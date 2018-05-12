@@ -11,7 +11,8 @@ using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
-using System.Diagnostics; 
+using System.Diagnostics;
+using WMS.UI.FormBasicInfos;
 
 namespace WMS.UI
 {
@@ -529,12 +530,12 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                FormUser l = new FormUser(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-                l.TopLevel = false;
-                l.Dock = DockStyle.Fill;//窗口大小
-                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(l);
-                l.Show();
+                FormPerson formPerson = new FormPerson();
+                formPerson.TopLevel = false;
+                formPerson.Dock = DockStyle.Fill;//窗口大小
+                formPerson.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(formPerson);
+                formPerson.Show();
             }
             if (treeViewLeft.SelectedNode.Text == "供应商管理")
             {

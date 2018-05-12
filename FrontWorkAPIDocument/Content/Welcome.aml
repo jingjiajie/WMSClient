@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="8496c70d-305b-4d2b-a951-1d52fd6b580c" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>非常荣幸您能够学习和使用FrontWork，作为一款极为先进的开源框架，我们希望您在使用的同步也能参与到我们的开发和反馈中</para>
+      <para>FrontWork框架的官方网站：<link xlink:href="http://www.frontwork.org">www.frontwork.org</link></para>
+      <para>FrontWork框架的GitHub开源地址：<link xlink:href="https://github.com/jingjiajie/FrontWork">https://github.com/jingjiajie/FrontWork</link>
+      </para>
+		</introduction>
+
+		<section>
+			<title>快速开始</title>
+			<content>
+        <para>
+          要开始查看FrontWork的API文档，请点击左侧树形框内的类名，或点击右上角的搜索框，输入类名进行搜索以查看搜索结果。
+        </para>
+			</content>
+		</section>
+
+		<relatedTopics>
+			   <!-- <link xlink:href="5be93949-fd0a-4fa4-858d-679c6c6f170d" /> -->
+    </relatedTopics>
+    
+	</developerConceptualDocument>
+</topic>

@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{32AD3F4C-4A95-4B21-8B9B-5AFB8DAAFDDA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <StartupObject>
+    </StartupObject>
+    <RootNamespace>FrontWork</RootNamespace>
+    <AssemblyName>FrontWork</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>FrontWork.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>FrontWork.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jint.2.11.58\lib\net40\Jint.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\Configuration.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\Configurator\Configurator.Designer.vb">
+      <DependentUpon>Configurator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\Configurator\Configurator.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configuration\Configurator\ConfiguratorEditor.vb" />
+    <Compile Include="Configuration\EventArgs\ConfigurationChangedEventArgs.vb" />
+    <Compile Include="Configuration\HTTPAPIConfiguration.vb" />
+    <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
+    <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
+    <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
+    <Compile Include="IDataView.vb" />
+    <Compile Include="Logger\Logger.vb" />
+    <Compile Include="Configuration\ModeConfiguration.vb" />
+    <Compile Include="Configuration\FieldConfiguration.vb" />
+    <Compile Include="Configuration\FieldMethod.vb" />
+    <Compile Include="Model\DataStructures\IndexRowSynchronizationStatePair.vb" />
+    <Compile Include="Model\DataStructures\SynchronizaionState.vb" />
+    <Compile Include="Model\EventArgs\ModelRowSynchronizationStateChangedEventArgs.vb" />
+    <Compile Include="Model\ModelBox.Designer.vb">
+      <DependentUpon>ModelBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Synchronizer\JsonRESTSynchronizer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Synchronizer\DataStructures\HTTPMethod.vb" />
+    <Compile Include="Model\EventArgs\ModelCellUpdatedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelRefreshedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelSelectionRangeChangedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelRowAddedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelRowRemovedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelRowUpdatedEventArgs.vb" />
+    <Compile Include="Model\IModel.vb" />
+    <Compile Include="Model\DataStructures\IndexRowPair.vb" />
+    <Compile Include="Model\Model.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Model\DataStructures\PositionCellPair.vb" />
+    <Compile Include="Model\DataStructures\Range.vb" />
+    <Compile Include="Model\EventArgs\RangeChangedEventArgs.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Synchronizer\ISynchronizer.vb" />
+    <Compile Include="Util\Util.vb" />
+    <Compile Include="View\DataStructures\AssociationItem.vb" />
+    <Compile Include="View\BasicView.Designer.vb">
+      <DependentUpon>BasicView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\BasicView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\DataStructures\BasicViewComponent.vb" />
+    <Compile Include="View\DataStructures\ReoGridViewComponent.vb" />
+    <Compile Include="View\FormAssociation.Designer.vb">
+      <DependentUpon>FormAssociation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormAssociation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\IView.vb" />
+    <Compile Include="View\IViewComponent.vb" />
+    <Compile Include="View\ReoGridView.Designer.vb">
+      <DependentUpon>ReoGridView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReoGridView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\DataStructures\PageChangedEventArgs.vb" />
+    <Compile Include="View\DataStructures\OnSearchEventArgs.vb" />
+    <Compile Include="View\PagerView.Designer.vb">
+      <DependentUpon>PagerView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\PagerView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Adapters\SearchViewJsonRESTAdapter.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\SearchView.Designer.vb">
+      <DependentUpon>SearchView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Adapters\SearchViewJsonRESTAdapter.resx">
+      <DependentUpon>SearchViewJsonRESTAdapter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\Configuration.resx">
+      <DependentUpon>Configuration.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\Configurator\Configurator.resx">
+      <DependentUpon>Configurator.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Model.resx">
+      <DependentUpon>Model.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\ModelBox.resx">
+      <DependentUpon>ModelBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Synchronizer\JsonRESTSynchronizer.resx">
+      <DependentUpon>JsonRESTSynchronizer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\BasicView.resx">
+      <DependentUpon>BasicView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormAssociation.resx">
+      <DependentUpon>FormAssociation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PagerView.resx">
+      <DependentUpon>PagerView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ReoGridView.resx">
+      <DependentUpon>ReoGridView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SearchView.resx">
+      <DependentUpon>SearchView.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Synchronizer\DataStructures\JsonRESTAPIInfo.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConfigurationEditor\ConfigurationEditor.csproj">
+      <Project>{69ce0fb9-99cf-4a40-a0ab-e39f5050054e}</Project>
+      <Name>ConfigurationEditor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

@@ -52,102 +52,108 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormJobTicket\JobTicketUtilities.cs" />
-    <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketUitilities.cs" />
-    <Compile Include="FormStockInfo\StockInfoUtilities.cs" />
-    <Compile Include="FromShipmentTicket\FormSelectPackage.cs">
+    <Compile Include="FormBasicInfos\FormPerson.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FromShipmentTicket\FormSelectPackage.Designer.cs">
+    <Compile Include="FormBasicInfos\FormPerson.Designer.cs">
+      <DependentUpon>FormPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Old\FormJobTicket\JobTicketUtilities.cs" />
+    <Compile Include="Old\FormPutOutStorageTicket\PutOutStorageTicketUitilities.cs" />
+    <Compile Include="Old\FormStockInfo\StockInfoUtilities.cs" />
+    <Compile Include="Old\FromShipmentTicket\FormSelectPackage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Old\FromShipmentTicket\FormSelectPackage.Designer.cs">
       <DependentUpon>FormSelectPackage.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\CommonDataStructures.cs" />
-    <Compile Include="FormBase\BasePersonMetaData.cs" />
-    <Compile Include="FormBase\BasePackageUnitMetaData.cs" />
-    <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
+    <Compile Include="Old\FormBase\BasePersonMetaData.cs" />
+    <Compile Include="Old\FormBase\BasePackageUnitMetaData.cs" />
+    <Compile Include="Old\FormBase\ComponentOuterPackingSizeModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\ComponentOuterPackingSizeModify.Designer.cs">
+    <Compile Include="Old\FormBase\ComponentOuterPackingSizeModify.Designer.cs">
       <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\ComponentShipmentInfoModify.cs">
+    <Compile Include="Old\FormBase\ComponentShipmentInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\ComponentShipmentInfoModify.Designer.cs">
+    <Compile Include="Old\FormBase\ComponentShipmentInfoModify.Designer.cs">
       <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSelectComponen.cs">
+    <Compile Include="Old\FormBase\FormSelectComponen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSelectComponen.Designer.cs">
+    <Compile Include="Old\FormBase\FormSelectComponen.Designer.cs">
       <DependentUpon>FormSelectComponen.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSelectSupply.cs">
+    <Compile Include="Old\FormBase\FormSelectSupply.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSelectSupply.Designer.cs">
+    <Compile Include="Old\FormBase\FormSelectSupply.Designer.cs">
       <DependentUpon>FormSelectSupply.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplyModify.cs">
+    <Compile Include="Old\FormBase\FormSupplyModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplyModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormSupplyModify.Designer.cs">
       <DependentUpon>FormSupplyModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplyViewMetaData.cs" />
-    <Compile Include="FormBase\ComponenViewMetaData.cs" />
-    <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
+    <Compile Include="Old\FormBase\SupplyViewMetaData.cs" />
+    <Compile Include="Old\FormBase\ComponenViewMetaData.cs" />
+    <Compile Include="Old\FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
+    <Compile Include="Old\FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupply.cs">
+    <Compile Include="Old\FormBase\FormBaseSupply.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupply.Designer.cs">
+    <Compile Include="Old\FormBase\FormBaseSupply.Designer.cs">
       <DependentUpon>FormBaseSupply.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBasePerson.cs">
+    <Compile Include="Old\FormBase\FormBasePerson.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBasePerson.Designer.cs">
+    <Compile Include="Old\FormBase\FormBasePerson.Designer.cs">
       <DependentUpon>FormBasePerson.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBasePersonModify.cs">
+    <Compile Include="Old\FormBase\FormBasePersonModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBasePersonModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormBasePersonModify.Designer.cs">
       <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSelectPerson.cs">
+    <Compile Include="Old\FormBase\FormSelectPerson.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSelectPerson.Designer.cs">
+    <Compile Include="Old\FormBase\FormSelectPerson.Designer.cs">
       <DependentUpon>FormSelectPerson.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSelectSupplier.cs">
+    <Compile Include="Old\FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
+    <Compile Include="Old\FormBase\FormSelectSupplier.Designer.cs">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierStorageInfo.cs">
+    <Compile Include="Old\FormBase\SupplierStorageInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\SupplierStorageInfo.Designer.cs">
+    <Compile Include="Old\FormBase\SupplierStorageInfo.Designer.cs">
       <DependentUpon>SupplierStorageInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierStorageInfoModify.cs">
+    <Compile Include="Old\FormBase\SupplierStorageInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\SupplierStorageInfoModify.Designer.cs">
+    <Compile Include="Old\FormBase\SupplierStorageInfoModify.Designer.cs">
       <DependentUpon>SupplierStorageInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierModify.cs">
+    <Compile Include="Old\FormBase\FormSupplierModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormSupplierModify.Designer.cs">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\FormAssociate.cs">
@@ -180,11 +186,11 @@
     <Compile Include="Utilities\StandardImportForm.Designer.cs">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierStorageInfoMetaData.cs" />
-    <Compile Include="FormJobTicket\FormJobTicketNew.cs">
+    <Compile Include="Old\FormBase\SupplierStorageInfoMetaData.cs" />
+    <Compile Include="Old\FormJobTicket\FormJobTicketNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicketNew.Designer.cs">
+    <Compile Include="Old\FormJobTicket\FormJobTicketNew.Designer.cs">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\FormLoading.cs">
@@ -193,213 +199,213 @@
     <Compile Include="Utilities\FormLoading.Designer.cs">
       <DependentUpon>FormLoading.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.Designer.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketNew.Designer.cs">
       <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.Designer.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.Designer.cs">
       <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormAddSubmissionItem.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormAddSubmissionItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormAddSubmissionItem.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormAddSubmissionItem.Designer.cs">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormAddSubmissionTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormAddSubmissionTicket.Designer.cs">
       <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormPutaway\FormPutawayModify.cs">
+    <Compile Include="Old\FormReceipt\FormPutaway\FormPutawayModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormPutaway\FormPutawayModify.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormPutaway\FormPutawayModify.Designer.cs">
       <DependentUpon>FormPutawayModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormPutawayNew.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormPutawayNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormPutawayNew.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormPutawayNew.Designer.cs">
       <DependentUpon>FormPutawayNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicketModify.cs">
+    <Compile Include="Old\FormJobTicket\FormJobTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicketModify.Designer.cs">
+    <Compile Include="Old\FormJobTicket\FormJobTicketModify.Designer.cs">
       <DependentUpon>FormJobTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\BaseProjectMetaData.cs" />
-    <Compile Include="FormBase\BaseWarehouseMetaData.cs" />
-    <Compile Include="FormBase\FormBaseProject.cs">
+    <Compile Include="Old\FormBase\BaseProjectMetaData.cs" />
+    <Compile Include="Old\FormBase\BaseWarehouseMetaData.cs" />
+    <Compile Include="Old\FormBase\FormBaseProject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseProject.Designer.cs">
+    <Compile Include="Old\FormBase\FormBaseProject.Designer.cs">
       <DependentUpon>FormBaseProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseProjectModify.cs">
+    <Compile Include="Old\FormBase\FormBaseProjectModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseProjectModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormBaseProjectModify.Designer.cs">
       <DependentUpon>FormBaseProjectModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplier.cs">
+    <Compile Include="Old\FormBase\FormBaseSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplier.designer.cs">
+    <Compile Include="Old\FormBase\FormBaseSupplier.designer.cs">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseModify.cs">
+    <Compile Include="Old\FormBase\FormBaseWarehouseModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormBaseWarehouseModify.Designer.cs">
       <DependentUpon>FormBaseWarehouseModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormComponenModify.cs">
+    <Compile Include="Old\FormBase\FormComponenModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormComponenModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormComponenModify.Designer.cs">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormUser.cs">
+    <Compile Include="Old\FormBase\FormUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormUser.Designer.cs">
+    <Compile Include="Old\FormBase\FormUser.Designer.cs">
       <DependentUpon>FormUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormUserModify.cs">
+    <Compile Include="Old\FormBase\FormUserModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormUserModify.Designer.cs">
+    <Compile Include="Old\FormBase\FormUserModify.Designer.cs">
       <DependentUpon>FormUserModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierMetaData.cs" />
-    <Compile Include="FormBase\UserMetaData.cs" />
-    <Compile Include="FormJobTicket\FormJobTicket.cs">
+    <Compile Include="Old\FormBase\SupplierMetaData.cs" />
+    <Compile Include="Old\FormBase\UserMetaData.cs" />
+    <Compile Include="Old\FormJobTicket\FormJobTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicket.Designer.cs">
+    <Compile Include="Old\FormJobTicket\FormJobTicket.Designer.cs">
       <DependentUpon>FormJobTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicketItem.cs">
+    <Compile Include="Old\FormJobTicket\FormJobTicketItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicketItem.Designer.cs">
+    <Compile Include="Old\FormJobTicket\FormJobTicketItem.Designer.cs">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptSubmissionNew.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptSubmissionNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptSubmissionNew.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptSubmissionNew.Designer.cs">
       <DependentUpon>FormReceiptSubmissionNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormSearch.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormSearch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormSearch.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormSearch.Designer.cs">
       <DependentUpon>FormSearch.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormPutawayTicketItem\FormShelvesItem.cs">
+    <Compile Include="Old\FormReceipt\FormPutawayTicketItem\FormShelvesItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormPutawayTicketItem\FormShelvesItem.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormPutawayTicketItem\FormShelvesItem.Designer.cs">
       <DependentUpon>FormShelvesItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormSubmissionChooseExcelType.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormSubmissionChooseExcelType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormSubmissionChooseExcelType.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormSubmissionChooseExcelType.Designer.cs">
       <DependentUpon>FormSubmissionChooseExcelType.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormSubmissionItem.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormSubmissionItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormSubmissionItem.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormSubmissionItem.Designer.cs">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRemind\FormSupplierRemind.cs">
+    <Compile Include="Old\FormRemind\FormSupplierRemind.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormRemind\FormSupplierRemind.Designer.cs">
+    <Compile Include="Old\FormRemind\FormSupplierRemind.Designer.cs">
       <DependentUpon>FormSupplierRemind.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRemind\FormSupplyRemind.cs">
+    <Compile Include="Old\FormRemind\FormSupplyRemind.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormRemind\FormSupplyRemind.Designer.cs">
+    <Compile Include="Old\FormRemind\FormSupplyRemind.Designer.cs">
       <DependentUpon>FormSupplyRemind.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormSelectStockInfo.cs">
+    <Compile Include="Old\FormStockInfo\FormSelectStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\ReceiptUtilities.cs" />
-    <Compile Include="FormStockInfo\FormSelectStockInfo.Designer.cs">
+    <Compile Include="Old\FormReceipt\ReceiptUtilities.cs" />
+    <Compile Include="Old\FormStockInfo\FormSelectStockInfo.Designer.cs">
       <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormJobTicket\JobTicketItemViewMetaData.cs" />
-    <Compile Include="FormJobTicket\JobTicketViewMetaData.cs" />
+    <Compile Include="Old\FormJobTicket\JobTicketItemViewMetaData.cs" />
+    <Compile Include="Old\FormJobTicket\JobTicketViewMetaData.cs" />
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptArrival1.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptArrival1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FormReceiptArrival.resx</DependentUpon>
     </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptItems.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptItems.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptItems.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptItems.Designer.cs">
       <DependentUpon>FormReceiptItems.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\ReceiptMetaData.cs" />
-    <Compile Include="FormReceipt\FormReceipt\ReceiptTicketModify.cs">
+    <Compile Include="Old\FormReceipt\ReceiptMetaData.cs" />
+    <Compile Include="Old\FormReceipt\FormReceipt\ReceiptTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\ReceiptTicketModify.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\ReceiptTicketModify.Designer.cs">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify1.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicketComponentModify1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify1.Designer.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicketComponentModify1.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicketComponentModify1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.Designer.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicketModify.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicketComponentModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicket.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicket.Designer.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoCheckTicket.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfo.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FromShipmentTicket\ShipmentTicketUtilities.cs" />
+    <Compile Include="Old\FromShipmentTicket\ShipmentTicketUtilities.cs" />
     <Compile Include="GlobalData.cs" />
     <Compile Include="Utilities\StandardFormPreviewExcel.cs">
       <SubType>Form</SubType>
@@ -413,69 +419,63 @@
     <Compile Include="FormMain\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponent.cs">
+    <Compile Include="Old\FormBase\FormBaseComponent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponent.Designer.cs">
+    <Compile Include="Old\FormBase\FormBaseComponent.Designer.cs">
       <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormOtherInfo.cs">
+    <Compile Include="Old\FormBase\FormOtherInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormOtherInfo.Designer.cs">
+    <Compile Include="Old\FormBase\FormOtherInfo.Designer.cs">
       <DependentUpon>FormOtherInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptArrival.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptArrival.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptArrival.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormReceipt\FormReceiptArrival.Designer.cs">
       <DependentUpon>FormReceiptArrival.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormPutaway\FormReceiptShelves.cs">
+    <Compile Include="Old\FormReceipt\FormPutaway\FormReceiptShelves.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormPutaway\FormReceiptShelves.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormPutaway\FormReceiptShelves.Designer.cs">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoModify.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
+    <Compile Include="Old\FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
-    <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
-    <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
-    <Compile Include="FormTest.cs">
+    <Compile Include="Old\FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
+    <Compile Include="Old\FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
+    <Compile Include="Old\FormStockInfo\StockInfoViewMetaData.cs" />
+    <Compile Include="Old\FromShipmentTicket\FormShipmentTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormTest.Designer.cs">
-      <DependentUpon>FormTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicket.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicket.Designer.cs">
+    <Compile Include="Old\FromShipmentTicket\FormShipmentTicket.Designer.cs">
       <DependentUpon>FormShipmentTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicketItem.cs">
+    <Compile Include="Old\FromShipmentTicket\FormShipmentTicketItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicketItem.Designer.cs">
+    <Compile Include="Old\FromShipmentTicket\FormShipmentTicketItem.Designer.cs">
       <DependentUpon>FormShipmentTicketItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicketModify.cs">
+    <Compile Include="Old\FromShipmentTicket\FormShipmentTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicketModify.Designer.cs">
+    <Compile Include="Old\FromShipmentTicket\FormShipmentTicketModify.Designer.cs">
       <DependentUpon>FormShipmentTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FromShipmentTicket\ShipmentTicketItemViewMetaData.cs" />
-    <Compile Include="FromShipmentTicket\ShipmentTicketViewMetaData.cs" />
-    <Compile Include="FormReceipt\FormSubmission\FormSubmissionManage.cs">
+    <Compile Include="Old\FromShipmentTicket\ShipmentTicketItemViewMetaData.cs" />
+    <Compile Include="Old\FromShipmentTicket\ShipmentTicketViewMetaData.cs" />
+    <Compile Include="Old\FormReceipt\FormSubmission\FormSubmissionManage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmission\FormSubmissionManage.Designer.cs">
+    <Compile Include="Old\FormReceipt\FormSubmission\FormSubmissionManage.Designer.cs">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\PagerWidget.cs">
@@ -486,70 +486,73 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicket.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicket.Designer.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicket.Designer.cs">
       <DependentUpon>FormPutOutStorageTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketItem.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketItem.Designer.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketItem.Designer.cs">
       <DependentUpon>FormPutOutStorageTicketItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketModify.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketModify.Designer.cs">
+    <Compile Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketModify.Designer.cs">
       <DependentUpon>FormPutOutStorageTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
-    <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
+    <Compile Include="Old\FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
+    <Compile Include="Old\FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities\Utilities.cs" />
-    <EmbeddedResource Include="FormBase\ComponentOuterPackingSizeModify.resx">
+    <EmbeddedResource Include="FormBasicInfos\FormPerson.resx">
+      <DependentUpon>FormPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Old\FormBase\ComponentOuterPackingSizeModify.resx">
       <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\ComponentShipmentInfoModify.resx">
+    <EmbeddedResource Include="Old\FormBase\ComponentShipmentInfoModify.resx">
       <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
+    <EmbeddedResource Include="Old\FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseSupply.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBaseSupply.resx">
       <DependentUpon>FormBaseSupply.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBasePerson.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBasePerson.resx">
       <DependentUpon>FormBasePerson.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBasePersonModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBasePersonModify.resx">
       <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSelectComponen.resx">
+    <EmbeddedResource Include="Old\FormBase\FormSelectComponen.resx">
       <DependentUpon>FormSelectComponen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSelectSupply.resx">
+    <EmbeddedResource Include="Old\FormBase\FormSelectSupply.resx">
       <DependentUpon>FormSelectSupply.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplyModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormSupplyModify.resx">
       <DependentUpon>FormSupplyModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSelectPerson.resx">
+    <EmbeddedResource Include="Old\FormBase\FormSelectPerson.resx">
       <DependentUpon>FormSelectPerson.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
+    <EmbeddedResource Include="Old\FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\SupplierStorageInfo.resx">
+    <EmbeddedResource Include="Old\FormBase\SupplierStorageInfo.resx">
       <DependentUpon>SupplierStorageInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\SupplierStorageInfoModify.resx">
+    <EmbeddedResource Include="Old\FormBase\SupplierStorageInfoModify.resx">
       <DependentUpon>SupplierStorageInfoModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FromShipmentTicket\FormSelectPackage.resx">
+    <EmbeddedResource Include="Old\FromShipmentTicket\FormSelectPackage.resx">
       <DependentUpon>FormSelectPackage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormAssociate.resx">
@@ -567,100 +570,100 @@
     <EmbeddedResource Include="Utilities\StandardImportForm.resx">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormJobTicket\FormJobTicketNew.resx">
+    <EmbeddedResource Include="Old\FormJobTicket\FormJobTicketNew.resx">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormLoading.resx">
       <DependentUpon>FormLoading.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
+    <EmbeddedResource Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
       <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.resx">
+    <EmbeddedResource Include="Old\FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.resx">
       <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormAddSubmissionItem.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\FormAddSubmissionItem.resx">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormSubmission\FormAddSubmissionTicket.resx">
       <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormPutaway\FormPutawayModify.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormPutaway\FormPutawayModify.resx">
       <DependentUpon>FormPutawayModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormPutawayNew.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\FormPutawayNew.resx">
       <DependentUpon>FormPutawayNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormJobTicket\FormJobTicketModify.resx">
+    <EmbeddedResource Include="Old\FormJobTicket\FormJobTicketModify.resx">
       <DependentUpon>FormJobTicketModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseProject.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBaseProject.resx">
       <DependentUpon>FormBaseProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseProjectModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBaseProjectModify.resx">
       <DependentUpon>FormBaseProjectModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouseModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBaseWarehouseModify.resx">
       <DependentUpon>FormBaseWarehouseModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormComponenModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormComponenModify.resx">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormUser.resx">
+    <EmbeddedResource Include="Old\FormBase\FormUser.resx">
       <DependentUpon>FormUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormUserModify.resx">
+    <EmbeddedResource Include="Old\FormBase\FormUserModify.resx">
       <DependentUpon>FormUserModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormJobTicket\FormJobTicket.resx">
+    <EmbeddedResource Include="Old\FormJobTicket\FormJobTicket.resx">
       <DependentUpon>FormJobTicket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormJobTicket\FormJobTicketItem.resx">
+    <EmbeddedResource Include="Old\FormJobTicket\FormJobTicketItem.resx">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptSubmissionNew.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\FormReceiptSubmissionNew.resx">
       <DependentUpon>FormReceiptSubmissionNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormSearch.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\FormSearch.resx">
       <DependentUpon>FormSearch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormPutawayTicketItem\FormShelvesItem.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormPutawayTicketItem\FormShelvesItem.resx">
       <DependentUpon>FormShelvesItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionChooseExcelType.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormSubmission\FormSubmissionChooseExcelType.resx">
       <DependentUpon>FormSubmissionChooseExcelType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionItem.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormSubmission\FormSubmissionItem.resx">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRemind\FormSupplierRemind.resx">
+    <EmbeddedResource Include="Old\FormRemind\FormSupplierRemind.resx">
       <DependentUpon>FormSupplierRemind.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRemind\FormSupplyRemind.resx">
+    <EmbeddedResource Include="Old\FormRemind\FormSupplyRemind.resx">
       <DependentUpon>FormSupplyRemind.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormSelectStockInfo.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormSelectStockInfo.resx">
       <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptItems.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\FormReceiptItems.resx">
       <DependentUpon>FormReceiptItems.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\ReceiptTicketModify.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicket.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormStockInfoCheckTicket.resx">
       <DependentUpon>FormStockInfoCheckTicket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModify.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormStockInfoCheckTicketModify.resx">
       <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\StandardFormPreviewExcel.resx">
@@ -670,43 +673,40 @@
       <DependentUpon>FormMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
+    <EmbeddedResource Include="Old\FormBase\FormBaseComponent.resx">
       <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormOtherInfo.resx">
+    <EmbeddedResource Include="Old\FormBase\FormOtherInfo.resx">
       <DependentUpon>FormOtherInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptArrival.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormReceipt\FormReceiptArrival.resx">
       <DependentUpon>FormReceiptArrival.cs</DependentUpon>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FormReceiptArrival1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormPutaway\FormReceiptShelves.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormPutaway\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketComponentModify1.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormStockInfoCheckTicketComponentModify1.resx">
       <DependentUpon>FormStockInfoCheckTicketComponentModify1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormStockInfoCheckTicketComponentModify.resx">
       <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoModify.resx">
+    <EmbeddedResource Include="Old\FormStockInfo\FormStockInfoModify.resx">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormTest.resx">
-      <DependentUpon>FormTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicket.resx">
+    <EmbeddedResource Include="Old\FromShipmentTicket\FormShipmentTicket.resx">
       <DependentUpon>FormShipmentTicket.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketItem.resx">
+    <EmbeddedResource Include="Old\FromShipmentTicket\FormShipmentTicketItem.resx">
       <DependentUpon>FormShipmentTicketItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketModify.resx">
+    <EmbeddedResource Include="Old\FromShipmentTicket\FormShipmentTicketModify.resx">
       <DependentUpon>FormShipmentTicketModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionManage.resx">
+    <EmbeddedResource Include="Old\FormReceipt\FormSubmission\FormSubmissionManage.resx">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\PagerWidget.resx">
@@ -722,13 +722,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicket.resx">
+    <EmbeddedResource Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicket.resx">
       <DependentUpon>FormPutOutStorageTicket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketItem.resx">
+    <EmbeddedResource Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketItem.resx">
       <DependentUpon>FormPutOutStorageTicketItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketModify.resx">
+    <EmbeddedResource Include="Old\FormPutOutStorageTicket\FormPutOutStorageTicketModify.resx">
       <DependentUpon>FormPutOutStorageTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
@@ -751,6 +751,10 @@
     <ProjectReference Include="..\EMacro\EMacro.csproj">
       <Project>{dc602b46-dc15-42b2-9136-19ed6876ab1f}</Project>
       <Name>EMacro</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrontWork\FrontWork.vbproj">
+      <Project>{32ad3f4c-4a95-4b21-8b9b-5afb8daafdda}</Project>
+      <Name>FrontWork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

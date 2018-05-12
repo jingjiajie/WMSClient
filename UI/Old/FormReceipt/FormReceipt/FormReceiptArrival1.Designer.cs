@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WMS.UI.FormReceipt.FormReceipt {
+namespace WMS.UI.Old.FormReceipt.FormReceipt {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WMS.UI.FormReceipt.FormReceipt {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WMS.UI.FormReceipt.FormReceipt.FormReceiptArrival", typeof(FormReceiptArrival).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WMS.UI.Old.FormReceipt.FormReceipt.FormReceiptArrival", typeof(FormReceiptArrival).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
