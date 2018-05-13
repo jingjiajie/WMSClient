@@ -190,4 +190,8 @@ Public Class SearchView
             Me.ComboBoxSearchRelation.SelectedIndex = 0
         End If
     End Sub
+
+    Public Sub Search()
+        Call Me.ButtonSearch.PerformClick()
+    End Sub
 End Class

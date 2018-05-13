@@ -331,6 +331,10 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRowIDs(rowNums)
     End Function
 
+    Public Sub UpdateRowID(oriRowID As Guid, newID As Guid) Implements IModel.UpdateRowID
+        Me.GetCurModel.UpdateRowID(oriRowID, newID)
+    End Sub
+
     Public Function GetRows(rows() As Long) As DataTable Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rows)
     End Function

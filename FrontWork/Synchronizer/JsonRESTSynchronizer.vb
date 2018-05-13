@@ -13,6 +13,8 @@ Public Class JsonRESTSynchronizer
     Private _model As IModel
     Private _configuration As Configuration
     Private _mode As String = "default"
+    Private Property RequestParams As New List(Of ModeParams)
+    Private Property JsonRequestParams As New List(Of ModeParams)
 
     Private jsEngine As New Jint.Engine
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
@@ -122,6 +124,56 @@ Public Class JsonRESTSynchronizer
 
     End Sub
 
+    Public Sub SetRequestParameter(name As String, value As Object, Optional mode As String = "default")
+        '如果目标模式正式当前模式，则对各API设置请求参数
+        If mode = Me.Mode Then
+            Me.PullAPI?.SetRequestParameter(name, value)
+            Me.AddAPI?.SetRequestParameter(name, value)
+            Me.RemoveAPI?.SetRequestParameter(name, value)
+            Me.UpdateAPI?.SetRequestParameter(name, value)
+        End If
+
+        '添加到参数记录中，以备切换模式时还能重新设置参数
+        Dim foundModeParams = (From mp In Me.RequestParams
+                               Where mp.Mode.Equals(mode, StringComparison.OrdinalIgnoreCase)
+                               Select mp).FirstOrDefault
+        If foundModeParams Is Nothing Then
+            Me.RequestParams.Add(New ModeParams With {
+                .Mode = mode,
+                .Params = New Dictionary(Of String, Object) From {
+                    {name, value}
+                }
+            })
+        Else
+            foundModeParams.Params.Add(name, value)
+        End If
+    End Sub
+
+    Public Sub SetJsonRequestParameter(name As String, jsonValue As String, Optional mode As String = "default")
+        '如果目标模式正式当前模式，则对各API设置请求参数
+        If mode = Me.Mode Then
+            Me.PullAPI?.SetJsonRequestParameter(name, jsonValue)
+            Me.AddAPI?.SetJsonRequestParameter(name, jsonValue)
+            Me.RemoveAPI?.SetJsonRequestParameter(name, jsonValue)
+            Me.UpdateAPI?.SetJsonRequestParameter(name, jsonValue)
+        End If
+
+        '添加到参数记录中，以备切换模式时还能重新设置参数
+        Dim foundModeParams = (From mp In Me.RequestParams
+                               Where mp.Mode.Equals(mode, StringComparison.OrdinalIgnoreCase)
+                               Select mp).FirstOrDefault
+        If foundModeParams Is Nothing Then
+            Me.RequestParams.Add(New ModeParams With {
+                .Mode = mode,
+                .Params = New Dictionary(Of String, Object) From {
+                    {name, jsonValue}
+                }
+            })
+        Else
+            foundModeParams.Params.Add(name, jsonValue)
+        End If
+    End Sub
+
     Private Sub BindModel()
         AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
         AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
@@ -139,6 +191,12 @@ Public Class JsonRESTSynchronizer
     Private Sub InitSynchronizer()
         If Me._configuration Is Nothing Then Return
         Dim httpAPIConfigs = Me._configuration.GetHTTPAPIConfigurations(Me.Mode)
+        Dim requestParams = (From mp In Me.RequestParams
+                             Where mp.Mode.Equals(Me.Mode, StringComparison.OrdinalIgnoreCase)
+                             Select mp).FirstOrDefault
+        Dim requestJsonParams = (From mp In Me.JsonRequestParams
+                                 Where mp.Mode.Equals(Me.Mode, StringComparison.OrdinalIgnoreCase)
+                                 Select mp).FirstOrDefault
         For Each apiConfig In httpAPIConfigs
             If apiConfig.Type.Equals("pushFinishedCallback", StringComparison.OrdinalIgnoreCase) Then
                 Me.PushFinishedCallback =
@@ -149,6 +207,16 @@ Public Class JsonRESTSynchronizer
             End If
 
             Dim newAPIInfo As New JsonRESTAPIInfo
+            If requestParams IsNot Nothing Then
+                For Each param In requestParams.Params
+                    newAPIInfo.SetRequestParameter(param.Key, param.Value)
+                Next
+            End If
+            If requestJsonParams IsNot Nothing Then
+                For Each param In requestJsonParams.Params
+                    newAPIInfo.SetJsonRequestParameter(param.Key, param.Value.ToString)
+                Next
+            End If
             newAPIInfo.URLTemplate = apiConfig.URL
             If Not String.IsNullOrWhiteSpace(apiConfig.Method) Then
                 newAPIInfo.HTTPMethod = HTTPMethod.Parse(apiConfig.Method)
@@ -198,10 +266,41 @@ Public Class JsonRESTSynchronizer
         If Me.RemoveAPI Is Nothing Then
             Throw New Exception("Remove API not setted!")
         End If
-        Dim rows = (From indexRow In e.RemovedRows
-                    Select indexRow.RowData).ToArray
-        Dim action = New RemoveRowAction(Me.RemoveAPI, e.RemovedRows)
-        modelActions.Add(action)
+        '删除操作单独进行，不和添加，更新一块提交
+        Dim actionList = New List(Of ModelAdapterAction)
+        actionList.Add(New RemoveRowAction(Me.RemoveAPI, e.RemovedRows))
+        '删除操作立即提交，以免删除失败导致后面的操作永远无法提交。
+        '如果删除失败，则把行添加回Model里
+        If Me.PushToServer(actionList) = False Then
+            Dim rowNumsASC = (From indexRow In e.RemovedRows
+                              Order By indexRow.Index Ascending
+                              Select indexRow.Index).ToArray
+            Dim rowIDsASC = (From indexRow In e.RemovedRows
+                             Order By indexRow.RowID Ascending
+                             Select indexRow.RowID).ToArray
+            Dim dataOfEachRowASC = (From indexRow In e.RemovedRows
+                                    Order By indexRow.Index Ascending
+                                    Select indexRow.RowData).ToArray
+            For i = 0 To rowNumsASC.Length - 1
+                RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+                Me.Model.InsertRow(rowNumsASC(i), dataOfEachRowASC(i)) '把行插入回去
+                Me.Model.UpdateRowID(Me.Model.GetRowID(rowNumsASC(i)), rowIDsASC(i)) '行ID也设置为被删除行的ID
+                '如果没有其他增加和更新的操作，则将行状态更新为已同步
+                Dim ifHasUnsynchronizedOperates = False
+                Dim curRowID = rowIDsASC(i)
+                For Each action In Me.modelActions
+                    If (From indexRow In action.IndexRowPairs
+                        Where indexRow.RowID = curRowID
+                        Select indexRow).Count > 0 Then
+                        ifHasUnsynchronizedOperates = True
+                    End If
+                Next
+                If Not ifHasUnsynchronizedOperates Then
+                    Me.Model.UpdateRowSynchronizationState(rowIDsASC(i), SynchronizationState.SYNCHRONIZED)
+                End If
+                AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+            Next
+        End If
     End Sub
 
     Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
@@ -313,15 +412,16 @@ Public Class JsonRESTSynchronizer
             Call Me.PullAPI.Callback?.Invoke(response, Nothing)
         Catch ex As WebException
             Call Me.PullAPI.Callback?.Invoke(CType(ex.Response, HttpWebResponse), ex)
+            Dim message = ex.Message
+            If ex.Response IsNot Nothing Then
+                message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
+            End If
+            MessageBox.Show("查询失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
         Return True
     End Function
 
-    ''' <summary>
-    ''' 推送变化数据到服务器
-    ''' </summary>
-    ''' <returns>是否成功</returns>
-    Public Function PushToServer() As Boolean Implements ISynchronizer.PushToServer
+    Private Function PushToServer(actions As List(Of ModelAdapterAction)) As Boolean
         Logger.SetMode(LogMode.SYNCHRONIZER)
         If Me.Model Is Nothing Then
             Throw New Exception("Model not set!")
@@ -329,8 +429,8 @@ Public Class JsonRESTSynchronizer
 
         '将Actions进行优化
         Dim optimizer As New ActionOptimizer
-        Dim optimizedActions = optimizer.Optimize(Me.modelActions.ToArray)
-        Me.modelActions.Clear()
+        Dim optimizedActions = optimizer.Optimize(actions.ToArray)
+        actions.Clear()
 
         For Each action In optimizedActions
             Dim rowGuids = (From indexRowPair In action.IndexRowPairs Select indexRowPair.RowID).ToArray
@@ -338,7 +438,7 @@ Public Class JsonRESTSynchronizer
                 Dim response = action.DoSync()
                 'TODO 不等于200就认为失败吗？
                 If response.StatusCode <> 200 Then
-                    Me.modelActions.Add(action)
+                    actions.Add(action)
                     If TypeOf action IsNot RemoveRowAction Then
                         Me.Model.UpdateRowSynchronizationStates(rowGuids, Util.Times(SynchronizationState.UNSYNCHRONIZED, rowGuids.Length))
                     End If
@@ -350,7 +450,7 @@ Public Class JsonRESTSynchronizer
                 End If
                 action.APIInfo.Callback.Invoke(response, Nothing)
             Catch ex As WebException
-                Me.modelActions.Add(action)
+                actions.Add(action)
                 If TypeOf action IsNot RemoveRowAction Then
                     Me.Model.UpdateRowSynchronizationStates(rowGuids, Util.Times(SynchronizationState.UNSYNCHRONIZED, rowGuids.Length))
                 End If
@@ -370,6 +470,14 @@ Public Class JsonRESTSynchronizer
         MessageBox.Show("保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Call Me.PushFinishedCallback?.Invoke
         Return True
+    End Function
+
+    ''' <summary>
+    ''' 推送变化数据到服务器
+    ''' </summary>
+    ''' <returns>是否成功</returns>
+    Public Function PushToServer() As Boolean Implements ISynchronizer.PushToServer
+        Return Me.PushToServer(Me.modelActions)
     End Function
 
     'Public Sub SetAddAPI(url As String, method As HTTPMethod, bodyJsonTemplate As String)
@@ -680,4 +788,9 @@ Public Class JsonRESTSynchronizer
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
 
     End Sub
+
+    Private Class ModeParams
+        Public Property Mode As String
+        Public Property Params As Dictionary(Of String, Object)
+    End Class
 End Class

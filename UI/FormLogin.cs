@@ -6,10 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WMS.DataAccess;
-using System.Threading;
-using System.Data.SqlClient;
-using System.Drawing.Drawing2D;//粗糙圆角www
 
 namespace WMS.UI
 {
@@ -17,91 +13,17 @@ namespace WMS.UI
     {
         Point mouseOff;//鼠标移动位置变量
         bool leftFlag;//标签是否为左键
-        bool networkError = false;
-        bool refreshedPossibleUser = false;
-        User possibleUser = null;
-        Mutex possibleUserMutex = new Mutex();
-
-        int clickCount = 0; //防止用户心情不好时疯狂点击登录按钮
-
-        WMSEntities wmsEntities = new WMSEntities();
-
-        public int ClickCount
-        {
-            get => clickCount;
-            set
-            {
-                clickCount = value;
-                if (clickCount > 1)
-                {
-                    if (this.IsDisposed)
-                    {
-                        return;
-                    }
-                    this.Invoke(new Action(()=>
-                    {
-                        this.labelClickCount.Text = clickCount.ToString();
-                        int size = ((int)Math.Pow(clickCount, 1.5) + 100) / 10;
-                        this.labelClickCount.Font = new Font("黑体", size > 40 ? 40 : size);
-                        this.labelClickCount.Visible = true;
-                    }));
-
-                }
-                else
-                {
-                    if (this.IsDisposed)
-                    {
-                        return;
-                    }
-                    this.Invoke(new Action(() =>
-                    {
-                        this.labelClickCount.Visible = false;
-                    }));
-                }
-
-            }
-        }
 
         public FormLogin()
         {
             InitializeComponent();
+            this.comboBoxAccountBook.Items.Add("测试账套");
+            this.comboBoxAccountBook.SelectedIndex = 0;
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            try
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                Project[] projects = (from p in wmsEntities.Project select p).ToArray();
-                Warehouse[] warehouses = (from w in wmsEntities.Warehouse select w).ToArray();
-                this.comboBoxProject.Items.AddRange((from p in projects select new ComboBoxItem(p.Name,p)).ToArray());
-                this.comboBoxWarehouse.Items.AddRange((from w in warehouses select new ComboBoxItem(w.Name,w)).ToArray());
-                if(projects.Length == 0)
-                {
-                    MessageBox.Show("系统错误：无可选项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
-                }
-                else if (warehouses.Length == 0)
-                {
-                    MessageBox.Show("系统错误：无可选仓库", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
-                }
-                this.comboBoxProject.SelectedIndex = 0;
-                this.comboBoxWarehouse.SelectedIndex = 0;
-            }
-            catch
-            {
-                MessageBox.Show("加载数据失败，请检查网络连接！","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            
-            this.labelStatus.Text = "";
-            this.labelClickCount.Visible = false;
-            this.labelClickCount.ForeColor = Color.White;
-            this.labelClickCount.Font = new Font("黑体", 12);
-            this.CancelButton = buttonClosing;
+
         }
 
         //启用双缓冲技术
@@ -117,93 +39,36 @@ namespace WMS.UI
 
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-            ClickCount++;
-            if (ClickCount > 1)
+            string personName = this.textBoxUsername.Text;
+            string password = this.textBoxPassword.Text;
+            string accountBook = "WMS_Template";
+            if (string.IsNullOrWhiteSpace(personName))
             {
+                MessageBox.Show("请填写用户名！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }else if (string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("请填写密码！","提示", MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 return;
             }
-            if (textBoxUsername.Text == string.Empty)
+            Condition condition = new Condition();
+            condition.AddCondition("name",personName);
+            condition.AddCondition("password", password);
+            string condStr = condition.ToString();
+            List<Dictionary<string,object>> personList = RestClient.Get<List<Dictionary<string,object>>>(Defines.ServerURL + "/ledger/" + accountBook + "/person/" + condStr);
+            if(personList == null)
             {
-                MessageBox.Show("用户名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ClickCount = 0;
+                return;
+            }else if(personList.Count == 0)
+            {
+                MessageBox.Show("登录失败，请检查用户名和密码","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (textBoxPassword.Text == string.Empty)
-            {
-                MessageBox.Show("密码不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ClickCount = 0;
-                return;
-            }
-            this.labelStatus.Text = "正在登陆，请耐心等待...";
-            new Thread(new ThreadStart(() =>
-            {
-                this.possibleUserMutex.WaitOne();
-                if (this.refreshedPossibleUser == false) //如果没有调用过RefreshPossibleUser，再调用一次
-                {
-                    this.possibleUserMutex.ReleaseMutex();
-                    this.RefreshPossibleUserSync();
-                    this.possibleUserMutex.WaitOne();
-                }
-                if (this.networkError == true) //如果networkError，直接返回
-                {
-                    if (this.IsDisposed) return;
-                    this.Invoke(new Action(() =>
-                    {
-                        this.labelStatus.Text = "";
-                    }));
-                    this.possibleUserMutex.ReleaseMutex();
-                    this.refreshedPossibleUser = false;
-                    ClickCount = 0;
-                    return;
-                }
-                User user = this.possibleUser;
-                if (user == null)
-                {
-                    if (textBoxUsername.Text.StartsWith(" ") || textBoxUsername.Text.EndsWith(" "))
-                    {
-                        MessageBox.Show("用户名错误（是不是用户名首尾多打了空格？）", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        MessageBox.Show("用户名错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    this.possibleUserMutex.ReleaseMutex();
-                    ClickCount = 0;
-                    return;
-                }
-                else if (user.Password != textBoxPassword.Text)
-                {
-                    if (textBoxPassword.Text.StartsWith(" ") || textBoxPassword.Text.EndsWith(" "))
-                    {
-                        MessageBox.Show("密码错误（是不是密码首尾多打了空格？）", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        MessageBox.Show("密码错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    this.possibleUserMutex.ReleaseMutex();
-                    ClickCount = 0;
-                    return;
-                }
-                else
-                {
-                    this.possibleUserMutex.ReleaseMutex();
-                    this.Invoke(new Action(() =>
-                    {
-                        this.labelStatus.Text = "";
-                        Project project = (this.comboBoxProject.SelectedItem as ComboBoxItem).Value as Project;
-                        Warehouse warehouse = (this.comboBoxWarehouse.SelectedItem as ComboBoxItem).Value as Warehouse;
-                        GlobalData.ProjectID = project.ID;
-                        GlobalData.WarehouseID = warehouse.ID;
-                        GlobalData.UserID = user.ID;
-                        FormMain formMain = new FormMain(user, project, warehouse);
-                        formMain.SetFormClosedCallback(this.Dispose);
-                        formMain.Show();
-                        this.Hide();
-                        ClickCount = 0;
-                    }));
-                }
-            })).Start();
+            GlobalData.Person = personList[0];
+            GlobalData.AccountBook = accountBook;
+            GlobalData.Warehouse = GlobalData.WarehouseList[this.comboBoxWarehouse.SelectedIndex];
+            new FormMain().Show();
+            this.Hide();
         }
 
         private void buttonClosing_Click(object sender, EventArgs e)
@@ -213,7 +78,7 @@ namespace WMS.UI
 
         private void textBoxUsername_TextChanged(object sender, EventArgs e)
         {
-            this.refreshedPossibleUser = false;
+            
         }
 
         private void textBoxUsername_KeyPress(object sender, KeyPressEventArgs e)
@@ -271,68 +136,9 @@ namespace WMS.UI
             }
         }
 
-        //粗糙圆角www
-        //public GraphicsPath GetRoundRectPath(RectangleF rect, float radius)
-        //{
-        //    return GetRoundRectPath(rect.X, rect.Y, rect.Width, rect.Height, radius);
-        //}
-
-        //public GraphicsPath GetRoundRectPath(float X, float Y, float width, float height, float radius)
-        //{
-        //    GraphicsPath path = new GraphicsPath();
-        //    path.AddLine(X + radius, Y, (X + width) - (radius * 2f), Y);
-        //    path.AddArc((X + width) - (radius * 2f), Y, radius * 2f, radius * 2f, 270f, 90f);
-        //    path.AddLine((float)(X + width), (float)(Y + radius), (float)(X + width), (float)((Y + height) - (radius * 2f)));
-        //    path.AddArc((float)((X + width) - (radius * 2f)), (float)((Y + height) - (radius * 2f)), (float)(radius * 2f), (float)(radius * 2f), 0f, 90f);
-        //    path.AddLine((float)((X + width) - (radius * 2f)), (float)(Y + height), (float)(X + radius), (float)(Y + height));
-        //    path.AddArc(X, (Y + height) - (radius * 2f), radius * 2f, radius * 2f, 90f, 90f);
-        //    path.AddLine(X, (Y + height) - (radius * 2f), X, Y + radius);
-        //    path.AddArc(X, Y, radius * 2f, radius * 2f, 180f, 90f);
-        //    path.CloseFigure();
-        //    return path;
-        //}
-
-       //private void AddBtnEvent(buttonEnter btn)
-       // {
-
-       // }
-
         private void textBoxUsername_Leave(object sender, EventArgs e)
         {
-            if (this.textBoxUsername.Text.Length == 0)
-            {
-                return;
-            }
-            new Thread(() =>
-            {
-                this.RefreshPossibleUserSync();
-            }).Start();
-        }
 
-        private void RefreshPossibleUserSync()
-        {
-            this.refreshedPossibleUser = true;
-            this.possibleUserMutex.WaitOne();
-            try
-            {
-                this.possibleUser = (from u in wmsEntities.User
-                                     where u.Username == this.textBoxUsername.Text
-                                     select u).FirstOrDefault();
-                this.networkError = false;
-            }
-            catch (Exception)
-            {
-                this.networkError = true;
-                if(this.IsDisposed == false)
-                {
-                    MessageBox.Show("连接数据库失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                return;
-            }
-            finally
-            { 
-                this.possibleUserMutex.ReleaseMutex();
-            }
         }
 
         private void FormLogin_KeyPress(object sender, KeyPressEventArgs e)
@@ -399,6 +205,20 @@ namespace WMS.UI
         private void labelusername_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void comboBoxAccountBook_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string accountBook = "WMS_Template";
+            var warehouseList = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + accountBook + "/warehouse/{}");
+            if (warehouseList == null) return;
+            GlobalData.WarehouseList = warehouseList;
+            this.comboBoxWarehouse.Items.Clear();
+            foreach(var warehouse in warehouseList)
+            {
+                this.comboBoxWarehouse.Items.Add(warehouse["name"].ToString());
+            }
+            this.comboBoxWarehouse.SelectedIndex = 0;
         }
     }
 }

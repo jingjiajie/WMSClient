@@ -41,7 +41,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxWarehouse = new System.Windows.Forms.ComboBox();
-            this.comboBoxProject = new System.Windows.Forms.ComboBox();
+            this.comboBoxAccountBook = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -224,7 +224,7 @@
             this.tableLayoutPanel2.Controls.Add(this.labelusername, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.labelPsaaword, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.comboBoxProject, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.comboBoxAccountBook, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.textBoxUsername, 1, 0);
@@ -252,17 +252,18 @@
             this.comboBoxWarehouse.Size = new System.Drawing.Size(342, 43);
             this.comboBoxWarehouse.TabIndex = 3;
             // 
-            // comboBoxProject
+            // comboBoxAccountBook
             // 
-            this.comboBoxProject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProject.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.comboBoxProject.FormattingEnabled = true;
-            this.comboBoxProject.Location = new System.Drawing.Point(179, 153);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
-            this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(342, 43);
-            this.comboBoxProject.TabIndex = 2;
+            this.comboBoxAccountBook.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxAccountBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAccountBook.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.comboBoxAccountBook.FormattingEnabled = true;
+            this.comboBoxAccountBook.Location = new System.Drawing.Point(179, 153);
+            this.comboBoxAccountBook.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
+            this.comboBoxAccountBook.Name = "comboBoxAccountBook";
+            this.comboBoxAccountBook.Size = new System.Drawing.Size(342, 43);
+            this.comboBoxAccountBook.TabIndex = 2;
+            this.comboBoxAccountBook.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountBook_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -276,7 +277,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(170, 70);
             this.label2.TabIndex = 12;
-            this.label2.Text = "项   目：";
+            this.label2.Text = "账   套：";
             // 
             // label3
             // 
@@ -392,7 +393,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ComboBox comboBoxProject;
+        private System.Windows.Forms.ComboBox comboBoxAccountBook;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxWarehouse;

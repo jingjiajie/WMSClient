@@ -64,9 +64,7 @@ namespace WMS.UI
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxWarehouse = new System.Windows.Forms.ComboBox();
-            this.comboBoxProject = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.panelFill = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelRight = new System.Windows.Forms.Panel();
@@ -142,9 +140,9 @@ namespace WMS.UI
             this.label1.Location = new System.Drawing.Point(76, 14);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(971, 57);
+            this.label1.Size = new System.Drawing.Size(937, 57);
             this.label1.TabIndex = 0;
-            this.label1.Text = "∞≤Õæ∑·¥ÔWMS≤÷ø‚π‹¿ÌœµÕ≥ V1.1.1 - Build 228";
+            this.label1.Text = "∞≤Õæ∑·¥ÔWMS≤÷ø‚π‹¿ÌœµÕ≥ V2.0.0 - ø™∑¢∞Ê±æ";
             // 
             // panel1
             // 
@@ -203,16 +201,13 @@ namespace WMS.UI
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.RoyalBlue;
             this.tableLayoutPanel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tableLayoutPanel2.BackgroundImage")));
             this.tableLayoutPanel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tableLayoutPanel2.ColumnCount = 5;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 4, 0);
-            this.tableLayoutPanel2.Controls.Add(this.comboBoxProject, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 1, 0);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
@@ -228,25 +223,12 @@ namespace WMS.UI
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxWarehouse.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(450, 4);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(252, 4);
             this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(242, 43);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(292, 43);
             this.comboBoxWarehouse.TabIndex = 0;
             this.comboBoxWarehouse.SelectedIndexChanged += new System.EventHandler(this.comboBoxWarehouse_SelectedIndexChanged);
-            // 
-            // comboBoxProject
-            // 
-            this.comboBoxProject.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProject.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10F);
-            this.comboBoxProject.FormattingEnabled = true;
-            this.comboBoxProject.Location = new System.Drawing.Point(98, 2);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(246, 43);
-            this.comboBoxProject.TabIndex = 1;
-            this.comboBoxProject.SelectedIndexChanged += new System.EventHandler(this.comboBoxProject_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -255,26 +237,12 @@ namespace WMS.UI
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(350, 0);
+            this.label2.Location = new System.Drawing.Point(152, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 60);
             this.label2.TabIndex = 2;
             this.label2.Text = "≤÷ø‚";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 60);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "œÓƒø";
             // 
             // panelFill
             // 
@@ -328,8 +296,8 @@ namespace WMS.UI
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.21468F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.785317F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(352, 1420);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
@@ -340,7 +308,7 @@ namespace WMS.UI
             this.panelLeft.Location = new System.Drawing.Point(2, 2);
             this.panelLeft.Margin = new System.Windows.Forms.Padding(2);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(348, 1319);
+            this.panelLeft.Size = new System.Drawing.Size(348, 1326);
             this.panelLeft.TabIndex = 0;
             // 
             // treeViewLeft
@@ -387,7 +355,7 @@ namespace WMS.UI
             treeNode12,
             treeNode14});
             this.treeViewLeft.SelectedImageIndex = 0;
-            this.treeViewLeft.Size = new System.Drawing.Size(348, 1319);
+            this.treeViewLeft.Size = new System.Drawing.Size(348, 1326);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
             // 
@@ -407,12 +375,12 @@ namespace WMS.UI
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.947368F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 1327);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 1334);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(344, 89);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(344, 82);
             this.tableLayoutPanel4.TabIndex = 32;
             // 
             // button2
@@ -427,10 +395,10 @@ namespace WMS.UI
             this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10F);
-            this.button2.Location = new System.Drawing.Point(16, 7);
+            this.button2.Location = new System.Drawing.Point(16, 6);
             this.button2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(310, 76);
+            this.button2.Size = new System.Drawing.Size(310, 70);
             this.button2.TabIndex = 31;
             this.button2.Text = "œ‘ æø‚¥Ê‘§æØ";
             this.button2.UseVisualStyleBackColor = false;
@@ -487,9 +455,7 @@ namespace WMS.UI
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBoxProject;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelRight;

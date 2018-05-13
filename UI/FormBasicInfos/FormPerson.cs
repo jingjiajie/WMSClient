@@ -22,7 +22,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void FormPerson_Load(object sender, EventArgs e)
         {
-            this.jsonRESTSynchronizer1.PullAPI.SetRequestParameter("$url", "http://localhost:9002");
+            this.jsonRESTSynchronizer1.SetRequestParameter("$url", Defines.ServerURL);
+            this.searchView1.Search();
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)

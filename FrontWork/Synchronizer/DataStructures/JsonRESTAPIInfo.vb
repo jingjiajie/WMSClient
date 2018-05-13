@@ -110,8 +110,10 @@ Public Class JsonRESTAPIInfo
     ''' <returns>url</returns>
     Public Function GetURL() As String
         Logger.SetMode(LogMode.SYNCHRONIZER)
-        Dim resultURL As New StringBuilder(Me.URLTemplate)
-        Dim curMatch = Regex.Match(Me.URLTemplate, "\{(((?<clojure>\{)|(?<-clojure>\})|[^{}])+(?(clojure)(?!)))\}")
+        Dim resultURL As New StringBuilder
+        Dim reg = "\{(((?<clojure>\{)|(?<-clojure>\})|[^{}])+(?(clojure)(?!)))\}"
+        Dim curMatch = Regex.Match(Me.URLTemplate, reg)
+        Dim lastMatch As Match = Nothing
         Do While curMatch.Success '遍历匹配到的各个"{表达式}"
             Dim expr As String = curMatch.Groups(1).Value
             Dim value As String
@@ -119,16 +121,35 @@ Public Class JsonRESTAPIInfo
                 value = "{}"
             Else
                 Try
-                    value = Me.requestJSEngine.Execute($"JSON.stringify({expr})").GetCompletionValue.ToString
+                    Dim exprType = requestJSEngine.Execute($"typeof({expr})").GetCompletionValue.ToString
+                    If exprType = "object" OrElse exprType = "array" Then
+                        value = Me.requestJSEngine.Execute($"JSON.stringify({expr})").GetCompletionValue.ToString
+                    Else
+                        value = Me.requestJSEngine.Execute(expr).GetCompletionValue.ToString
+                    End If
                 Catch ex As Exception
                     Throw New Exception($"Invalid expression: ""{expr}""" & vbCrLf & $"Message: {ex.Message}")
                     Return Nothing
                 End Try
             End If
-            resultURL = resultURL.Remove(curMatch.Index, curMatch.Length)
-            resultURL.Insert(curMatch.Index, value)
+            If lastMatch Is Nothing Then
+                If curMatch.Index <> 0 Then '如果是首个匹配，且不是从头开始。则将字符串开头至匹配开始的字符加进来
+                    resultURL.Append(Me.URLTemplate.Substring(0, curMatch.Index))
+                End If
+            Else '增加上次匹配结束到本次匹配开始中间的字符串
+                Dim lastSpanIndex = lastMatch.Index + lastMatch.Value.Length '上一个匹配到此匹配中间间隔的字符串的起始下标
+                resultURL.Append(Me.URLTemplate.Substring(lastSpanIndex, curMatch.Index - lastSpanIndex))
+            End If
+            resultURL.Append(value)
+            lastMatch = curMatch
             curMatch = curMatch.NextMatch
         Loop
+        '将最后一个匹配到字符串结尾的部分加上
+        If lastMatch Is Nothing Then '如果lastMatch为空，说明整个字符串没有插值
+            resultURL.Append(Me.URLTemplate)
+        Else '否则lastMatch是最后一个匹配，因为curMatch在循环结束后一定会next到最后一个匹配的下一个，也就是空匹配
+            resultURL.Append(Me.URLTemplate.Substring(lastMatch.Index + lastMatch.Length))
+        End If
         Return resultURL.ToString
     End Function
 

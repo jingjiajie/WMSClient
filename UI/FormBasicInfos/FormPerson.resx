@@ -188,10 +188,10 @@
 		{"name":"authorityString","displayName":"权限字符串","visible":true,"editable":false}
 	]
 	,"httpAPIs":[
-		{"type":"pull","url":"http://localhost:9001/WMS_Template/person/{{conditions:$conditions,orders:$orders}}","method":"GET","responseBody":"$data"},
-		{"type":"update","url":"http://localhost:9001/WMS_Template/person/","method":"PUT","requestBody":"$data"},
-		{"type":"add","url":"http://localhost:9001/WMS_Template/person/","method":"POST","requestBody":"$data"},
-		{"type":"remove","url":"http://localhost:9001/WMS_Template/person/{mapProperty($data,'id')}","method":"DELETE"}
+		{"type":"pull","url":"{$url}/ledger/WMS_Template/person/{{conditions:$conditions,orders:$orders}}","method":"GET","responseBody":"$data"},
+		{"type":"update","url":"{$url}/ledger/WMS_Template/person/","method":"PUT","requestBody":"$data"},
+		{"type":"add","url":"{$url}/ledger/WMS_Template/person/","method":"POST","requestBody":"$data"},
+		{"type":"remove","url":"http://localhost/ledger/WMS_Template/person/{mapProperty($data,'id')}","method":"DELETE"}
 	]
 }
 ]</value>

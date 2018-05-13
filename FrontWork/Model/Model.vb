@@ -426,6 +426,9 @@ Public Class Model
             For Each curRowNum In realRows
                 Dim newIndexRowPair = New IndexRowPair(curRowNum, Me.GetRowID(Me.Data.Rows(curRowNum)), Me.DataRowToDictionary(Me.Data.Rows(curRowNum)))
                 indexRowList.Add(newIndexRowPair)
+                If Me._dicRowGuid.ContainsKey(Me.Data.Rows(curRowNum)) Then
+                    Me._dicRowGuid.Remove(Me.Data.Rows(curRowNum))
+                End If
                 Me.Data.Rows.RemoveAt(curRowNum)
             Next
         Catch ex As Exception
@@ -650,6 +653,11 @@ Public Class Model
     Public Function GetRowID(rowNum As Long) As Guid Implements IModel.GetRowID
         Return Me.GetRowIDs({rowNum})(0)
     End Function
+
+    Public Sub UpdateRowID(oriRowID As Guid, newID As Guid) Implements IModel.UpdateRowID
+        Dim row = Me.GetDataRow(oriRowID)
+        Me._dicRowGuid(row) = newID
+    End Sub
 
     ''' <summary>
     ''' 获取行ID
