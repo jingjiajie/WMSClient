@@ -55,13 +55,16 @@ namespace WMS.UI
             condition.AddCondition("name",personName);
             condition.AddCondition("password", password);
             string condStr = condition.ToString();
+            this.labelStatus.Visible = true;
             List<Dictionary<string,object>> personList = RestClient.Get<List<Dictionary<string,object>>>(Defines.ServerURL + "/ledger/" + accountBook + "/person/" + condStr);
-            if(personList == null)
+            this.labelStatus.Visible = false;
+            if (personList == null)
             {
                 return;
-            }else if(personList.Count == 0)
+            }
+            else if (personList.Count == 0)
             {
-                MessageBox.Show("登录失败，请检查用户名和密码","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("登录失败，请检查用户名和密码", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             GlobalData.Person = personList[0];
@@ -211,7 +214,12 @@ namespace WMS.UI
         {
             string accountBook = "WMS_Template";
             var warehouseList = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + accountBook + "/warehouse/{}");
-            if (warehouseList == null) return;
+            if (warehouseList == null)
+            {
+                //MessageBox.Show("加载仓库信息失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Close();
+                return;
+            }
             GlobalData.WarehouseList = warehouseList;
             this.comboBoxWarehouse.Items.Clear();
             foreach(var warehouse in warehouseList)

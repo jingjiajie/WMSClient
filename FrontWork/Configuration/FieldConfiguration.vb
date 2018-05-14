@@ -176,40 +176,12 @@ Public Class FieldConfiguration
             If prop Is Nothing Then
                 Throw New Exception("can not resolve property:""" + key + """ in json configure")
                 Continue For
-            ElseIf prop.PropertyType <> GetType(FieldMethod) Then '如果不是函数，则直接赋值
+            ElseIf prop.PropertyType <> GetType(FieldMethod) Then '如果不是FieldMethod，则直接赋值
                 prop.SetValue(newFieldConfiguration, value, Nothing)
-            Else '如果是函数，特殊处理
+            Else '如果是FieldMethod，特殊处理
                 Dim jsProp = item.Value.Value
-                If jsProp.IsString Then '如果为字符串，则调用MethodListener的方法
-                    Dim strValue = jsProp.ToString
-                    If strValue.StartsWith("$") Then
-                        Dim methodName = value.ToString
-                        '实例化一个绑定MethodListener方法的方法。运行时该方法动态执行MethodListener中的相应方法
-                        Dim newFieldMethod As FieldMethod = FieldMethod.NewInstance(methodName, methodListenerNames, strValue)
-                        prop.SetValue(newFieldConfiguration, newFieldMethod, Nothing)
-                    Else
-                        prop.SetValue(newFieldConfiguration, FieldMethod.NewInstance(strValue, strValue), Nothing)
-                    End If
-                ElseIf jsProp.IsArray Then
-                    prop.SetValue(newFieldConfiguration, FieldMethod.NewInstance(jsProp.ToObject, jsProp.ToString), Nothing)
-                    'Else
-                    '    '否则，认为是js的方法
-                    '    Dim jsMethod = jsProp
-                    '    Dim fieldMethod As New FieldMethod
-                    '    fieldMethod.DeclareString = jsMethod.ToString
-                    '    fieldMethod.Func =
-                    '        Sub()
-                    '            Try
-                    '                Dim jsParams As JsValue() = (From p In fieldMethod.Parameters Select JsValue.FromObject(jsEngine, p)).ToArray
-                    '                fieldMethod.ReturnValue = jsMethod.Invoke((From p In fieldMethod.Parameters Select JsValue.FromObject(jsEngine, p)).ToArray).ToObject
-                    '                Exit Sub
-                    '            Catch ex As Exception
-                    '                Throw New Exception("Execute js function failed: " + ex.Message)
-                    '                Exit Sub
-                    '            End Try
-                    '        End Sub
-                    '    prop.SetValue(newFieldConfiguration, fieldMethod, Nothing)
-                End If
+                Dim newFieldMethod = FieldMethod.FromJsValue(jsProp, methodListenerNames)
+                prop.SetValue(newFieldConfiguration, newFieldMethod, Nothing)
             End If
         Next
         Return newFieldConfiguration

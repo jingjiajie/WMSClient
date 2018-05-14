@@ -25,7 +25,7 @@ namespace WMS.UI
             }
             catch (WebException ex)
             {
-                MessageBox.Show("登录失败：" + ex.Message);
+                MessageBox.Show("加载失败：" + ex.Message,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return default(T);
             }
             JavaScriptSerializer serializer = new JavaScriptSerializer();

@@ -179,19 +179,34 @@
   </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>[
-{"mode":"default",
-	"fields":[
-		{"name":"id",type:"int","displayName":"id","visible":false,"editable":false},
-		{"name":"name",type:"string","displayName":"姓名","visible":true,"editable":true},
-		{"name":"role","displayName":"角色","visible":true,"editable":true,editEnded:"$roleChanged"},
-		{"name":"password","displayName":"密码","visible":true,"editable":true},
-		{"name":"authorityString","displayName":"权限字符串","visible":true,"editable":false}
+{mode:"default",
+	fields:[
+		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+		{name:"name",type:"string",displayName:"姓名",visible:true,editable:true},
+		{name:"role",type:"string",displayName:"角色",visible:true,editable:true},
+		{name:"password",type:"string",displayName:"密码",visible:true,editable:true},
+		{name:"authorityString",type:"string",displayName:"权限字符串",visible:true,editable:false}
 	]
 	,"httpAPIs":[
-		{"type":"pull","url":"{$url}/ledger/WMS_Template/person/{{conditions:$conditions,orders:$orders}}","method":"GET","responseBody":"$data"},
-		{"type":"update","url":"{$url}/ledger/WMS_Template/person/","method":"PUT","requestBody":"$data"},
-		{"type":"add","url":"{$url}/ledger/WMS_Template/person/","method":"POST","requestBody":"$data"},
-		{"type":"remove","url":"{$url}/ledger/WMS_Template/person/{mapProperty($data,'id')}","method":"DELETE"}
+        {type:"get-count",
+            url:"{$url}/ledger/WMS_Template/person/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/ledger/WMS_Template/person/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/ledger/WMS_Template/person/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/ledger/WMS_Template/person/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/ledger/WMS_Template/person/{mapProperty($data,'id')}",
+            method:"DELETE"}
 	]
 }
 ]</value>

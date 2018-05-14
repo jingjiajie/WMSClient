@@ -198,6 +198,13 @@ Public Interface IModel
     Function GetRowIDs(rowNums As Long()) As Guid()
 
     ''' <summary>
+    ''' 获取行号
+    ''' </summary>
+    ''' <param name="rowID">行ID</param>
+    ''' <returns>行号</returns>
+    Function GetRowIndex(rowID As Guid) As Long
+
+    ''' <summary>
     ''' 更新行ID
     ''' </summary>
     ''' <param name="oriRowID">原行ID</param>

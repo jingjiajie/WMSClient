@@ -123,34 +123,8 @@ Public Class HTTPAPIConfiguration
                 prop.SetValue(newHTTPAPIConfiguration, value, Nothing)
             Else '如果是函数，特殊处理
                 Dim jsProp = item.Value.Value
-                If jsProp.IsString Then '如果为字符串，则调用MethodListener的方法
-                    Dim strValue = jsProp.ToString
-                    If strValue.StartsWith("$") Then
-                        Dim methodName = value.ToString
-                        '实例化一个绑定MethodListener方法的方法。运行时该方法动态执行MethodListener中的相应方法
-                        Dim newFieldMethod As FieldMethod = FieldMethod.NewInstance(methodName, methodListenerNames, strValue)
-                        prop.SetValue(newHTTPAPIConfiguration, newFieldMethod, Nothing)
-                    Else
-                        prop.SetValue(newHTTPAPIConfiguration, FieldMethod.NewInstance(strValue, strValue), Nothing)
-                    End If
-
-                    'Else
-                    '    '否则，认为是js的方法
-                    '    Dim jsMethod = jsProp
-                    '    Dim fieldMethod As New FieldMethod
-                    '    fieldMethod.Func =
-                    '        Sub()
-                    '            Try
-                    '                Dim jsParams As JsValue() = (From p In fieldMethod.Parameters Select JsValue.FromObject(jsEngine, p)).ToArray
-                    '                fieldMethod.ReturnValue = jsMethod.Invoke((From p In fieldMethod.Parameters Select JsValue.FromObject(jsEngine, p)).ToArray).ToObject
-                    '                Exit Sub
-                    '            Catch ex As Exception
-                    '                Throw New Exception("Execute js function failed: " + ex.Message)
-                    '                Exit Sub
-                    '            End Try
-                    '        End Sub
-                    '    prop.SetValue(newHTTPAPIConfiguration, fieldMethod, Nothing)
-                End If
+                Dim newFieldMethod = FieldMethod.FromJsValue(jsProp, methodListenerNames)
+                prop.SetValue(newHTTPAPIConfiguration, newFieldMethod, Nothing)
             End If
         Next
         Return newHTTPAPIConfiguration

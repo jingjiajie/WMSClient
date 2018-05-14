@@ -187,6 +187,7 @@
             this.labelStatus.Size = new System.Drawing.Size(306, 35);
             this.labelStatus.TabIndex = 6;
             this.labelStatus.Text = "正在登陆，请耐心等待...";
+            this.labelStatus.Visible = false;
             // 
             // labelClickCount
             // 

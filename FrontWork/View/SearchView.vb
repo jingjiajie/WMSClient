@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Linq
+Imports FrontWork.OnSearchEventArgs
 
 ''' <summary>
 ''' 搜索视图。提供基本的搜索条件，比较条件，排序条件等功能。
@@ -10,6 +11,8 @@ Public Class SearchView
     Implements IView
     Private _configuration As Configuration
     Private _mode As String = "default"
+
+    Private Property StaticConditions As New List(Of SearchConditionItem)
 
     ''' <summary>
     ''' 用户按下查询按键触发的事件
@@ -99,24 +102,24 @@ Public Class SearchView
 
         If Me.ComboBoxSearchKey.SelectedIndex <> 0 Then
             Dim searchDisplayName = Me.ComboBoxSearchKey.SelectedItem?.ToString
-            Dim relation As OnSearchEventArgs.Relation
+            Dim relation As Relation
             Dim searchValue = Me.TextBoxSearchCondition.Text
             Dim searchName = (From m In Me.Configuration.GetFieldConfigurations(Me.Mode)
                               Where m.DisplayName = searchDisplayName
                               Select m.Name).First
             Select Case Me.ComboBoxSearchRelation.SelectedItem.ToString
                 Case "包含"
-                    relation = OnSearchEventArgs.Relation.CONTAINS
+                    relation = Relation.CONTAINS
                 Case "等于"
-                    relation = OnSearchEventArgs.Relation.EQUAL
+                    relation = Relation.EQUAL
                 Case "介于"
-                    relation = OnSearchEventArgs.Relation.BETWEEN
+                    relation = Relation.BETWEEN
                 Case "大于等于"
-                    relation = OnSearchEventArgs.Relation.GREATER_THAN_OR_EQUAL_TO
+                    relation = Relation.GREATER_THAN_OR_EQUAL_TO
                 Case "小于等于"
-                    relation = OnSearchEventArgs.Relation.LESS_THAN_OR_EQUAL_TO
+                    relation = Relation.LESS_THAN_OR_EQUAL_TO
             End Select
-            newSearchArgs.Conditions = {New OnSearchEventArgs.SearchConditionItem(searchName, relation, {searchValue})}
+            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, {searchValue})})
         End If
 
         If Me.ComboBoxOrderKey.SelectedIndex <> 0 Then
@@ -124,14 +127,14 @@ Public Class SearchView
             Dim orderName = (From m In Me.Configuration.GetFieldConfigurations(Mode)
                              Where m.DisplayName = orderDisplayName
                              Select m.Name).First
-            Dim order As OnSearchEventArgs.Order
+            Dim order As Order
             Select Case Me.ComboBoxOrder.SelectedIndex
                 Case 0
-                    order = OnSearchEventArgs.Order.ASC
+                    order = Order.ASC
                 Case 1
-                    order = OnSearchEventArgs.Order.DESC
+                    order = Order.DESC
             End Select
-            newSearchArgs.Orders = {New OnSearchEventArgs.OrderConditionItem(orderName, order)}
+            newSearchArgs.Orders = {New OrderConditionItem(orderName, order)}
         End If
         Return newSearchArgs
     End Function
@@ -193,5 +196,25 @@ Public Class SearchView
 
     Public Sub Search()
         Call Me.ButtonSearch.PerformClick()
+    End Sub
+
+    ''' <summary>
+    ''' 添加静态搜索条件，即每一次搜索都会自动附加的条件
+    ''' </summary>
+    ''' <param name="key">字段名</param>
+    ''' <param name="values">值列表</param>
+    ''' <param name="relation">关系</param>
+    Public Sub AddStaicCondition(key As String, values As Object(), Optional relation As Relation = Relation.EQUAL)
+        Me.StaticConditions.Add(New SearchConditionItem(key, relation, values))
+    End Sub
+
+    ''' <summary>
+    ''' 添加静态搜索条件，即每一次搜索都会自动附加的条件
+    ''' </summary>
+    ''' <param name="key">字段名</param>
+    ''' <param name="value">值</param>
+    ''' <param name="relation">关系</param>
+    Public Sub AddStaticCondition(key As String, value As Object, Optional relation As Relation = Relation.EQUAL)
+        Call Me.AddStaticCondition(key, {value}, relation)
     End Sub
 End Class

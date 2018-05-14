@@ -78,18 +78,18 @@ Public Class JsonRESTAPIInfo
         Me.requestJSEngine.SetValue(paramName, value)
     End Sub
 
-    ''' <summary>
-    ''' 设置Json字符串格式的相应体参数，自动转换为Js对象
-    ''' </summary>
-    ''' <param name="paramName">参数名</param>
-    ''' <param name="jsonString">参数值</param>
-    Public Sub SetJsonResponseParameter(paramName As String, jsonString As String)
-        Try
-            Me.responseJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
-        Catch
-            Throw New Exception($"Invalid jsonString: ""{jsonString}""")
-        End Try
-    End Sub
+    '''' <summary>
+    '''' 设置Json字符串格式的相应体参数，自动转换为Js对象
+    '''' </summary>
+    '''' <param name="paramName">参数名</param>
+    '''' <param name="jsonString">参数值</param>
+    'Public Sub SetJsonResponseParameter(paramName As String, jsonString As String)
+    '    Try
+    '        Me.responseJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
+    '    Catch
+    '        Throw New Exception($"Invalid jsonString: ""{jsonString}""")
+    '    End Try
+    'End Sub
 
     ''' <summary>
     ''' 设置Json请求参数
@@ -170,9 +170,15 @@ Public Class JsonRESTAPIInfo
     ''' <returns>参数值</returns>
     Public Function GetResponseParameters(responsebody As String, paramNames As String()) As Object()
         Logger.SetMode(LogMode.SYNCHRONIZER)
-        Dim paramPaths = Me.GetResponseBodyTemplateParamPaths(responsebody, paramNames)
+        Dim responseJsValue As JsValue = Nothing
+        Try
+            responseJsValue = Me.requestJSEngine.Execute("$_EPFResponse=" & responsebody).GetValue("$_EPFResponse")
+        Catch
+            Throw New Exception($"Invalid ResponseBody:{responsebody}")
+        End Try
+        '根据ResponseBody获取各个ResponseParameter的位置
+        Dim paramPaths As Dictionary(Of String, String()) = Me.GetResponseBodyTemplateParamPaths(paramNames)
         Dim result(paramNames.Length - 1) As Object
-
         For i = 0 To paramNames.Length - 1
             Dim paramName = paramNames(i)
             '如果此参数没有找到路径，报错并Continue
@@ -180,8 +186,6 @@ Public Class JsonRESTAPIInfo
                 Logger.PutMessage($"Parameter ""{paramName}"" not found in ResponseBodyTemplate!")
                 Continue For
             End If
-
-            Dim responseJsValue = Me.requestJSEngine.Execute("$_EPFResponse=" & responsebody).GetValue("$_EPFResponse")
             Dim paramPath = paramPaths(paramName)
             Dim curJsValue As JsValue = responseJsValue
             '根据参数的路径去寻找参数
@@ -193,8 +197,12 @@ Public Class JsonRESTAPIInfo
         Return result
     End Function
 
-
-    Private Function GetResponseBodyTemplateParamPaths(responseBody As String, paramNames As String()) As Dictionary(Of String, String())
+    ''' <summary>
+    ''' 在响应体中寻找相应体参数的路径
+    ''' </summary>
+    ''' <param name="paramNames">参数名</param>
+    ''' <returns>各个参数的路径</returns>
+    Private Function GetResponseBodyTemplateParamPaths(paramNames As String()) As Dictionary(Of String, String())
         Dim result As New Dictionary(Of String, String())
         Me.responseJSEngine.Execute("objsToFind = {};")
 
@@ -263,5 +271,22 @@ Public Class JsonRESTAPIInfo
             result.Add(paramName, dataPathArray)
         Next
         Return result
+    End Function
+
+    Public Function Invoke() As HttpWebResponse
+        Logger.Debug(Me.HTTPMethod.ToString & " " & Me.GetURL & vbCrLf & Me.GetRequestBody)
+
+        Dim httpWebRequest = CType(WebRequest.Create(Me.GetURL), HttpWebRequest)
+        httpWebRequest.Method = Me.HTTPMethod.ToString
+        If Me.HTTPMethod = HTTPMethod.POST OrElse Me.HTTPMethod = HTTPMethod.PUT Then
+            httpWebRequest.ContentType = "application/json"
+            Dim requestBody = Me.GetRequestBody
+            Dim bytes = Encoding.UTF8.GetBytes(requestBody)
+            Dim stream = httpWebRequest.GetRequestStream
+            stream.Write(bytes, 0, bytes.Length)
+        End If
+
+        Dim response = httpWebRequest.GetResponse
+        Return response
     End Function
 End Class

@@ -331,6 +331,10 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRowIDs(rowNums)
     End Function
 
+    Public Function GetRowIndex(rowID As Guid) As Long Implements IModel.GetRowIndex
+        Return Me.GetCurModel.GetRowIndex(rowID)
+    End Function
+
     Public Sub UpdateRowID(oriRowID As Guid, newID As Guid) Implements IModel.UpdateRowID
         Me.GetCurModel.UpdateRowID(oriRowID, newID)
     End Sub

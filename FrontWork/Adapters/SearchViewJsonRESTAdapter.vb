@@ -74,10 +74,7 @@ Public Class SearchViewJsonRESTAdapter
         Return False
     End Function
 
-    Protected Overridable Sub SearchViewOnSearch(sender As Object, args As OnSearchEventArgs)
-        If Me.Synchronizer.PullAPI Is Nothing Then
-            Throw New Exception("PullAPI not set!")
-        End If
+    Protected Sub SetConditionAndOrdersToAPI(api As JsonRESTAPIInfo, args As OnSearchEventArgs)
         Dim jsEngine As New Jint.Engine
         Dim jsSerializer = New JavaScriptSerializer
         '添加搜索条件
@@ -110,10 +107,17 @@ Public Class SearchViewJsonRESTAdapter
             Next
         End If
 
-        Me.Synchronizer.PullAPI.SetRequestParameter("$conditions", jsEngine.GetValue("$conditions"))
-        Me.Synchronizer.PullAPI.SetRequestParameter("$orders", jsEngine.GetValue("$orders"))
-        Call Me.Synchronizer.PullFromServer()
+        api.SetRequestParameter("$conditions", jsEngine.GetValue("$conditions"))
+        api.SetRequestParameter("$orders", jsEngine.GetValue("$orders"))
     End Sub
+
+    Protected Overridable Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
+        If Me.Synchronizer.FindAPI Is Nothing Then
+            Throw New Exception("PullAPI not set!")
+        End If
+        Me.SetConditionAndOrdersToAPI(Me.Synchronizer.FindAPI, args)
+        Return Me.Synchronizer.Find()
+    End Function
 
     Protected Overridable Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SearchViewJsonRESTAdapter))

@@ -18,11 +18,11 @@ Public Interface ISynchronizer
     ''' 从服务器拉取数据到Model
     ''' </summary>
     ''' <returns></returns>
-    Function PullFromServer() As Boolean
+    Function Find() As Boolean
 
     ''' <summary>
     ''' 从Model推送变化的数据到服务器
     ''' </summary>
     ''' <returns></returns>
-    Function PushToServer() As Boolean
+    Function Save() As Boolean
 End Interface

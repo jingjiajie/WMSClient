@@ -11,13 +11,16 @@ namespace WMS.UI
         public static IDictionary<string, object> Person;
         public static IDictionary<string, object> Warehouse;
         public static List<IDictionary<string, object>> WarehouseList;
-
+        
         private static int projectID = -1;
         private static int warehouseID = -1;
         private static int userID = -1;
 
+        [Obsolete("二期已弃用")]
         public static int ProjectID { get => projectID; set => projectID = value; }
+        [Obsolete("二期已弃用")]
         public static int WarehouseID { get => warehouseID; set => warehouseID = value; }
+        [Obsolete("二期已弃用")]
         public static int UserID { get => userID; set => userID = value; }
     }
 }

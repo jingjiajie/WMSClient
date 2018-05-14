@@ -50,7 +50,6 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.ConfiguratorGUI = resources.GetString("configuration1.ConfiguratorGUI");
             this.configuration1.Location = new System.Drawing.Point(531, 179);
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration1.Name = "configuration1";

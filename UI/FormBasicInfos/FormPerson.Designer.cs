@@ -40,16 +40,16 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pagerView1 = new FrontWork.PagerView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.checkBoxOnlyThisProAndWare = new System.Windows.Forms.CheckBox();
+            this.pagerView1 = new FrontWork.PagerView();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.jsonRESTSynchronizer1 = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.checkBoxOnlyThisProAndWare = new System.Windows.Forms.CheckBox();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -133,16 +133,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1009, 543);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
-            // pagerView1
-            // 
-            this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(3, 496);
-            this.pagerView1.Mode = "default";
-            this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((long)(50));
-            this.pagerView1.Size = new System.Drawing.Size(1003, 44);
-            this.pagerView1.TabIndex = 12;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
@@ -156,6 +146,44 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1009, 403);
             this.panel1.TabIndex = 13;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelStatus});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 543);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(1009, 34);
+            this.toolStrip1.TabIndex = 10;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // checkBoxOnlyThisProAndWare
+            // 
+            this.checkBoxOnlyThisProAndWare.AutoSize = true;
+            this.checkBoxOnlyThisProAndWare.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.checkBoxOnlyThisProAndWare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBoxOnlyThisProAndWare.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkBoxOnlyThisProAndWare.Location = new System.Drawing.Point(364, 52);
+            this.checkBoxOnlyThisProAndWare.Margin = new System.Windows.Forms.Padding(6);
+            this.checkBoxOnlyThisProAndWare.Name = "checkBoxOnlyThisProAndWare";
+            this.checkBoxOnlyThisProAndWare.Size = new System.Drawing.Size(272, 35);
+            this.checkBoxOnlyThisProAndWare.TabIndex = 12;
+            this.checkBoxOnlyThisProAndWare.Text = "仅查看当前项目/仓库";
+            this.checkBoxOnlyThisProAndWare.UseVisualStyleBackColor = false;
+            // 
+            // pagerView1
+            // 
+            this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pagerView1.Location = new System.Drawing.Point(3, 496);
+            this.pagerView1.Mode = "default";
+            this.pagerView1.Name = "pagerView1";
+            this.pagerView1.PageSize = ((long)(50));
+            this.pagerView1.Size = new System.Drawing.Size(1003, 44);
+            this.pagerView1.TabIndex = 12;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
@@ -237,34 +265,6 @@
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(1009, 403);
             this.reoGridView1.TabIndex = 0;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 543);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(1009, 34);
-            this.toolStrip1.TabIndex = 10;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // checkBoxOnlyThisProAndWare
-            // 
-            this.checkBoxOnlyThisProAndWare.AutoSize = true;
-            this.checkBoxOnlyThisProAndWare.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.checkBoxOnlyThisProAndWare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBoxOnlyThisProAndWare.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBoxOnlyThisProAndWare.Location = new System.Drawing.Point(364, 52);
-            this.checkBoxOnlyThisProAndWare.Margin = new System.Windows.Forms.Padding(6);
-            this.checkBoxOnlyThisProAndWare.Name = "checkBoxOnlyThisProAndWare";
-            this.checkBoxOnlyThisProAndWare.Size = new System.Drawing.Size(272, 35);
-            this.checkBoxOnlyThisProAndWare.TabIndex = 12;
-            this.checkBoxOnlyThisProAndWare.Text = "仅查看当前项目/仓库";
-            this.checkBoxOnlyThisProAndWare.UseVisualStyleBackColor = false;
             // 
             // FormPerson
             // 

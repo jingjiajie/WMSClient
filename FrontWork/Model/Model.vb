@@ -251,7 +251,7 @@ Public Class Model
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowNum(rowID)
+            Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
                 Throw New Exception($"Invalid RowID: {rowID}")
             End If
@@ -401,7 +401,7 @@ Public Class Model
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowNum(rowID)
+            Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
                 Throw New Exception($"Invalid RowID: {rowID}")
             End If
@@ -485,7 +485,7 @@ Public Class Model
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowNum(rowID)
+            Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
                 Throw New Exception($"Invalid RowID: {rowID}")
             End If
@@ -559,7 +559,7 @@ Public Class Model
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowNum(rowID)
+            Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
                 Throw New Exception($"Invalid RowID: {rowID}")
             End If
@@ -678,7 +678,7 @@ Public Class Model
         Return rowIDs
     End Function
 
-    Protected Function GetRowNum(rowID As Guid) As Long
+    Public Function GetRowIndex(rowID As Guid) As Long Implements IModel.GetRowIndex
         Dim dataRow = (From rg In Me._dicRowGuid Where rg.Value = rowID Select rg.Key).FirstOrDefault
         If dataRow Is Nothing Then Return -1
         Return Me.Data.Rows.IndexOf(dataRow)
@@ -700,7 +700,7 @@ Public Class Model
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowNum(rowID)
+            Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum < 0 Then
                 Throw New Exception($"Row ID:{rowID} not found!")
             End If
@@ -792,7 +792,7 @@ Public Class Model
     Public Function GetRowSynchronizationStates(rowIDs As Guid()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
         Dim rows(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
-            Dim row = Me.GetRowNum(rowIDs(i))
+            Dim row = Me.GetRowIndex(rowIDs(i))
             If row < 0 Then
                 Throw New Exception($"Row ID:{rowIDs(i)} not found!")
             End If

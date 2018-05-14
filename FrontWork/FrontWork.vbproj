@@ -203,7 +203,7 @@
       <DependentUpon>ModelBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
@@ -247,13 +247,28 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ConfigurationEditor\ConfigurationEditor.csproj">
       <Project>{69ce0fb9-99cf-4a40-a0ab-e39f5050054e}</Project>
       <Name>ConfigurationEditor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\adapter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\configuration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\model.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\modelBox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\synchronizer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

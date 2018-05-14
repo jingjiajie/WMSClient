@@ -5,6 +5,7 @@ Public Class PagerView
     Implements IView
     Private _currentPage As Long = 1
     Private _totalPage As Long = 1
+    Private _pageSize As Long = 50
     Private _mode As String = "default"
 
     ''' <summary>
@@ -17,7 +18,7 @@ Public Class PagerView
             Return Me._totalPage
         End Get
         Set(value As Long)
-            If value < 1 Then Throw New Exception("Page must be greater than 1")
+            If value < 1 Then Throw New Exception("TotalPage must be greater than 1")
             If value < Me.CurrentPage Then
                 Throw New Exception($"TotalPage:{value} cannot be less than CurrentPage:{Me.CurrentPage}")
             End If
@@ -52,7 +53,17 @@ Public Class PagerView
     ''' </summary>
     ''' <returns></returns>
     <Description("每页大小"), Category("FrontWork")>
-    Public Property PageSize As Long = 50
+    Public Property PageSize As Long
+        Get
+            Return Me._pageSize
+        End Get
+        Set(value As Long)
+            If value <= 0 Then
+                Throw New Exception($"PageSize:{value} must be positive!")
+            End If
+            Me._pageSize = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' 当前模式

@@ -1,6 +1,7 @@
 ﻿Imports System.Linq
 Imports System.Reflection
 Imports System.Text
+Imports Jint.Native
 ''' <summary>
 ''' 字段方法，对于函数类型的字段属性，字段属性的实际类型为此类型
 ''' </summary>
@@ -84,7 +85,7 @@ Public Class FieldMethod
     Public Shared Function NewInstance(methodName As String, _methodListenerNames As String(), declareString As String) As FieldMethod
         Dim fieldMethod As New FieldMethod
         fieldMethod.DeclareString = declareString
-        If methodName.StartsWith("$") Then methodName = methodName.Substring(1)
+        If methodName.StartsWith("#") Then methodName = methodName.Substring(1)
         _methodListenerNames = If(_methodListenerNames, {}).Union(presetMethodListenerNames).ToArray
         fieldMethod.MethodListenerNames = _methodListenerNames
         fieldMethod.Func =
@@ -115,7 +116,7 @@ Public Class FieldMethod
                             Continue For
                         End If
                     End If
-                        Dim [paramArray] As Object()
+                    Dim [paramArray] As Object()
                     If fieldMethod.AutoMatchParams Then
                         Dim expectedParamTypes = (From p In method.GetParameters Select p.ParameterType).ToArray
                         [paramArray] = MatchParams(expectedParamTypes, fieldMethod.Parameters)
@@ -146,6 +147,24 @@ Public Class FieldMethod
                                   newFieldMethod.ReturnValue = returnValue
                               End Sub
         Return newFieldMethod
+    End Function
+
+    Public Shared Function FromJsValue(jsValue As JsValue, methodListenerNames As String()) As FieldMethod
+        If jsValue.IsString Then '如果为#开头的字符串，则调用MethodListener的方法
+            Dim strValue = jsValue.ToString
+            If strValue.StartsWith("#") Then
+                Dim methodName = strValue.Substring(1)
+                '实例化一个绑定MethodListener方法的方法。运行时该方法动态执行MethodListener中的相应方法
+                Dim newFieldMethod As FieldMethod = FieldMethod.NewInstance(methodName, methodListenerNames, strValue)
+                Return newFieldMethod
+            Else
+                Return FieldMethod.NewInstance(strValue, strValue)
+            End If
+        ElseIf jsValue.IsArray Then
+            Return FieldMethod.NewInstance(jsValue.ToObject, CType(jsValue.ToString, String))
+        Else
+            Throw New Exception($"Unsupported value for field:{jsValue.ToString}")
+        End If
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
