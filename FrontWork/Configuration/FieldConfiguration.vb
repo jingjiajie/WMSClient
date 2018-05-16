@@ -9,6 +9,7 @@ Imports Jint.Native
 Public Class FieldConfiguration
     Implements ICloneable
     Private _name As String = Nothing
+    Private _type As String = "string"
     ''' <summary>
     ''' 显示名称
     ''' </summary>
@@ -19,7 +20,24 @@ Public Class FieldConfiguration
     ''' 字段类型
     ''' </summary>
     ''' <returns></returns>
-    Public Property Type As String = "object"
+    Public Property Type As String
+        Get
+            Return _type
+        End Get
+        Set(value As String)
+            Static supportTypes() = {
+                "string", "int", "double", "datetime"
+            }
+            If value Is Nothing Then
+                Throw New Exception("Field Type cannot be null!")
+            End If
+            value = value.ToLower
+            If Not supportTypes.Contains(value) Then
+                Throw New Exception($"Unsupported field type:{value.ToString}")
+            End If
+            Me._type = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' 占位符

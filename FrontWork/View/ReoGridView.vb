@@ -272,6 +272,27 @@ Public Class ReoGridView
         AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
     End Sub
 
+    '删除行，自动移动dicCellState和dicCellEdited
+    Private Sub DeleteRows(row As Integer, count As Integer)
+        Me.Panel.DeleteRows(row, count)
+        For Each cellPos In Me.dicCellEdited.Keys
+            If cellPos.Row >= row And cellPos.Row <= row + count - 1 Then
+                Me.dicCellEdited.Remove(cellPos)
+            ElseIf cellPos.Row > row Then
+                cellPos.Row -= count
+            End If
+        Next
+
+        For Each entry In Me.dicCellState
+            If entry.Key >= row And entry.Key <= row + count - 1 Then
+                Me.dicCellState.Remove(entry.Key)
+            ElseIf entry.Key > row Then
+                Me.dicCellState.Remove(entry.Key)
+                Me.dicCellState.Add(entry.Key - count, entry.Value)
+            End If
+        Next
+    End Sub
+
     ''' <summary>
     ''' 根据各个单元格的状态，按行绘制单元格的颜色
     ''' </summary>

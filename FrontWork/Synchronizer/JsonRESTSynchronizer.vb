@@ -279,18 +279,55 @@ Public Class JsonRESTSynchronizer
         If Me.RemoveAPI Is Nothing Then
             Throw New Exception("Remove API not setted!")
         End If
+        '删除行的所有ID
+        Dim rowIDsASC = (From indexRow In e.RemovedRows
+                         Order By indexRow.RowID Ascending
+                         Select indexRow.RowID).ToArray
+        '如果是新增的行，不要将删除操作同步到服务器。这里记录删除行的ID。
+        '待同步服务器成功后，删除这些行的ADD操作
+        '如果同步服务器失败，不删除这些行的ADD操作
+        Dim addedRowIDs As New List(Of Guid)
+        For Each action In Me.modelActions
+            If TypeOf action IsNot AddRowAction Then Continue For
+            Dim addActionRowIDs = (From indexRow In action.IndexRowPairs
+                                   Select indexRow.RowID).ToArray
+            For Each removedRow In e.RemovedRows
+                If addActionRowIDs.Contains(removedRow.RowID) Then
+                    addedRowIDs.Add(removedRow.RowID)
+                End If
+            Next
+        Next
+        '需要推送到服务器的删除行
+        Dim saveRows = (From rowIndex In e.RemovedRows
+                        Where Not addedRowIDs.Contains(rowIndex.RowID)
+                        Select rowIndex).ToArray
         '删除操作单独进行，不和添加，更新一块提交
         Dim actionList = New List(Of ModelAdapterAction)
-        actionList.Add(New RemoveRowAction(Me.RemoveAPI, e.RemovedRows, Me.Model))
+        actionList.Add(New RemoveRowAction(Me.RemoveAPI, saveRows, Me.Model))
         '删除操作立即提交，以免删除失败导致后面的操作永远无法提交。
-        '如果删除失败，则把行添加回Model里
-        If Me.Save(actionList, "删除") = False Then
+        If Me.Save(actionList, "删除") Then
+            '如果删除成功，清空所有删除行的所有更新记录
+            Me.modelActions.ForEach(
+                Sub(action)
+                    If TypeOf (action) Is UpdateRowAction Then
+                        action.IndexRowPairs = (From indexRow In action.IndexRowPairs
+                                                Where Not rowIDsASC.Contains(indexRow.RowID)
+                                                Select indexRow).ToArray
+                    End If
+                End Sub)
+            '如果删除成功，清空所有新增行的新增记录
+            Me.modelActions.ForEach(
+                Sub(action)
+                    If TypeOf (action) Is AddRowAction Then
+                        action.IndexRowPairs = (From indexRow In action.IndexRowPairs
+                                                Where Not addedRowIDs.Contains(indexRow.RowID)
+                                                Select indexRow).ToArray
+                    End If
+                End Sub)
+        Else '如果删除失败，则把行添加回Model里
             Dim rowNumsASC = (From indexRow In e.RemovedRows
                               Order By indexRow.Index Ascending
                               Select indexRow.Index).ToArray
-            Dim rowIDsASC = (From indexRow In e.RemovedRows
-                             Order By indexRow.RowID Ascending
-                             Select indexRow.RowID).ToArray
             Dim dataOfEachRowASC = (From indexRow In e.RemovedRows
                                     Order By indexRow.Index Ascending
                                     Select indexRow.RowData).ToArray

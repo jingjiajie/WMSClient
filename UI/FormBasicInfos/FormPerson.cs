@@ -28,8 +28,10 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.jsonRESTSynchronizer1.Save();
-            this.searchView1.Search();
+            if (this.jsonRESTSynchronizer1.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void pagerSearchJsonRESTAdapter1_Load(object sender, EventArgs e)
