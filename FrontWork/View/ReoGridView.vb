@@ -236,7 +236,7 @@ Public Class ReoGridView
         Next
         '将调整后的行分别插入表格中
         For i = 0 To realRowsASC.Length - 1
-            Me.Panel.InsertRows(realRowsASC(i), 1)
+            Me.InsertRows(realRowsASC(i), 1)
         Next
         '刷新数据
         Call Me.ImportData(realRowsASC)
@@ -262,35 +262,73 @@ Public Class ReoGridView
             Call Me.ImportData()
             Return
         End If
-        '去掉选区变化事件，防止删除行时触发选区变化事件，造成无用刷新和警告
-        RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
+
         For Each indexDataRow In e.RemovedRows
             If Me.Panel.Rows > indexDataRow.Index Then
-                Me.Panel.DeleteRows(indexDataRow.Index, 1)
+                Me.DeleteRows(indexDataRow.Index, 1)
             End If
         Next
-        AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
     End Sub
 
     '删除行，自动移动dicCellState和dicCellEdited
     Private Sub DeleteRows(row As Integer, count As Integer)
-        Me.Panel.DeleteRows(row, count)
+        Dim newDicCellEdited As New Dictionary(Of CellPosition, Boolean)
         For Each cellPos In Me.dicCellEdited.Keys
             If cellPos.Row >= row And cellPos.Row <= row + count - 1 Then
-                Me.dicCellEdited.Remove(cellPos)
+                '删除行，不加入newDicCelledited
             ElseIf cellPos.Row > row Then
                 cellPos.Row -= count
+                newDicCellEdited.Add(cellPos, True)
+            Else
+                newDicCellEdited.Add(cellPos, True)
             End If
         Next
+        Me.dicCellEdited = newDicCellEdited
 
+        Dim newDicCellState As New Dictionary(Of Long, Dictionary(Of Long, Long))
         For Each entry In Me.dicCellState
             If entry.Key >= row And entry.Key <= row + count - 1 Then
-                Me.dicCellState.Remove(entry.Key)
+                '删掉
             ElseIf entry.Key > row Then
-                Me.dicCellState.Remove(entry.Key)
-                Me.dicCellState.Add(entry.Key - count, entry.Value)
+                newDicCellState.Add(entry.Key - count, entry.Value)
+            Else
+                newDicCellState.Add(entry.Key, entry.Value)
             End If
         Next
+        Me.dicCellState = newDicCellState
+        '去掉选区变化事件，防止删除行时触发选区变化事件，造成无用刷新和警告
+        RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
+        Me.Panel.DeleteRows(row, count)
+        AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
+        Call Me.PaintRows(Util.Range(row, Me.Panel.RowCount))
+    End Sub
+
+    Private Sub InsertRows(row As Integer, count As Integer)
+        Dim newDicCellEdited As New Dictionary(Of CellPosition, Boolean)
+        For Each cellPos In Me.dicCellEdited.Keys
+            If cellPos.Row >= row Then
+                cellPos.Row += count
+                newDicCellEdited.Add(cellPos, True)
+            Else
+                newDicCellEdited.Add(cellPos, True)
+            End If
+        Next
+        Me.dicCellEdited = newDicCellEdited
+
+        Dim newDicCellState As New Dictionary(Of Long, Dictionary(Of Long, Long))
+        For Each entry In Me.dicCellState
+            If entry.Key >= row Then
+                newDicCellState.Add(entry.Key + count, entry.Value)
+            Else
+                newDicCellState.Add(entry.Key, entry.Value)
+            End If
+        Next
+        Me.dicCellState = newDicCellState
+        '去掉选区变化事件，防止插入行时触发选区变化事件，造成无用刷新和警告
+        RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
+        Call Me.Panel.InsertRows(row, count)
+        AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.BeforeSelectionRangeChange
+        Call Me.PaintRows(Util.Range(row, Me.Panel.RowCount))
     End Sub
 
     ''' <summary>
