@@ -42,8 +42,8 @@ namespace WMS.UI
                     MakeTreeNode("人员管理"),
                     MakeTreeNode("其他")
                     }),
-                MakeTreeNode("收货管理",new TreeNode[]{
-                    MakeTreeNode("到货单管理"),
+                MakeTreeNode("入库管理",new TreeNode[]{
+                    MakeTreeNode("入库单管理"),
                     MakeTreeNode("送检单管理"),
                     MakeTreeNode("上架单管理"),
                     MakeTreeNode("上架零件管理"),
@@ -184,16 +184,15 @@ namespace WMS.UI
         {
             this.panelRight.Hide();
             this.panelRight.SuspendLayout();
-            if (treeViewLeft.SelectedNode.Text == "用户管理")
+            switch (treeViewLeft.SelectedNode.Text)
             {
-                this.panelRight.Controls.Clear();//清空
-                FormPerson formPerson = new FormPerson();
-                formPerson.TopLevel = false;
-                formPerson.Dock = DockStyle.Fill;//窗口大小
-                formPerson.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(formPerson);
-                formPerson.Show();
-            }
+                case "用户管理":
+                    this.LoadSubWindow(new FormPerson());
+                    break;
+                case "入库单管理":
+                    this.LoadSubWindow(new FormWarehouseEntry());
+                    break;
+            }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")
             //{
             //    this.panelRight.Controls.Clear();//清空

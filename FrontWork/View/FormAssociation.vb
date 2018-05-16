@@ -155,14 +155,20 @@ Partial Public Class FormAssociation
 
                     Me.Invoke(New Action(Sub()
                                              Me.listBox.Items.Clear()
-                                             Me.listBox.Items.AddRange(data)
+                                             For Each item In data
+                                                 If item IsNot Nothing Then
+                                                     Me.listBox.Items.Add(item)
+                                                 End If
+                                             Next
                                              If data.Length = 0 Then
                                                  Me.Hide()
                                              ElseIf Me.Visible = False AndAlso _textBox.Visible = True Then
                                                  Me.Show()
                                              End If
                                          End Sub))
-                Catch
+                Catch ex As Exception
+                    Logger.SetMode(LogMode.DEFAULT_MODE)
+                    Logger.PutMessage(ex.Message)
                     Return
                 End Try
             End Sub)

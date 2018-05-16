@@ -44,6 +44,15 @@ Public Class JsonRESTAPIInfo
         requestJSEngine.SetValue("log", New Action(Of String)(AddressOf Console.WriteLine))
         responseJSEngine.SetValue("log", New Action(Of String)(AddressOf Console.WriteLine))
         Dim strMapProperty = <string>
+                            function getPropertyIgnoreCase(obj,propName){
+                                for(p in obj){
+                                    if(p.toLowerCase() == propName.toLowerCase()){
+                                        return obj[p];
+                                    }
+                                }
+                                return null;
+                            }
+
                              function mapProperty(objs,propName){
                                 if(typeof(objs)!='object' || typeof(propName)!='string'){
                                     log("mapProperty usage: mapProperty(&lt;object&gt;,&lt;propertyName&gt;)");
@@ -51,7 +60,7 @@ Public Class JsonRESTAPIInfo
                                 }
                                 var result = []
                                 for(var i=0;i&lt;objs.length;i++){
-                                    result.push(objs[i][propName])
+                                    result.push(getPropertyIgnoreCase(objs[i],propName))
                                 }
                                 return result
                              }

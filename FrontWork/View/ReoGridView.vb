@@ -248,8 +248,9 @@ Public Class ReoGridView
             Call Me.ImportData()
             Return
         End If
-        Dim rows As Long() = (From item In e.UpdatedCells Select item.Row).ToArray
-        Me.ImportData(rows)
+        For Each posCell In e.UpdatedCells
+            Me.ImportCell(posCell.Row, posCell.ColumnName)
+        Next
     End Sub
 
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
@@ -463,9 +464,6 @@ Public Class ReoGridView
 
         '禁止自动判断单元格格式
         Me.Panel.SetSettings(WorksheetSettings.Edit_AutoFormatCell, False)
-        '自动行高列宽
-        Me.Panel.SetSettings(WorksheetSettings.Edit_AutoExpandColumnWidth, True)
-        Me.Panel.SetSettings(WorksheetSettings.Edit_AutoExpandRowHeight, True)
         '清空列Name和列号的对应关系
         Call Me.dicNameColumn.Clear()
         '清空状态
@@ -526,6 +524,23 @@ Public Class ReoGridView
 
     Private Sub textBoxLeave(sender As Object, e As EventArgs)
         Me.Workbook.Focus()
+    End Sub
+
+    Private Sub AutoFitColumnWidth(col As Integer)
+        Call Me.Panel.AutoFitColumnWidth(col)
+        Dim columnHeader = Me.Panel.ColumnHeaders.Item(col)
+        Dim columnHeaderText = columnHeader.Text
+        Dim width = 20 + columnHeaderText.Sum(
+            Function(c)
+                If Char.IsLetterOrDigit(c) OrElse
+                    Char.IsWhiteSpace(c) OrElse
+                    Char.IsSymbol(c) Then
+                    Return 8
+                Else
+                    Return 15
+                End If
+            End Function)
+        Me.Panel.ColumnHeaders(col).Width = System.Math.Max(width, Me.Panel.ColumnHeaders.Item(col).Width + 10)
     End Sub
 
     ''' <summary>
@@ -874,6 +889,77 @@ Public Class ReoGridView
     End Sub
 
     ''' <summary>
+    ''' 从Model导入单元格数据
+    ''' </summary>
+    ''' <param name="row">要导入的行</param>
+    ''' <param name="colName">要导入的列名</param>
+    ''' <returns>是否导入成功</returns>
+    Protected Function ImportCell(row As Long, colName As String) As Boolean
+        Logger.Debug("==ReoGrid ImportCell: " + Str(Me.GetHashCode))
+        Logger.SetMode(LogMode.REFRESH_VIEW)
+        If Me.Model.RowCount = 0 Then
+            Me.CurSyncMode = SyncMode.NOT_SYNC
+            Call Me.ShowDefaultPage()
+            Return True
+        ElseIf Me.CurSyncMode = SyncMode.NOT_SYNC Then
+            Me.Panel.Rows = 1
+            Me.CurSyncMode = SyncMode.SYNC
+        End If
+
+        If Me.Configuration Is Nothing Then
+            Logger.PutMessage("Configuration is not setted")
+            Return False
+        End If
+        If Me.Panel Is Nothing Then
+            Logger.PutMessage("Panel is not setted")
+            Return False
+        End If
+        '获取当前的Configuration
+        Dim fieldConfigurations = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        If fieldConfigurations Is Nothing Then
+            Logger.PutMessage("Configuration not found!")
+            Return False
+        End If
+        Dim field = (From f In fieldConfigurations Where f.Name.Equals(colName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
+        If field.Visible = False Then Return True
+        '传入数据
+        '否则开始导入值
+        '先计算值，过一遍Mapper
+        Dim value = Me.Model(row, colName)
+        Dim text As String
+        If Not field.ForwardMapper Is Nothing Then
+            text = field.ForwardMapper.Invoke(value, Me)
+        Else
+            text = If(value?.ToString, "")
+        End If
+        Logger.SetMode(LogMode.REFRESH_VIEW)
+        '然后获取单元格
+
+        Dim reoGridColumnNum = Me.dicNameColumn(colName)
+        Dim reoGridCell = Panel.GetCell(row, reoGridColumnNum)
+        If reoGridCell Is Nothing AndAlso String.IsNullOrEmpty(text) Then Return True
+        '根据Configuration中的Field类型，处理View中的单元格
+        If field.Values Is Nothing Then '没有Values，是文本框
+            RemoveHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
+            reoGridCell.Data = text
+            AddHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
+        Else '有Values，是ComboBox框
+            Dim values = Util.ToArray(Of String)(field.Values.Invoke(Me))
+            If values.Contains(text) = False Then
+                Logger.PutMessage("Value """ + text + """" + " not found in comboBox """ + field.Name + """")
+            End If
+            RemoveHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
+            reoGridCell.Data = text
+            AddHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
+            Call Me.ValidateComboBoxData(reoGridCell.Row, reoGridCell.Column)
+        End If
+
+        Call Me.PaintRows({row})
+        Me.AutoFitColumnWidth(Me.dicNameColumn(colName))
+        Return True
+    End Function
+
+    ''' <summary>
     ''' 从Model导入数据
     ''' </summary>
     ''' <param name="rows">要导入的行</param>
@@ -964,6 +1050,9 @@ Public Class ReoGridView
                 End If
             Next
             Call Me.PaintRows({curReoGridRowNum})
+        Next
+        For col = 0 To Me.Panel.Columns - 1
+            Me.AutoFitColumnWidth(col)
         Next
         Return True
     End Function

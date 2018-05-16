@@ -119,7 +119,7 @@ Public Class SearchView
                 Case "小于等于"
                     relation = Relation.LESS_THAN_OR_EQUAL_TO
             End Select
-            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, {searchValue})})
+            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, {searchValue})}).ToArray
         End If
 
         If Me.ComboBoxOrderKey.SelectedIndex <> 0 Then

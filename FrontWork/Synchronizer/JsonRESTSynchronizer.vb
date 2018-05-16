@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Linq
 Imports System.Net
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Web.Script.Serialization
 Imports FrontWork
 Imports Jint.Native
@@ -565,7 +566,15 @@ Public Class JsonRESTSynchronizer
         Protected Shared Function IndexRowPairsToJson(indexRowPairs As IndexRowPair()) As String
             Dim dics = (From indexRowPair In indexRowPairs
                         Select indexRowPair.RowData).ToArray
-            Return New JavaScriptSerializer().Serialize(dics)
+            Dim str = New JavaScriptSerializer().Serialize(dics)
+            str = Regex.Replace(str, "\\/Date\((\d+)\)\\/",
+                    Function(match)
+                        Dim dt = New DateTime(1970, 1, 1)
+                        dt = dt.AddMilliseconds(Long.Parse(match.Groups(1).Value))
+                        dt = dt.ToLocalTime()
+                        Return dt.ToString("yyyy-MM-dd HH:mm:ss")
+                    End Function)
+            Return str
         End Function
 
     End Class

@@ -26,7 +26,7 @@ Public Class FieldConfiguration
         End Get
         Set(value As String)
             Static supportTypes() = {
-                "string", "int", "double", "datetime"
+                "string", "int", "double", "datetime", "bool"
             }
             If value Is Nothing Then
                 Throw New Exception("Field Type cannot be null!")

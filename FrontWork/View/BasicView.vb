@@ -190,7 +190,7 @@ Public Class BasicView
         '如果更新的行不包括本View的目标行，则不刷新
         For Each posCell In e.UpdatedCells
             If modelSelectedRow = posCell.Row Then
-                Call Me.ImportData()
+                Call Me.ImportField(posCell.ColumnName)
                 Return
             End If
         Next
@@ -247,7 +247,10 @@ Public Class BasicView
         Call Me.Panel.SuspendLayout()
         Me.BorderStyle = BorderStyle.None
         Me.Panel.Controls.Clear()
-        Dim fieldConfiguration As FieldConfiguration() = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim fieldConfigurations As FieldConfiguration() = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim visibleFieldConfigurations = (From f In fieldConfigurations
+                                          Where f.Visible
+                                          Select f).ToArray
         '初始化行列数量和大小
         Me.Panel.RowStyles.Clear()
         Me.Panel.ColumnStyles.Clear()
@@ -258,7 +261,7 @@ Public Class BasicView
             Return
         End If
         Me.Panel.ColumnCount = fieldsPerRow * 2 '计算列数
-        Me.Panel.RowCount = System.Math.Floor(fieldConfiguration.Length / fieldsPerRow) + If(fieldConfiguration.Length Mod fieldsPerRow = 0, 0, 1) '计算行数
+        Me.Panel.RowCount = System.Math.Floor(visibleFieldConfigurations.Length / fieldsPerRow) + If(visibleFieldConfigurations.Length Mod fieldsPerRow = 0, 0, 1) '计算行数
         For j = 0 To Me.Panel.RowCount
             Me.Panel.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F / Me.Panel.RowCount))
         Next
@@ -267,7 +270,7 @@ Public Class BasicView
         Call Me.dicFieldNameColumn.Clear()
         Call Me.dicFieldUpdated.Clear()
         Dim col As Integer = -1 'i从0开始循环
-        For Each curField As FieldConfiguration In fieldConfiguration
+        For Each curField As FieldConfiguration In fieldConfigurations
             col += 1
             Me.dicFieldNameColumn.Add(curField.Name, col)
             Me.dicFieldUpdated.Add(curField.Name, False)
@@ -343,7 +346,7 @@ Public Class BasicView
                     AddHandler textBox.Enter, Sub()
                                                   Me.FormAssociation.TextBox = textBox
                                                   FormAssociation.SetAssociationFunc(Function(str As String)
-                                                                                         Dim ret = curField.Association.Invoke(Me, {str})
+                                                                                         Dim ret = curField.Association.Invoke(Me, str)
                                                                                          Return Util.ToArray(Of AssociationItem)(ret)
                                                                                      End Function)
                                               End Sub
@@ -353,6 +356,7 @@ Public Class BasicView
                     AddHandler textBox.TextChanged, Sub()
                                                         If Me.switcherLocalEvents = False Then Return
                                                         Logger.Debug("TableLayoutView TextBox TextChanged User Event: " & Str(Me.GetHashCode))
+                                                        If Me.Model.SelectionRange Is Nothing Then Return
                                                         curField.ContentChanged.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
                                                     End Sub
                 End If
@@ -360,6 +364,7 @@ Public Class BasicView
                 If curField.EditEnded IsNot Nothing Then
                     AddHandler textBox.Leave, Sub()
                                                   If Me.switcherLocalEvents = False Then Return
+                                                  If Me.Model.SelectionRange Is Nothing Then Return
                                                   Logger.Debug("TableLayoutView TextBox Leave User Event: " & Str(Me.GetHashCode))
                                                   curField.EditEnded.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
                                               End Sub
@@ -393,6 +398,7 @@ Public Class BasicView
                     AddHandler comboBox.SelectedIndexChanged, Sub()
                                                                   If Me.switcherLocalEvents = False Then Return
                                                                   Logger.Debug("TableLayoutView ComboBox SelectedIndexChanged User Event: " & Str(Me.GetHashCode))
+                                                                  If Me.Model.SelectionRange Is Nothing Then Return
                                                                   curField.ContentChanged.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
                                                               End Sub
                 End If
@@ -400,6 +406,7 @@ Public Class BasicView
                     AddHandler comboBox.Leave, Sub()
                                                    If Me.switcherLocalEvents = False Then Return
                                                    Logger.Debug("TableLayoutView ComboBox Leave User Event: " & Str(Me.GetHashCode))
+                                                   If Me.Model.SelectionRange Is Nothing Then Return
                                                    curField.EditEnded.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
                                                End Sub
                 End If
@@ -411,11 +418,6 @@ Public Class BasicView
                                            End Sub
             End If
         Next
-
-        'For j = 0 To fieldsPerRow - 1
-        '    Me.Panel.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 100))
-        '    Me.Panel.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, textBoxWidthPercent))
-        'Next
 
         Dim g = Me.Panel.CreateGraphics
         '根据实际标题设置列宽
@@ -476,6 +478,69 @@ Public Class BasicView
         End If
         Call Me.ExportField(controlName)
     End Sub
+
+    ''' <summary>
+    ''' 从Model导入一个字段
+    ''' </summary>
+    ''' <param name="fieldName">字段名</param>
+    ''' <returns>是否导入成功</returns>
+    Protected Function ImportField(fieldName As String) As Boolean
+        Logger.SetMode(LogMode.REFRESH_VIEW)
+        If Me.Configuration Is Nothing Then
+            Logger.PutMessage("Configuration is not setted")
+            Return False
+        End If
+        Dim modelSelectedRow = Me.GetModelSelectedRow
+        If modelSelectedRow < 0 Then
+            Call Me.ClearPanelData()
+            Return True
+        End If
+        '遍历Configuration的字段
+        Dim fieldConfigurations = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        If fieldConfigurations Is Nothing Then
+            Logger.PutMessage("Configuration not found!")
+            Return False
+        End If
+        Dim field = (From f In fieldConfigurations Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
+        If Not field.Visible Then Return True
+        '获取数据
+        Dim value = Me.Model(modelSelectedRow, fieldName)
+        '先计算值，过一遍Mapper
+        Dim text As String
+        If Not field.ForwardMapper Is Nothing Then
+            text = field.ForwardMapper.Invoke(Me, value)
+        Else
+            text = If(value?.ToString, "")
+            End If
+            Logger.SetMode(LogMode.REFRESH_VIEW)
+        '然后获取Control
+        Dim curControl = (From control As Control In Me.Panel.Controls
+                          Where control.Name = field.Name
+                          Select control).FirstOrDefault()
+        '根据Control是文本框还是ComboBox，有不一样的行为
+        Me.switcherLocalEvents = False '关闭本地事件开关， 防止连锁事件
+            Select Case curControl.GetType()
+                Case GetType(TextBox)
+                    Dim textBox = CType(curControl, TextBox)
+                    textBox.Text = text
+                Case GetType(ComboBox)
+                    Dim comboBox = CType(curControl, ComboBox)
+                    Dim found = False
+                    For i As Integer = 0 To comboBox.Items.Count - 1
+                        If comboBox.Items(i).ToString = text Then
+                            found = True
+                            RemoveHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBoxSelectedIndexChangedEvent
+                            comboBox.SelectedIndex = i
+                            AddHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBoxSelectedIndexChangedEvent
+                        End If
+                    Next
+                    If found = False Then
+                    Logger.PutMessage("Value """ + text + """" + " not found in comboBox """ + fieldName + """")
+                End If
+            End Select
+        Me.switcherLocalEvents = True
+        Return True
+    End Function
 
     ''' <summary>
     ''' 从Model导入数据
