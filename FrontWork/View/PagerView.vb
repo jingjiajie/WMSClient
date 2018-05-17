@@ -23,7 +23,7 @@ Public Class PagerView
                 Throw New Exception($"TotalPage:{value} cannot be less than CurrentPage:{Me.CurrentPage}")
             End If
             Me._totalPage = value
-            Me.LabelTotalPage.Text = CStr(value)
+            Me.TextBoxTotalPage.Text = CStr(value)
         End Set
     End Property
 

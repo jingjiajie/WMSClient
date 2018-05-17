@@ -204,7 +204,7 @@ Public Class SearchView
     ''' <param name="key">字段名</param>
     ''' <param name="values">值列表</param>
     ''' <param name="relation">关系</param>
-    Public Sub AddStaicCondition(key As String, values As Object(), Optional relation As Relation = Relation.EQUAL)
+    Public Sub AddStaticCondition(key As String, values As Object(), Optional relation As Relation = Relation.EQUAL)
         Me.StaticConditions.Add(New SearchConditionItem(key, relation, values))
     End Sub
 

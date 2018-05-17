@@ -57,7 +57,6 @@ namespace WMS.UI
             string condStr = condition.ToString();
             this.labelStatus.Visible = true;
             List<Dictionary<string,object>> personList = RestClient.Get<List<Dictionary<string,object>>>(Defines.ServerURL + "/ledger/" + accountBook + "/person/" + condStr);
-            this.labelStatus.Visible = false;
             if (personList == null)
             {
                 return;
@@ -69,7 +68,9 @@ namespace WMS.UI
             }
             GlobalData.Person = personList[0];
             GlobalData.AccountBook = accountBook;
-            GlobalData.Warehouse = GlobalData.WarehouseList[this.comboBoxWarehouse.SelectedIndex];
+            GlobalData.Warehouse = GlobalData.AllWarehouses[this.comboBoxWarehouse.SelectedIndex];
+            this.RefreshAssociationData();
+            this.labelStatus.Visible = false;
             new FormMain().Show();
             this.Hide();
         }
@@ -220,13 +221,26 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
-            GlobalData.WarehouseList = warehouseList;
+            GlobalData.AllWarehouses = warehouseList;
             this.comboBoxWarehouse.Items.Clear();
             foreach(var warehouse in warehouseList)
             {
                 this.comboBoxWarehouse.Items.Add(warehouse["name"].ToString());
             }
             this.comboBoxWarehouse.SelectedIndex = 0;
+        }
+
+        private void RefreshAssociationData()
+        {
+            GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{{}}");
+
+            GlobalData.AllMaterials = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{{}}");
+
+            GlobalData.AllStorageLocations = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_location/{{}}");
+
         }
     }
 }

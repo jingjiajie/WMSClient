@@ -123,6 +123,9 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1090, 17</value>
   </metadata>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1090, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -180,111 +183,57 @@
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="buttonReceipt.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAEzSURBVDhPnZG9SkNBEIUPgj+FWNtYiNjYCTZ2ViLYBeTu
-        RuFa2QiijTZiWkEEX0EsfAlBC8FGX8LCwsJAYohIdtazw1xQYnT1g4W7Z2fO/Fz8Bx9w4gQ7WxHDJuXj
-        As58RFx6QqBJaXIeLuI4JesRHK1FTNrT77Da9qfkA5PzYMKib6GTkjnCqcl5sM1x38ODVg644n3EnvJg
-        6w1NfsMzO5k1OY9CMOM6aGnr3IHJ/ZQRY/b5heqXuR7uBrbOKstpxnrEpkkK9alaFy/JoC6omdwPq5zr
-        jKlSwOWGYFp1wW7Sioj7FcGoBn/HumCCwYf+FW01escj7yU3fq2mgj0L/RkGLrDaTdWNJnOBVUdZpEXR
-        aL/ooqkm3E0jYsie86HJPDd/yzEuTPo73M0cjVbtOgDgA/0tnHEOdaOeAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="buttonReceiptCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAGWSURBVDhPjVI7SwNhEBwfIIoPkrsvGAhWglhY2NhY2FpY
-        iNgpEiws0oiof0BBBNMJNnYqWFhpJ1gELAQ7tbAROwtBCwvxkdx3zt7teSeJSQZCkp3Z2ce38IFWD+6O
-        hTOHJkH9lg93ibktsDDrPoz/BOPx95pqasIi3cvkA9Vb6gsSHKvAuZGgfDyYonSlOb+gLke+lNAdWbij
-        SrpZOp/HpFTJdgUkwfGGKnDvEvyWUjFIdJM4jEXmTExYebiM9IPEwradVU2pBltvo8luZMLRLqPkF6Q/
-        2emiSuuD1TdYrRwZfSH1zIXNKN0YFpmRd5i3uBNzbTHYoXR9yMLKcB4lUWaOTNjVqUWuU2W14SM1UIa5
-        l4RwZjMr48Qm8jrVTxzAR1+KT3UlQjkqfueVksvbi01MUcMx6NruwTmJRNz2slIBQt4cJ/gVpULwrrcj
-        ksJNDf8Bd9PDTi5Eww6/aTKlhCkkkveD4D+gpj+6SHklvtY8g5npD5hXBksNt0zIZcpd8MhuWXxSg2aB
-        LU0Ef5oAi+WZMw4AP7nG5/tQFXN/AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="buttonInspect.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAARQSURBVFhH7ZbrT1tlHMdJjG9MjH+A0cTLjPPFsi26zY2s
-        AdmYDIFB3SaJ88Ve6iuNRmVeCC5uY4u3iRfmMrHixFLCKNcNaKEXuva0DNrTnva0pxdaTuG0FG8ssvn1
-        eZ42xPlubfEVv+SX5+SkPd/P9/f8nvM7JRuxHmExjkO44YRf8CF3a/3CbjVD5GewOBdGRkliPpUCn0hj
-        JJZGQF4oHsD42CicdhvCooD0QgK/ZtJILS/Bn8zAwMv4diqCpmERL+t8OPijG6puH6xBKX8Aq8WCeETC
-        UnoRN2/+ifTvf6yJXZyQ0NzD41g7h/o2B6pJVn7jROWlGezr9KCsS4BKL8JeCAB1OJ1YvkOs8eMJHGox
-        sqw/bULDp1MMoPY7F3Nd8RPPnO/uFRmAQwzlD7C0pKBJx6Pq1T40vDmEoyeu4aXmcQZxpNWMFz/Litdc
-        cDHnVHxvt4BdvUFs7Zewc1gCFygEgJSeOm94YxCN74/eIa7+xIrzHe1ouqTF8Y5R1HTaUablmfg28zJ2
-        DMWx7WqkMABlUUZLn4+5pwBHWgw4fGoS6nNm1Hxuw+1gKW5N78Ztw07M9Zbji+E2qCYTeMQJbHL8hYe1
-        QVy2h3CgJ8+juJCM46N+AYfeGsbR5jEcPmmE+owJdWTfq7+0Y8X+HGBWAdYyBnFsaBRPOVcZwOYbwBPX
-        V7HFtsKqkXvk3YWciOLkYAB1b48w92rivvZs1j3teMn8CjCxBzARCJKSrhzqgQFs4lbwGJeFoLnneiY/
-        gPhcFqD23atQE/e0618ge19J3JeTxuMMr2chcgCwqpC6sh07LAEivMogHiVZ4blVQAWGsgD1pPmo+yri
-        vuJrDqUXp9GoM+KZHoHtPSZJJUjqrB/gQXOS9cD2maz48ejfeH4wdvcQcjxCAERUvTeKutOTOJhzr2p3
-        YlfHLLb+7MVmrYCHekScMrThe0sr7jHIuNe0gPttGVb6ifB8fu5pJKISAzjw4RiqydGj7su/cjD3T2vc
-        a+IP6MO471qcOd8/o+AdQWFzgM6EUMBfIMBIEPubDag6a8E+AlBKXjxb2qfxuIbHk1eC7NhRwa5Yir2m
-        lXgM84Inf9F/x3w0xAD2nhhD+TkLniWdT8/0a1NxtHmTsMsKFGURvyky0gRWIqPX5eSKI04jLolotcXZ
-        dKOC45EUIuk0knMRyKEAc0tLzHs88PI8An4/FmSZQXGcA5zDXhgMfaBCJiAduYuxMFxWC1zkoXabDRNG
-        A+aiUYQlCdFImF1HyBoMivD7BYhigFwH4fXyxasIDb2+j41mKhiNRhAOS2uiAtkCgYoHApCkEEsfuWcy
-        mYoHMTg4ALd7Fjzvya1u+Hxe5pgKUtcejxv046VToymecL9eD6fTCZeLvAHJ/tJ1dnaGgdAy0+ajovR3
-        ub8UN5pazzNhuv8cEeM4jpWWVqRb+8v6iP43NJe7YCTNR9czF374f0Q3YiM2Yv2jpOQfWVEiR6Kd9dsA
-        AAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAG/SURBVDhPndI/SAJxFAfw29raanCsPShobYi2hraopKCI
-        QrLDmiKTpCiiWmoJl6CSkzsU5ZLQkBosIQm8ED1CIZJCSigFE0ny27vzjCiy7MGH+/feu98/5nPw8Tj+
-        Qkv/HsrHapTLZZTe3lAovSJbLCLz8oJ0PgebJP3eIPn0BF8yiaNEAl5yeH0NkZzd3mLr8rJ2A+XPcibz
-        pViGR5ZxenOD9XC4doNCqQQpnYab7l3EGYtBIHw0iuNkAkuhUO0Gz4UCLlIpOK4kcDRfuxSBPRLBAfHS
-        KOaDwe8Nmq0raFnbRD/vhMnnx7hHhF5wQk/PQ7yAQYeAAQePYXrXvbsPJV8rrcRq8Exd5cd8Hg+fpHM5
-        1T25U2SzSBHlaj45rTRpWlwGF40hQvOuh626Gw3sLLZDFxBo/vVYro6A0Y/A4j/G+vl5XUyiqDXo7QPr
-        9mA+EMCwy42e3b2aprxeNXeUFlWt1xmMGLNz2KYD0rt/gBxt409ccRkT4iE26Cx0rW2g07wAZobj0Mqa
-        VI0TBgTouP5EmWrzpAEt06zKRLXMFg2nqm3OjI7FJY21wmJFu0ZnZDG0Y/vIVzBHtKL/F8c7y1WZOtry
-        EfkAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>[
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"入库单号",type:"string",placeHolder:"留空自动生成"},
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-        {name:"supplierId",displayName:"供应商ID",type:"int",visible:false},
-        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"supplierName",displayName:"供应商名",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"description",displayName:"描述",type:"string"},
+        {name:"warehouseEntryID",displayName:"入库单ID",type:"int",visible:false},
+        {name:"warehouseEntryNo",displayName:"入库单号",visible:false},
+        {name:"supplyID",displayName:"供货ID",type:"int",visible:false},
+        {name:"materialNo",displayName:"物料代号"},
+        {name:"materialName",displayName:"物料名称"},
+        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"storageLocationID",displayName:"收货库位ID",type:"int",visible:false},
+        {name:"storageLocationNo",displayName:"收货库位编码"},
+        {name:"storageLocationName",displayName:"收货库位名称"},
+        {name:"expectedAmount",displayName:"订单数量",type:"double"},
+        {name:"realAmount",displayName:"实收数量",type:"double"},
+        {name:"unit",displayName:"单位"},
+        {name:"unitAmount",displayName:"单位数量",type:"double"},
+        {name:"inspectionAmount",displayName:"已分配送检数量",editable:false},
         {name:"state",displayName:"状态",type:"int",editable:false},
-        {name:"deliverOrderNoSRM",displayName:"送货单号（SRM)",type:"string"},
-        {name:"inboundDeliveryOrderNo",displayName:"内向交货单号",type:"string"},
-        {name:"outboundDeliveryOrderNo",displayName:"外向交货单号",type:"string"},
-        {name:"purchaseOrderNo",displayName:"采购订单号",type:"string"},
-        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
-        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
+        {name:"refuseAmount",displayName:"拒收数量",type:"double"},
+        {name:"refuseUnit",displayName:"拒收单位"},
+        {name:"refuseUnitAmount",displayName:"拒收单位数量",type:"double"},
+        {name:"comment",displayName:"备注"},
+        {name:"manufactureNo",displayName:"厂商批号"},
+        {name:"inventoryDate",displayName:"存货日期",type:"datetime"},
+        {name:"manufactureDate",displayName:"生产日期",type:"datetime"},
+        {name:"expiryDate",displayName:"失效日期",type:"datetime"},
+        {name:"personID",displayName:"作业人ID",type:"int",visible:false},
+        {name:"personName",displayName:"作业人名称"}
     ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }

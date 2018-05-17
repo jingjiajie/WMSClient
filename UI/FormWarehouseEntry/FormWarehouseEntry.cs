@@ -12,15 +12,11 @@ namespace WMS.UI
 {
     public partial class FormWarehouseEntry : Form
     {
-        private List<IDictionary<string, object>> allSuppliers = new List<IDictionary<string, object>>();
-
         public FormWarehouseEntry()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            //缓存所有供应商信息，联想用
-            this.RefreshAllSuppliers();
         }
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
@@ -32,15 +28,6 @@ namespace WMS.UI
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
             }
-        }
-
-        public List<IDictionary<string, object>> AllSuppliers { get => allSuppliers; set => allSuppliers = value; }
-
-        private void RefreshAllSuppliers()
-        {
-            this.allSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{{}}");
-            if (this.allSuppliers == null) this.Close();
         }
 
         //添加按钮点击事件
@@ -72,29 +59,14 @@ namespace WMS.UI
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url",Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-        }
-
-        //供应商名称输入联想
-        private object[] SupplierNameAssociation(string str)
-        {
-            return (from s in this.allSuppliers
-                    where s["name"] != null && s["name"].ToString().StartsWith(str)
-                    select s["name"]).ToArray();
-        }
-
-        //供应商代号输入联想
-        private object[] SupplierNoAssociation(string str)
-        {
-            return (from s in this.allSuppliers
-                    where s["no"] != null && s["no"].ToString().StartsWith(str)
-                    select s["no"]).ToArray();
+            this.searchView1.Search();
         }
         
         //供应商名称编辑完成，根据名称自动搜索ID和No
         private void SupplierNameEditEnded(int row, string supplierName)
         {
             IDictionary<string, object> foundSupplier =
-                this.AllSuppliers.Find((s) =>
+                GlobalData.AllSuppliers.Find((s) =>
                     {
                         if (s["name"] == null) return false;
                         return s["name"].ToString() == supplierName;
@@ -114,7 +86,7 @@ namespace WMS.UI
         private void SupplierNoEditEnded(int row, string supplierName)
         {
             IDictionary<string, object> foundSupplier =
-                this.AllSuppliers.Find((s) =>
+                GlobalData.AllSuppliers.Find((s) =>
                 {
                     if (s["no"] == null) return false;
                     return s["no"].ToString() == supplierName;
@@ -126,7 +98,7 @@ namespace WMS.UI
             else
             {
                 this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "supplierNo"] = foundSupplier["no"];
+                this.model1[row, "supplierName"] = foundSupplier["name"];
             }
         }
 
@@ -140,6 +112,17 @@ namespace WMS.UI
             }
             var warehouseEntries = this.model1.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
             new FormWarehouseEntryInspect(warehouseEntries).Show();
+        }
+
+        private void buttonItems_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new long[] { this.model1.SelectionRange.Row })[0];
+            new FormWarehouseEntryItem(rowData).Show();
         }
     }
 }

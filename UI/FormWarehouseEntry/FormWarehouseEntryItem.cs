@@ -1,0 +1,109 @@
+﻿using FrontWork;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace WMS.UI
+{
+    public partial class FormWarehouseEntryItem : Form
+    {
+        private IDictionary<string, object> warehouseEntry = null;
+
+        public FormWarehouseEntryItem(IDictionary<string,object> warehouseEntry)
+        {
+            MethodListenerContainer.Register(this);
+            this.warehouseEntry = warehouseEntry;
+            InitializeComponent();
+            this.searchView1.AddStaticCondition("warehouseEntryId", this.warehouseEntry["id"]);
+        }
+
+        //添加按钮点击事件
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0,new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "createPersonId",GlobalData.Person["id"]},
+                { "createPersonName",GlobalData.Person["name"]},
+                { "createTime",DateTime.Now}
+            });
+        }
+
+        //删除按钮点击事件
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            this.model1.RemoveSelectedRows();
+        }
+
+        //保存按钮点击事件
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            this.synchronizer.Save();
+        }
+
+        private void FormWarehouseEntry_Load(object sender, EventArgs e)
+        {
+            //设置两个请求参数
+            this.synchronizer.SetRequestParameter("$url",Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
+        
+        //供应商名称编辑完成，根据名称自动搜索ID和No
+        private void SupplierNameEditEnded(int row, string supplierName)
+        {
+            //IDictionary<string, object> foundSupplier =
+            //    GlobalData.AllSuppliers.Find((s) =>
+            //        {
+            //            if (s["name"] == null) return false;
+            //            return s["name"].ToString() == supplierName;
+            //        });
+            //if(foundSupplier == null)
+            //{
+            //    MessageBox.Show($"供应商\"{supplierName}\"不存在，请重新填写","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //else
+            //{
+            //    this.model1[row, "supplierId"] = foundSupplier["id"];
+            //    this.model1[row, "supplierNo"] = foundSupplier["no"];
+            //}
+        }
+
+        //供应商代号编辑完成，根据名称自动搜索ID和名称
+        private void SupplierNoEditEnded(int row, string supplierName)
+        {
+            //IDictionary<string, object> foundSupplier =
+            //    GlobalData.AllSuppliers.Find((s) =>
+            //    {
+            //        if (s["no"] == null) return false;
+            //        return s["no"].ToString() == supplierName;
+            //    });
+            //if (foundSupplier == null)
+            //{
+            //    MessageBox.Show($"供应商\"{supplierName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //else
+            //{
+            //    this.model1[row, "supplierId"] = foundSupplier["id"];
+            //    this.model1[row, "supplierNo"] = foundSupplier["no"];
+            //}
+        }
+
+        private void buttonInspect_Click(object sender, EventArgs e)
+        {
+            var selectionRange = this.model1.SelectionRange;
+            if(selectionRange == null)
+            {
+                MessageBox.Show("请选择要生成送检单的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var warehouseEntries = this.model1.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
+            new FormWarehouseEntryInspect(warehouseEntries).Show();
+        }
+    }
+}

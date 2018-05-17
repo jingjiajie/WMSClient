@@ -58,11 +58,11 @@ Partial Class SearchView
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 5
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1280, 84)
         Me.TableLayoutPanel1.TabIndex = 0
         '
@@ -71,10 +71,10 @@ Partial Class SearchView
         Me.LabelSearchCondition.AutoSize = True
         Me.LabelSearchCondition.Dock = System.Windows.Forms.DockStyle.Fill
         Me.LabelSearchCondition.Font = New System.Drawing.Font("黑体", 10.0!)
-        Me.LabelSearchCondition.Location = New System.Drawing.Point(25, 32)
+        Me.LabelSearchCondition.Location = New System.Drawing.Point(25, 34)
         Me.LabelSearchCondition.Margin = New System.Windows.Forms.Padding(5, 5, 5, 0)
         Me.LabelSearchCondition.Name = "LabelSearchCondition"
-        Me.LabelSearchCondition.Size = New System.Drawing.Size(140, 25)
+        Me.LabelSearchCondition.Size = New System.Drawing.Size(140, 30)
         Me.LabelSearchCondition.TabIndex = 0
         Me.LabelSearchCondition.Text = "查询条件"
         '
@@ -83,10 +83,10 @@ Partial Class SearchView
         Me.Label2.AutoSize = True
         Me.Label2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label2.Font = New System.Drawing.Font("黑体", 10.0!)
-        Me.Label2.Location = New System.Drawing.Point(625, 32)
+        Me.Label2.Location = New System.Drawing.Point(625, 34)
         Me.Label2.Margin = New System.Windows.Forms.Padding(5, 5, 5, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(140, 25)
+        Me.Label2.Size = New System.Drawing.Size(140, 30)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "排序条件"
         '
@@ -96,7 +96,7 @@ Partial Class SearchView
         Me.ComboBoxSearchKey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxSearchKey.Font = New System.Drawing.Font("黑体", 10.0!)
         Me.ComboBoxSearchKey.FormattingEnabled = True
-        Me.ComboBoxSearchKey.Location = New System.Drawing.Point(175, 27)
+        Me.ComboBoxSearchKey.Location = New System.Drawing.Point(175, 29)
         Me.ComboBoxSearchKey.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.ComboBoxSearchKey.Name = "ComboBoxSearchKey"
         Me.ComboBoxSearchKey.Size = New System.Drawing.Size(140, 35)
@@ -109,7 +109,7 @@ Partial Class SearchView
         Me.ComboBoxSearchRelation.Font = New System.Drawing.Font("黑体", 10.0!)
         Me.ComboBoxSearchRelation.FormattingEnabled = True
         Me.ComboBoxSearchRelation.Items.AddRange(New Object() {"等于", "大于等于", "小于等于"})
-        Me.ComboBoxSearchRelation.Location = New System.Drawing.Point(325, 27)
+        Me.ComboBoxSearchRelation.Location = New System.Drawing.Point(325, 29)
         Me.ComboBoxSearchRelation.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.ComboBoxSearchRelation.Name = "ComboBoxSearchRelation"
         Me.ComboBoxSearchRelation.Size = New System.Drawing.Size(140, 35)
@@ -122,7 +122,7 @@ Partial Class SearchView
         Me.ComboBoxOrderKey.Font = New System.Drawing.Font("黑体", 10.0!)
         Me.ComboBoxOrderKey.FormattingEnabled = True
         Me.ComboBoxOrderKey.Items.AddRange(New Object() {"无"})
-        Me.ComboBoxOrderKey.Location = New System.Drawing.Point(775, 27)
+        Me.ComboBoxOrderKey.Location = New System.Drawing.Point(775, 29)
         Me.ComboBoxOrderKey.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.ComboBoxOrderKey.Name = "ComboBoxOrderKey"
         Me.ComboBoxOrderKey.Size = New System.Drawing.Size(140, 35)
@@ -135,7 +135,7 @@ Partial Class SearchView
         Me.ComboBoxOrder.Font = New System.Drawing.Font("黑体", 10.0!)
         Me.ComboBoxOrder.FormattingEnabled = True
         Me.ComboBoxOrder.Items.AddRange(New Object() {"正序", "倒序"})
-        Me.ComboBoxOrder.Location = New System.Drawing.Point(925, 27)
+        Me.ComboBoxOrder.Location = New System.Drawing.Point(925, 29)
         Me.ComboBoxOrder.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.ComboBoxOrder.Name = "ComboBoxOrder"
         Me.ComboBoxOrder.Size = New System.Drawing.Size(140, 35)
@@ -145,7 +145,7 @@ Partial Class SearchView
         '
         Me.TextBoxSearchCondition.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TextBoxSearchCondition.Font = New System.Drawing.Font("黑体", 9.0!)
-        Me.TextBoxSearchCondition.Location = New System.Drawing.Point(475, 27)
+        Me.TextBoxSearchCondition.Location = New System.Drawing.Point(475, 29)
         Me.TextBoxSearchCondition.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.TextBoxSearchCondition.Name = "TextBoxSearchCondition"
         Me.TextBoxSearchCondition.Size = New System.Drawing.Size(140, 35)
@@ -159,7 +159,7 @@ Partial Class SearchView
         Me.ButtonSearch.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.ButtonSearch.Name = "ButtonSearch"
         Me.TableLayoutPanel1.SetRowSpan(Me.ButtonSearch, 3)
-        Me.ButtonSearch.Size = New System.Drawing.Size(110, 40)
+        Me.ButtonSearch.Size = New System.Drawing.Size(110, 49)
         Me.ButtonSearch.TabIndex = 7
         Me.ButtonSearch.Text = "查询"
         Me.ButtonSearch.UseVisualStyleBackColor = True
