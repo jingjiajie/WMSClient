@@ -189,7 +189,18 @@ Public Class Model
             If Not Me.Data.Columns.Contains(curField.Name) Then
                 Dim newColumn As New DataColumn
                 newColumn.ColumnName = curField.Name
-                newColumn.DataType = GetType(Object)
+                Select Case curField.Type
+                    Case "int"
+                        newColumn.DataType = GetType(Integer)
+                    Case "double"
+                        newColumn.DataType = GetType(Double)
+                    Case "string"
+                        newColumn.DataType = GetType(String)
+                    Case "datetime"
+                        newColumn.DataType = GetType(DateTime)
+                    Case "bool"
+                        newColumn.DataType = GetType(Boolean)
+                End Select
                 Me.Data.Columns.Add(newColumn)
             End If
         Next
@@ -232,7 +243,7 @@ Public Class Model
             Throw New Exception($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
         End If
         If Not Me.Data.Columns.Contains(columnName) Then
-            Throw New Exception($"Model doesn't contain column:{columnName}")
+            Throw New Exception($"Model:{Me.Name} doesn't contain column:{columnName}")
         End If
         Dim data As Object = Me.Data.Rows(row)(columnName)
         If IsDBNull(data) Then
@@ -247,7 +258,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rowIDs">行ID</param>
     ''' <returns>相应行数据</returns>
-    Public Function GetRows(rowIDs As Guid()) As DataTable Implements IModel.GetRows
+    Public Function GetRows(rowIDs As Guid()) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
@@ -265,19 +276,17 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>相应行数据</returns>
-    Public Function GetRows(rows As Long()) As DataTable Implements IModel.GetRows
-        Dim dataTable = Me.Data.Clone
+    Public Function GetRows(rows As Long()) As IDictionary(Of String, Object)() Implements IModel.GetRows
+        Dim result As New List(Of IDictionary(Of String, Object))
         Try
             For Each row In rows
-                Dim newRow = dataTable.NewRow
-                newRow.ItemArray = Me.Data.Rows(row).ItemArray
-                dataTable.Rows.Add(newRow)
+                result.Add(Me.DataRowToDictionary(Me.Data.Rows(row)))
             Next
         Catch ex As Exception
             Throw New Exception("GetRows failed: " & ex.Message)
         End Try
 
-        Return dataTable
+        Return result.ToArray
     End Function
 
     ''' <summary>
@@ -285,7 +294,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="data">增加行的数据</param>
     ''' <returns>增加的行号</returns>
-    Public Function AddRow(data As Dictionary(Of String, Object)) As Long Implements IModel.AddRow
+    Public Function AddRow(data As IDictionary(Of String, Object)) As Long Implements IModel.AddRow
         Return Me.AddRows({data})(0)
     End Function
 
@@ -294,7 +303,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="dataOfEachRow">增加行的数据</param>
     ''' <returns>增加的行号</returns>
-    Public Function AddRows(dataOfEachRow As Dictionary(Of String, Object)()) As Long() Implements IModel.AddRows
+    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Long() Implements IModel.AddRows
         Dim addRowCount = dataOfEachRow.Length
         Dim oriRowCount = Me.Data.Rows.Count
         Dim insertRows = Util.Range(RowCount, RowCount + addRowCount)
@@ -307,7 +316,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="row">插入行行号</param>
     ''' <param name="data">数据</param>
-    Public Sub InsertRow(row As Long, data As Dictionary(Of String, Object)) Implements IModel.InsertRow
+    Public Sub InsertRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
         Call Me.InsertRows({row}, {data})
     End Sub
 
@@ -316,14 +325,15 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
-    Public Sub InsertRows(rows As Long(), dataOfEachRow As Dictionary(Of String, Object)()) Implements IModel.InsertRows
+    Public Sub InsertRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         If Me.Configuration Is Nothing Then Throw New Exception($"Configuration not set to Model:{Me.Name}!")
         Dim fields = Configuration.GetFieldConfigurations(Me.Mode)
         Dim indexRowPairs As New List(Of IndexRowPair)
+        Dim oriRowCount = Me.Data.Rows.Count
         '原始行每次插入之后，行号会变，所以做调整
         Dim realRowsASC = (From r In rows Order By r Ascending Select r).ToArray
         For i = 0 To realRowsASC.Length - 1
-            realRowsASC(i) = realRowsASC(i) + i
+            realRowsASC(i) = realRowsASC(i) + System.Math.Min(oriRowCount, i)
         Next
         '开始添加数据
         For i = 0 To realRowsASC.Length - 1
@@ -341,6 +351,7 @@ Public Class Model
             Next
             '将值写入datatable
             For Each item In curData
+                If Not Me.Data.Columns.Contains(item.Key) Then Continue For
                 newRow(item.Key) = item.Value
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
@@ -460,7 +471,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rowID">更新行ID</param>
     ''' <param name="data">数据</param>
-    Public Sub UpdateRow(rowID As Guid, data As Dictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(rowID As Guid, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Me.UpdateRows({rowID}, {data})
     End Sub
 
@@ -469,7 +480,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="row">更新行行号</param>
     ''' <param name="data">数据</param>
-    Public Sub UpdateRow(row As Long, data As Dictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Call Me.UpdateRows(
             New Long() {row},
             New Dictionary(Of String, Object)() {data}
@@ -481,7 +492,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rowIDs">更新的行ID</param>
     ''' <param name="dataOfEachRow">相应的数据</param>
-    Public Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As Dictionary(Of String, Object)()) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
@@ -499,7 +510,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Sub UpdateRows(rows As Long(), dataOfEachRow As Dictionary(Of String, Object)()) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
         Try
             Dim i = 0
             For Each row In rows
@@ -629,7 +640,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="dataRow">DataRow对象</param>
     ''' <returns>转换结果</returns>
-    Protected Function DataRowToDictionary(dataRow As DataRow) As Dictionary(Of String, Object)
+    Protected Function DataRowToDictionary(dataRow As DataRow) As IDictionary(Of String, Object)
         Dim result As New Dictionary(Of String, Object)
         Dim columns = dataRow.Table.Columns
         For Each column As DataColumn In columns

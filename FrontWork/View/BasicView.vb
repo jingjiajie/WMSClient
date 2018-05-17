@@ -568,7 +568,7 @@ Public Class BasicView
         '清空面板
         Call Me.ClearPanelData()
         '获取数据
-        Dim data = Me.Model.GetRows(New Long() {modelSelectedRow})
+        Dim rowData As IDictionary(Of String, Object) = Me.Model.GetRows({modelSelectedRow})(0)
         '遍历Configuration的字段
         Dim fieldConfiguration = Me.Configuration.GetFieldConfigurations(Me.Mode)
         If fieldConfiguration Is Nothing Then
@@ -576,17 +576,13 @@ Public Class BasicView
             Return False
         End If
         For Each curField In fieldConfiguration
-            Dim curColumn As DataColumn = (From c As DataColumn In data.Columns
-                                           Where c.ColumnName.Equals(curField.Name, StringComparison.OrdinalIgnoreCase)
-                                           Select c).FirstOrDefault
-            '在对象中找不到Configuration描述的字段，直接报错，并接着下一个字段
-            If curColumn Is Nothing Then
+            If Not rowData.ContainsKey(curField.Name) Then
                 Logger.PutMessage("Field """ + curField.Name + """ not found in model")
                 Continue For
             End If
             '否则开始Push值
             '先计算值，过一遍Mapper
-            Dim value = data.Rows(0)(curColumn)
+            Dim value = rowData(curField.Name)
             Dim text As String
 
             If Not curField.ForwardMapper Is Nothing Then

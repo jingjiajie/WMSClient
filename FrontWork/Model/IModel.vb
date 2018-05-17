@@ -8,28 +8,28 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="data">新增行的数据</param>
     ''' <returns>新增行的行号</returns>
-    Function AddRow(data As Dictionary(Of String, Object)) As Long
+    Function AddRow(data As IDictionary(Of String, Object)) As Long
 
     ''' <summary>
     ''' 增加若干行
     ''' </summary>
     ''' <param name="data">新增行的数据</param>
     ''' <returns>新增行的行号</returns>
-    Function AddRows(data As Dictionary(Of String, Object)()) As Long()
+    Function AddRows(data As IDictionary(Of String, Object)()) As Long()
 
     ''' <summary>
     ''' 插入一行
     ''' </summary>
     ''' <param name="row">插入行号</param>
     ''' <param name="data">插入行数据</param>
-    Sub InsertRow(row As Long, data As Dictionary(Of String, Object))
+    Sub InsertRow(row As Long, data As IDictionary(Of String, Object))
 
     ''' <summary>
     ''' 插入若干行
     ''' </summary>
     ''' <param name="rows">插入行的行号</param>
     ''' <param name="data">插入行的数据</param>
-    Sub InsertRows(rows As Long(), data As Dictionary(Of String, Object)())
+    Sub InsertRows(rows As Long(), data As IDictionary(Of String, Object)())
 
     ''' <summary>
     ''' 删除一行
@@ -72,28 +72,28 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="row">更新的行号</param>
     ''' <param name="data">更新的数据</param>
-    Sub UpdateRow(row As Long, data As Dictionary(Of String, Object))
+    Sub UpdateRow(row As Long, data As IDictionary(Of String, Object))
 
     ''' <summary>
     ''' 更新一行
     ''' </summary>
     ''' <param name="rowID">更新行的ID</param>
     ''' <param name="data">更新的数据</param>
-    Sub UpdateRow(rowID As Guid, data As Dictionary(Of String, Object))
+    Sub UpdateRow(rowID As Guid, data As IDictionary(Of String, Object))
 
     ''' <summary>
     ''' 更新若干行
     ''' </summary>
     ''' <param name="rows">更新的行号</param>
     ''' <param name="dataOfEachRow">更新的数据，和行号一一对应</param>
-    Sub UpdateRows(rows As Long(), dataOfEachRow As Dictionary(Of String, Object)())
+    Sub UpdateRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)())
 
     ''' <summary>
     ''' 更新若干行
     ''' </summary>
     ''' <param name="rowIDs">更新的行ID</param>
     ''' <param name="dataOfEachRow">更新的数据，和ID一一对应</param>
-    Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As Dictionary(Of String, Object)())
+    Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)())
 
     ''' <summary>
     ''' 更新若干单元格
@@ -216,14 +216,14 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>数据</returns>
-    Function GetRows(rows As Long()) As DataTable
+    Function GetRows(rows As Long()) As IDictionary(Of String, Object)()
 
     ''' <summary>
     ''' 获取行数据
     ''' </summary>
     ''' <param name="rowIDs">行号</param>
     ''' <returns>数据</returns>
-    Function GetRows(rowIDs As Guid()) As DataTable
+    Function GetRows(rowIDs As Guid()) As IDictionary(Of String, Object)()
 
     ''' <summary>
     ''' 获取Model内部的DataTable

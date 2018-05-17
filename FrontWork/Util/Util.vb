@@ -8,7 +8,7 @@ Imports System.Web.Script.Serialization
 ''' <summary>
 ''' 公用工具类
 ''' </summary>
-Friend Class Util
+Public Class Util
     Private Shared jsEngine As New Jint.Engine
 
     ''' <summary>

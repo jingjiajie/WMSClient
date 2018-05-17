@@ -135,7 +135,7 @@ Public Class JsonRESTSynchronizer
     End Sub
 
     Public Sub SetRequestParameter(name As String, value As Object, Optional mode As String = "default")
-        '如果目标模式正式当前模式，则对各API设置请求参数
+        '如果目标模式正是当前模式，则对各API设置请求参数
         If mode = Me.Mode Then
             Me.FindAPI?.SetRequestParameter(name, value)
             Me.AddAPI?.SetRequestParameter(name, value)
@@ -155,8 +155,10 @@ Public Class JsonRESTSynchronizer
                     {name, value}
                 }
             })
-        Else
+        ElseIf Not foundModeParams.Params.ContainsKey(name) Then
             foundModeParams.Params.Add(name, value)
+        Else
+            foundModeParams.Params(name) = value
         End If
     End Sub
 
@@ -268,7 +270,7 @@ Public Class JsonRESTSynchronizer
             Dim row = posCell.Row
             Dim rowID = posCell.RowID
             '获取整列数据
-            Dim fullRow As Dictionary(Of String, Object) = Me.DataRowToDictionary(Me.Model.GetRows({row}).Rows(0))
+            Dim fullRow As IDictionary(Of String, Object) = Me.Model.GetRows({row})(0)
             indexFullRows(i) = New IndexRowPair(row, rowID, fullRow)
 
             Dim action = New UpdateRowAction(Me.UpdateAPI, indexFullRows, Me.Model)
@@ -362,7 +364,7 @@ Public Class JsonRESTSynchronizer
         For i = 0 To e.UpdatedRows.Length - 1
             Dim index = e.UpdatedRows(i).Index
             Dim rowID = e.UpdatedRows(i).RowID
-            Dim fullRow As Dictionary(Of String, Object) = Me.DataRowToDictionary(Me.Model.GetRows({index}).Rows(0))
+            Dim fullRow As IDictionary(Of String, Object) = Me.Model.GetRows({index})(0)
             indexFullRows(i) = New IndexRowPair(index, rowID, fullRow)
         Next
         Dim action = New UpdateRowAction(Me.UpdateAPI, indexFullRows, Me.Model)
@@ -431,7 +433,7 @@ Public Class JsonRESTSynchronizer
                         Logger.PutMessage("Column """ & key & """ not found in model", LogLevel.WARNING)
                         Continue For
                     Else
-                        newRow(key) = value
+                        newRow(key) = If(value, DBNull.Value)
                     End If
                 Next
                 dataTable.Rows.Add(newRow)

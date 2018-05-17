@@ -211,11 +211,11 @@ Public Class ModelBox
         RaiseEvent RowSynchronizationStateChanged(sender, e)
     End Sub
 
-    Public Sub InsertRows(rows() As Long, data() As Dictionary(Of String, Object)) Implements IModel.InsertRows
+    Public Sub InsertRows(rows() As Long, data() As IDictionary(Of String, Object)) Implements IModel.InsertRows
         Me.GetCurModel.InsertRows(rows, data)
     End Sub
 
-    Public Sub InsertRow(row As Long, data As Dictionary(Of String, Object)) Implements IModel.InsertRow
+    Public Sub InsertRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
         Me.GetCurModel.InsertRow(row, data)
     End Sub
 
@@ -243,19 +243,19 @@ Public Class ModelBox
         Call Me.GetCurModel.RemoveSelectedRows()
     End Sub
 
-    Public Sub UpdateRow(row As Long, data As Dictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Call Me.GetCurModel.UpdateRow(row, data)
     End Sub
 
-    Public Sub UpdateRow(rowID As Guid, data As Dictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(rowID As Guid, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Me.GetCurModel.UpdateRow(rowID, data)
     End Sub
 
-    Public Sub UpdateRows(rows() As Long, dataOfEachRow() As Dictionary(Of String, Object)) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rows() As Long, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModel.UpdateRows
         Me.GetCurModel.UpdateRows(rows, dataOfEachRow)
     End Sub
 
-    Public Sub UpdateRows(rowIDs() As Guid, dataOfEachRow() As Dictionary(Of String, Object)) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rowIDs() As Guid, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModel.UpdateRows
         Me.GetCurModel.UpdateRows(rowIDs, dataOfEachRow)
     End Sub
 
@@ -299,11 +299,11 @@ Public Class ModelBox
 
     End Sub
 
-    Public Function AddRow(data As Dictionary(Of String, Object)) As Long Implements IModel.AddRow
+    Public Function AddRow(data As IDictionary(Of String, Object)) As Long Implements IModel.AddRow
         Return Me.GetCurModel.AddRow(data)
     End Function
 
-    Public Function AddRows(data() As Dictionary(Of String, Object)) As Long() Implements IModel.AddRows
+    Public Function AddRows(data() As IDictionary(Of String, Object)) As Long() Implements IModel.AddRows
         Return Me.GetCurModel.AddRows(data)
     End Function
 
@@ -339,11 +339,11 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowID(oriRowID, newID)
     End Sub
 
-    Public Function GetRows(rows() As Long) As DataTable Implements IModel.GetRows
+    Public Function GetRows(rows() As Long) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rows)
     End Function
 
-    Public Function GetRows(rowIDs() As Guid) As DataTable Implements IModel.GetRows
+    Public Function GetRows(rowIDs() As Guid) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rowIDs)
     End Function
 

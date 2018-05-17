@@ -130,5 +130,16 @@ namespace WMS.UI
             }
         }
 
+        private void buttonInspect_Click(object sender, EventArgs e)
+        {
+            var selectionRange = this.model1.SelectionRange;
+            if(selectionRange == null)
+            {
+                MessageBox.Show("请选择要生成送检单的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var warehouseEntries = this.model1.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
+            new FormWarehouseEntryInspect(warehouseEntries).Show();
+        }
     }
 }

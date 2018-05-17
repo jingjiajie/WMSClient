@@ -185,6 +185,12 @@
     <Compile Include="View\SearchView.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="View\TabView.Designer.vb">
+      <DependentUpon>TabView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\TabView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Adapters\SearchViewJsonRESTAdapter.resx">
@@ -225,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\SearchView.resx">
       <DependentUpon>SearchView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\TabView.resx">
+      <DependentUpon>TabView.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

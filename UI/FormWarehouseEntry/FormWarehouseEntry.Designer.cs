@@ -1,6 +1,8 @@
-﻿namespace WMS.UI
+﻿using System.Windows.Forms;
+
+namespace WMS.UI
 {
-    partial class FormWarehouseEntry
+    public partial class FormWarehouseEntry : Form
     {
         /// <summary>
         /// Required designer variable.
@@ -47,14 +49,14 @@
             this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
             this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonItemSubmission = new System.Windows.Forms.ToolStripButton();
+            this.buttonInspect = new System.Windows.Forms.ToolStripButton();
             this.ButtonToSubmission = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.pagerView1 = new FrontWork.PagerView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
@@ -133,7 +135,7 @@
             this.buttonReceipt,
             this.buttonReceiptCancel,
             this.toolStripSeparator4,
-            this.buttonItemSubmission,
+            this.buttonInspect,
             this.ButtonToSubmission,
             this.toolStripSeparator5,
             this.buttonPreview});
@@ -214,13 +216,14 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(10, 28);
             // 
-            // buttonItemSubmission
+            // buttonInspect
             // 
-            this.buttonItemSubmission.Image = ((System.Drawing.Image)(resources.GetObject("buttonItemSubmission.Image")));
-            this.buttonItemSubmission.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonItemSubmission.Name = "buttonItemSubmission";
-            this.buttonItemSubmission.Size = new System.Drawing.Size(158, 35);
-            this.buttonItemSubmission.Text = "生成送检单";
+            this.buttonInspect.Image = ((System.Drawing.Image)(resources.GetObject("buttonInspect.Image")));
+            this.buttonInspect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonInspect.Name = "buttonInspect";
+            this.buttonInspect.Size = new System.Drawing.Size(158, 35);
+            this.buttonInspect.Text = "生成送检单";
+            this.buttonInspect.Click += new System.EventHandler(this.buttonInspect_Click);
             // 
             // ButtonToSubmission
             // 
@@ -243,20 +246,6 @@
             this.buttonPreview.Name = "buttonPreview";
             this.buttonPreview.Size = new System.Drawing.Size(144, 35);
             this.buttonPreview.Text = "导出/打印";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
-            this.panel1.Controls.Add(this.synchronizer);
-            this.panel1.Controls.Add(this.model1);
-            this.panel1.Controls.Add(this.configuration1);
-            this.panel1.Controls.Add(this.reoGridView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 218);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1299, 382);
-            this.panel1.TabIndex = 13;
             // 
             // searchView1
             // 
@@ -294,6 +283,20 @@
             this.pagerView1.Size = new System.Drawing.Size(1293, 55);
             this.pagerView1.TabIndex = 12;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
+            this.panel1.Controls.Add(this.synchronizer);
+            this.panel1.Controls.Add(this.model1);
+            this.panel1.Controls.Add(this.configuration1);
+            this.panel1.Controls.Add(this.reoGridView1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 218);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1299, 382);
+            this.panel1.TabIndex = 13;
+            // 
             // pagerSearchJsonRESTAdapter1
             // 
             conditionFieldNamesType1.Key = "key";
@@ -313,14 +316,14 @@
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
             // 
-            // jsonRESTSynchronizer1
+            // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.Location = new System.Drawing.Point(363, 163);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
-            this.synchronizer.Name = "jsonRESTSynchronizer1";
+            this.synchronizer.Name = "synchronizer";
             this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
@@ -391,7 +394,7 @@
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton ButtonToSubmission;
-        private System.Windows.Forms.ToolStripButton buttonItemSubmission;
+        private System.Windows.Forms.ToolStripButton buttonInspect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton buttonReceipt;
