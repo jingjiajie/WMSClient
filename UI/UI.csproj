@@ -61,6 +61,12 @@
     <Compile Include="FormBasicInfos\FormPerson.Designer.cs">
       <DependentUpon>FormPerson.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasicInfos\FormSupplier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormSupplier.Designer.cs">
+      <DependentUpon>FormSupplier.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormWarehouseEntry\FormWarehouseEntryItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -533,6 +539,9 @@
     <Compile Include="Utilities\Utilities.cs" />
     <EmbeddedResource Include="FormBasicInfos\FormPerson.resx">
       <DependentUpon>FormPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormSupplier.resx">
+      <DependentUpon>FormSupplier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryItem.resx">
       <DependentUpon>FormWarehouseEntryItem.cs</DependentUpon>
