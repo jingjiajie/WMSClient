@@ -17,7 +17,7 @@ namespace WMS.UI
             return serializer.Serialize(this);
         }
 
-        public Condition AddCondition(String key, Object[] values, ConditionItemRelation relation)
+        public Condition AddCondition(String key, Object[] values, ConditionItemRelation relation = ConditionItemRelation.EQUAL)
         {
             ConditionItem conditionItem = new ConditionItem();
             conditionItem.key = key;
@@ -27,7 +27,7 @@ namespace WMS.UI
             return this;
         }
 
-        public Condition AddCondition(String key, Object value, ConditionItemRelation relation)
+        public Condition AddCondition(String key, Object value, ConditionItemRelation relation = ConditionItemRelation.EQUAL)
         {
             ConditionItem conditionItem = new ConditionItem();
             conditionItem.key = key;
@@ -37,14 +37,13 @@ namespace WMS.UI
             return this;
         }
 
-        public Condition AddCondition(String key, Object[] values)
+        public Condition AddOrder(String key, OrderItemOrder order = OrderItemOrder.ASC)
         {
-            return this.AddCondition(key, values, ConditionItemRelation.EQUAL);
-        }
-
-        public Condition AddCondition(String key, Object value)
-        {
-            return this.AddCondition(key, value, ConditionItemRelation.EQUAL);
+            OrderItem orderItem = new OrderItem();
+            orderItem.key = key;
+            orderItem.order = order.ToString();
+            this.orders.Add(orderItem);
+            return this;
         }
     }
 

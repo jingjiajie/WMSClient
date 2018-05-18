@@ -225,10 +225,10 @@ Public Class Model
 
     Public Function GetCell(row As Long, column As Long) As Object Implements IModel.GetCell
         If row >= Me.Data.Rows.Count Then
-            Throw New Exception($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
+            Throw New FrontWorkException($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
         End If
         If column >= Me.Data.Columns.Count Then
-            Throw New Exception($"Column:{column} exceeded the max column of Model({Me.Data.Columns.Count - 1})")
+            Throw New FrontWorkException($"Column:{column} exceeded the max column of Model({Me.Data.Columns.Count - 1})")
         End If
         Dim data As Object = Me.Data.Rows(row)(CType(column, Integer))
         If IsDBNull(data) Then
@@ -240,10 +240,10 @@ Public Class Model
 
     Public Function GetCell(row As Long, columnName As String) As Object Implements IModel.GetCell
         If row >= Me.Data.Rows.Count Then
-            Throw New Exception($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
+            Throw New FrontWorkException($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
         End If
         If Not Me.Data.Columns.Contains(columnName) Then
-            Throw New Exception($"Model:{Me.Name} doesn't contain column:{columnName}")
+            Throw New FrontWorkException($"{Me.Name} doesn't contain column:""{columnName}""")
         End If
         Dim data As Object = Me.Data.Rows(row)(columnName)
         If IsDBNull(data) Then
@@ -264,7 +264,7 @@ Public Class Model
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
-                Throw New Exception($"Invalid RowID: {rowID}")
+                Throw New FrontWorkException($"Invalid RowID: {rowID}")
             End If
             rowNums(i) = rowNum
         Next
@@ -283,7 +283,7 @@ Public Class Model
                 result.Add(Me.DataRowToDictionary(Me.Data.Rows(row)))
             Next
         Catch ex As Exception
-            Throw New Exception("GetRows failed: " & ex.Message)
+            Throw New FrontWorkException("GetRows failed: " & ex.Message)
         End Try
 
         Return result.ToArray
@@ -326,7 +326,7 @@ Public Class Model
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
     Public Sub InsertRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
-        If Me.Configuration Is Nothing Then Throw New Exception($"Configuration not set to Model:{Me.Name}!")
+        If Me.Configuration Is Nothing Then Throw New FrontWorkException($"Configuration not set to Model:{Me.Name}!")
         Dim fields = Configuration.GetFieldConfigurations(Me.Mode)
         Dim indexRowPairs As New List(Of IndexRowPair)
         Dim oriRowCount = Me.Data.Rows.Count
@@ -414,7 +414,7 @@ Public Class Model
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
-                Throw New Exception($"Invalid RowID: {rowID}")
+                Throw New FrontWorkException($"Invalid RowID: {rowID}")
             End If
             rowNums(i) = rowNum
         Next
@@ -443,7 +443,7 @@ Public Class Model
                 Me.Data.Rows.RemoveAt(curRowNum)
             Next
         Catch ex As Exception
-            Throw New Exception("RemoveRows failed: " & ex.Message)
+            Throw New FrontWorkException("RemoveRows failed: " & ex.Message)
         End Try
         RaiseEvent RowRemoved(Me, New ModelRowRemovedEventArgs() With {
                                         .RemovedRows = indexRowList.ToArray
@@ -498,7 +498,7 @@ Public Class Model
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
-                Throw New Exception($"Invalid RowID: {rowID}")
+                Throw New FrontWorkException($"Invalid RowID: {rowID}")
             End If
             rowNums(i) = rowNum
         Next
@@ -536,7 +536,7 @@ Public Class Model
             Me.UpdateRowSynchronizationStates(rows, Util.Times(SynchronizationState.UNSYNCHRONIZED, rows.Length))
 
         Catch ex As Exception
-            Throw New Exception("UpdateRows failed: " & ex.Message)
+            Throw New FrontWorkException("UpdateRows failed: " & ex.Message)
         End Try
     End Sub
 
@@ -572,7 +572,7 @@ Public Class Model
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum = -1 Then
-                Throw New Exception($"Invalid RowID: {rowID}")
+                Throw New FrontWorkException($"Invalid RowID: {rowID}")
             End If
             rowNums(i) = rowNum
         Next
@@ -593,7 +593,7 @@ Public Class Model
                               Where col.ColumnName.Equals(columnName, StringComparison.OrdinalIgnoreCase)
                               Select col).FirstOrDefault
             If dataColumn Is Nothing Then
-                Throw New Exception("UpdateCells failed: column """ & columnName & """ not found in model")
+                Throw New FrontWorkException("UpdateCells failed: column """ & columnName & """ not found in model")
             End If
             Me.Data.Rows(rows(i))(dataColumn) = dataOfEachCell(i)
             posCellPairs.Add(New PositionCellPair(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
@@ -624,7 +624,7 @@ Public Class Model
         If syncStates IsNot Nothing Then
             For i = 0 To syncStates.Length - 1
                 If dataTable.Rows.Count <= i Then
-                    Throw New Exception("Length of syncStates exceeded the max row of dataTable")
+                    Throw New FrontWorkException("Length of syncStates exceeded the max row of dataTable")
                 End If
                 Dim row = dataTable.Rows(i)
                 Dim syncState = syncStates(i)
@@ -681,7 +681,7 @@ Public Class Model
         For i = 0 To rowNums.Length - 1
             Dim rowNum = rowNums(i)
             If Me.Data.Rows.Count <= rowNum Then
-                Throw New Exception($"Row {rowNum} exceeded the max row of model")
+                Throw New FrontWorkException($"Row {rowNum} exceeded the max row of model")
             End If
             Dim dataRow = Me.Data.Rows(rowNum)
             rowIDs(i) = Me.GetRowID(dataRow)
@@ -706,14 +706,14 @@ Public Class Model
     ''' <param name="syncStates">同步状态</param>
     Public Sub UpdateRowSynchronizationStates(rowIDs As Guid(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
         If rowIDs.Length <> syncStates.Length Then
-            Throw New Exception("Length of rows must be same of the length of syncStates")
+            Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
         Dim rowNums(rowIDs.Length - 1) As Long
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
             If rowNum < 0 Then
-                Throw New Exception($"Row ID:{rowID} not found!")
+                Throw New FrontWorkException($"Row ID:{rowID} not found!")
             End If
             rowNums(i) = rowNum
         Next
@@ -727,14 +727,14 @@ Public Class Model
     ''' <param name="syncStates">同步状态</param>
     Public Sub UpdateRowSynchronizationStates(rows As Long(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
         If rows.Length <> syncStates.Length Then
-            Throw New Exception("Length of rows must be same of the length of syncStates")
+            Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
         Dim updatedRows = New List(Of IndexRowSynchronizationStatePair)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim syncState = syncStates(i)
             If row >= Me.Data.Rows.Count Then
-                Throw New Exception($"Row {row} exceeded the max row of model")
+                Throw New FrontWorkException($"Row {row} exceeded the max row of model")
             End If
             Me.SetRowSynchronizationState(Me.Data.Rows(row), syncState)
             Dim newIndexRowSynchronizationStatePair = New IndexRowSynchronizationStatePair(row, Me.GetRowID(row), syncState)
@@ -787,7 +787,7 @@ Public Class Model
         For i = 0 To rows.Length - 1
             Dim rowNum = rows(i)
             If Me.Data.Rows.Count <= rowNum Then
-                Throw New Exception($"Row {rowNum} exceeded max row of model!")
+                Throw New FrontWorkException($"Row {rowNum} exceeded max row of model!")
             End If
             Dim dataRow = Me.Data.Rows(rowNum)
             states(i) = Me.GetRowSynchronizationState(dataRow)
@@ -805,7 +805,7 @@ Public Class Model
         For i = 0 To rowIDs.Length - 1
             Dim row = Me.GetRowIndex(rowIDs(i))
             If row < 0 Then
-                Throw New Exception($"Row ID:{rowIDs(i)} not found!")
+                Throw New FrontWorkException($"Row ID:{rowIDs(i)} not found!")
             End If
             rows(i) = row
         Next

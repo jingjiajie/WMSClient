@@ -214,7 +214,8 @@ namespace WMS.UI
         private void comboBoxAccountBook_SelectedIndexChanged(object sender, EventArgs e)
         {
             string accountBook = "WMS_Template";
-            var warehouseList = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + accountBook + "/warehouse/{}");
+            var warehouseList = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + accountBook + "/warehouse/"+
+                new Condition().AddOrder("name"));
             if (warehouseList == null)
             {
                 //MessageBox.Show("加载仓库信息失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -232,14 +233,19 @@ namespace WMS.UI
 
         private void RefreshAssociationData()
         {
+            Condition condWarehouse = new Condition().AddCondition("warehouseId",GlobalData.Warehouse["id"]);
+
             GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{{}}");
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
 
             GlobalData.AllMaterials = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{{}}");
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{condWarehouse.ToString()}");
+
+            GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
 
             GlobalData.AllStorageLocations = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_location/{{}}");
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_location/{condWarehouse.ToString()}");
 
         }
     }

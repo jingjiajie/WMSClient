@@ -112,7 +112,7 @@ Public Class Configuration
         If Me.DesignMode Then Return '设计器设计的时候就不用绑方法监听器了
         Dim foundModeConfiguration = (From m In Me.modeConfigurations Where m.Mode.Equals(mode, StringComparison.OrdinalIgnoreCase) Select m).FirstOrDefault
         If foundModeConfiguration Is Nothing Then
-            Throw New Exception($"mode ""{mode}"" not found!")
+            throw new FrontWorkException($"mode ""{mode}"" not found!")
             Return
         End If
 
@@ -126,7 +126,7 @@ Public Class Configuration
     Public Function GetFieldConfigurations(mode As String) As FieldConfiguration()
         Dim foundModeConfiguration = (From m In modeConfigurations Where m.Mode = mode Select m).FirstOrDefault
         If foundModeConfiguration Is Nothing Then
-            Throw New Exception($"Mode ""{mode}"" not found!")
+            throw new FrontWorkException($"Mode ""{mode}"" not found!")
         Else
             Return foundModeConfiguration.Fields
         End If
@@ -159,7 +159,7 @@ Public Class Configuration
                 MessageBox.Show($"配置中心的配置字符串错误，请检查" & vbCrLf & ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Return
             End If
-            Throw New Exception("ConfigurationString error: " + ex.Message)
+            throw new FrontWorkException("ConfigurationString error: " + ex.Message)
         End Try
         Dim newModeConfigurations = ModeConfiguration.FromJsValue(Me.MethodListeners, jsValue)
         If newModeConfigurations Is Nothing Then Return

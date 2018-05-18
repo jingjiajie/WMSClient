@@ -86,7 +86,7 @@ Public Class Util
             If field.FieldType = GetType(String) OrElse field.FieldType.IsValueType Then
                 field.SetValue(newObj, srcValue)
             ElseIf field.FieldType.GetInterface("ICloneable") = Nothing Then
-                Throw New Exception($"Field {field.Name} must implement ICloneable")
+                throw new FrontWorkException($"Field {field.Name} must implement ICloneable")
             ElseIf srcValue Is Nothing Then
                 field.SetValue(newObj, srcValue)
             Else

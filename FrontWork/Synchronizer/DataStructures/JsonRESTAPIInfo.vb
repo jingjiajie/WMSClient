@@ -96,7 +96,7 @@ Public Class JsonRESTAPIInfo
     '    Try
     '        Me.responseJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
     '    Catch
-    '        Throw New Exception($"Invalid jsonString: ""{jsonString}""")
+    '        throw new FrontWorkException($"Invalid jsonString: ""{jsonString}""")
     '    End Try
     'End Sub
 
@@ -109,7 +109,7 @@ Public Class JsonRESTAPIInfo
         Try
             Me.requestJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
         Catch
-            Throw New Exception($"Invalid jsonString: ""{jsonString}""")
+            throw new FrontWorkException($"Invalid jsonString: ""{jsonString}""")
         End Try
     End Sub
 
@@ -137,7 +137,7 @@ Public Class JsonRESTAPIInfo
                         value = Me.requestJSEngine.Execute(expr).GetCompletionValue.ToString
                     End If
                 Catch ex As Exception
-                    Throw New Exception($"Invalid expression: ""{expr}""" & vbCrLf & $"Message: {ex.Message}")
+                    throw new FrontWorkException($"Invalid expression: ""{expr}""" & vbCrLf & $"Message: {ex.Message}")
                     Return Nothing
                 End Try
             End If
@@ -183,7 +183,7 @@ Public Class JsonRESTAPIInfo
         Try
             responseJsValue = Me.requestJSEngine.Execute("$_EPFResponse=" & responsebody).GetValue("$_EPFResponse")
         Catch
-            Throw New Exception($"Invalid ResponseBody:{responsebody}")
+            throw new FrontWorkException($"Invalid ResponseBody:{responsebody}")
         End Try
         '根据ResponseBody获取各个ResponseParameter的位置
         Dim paramPaths As Dictionary(Of String, String()) = Me.GetResponseBodyTemplateParamPaths(paramNames)
@@ -266,7 +266,7 @@ Public Class JsonRESTAPIInfo
         Try
             Me.responseJSEngine.Execute(String.Format("var $_EPFTargetObject = {0}", Me._ResponseBodyTemplate))
         Catch
-            Throw New Exception("Invalid ResponseBodyTemplate")
+            throw new FrontWorkException("Invalid ResponseBodyTemplate")
         End Try
         Me.responseJSEngine.Execute("fillObjPath($_EPFTargetObject)")
         For Each paramName In paramNames

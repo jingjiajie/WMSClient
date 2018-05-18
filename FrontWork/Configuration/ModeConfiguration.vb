@@ -55,7 +55,7 @@ Public Class ModeConfiguration
     ''' <param name="jsValue">JsValue对象</param>
     ''' <returns></returns>
     Public Shared Function FromJsValue(modeMethodListenerNamesPairs As ModeMethodListenerNamesPair(), jsValue As Jint.Native.JsValue) As ModeConfiguration()
-        If jsValue Is Nothing Then Throw New Exception("JsValue can not be null!")
+        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
         '如果是数组，则遍历解析
         If jsValue.IsArray Then
             Dim newModeConfigurations As New List(Of ModeConfiguration)
@@ -69,7 +69,7 @@ Public Class ModeConfiguration
             Dim newModeConfiguration = MakeModeConfigurationFromJsValue(modeMethodListenerNamesPairs, jsValue, New List(Of ModeConfiguration))
             Return New ModeConfiguration() {newModeConfiguration}
         Else '既不是数组又不是对象，报错返回空
-            Throw New Exception("Only js object or array is accepted to generate EditPanelModeConfiguration!")
+            throw new FrontWorkException("Only js object or array is accepted to generate EditPanelModeConfiguration!")
         End If
     End Function
 
@@ -81,9 +81,9 @@ Public Class ModeConfiguration
     ''' <param name="prevModeConfigurations">之前已经初始化过的modeConfiguration，用来处理ref</param>
     ''' <returns></returns>
     Private Shared Function MakeModeConfigurationFromJsValue(modeMethodListenerNamesPairs As ModeMethodListenerNamesPair(), jsValue As Jint.Native.JsValue, prevModeConfigurations As List(Of ModeConfiguration)) As ModeConfiguration
-        If jsValue Is Nothing Then Throw New Exception("JsValue can not be null!")
+        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
         If Not jsValue.IsObject Then
-            Throw New Exception("Not a valid JsObject!")
+            throw new FrontWorkException("Not a valid JsObject!")
             Return Nothing
         End If
 
@@ -95,7 +95,7 @@ Public Class ModeConfiguration
             newModeConfiguration.Mode = jsObject.GetOwnProperty("mode").Value.ToObject
         Else
             newModeConfiguration.Mode = "default"
-            Throw New Exception("""mode"" property not found, set as ""default"" automatically")
+            throw new FrontWorkException("""mode"" property not found, set as ""default"" automatically")
         End If
         '该模式的方法监听器名称
         Dim methodListenerNames As String() = New String() {}
@@ -110,11 +110,11 @@ Public Class ModeConfiguration
         If jsObject.HasOwnProperty("ref") Then
             Dim jsValueModeRef = jsObject.GetOwnProperty("ref").Value
             If Not jsValueModeRef.IsString Then
-                Throw New Exception("ref property must be a string!")
+                throw new FrontWorkException("ref property must be a string!")
             End If
             Dim modeRef As String = jsValueModeRef.ToString
             If modeRef = newModeConfiguration.Mode Then
-                Throw New Exception($"Mode ""{modeRef}"" cannot reference it self!")
+                throw new FrontWorkException($"Mode ""{modeRef}"" cannot reference it self!")
             End If
             '寻找引用的模式
             Dim foundModeConfiguration = prevModeConfigurations.Find(
@@ -122,7 +122,7 @@ Public Class ModeConfiguration
                     Return modeConfiguration.Mode = modeRef
                 End Function)
             If foundModeConfiguration Is Nothing Then
-                Throw New Exception($"Mode ""{modeRef}"" not found!")
+                throw new FrontWorkException($"Mode ""{modeRef}"" not found!")
             End If
             Dim newModeName = newModeConfiguration.Mode
             newModeConfiguration = Util.DeepClone(foundModeConfiguration)
@@ -134,7 +134,7 @@ Public Class ModeConfiguration
             Dim newFields = FieldConfiguration.FromJsValue(methodListenerNames, jsObject.GetOwnProperty("fields").Value, newModeConfiguration.Fields)
             newModeConfiguration.Fields = newFields
         Else
-            Throw New Exception("""fields"" property is necessary!")
+            throw new FrontWorkException("""fields"" property is necessary!")
         End If
 
         If jsObject.HasOwnProperty("httpAPIs") Then

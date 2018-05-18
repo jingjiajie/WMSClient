@@ -34,7 +34,7 @@ Public Class MethodListenerContainer
                 Dim properties = curType.GetProperties(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic)
                 For Each prop In properties
                     If prop.PropertyType = GetType(Configuration) Then
-                        Throw New Exception($"MethodListener: {name} cannot contain Configuration property!")
+                        throw new FrontWorkException($"MethodListener: {name} cannot contain Configuration property!")
                     End If
                 Next
                 Dim fields = curType.GetFields(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic)
@@ -43,13 +43,13 @@ Public Class MethodListenerContainer
                         Console.Write("")
                     End If
                     If field.FieldType = GetType(Configuration) Then
-                        Throw New Exception($"MethodListener: {name} cannot contain Configuration field!")
+                        throw new FrontWorkException($"MethodListener: {name} cannot contain Configuration field!")
                     End If
                 Next
                 Call MethodListenerContainer.Register(name, instance)
             Next
         Catch ex As Exception
-            Throw New Exception(ex.Message)
+            throw new FrontWorkException(ex.Message)
         End Try
     End Sub
 

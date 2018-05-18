@@ -115,7 +115,7 @@ Partial Public Class FormAssociation
     Private Function FindTopParentForm(ByVal c As Control) As Form
         If c.Parent Is Nothing Then
             If TypeOf (c) IsNot Form Then
-                Throw New Exception("textbox must be added in a Form before binded to FormAssociation!")
+                throw new FrontWorkException("textbox must be added in a Form before binded to FormAssociation!")
             End If
             Return c
         Else
@@ -166,7 +166,9 @@ Partial Public Class FormAssociation
                                                  Me.Show()
                                              End If
                                          End Sub))
-                Catch ex As Exception
+                Catch ex As MethodNotFoundException
+                    Throw
+                Catch ex As FrontWorkException
                     Logger.SetMode(LogMode.DEFAULT_MODE)
                     Logger.PutMessage(ex.Message)
                     Return

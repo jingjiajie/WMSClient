@@ -360,7 +360,13 @@ Public Class BasicView
                                                         curField.ContentChanged.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
                                                     End Sub
                 End If
-                '编辑结束事件
+                '绑定焦点离开自动保存事件
+                AddHandler textBox.Leave, Sub()
+                                              If Me.switcherLocalEvents = False Then Return
+                                              Logger.Debug("TableLayoutView TextBox Leave Save Data: " & Str(Me.GetHashCode))
+                                              Call Me.CellUpdateEvent(textBox.Name)
+                                          End Sub
+                '编辑结束事件（先保存数据再触发编辑结束事件，顺序不能颠倒）
                 If curField.EditEnded IsNot Nothing Then
                     AddHandler textBox.Leave, Sub()
                                                   If Me.switcherLocalEvents = False Then Return
@@ -369,12 +375,6 @@ Public Class BasicView
                                                   curField.EditEnded.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
                                               End Sub
                 End If
-                '绑定焦点离开自动保存事件
-                AddHandler textBox.Leave, Sub()
-                                              If Me.switcherLocalEvents = False Then Return
-                                              Logger.Debug("TableLayoutView TextBox Leave Save Data: " & Str(Me.GetHashCode))
-                                              Call Me.CellUpdateEvent(textBox.Name)
-                                          End Sub
             Else '否则可以用ComboBox体现
                 Dim comboBox As New ComboBox With {
                                                           .Name = curField.Name,
@@ -402,6 +402,12 @@ Public Class BasicView
                                                                   curField.ContentChanged.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
                                                               End Sub
                 End If
+                '绑定焦点离开自动保存事件
+                AddHandler comboBox.Leave, Sub()
+                                               If Me.switcherLocalEvents = False Then Return
+                                               Logger.Debug("TableLayoutView ComboBox Leave Save Data: " & Str(Me.GetHashCode))
+                                               Call Me.CellUpdateEvent(comboBox.Name)
+                                           End Sub
                 If curField.EditEnded IsNot Nothing Then
                     AddHandler comboBox.Leave, Sub()
                                                    If Me.switcherLocalEvents = False Then Return
@@ -410,12 +416,6 @@ Public Class BasicView
                                                    curField.EditEnded.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
                                                End Sub
                 End If
-                '绑定焦点离开自动保存事件
-                AddHandler comboBox.Leave, Sub()
-                                               If Me.switcherLocalEvents = False Then Return
-                                               Logger.Debug("TableLayoutView ComboBox Leave Save Data: " & Str(Me.GetHashCode))
-                                               Call Me.CellUpdateEvent(comboBox.Name)
-                                           End Sub
             End If
         Next
 
@@ -804,7 +804,7 @@ Public Class BasicView
     Public Function GetViewComponent(row As Long, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
         Dim foundControls = Me.Panel.Controls.Find(fieldName, False)
         If foundControls.Length = 0 Then
-            Throw New Exception($"ViewComponent ""{fieldName}"" not found!")
+            throw new FrontWorkException($"ViewComponent ""{fieldName}"" not found!")
         End If
         Return New BasicViewComponent(foundControls(0))
     End Function

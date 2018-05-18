@@ -21,7 +21,7 @@ Public Class HTTPMethod
         ElseIf methodString.Equals("DELETE", StringComparison.OrdinalIgnoreCase) Then
             Return DELETE
         Else
-            Throw New Exception($"Invalid HTTP Method: {methodString}")
+            throw new FrontWorkException($"Invalid HTTP Method: {methodString}")
         End If
     End Function
 
@@ -35,7 +35,7 @@ Public Class HTTPMethod
         ElseIf Me Is HTTPMethod.DELETE Then
             Return "DELETE"
         Else
-            Throw New Exception("Unknown HTTPMethod!")
+            throw new FrontWorkException("Unknown HTTPMethod!")
         End If
     End Function
 

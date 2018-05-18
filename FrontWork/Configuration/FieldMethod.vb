@@ -94,11 +94,16 @@ Public Class FieldMethod
                     Dim methodListenerName = fieldMethod.MethodListenerNames(i)
                     Dim methodListener = MethodListenerContainer.Get(methodListenerName)
                     If methodListener Is Nothing Then
-                        Throw New Exception(vbCrLf & $"  MethodListener: ""{methodListenerName}"" not found!" &
+                        Throw New MethodNotFoundException(vbCrLf & $"  MethodListener: ""{methodListenerName}"" not found!" &
                                             vbCrLf &
                                             "  Have you register your MethodListener into MethodListenerContainer before it should be called?")
                     End If
-                    Dim method = methodListener.GetType().GetMethod(methodName, BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.IgnoreCase)
+                    Dim method As MethodInfo = Nothing
+                    Try
+                        method = methodListener.GetType().GetMethod(methodName, BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.IgnoreCase)
+                    Catch ex As Exception
+                        Throw New FrontWorkException($"Get ""{methodName}"" from ""{methodListener.GetType.Name}"" failed:" & vbCrLf & ex.Message)
+                    End Try
                     '如果到了最后一个方法监听器还没有找到目标方法，则抛出错误
                     If method Is Nothing Then
                         If i = fieldMethod.MethodListenerNames.Length - 1 Then
@@ -110,7 +115,7 @@ Public Class FieldMethod
                             Next
                             sbMethodListenerNames.Length -= 1
                             sbMethodListenerNames.Append("]")
-                            Throw New Exception($"Method: ""{methodName}"" not found in MethodListener: {sbMethodListenerNames.ToString}!")
+                            Throw New MethodNotFoundException($"Method: ""{methodName}"" not found in MethodListener: {sbMethodListenerNames.ToString}!")
                             Return
                         Else
                             Continue For
@@ -127,7 +132,7 @@ Public Class FieldMethod
                         fieldMethod.ReturnValue = method.Invoke(methodListener, [paramArray].ToArray)
                         Return
                     Catch ex As Exception
-                        Throw New Exception($"Invoke method ""{methodName}"" in methodListener {methodListenerName} failed: " + ex.Message)
+                        Throw New FrontWorkException($"Invoke method ""{methodName}"" in methodListener {methodListenerName} failed: " + ex.Message)
                         Return
                     End Try
                 Next
@@ -163,7 +168,7 @@ Public Class FieldMethod
         ElseIf jsValue.IsArray Then
             Return FieldMethod.NewInstance(jsValue.ToObject, CType(jsValue.ToString, String))
         Else
-            Throw New Exception($"Unsupported value for field:{jsValue.ToString}")
+            throw new FrontWorkException($"Unsupported value for field:{jsValue.ToString}")
         End If
     End Function
 
@@ -219,7 +224,7 @@ Public Class FieldMethod
         '如果是实现接口，返回1
         If subType.GetInterface(baseType.Name) IsNot Nothing Then Return 1
         If Not subType.IsSubclassOf(baseType) Then
-            Throw New Exception($"SubType: {subType.Name} is not a sub type of BaseType: {baseType.Name}")
+            throw new FrontWorkException($"SubType: {subType.Name} is not a sub type of BaseType: {baseType.Name}")
         End If
         Dim curType = subType
         While Not curType.Equals(baseType)

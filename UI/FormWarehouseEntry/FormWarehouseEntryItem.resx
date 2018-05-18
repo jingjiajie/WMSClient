@@ -123,9 +123,6 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1090, 17</value>
   </metadata>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1090, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -188,14 +185,15 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"warehouseEntryID",displayName:"入库单ID",type:"int",visible:false},
+        {name:"warehouseEntryId",displayName:"入库单ID",type:"int",visible:false},
         {name:"warehouseEntryNo",displayName:"入库单号",visible:false},
-        {name:"supplyID",displayName:"供货ID",type:"int",visible:false},
-        {name:"materialNo",displayName:"物料代号"},
-        {name:"materialName",displayName:"物料名称"},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:true},
+        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"storageLocationID",displayName:"收货库位ID",type:"int",visible:false},
+        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"storageLocationId",displayName:"收货库位ID",type:"int",visible:false},
         {name:"storageLocationNo",displayName:"收货库位编码"},
         {name:"storageLocationName",displayName:"收货库位名称"},
         {name:"expectedAmount",displayName:"订单数量",type:"double"},
@@ -212,7 +210,7 @@
         {name:"inventoryDate",displayName:"存货日期",type:"datetime"},
         {name:"manufactureDate",displayName:"生产日期",type:"datetime"},
         {name:"expiryDate",displayName:"失效日期",type:"datetime"},
-        {name:"personID",displayName:"作业人ID",type:"int",visible:false},
+        {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称"}
     ],
     httpAPIs:[

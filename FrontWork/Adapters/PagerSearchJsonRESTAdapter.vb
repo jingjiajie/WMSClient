@@ -32,7 +32,7 @@ Public Class PagerSearchJsonRESTAdapter
     Protected Overrides Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
         Logger.SetMode(LogMode.DEFAULT_MODE)
         If Me.Synchronizer.GetCountAPI Is Nothing Then
-            Throw New Exception("get-count API not set!")
+            throw new FrontWorkException("get-count API not set!")
         End If
 
         '=====开始搜索内容

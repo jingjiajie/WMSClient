@@ -935,6 +935,9 @@ Public Class ReoGridView
         Logger.SetMode(LogMode.REFRESH_VIEW)
         '然后获取单元格
 
+        If Not Me.dicNameColumn.ContainsKey(colName) Then
+            Throw New FrontWorkException($"{Me.Name} doesn't contains field:""{colName}""")
+        End If
         Dim reoGridColumnNum = Me.dicNameColumn(colName)
         Dim reoGridCell = Panel.GetCell(row, reoGridColumnNum)
         If reoGridCell Is Nothing AndAlso String.IsNullOrEmpty(text) Then Return True
@@ -1141,7 +1144,7 @@ Public Class ReoGridView
         If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
 
         If rangePosition.Cols <> 1 Then
-            Throw New Exception("ExportCells() can only be used when single column selected")
+            Throw New FrontWorkException("ExportCells() can only be used when single column selected")
         End If
 
         Dim rowsUpdated As List(Of Long) = Me.Range(rangePosition.Row, System.Math.Min(Me.Model.RowCount, rangePosition.EndRow + 1)).ToList
@@ -1344,7 +1347,7 @@ Public Class ReoGridView
     ''' <returns>单元格对象</returns>
     Public Function GetViewComponent(row As Long, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
         If Me.Panel.RowCount <= row Then
-            Throw New Exception($"Row {row} exceeded the last row of ReoGridView")
+            Throw New FrontWorkException($"Row {row} exceeded the last row of ReoGridView")
         End If
         Return Me.Panel.CreateAndGetCell(row, Me.dicNameColumn(Name))
     End Function

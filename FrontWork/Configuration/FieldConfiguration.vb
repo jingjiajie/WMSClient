@@ -29,11 +29,11 @@ Public Class FieldConfiguration
                 "string", "int", "double", "datetime", "bool"
             }
             If value Is Nothing Then
-                Throw New Exception("Field Type cannot be null!")
+                throw new FrontWorkException("Field Type cannot be null!")
             End If
             value = value.ToLower
             If Not supportTypes.Contains(value) Then
-                Throw New Exception($"Unsupported field type:{value.ToString}")
+                throw new FrontWorkException($"Unsupported field type:{value.ToString}")
             End If
             Me._type = value
         End Set
@@ -126,7 +126,7 @@ Public Class FieldConfiguration
     ''' <param name="jsValue">要转换的JsValue</param>
     ''' <returns></returns>
     Public Shared Function FromJsValue(methodListenerNames As String(), jsValue As JsValue, refFieldConfigurations As FieldConfiguration()) As FieldConfiguration()
-        If jsValue Is Nothing Then Throw New Exception("JsValue can not be null!")
+        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
         '如果是数组，则遍历解析
         If jsValue.IsArray Then
             '先把引用的所有字段都拷贝过来，再根据新的配置进行更新
@@ -134,7 +134,7 @@ Public Class FieldConfiguration
             Dim jsArray = jsValue.AsArray
             For i As Integer = 0 To jsValue.AsArray.GetLength - 1
                 If Not jsArray.Get(i).AsObject().HasOwnProperty("name") Then
-                    Throw New Exception("Field configuration must contains ""name"" property!")
+                    throw new FrontWorkException("Field configuration must contains ""name"" property!")
                 End If
                 '新配置的名称
                 Dim name = jsArray.Get(i).AsObject.GetOwnProperty("name").Value.ToString
@@ -156,7 +156,7 @@ Public Class FieldConfiguration
             Next
             Return fieldConfigurations.ToArray
         Else '不是数组，报错
-            Throw New Exception("Only js array is accepted to generate FieldConfiguration!")
+            throw new FrontWorkException("Only js array is accepted to generate FieldConfiguration!")
         End If
     End Function
 
@@ -167,9 +167,9 @@ Public Class FieldConfiguration
     ''' <param name="jsValue">JsValue</param>
     ''' <returns></returns>
     Private Shared Function MakeFieldConfigurationFromJsValue(jsValue As JsValue, methodListenerNames As String(), refFieldConfiguration As FieldConfiguration) As FieldConfiguration
-        If jsValue Is Nothing Then Throw New Exception("JsValue can not be null!")
+        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
         If Not jsValue.IsObject Then
-            Throw New Exception("Not a valid JsObject!")
+            throw new FrontWorkException("Not a valid JsObject!")
             Return Nothing
         End If
 
@@ -192,7 +192,7 @@ Public Class FieldConfiguration
             '获取js字段对应的FieldConfiguration属性，找不到就跳过并报错
             Dim prop = typeFieldConfiguration.GetProperty(key, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.IgnoreCase)
             If prop Is Nothing Then
-                Throw New Exception("can not resolve property:""" + key + """ in json configure")
+                throw new FrontWorkException("can not resolve property:""" + key + """ in json configure")
                 Continue For
             ElseIf prop.PropertyType <> GetType(FieldMethod) Then '如果不是FieldMethod，则直接赋值
                 prop.SetValue(newFieldConfiguration, value, Nothing)

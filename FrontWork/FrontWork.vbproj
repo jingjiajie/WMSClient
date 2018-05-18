@@ -81,6 +81,7 @@
     <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Configuration\Configuration.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +93,7 @@
     </Compile>
     <Compile Include="Configuration\Configurator\ConfiguratorEditor.vb" />
     <Compile Include="Configuration\EventArgs\ConfigurationChangedEventArgs.vb" />
+    <Compile Include="Configuration\Exceptions\MethodNotFoundException.vb" />
     <Compile Include="Configuration\HTTPAPIConfiguration.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
@@ -144,7 +146,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Synchronizer\ISynchronizer.vb" />
-    <Compile Include="Util\Util.vb" />
+    <Compile Include="Common\Util\Util.vb" />
     <Compile Include="View\DataStructures\AssociationItem.vb" />
     <Compile Include="View\BasicView.Designer.vb">
       <DependentUpon>BasicView.vb</DependentUpon>
@@ -279,5 +281,6 @@
   <ItemGroup>
     <Content Include="Model.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

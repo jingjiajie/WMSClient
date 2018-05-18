@@ -96,7 +96,7 @@ Public Class SearchView
     ''' <returns>返回生成的OnSearchEventArgs</returns>
     Protected Function GetSearchEventArgs() As OnSearchEventArgs
         If Me.Configuration Is Nothing Then
-            Throw New Exception("Configuration not set in SearchWidget")
+            throw new FrontWorkException("Configuration not set in SearchWidget")
         End If
         Dim newSearchArgs = New OnSearchEventArgs
 

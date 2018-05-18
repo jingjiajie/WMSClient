@@ -31,10 +31,10 @@ namespace WMS.UI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseEntryItem));
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -50,7 +50,7 @@ namespace WMS.UI
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
-            this.model1 = new FrontWork.Model();
+            this.model = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
             this.statusStrip1.SuspendLayout();
@@ -175,7 +175,7 @@ namespace WMS.UI
             // 
             this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
             this.panel1.Controls.Add(this.synchronizer);
-            this.panel1.Controls.Add(this.model1);
+            this.panel1.Controls.Add(this.model);
             this.panel1.Controls.Add(this.configuration1);
             this.panel1.Controls.Add(this.reoGridView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -187,14 +187,14 @@ namespace WMS.UI
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(561, 48);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -221,12 +221,12 @@ namespace WMS.UI
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(49, 66);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormWarehouseEntryItem",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -237,22 +237,22 @@ namespace WMS.UI
             this.synchronizer.Location = new System.Drawing.Point(397, 57);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
-            this.synchronizer.Model = this.model1;
+            this.synchronizer.Model = this.model;
             this.synchronizer.Name = "synchronizer";
             this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
-            // model1
+            // model
             // 
-            this.model1.AllSelectionRanges = new FrontWork.Range[0];
-            this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.model1.Configuration = this.configuration1;
-            this.model1.Location = new System.Drawing.Point(224, 66);
-            this.model1.Mode = "default";
-            this.model1.Name = "model1";
-            this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(180, 180);
-            this.model1.TabIndex = 2;
+            this.model.AllSelectionRanges = new FrontWork.Range[0];
+            this.model.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.model.Configuration = this.configuration1;
+            this.model.Location = new System.Drawing.Point(224, 66);
+            this.model.Mode = "default";
+            this.model.Name = "model";
+            this.model.SelectionRange = null;
+            this.model.Size = new System.Drawing.Size(180, 180);
+            this.model.TabIndex = 2;
             // 
             // reoGridView1
             // 
@@ -261,7 +261,7 @@ namespace WMS.UI
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView1.Location = new System.Drawing.Point(0, 0);
             this.reoGridView1.Mode = "default";
-            this.reoGridView1.Model = this.model1;
+            this.reoGridView1.Model = this.model;
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(974, 224);
             this.reoGridView1.TabIndex = 0;
@@ -276,7 +276,7 @@ namespace WMS.UI
             this.basicView1.Location = new System.Drawing.Point(0, 65);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
-            this.basicView1.Model = this.model1;
+            this.basicView1.Model = this.model;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 0);
             this.basicView1.Size = new System.Drawing.Size(974, 170);
@@ -317,7 +317,7 @@ namespace WMS.UI
         private FrontWork.PagerView pagerView1;
         private System.Windows.Forms.Panel panel1;
         private FrontWork.ReoGridView reoGridView1;
-        private FrontWork.Model model1;
+        private FrontWork.Model model;
         private FrontWork.Configuration configuration1;
         private FrontWork.BasicView basicView1;
         private FrontWork.JsonRESTSynchronizer synchronizer;

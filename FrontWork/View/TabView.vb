@@ -111,11 +111,11 @@ Public Class TabView
     Private Sub ImportCells(Optional rows As Integer() = Nothing)
         Dim fieldConfigurations = Me.Configuration.GetFieldConfigurations(Me.Mode)
         If fieldConfigurations Is Nothing Then
-            Throw New Exception($"Mode Configuration:{Me.Mode} not found!")
+            throw new FrontWorkException($"Mode Configuration:{Me.Mode} not found!")
         End If
         Dim field = (From f In fieldConfigurations Where f.Name.Equals(Me.ColumnName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
         If field Is Nothing Then
-            Throw New Exception($"Field:{Me.ColumnName} not exist in Configuration!")
+            throw new FrontWorkException($"Field:{Me.ColumnName} not exist in Configuration!")
         End If
         If rows Is Nothing Then
             For i = 0 To Me.Model.RowCount - 1

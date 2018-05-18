@@ -30,7 +30,7 @@ Public Class ModelBox
     Public ReadOnly Property Models(name As String) As IModel
         Get
             If Not Me.dicModels.ContainsKey(name) Then
-                Throw New Exception($"Modelbox doesn't contain model:{name}")
+                throw new FrontWorkException($"Modelbox doesn't contain model:{name}")
             End If
             Return Me.dicModels(name)
         End Get
@@ -41,7 +41,7 @@ Public Class ModelBox
         Get
             Dim _models = Me.Models
             If _models.Length <= index Then
-                Throw New Exception($"ModelBox {Me.Name} doesn't have model {index}")
+                throw new FrontWorkException($"ModelBox {Me.Name} doesn't have model {index}")
             End If
             Return _models(index)
         End Get
@@ -71,7 +71,7 @@ Public Class ModelBox
         End Get
         Set(value As String)
             If String.IsNullOrWhiteSpace(value) Then
-                Throw New Exception("ModelName cannot be null or whitespace!")
+                throw new FrontWorkException("ModelName cannot be null or whitespace!")
             End If
             If Not Me.dicModels.ContainsKey(value) Then
                 Dim newModel As New Model
@@ -353,7 +353,7 @@ Public Class ModelBox
 
     Private Function GetCurModel() As IModel
         If Not Me.dicModels.ContainsKey(Me.CurrentModelName) Then
-            Throw New Exception($"ModelBook doesn't have model:""{Me.CurrentModelName}""")
+            throw new FrontWorkException($"ModelBook doesn't have model:""{Me.CurrentModelName}""")
         End If
         Return Me.dicModels(Me.CurrentModelName)
     End Function
@@ -368,7 +368,7 @@ Public Class ModelBox
 
     Public Sub RemoveModel(modelName As String)
         If Not Me.dicModels.ContainsKey(modelName) Then
-            Throw New Exception($"Model ""{modelName}"" not exist in {Me.Name}")
+            throw new FrontWorkException($"Model ""{modelName}"" not exist in {Me.Name}")
         End If
         Me.dicModels.Remove(modelName)
     End Sub

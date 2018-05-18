@@ -18,9 +18,9 @@ Public Class PagerView
             Return Me._totalPage
         End Get
         Set(value As Long)
-            If value < 1 Then Throw New Exception("TotalPage must be greater than 1")
+            If value < 1 Then throw new FrontWorkException("TotalPage must be greater than 1")
             If value < Me.CurrentPage Then
-                Throw New Exception($"TotalPage:{value} cannot be less than CurrentPage:{Me.CurrentPage}")
+                throw new FrontWorkException($"TotalPage:{value} cannot be less than CurrentPage:{Me.CurrentPage}")
             End If
             Me._totalPage = value
             Me.TextBoxTotalPage.Text = CStr(value)
@@ -37,9 +37,9 @@ Public Class PagerView
             Return Me._currentPage
         End Get
         Set(value As Long)
-            If value < 1 Then Throw New Exception("Page must be greater than 1")
+            If value < 1 Then throw new FrontWorkException("Page must be greater than 1")
             If value > Me.TotalPage Then
-                Throw New Exception($"CurrentPage:{value} exceeded TotalPage:{Me.TotalPage}")
+                throw new FrontWorkException($"CurrentPage:{value} exceeded TotalPage:{Me.TotalPage}")
             End If
             Me._currentPage = value
             Me.TextBoxCurrentPage.Text = CStr(value)
@@ -59,7 +59,7 @@ Public Class PagerView
         End Get
         Set(value As Long)
             If value <= 0 Then
-                Throw New Exception($"PageSize:{value} must be positive!")
+                throw new FrontWorkException($"PageSize:{value} must be positive!")
             End If
             Me._pageSize = value
         End Set

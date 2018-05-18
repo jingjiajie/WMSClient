@@ -51,7 +51,7 @@ Public Class HTTPAPIConfiguration
     ''' <param name="jsValue">JsValue对象</param>
     ''' <returns></returns>
     Public Shared Function FromJSValue(methodListenerNames As String(), jsValue As JsValue, refConfigurations As HTTPAPIConfiguration()) As HTTPAPIConfiguration()
-        If jsValue Is Nothing Then Throw New Exception("JsValue can not be null!")
+        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
         '如果是数组，则遍历解析
         If jsValue.IsArray Then
             '先把引用的所有字段都拷贝过来，再根据新的配置进行更新
@@ -59,7 +59,7 @@ Public Class HTTPAPIConfiguration
             Dim jsArray = jsValue.AsArray
             For i As Integer = 0 To jsValue.AsArray.GetLength - 1
                 If Not jsArray.Get(i).AsObject().HasOwnProperty("type") Then
-                    Throw New Exception("HTTPAPIConfiguration must contains ""type"" property!")
+                    throw new FrontWorkException("HTTPAPIConfiguration must contains ""type"" property!")
                 End If
                 '新配置的type
                 Dim type = jsArray.Get(i).AsObject.GetOwnProperty("type").Value.ToString
@@ -81,7 +81,7 @@ Public Class HTTPAPIConfiguration
             Next
             Return newHTTPAPIConfigurations.ToArray
         Else '不是数组，报错
-            Throw New Exception("Only js array is accepted to generate HTTPAPIConfiguration!")
+            throw new FrontWorkException("Only js array is accepted to generate HTTPAPIConfiguration!")
             Return Nothing
         End If
     End Function
@@ -93,9 +93,9 @@ Public Class HTTPAPIConfiguration
     ''' <param name="jsValue">JsValue对象</param>
     ''' <returns></returns>
     Private Shared Function MakeHTTPApiConfiguration(methodListenerNames As String(), jsValue As JsValue, refConfiguration As HTTPAPIConfiguration) As HTTPAPIConfiguration
-        If jsValue Is Nothing Then Throw New Exception("JsValue can not be null!")
+        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
         If Not jsValue.IsObject Then
-            Throw New Exception("Not a valid JsObject!")
+            throw new FrontWorkException("Not a valid JsObject!")
             Return Nothing
         End If
         Dim jsEngine = ModeConfiguration.JsEngine
@@ -117,7 +117,7 @@ Public Class HTTPAPIConfiguration
             '获取js字段对应的HTTPAPIConfiguration属性，找不到就跳过并报错
             Dim prop = typeHTTPAPIConfiguration.GetProperty(key, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.IgnoreCase)
             If prop Is Nothing Then
-                Throw New Exception("can not resolve property:""" + key + """ in json configure")
+                throw new FrontWorkException("can not resolve property:""" + key + """ in json configure")
                 Continue For
             ElseIf prop.PropertyType <> GetType(FieldMethod) Then '如果不是函数，则直接赋值
                 prop.SetValue(newHTTPAPIConfiguration, value, Nothing)

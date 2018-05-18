@@ -261,7 +261,7 @@ Public Class JsonRESTSynchronizer
 
     Private Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
         If Me.UpdateAPI Is Nothing Then
-            Throw New Exception("Update API not set!")
+            throw new FrontWorkException("Update API not set!")
         End If
         Dim updatedCells = e.UpdatedCells
         Dim indexFullRows(updatedCells.Length - 1) As IndexRowPair
@@ -280,7 +280,7 @@ Public Class JsonRESTSynchronizer
 
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
         If Me.RemoveAPI Is Nothing Then
-            Throw New Exception("Remove API not setted!")
+            throw new FrontWorkException("Remove API not setted!")
         End If
         '删除行的所有ID
         Dim rowIDsASC = (From indexRow In e.RemovedRows
@@ -358,7 +358,7 @@ Public Class JsonRESTSynchronizer
 
     Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
         If Me.UpdateAPI Is Nothing Then
-            Throw New Exception("Update API not setted!")
+            throw new FrontWorkException("Update API not setted!")
         End If
         Dim indexFullRows(e.UpdatedRows.Length - 1) As IndexRowPair
         For i = 0 To e.UpdatedRows.Length - 1
@@ -373,7 +373,7 @@ Public Class JsonRESTSynchronizer
 
     Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
         If Me.AddAPI Is Nothing Then
-            Throw New Exception("Add API not set!")
+            throw new FrontWorkException("Add API not set!")
         End If
         Dim rows = (From indexRow In e.AddedRows
                     Select indexRow.RowData).ToArray
@@ -384,7 +384,7 @@ Public Class JsonRESTSynchronizer
     Public Function Find() As Boolean Implements ISynchronizer.Find
         Logger.SetMode(LogMode.SYNCHRONIZER)
         If Me.FindAPI Is Nothing Then
-            Throw New Exception("Find API Not set!")
+            throw new FrontWorkException("Find API Not set!")
         End If
         Try
             Console.WriteLine(Me.FindAPI.HTTPMethod.ToString & " " & Me.FindAPI.GetURL)
@@ -478,7 +478,7 @@ Public Class JsonRESTSynchronizer
     Private Function Save(actions As List(Of ModelAdapterAction), Optional operationName As String = "保存") As Boolean
         Logger.SetMode(LogMode.SYNCHRONIZER)
         If Me.Model Is Nothing Then
-            Throw New Exception("Model not set!")
+            throw new FrontWorkException("Model not set!")
         End If
 
         '将Actions进行优化
@@ -603,7 +603,7 @@ Public Class JsonRESTSynchronizer
             'Dim serializer As New JavaScriptSerializer
             'Dim ids As Integer() = serializer.Deserialize(Of Integer())(responseStr)
             'If ids.Count <> Me.IndexRowPairs.Count Then
-            '    Throw New Exception($"Add API返回数据错误：ID数量({ids.Length})不等于提交数量({Me.IndexRowPairs.Length})")
+            '    throw new FrontWorkException($"Add API返回数据错误：ID数量({ids.Length})不等于提交数量({Me.IndexRowPairs.Length})")
             'End If
             'For i = 0 To ids.Length - 1
             '    Dim id = ids(i)

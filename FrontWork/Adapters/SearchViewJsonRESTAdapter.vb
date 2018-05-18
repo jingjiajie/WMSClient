@@ -113,7 +113,7 @@ Public Class SearchViewJsonRESTAdapter
 
     Protected Overridable Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
         If Me.Synchronizer.FindAPI Is Nothing Then
-            Throw New Exception("PullAPI not set!")
+            throw new FrontWorkException("PullAPI not set!")
         End If
         Me.SetConditionAndOrdersToAPI(Me.Synchronizer.FindAPI, args)
         Return Me.Synchronizer.Find()
