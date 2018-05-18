@@ -165,10 +165,10 @@ Public Class FieldMethod
             Else
                 Return FieldMethod.NewInstance(strValue, strValue)
             End If
-        ElseIf jsValue.IsArray Then
-            Return FieldMethod.NewInstance(jsValue.ToObject, CType(jsValue.ToString, String))
         Else
-            throw new FrontWorkException($"Unsupported value for field:{jsValue.ToString}")
+            Return FieldMethod.NewInstance(jsValue.ToObject, CType(jsValue.ToString, String))
+            'Else
+            '    throw new FrontWorkException($"Unsupported value for field:{jsValue.ToString}")
         End If
     End Function
 

@@ -47,12 +47,12 @@ namespace WMS.UI
             this.pagerView1 = new FrontWork.PagerView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
-            this.searchView1 = new FrontWork.SearchView();
-            this.configuration1 = new FrontWork.Configuration();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model = new FrontWork.Model();
+            this.configuration1 = new FrontWork.Configuration();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
+            this.searchView1 = new FrontWork.SearchView();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -204,33 +204,6 @@ namespace WMS.UI
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
             // 
-            // searchView1
-            // 
-            this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.searchView1.Configuration = this.configuration1;
-            this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(0);
-            this.searchView1.Mode = "default";
-            this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(974, 35);
-            this.searchView1.TabIndex = 15;
-            // 
-            // configuration1
-            // 
-            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(49, 66);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntryItem",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
-            this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
-            this.configuration1.TabIndex = 1;
-            // 
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
@@ -253,6 +226,21 @@ namespace WMS.UI
             this.model.SelectionRange = null;
             this.model.Size = new System.Drawing.Size(180, 180);
             this.model.TabIndex = 2;
+            // 
+            // configuration1
+            // 
+            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
+            this.configuration1.Location = new System.Drawing.Point(49, 66);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormWarehouseEntryItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1};
+            this.configuration1.Name = "configuration1";
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.TabIndex = 1;
             // 
             // reoGridView1
             // 
@@ -281,6 +269,18 @@ namespace WMS.UI
             this.basicView1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 0);
             this.basicView1.Size = new System.Drawing.Size(974, 170);
             this.basicView1.TabIndex = 14;
+            // 
+            // searchView1
+            // 
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.searchView1.Configuration = this.configuration1;
+            this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchView1.Location = new System.Drawing.Point(0, 0);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(0);
+            this.searchView1.Mode = "default";
+            this.searchView1.Name = "searchView1";
+            this.searchView1.Size = new System.Drawing.Size(974, 35);
+            this.searchView1.TabIndex = 15;
             // 
             // FormWarehouseEntryItem
             // 
