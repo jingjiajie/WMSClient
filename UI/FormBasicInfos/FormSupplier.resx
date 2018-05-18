@@ -184,7 +184,21 @@
         {name:"contractEndTime",displayName:"合同截止时间",type:"DateTime"},
         {name:"invoiceDelayMonth",displayName:"开票延迟月",type:"double"},
         {name:"balanceDelayMonth",displayName:"结算延迟月",type:"double"},
-        {name:"cetArea",displayName:"净面积",type:"string"},
+        {name:"netArea",displayName:"净面积",type:"double"},
+        {name:"taxpayerNumber",displayName:"纳税人识别号",type:"string"},
+        {name:"address",displayName:"地址",type:"string"},
+        {name:"tel",displayName:"电话",type:"string"},
+        {name:"bankName",displayName:"开户行",type:"string"},
+
+
+{name:"zipCode",displayName:"邮编",type:"string"},
+{name:"recipientName",displayName:"收件人",type:"string"},
+{name:"contractState",displayName:"合同状态",type:"string"},
+{name:"isHistory",displayName:"是否历史信息",type:"int"},
+
+
+
+
         {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
         {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
         {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
