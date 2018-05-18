@@ -166,6 +166,56 @@
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"no",displayName:"入库单号",type:"string",placeHolder:"留空自动生成"},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:false},
+        {name:"supplierNo",displayName:"供应商代号",type:"string"},
+        {name:"supplierName",displayName:"供应商名",type:"string"},
+        {name:"description",displayName:"描述",type:"string"},
+        {name:"contractNo",displayName:"合同编码",type:"string"},
+        {name:"enterpriseCode",displayName:"企业编码",type:"string"},
+        {name:"contractStartTime",displayName:"合同生效时间",type:"DateTime"},
+        {name:"contractEndTime",displayName:"合同截止时间",type:"DateTime"},
+        {name:"invoiceDelayMonth",displayName:"开票延迟月",type:"double"},
+        {name:"balanceDelayMonth",displayName:"结算延迟月",type:"double"},
+        {name:"cetArea",displayName:"净面积",type:"string"},
+        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
+        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
+        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
+        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
+        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
+    ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
+  </data>
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
