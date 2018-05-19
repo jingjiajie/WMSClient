@@ -61,11 +61,23 @@
     <Compile Include="FormBasicInfos\FormPerson.Designer.cs">
       <DependentUpon>FormPerson.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasicInfos\FormStorageArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormStorageArea.Designer.cs">
+      <DependentUpon>FormStorageArea.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBasicInfos\FormSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBasicInfos\FormSupplier.Designer.cs">
       <DependentUpon>FormSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormWarehouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormWarehouse.Designer.cs">
+      <DependentUpon>FormWarehouse.cs</DependentUpon>
     </Compile>
     <Compile Include="FormWarehouseEntry\FormWarehouseEntryItem.cs">
       <SubType>Form</SubType>
@@ -540,8 +552,14 @@
     <EmbeddedResource Include="FormBasicInfos\FormPerson.resx">
       <DependentUpon>FormPerson.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormStorageArea.resx">
+      <DependentUpon>FormStorageArea.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormSupplier.resx">
       <DependentUpon>FormSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormWarehouse.resx">
+      <DependentUpon>FormWarehouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryItem.resx">
       <DependentUpon>FormWarehouseEntryItem.cs</DependentUpon>

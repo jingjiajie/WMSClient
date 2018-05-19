@@ -55,7 +55,8 @@ namespace WMS.UI.FormBasicInfos
         {
 
         }
-        //供应商名称编辑完成，根据名称自动搜索ID和No
+
+        //
         private void WarehouseNameEditEnded(int row, string warehouseName)
         {
             IDictionary<string, object> foundWarehouse =
