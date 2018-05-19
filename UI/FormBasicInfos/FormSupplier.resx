@@ -171,12 +171,12 @@
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"入库单号",type:"string",placeHolder:"留空自动生成"},
+        {name:"id",displayName:"ID",type:"int",visible:false},       
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false},
-        {name:"supplierNo",displayName:"供应商代号",type:"string"},
+        {name:"no",displayName:"供应商代号",type:"string"},
         {name:"supplierName",displayName:"供应商名",type:"string"},
+        {name:"fullName",displayName:"供应商全名",type:"string"},
         {name:"description",displayName:"描述",type:"string"},
         {name:"contractNo",displayName:"合同编码",type:"string"},
         {name:"enterpriseCode",displayName:"企业编码",type:"string"},
@@ -189,21 +189,17 @@
         {name:"address",displayName:"地址",type:"string"},
         {name:"tel",displayName:"电话",type:"string"},
         {name:"bankName",displayName:"开户行",type:"string"},
-
-
-{name:"zipCode",displayName:"邮编",type:"string"},
-{name:"recipientName",displayName:"收件人",type:"string"},
-{name:"contractState",displayName:"合同状态",type:"string"},
-{name:"isHistory",displayName:"是否历史信息",type:"int"},
-
-
-
-
-        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
+        {name:"zipCode",displayName:"邮编",type:"string"},
+        {name:"recipientName",displayName:"收件人",type:"string"},
+        {name:"contractState",displayName:"合同状态",type:"string"},
+        {name:"isHistory",displayName:"是否历史信息",type:"int"},
+        {name:"warehouseName",displayName:"仓库名",type:"string"},
+        {name:"Enabled",displayName:"是否启用",type:"int",visible:false},
+        {name:"newestSupplierID",displayName:"最新供应商信息ID",type:"int",visible:false},
+        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
+        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
         {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
-        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
+        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},     
         {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
     ],
     httpAPIs:[
@@ -212,19 +208,19 @@
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/supplier/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/",
+            url:"{$url}/warehouse/{$accountBook}/supplier/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/",
+            url:"{$url}/warehouse/{$accountBook}/supplier/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/supplier/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }

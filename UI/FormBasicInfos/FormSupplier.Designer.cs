@@ -40,7 +40,7 @@
             this.pagerView1 = new FrontWork.PagerView();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
-            this.jsonRESTSynchronizer1 = new FrontWork.JsonRESTSynchronizer();
+            this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
@@ -74,20 +74,22 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonDelete.Text = "删除";
+            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // toolStripButtonAlter
             // 
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(63, 25);
-            this.toolStripButtonAlter.Text = "修改";
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(93, 25);
+            this.toolStripButtonAlter.Text = "保存修改";
+            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
             // panelPager
             // 
             this.panelPager.BackColor = System.Drawing.SystemColors.Control;
             this.panelPager.Controls.Add(this.pagerSearchJsonRESTAdapter1);
-            this.panelPager.Controls.Add(this.jsonRESTSynchronizer1);
+            this.panelPager.Controls.Add(this.synchronizer);
             this.panelPager.Controls.Add(this.model1);
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
@@ -113,7 +115,7 @@
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
             this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(109, 85);
-            this.pagerSearchJsonRESTAdapter1.Synchronizer = this.jsonRESTSynchronizer1;
+            this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
             // 
@@ -149,16 +151,16 @@
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
-            // jsonRESTSynchronizer1
+            // synchronizer
             // 
-            this.jsonRESTSynchronizer1.Configuration = this.configuration1;
-            this.jsonRESTSynchronizer1.Location = new System.Drawing.Point(314, 77);
-            this.jsonRESTSynchronizer1.Margin = new System.Windows.Forms.Padding(0);
-            this.jsonRESTSynchronizer1.Mode = "default";
-            this.jsonRESTSynchronizer1.Model = this.model1;
-            this.jsonRESTSynchronizer1.Name = "jsonRESTSynchronizer1";
-            this.jsonRESTSynchronizer1.Size = new System.Drawing.Size(180, 180);
-            this.jsonRESTSynchronizer1.TabIndex = 3;
+            this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.Location = new System.Drawing.Point(314, 77);
+            this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
+            this.synchronizer.Mode = "default";
+            this.synchronizer.Model = this.model1;
+            this.synchronizer.Name = "synchronizer";
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
+            this.synchronizer.TabIndex = 3;
             // 
             // model1
             // 
@@ -191,6 +193,7 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // panelSearchWidget
             // 
@@ -218,8 +221,8 @@
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
             this.toolStripButtonAdd,
-            this.toolStripButtonAlter,
             this.toolStripButtonDelete,
+            this.toolStripButtonAlter,
             this.toolStripSeparator3,
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 31);
@@ -351,7 +354,7 @@
         private FrontWork.SearchView searchView1;
         private FrontWork.Configuration configuration1;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
-        private FrontWork.JsonRESTSynchronizer jsonRESTSynchronizer1;
+        private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.Model model1;
     }
 }
