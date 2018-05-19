@@ -15,5 +15,39 @@ namespace WMS.UI.FormBasicInfos
         {
             InitializeComponent();
         }
+
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "createPersonId",GlobalData.Person["id"]},
+                { "createPersonName",GlobalData.Person["name"]},
+                { "createTime",DateTime.Now}
+            });
+        }
+
+        private void FormWarehouse_QueryAccessibilityHelp(object sender, QueryAccessibilityHelpEventArgs e)
+        {
+
+        }
+
+        private void FormWarehouse_Load(object sender, EventArgs e)
+        {
+            //设置两个请求参数
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            this.model1.RemoveSelectedRows();
+        }
+
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        {
+            this.synchronizer.Save();
+        }
     }
 }

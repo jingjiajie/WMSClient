@@ -129,26 +129,26 @@
         {name:"name",displayName:"仓库名",type:"string"},
         {name:"adress",displayName:"仓库地址",type:"string"},
         {name:"tel",displayName:"仓库电话",type:"string"},
-        {name:"enabled",displayName:"是否启用",type:"int",visible:false}
+        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
     httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/warehouse/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/supplier/",
+            url:"{$url}/warehouse/{$accountBook}/warehouse/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/supplier/",
+            url:"{$url}/warehouse/{$accountBook}/warehouse/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/warehouser/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
