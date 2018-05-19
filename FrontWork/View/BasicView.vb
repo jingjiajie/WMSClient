@@ -214,10 +214,18 @@ Public Class BasicView
         End If
     End Sub
 
-    Private Sub CellUpdateEvent(fieldName As String)
+    '字段离开事件，保存数据+触发编辑结束事件
+    Private Sub LeaveEvent(fieldName As String, text As String, fieldConfig As FieldConfiguration)
         If Me.switcherLocalEvents = False Then Return
-        Logger.Debug("TableLayoutView CellUpdateEvent: " & Str(Me.GetHashCode))
+        If Me.Model.SelectionRange Is Nothing Then Return
+        Logger.Debug("TableLayoutView LeaveEvent: " & Str(Me.GetHashCode))
+        '如果没被编辑则不保存数据+触发编辑结束事件
+        If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
+        '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
+        If fieldConfig.EditEnded IsNot Nothing Then
+            fieldConfig.EditEnded.Invoke(Me, text, Me.Model.SelectionRange.Row)
+        End If
     End Sub
 
     Private Sub ClearPanelData()
@@ -361,21 +369,13 @@ Public Class BasicView
                                                         curField.ContentChanged.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
                                                     End Sub
                 End If
-                '绑定焦点离开自动保存事件
+                '绑定焦点离开自动保存，和触发编辑完成事件
                 AddHandler textBox.Leave, Sub()
                                               If Me.switcherLocalEvents = False Then Return
                                               Logger.Debug("TableLayoutView TextBox Leave Save Data: " & Str(Me.GetHashCode))
-                                              Call Me.CellUpdateEvent(textBox.Name)
+                                              Call Me.LeaveEvent(textBox.Name, textBox.Text, curField)
                                           End Sub
-                '编辑结束事件（先保存数据再触发编辑结束事件，顺序不能颠倒）
-                If curField.EditEnded IsNot Nothing Then
-                    AddHandler textBox.Leave, Sub()
-                                                  If Me.switcherLocalEvents = False Then Return
-                                                  If Me.Model.SelectionRange Is Nothing Then Return
-                                                  Logger.Debug("TableLayoutView TextBox Leave User Event: " & Str(Me.GetHashCode))
-                                                  curField.EditEnded.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
-                                              End Sub
-                End If
+
             Else '否则可以用ComboBox体现
                 Dim comboBox As New ComboBox With {
                                                           .Name = curField.Name,
@@ -403,20 +403,12 @@ Public Class BasicView
                                                                   curField.ContentChanged.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
                                                               End Sub
                 End If
-                '绑定焦点离开自动保存事件
+                '绑定焦点离开自动保存事件，和编辑完成事件
                 AddHandler comboBox.Leave, Sub()
                                                If Me.switcherLocalEvents = False Then Return
                                                Logger.Debug("TableLayoutView ComboBox Leave Save Data: " & Str(Me.GetHashCode))
-                                               Call Me.CellUpdateEvent(comboBox.Name)
+                                               Call Me.LeaveEvent(comboBox.Name, comboBox.SelectedItem?.ToString, curField)
                                            End Sub
-                If curField.EditEnded IsNot Nothing Then
-                    AddHandler comboBox.Leave, Sub()
-                                                   If Me.switcherLocalEvents = False Then Return
-                                                   Logger.Debug("TableLayoutView ComboBox Leave User Event: " & Str(Me.GetHashCode))
-                                                   If Me.Model.SelectionRange Is Nothing Then Return
-                                                   curField.EditEnded.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
-                                               End Sub
-                End If
             End If
         Next
 

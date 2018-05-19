@@ -53,10 +53,10 @@ namespace WMS.UI
             this.ButtonToSubmission = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.pagerView1 = new FrontWork.PagerView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
@@ -248,6 +248,20 @@ namespace WMS.UI
             this.buttonPreview.Size = new System.Drawing.Size(144, 35);
             this.buttonPreview.Text = "导出/打印";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
+            this.panel1.Controls.Add(this.synchronizer);
+            this.panel1.Controls.Add(this.model1);
+            this.panel1.Controls.Add(this.configuration1);
+            this.panel1.Controls.Add(this.reoGridView1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 218);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1299, 382);
+            this.panel1.TabIndex = 13;
+            // 
             // searchView1
             // 
             this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -284,20 +298,6 @@ namespace WMS.UI
             this.pagerView1.PageSize = ((long)(50));
             this.pagerView1.Size = new System.Drawing.Size(1293, 55);
             this.pagerView1.TabIndex = 12;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
-            this.panel1.Controls.Add(this.synchronizer);
-            this.panel1.Controls.Add(this.model1);
-            this.panel1.Controls.Add(this.configuration1);
-            this.panel1.Controls.Add(this.reoGridView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 218);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1299, 382);
-            this.panel1.TabIndex = 13;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
@@ -376,6 +376,7 @@ namespace WMS.UI
             this.ClientSize = new System.Drawing.Size(1299, 701);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormWarehouseEntry";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormWarehouseEntry";
             this.Load += new System.EventHandler(this.FormWarehouseEntry_Load);
             this.statusStrip1.ResumeLayout(false);

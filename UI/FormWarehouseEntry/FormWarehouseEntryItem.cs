@@ -103,13 +103,15 @@ namespace WMS.UI
 
         private void SupplierNoEditEnded(int row)
         {
-            this.model[row,"supplierName"] = "";
+            if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
+            this.model[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
         }
 
         private void SupplierNameEditEnded(int row)
         {
+            if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
             this.model[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -117,6 +119,7 @@ namespace WMS.UI
 
         private void MaterialNoEditEnded(int row)
         {
+            if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
             this.model[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
@@ -124,6 +127,7 @@ namespace WMS.UI
 
         private void MaterialNameEditEnded(int row)
         {
+            if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
             this.model[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);

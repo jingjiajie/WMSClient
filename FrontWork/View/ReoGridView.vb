@@ -749,10 +749,11 @@ Public Class ReoGridView
         If Not Me.RowInited.Contains(row) Then '如果本行未被初始化，不要触发事件
             Return
         End If
-        '记录单元格被编辑
-        If Not Me.dicCellEdited.ContainsKey(New CellPosition(row, col)) Then
-            Me.dicCellEdited.Add(New CellPosition(row, col), True)
-        End If
+        '在CellDataChanged事件里记录单元格被编辑
+        ''记录单元格被编辑
+        'If Not Me.dicCellEdited.ContainsKey(New CellPosition(row, col)) Then
+        '    Me.dicCellEdited.Add(New CellPosition(row, col), True)
+        'End If
         '要是这个列没设置TextChanged事件，就不用刷了
         If Not Me.dicTextChangedEvent.ContainsKey(col) Then Exit Sub
         '否则执行设置的事件
@@ -1357,6 +1358,7 @@ Public Class ReoGridView
     End Sub
 
     Private Sub WorkbookPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+        '处理复制不会触发事件的问题
         If e.Control AndAlso e.KeyCode = Keys.V Then
             Dim row = Me.Panel.SelectionRange.Row
             Dim col = Me.Panel.SelectionRange.Col
@@ -1364,6 +1366,18 @@ Public Class ReoGridView
             Me.copyStartCell = New CellPosition(row, col)
             Me.dicCellEdited.Add(Me.copyStartCell, True)
             Me.copied = True
+        ElseIf e.KeyCode = Keys.Delete Then '处理Del删除单元格不会触发事件的问题
+            Dim row = Me.Panel.SelectionRange.Row
+            Dim rows = Me.Panel.SelectionRange.Rows
+            Dim col = Me.Panel.SelectionRange.Col
+            Dim cols = Me.Panel.SelectionRange.Cols
+            For curRow = row To row + rows - 1
+                For curCol = col To col + cols - 1
+                    Dim cell = Me.Panel.GetCell(curRow, curCol)
+                    If cell Is Nothing Then Continue For
+                    Me.CellDataChanged(Me.Panel, New CellEventArgs(cell))
+                Next
+            Next
         End If
     End Sub
 End Class
