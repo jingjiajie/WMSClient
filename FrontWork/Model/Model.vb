@@ -595,7 +595,7 @@ Public Class Model
             If dataColumn Is Nothing Then
                 Throw New FrontWorkException("UpdateCells failed: column """ & columnName & """ not found in model")
             End If
-            Me.Data.Rows(rows(i))(dataColumn) = dataOfEachCell(i)
+            Me.Data.Rows(rows(i))(dataColumn) = If(dataOfEachCell(i), DBNull.Value)
             posCellPairs.Add(New PositionCellPair(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
         Next
 

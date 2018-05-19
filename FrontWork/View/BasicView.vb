@@ -246,6 +246,7 @@ Public Class BasicView
         End If
         Call Me.Panel.SuspendLayout()
         Me.BorderStyle = BorderStyle.None
+        Me.Panel.Focus() '把焦点转移走，以免有未保存的编辑框被清除数据
         Me.Panel.Controls.Clear()
         Dim fieldConfigurations As FieldConfiguration() = Me.Configuration.GetFieldConfigurations(Me.Mode)
         Dim visibleFieldConfigurations = (From f In fieldConfigurations
@@ -788,7 +789,7 @@ Public Class BasicView
     End Sub
 
     Private Sub BasicView_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-        If Me.Configuration IsNot Nothing Then Call Me.InitEditPanel()
+        ' If Me.Configuration IsNot Nothing Then Call Me.InitEditPanel()
     End Sub
 
     Private Sub TableLayoutPanel_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel.MouseDoubleClick
