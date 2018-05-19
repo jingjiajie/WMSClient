@@ -50,5 +50,37 @@ namespace WMS.UI.FormBasicInfos
         {
             this.model1.RemoveSelectedRows();
         }
+
+        private void configuration1_Load(object sender, EventArgs e)
+        {
+
+        }
+        //供应商名称编辑完成，根据名称自动搜索ID和No
+        private void WarehouseNameEditEnded(int row, string warehouseName)
+        {
+            IDictionary<string, object> foundWarehouse =
+                GlobalData.AllWarehouses.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == warehouseName;
+                });
+            if (foundWarehouse == null)
+            {
+                MessageBox.Show($"仓库\"{warehouseName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "warehouseId"] = foundWarehouse["id"];
+                this.model1[row, "warehouseName"] = foundWarehouse["name"];
+            }
+        }
+
+        private void FormSupplier_Load(object sender, EventArgs e)
+        {
+            //设置两个请求参数
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
     }
 }
