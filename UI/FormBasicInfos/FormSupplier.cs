@@ -26,6 +26,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
+                this.model1[cell.Row, "enabled"] = 1;   //TODO 需要设置吗 
             }
         }
 
@@ -37,7 +38,8 @@ namespace WMS.UI.FormBasicInfos
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now}
+                { "createTime",DateTime.Now},
+                { "enabled",1}
             });
         }
 

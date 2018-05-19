@@ -67,6 +67,12 @@
     <Compile Include="FormBasicInfos\FormStorageArea.Designer.cs">
       <DependentUpon>FormStorageArea.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasicInfos\FormStorageLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormStorageLocation.Designer.cs">
+      <DependentUpon>FormStorageLocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBasicInfos\FormSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -554,6 +560,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormStorageArea.resx">
       <DependentUpon>FormStorageArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormStorageLocation.resx">
+      <DependentUpon>FormStorageLocation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormSupplier.resx">
       <DependentUpon>FormSupplier.cs</DependentUpon>

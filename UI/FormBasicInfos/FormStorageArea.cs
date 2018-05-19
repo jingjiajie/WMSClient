@@ -15,5 +15,52 @@ namespace WMS.UI.FormBasicInfos
         {
             InitializeComponent();
         }
+
+        private void FormStorageArea_Load(object sender, EventArgs e)
+        {
+            //设置两个请求参数
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
+
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+            });
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            this.model1.RemoveSelectedRows();
+        }
+
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        {
+            this.synchronizer.Save();
+        }
+
+        private void WarehouseEditEnded(int row, string warehouseName)
+        {
+            IDictionary<string, object> foundWarehouse =
+                GlobalData.AllWarehouses.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == warehouseName;
+                });
+            if (foundWarehouse == null)
+            {
+                MessageBox.Show($"仓库\"{warehouseName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+               // this.model1[row, "warehouseName "] = foundWarehouse["name"];
+                this.model1[row, "warehouseId"] = foundWarehouse["id"];
+            }
+        }
+
+
+
     }
 }
