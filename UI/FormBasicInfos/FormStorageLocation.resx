@@ -117,6 +117,42 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},       
+        {name:"storageAreaId",displayName:"库区id",type:"string",visible:false},
+        {name:"storageAreaNmae",displayName:"库区名称",type:"string"},
+        {name:"storageAreaNo",displayName:"库区编码",type:"string"},
+        {name:"no",displayName:"库位编码",type:"string"},
+        {name:"name",displayName:"库位名称",type:"int",visible:false},
+        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/storageA_location/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
+  </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>440, 59</value>
   </metadata>
@@ -176,42 +212,6 @@
         IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"storageAreaId",displayName:"库区id",type:"string",visible:false},
-        {name:"storageAreaNmae",displayName:"库区名称",type:"string"},
-        {name:"storageAreaNo",displayName:"库区编码",type:"string"},
-        {name:"no",displayName:"库位编码",type:"string"},
-        {name:"name",displayName:"库位名称",type:"int",visible:false},
-        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
-    httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/storageArea/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/storageArea/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/storageArea/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/storageArea/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>589, 59</value>

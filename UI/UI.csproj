@@ -90,6 +90,18 @@
     </Compile>
     <Compile Include="FormInspectionNote\FormInspectionNote.Designer.cs">
       <DependentUpon>FormInspectionNote.cs</DependentUpon>
+	</Compile>
+    <Compile Include="FormStockTaking\FormStockTakingOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockTaking\FormStockTakingOrder.Designer.cs">
+      <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockTaking\FormStockTakingOrderItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockTaking\FormStockTakingOrderItem.Designer.cs">
+      <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
     </Compile>
     <Compile Include="FormWarehouseEntry\FormWarehouseEntryItem.cs">
       <SubType>Form</SubType>
@@ -578,6 +590,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNote.resx">
       <DependentUpon>FormInspectionNote.cs</DependentUpon>
+	</EmbeddedResource>
+    <EmbeddedResource Include="FormStockTaking\FormStockTakingOrder.resx">
+      <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockTaking\FormStockTakingOrderItem.resx">
+      <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryItem.resx">
       <DependentUpon>FormWarehouseEntryItem.cs</DependentUpon>

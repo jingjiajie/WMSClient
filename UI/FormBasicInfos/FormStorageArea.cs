@@ -26,9 +26,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-            });
+            this.model1.InsertRow(0, null);          
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

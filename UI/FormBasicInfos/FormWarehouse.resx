@@ -132,7 +132,7 @@
         {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/warehouse/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",

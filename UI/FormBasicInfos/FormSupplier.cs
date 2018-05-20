@@ -26,7 +26,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
-                this.model1[cell.Row, "enabled"] = 1;   //TODO 需要设置吗 
+              //  this.model1[cell.Row, "enabled"] = 1;   //TODO 需要设置吗 
             }
         }
 

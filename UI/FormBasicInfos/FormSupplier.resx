@@ -204,7 +204,7 @@
     ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/supplier/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
