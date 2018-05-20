@@ -585,6 +585,9 @@
     <EmbeddedResource Include="FormStockTaking\FormStockTakingOrder.resx">
       <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormStockTaking\FormStockTakingOrderItem.resx">
+      <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryItem.resx">
       <DependentUpon>FormWarehouseEntryItem.cs</DependentUpon>
       <SubType>Designer</SubType>

@@ -49,12 +49,12 @@
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.basicView1 = new FrontWork.BasicView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -261,6 +261,16 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
+            // buttonItems
+            // 
+            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
+            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItems.Name = "buttonItems";
+            this.buttonItems.Size = new System.Drawing.Size(138, 25);
+            this.buttonItems.Text = "查看盘点单条目";
+            this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
+            // 
             // basicView1
             // 
             this.basicView1.Configuration = this.configuration1;
@@ -289,8 +299,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(69, 20);
-            this.labelStatus.Text = "库区信息";
+            this.labelStatus.Size = new System.Drawing.Size(84, 20);
+            this.labelStatus.Text = "盘点单信息";
             // 
             // toolStripStatusLabel1
             // 
@@ -310,16 +320,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(1243, 25);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // buttonItems
-            // 
-            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
-            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonItems.Name = "buttonItems";
-            this.buttonItems.Size = new System.Drawing.Size(138, 25);
-            this.buttonItems.Text = "查看盘点单条目";
-            this.buttonItems.ToolTipText = "查看零件条目";
-            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
             // FormStockTakingOrder
             // 
