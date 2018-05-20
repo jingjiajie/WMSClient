@@ -254,6 +254,7 @@
             this.ClientSize = new System.Drawing.Size(1249, 800);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormWarehouseEntryInspect";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormWarehouseEntryInspect";
             this.Load += new System.EventHandler(this.FormWarehouseEntryInspect_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
