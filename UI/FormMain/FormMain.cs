@@ -45,8 +45,7 @@ namespace WMS.UI
                 MakeTreeNode("入库管理",new TreeNode[]{
                     MakeTreeNode("入库单管理"),
                     MakeTreeNode("送检单管理"),
-                    MakeTreeNode("上架单管理"),
-                    MakeTreeNode("上架零件管理"),
+                    MakeTreeNode("上架单管理")
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
                     MakeTreeNode("工作任务单管理"),
@@ -191,6 +190,9 @@ namespace WMS.UI
                     break;
                 case "入库单管理":
                     this.LoadSubWindow(new FormWarehouseEntry());
+                    break;
+                case "送检单管理":
+                    this.LoadSubWindow(new FormInspectionNote());
                     break;
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")
