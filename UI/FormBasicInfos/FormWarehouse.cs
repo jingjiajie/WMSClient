@@ -20,7 +20,7 @@ namespace WMS.UI.FormBasicInfos
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {             
-                { "enabled",1}
+                { "enabled",1}//TODO
             });
         }
 
