@@ -60,6 +60,7 @@ namespace WMS.UI.FormStockTaking
         private void buttonItems_Click(object sender, EventArgs e)
         {
 
-        }
+        }   
+
     }
 }
