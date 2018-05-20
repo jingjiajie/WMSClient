@@ -6,29 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using FrontWork;
 
-namespace WMS.UI.FormStockTaking
+namespace WMS.UI.FormBasicInfos
 {
-    public partial class FormStockTakingOrder : Form
+    public partial class FormPackage : Form
     {
-        public FormStockTakingOrder()
+        public FormPackage()
         {
             InitializeComponent();
-            this.model1.CellUpdated += this.model_CellUpdated;
-        }
-        private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
-        {
-            foreach (var cell in e.UpdatedCells)
-            {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
-                this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
-                this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
-            }
         }
 
-        private void FormStockTakingOrder_Load(object sender, EventArgs e)
+        private void FormPackage_Load(object sender, EventArgs e)
         {
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -36,14 +24,16 @@ namespace WMS.UI.FormStockTaking
             this.searchView1.Search();
         }
 
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},               
             });
         }
 
@@ -60,7 +50,6 @@ namespace WMS.UI.FormStockTaking
         private void buttonItems_Click(object sender, EventArgs e)
         {
 
-        }   
-
+        }
     }
 }

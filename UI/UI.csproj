@@ -55,6 +55,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Defines.cs" />
+    <Compile Include="FormBasicInfos\FormMaterial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormMaterial.Designer.cs">
+      <DependentUpon>FormMaterial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormPackage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormPackage.Designer.cs">
+      <DependentUpon>FormPackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormPackageItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormPackageItem.Designer.cs">
+      <DependentUpon>FormPackageItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBasicInfos\FormPerson.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,11 +97,23 @@
     <Compile Include="FormBasicInfos\FormSupplier.Designer.cs">
       <DependentUpon>FormSupplier.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasicInfos\FormSupply.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormSupply.Designer.cs">
+      <DependentUpon>FormSupply.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBasicInfos\FormWarehouse.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBasicInfos\FormWarehouse.Designer.cs">
       <DependentUpon>FormWarehouse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInspectionNote\FormInspectionNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInspectionNote\FormInspectionNote.Designer.cs">
+      <DependentUpon>FormInspectionNote.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockTaking\FormStockTakingOrder.cs">
       <SubType>Form</SubType>
@@ -567,6 +597,15 @@
     <Compile Include="Old\FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="Old\FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities\Utilities.cs" />
+    <EmbeddedResource Include="FormBasicInfos\FormMaterial.resx">
+      <DependentUpon>FormMaterial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormPackage.resx">
+      <DependentUpon>FormPackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormPackageItem.resx">
+      <DependentUpon>FormPackageItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormPerson.resx">
       <DependentUpon>FormPerson.cs</DependentUpon>
     </EmbeddedResource>
@@ -579,11 +618,20 @@
     <EmbeddedResource Include="FormBasicInfos\FormSupplier.resx">
       <DependentUpon>FormSupplier.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormSupply.resx">
+      <DependentUpon>FormSupply.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormWarehouse.resx">
       <DependentUpon>FormWarehouse.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormInspectionNote\FormInspectionNote.resx">
+      <DependentUpon>FormInspectionNote.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockTaking\FormStockTakingOrder.resx">
       <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockTaking\FormStockTakingOrderItem.resx">
+      <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryItem.resx">
       <DependentUpon>FormWarehouseEntryItem.cs</DependentUpon>
@@ -913,5 +961,6 @@
     <None Include="icon\package.png" />
     <None Include="icon\20180114034630784_easyicon_net_64.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
