@@ -145,6 +145,12 @@
     <Compile Include="FormWarehouseEntry\FormWarehouseEntryInspect.Designer.cs">
       <DependentUpon>FormWarehouseEntryInspect.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromDeliverOrder\FormDeliveryOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FromDeliverOrder\FormDeliveryOrder.Designer.cs">
+      <DependentUpon>FormDeliveryOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Old\FormJobTicket\JobTicketUtilities.cs" />
     <Compile Include="Old\FormPutOutStorageTicket\PutOutStorageTicketUitilities.cs" />
     <Compile Include="Old\FormStockInfo\StockInfoUtilities.cs" />
@@ -643,6 +649,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryInspect.resx">
       <DependentUpon>FormWarehouseEntryInspect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FromDeliverOrder\FormDeliveryOrder.resx">
+      <DependentUpon>FormDeliveryOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Old\FormBase\ComponentOuterPackingSizeModify.resx">
       <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>

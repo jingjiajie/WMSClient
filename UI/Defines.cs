@@ -7,6 +7,6 @@ namespace WMS.UI
 {
     class Defines
     {
-        public static string ServerURL = "http://localhost.fiddler:9000";
+        public static string ServerURL = "http://localhost:9000";
     }
 }
