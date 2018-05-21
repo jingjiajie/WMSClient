@@ -16,6 +16,7 @@ namespace WMS.UI.FormBasicInfos
             InitializeComponent();
         }
 
+        /*
         private void WarehouseNameEditEnded(int row, string warehouseName)
         {
             IDictionary<string, object> foundWarehouse =
@@ -33,7 +34,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "warehouseId"] = foundWarehouse["id"];
             }
         }
-
+        */
 
         private void StorageAreaNameEditEnded(int row, string storageAreaName)
         {
@@ -45,7 +46,7 @@ namespace WMS.UI.FormBasicInfos
                 });
             if (foundStorageArea == null)
             {
-                MessageBox.Show($"仓库\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -64,7 +65,11 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, null);
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},              
+                { "warehouseName",GlobalData.Warehouse["name"]},               
+            });
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
