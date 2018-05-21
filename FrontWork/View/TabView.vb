@@ -57,6 +57,19 @@ Public Class TabView
         End Set
     End Property
 
+    Public Sub New()
+
+        ' 此调用是设计器所必需的。
+        InitializeComponent()
+
+        ' 在 InitializeComponent() 调用之后添加任何初始化。
+        If Not Me.DesignMode Then
+            RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
+            Call Me.TabControl.TabPages.Clear()
+            AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
+        End If
+    End Sub
+
     Private Sub TabView_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         Call Me.AdjustItemSize()
     End Sub
@@ -82,6 +95,7 @@ Public Class TabView
     End Sub
 
     Private Sub BindModel()
+        If Me.DesignMode Then Return
         AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
         AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
         AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
@@ -94,6 +108,7 @@ Public Class TabView
     End Sub
 
     Private Sub UnbindModel()
+        If Me.DesignMode Then Return
         RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
         RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
         RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
@@ -109,13 +124,17 @@ Public Class TabView
     End Sub
 
     Private Sub ImportCells(Optional rows As Integer() = Nothing)
+        If Me.DesignMode Then Return
+        If Me.Model Is Nothing Then
+            Throw New FrontWorkException($"Model not set in {Me.Name}!")
+        End If
         Dim fieldConfigurations = Me.Configuration.GetFieldConfigurations(Me.Mode)
         If fieldConfigurations Is Nothing Then
-            throw new FrontWorkException($"Mode Configuration:{Me.Mode} not found!")
+            Throw New FrontWorkException($"Mode Configuration:""{Me.Mode}"" not found!")
         End If
         Dim field = (From f In fieldConfigurations Where f.Name.Equals(Me.ColumnName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
         If field Is Nothing Then
-            throw new FrontWorkException($"Field:{Me.ColumnName} not exist in Configuration!")
+            Throw New FrontWorkException($"Field:""{Me.ColumnName}"" not exist in Configuration!")
         End If
         If rows Is Nothing Then
             For i = 0 To Me.Model.RowCount - 1
@@ -179,12 +198,20 @@ Public Class TabView
     End Sub
 
     Private Sub TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl.SelectedIndexChanged
+        If Me.DesignMode Then Return
+        If Me.Model Is Nothing Then
+            Throw New FrontWorkException($"Model not set in {Me.Name}!")
+        End If
         RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
         Me.Model.SelectionRange = New Range(Me.TabControl.SelectedIndex, 0, 1, Me.Model.ColumnCount)
         AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
     End Sub
 
     Private Sub RefreshSelectionRange()
+        If Me.DesignMode Then Return
+        If Me.Model Is Nothing Then
+            Throw New FrontWorkException($"Model not set in {Me.Name}!")
+        End If
         RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
         If Me.Model.SelectionRange IsNot Nothing Then
             Me.TabControl.SelectedIndex = Me.Model.SelectionRange.Row
@@ -192,4 +219,7 @@ Public Class TabView
         AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
     End Sub
 
+    Private Sub TabView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

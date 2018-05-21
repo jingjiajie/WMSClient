@@ -18,10 +18,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
-            {             
-                { "enabled",1}//TODO
-            });
+            this.model1.InsertRow(0, null);
+
         }
 
         private void FormWarehouse_QueryAccessibilityHelp(object sender, QueryAccessibilityHelpEventArgs e)

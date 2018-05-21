@@ -152,14 +152,13 @@
     <value>[
     {mode:"default",
      fields:[
-        {name:"warehouseEntryNo",displayName:"入库单号",visible:false},
         {name:"warehouseEntryId",displayName:"入库单ID",visible:false},
-        {name:"warehouseId",displayName:"仓库ID",visible:false},
+        {name:"warehouseId",displayName:"仓库ID",visible:false,defaultValue:"#warehouseIdDefaultValue"},
         {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
-        {name:"description",displayName:"描述",defaultValue:"无"},
-        {name:"inspectionTime",displayName:"送检时间",defaultValue:"#now"},
-        {name:"createPersonId",displayName:"创建用户ID"},
-        {name:"createTime",displayName:"创建时间"}
+        {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
+        {name:"inspectionTime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
+        {name:"createPersonId",displayName:"创建用户ID",defaultValue:"#createPersonIDDefaultValue"},
+        {name:"createTime",displayName:"创建时间",defaultValue:"#now",editable:false}
      ]
     }
 ]</value>

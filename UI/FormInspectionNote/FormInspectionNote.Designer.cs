@@ -41,22 +41,22 @@
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonItems = new System.Windows.Forms.ToolStripButton();
-            this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.basicView1 = new FrontWork.BasicView();
+            this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonItems = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
-            this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // pagerSearchJsonRESTAdapter1
@@ -106,7 +106,7 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(3, 163);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntry",
+        "FormInspectionNote",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -163,70 +163,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1040, 282);
             this.panel1.TabIndex = 13;
-            // 
-            // buttonPreview
-            // 
-            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
-            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(144, 35);
-            this.buttonPreview.Text = "导出/打印";
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.AutoSize = false;
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(10, 28);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.AutoSize = false;
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(10, 28);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
-            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(134, 35);
-            this.buttonSave.Text = "保存修改";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.AutoSize = false;
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(10, 28);
-            // 
-            // buttonItems
-            // 
-            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
-            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonItems.Name = "buttonItems";
-            this.buttonItems.Size = new System.Drawing.Size(182, 35);
-            this.buttonItems.Text = "查看物料条目";
-            this.buttonItems.ToolTipText = "查看零件条目";
-            // 
-            // toolStripTop
-            // 
-            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonItems,
-            this.toolStripSeparator2,
-            this.buttonSave,
-            this.toolStripSeparator3,
-            this.toolStripSeparator5,
-            this.buttonPreview});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 50);
-            this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1040, 38);
-            this.toolStripTop.TabIndex = 3;
-            this.toolStripTop.Text = "toolStrip1";
             // 
             // tableLayoutPanel1
             // 
@@ -294,6 +230,71 @@
             this.basicView1.Size = new System.Drawing.Size(1040, 130);
             this.basicView1.TabIndex = 14;
             // 
+            // toolStripTop
+            // 
+            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonItems,
+            this.toolStripSeparator2,
+            this.buttonSave,
+            this.toolStripSeparator3,
+            this.toolStripSeparator5,
+            this.buttonPreview});
+            this.toolStripTop.Location = new System.Drawing.Point(0, 50);
+            this.toolStripTop.Name = "toolStripTop";
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1040, 38);
+            this.toolStripTop.TabIndex = 3;
+            this.toolStripTop.Text = "toolStrip1";
+            // 
+            // buttonItems
+            // 
+            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
+            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItems.Name = "buttonItems";
+            this.buttonItems.Size = new System.Drawing.Size(182, 35);
+            this.buttonItems.Text = "查看物料条目";
+            this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(10, 28);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
+            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(134, 35);
+            this.buttonSave.Text = "保存修改";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(10, 28);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.AutoSize = false;
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(10, 28);
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(144, 35);
+            this.buttonPreview.Text = "导出/打印";
+            // 
             // FormInspectionNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -304,12 +305,12 @@
             this.Text = "送检单管理";
             this.Load += new System.EventHandler(this.FormInspectionNote_Load);
             this.panel1.ResumeLayout(false);
-            this.toolStripTop.ResumeLayout(false);
-            this.toolStripTop.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.toolStripTop.ResumeLayout(false);
+            this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
 
         }
