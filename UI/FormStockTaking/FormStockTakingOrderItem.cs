@@ -12,9 +12,14 @@ namespace WMS.UI.FormStockTaking
 {
     public partial class FormStockTakingOrderItem : Form
     {
-        public FormStockTakingOrderItem()
+        private IDictionary<string, object> stockTakingOrder = null;
+
+        public FormStockTakingOrderItem(IDictionary<string, object> srockTakingOrder)
         {
-            InitializeComponent();          
+            MethodListenerContainer.Register(this);
+            this.stockTakingOrder = srockTakingOrder;
+            InitializeComponent();
+            this.searchView1.AddStaticCondition("stockTakingOrder", this.stockTakingOrder["id"]);
         }
 
         private void FormStockTakingOrderItem_Load(object sender, EventArgs e)

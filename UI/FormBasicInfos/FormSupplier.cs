@@ -44,8 +44,11 @@ namespace WMS.UI.FormBasicInfos
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
-        {
-            this.synchronizer.Save();
+        {         
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
