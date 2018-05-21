@@ -26,7 +26,11 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, null);          
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},              
+                { "warehouseName",GlobalData.Warehouse["name"]},               
+            });
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -39,6 +43,7 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.Save();
         }
 
+        /*
         private void WarehouseEditEnded(int row, string warehouseName)
         {
             IDictionary<string, object> foundWarehouse =
@@ -52,11 +57,10 @@ namespace WMS.UI.FormBasicInfos
                 MessageBox.Show($"仓库\"{warehouseName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-            {
-               // this.model1[row, "warehouseName "] = foundWarehouse["name"];
+            {             
                 this.model1[row, "warehouseId"] = foundWarehouse["id"];
             }
-        }
+        }*/
 
 
 

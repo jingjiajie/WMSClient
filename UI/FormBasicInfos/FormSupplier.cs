@@ -25,8 +25,7 @@ namespace WMS.UI.FormBasicInfos
                 if (cell.ColumnName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
-              //  this.model1[cell.Row, "enabled"] = 1;   //TODO 需要设置吗 
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;            
             }
         }
 
@@ -38,8 +37,8 @@ namespace WMS.UI.FormBasicInfos
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "enabled",1}
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "createTime",DateTime.Now}
             });
         }
 
@@ -61,7 +60,7 @@ namespace WMS.UI.FormBasicInfos
 
         }
 
-        //
+       /*
         private void WarehouseNameEditEnded(int row, string warehouseName)
         {
             IDictionary<string, object> foundWarehouse =
@@ -80,6 +79,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "warehouseName"] = foundWarehouse["name"];
             }
         }
+        */
 
         private void FormSupplier_Load(object sender, EventArgs e)
         {
@@ -87,6 +87,11 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+        }
+
+        private void reoGridView1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
