@@ -38,6 +38,7 @@ namespace WMS.UI
         private void buttonSave_Click(object sender, EventArgs e)
         {
             this.synchronizer.Save();
+            this.searchView1.Search();
         }
 
         private void FormWarehouseEntry_Load(object sender, EventArgs e)

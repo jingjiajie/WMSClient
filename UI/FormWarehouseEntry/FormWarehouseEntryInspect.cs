@@ -16,23 +16,39 @@ namespace WMS.UI
             InitializeComponent();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.modelWarehouseEntryNo.SelectionRangeChanged += ModelWarehouseEntryNo_SelectionRangeChanged;
-            this.modelWarehouseEntryNo.AddRows(warehouseEntries);
-        }
-
-        private void ModelWarehouseEntryNo_SelectionRangeChanged(object sender, FrontWork.ModelSelectionRangeChangedEventArgs e)
-        {
-            int selectedWarehouseEntryID = (int)this.modelWarehouseEntryNo[this.modelWarehouseEntryNo.SelectionRange.Row, "id"];
-            this.modelBoxInspectionNoteItems.CurrentModelName = selectedWarehouseEntryID.ToString();
-            Condition condition = new Condition()
-                .AddCondition("warehouseEntryId", selectedWarehouseEntryID);
-            this.synchronizer.SetRequestParameter("$condStr",condition.ToString());
-            this.synchronizer.Find();
+            this.modelWarehouseEntry.AddRows(warehouseEntries);
         }
 
         private void FormWarehouseEntryInspect_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["Id"];
+        }
+
+        private int CreatePersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["Id"];
+        }
+
+        private DateTime InspectionTimeDefaultValue()
+        {
+            int row = (int)this.modelWarehouseEntry.SelectionRange.Row;
+            DateTime inventoryDate = (DateTime)this.modelWarehouseEntry[row, "inventoryDate"];
+            return inventoryDate;
+        }
+
+        private void modelWarehouseEntry_SelectionRangeChanged(object sender, FrontWork.ModelSelectionRangeChangedEventArgs e)
+        {
+            int selectedWarehouseEntryID = (int)this.modelWarehouseEntry[this.modelWarehouseEntry.SelectionRange.Row, "id"];
+            this.modelBoxInspectionNoteItems.CurrentModelName = selectedWarehouseEntryID.ToString();
+            Condition condition = new Condition()
+                .AddCondition("warehouseEntryId", selectedWarehouseEntryID);
+            this.synchronizer.SetRequestParameter("$condStr", condition.ToString());
+            this.synchronizer.Find();
         }
     }
 }
