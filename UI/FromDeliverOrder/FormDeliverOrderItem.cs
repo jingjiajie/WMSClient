@@ -19,7 +19,7 @@ namespace WMS.UI.FromDeliverOrder
             MethodListenerContainer.Register(this);
             this.deliverOrder = deliverOrder;
             InitializeComponent();
-            this.searchView1.AddStaticCondition("warehouseEntryId", this.deliverOrder["id"]);
+            this.searchView1.AddStaticCondition("deliverOrderId", this.deliverOrder["id"]);
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
