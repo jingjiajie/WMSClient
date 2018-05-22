@@ -197,6 +197,12 @@ namespace WMS.UI
                 case "供应商管理":
                     this.LoadSubWindow(new FormSupplier());
                     break;
+                case "供货管理":
+                    this.LoadSubWindow(new FormSupply());
+                    break;
+                case "物料管理":
+                    this.LoadSubWindow(new FormMaterial());
+                    break;
 
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")
