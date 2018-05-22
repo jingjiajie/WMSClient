@@ -27,16 +27,18 @@ namespace WMS.UI.FormBasicInfos
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                { "warehouseId",GlobalData.Warehouse["id"]},//todo 物料跟仓库绑定了？
-            });
+
         }
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, null);
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "enabled",1}
+            });
         }
 
         private void configuration1_Load(object sender, EventArgs e)
@@ -51,7 +53,10 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.jsonRESTSynchronizer1.Save();
+            if (this.jsonRESTSynchronizer1.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         //仓库名称编辑完成，根据名称自动搜索ID
