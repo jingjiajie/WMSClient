@@ -132,7 +132,7 @@
 		{name:"supplierID",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseID",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称",association:"#warehouseNameAssociation",editEnded:"#warehouseNameEditEnded"},
+		{name:"warehouseName",type:"string",displayName:"仓库名称"},
         {name:"materialID",type:"int",displayName:"物料ID",visible:false},
 		{name:"materialName",type:"string",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
 
