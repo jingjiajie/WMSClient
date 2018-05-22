@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>440, 59</value>
+  </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>
 [
@@ -124,10 +127,10 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
         {name:"storageAreaId",displayName:"库区id",type:"string",visible:false},
-        {name:"storageAreaNmae",displayName:"库区名称",type:"string"},
-        {name:"storageAreaNo",displayName:"库区编码",type:"string"},
         {name:"no",displayName:"库位编码",type:"string"},
-        {name:"name",displayName:"库位名称",type:"int",visible:false},
+        {name:"name",displayName:"库位名称",type:"string"},
+        {name:"storageAreaNmae",displayName:"库区名称",type:"string"},
+        {name:"storageAreaNo",displayName:"库区编码",type:"string"},       
         {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
     httpAPIs:[
         {type:"get-count",
@@ -153,9 +156,6 @@
     }
 ]</value>
   </data>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>440, 59</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -13,6 +13,7 @@ using WMS.UI.FormBase;
 using WMS.DataAccess;
 using System.Diagnostics;
 using WMS.UI.FormBasicInfos;
+using WMS.UI.FormStockTaking;
 
 namespace WMS.UI
 {
@@ -41,7 +42,7 @@ namespace WMS.UI
                     MakeTreeNode("物料管理"),
                     MakeTreeNode("人员管理"),
                     MakeTreeNode("库区管理"),
-                    MakeTreeNode(" 库位管理")
+                    MakeTreeNode("库位管理")
                     }),
                 MakeTreeNode("入库管理",new TreeNode[]{
                     MakeTreeNode("入库单管理"),
@@ -209,6 +210,9 @@ namespace WMS.UI
                     break;
                 case "库位管理":
                     this.LoadSubWindow(new FormStorageLocation());
+                    break;
+                case "库存盘点":
+                    this.LoadSubWindow(new FormStockTakingOrder());
                     break;
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")
