@@ -255,6 +255,13 @@ Public Interface IModel
     ''' <param name="syncStates">各行同步状态</param>
     Sub Refresh(dataTable As DataTable, selectionRange As Range(), syncStates As SynchronizationState())
 
+    ''' <summary>
+    ''' 列是否存在
+    ''' </summary>
+    ''' <param name="columnName">列名</param>
+    ''' <returns>是否存在</returns>
+    Function ContainsColumn(columnName As String) As Boolean
+
     '属性相关
     ''' <summary>
     ''' 配置中心对象

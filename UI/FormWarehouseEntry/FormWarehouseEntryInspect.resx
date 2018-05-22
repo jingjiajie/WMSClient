@@ -117,26 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="configurationInspectionNote.ConfigurationString" xml:space="preserve">
+    <value>[
+    {mode:"default",
+     fields:[
+        {name:"warehouseEntryId",type:"int",displayName:"入库单ID",visible:false},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
+        {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
+        {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
+        {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
+        {name:"createPersonId",type:"int",displayName:"创建用户ID",defaultValue:"#createPersonIDDefaultValue"},
+        {name:"createTime",type:"datetime",displayName:"创建时间",defaultValue:"#now",editable:false}
+     ]
+    }
+]</value>
+  </data>
   <data name="configurationInspectionNoteItem.ConfigurationString" xml:space="preserve">
     <value>[
     {mode:"default",
      fields:[
-        {name:"ID",displayName:"ID",visible:false},
-        {name:"WarehouseEntryID",displayName:"收货单ID",visible:false},
-        {name:"SupplyID",displayName:"供货ID",visible:false},
-        {name:"StorageLocationID",displayName:"收货库位ID",visible:false},
-        {name:"ExpectedAmount",displayName:"订单数量（个）"},
-        {name:"RealAmount",displayName:"实收数量"},
-        {name:"Unit",displayName:"单位"},
-        {name:"UnitAmount",displayName:"单位数量"},
-        {name:"InspectionAmount",displayName:"已分配送检数量（个）"},
-        {name:"State",displayName:"状态"},
-        {name:"RefuseAmount",displayName:"拒收数量（个）"},
-        {name:"RefuseUnit",displayName:"拒收单位"},
-        {name:"RefuseUnitAmount",displayName:"拒收单位数量"},
-        {name:"PersonID",displayName:"作业人ID",visible:false},
-        {name:"Comment",displayName:"备注"},
-        {name:"InventoryDate",displayName:"存货日期"}
+        {name:"id",displayName:"ID",visible:false},
+        {name:"warehouseEntryId",displayName:"收货单ID",visible:false},
+        {name:"supplyId",displayName:"供货ID",visible:false},
+        {name:"storageLocationId",displayName:"收货库位ID",visible:false},
+        {name:"expectedAmount",displayName:"订单数量（个）"},
+        {name:"realAmount",displayName:"实收数量"},
+        {name:"unit",displayName:"单位"},
+        {name:"unitAmount",displayName:"单位数量"},
+        {name:"inspectionAmount",displayName:"已分配送检数量（个）"},
+        {name:"state",displayName:"状态"},
+        {name:"refuseAmount",displayName:"拒收数量（个）"},
+        {name:"refuseUnit",displayName:"拒收单位"},
+        {name:"refuseUnitAmount",displayName:"拒收单位数量"},
+        {name:"personId",displayName:"作业人ID",visible:false},
+        {name:"comment",displayName:"备注"},
+        {name:"inventoryDate",displayName:"存货日期"}
      ],
     httpAPIs:[
         {type:"find",
@@ -144,21 +159,6 @@
          method:"GET",
          responseBody:"$data"
         }
-     ]
-    }
-]</value>
-  </data>
-  <data name="configurationInspectionNote.ConfigurationString" xml:space="preserve">
-    <value>[
-    {mode:"default",
-     fields:[
-        {name:"warehouseEntryId",displayName:"入库单ID",visible:false},
-        {name:"warehouseId",displayName:"仓库ID",visible:false,defaultValue:"#warehouseIdDefaultValue"},
-        {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
-        {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
-        {name:"inspectionTime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
-        {name:"createPersonId",displayName:"创建用户ID",defaultValue:"#createPersonIDDefaultValue"},
-        {name:"createTime",displayName:"创建时间",defaultValue:"#now",editable:false}
      ]
     }
 ]</value>

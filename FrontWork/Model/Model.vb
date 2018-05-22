@@ -352,7 +352,7 @@ Public Class Model
             '将值写入datatable
             For Each item In curData
                 If Not Me.Data.Columns.Contains(item.Key) Then Continue For
-                newRow(item.Key) = item.Value
+                newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
             Dim newIndexRowPair As New IndexRowPair(realRow, Me.GetRowID(Me.Data.Rows(realRow)), If(curData, New Dictionary(Of String, Object)))
@@ -595,7 +595,12 @@ Public Class Model
             If dataColumn Is Nothing Then
                 Throw New FrontWorkException("UpdateCells failed: column """ & columnName & """ not found in model")
             End If
-            Me.Data.Rows(rows(i))(dataColumn) = If(dataOfEachCell(i), DBNull.Value)
+            Try
+                Me.Data.Rows(rows(i))(dataColumn) = If(dataOfEachCell(i), DBNull.Value)
+            Catch ex As ArgumentException
+                Me.Data.Rows(rows(i))(dataColumn) = DBNull.Value
+                Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
+            End Try
             posCellPairs.Add(New PositionCellPair(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
         Next
 
@@ -933,4 +938,8 @@ Public Class Model
         If Not Me.DesignMode Then Me.Visible = False
         Call Me.InitializeComponent()
     End Sub
+
+    Public Function ContainsColumn(columnName As String) As Boolean Implements IModel.ContainsColumn
+        Return Me.Data.Columns.Contains(columnName)
+    End Function
 End Class

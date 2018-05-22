@@ -63,11 +63,6 @@ Public Class TabView
         InitializeComponent()
 
         ' 在 InitializeComponent() 调用之后添加任何初始化。
-        If Not Me.DesignMode Then
-            RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
-            Call Me.TabControl.TabPages.Clear()
-            AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
-        End If
     End Sub
 
     Private Sub TabView_SizeChanged(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
@@ -133,15 +128,18 @@ Public Class TabView
             Throw New FrontWorkException($"Mode Configuration:""{Me.Mode}"" not found!")
         End If
         Dim field = (From f In fieldConfigurations Where f.Name.Equals(Me.ColumnName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
-        If field Is Nothing Then
-            Throw New FrontWorkException($"Field:""{Me.ColumnName}"" not exist in Configuration!")
-        End If
+        '如果列名在Configuration里不存在，或者在Model里不存在的情况，直接返回
+        If field Is Nothing Then Return
+        If Not Me.Model.ContainsColumn(Me.ColumnName) Then Return
+        RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
         If rows Is Nothing Then
+            Call Me.TabControl.TabPages.Clear()
             For i = 0 To Me.Model.RowCount - 1
                 Me.TabControl.TabPages.Add(String.Empty)
             Next
             rows = Util.ToArray(Of Integer)(Util.Range(0, Me.Model.RowCount))
         End If
+        AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim value = Me.Model(row, Me.ColumnName)
@@ -175,9 +173,11 @@ Public Class TabView
     End Sub
 
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
+        RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
         For Each indexDataRow In e.RemovedRows
             Me.TabControl.TabPages.RemoveAt(indexDataRow.Index)
         Next
+        AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
     End Sub
 
     Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
