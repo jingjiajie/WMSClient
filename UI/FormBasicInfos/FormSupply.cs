@@ -40,9 +40,7 @@ namespace WMS.UI.FormBasicInfos
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
+                { "warehouseName",GlobalData.Warehouse["name"]},
                 { "enabled",1}
             });
         }
