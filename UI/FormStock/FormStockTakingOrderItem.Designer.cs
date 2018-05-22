@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockTakingOrderItem));
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -100,7 +100,7 @@
             // 
             // basicView1
             // 
-            this.basicView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.basicView1.Configuration = this.configuration1;
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
@@ -110,6 +110,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
+            this.basicView1.Padding = new System.Windows.Forms.Padding(3);
             this.basicView1.Size = new System.Drawing.Size(828, 115);
             this.basicView1.TabIndex = 13;
             // 
@@ -150,6 +151,7 @@
             // 
             // pagerView1
             // 
+            this.pagerView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pagerView1.Location = new System.Drawing.Point(2, 325);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -161,14 +163,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(650, 80);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -181,6 +183,7 @@
             // 
             // searchView1
             // 
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
@@ -207,6 +210,7 @@
             // 
             // reoGridView1
             // 
+            this.reoGridView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.reoGridView1.Configuration = this.configuration1;
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
