@@ -208,7 +208,7 @@ namespace WMS.UI
                     this.LoadSubWindow(new FormStorageArea());
                     break;
                 case "库位管理":
-                    this.LoadSubWindow(new FormStorageLocation);
+                    this.LoadSubWindow(new FormStorageLocation());
                     break;
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")

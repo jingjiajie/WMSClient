@@ -117,6 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>[
+    {mode:"default",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"no",displayName:"出库单号",type:"string",placeHolder:"留空自动生成"},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+        {name:"description",displayName:"描述",type:"string"},
+        {name:"state",displayName:"状态",type:"int",editable:false},
+        {name:"deliverTime",displayName:"发运时间",type:"datetime"},
+        {name:"returnNoteNo",displayName:"回单号",type:"string"},
+        {name:"returnNoteTime",displayName:"回单时间",type:"datetime"},
+        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
+        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
+        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
+        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
+        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
+
+    ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/deliver_order/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/deliver_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/deliver_order/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/deliver_order/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/deliver_order/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
+  </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>287, 59</value>
   </metadata>
@@ -185,31 +229,31 @@
   <data name="buttonTransferOrder.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIOSURBVDhP3dHfS1NxGMfxp2hl2MmLKOfy6KaWte2cHUNY
-        jihrZW2JBEG0MBRiKV3UuojCjIFhEFoEU69Ma5TphbTIfsyISSAsgrBaBUXQD9mSSeYpa5Hj06MesL/B
-        B14338P74YFDC2zk4EimI5QUNvd9Xm6pqPe1nzX8DPeI6sNrohruEtXBgCYoqj7vzi9aps3FZ+7iB4mJ
-        8uFvqvgylcys7Yp/7CVgmn1gb9kIi7IXhEsnS6GVPP5IhvFmfGo4DcQAWMcAOtg6FT1Pqdl4iIXZXdbP
-        Bgj+w+bvWk20NPCmt2M8jR8cT7KqUV5Q0ZyMXKA/eMXBfXabzVwUZH2EhkP/LTDdiv3u/wUceZ2Cc+gr
-        sp/ygr3NY1E/X/Ccg9BcNBt3shuE45WF8wt0gXdxXWgCdOcv6B7HUebyjz8+xhcMzgW4ytpZgHUvQo17
-        dUrLedomP9EjYGXLE2Tv92GVtxWmsj2otBdg3/Yi7FByULVlPZyKAW67EQd2WaEUGWJaTWSpa0JO/WXo
-        1xbAs8kEl8WIjXl6HD3RiJq6c1gnb8MSIQ9bXR7ky04I+bk4ZRMSWs4/YXdGY7moa1pGlG650obTZxqQ
-        JQjTsiy/t9tsCUVSIrkGAzq7r6O6uhYr9Fk9nsI1ZVo+P2ab3btBFFXJKqmSJLn4aTHjvUQlJaUdIn8z
-        m82jksNRPPO2IIboH0UwHfRXeGpOAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIOSURBVDhP3dHfS1NxGMfxp2hl2MmLIufy6KaWdbZzNkNY
+        jihrZW2JBEG0sBJiKV3UuojCjMHAILQIpl6Z1ijTC2mR/ZgRk0BYBGFpBUXQD9mSSeYpa5Hj06MesL/B
+        B14338P74YFDC2yU0FCmI5wUNvd8Xm6uqPO1njf8jHSJ6qProhrpENX+oCYkqj7vzi9aps2l5+7ih4mJ
+        8sFvqvgqlcys6Yh/7CZgmn1gb9kQi7GXhMunS6GVPP5ohvFWfGowDYwAsIwBdLB5Khag1Gw8wCLsHutl
+        fQT/Yem7VhMtDb7pbhtP4wfHk6xqlBdUNCajF+kPhjl4wO6wmYtCrIdQf+i/Babbw797fwHHXqfgHPiK
+        7Ge8YG/jWMzPF7zgIDwXzcbt7CbhZGXh/AJd8F1cF54A3f0Lus9xjLn8409O8AX9cwGusVYWZJ2LcMS9
+        OqXlPC2Tn+gxsLLpKbL3+7DK2wxT2R5U2guwb3sRdthyULVlPZw2A9x2Iw7sssBWZBjRaiJzbQA5dVeg
+        X1sAzyYTXGYjNubpcfxUA47WXsA6ZRuWCHnY6vIgX3FCyM/FGauQ0HL+CbszGspFXWAZUbrpagvOnqtH
+        liBMK4ry3m61JmyyLZprMKC98waqq2uwQp/V5SlcU6bl8yNZ7d4NoqjKFlmVZdnFT4sZ7yUqKSltE/mb
+        JEmjssNRPPO2IIboHzylHfB3S3LpAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="buttonDeliver.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAINSURBVDhP3dHfS1NxGMfxp2hl2MkLIefy6KaWdbZzNkNY
-        jihrZW2JBEG0UBJiKV3UuojCjJFgEFoEU69Ma5TphbTo5xSZBMIiCDMrKIJ+yJZMMk9ZixyfHvWA/Q0+
-        8Lr5Ht4PDxxaYqMER9IdoYSwtffzanN5na/tvOFnuFtUn9wQ1XCnqPYHNEFR9Xl3f9EybS4/dxc9jk+V
-        DX9TxdFkIr2mM/axh4BZ9oG9ZSMsyl4SrpwugVby+CNpxtuxmeEUMAbAMgHQ4ZaZ6EVKzsdDLMzusz72
-        gOCvlr5rNdHKwJue9skUfnA8zSrHeUF5UyJyif7gFQeP2F02d1GQ9RLqj/y3wHRn9HffL+DY6yScQ1+R
-        9YwX7G+aiPr5ghcchBai+biD3SKcrChYXKALvIvpQlOge39BDzmOMpd/cvAEX9C/EOA6a2MB1rUM1e7M
-        pJbztE5/ogFgbfNTZB30IdPbAlPpPlTY83FgZyF22bJRuW0jnDYD3HYjDu2xwFZoGNNqInNtI7LrrkK/
-        Ph+eLSa4zEZsztXj+KkGHK29gA3KDqwQcrHd5UGe4oSQl4MzViGu5fwT9qY1lIm6xlVEqeZrrTh7rh4Z
-        gjCrKMp7u9Uat8m2SI7BgI6um6iqqsEafUa3p2BdqZYvjmS1ezeJoipbZFWWZRc/LWe8l6i4uKRd5G+S
-        JI3LDkfR3NuSGKJ/NBod7Oq4qkMAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIOSURBVDhP3dHvS1NxFMfxU7Qy7CYU5Fxe3dSytt27awjL
+        EWWtrC2RIIgWi4RYSg9qPYjCjIVgEFoEUx+Z1ijTB9Ii+zEjJoGwCELLCoqgH7Ilk8xb1iLHp6NesL/B
+        A68n38v7cODSAhs5NJTpCCeFzT2fl1sqav2t5ww/I12i+ui6qEY6RLU/qAmJqt+384uWaXPpubv4YWKi
+        fPCbKr5MJTOrO+IfuwmYZh/YWzbEYmyYcPlUKbSSJxDNMN6KTw2mgREA1jGADjZPxS5QajYeYBF2j/Wy
+        PkLgsPm7VhMtDb7pbhtP4wfHk6xqlBdUNCajF+kPXnHwgN1hMxeFWA+h7tB/C0y3h3/3/gKOvk7BOfAV
+        2c94wd7GsViAL3jBQXgumo3b2U3CicrC+QW64Lu4LjwBuvsXdJ/jGHMFxp8c5wv65wJcY60syDoXwete
+        ldJynpbJT/QYWNn0FNn7/Vjta4apbA8q7QXYt70IO5QcVG1ZD6digNtuxIFdVihFhhGtJrLUNCCn9gr0
+        awvg2WSCy2LExjw9jp2sx5Ga81gnb8MSIQ9bXR7ky04I+bk4bRMSWs4/YXdGfbmoa1hGlG662oIzZ+uQ
+        JQjTsiy/t9tsCUVSorkGA9o7b8DrrcYKfVaXp3BNmZbPj9lm920QRVWySqokSS5+Wsx4L1FJSWmbyN/M
+        ZvOo5HAUz7wtiCH6ByuPHeh0yovVAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -225,50 +269,6 @@
         VI0TBgTouP5EmWrzpAEt06zKRLXMFg2nqm3OjI7FJY21wmJFu0ZnZDG0Y/vIVzBHtKL/F8c7y1WZOtry
         EfkAAAAASUVORK5CYII=
 </value>
-  </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>[
-    {mode:"default",
-     fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"出库单号",type:"string",placeHolder:"留空自动生成"},
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-        {name:"description",displayName:"描述",type:"string"},
-        {name:"state",displayName:"状态",type:"int",editable:false},
-        {name:"deliverTime",displayName:"发运时间",type:"datetime"},
-        {name:"returnNoteNo",displayName:"回单号",type:"string"},
-        {name:"returnNoteTime",displayName:"回单时间",type:"datetime"},
-        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
-        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
-
-    ],
-    httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
   </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>413, 59</value>
