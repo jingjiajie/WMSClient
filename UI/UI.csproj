@@ -115,6 +115,12 @@
     <Compile Include="FormInspectionNote\FormInspectionNote.Designer.cs">
       <DependentUpon>FormInspectionNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormInspectionNote\FormInspectionNoteItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInspectionNote\FormInspectionNoteItem.Designer.cs">
+      <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockTaking\FormStockTakingOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,18 @@
     </Compile>
     <Compile Include="FormStockTaking\FormStockTakingOrderItem.Designer.cs">
       <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTransferOrder\FormTransferOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTransferOrder\FormTransferOrder.Designer.cs">
+      <DependentUpon>FormTransferOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTransferOrder\FormTransferOrderItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTransferOrder\FormTransferOrderItem.Designer.cs">
+      <DependentUpon>FormTransferOrderItem.cs</DependentUpon>
     </Compile>
     <Compile Include="FormWarehouseEntry\FormWarehouseEntryItem.cs">
       <SubType>Form</SubType>
@@ -639,11 +657,20 @@
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNote.resx">
       <DependentUpon>FormInspectionNote.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormInspectionNote\FormInspectionNoteItem.resx">
+      <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockTaking\FormStockTakingOrder.resx">
       <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockTaking\FormStockTakingOrderItem.resx">
       <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTransferOrder\FormTransferOrder.resx">
+      <DependentUpon>FormTransferOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTransferOrder\FormTransferOrderItem.resx">
+      <DependentUpon>FormTransferOrderItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouseEntry\FormWarehouseEntryItem.resx">
       <DependentUpon>FormWarehouseEntryItem.cs</DependentUpon>

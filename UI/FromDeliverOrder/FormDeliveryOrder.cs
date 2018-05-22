@@ -25,7 +25,7 @@ namespace WMS.UI.FromDeliverOrder
                 return;
             }
             var rowData = this.model1.GetRows(new long[] { this.model1.SelectionRange.Row })[0];
-            new FormWarehouseEntryItem(rowData).Show();
+            new FormDeliverOrderItem(rowData).Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
