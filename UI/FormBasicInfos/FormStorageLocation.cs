@@ -18,8 +18,9 @@ namespace WMS.UI.FormBasicInfos
 
         private void StorageAreaNameEditEnded(int row, string storageAreaName)
         {
+            //TODO
             IDictionary<string, object> foundStorageArea =
-                GlobalData.AllWarehouses.Find((s) =>
+                GlobalData.AllStorageLocations.Find((s) =>
                 {
                     if (s["name"] == null) return false;
                     return s["name"].ToString() == storageAreaName;
