@@ -122,41 +122,32 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"移库单号",type:"string",placeHolder:"留空自动生成"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-        {name:"description",displayName:"描述",type:"string"},
-        {name:"state",displayName:"状态",type:"int",editable:false},
-        {name:"printTimes",displayName:"打印次数",type:"int"},
-        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
-        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
-   ID
-TransferOrderID
-SupplyID
-TargetStorageLocationID
-State
-ScheduledAmount
-RealAmount
-Unit
-UnitAmount
-Comment
-OperateTime
-PersonID
-TransferOrderNo
-MaterialNo
-MaterialName
-MaterialProductLine
-SupplierNo
-SupplierName
-PersonName
-TargetStorageLocationNo
-TargetStorageLocationName
-SourceStorageLocationNo
-SourceStorageLocationName
-
+        {name:"transferOrderId",displayName:"移库单ID",type:"string",visible:false},
+        {name:"transferOrderNo",displayName:"移库单号",type:"string"},
+        {name:"scheduledAmount",displayName:"计划数量",type:"double"},
+        {name:"realAmount",displayName:"实际数量",type:"double"},
+        {name:"unit",displayName:"单位"},
+        {name:"unitAmount",displayName:"单位数量",type:"double"},
+        {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0},
+        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
+        {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false},
+        {name:"targetStorageLocationNo",displayName:"目标库位编码",association:"#sourceStorageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
+        {name:"targetStorageLocationName",displayName:"目标库位名称",association:"#sourceStorageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded"},
+        {name:"sourceStorageLocationId",displayName:"源库位ID",type:"int",visible:false},
+        {name:"sourceStorageLocationNo",displayName:"源库位编码",association:"#sourceStorageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
+        {name:"sourceStorageLocationName",displayName:"源库位名称",association:"#sourceStorageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded"},       
+        {name:"PersonId",displayName:"作业人ID",type:"int",visible:false},
+        {name:"PersonName",displayName:"作业人名称",type:"string",editable:true},
+        {name:"operateTime",displayName:"作业时间",type:"datetime",editable:true},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:true,defaultValue:0},
+        {name:"materialId",displayName:"物料ID",type:"int",visible:true,defaultValue:0},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,defaultValue:0},
+        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
  ],
     httpAPIs:[
         {type:"get-count",
@@ -185,11 +176,11 @@ SourceStorageLocationName
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 97</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 97</value>
