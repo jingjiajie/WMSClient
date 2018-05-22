@@ -14,6 +14,7 @@ using WMS.DataAccess;
 using System.Diagnostics;
 using WMS.UI.FormBasicInfos;
 using WMS.UI.FormStockTaking;
+using WMS.UI.FormStock;
 
 namespace WMS.UI
 {
@@ -213,6 +214,9 @@ namespace WMS.UI
                     break;
                 case "库存盘点":
                     this.LoadSubWindow(new FormStockTakingOrder());
+                    break;
+                case "库存批次":
+                    this.LoadSubWindow(new FormStockRecord());
                     break;
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")
