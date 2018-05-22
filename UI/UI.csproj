@@ -121,16 +121,22 @@
     <Compile Include="FormInspectionNote\FormInspectionNoteItem.Designer.cs">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockTaking\FormStockTakingOrder.cs">
+    <Compile Include="FormStock\FormStockRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockTaking\FormStockTakingOrder.Designer.cs">
+    <Compile Include="FormStock\FormStockRecord.Designer.cs">
+      <DependentUpon>FormStockRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStock\FormStockTakingOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStock\FormStockTakingOrder.Designer.cs">
       <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockTaking\FormStockTakingOrderItem.cs">
+    <Compile Include="FormStock\FormStockTakingOrderItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockTaking\FormStockTakingOrderItem.Designer.cs">
+    <Compile Include="FormStock\FormStockTakingOrderItem.Designer.cs">
       <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
     </Compile>
     <Compile Include="FormTransferOrder\FormTransferOrder.cs">
@@ -660,10 +666,13 @@
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNoteItem.resx">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockTaking\FormStockTakingOrder.resx">
+    <EmbeddedResource Include="FormStock\FormStockRecord.resx">
+      <DependentUpon>FormStockRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStock\FormStockTakingOrder.resx">
       <DependentUpon>FormStockTakingOrder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockTaking\FormStockTakingOrderItem.resx">
+    <EmbeddedResource Include="FormStock\FormStockTakingOrderItem.resx">
       <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTransferOrder\FormTransferOrder.resx">
