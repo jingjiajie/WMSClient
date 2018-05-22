@@ -122,6 +122,7 @@
             // 
             // pagerView1
             // 
+            this.pagerView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pagerView1.Location = new System.Drawing.Point(2, 457);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -133,6 +134,7 @@
             // 
             // searchView1
             // 
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
@@ -150,7 +152,7 @@
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(103, 126);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // synchronizer
@@ -161,7 +163,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(134, 126);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
@@ -174,11 +176,12 @@
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(124, 126);
+            this.model1.Size = new System.Drawing.Size(180, 180);
             this.model1.TabIndex = 2;
             // 
             // reoGridView1
             // 
+            this.reoGridView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.reoGridView1.Configuration = this.configuration1;
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
@@ -188,7 +191,7 @@
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(955, 255);
-            this.reoGridView1.TabIndex = 0;         
+            this.reoGridView1.TabIndex = 0;
             // 
             // toolStripButtonAdd
             // 
@@ -268,7 +271,7 @@
             this.basicView1.Configuration = this.configuration1;
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
-            this.basicView1.ItemsPerRow = 3;
+            this.basicView1.ItemsPerRow = 5;
             this.basicView1.Location = new System.Drawing.Point(0, 47);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";

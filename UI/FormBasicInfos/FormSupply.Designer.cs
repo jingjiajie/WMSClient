@@ -83,7 +83,7 @@
             // searchView1
             // 
             this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.searchView1.Configuration = null;
+            this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
             this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -360,7 +360,7 @@
             this.basicView1.Location = new System.Drawing.Point(0, 0);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
-            this.basicView1.Model = null;
+            this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Size = new System.Drawing.Size(836, 240);
             this.basicView1.TabIndex = 16;

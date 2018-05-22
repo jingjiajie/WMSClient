@@ -95,12 +95,14 @@
             // 
             // searchView1
             // 
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
+            this.searchView1.Padding = new System.Windows.Forms.Padding(3);
             this.searchView1.Size = new System.Drawing.Size(932, 25);
             this.searchView1.TabIndex = 0;
             // 
@@ -152,6 +154,7 @@
             // 
             // pagerView1
             // 
+            this.pagerView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pagerView1.Location = new System.Drawing.Point(2, 326);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -187,6 +190,7 @@
             // 
             // reoGridView1
             // 
+            this.reoGridView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.reoGridView1.Configuration = this.configuration1;
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
@@ -276,7 +280,7 @@
             // 
             // basicView1
             // 
-            this.basicView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.basicView1.Configuration = this.configuration1;
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
@@ -286,6 +290,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
+            this.basicView1.Padding = new System.Windows.Forms.Padding(3);
             this.basicView1.Size = new System.Drawing.Size(932, 50);
             this.basicView1.TabIndex = 13;
             // 

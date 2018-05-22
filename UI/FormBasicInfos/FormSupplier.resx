@@ -199,7 +199,7 @@
         {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
         {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
         {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false}, 
-        {name:"lastUpdatePersonName",displayName:"最后修改用户名称",type:"string"},     
+        {name:"lastUpdatePersonName",displayName:"最后修改用户名称",type:"string",editable:false},     
         {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
     ],
     httpAPIs:[

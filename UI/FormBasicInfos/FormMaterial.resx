@@ -125,7 +125,7 @@
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
 		{name:"name",type:"string",displayName:"物料名称",visible:true,editable:true},
 		{name:"no",type:"string",displayName:"代号",visible:true,editable:true},
-		{name:"warehouseID",type:"int",displayName:"仓库ID",visible:false},
+		{name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
 		{name:"warehouseName",type:"string",displayName:"仓库名称"},
 		{name:"productLine",type:"string",displayName:"系列",visible:true}
 	]
