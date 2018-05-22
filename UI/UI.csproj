@@ -79,6 +79,12 @@
     <Compile Include="FormBasicInfos\FormPerson.Designer.cs">
       <DependentUpon>FormPerson.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasicInfos\FormSafetyStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormSafetyStock.Designer.cs">
+      <DependentUpon>FormSafetyStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBasicInfos\FormStorageArea.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -638,6 +644,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormPerson.resx">
       <DependentUpon>FormPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormSafetyStock.resx">
+      <DependentUpon>FormSafetyStock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormStorageArea.resx">
       <DependentUpon>FormStorageArea.cs</DependentUpon>
