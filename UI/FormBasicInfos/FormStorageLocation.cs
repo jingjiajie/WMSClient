@@ -16,26 +16,6 @@ namespace WMS.UI.FormBasicInfos
             InitializeComponent();
         }
 
-        /*
-        private void WarehouseNameEditEnded(int row, string warehouseName)
-        {
-            IDictionary<string, object> foundWarehouse =
-                GlobalData.AllWarehouses.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == warehouseName;
-                });
-            if (foundWarehouse == null)
-            {
-                MessageBox.Show($"仓库\"{warehouseName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                this.model1[row, "warehouseId"] = foundWarehouse["id"];
-            }
-        }
-        */
-
         private void StorageAreaNameEditEnded(int row, string storageAreaName)
         {
             IDictionary<string, object> foundStorageArea =
@@ -65,11 +45,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                { "warehouseId",GlobalData.Warehouse["id"]},              
-                { "warehouseName",GlobalData.Warehouse["name"]},               
-            });
+            this.model1.InsertRow(0, null);
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

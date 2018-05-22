@@ -140,12 +140,12 @@
             orderParamNamesType1.Order = "order";
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(563, 99);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(632, 80);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(121, 109);
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(150, 133);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
