@@ -11,7 +11,7 @@ namespace WMS.UI
 {
     class RestClient
     {
-        public static T Get<T>(string url) 
+        public static T Get<T>(string url,string bodyStr) 
         {
             string responseStr = null;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;

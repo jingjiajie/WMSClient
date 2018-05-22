@@ -122,53 +122,55 @@
 [
     {mode:"default",
         fields:[
-		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
-		{name:"name",type:"string",displayName:"物料名称",visible:true,editable:true},
-		{name:"no",type:"string",displayName:"代号",visible:true,editable:true},
-		{name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称"},
-		{name:"productLine",type:"string",displayName:"系列",visible:true}
+		{name:"id",displayName:"ID",type:"string",visible:false,editable:false},
+        {name:"warehouseId",displayName:"仓库ID",type:"string",editable:false},
+        {name:"supplyId",displayName:"供货ID",type:"string",editable:false},
+        {name:"targetStorageLocationId",displayName:"目标库位ID",type:"string"},
+        {name:"amount",displayName:"安全库存数(个)",type:"string"},
+        {name:"sourceStorageLocationId",displayName:"移出库位ID",type:"string"},
+        {name:"sourceUnit",displayName:"源单位",type:"string"},
+        {name:"sourceUnitAmount",displayName:"源单位数量",type:"string"},
+        {name:"unit",displayName:"单位",type:"string"},
+        {name:"unitAmount",displayName:"单位数量",type:"string"},
+        {name:"type",displayName:"类型",type:"string"},
+        {name:"warehouseName",displayName:"仓库名",type:"string"},
+        {name:"materialNo",displayName:"物料代号",type:"string"},
+        {name:"materialName",displayName:"物料名称",type:"string"},
+        {name:"supplierNo",displayName:"供应商代号",type:"string"},
+        {name:"supplierName",displayName:"供货商名称",type:"string"},
+        {name:"targetStorageLocationNo",displayName:"目标库位编码",type:"string"},
+        {name:"targetStorageLocationName",displayName:"目标库位名称",type:"string"},
+        {name:"sourceStorageLocationNo",displayName:"移出库位编码",type:"string"},
+        {name:"sourceStorageLocationName",displayName:"移出库位名称",type:"string"},
+        {name:"storageLocationName",displayName:"库位名称",type:"string"},
+
 	]
 	,
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/warehouse_entry/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/safety_stock/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/material/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/safety_stock/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/material/",
+            url:"{$url}/warehouse/{$accountBook}/safety_stock/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/material/",
+            url:"{$url}/warehouse/{$accountBook}/safety_stock/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/material/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/safety_stock/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
 ]</value>
   </data>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>512, 17</value>
-  </metadata>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>622, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="toolStripButtonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -217,6 +219,20 @@
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>512, 17</value>
+  </metadata>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>622, 17</value>
+  </metadata>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>748, 17</value>
   </metadata>

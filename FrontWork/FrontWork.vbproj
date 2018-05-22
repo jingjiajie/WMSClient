@@ -82,6 +82,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
+    <Compile Include="Common\Exceptions\InvalidDataException.vb" />
     <Compile Include="Configuration\Configuration.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -277,9 +278,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\synchronizer.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

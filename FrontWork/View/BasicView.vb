@@ -642,7 +642,11 @@ Public Class BasicView
                              Select m).FirstOrDefault
         Dim value = Me.GetMappedValue(fieldName, Configuration)
         RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        Me.Model.UpdateCell(modelSelectedRow, fieldName, value)
+        Try
+            Me.Model.UpdateCell(modelSelectedRow, fieldName, value)
+        Catch ex As InvalidDataException
+            MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End Try
         AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         Me.dicFieldEdited.Remove(fieldName)
     End Sub
@@ -678,7 +682,11 @@ Public Class BasicView
             dicData.Add(curField.Name, value)
         Next
         RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        Call Me.Model.UpdateRow(modelSelectedRow, dicData)
+        Try
+            Call Me.Model.UpdateRow(modelSelectedRow, dicData)
+        Catch ex As InvalidDataException
+            MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End Try
         AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
         Call Me.dicFieldEdited.Clear()
     End Sub

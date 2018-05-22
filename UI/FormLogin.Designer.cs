@@ -59,10 +59,10 @@
             this.labelPsaaword.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelPsaaword.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPsaaword.ForeColor = System.Drawing.Color.White;
-            this.labelPsaaword.Location = new System.Drawing.Point(0, 35);
+            this.labelPsaaword.Location = new System.Drawing.Point(0, 70);
             this.labelPsaaword.Margin = new System.Windows.Forms.Padding(0);
             this.labelPsaaword.Name = "labelPsaaword";
-            this.labelPsaaword.Size = new System.Drawing.Size(85, 35);
+            this.labelPsaaword.Size = new System.Drawing.Size(170, 70);
             this.labelPsaaword.TabIndex = 7;
             this.labelPsaaword.Text = "密   码：";
             this.labelPsaaword.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -79,7 +79,7 @@
             this.labelusername.Location = new System.Drawing.Point(0, 0);
             this.labelusername.Margin = new System.Windows.Forms.Padding(0);
             this.labelusername.Name = "labelusername";
-            this.labelusername.Size = new System.Drawing.Size(85, 35);
+            this.labelusername.Size = new System.Drawing.Size(170, 70);
             this.labelusername.TabIndex = 6;
             this.labelusername.Text = "用户名：";
             this.labelusername.Click += new System.EventHandler(this.labelusername_Click);
@@ -91,11 +91,11 @@
             // 
             this.textBoxPassword.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxPassword.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxPassword.Location = new System.Drawing.Point(88, 39);
-            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxPassword.Location = new System.Drawing.Point(176, 78);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(174, 25);
+            this.textBoxPassword.Size = new System.Drawing.Size(348, 43);
             this.textBoxPassword.TabIndex = 1;
             this.textBoxPassword.UseSystemPasswordChar = true;
             this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPassword_KeyPress);
@@ -105,10 +105,10 @@
             this.textBoxUsername.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxUsername.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxUsername.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxUsername.Location = new System.Drawing.Point(88, 4);
-            this.textBoxUsername.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxUsername.Location = new System.Drawing.Point(176, 8);
+            this.textBoxUsername.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(174, 25);
+            this.textBoxUsername.Size = new System.Drawing.Size(348, 43);
             this.textBoxUsername.TabIndex = 0;
             this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
@@ -123,10 +123,10 @@
             this.buttonClosing.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClosing.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.buttonClosing.Location = new System.Drawing.Point(232, 225);
-            this.buttonClosing.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonClosing.Location = new System.Drawing.Point(464, 450);
+            this.buttonClosing.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.buttonClosing.Name = "buttonClosing";
-            this.buttonClosing.Size = new System.Drawing.Size(88, 29);
+            this.buttonClosing.Size = new System.Drawing.Size(176, 58);
             this.buttonClosing.TabIndex = 5;
             this.buttonClosing.Text = "退出";
             this.buttonClosing.UseVisualStyleBackColor = true;
@@ -147,10 +147,10 @@
             this.buttonEnter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEnter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonEnter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonEnter.Location = new System.Drawing.Point(92, 225);
-            this.buttonEnter.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonEnter.Location = new System.Drawing.Point(184, 450);
+            this.buttonEnter.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.buttonEnter.Name = "buttonEnter";
-            this.buttonEnter.Size = new System.Drawing.Size(88, 29);
+            this.buttonEnter.Size = new System.Drawing.Size(176, 58);
             this.buttonEnter.TabIndex = 4;
             this.buttonEnter.Text = "确认";
             this.buttonEnter.UseVisualStyleBackColor = false;
@@ -165,9 +165,10 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 20F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(22, 19);
+            this.label1.Location = new System.Drawing.Point(44, 38);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(358, 36);
+            this.label1.Size = new System.Drawing.Size(716, 72);
             this.label1.TabIndex = 7;
             this.label1.Text = "安途丰达WMS仓库管理系统";
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -180,10 +181,10 @@
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.labelStatus.ForeColor = System.Drawing.Color.White;
-            this.labelStatus.Location = new System.Drawing.Point(130, 258);
-            this.labelStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelStatus.Location = new System.Drawing.Point(260, 516);
+            this.labelStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(158, 20);
+            this.labelStatus.Size = new System.Drawing.Size(306, 35);
             this.labelStatus.TabIndex = 6;
             this.labelStatus.Text = "正在登陆，请耐心等待...";
             this.labelStatus.Visible = false;
@@ -192,10 +193,10 @@
             // 
             this.labelClickCount.AutoSize = true;
             this.labelClickCount.BackColor = System.Drawing.Color.Transparent;
-            this.labelClickCount.Location = new System.Drawing.Point(334, 181);
-            this.labelClickCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelClickCount.Location = new System.Drawing.Point(668, 362);
+            this.labelClickCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelClickCount.Name = "labelClickCount";
-            this.labelClickCount.Size = new System.Drawing.Size(11, 12);
+            this.labelClickCount.Size = new System.Drawing.Size(22, 24);
             this.labelClickCount.TabIndex = 12;
             this.labelClickCount.Text = "1";
             // 
@@ -208,10 +209,10 @@
             this.panel1.Controls.Add(this.buttonClosing);
             this.panel1.Controls.Add(this.buttonEnter);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(75, 25);
+            this.panel1.Location = new System.Drawing.Point(150, 50);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(400, 275);
+            this.panel1.Size = new System.Drawing.Size(800, 550);
             this.panel1.TabIndex = 13;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
@@ -220,7 +221,7 @@
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.labelusername, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 1, 3);
@@ -230,15 +231,15 @@
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.textBoxUsername, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxPassword, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(62, 68);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(124, 136);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(265, 140);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(530, 280);
             this.tableLayoutPanel2.TabIndex = 16;
             // 
             // comboBoxWarehouse
@@ -247,10 +248,10 @@
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxWarehouse.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(89, 111);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(178, 222);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(8, 12, 8, 12);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(172, 27);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(344, 43);
             this.comboBoxWarehouse.TabIndex = 3;
             // 
             // comboBoxAccountBook
@@ -259,10 +260,10 @@
             this.comboBoxAccountBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAccountBook.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxAccountBook.FormattingEnabled = true;
-            this.comboBoxAccountBook.Location = new System.Drawing.Point(89, 76);
-            this.comboBoxAccountBook.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.comboBoxAccountBook.Location = new System.Drawing.Point(178, 152);
+            this.comboBoxAccountBook.Margin = new System.Windows.Forms.Padding(8, 12, 8, 12);
             this.comboBoxAccountBook.Name = "comboBoxAccountBook";
-            this.comboBoxAccountBook.Size = new System.Drawing.Size(172, 27);
+            this.comboBoxAccountBook.Size = new System.Drawing.Size(344, 43);
             this.comboBoxAccountBook.TabIndex = 2;
             this.comboBoxAccountBook.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountBook_SelectedIndexChanged);
             // 
@@ -273,10 +274,10 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(0, 70);
+            this.label2.Location = new System.Drawing.Point(0, 140);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 35);
+            this.label2.Size = new System.Drawing.Size(170, 70);
             this.label2.TabIndex = 12;
             this.label2.Text = "账   套：";
             // 
@@ -287,10 +288,10 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(0, 105);
+            this.label3.Location = new System.Drawing.Point(0, 210);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 35);
+            this.label3.Size = new System.Drawing.Size(170, 70);
             this.label3.TabIndex = 13;
             this.label3.Text = "仓   库：";
             // 
@@ -299,20 +300,20 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 800F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel3, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 275F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 550F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(550, 325);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1100, 650);
             this.tableLayoutPanel1.TabIndex = 14;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             this.tableLayoutPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -323,10 +324,10 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 25);
+            this.panel2.Location = new System.Drawing.Point(0, 50);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(75, 275);
+            this.panel2.Size = new System.Drawing.Size(150, 550);
             this.panel2.TabIndex = 14;
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
             this.panel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
@@ -336,10 +337,10 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(475, 25);
+            this.panel3.Location = new System.Drawing.Point(950, 50);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(75, 275);
+            this.panel3.Size = new System.Drawing.Size(150, 550);
             this.panel3.TabIndex = 15;
             this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
             this.panel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
@@ -347,17 +348,17 @@
             // 
             // FormLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(550, 325);
+            this.ClientSize = new System.Drawing.Size(1100, 650);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.labelClickCount);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "欢迎使用安途丰达WMS仓库管理系统";

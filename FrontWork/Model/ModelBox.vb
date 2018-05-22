@@ -372,4 +372,8 @@ Public Class ModelBox
         End If
         Me.dicModels.Remove(modelName)
     End Sub
+
+    Public Function ContainsColumn(columnName As String) As Boolean Implements IModel.ContainsColumn
+        Return Me.GetCurModel.ContainsColumn(columnName)
+    End Function
 End Class
