@@ -14,6 +14,7 @@ namespace WMS.UI.FormBasicInfos
     {
         public FormSupply()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -40,7 +41,10 @@ namespace WMS.UI.FormBasicInfos
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
+                { "createPersonId",GlobalData.Person["id"]},
+                { "createPersonName",GlobalData.Person["name"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
+                { "createTime",DateTime.Now},
                 { "enabled",1}
             });
         }
@@ -55,24 +59,6 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.Save();
         }
 
-        private void WarehouseNameEditEnded(int row, string warehouseName)
-        {
-            IDictionary<string, object> foundWarehouse =
-                GlobalData.AllWarehouses.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == warehouseName;
-                });
-            if (foundWarehouse == null)
-            {
-                MessageBox.Show($"仓库\"{warehouseName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                this.model1[row, "warehouseId"] = foundWarehouse["id"];
-                this.model1[row, "warehouseName"] = foundWarehouse["name"];
-            }
-        }
         private void MaterialNameEditEnded(int row, string materialName)
         {
             IDictionary<string, object> foundMaterial =

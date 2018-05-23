@@ -14,6 +14,7 @@ namespace WMS.UI.FromDeliverOrder
     {
         public FormDeliveryOrder()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
         //查看条目
