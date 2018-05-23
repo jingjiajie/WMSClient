@@ -127,6 +127,15 @@ Public Class ModelBox
         RemoveHandler model.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
     End Sub
 
+    ''' <summary>
+    ''' 是否包含指定名称的Model
+    ''' </summary>
+    ''' <param name="modelName">Model名称</param>
+    ''' <returns>是否包含此Model</returns>
+    Public Function ContainsModel(modelName As String) As Boolean
+        Return Me.dicModels.ContainsKey(modelName)
+    End Function
+
     Private Sub ConfigurationChanged(sender As Object, args As ConfigurationChangedEventArgs)
         For Each model In Me.dicModels.Values
             model.Configuration = Me.Configuration

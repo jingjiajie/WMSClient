@@ -41,6 +41,7 @@ namespace WMS.UI
                     MakeTreeNode("供应商管理"),
                     MakeTreeNode("供货管理"),
                     MakeTreeNode("物料管理"),
+                    MakeTreeNode("安全库存管理"),
                     MakeTreeNode("人员管理"),
                     MakeTreeNode("库区管理"),
                     MakeTreeNode("库位管理")
@@ -206,6 +207,9 @@ namespace WMS.UI
                     break;
                 case "物料管理":
                     this.LoadSubWindow(new FormMaterial());
+                    break;
+                case "安全库存管理":
+                    this.LoadSubWindow(new FormSafetyStock());
                     break;
                 case "库区管理":
                     this.LoadSubWindow(new FormStorageArea());

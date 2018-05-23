@@ -134,26 +134,26 @@
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:true,editable:true},
 		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:true},
 		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
-		{name:"defaultEntryStorageLocationName",type:"string",displayName:"物料名称",association:"#defaultEntryStorageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
+		{name:"defaultEntryStorageLocationName",type:"string",displayName:"物料名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
 		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:true,editable:true},
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:true},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:true,editable:true},
 
 
 		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
-		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",association:"#defaultInspectionStorageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
+		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
 
 		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
-		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",association:"#defaultQualifiedStorageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
+		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
 
 		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
-		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",association:"#defaultUnqualifiedStorageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
 
 		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
-		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",association:"#defaultDeliveryStorageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
 
         {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
-		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",association:"#defaultPrepareTargetStorageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
 
         {name:"defaultDeliveryAmount",type:"double",displayName:"默认发货数量（个）",visible:true,editable:true},
 		{name:"defaultDeliveryUnit",type:"string",displayName:"默认发货单位",visible:true},
@@ -199,10 +199,10 @@
 		{name:"IsHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"NewestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
 		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
-		{name:"createPersonName",type:"string",displayName:"创建人名称",association:"#createPersonNameAssociation",editEnded:"#createPersonNameEditEnded"},
+		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
 		{name:"CreateTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
-		{name:"lastUpdatePersonName",type:"string",displayName:"创建人名称",association:"#lastUpdatePersonNameAssociation",editEnded:"#lastUpdatePersonNameEditEnded"},
+		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
 		{name:"Enabled",type:"int",displayName:"是否启用",visible:false},
 

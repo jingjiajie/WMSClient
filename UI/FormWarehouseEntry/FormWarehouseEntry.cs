@@ -52,7 +52,10 @@ namespace WMS.UI
         //保存按钮点击事件
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void FormWarehouseEntry_Load(object sender, EventArgs e)

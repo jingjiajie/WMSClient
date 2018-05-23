@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrontWork;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace WMS.UI.FormBasicInfos
     {
         public FormPackage()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
