@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrontWork;
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -13,6 +14,7 @@ namespace WMS.UI.FormBasicInfos
     {
         public FormStorageLocation()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -31,7 +33,7 @@ namespace WMS.UI.FormBasicInfos
             else
             {
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
-                this.model1[row, "storgeAreaName"] = foundStorageArea["name"];
+                this.model1[row, "storageAreaNo"] = foundStorageArea["no"];
             }
         }
 
@@ -40,17 +42,17 @@ namespace WMS.UI.FormBasicInfos
             IDictionary<string, object> foundStorageArea =
                 GlobalData.AllStorageAreas.Find((s) =>
                 {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == storageAreaName;
+                    if (s["no"] == null) return false;
+                    return s["no"].ToString() == storageAreaName;
                 });
             if (foundStorageArea == null)
             {
-                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"库区编号\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
-                this.model1[row, "storgeAreaName"] = foundStorageArea["name"];
+                this.model1[row, "storageAreaName"] = foundStorageArea["name"];
             }
         }
 
@@ -74,6 +76,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
