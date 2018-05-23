@@ -41,6 +41,7 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
@@ -49,45 +50,8 @@ namespace WMS.UI.FormStockTaking
             this.synchronizer.Save();
         }
 
-        //供应商名称编辑完成，根据名称自动搜索ID和No
-        private void SupplierNameEditEnded(int row, string supplierName)
-        {
-            IDictionary<string, object> foundSupplier =
-                GlobalData.AllSuppliers.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == supplierName;
-                });
-            if (foundSupplier == null)
-            {
-                MessageBox.Show($"供应商\"{supplierName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "supplierNo"] = foundSupplier["no"];
-            }
-        }
 
-        //供应商代号编辑完成，根据名称自动搜索ID和名称
-        private void SupplierNoEditEnded(int row, string supplierName)
-        {
-            IDictionary<string, object> foundSupplier =
-                GlobalData.AllSuppliers.Find((s) =>
-                {
-                    if (s["no"] == null) return false;
-                    return s["no"].ToString() == supplierName;
-                });
-            if (foundSupplier == null)
-            {
-                MessageBox.Show($"供应商\"{supplierName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "supplierName"] = foundSupplier["name"];
-            }
-        }
+      
 
         //库位
         private void StorageLocationNoEditEnded(int row, string storageLocationNo)

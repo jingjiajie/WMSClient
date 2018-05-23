@@ -14,6 +14,7 @@ namespace WMS.UI.FormTransferOrder
     {
         public FormTransferOrder()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 

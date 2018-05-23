@@ -30,6 +30,7 @@ namespace WMS.UI.FormStockTaking
 
         private void FormStockTakingOrder_Load(object sender, EventArgs e)
         {
+            this.searchView1.AddStaticCondition("waehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -41,6 +42,7 @@ namespace WMS.UI.FormStockTaking
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
                 { "createTime",DateTime.Now},               
@@ -49,6 +51,7 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 

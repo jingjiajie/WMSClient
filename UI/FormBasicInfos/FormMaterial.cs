@@ -14,6 +14,7 @@ namespace WMS.UI.FormBasicInfos
     {
         public FormMaterial()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -59,23 +60,5 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        //仓库名称编辑完成，根据名称自动搜索ID
-        private void WarehouseNameEditEnded(int row, string warehouseName)
-        {
-            IDictionary<string, object> foundWarehouse =
-                GlobalData.AllWarehouses.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == warehouseName;
-                });
-            if (foundWarehouse == null)
-            {
-                MessageBox.Show($"仓库\"{warehouseName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                this.model1[row, "warehouseId"] = foundWarehouse["id"];
-            }
-        }
     }
 }
