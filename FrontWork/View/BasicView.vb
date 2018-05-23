@@ -309,7 +309,7 @@ Public Class BasicView
                     '加一个label覆盖在上面，看着跟真的placeholder似的
                     Dim labelLayer As Label = New Label()
                     textBox.Controls.Add(labelLayer)
-                    labelLayer.Text = curField.PlaceHolder
+                    labelLayer.Text = curField.PlaceHolder.Invoke(Me)
                     labelLayer.TextAlign = ContentAlignment.MiddleLeft
                     labelLayer.ForeColor = Color.Gray
                     labelLayer.Font = textBox.Font

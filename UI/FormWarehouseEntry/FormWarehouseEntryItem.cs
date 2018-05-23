@@ -31,14 +31,17 @@ namespace WMS.UI
         //删除按钮点击事件
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model.RemoveSelectedRows();
         }
 
         //保存按钮点击事件
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
-            this.searchView1.Search();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void FormWarehouseEntry_Load(object sender, EventArgs e)

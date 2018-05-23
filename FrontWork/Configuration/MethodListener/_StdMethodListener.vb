@@ -25,4 +25,18 @@
     Public Function Now() As DateTime
         Return DateTime.Now
     End Function
+
+    Public Function DateTimePlaceHolder() As String
+        Return "年-月-日 (时:分:秒 可选)"
+    End Function
+
+    Public Function DateTimeAssociation() As String()
+        Dim associationList As New List(Of String)
+        Dim now = DateTime.Now
+        For i = 0 To 9
+            Dim curDate = now.AddDays(-i)
+            associationList.Add(curDate.ToShortDateString)
+        Next
+        Return associationList.ToArray
+    End Function
 End Class

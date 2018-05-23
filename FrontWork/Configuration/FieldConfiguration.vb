@@ -43,7 +43,7 @@ Public Class FieldConfiguration
     ''' 占位符
     ''' </summary>
     ''' <returns></returns>
-    Public Property PlaceHolder As String = Nothing
+    Public Property PlaceHolder As FieldMethod 'no param returns string
 
     ''' <summary>
     ''' 是否可视

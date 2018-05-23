@@ -218,8 +218,8 @@ namespace WMS.UI
                 new Condition().AddOrder("name"));
             if (warehouseList == null)
             {
-                //MessageBox.Show("加载仓库信息失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Close();
+                Environment.Exit(0);
                 return;
             }
             GlobalData.AllWarehouses = warehouseList;
