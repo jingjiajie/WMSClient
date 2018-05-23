@@ -145,6 +145,12 @@
     <Compile Include="FormStock\FormStockTakingOrderItem.Designer.cs">
       <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStock\FormTransferRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStock\FormTransferRecord.Designer.cs">
+      <DependentUpon>FormTransferRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTransferOrder\FormTransferOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -683,6 +689,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormStockTakingOrderItem.resx">
       <DependentUpon>FormStockTakingOrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStock\FormTransferRecord.resx">
+      <DependentUpon>FormTransferRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTransferOrder\FormTransferOrder.resx">
       <DependentUpon>FormTransferOrder.cs</DependentUpon>

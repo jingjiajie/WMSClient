@@ -54,11 +54,12 @@ namespace WMS.UI
                 MakeTreeNode("发货管理",new TreeNode[]{
                     MakeTreeNode("工作任务单管理"),
                     MakeTreeNode("翻包作业单管理"),
-                    MakeTreeNode("出库单管理"),
+                    MakeTreeNode("出库单管理")
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存批次"),
                     MakeTreeNode("库存盘点"),
+                    MakeTreeNode("移位记录")
                     }),
             };
 
@@ -221,6 +222,9 @@ namespace WMS.UI
                     break;
                 case "库存批次":
                     this.LoadSubWindow(new FormStockRecord());
+                    break;
+                case "移位记录":
+                    this.LoadSubWindow(new FormTransferRecord());
                     break;
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")
