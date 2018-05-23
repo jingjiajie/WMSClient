@@ -35,6 +35,7 @@
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
+            this.configuration1 = new FrontWork.Configuration();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
@@ -51,7 +52,6 @@
             this.basicView1 = new FrontWork.BasicView();
             this.model1 = new FrontWork.Model();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.configuration1 = new FrontWork.Configuration();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.reoGridView2 = new FrontWork.ReoGridView();
@@ -88,6 +88,22 @@
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(758, 25);
             this.searchView1.TabIndex = 2;
+            // 
+            // configuration1
+            // 
+            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
+            this.configuration1.Location = new System.Drawing.Point(30, 78);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormSafetyStock",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1};
+            this.configuration1.Name = "configuration1";
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.TabIndex = 12;
             // 
             // toolStripSeparator1
             // 
@@ -165,8 +181,8 @@
             this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(758, 472);
@@ -223,7 +239,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 45);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(758, 94);
+            this.panel1.Size = new System.Drawing.Size(758, 113);
             this.panel1.TabIndex = 7;
             // 
             // basicView1
@@ -238,7 +254,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(758, 94);
+            this.basicView1.Size = new System.Drawing.Size(758, 113);
             this.basicView1.TabIndex = 16;
             // 
             // model1
@@ -263,27 +279,11 @@
             this.panel2.Controls.Add(this.reoGridView2);
             this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 139);
+            this.panel2.Location = new System.Drawing.Point(0, 158);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(758, 282);
+            this.panel2.Size = new System.Drawing.Size(758, 263);
             this.panel2.TabIndex = 8;
-            // 
-            // configuration1
-            // 
-            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(30, 78);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormSafetyStock",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
-            this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
-            this.configuration1.TabIndex = 12;
             // 
             // synchronizer
             // 
@@ -326,7 +326,7 @@
             this.reoGridView2.Mode = "default";
             this.reoGridView2.Model = this.model1;
             this.reoGridView2.Name = "reoGridView2";
-            this.reoGridView2.Size = new System.Drawing.Size(758, 282);
+            this.reoGridView2.Size = new System.Drawing.Size(758, 263);
             this.reoGridView2.TabIndex = 6;
             // 
             // reoGridView1
@@ -339,7 +339,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = null;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(758, 282);
+            this.reoGridView1.Size = new System.Drawing.Size(758, 263);
             this.reoGridView1.TabIndex = 2;
             // 
             // tableLayoutPanel1

@@ -41,6 +41,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
