@@ -39,6 +39,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
@@ -46,10 +47,9 @@ namespace WMS.UI.FormBasicInfos
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();
-                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                this.searchView1.Search();            
                 GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/warehouse/{condWarehouse.ToString()}");
+                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/warehouse/{{}}");
             }
         }
     }
