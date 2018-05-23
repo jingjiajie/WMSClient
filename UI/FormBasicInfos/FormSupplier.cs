@@ -39,7 +39,7 @@ namespace WMS.UI.FormBasicInfos
                 { "createPersonName",GlobalData.Person["name"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "createTime",DateTime.Now}
-            });
+            });        
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -47,6 +47,9 @@ namespace WMS.UI.FormBasicInfos
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
+                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
             }
         }
 
@@ -57,6 +60,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void FormSupplier_Load(object sender, EventArgs e)
         {
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);

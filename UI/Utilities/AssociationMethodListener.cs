@@ -63,5 +63,21 @@ namespace WMS.UI
                     where s["no"] != null && s["no"].ToString().StartsWith(str)
                     select s["no"]).ToArray();
         }
+
+        //库区编码输入联想
+        private object[] StorageAreaNoAssociation(string str)
+        {
+            return (from s in GlobalData.AllStorageAreas
+                    where s["no"] != null && s["no"].ToString().StartsWith(str)
+                    select s["no"]).ToArray();
+        }
+
+        //库区名称输入联想
+        private object[] StorageAreaNameAssociation(string str)
+        {
+            return (from s in GlobalData.AllStorageAreas
+                    where s["name"] != null && s["name"].ToString().StartsWith(str)
+                    select s["name"]).ToArray();
+        }
     }
 }
