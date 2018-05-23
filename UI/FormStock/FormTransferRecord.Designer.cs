@@ -314,6 +314,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormTransferRecord";
             this.Text = "FormTransferRecord";
+            this.Load += new System.EventHandler(this.FormTransferRecord_Load);
             this.panelSearchWidget.ResumeLayout(false);
             this.panelPager.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
