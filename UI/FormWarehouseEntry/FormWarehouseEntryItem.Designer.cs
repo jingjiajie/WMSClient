@@ -30,15 +30,20 @@ namespace WMS.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseEntryItem));
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseEntryItem));
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
+            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
+            this.buttonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.pagerView1 = new FrontWork.PagerView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
@@ -48,15 +53,10 @@ namespace WMS.UI
             this.model = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
-            this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
-            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
-            this.buttonSave = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lableStatus
@@ -108,6 +108,58 @@ namespace WMS.UI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 529);
             this.tableLayoutPanel1.TabIndex = 6;
+            // 
+            // toolStripTop
+            // 
+            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonAdd,
+            this.buttonDelete,
+            this.buttonSave,
+            this.toolStripSeparator3});
+            this.toolStripTop.Location = new System.Drawing.Point(0, 35);
+            this.toolStripTop.Name = "toolStripTop";
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(974, 30);
+            this.toolStripTop.TabIndex = 3;
+            this.toolStripTop.Text = "toolStrip1";
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
+            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(86, 27);
+            this.buttonAdd.Text = "添加";
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
+            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(86, 27);
+            this.buttonDelete.Text = "删除";
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
+            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(134, 27);
+            this.buttonSave.Text = "保存修改";
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(10, 28);
             // 
             // pagerView1
             // 
@@ -230,58 +282,6 @@ namespace WMS.UI
             this.basicView1.Size = new System.Drawing.Size(974, 170);
             this.basicView1.TabIndex = 14;
             // 
-            // toolStripTop
-            // 
-            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonAdd,
-            this.buttonDelete,
-            this.buttonSave,
-            this.toolStripSeparator3});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 35);
-            this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(974, 30);
-            this.toolStripTop.TabIndex = 3;
-            this.toolStripTop.Text = "toolStrip1";
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
-            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(86, 27);
-            this.buttonAdd.Text = "添加";
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
-            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(86, 27);
-            this.buttonDelete.Text = "删除";
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
-            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(134, 27);
-            this.buttonSave.Text = "保存修改";
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.AutoSize = false;
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(10, 28);
-            // 
             // FormWarehouseEntryItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
@@ -297,9 +297,9 @@ namespace WMS.UI
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
