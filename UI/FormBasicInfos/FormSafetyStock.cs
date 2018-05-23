@@ -12,8 +12,8 @@ namespace WMS.UI.FormBasicInfos
 {
     public partial class FormSafetyStock : Form
     {
-        private int materialId = -1;
-        private int supplierId = -1;
+        //private int materialId = -1;
+        //private int supplierId = -1;
         public FormSafetyStock()
         {
             MethodListenerContainer.Register(this);
@@ -31,6 +31,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
@@ -75,7 +76,7 @@ namespace WMS.UI.FormBasicInfos
                                          where s["name"]?.ToString() == targetStorageLocationName
                                          select s).ToArray();
             if (foundStorageLocations.Length != 1) goto FAILED;
-            this.model1[row, "sourceStorageLocationId"] = (int)foundStorageLocations[0]["id"];
+            this.model1[row, "targetStorageLocationId"] = (int)foundStorageLocations[0]["id"];
             this.model1[row, "targetStorageLocationNo"] = foundStorageLocations[0]["no"];
             return;
 
@@ -103,7 +104,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
         {
-            this.model1[row, "storageLocationId"] = 0;//先清除库位ID
+            this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
                                          where s["name"]?.ToString() == sourceStorageLocationName
@@ -117,11 +118,12 @@ namespace WMS.UI.FormBasicInfos
             MessageBox.Show($"库位\"{sourceStorageLocationName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
+
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
         private void SupplierNoEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -129,7 +131,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void SupplierNameEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -151,9 +153,15 @@ namespace WMS.UI.FormBasicInfos
             this.TryGetSupplyID(row);
         }
 
+        private void MaterialProductLineEditEnded(int row)
+        {
+            this.FindMaterialID(row);
+            this.TryGetSupplyID(row);
+        }
 
         private void FindMaterialID(int row)
         {
+            this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
@@ -165,7 +173,7 @@ namespace WMS.UI.FormBasicInfos
             {
                 goto FAILED;
             }
-            this.materialId = (int)foundMaterials[0]["id"];
+            this.model1[row, "materialId"] = foundMaterials[0]["id"];
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
             return;
@@ -177,6 +185,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void FindSupplierID(int row)
         {
+            this.model1[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
             string supplierName = this.model1[row, "supplierName"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(supplierNo) && string.IsNullOrWhiteSpace(supplierName)) return;
@@ -186,7 +195,7 @@ namespace WMS.UI.FormBasicInfos
                                   && (string.IsNullOrWhiteSpace(supplierName) ? true : (s["name"]?.ToString() ?? "") == supplierName)
                                   select s).ToArray();
             if (foundSuppliers.Length != 1) goto FAILED;
-            this.supplierId = (int)foundSuppliers[0]["id"];
+            this.model1[row, "supplierId"] = foundSuppliers[0]["id"];
             this.model1[row, "supplierNo"] = foundSuppliers[0]["no"];
             this.model1[row, "supplierName"] = foundSuppliers[0]["name"];
             return;
@@ -199,9 +208,9 @@ namespace WMS.UI.FormBasicInfos
         private void TryGetSupplyID(int row)
         {
             this.model1[row, "supplyId"] = 0; //先清除供货ID
-            string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
-            string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
-            if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(supplierNo)) return;
+            int supplierId = (int?)this.model1[row, "supplierId"] ?? 0;
+            int materialId = (int?)this.model1[row, "materialId"] ?? 0;
+            if (supplierId == 0 || materialId == 0) return;
             var foundSupplies = (from s in GlobalData.AllSupplies
                                  where (int)s["supplierId"] == supplierId
                                  && (int)s["materialId"] == materialId
@@ -210,19 +219,15 @@ namespace WMS.UI.FormBasicInfos
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "Amount", foundSupplies[0]["defaultDeliveryAmount"]);
+                this.FillDefaultValue(row, "amount", foundSupplies[0]["defaultDeliveryAmount"]);
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
                 this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
                 this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultPrepareTargetStorageLocationId"]);
-                this.FillDefaultValue(row, "targetstorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
-                this.FillDefaultValue(row, "targetstorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
-                this.FillDefaultValue(row, "sourcestorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
-                this.FillDefaultValue(row, "sourcestorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
+                this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
+                this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
+                this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
+                this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
                 this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
-            }
-            else
-            {
-                MessageBox.Show("供货信息不存在，请重新填写物料——供货商！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
