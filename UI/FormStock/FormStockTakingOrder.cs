@@ -30,7 +30,7 @@ namespace WMS.UI.FormStockTaking
 
         private void FormStockTakingOrder_Load(object sender, EventArgs e)
         {
-            this.searchView1.AddStaticCondition("waehouseId", GlobalData.Warehouse["id"]);
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
