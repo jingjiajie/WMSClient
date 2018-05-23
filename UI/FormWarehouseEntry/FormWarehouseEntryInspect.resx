@@ -126,7 +126,8 @@
         {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
         {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
         {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
-        {name:"createPersonId",type:"int",displayName:"创建用户ID",defaultValue:"#createPersonIDDefaultValue"},
+        {name:"createPersonId",type:"int",displayName:"创建用户ID",visible:false,defaultValue:"#createPersonIDDefaultValue"},
+        {name:"createPersonName",displayName:"创建用户",editable:false,defaultValue:"#createPersonNameDefaultValue"},
         {name:"createTime",type:"datetime",displayName:"创建时间",defaultValue:"#now",editable:false}
      ]
     }
@@ -136,22 +137,21 @@
     <value>[
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",visible:false},
-        {name:"warehouseEntryId",displayName:"收货单ID",visible:false},
-        {name:"supplyId",displayName:"供货ID",visible:false},
-        {name:"storageLocationId",displayName:"收货库位ID",visible:false},
-        {name:"expectedAmount",displayName:"订单数量（个）"},
-        {name:"realAmount",displayName:"实收数量"},
-        {name:"unit",displayName:"单位"},
-        {name:"unitAmount",displayName:"单位数量"},
-        {name:"inspectionAmount",displayName:"已分配送检数量（个）"},
-        {name:"state",displayName:"状态"},
-        {name:"refuseAmount",displayName:"拒收数量（个）"},
-        {name:"refuseUnit",displayName:"拒收单位"},
-        {name:"refuseUnitAmount",displayName:"拒收单位数量"},
-        {name:"personId",displayName:"作业人ID",visible:false},
-        {name:"comment",displayName:"备注"},
-        {name:"inventoryDate",displayName:"存货日期"}
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"warehouseEntryItemId",displayName:"入库单条目ID",type:"int",visible:false},
+        {name:"supplyId",displayName:"供货ID",visible:false,type:"int"},
+        {name:"amount",displayName:"送检数量",type:"double",placeHolder:"必填项"},
+        {name:"unit",displayName:"送检单位",placeHolder:"必填项"},
+        {name:"unitAmount",displayName:"送检单位数量",type:"double",placeHolder:"必填项"},
+        {name:"inspectionStorageLocationId",displayName:"待检库位ID",type:"int",visible:false},
+        {name:"inspectionStorageLocationNo",displayName:"待检库位编码",placeHolder:"必填项"},
+        {name:"inspectionStorageLocationName",displayName:"待检库位名称",placeHolder:"必填项"},
+        {name:"materialNo",displayName:"物料代号",editable:false},
+        {name:"materialName",displayName:"物料名称",editable:false},
+        {name:"materialProductLine",displayName:"物料系列",editable:false},
+        {name:"supplierName",displayName:"供货商名称",editable:false},
+        {name:"inspectionAmount",displayName:"已分配送检数量",type:"double"},
+        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"}
      ],
     httpAPIs:[
         {type:"find",

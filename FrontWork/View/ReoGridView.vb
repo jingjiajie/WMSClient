@@ -537,7 +537,7 @@ Public Class ReoGridView
                     Char.IsSymbol(c) Then
                     Return 8
                 Else
-                    Return 15
+                    Return 16
                 End If
             End Function)
         Me.Panel.ColumnHeaders(col).Width = System.Math.Max(width, Me.Panel.ColumnHeaders.Item(col).Width + 10)
@@ -941,7 +941,13 @@ Public Class ReoGridView
         End If
         Dim reoGridColumnNum = Me.dicNameColumn(colName)
         Dim reoGridCell = Panel.GetCell(row, reoGridColumnNum)
-        If reoGridCell Is Nothing AndAlso String.IsNullOrEmpty(text) Then Return True
+        If reoGridCell Is Nothing Then
+            If String.IsNullOrEmpty(text) Then
+                Return True
+            Else
+                reoGridCell = Panel.CreateAndGetCell(row, reoGridColumnNum)
+            End If
+        End If
         '根据Configuration中的Field类型，处理View中的单元格
         If field.Values Is Nothing Then '没有Values，是文本框
             RemoveHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
