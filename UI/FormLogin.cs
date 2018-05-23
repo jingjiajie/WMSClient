@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -23,7 +24,8 @@ namespace WMS.UI
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-
+            //设置一下区域与语言
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("zh-CN");
         }
 
         //启用双缓冲技术

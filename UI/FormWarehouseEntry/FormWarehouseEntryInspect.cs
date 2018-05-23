@@ -36,11 +36,16 @@ namespace WMS.UI
             return (int)GlobalData.Person["id"];
         }
 
+        private string CreatePersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
+        }
+
         private DateTime? InspectionTimeDefaultValue()
         {
             int row = (int)this.modelWarehouseEntry.SelectionRange.Row;
-            DateTime? inventoryDate = this.modelWarehouseEntry[row, "inventoryDate"] as DateTime?;
-            return inventoryDate;
+            DateTime? createTime = this.modelWarehouseEntry[row, "createTime"] as DateTime?;
+            return createTime;
         }
 
         private void modelWarehouseEntry_SelectionRangeChanged(object sender, FrontWork.ModelSelectionRangeChangedEventArgs e)
@@ -67,7 +72,7 @@ namespace WMS.UI
             for(int row = 0; row < dataTable.Rows.Count; row++)
             {
                 int curID = (int)dataTable.Rows[row]["warehouseEntryId"];
-                if(curID == warehouseEntryID)
+                if (curID == warehouseEntryID)
                 {
                     this.modelInspectionNotes.SelectionRange = new Range(row,0,1,this.modelInspectionNotes.ColumnCount);
                     return;
@@ -77,6 +82,11 @@ namespace WMS.UI
             {
                 { "warehouseEntryId",warehouseEntryID}
             });
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
