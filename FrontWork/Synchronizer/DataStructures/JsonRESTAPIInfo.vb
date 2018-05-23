@@ -2,6 +2,7 @@
 Imports System.Net
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Web.Script.Serialization
 
 ''' <summary>
 ''' RESTful接口，Json数据格式的API信息
@@ -73,9 +74,8 @@ Public Class JsonRESTAPIInfo
     ''' 设置响应体参数
     ''' </summary>
     ''' <param name="paramName">参数名</param>
-    ''' <param name="value">参数值，默认为null</param>
-    Public Sub SetResponseParameter(paramName As String, Optional value As Object = Nothing)
-        Me.responseJSEngine.SetValue(paramName, value)
+    Public Sub SetResponseParameter(paramName As String)
+        Me.responseJSEngine.SetValue(paramName, JsValue.Null)
     End Sub
 
     ''' <summary>
@@ -84,21 +84,21 @@ Public Class JsonRESTAPIInfo
     ''' <param name="paramName">参数名</param>
     ''' <param name="value">参数值</param>
     Public Sub SetRequestParameter(paramName As String, value As Object)
-        Me.requestJSEngine.SetValue(paramName, value)
+        If TypeOf (value) Is JsValue Then
+            Call Me.requestJSEngine.SetValue(paramName, value)
+        Else
+            Dim serializer As New JavaScriptSerializer
+        Dim serializedStr = serializer.Serialize(value)
+        serializedStr = Regex.Replace(serializedStr, "\\/Date\((\d+)\)\\/",
+                                      Function(match)
+                                          Dim dt = New DateTime(1970, 1, 1)
+                                          dt = dt.AddMilliseconds(Long.Parse(match.Groups(1).Value))
+                                          dt = dt.ToLocalTime()
+                                          Return dt.ToString("yyyy-MM-dd HH:mm:ss")
+                                      End Function)
+            Call Me.SetJsonRequestParameter(paramName, serializedStr)
+        End If
     End Sub
-
-    '''' <summary>
-    '''' 设置Json字符串格式的相应体参数，自动转换为Js对象
-    '''' </summary>
-    '''' <param name="paramName">参数名</param>
-    '''' <param name="jsonString">参数值</param>
-    'Public Sub SetJsonResponseParameter(paramName As String, jsonString As String)
-    '    Try
-    '        Me.responseJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
-    '    Catch
-    '        throw new FrontWorkException($"Invalid jsonString: ""{jsonString}""")
-    '    End Try
-    'End Sub
 
     ''' <summary>
     ''' 设置Json请求参数
@@ -109,7 +109,7 @@ Public Class JsonRESTAPIInfo
         Try
             Me.requestJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
         Catch
-            throw new FrontWorkException($"Invalid jsonString: ""{jsonString}""")
+            Throw New FrontWorkException($"Invalid jsonString: ""{jsonString}""")
         End Try
     End Sub
 
@@ -137,7 +137,7 @@ Public Class JsonRESTAPIInfo
                         value = Me.requestJSEngine.Execute(expr).GetCompletionValue.ToString
                     End If
                 Catch ex As Exception
-                    throw new FrontWorkException($"Invalid expression: ""{expr}""" & vbCrLf & $"Message: {ex.Message}")
+                    Throw New FrontWorkException($"Invalid expression: ""{expr}""" & vbCrLf & $"Message: {ex.Message}")
                     Return Nothing
                 End Try
             End If
@@ -183,7 +183,7 @@ Public Class JsonRESTAPIInfo
         Try
             responseJsValue = Me.requestJSEngine.Execute("$_EPFResponse=" & responsebody).GetValue("$_EPFResponse")
         Catch
-            throw new FrontWorkException($"Invalid ResponseBody:{responsebody}")
+            Throw New FrontWorkException($"Invalid ResponseBody:{responsebody}")
         End Try
         '根据ResponseBody获取各个ResponseParameter的位置
         Dim paramPaths As Dictionary(Of String, String()) = Me.GetResponseBodyTemplateParamPaths(paramNames)
@@ -266,7 +266,7 @@ Public Class JsonRESTAPIInfo
         Try
             Me.responseJSEngine.Execute(String.Format("var $_EPFTargetObject = {0}", Me._ResponseBodyTemplate))
         Catch
-            throw new FrontWorkException("Invalid ResponseBodyTemplate")
+            Throw New FrontWorkException("Invalid ResponseBodyTemplate")
         End Try
         Me.responseJSEngine.Execute("fillObjPath($_EPFTargetObject)")
         For Each paramName In paramNames

@@ -106,6 +106,7 @@
     <Compile Include="Configuration\FieldMethod.vb" />
     <Compile Include="Model\DataStructures\IndexRowSynchronizationStatePair.vb" />
     <Compile Include="Model\DataStructures\SynchronizaionState.vb" />
+    <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowSynchronizationStateChangedEventArgs.vb" />
     <Compile Include="Model\ModelBox.Designer.vb">
       <DependentUpon>ModelBox.vb</DependentUpon>

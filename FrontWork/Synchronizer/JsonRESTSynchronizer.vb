@@ -128,8 +128,6 @@ Public Class JsonRESTSynchronizer
         End Set
     End Property
 
-    Private modelActions As New List(Of ModelAdapterAction)
-
     Public Sub New()
 
     End Sub
@@ -189,17 +187,11 @@ Public Class JsonRESTSynchronizer
     End Sub
 
     Private Sub BindModel()
-        AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
-        AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+        AddHandler Me.Model.BeforeRowRemove, AddressOf Me.ModelBeforeRowRemoveEvent
     End Sub
 
     Private Sub UnbindModel()
-        RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
-        RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+        RemoveHandler Me.Model.BeforeRowRemove, AddressOf Me.ModelBeforeRowRemoveEvent
     End Sub
 
     Private Sub InitSynchronizer()
@@ -259,132 +251,39 @@ Public Class JsonRESTSynchronizer
         Call Me.InitSynchronizer()
     End Sub
 
-    Private Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
-        If Me.UpdateAPI Is Nothing Then
-            throw new FrontWorkException("Update API not set!")
-        End If
-        Dim updatedCells = e.UpdatedCells
-        Dim indexFullRows(updatedCells.Length - 1) As IndexRowPair
-        For i = 0 To updatedCells.Length - 1
-            Dim posCell = updatedCells(i)
-            Dim row = posCell.Row
-            Dim rowID = posCell.RowID
-            '获取整列数据
-            Dim fullRow As IDictionary(Of String, Object) = Me.Model.GetRows({row})(0)
-            indexFullRows(i) = New IndexRowPair(row, rowID, fullRow)
-
-            Dim action = New UpdateRowAction(Me.UpdateAPI, indexFullRows, Me.Model)
-            modelActions.Add(action)
-        Next
-    End Sub
-
-    Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
+    Private Sub ModelBeforeRowRemoveEvent(sender As Object, e As ModelBeforeRowRemoveEventArgs)
         If Me.RemoveAPI Is Nothing Then
-            throw new FrontWorkException("Remove API not setted!")
+            Throw New FrontWorkException("Remove API not setted!")
         End If
         '删除行的所有ID
-        Dim rowIDsASC = (From indexRow In e.RemovedRows
+        Dim rowIDsASC = (From indexRow In e.RemoveRows
                          Order By indexRow.RowID Ascending
                          Select indexRow.RowID).ToArray
-        '如果是新增的行，不要将删除操作同步到服务器。这里记录删除行的ID。
-        '待同步服务器成功后，删除这些行的ADD操作
-        '如果同步服务器失败，不删除这些行的ADD操作
-        Dim addedRowIDs As New List(Of Guid)
-        For Each action In Me.modelActions
-            If TypeOf action IsNot AddRowAction Then Continue For
-            Dim addActionRowIDs = (From indexRow In action.IndexRowPairs
-                                   Select indexRow.RowID).ToArray
-            For Each removedRow In e.RemovedRows
-                If addActionRowIDs.Contains(removedRow.RowID) Then
-                    addedRowIDs.Add(removedRow.RowID)
-                End If
-            Next
-        Next
-        '需要推送到服务器的删除行
-        Dim saveRows = (From rowIndex In e.RemovedRows
-                        Where Not addedRowIDs.Contains(rowIndex.RowID)
-                        Select rowIndex).ToArray
-        '删除操作单独进行，不和添加，更新一块提交
-        Dim actionList = New List(Of ModelAdapterAction)
-        actionList.Add(New RemoveRowAction(Me.RemoveAPI, saveRows, Me.Model))
-        '删除操作立即提交，以免删除失败导致后面的操作永远无法提交。
-        If Me.Save(actionList, "删除") Then
-            '如果删除成功，清空所有删除行的所有更新记录
-            Me.modelActions.ForEach(
-                Sub(action)
-                    If TypeOf (action) Is UpdateRowAction Then
-                        action.IndexRowPairs = (From indexRow In action.IndexRowPairs
-                                                Where Not rowIDsASC.Contains(indexRow.RowID)
-                                                Select indexRow).ToArray
-                    End If
-                End Sub)
-            '如果删除成功，清空所有新增行的新增记录
-            Me.modelActions.ForEach(
-                Sub(action)
-                    If TypeOf (action) Is AddRowAction Then
-                        action.IndexRowPairs = (From indexRow In action.IndexRowPairs
-                                                Where Not addedRowIDs.Contains(indexRow.RowID)
-                                                Select indexRow).ToArray
-                    End If
-                End Sub)
-        Else '如果删除失败，则把行添加回Model里
-            Dim rowNumsASC = (From indexRow In e.RemovedRows
-                              Order By indexRow.Index Ascending
-                              Select indexRow.Index).ToArray
-            Dim dataOfEachRowASC = (From indexRow In e.RemovedRows
-                                    Order By indexRow.Index Ascending
-                                    Select indexRow.RowData).ToArray
-            For i = 0 To rowNumsASC.Length - 1
-                RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
-                Me.Model.InsertRow(rowNumsASC(i), dataOfEachRowASC(i)) '把行插入回去
-                Me.Model.UpdateRowID(Me.Model.GetRowID(rowNumsASC(i)), rowIDsASC(i)) '行ID也设置为被删除行的ID
-                '如果没有其他增加和更新的操作，则将行状态更新为已同步
-                Dim ifHasUnsynchronizedOperates = False
-                Dim curRowID = rowIDsASC(i)
-                For Each action In Me.modelActions
-                    If (From indexRow In action.IndexRowPairs
-                        Where indexRow.RowID = curRowID
-                        Select indexRow).Count > 0 Then
-                        ifHasUnsynchronizedOperates = True
-                    End If
-                Next
-                If Not ifHasUnsynchronizedOperates Then
-                    Me.Model.UpdateRowSynchronizationState(rowIDsASC(i), SynchronizationState.SYNCHRONIZED)
-                End If
-                AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
-            Next
-        End If
-    End Sub
-
-    Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
-        If Me.UpdateAPI Is Nothing Then
-            throw new FrontWorkException("Update API not setted!")
-        End If
-        Dim indexFullRows(e.UpdatedRows.Length - 1) As IndexRowPair
-        For i = 0 To e.UpdatedRows.Length - 1
-            Dim index = e.UpdatedRows(i).Index
-            Dim rowID = e.UpdatedRows(i).RowID
-            Dim fullRow As IDictionary(Of String, Object) = Me.Model.GetRows({index})(0)
-            indexFullRows(i) = New IndexRowPair(index, rowID, fullRow)
-        Next
-        Dim action = New UpdateRowAction(Me.UpdateAPI, indexFullRows, Me.Model)
-        modelActions.Add(action)
-    End Sub
-
-    Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-        If Me.AddAPI Is Nothing Then
-            throw new FrontWorkException("Add API not set!")
-        End If
-        Dim rows = (From indexRow In e.AddedRows
-                    Select indexRow.RowData).ToArray
-        Dim action = New AddRowAction(Me.AddAPI, e.AddedRows, Me.Model)
-        modelActions.Add(action)
+        '如果是新增的行，不要将删除操作同步到服务器。
+        Dim rowDataList = (From rowInfo In e.RemoveRows
+                           Select rowInfo.RowData).ToArray
+        Me.RemoveAPI.SetRequestParameter("$data", rowDataList)
+        Try
+            Dim response = Me.RemoveAPI.Invoke()
+            Me.RemoveAPI.Callback.Invoke(response, Nothing)
+            MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As WebException
+            e.Cancel = True
+            Dim message = ex.Message
+            If ex.Response IsNot Nothing Then
+                message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
+            End If
+            MessageBox.Show("删除失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            If Me.RemoveAPI.Callback IsNot Nothing Then
+                Me.RemoveAPI.Callback.Invoke(ex.Response, ex)
+            End If
+        End Try
     End Sub
 
     Public Function Find() As Boolean Implements ISynchronizer.Find
         Logger.SetMode(LogMode.SYNCHRONIZER)
         If Me.FindAPI Is Nothing Then
-            throw new FrontWorkException("Find API Not set!")
+            Throw New FrontWorkException("Find API Not set!")
         End If
         Try
             Console.WriteLine(Me.FindAPI.HTTPMethod.ToString & " " & Me.FindAPI.GetURL)
@@ -407,8 +306,6 @@ Public Class JsonRESTSynchronizer
             Dim data = Me.FindAPI.GetResponseParameters(responseStreamReader.ReadToEnd, {"$data"})(0)
             If data Is Nothing Then Return False
 
-            '清空actions
-            Call Me.modelActions.Clear()
             '更新Model
             Dim resultList As New List(Of IDictionary(Of String, Object))
             '判断是对象还是对象数组
@@ -475,62 +372,46 @@ Public Class JsonRESTSynchronizer
         Return True
     End Function
 
-    Private Function Save(actions As List(Of ModelAdapterAction), Optional operationName As String = "保存") As Boolean
+    Public Function Save() As Boolean Implements ISynchronizer.Save
         Logger.SetMode(LogMode.SYNCHRONIZER)
         If Me.Model Is Nothing Then
-            throw new FrontWorkException("Model not set!")
+            Throw New FrontWorkException("Model not set!")
         End If
 
-        '将Actions进行优化
-        Dim optimizer As New ActionOptimizer
-        Dim optimizedActions = optimizer.Optimize(actions.ToArray, Me.Model)
-        actions.Clear()
-
-        For Each action In optimizedActions
-            Dim rowGuids = (From indexRowPair In action.IndexRowPairs Select indexRowPair.RowID).ToArray
+        For row = 0 To Me.Model.RowCount - 1
+            Dim syncState = Me.Model.GetRowSynchronizationState(row)
+            If syncState = SynchronizationState.SYNCHRONIZED Then Continue For
+            Dim apiInfo As JsonRESTAPIInfo = Nothing
             Try
-                Dim response = action.DoSync()
-                '不等于200直接抛Exception了。在后面处理
-                'If response.StatusCode <> 200 Then
-                '    actions.Add(action)
-                '    If TypeOf action IsNot RemoveRowAction Then
-                '        Me.Model.UpdateRowSynchronizationStates(rowGuids, Util.Times(SynchronizationState.UNSYNCHRONIZED, rowGuids.Length))
-                '    End If
-                'Else
-                '将相应行的同步状态更新为已同步，删除行就不用同步了，因为行已经被删了。
-                If TypeOf (action) IsNot RemoveRowAction Then
-                    Me.Model.UpdateRowSynchronizationStates(rowGuids, Util.Times(SynchronizationState.SYNCHRONIZED, rowGuids.Length))
-                End If
-                action.APIInfo.Callback.Invoke(response, Nothing)
+                Select Case syncState
+                    Case SynchronizationState.ADDED
+                        apiInfo = Me.AddAPI
+                    Case SynchronizationState.UPDATED
+                        apiInfo = Me.UpdateAPI
+                End Select
+                Dim rowData = DataRowToDictionary(Me.Model.GetDataTable.Rows(row))
+                apiInfo.SetRequestParameter("$data", {rowData})
+                Dim response = apiInfo.Invoke()
+                apiInfo.Callback.Invoke(response, Nothing)
+                '将相应行的同步状态更新为已同步
+                Me.Model.UpdateRowSynchronizationState(row, SynchronizationState.SYNCHRONIZED)
             Catch ex As WebException
-                actions.Add(action)
-                If TypeOf action IsNot RemoveRowAction Then
-                    Me.Model.UpdateRowSynchronizationStates(rowGuids, Util.Times(SynchronizationState.UNSYNCHRONIZED, rowGuids.Length))
-                End If
                 Dim message = ex.Message
                 If ex.Response IsNot Nothing Then
                     message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
                 End If
-                MessageBox.Show(operationName & "失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                If action.APIInfo.Callback Is Nothing Then Continue For
-                Dim ifContinue = action.APIInfo.Callback.Invoke(ex.Response, ex)
+                MessageBox.Show($"行{row + 1}：保存失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                If apiInfo.Callback Is Nothing Then Continue For
+                Dim ifContinue = apiInfo.Callback.Invoke(ex.Response, ex)
                 If Not ifContinue Then
                     Return False
                 End If
             End Try
         Next
 
-        MessageBox.Show(operationName & "成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show("保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Call Me.PushFinishedCallback?.Invoke
         Return True
-    End Function
-
-    ''' <summary>
-    ''' 推送变化数据到服务器
-    ''' </summary>
-    ''' <returns>是否成功</returns>
-    Public Function Save() As Boolean Implements ISynchronizer.Save
-        Return Me.Save(Me.modelActions)
     End Function
 
     Private Function DataRowToDictionary(dataRow As DataRow) As Dictionary(Of String, Object)
@@ -541,218 +422,6 @@ Public Class JsonRESTSynchronizer
         Next
         Return result
     End Function
-
-    '=======================================================================================
-    Private MustInherit Class ModelAdapterAction
-        Public Property APIInfo As JsonRESTAPIInfo
-        Public Property IndexRowPairs As IndexRowPair()
-        Public Property Model As IModel
-
-        Public Overridable Function DoSync() As HttpWebResponse
-            Logger.Debug(Me.APIInfo.HTTPMethod.ToString & " " & Me.APIInfo.GetURL & vbCrLf & Me.APIInfo.GetRequestBody)
-
-            Dim httpWebRequest = CType(WebRequest.Create(Me.APIInfo.GetURL), HttpWebRequest)
-            httpWebRequest.Method = Me.APIInfo.HTTPMethod.ToString
-            If Me.APIInfo.HTTPMethod = HTTPMethod.POST OrElse Me.APIInfo.HTTPMethod = HTTPMethod.PUT Then
-                httpWebRequest.ContentType = "application/json"
-                Dim requestBody = Me.APIInfo.GetRequestBody
-                Dim bytes = Encoding.UTF8.GetBytes(requestBody)
-                Dim stream = httpWebRequest.GetRequestStream
-                stream.Write(bytes, 0, bytes.Length)
-            End If
-
-            Dim response = httpWebRequest.GetResponse
-            Return response
-        End Function
-
-        Protected Shared Function IndexRowPairsToJson(indexRowPairs As IndexRowPair()) As String
-            Dim dics = (From indexRowPair In indexRowPairs
-                        Select indexRowPair.RowData).ToArray
-            Dim str = New JavaScriptSerializer().Serialize(dics)
-            str = Regex.Replace(str, "\\/Date\((\d+)\)\\/",
-                    Function(match)
-                        Dim dt = New DateTime(1970, 1, 1)
-                        dt = dt.AddMilliseconds(Long.Parse(match.Groups(1).Value))
-                        dt = dt.ToLocalTime()
-                        Return dt.ToString("yyyy-MM-dd HH:mm:ss")
-                    End Function)
-            Return str
-        End Function
-
-    End Class
-
-    Private Class AddRowAction
-        Inherits ModelAdapterAction
-
-        Public Sub New(apiInfo As JsonRESTAPIInfo, indexRowPairs As IndexRowPair(), model As IModel)
-            Me.APIInfo = apiInfo
-            Me.IndexRowPairs = indexRowPairs
-            Me.Model = model
-        End Sub
-
-        Public Overrides Function DoSync() As HttpWebResponse
-            Dim dataJson = IndexRowPairsToJson(Me.IndexRowPairs)
-            Me.APIInfo.SetJsonRequestParameter("$data", dataJson)
-            Dim response = MyBase.DoSync()
-            '本来想把返回的ids置入Model，以便后续继续更改条目。但是废了，因为如果服务器端生成了其他字段的默认值，光同步ID没用，默认值同步不下来
-            'TODO 所以需要后端返回$data，把所有字段值和生成的字段值全都返回来
-            '这事儿以后再做
-            'Me.APIInfo.SetResponseParameter("$ids")
-            'Dim responseStr = New StreamReader(response.GetResponseStream).ReadToEnd
-            ''将返回的文本根据ResponseParameters获取到$ids，并将返回的IDs置入Model。如果返回ID失败，则抛异常
-            'Dim serializer As New JavaScriptSerializer
-            'Dim ids As Integer() = serializer.Deserialize(Of Integer())(responseStr)
-            'If ids.Count <> Me.IndexRowPairs.Count Then
-            '    throw new FrontWorkException($"Add API返回数据错误：ID数量({ids.Length})不等于提交数量({Me.IndexRowPairs.Length})")
-            'End If
-            'For i = 0 To ids.Length - 1
-            '    Dim id = ids(i)
-            '    Dim indexRowPair = Me.IndexRowPairs(i)
-            '    Dim rowID = indexRowPair.RowID
-            '    Me.Model.UpdateCell(rowID, "id", id)
-            '    Me.Model.UpdateRowSynchronizationState(rowID, SynchronizationState.SYNCHRONIZED)
-            'Next
-            Return response
-        End Function
-    End Class
-
-    Private Class UpdateRowAction
-        Inherits ModelAdapterAction
-
-        Public Sub New(apiInfo As JsonRESTAPIInfo, indexRowPairs As IndexRowPair(), model As IModel)
-            Me.APIInfo = apiInfo
-            Me.IndexRowPairs = indexRowPairs
-            Me.Model = model
-        End Sub
-
-
-        Public Overrides Function DoSync() As HttpWebResponse
-            Dim dataJson = IndexRowPairsToJson(Me.IndexRowPairs)
-            Me.APIInfo.SetJsonRequestParameter("$data", dataJson)
-            Return MyBase.DoSync()
-        End Function
-    End Class
-
-    Private Class RemoveRowAction
-        Inherits ModelAdapterAction
-
-        Public Sub New(apiInfo As JsonRESTAPIInfo, indexRowPairs As IndexRowPair(), model As IModel)
-            Me.APIInfo = apiInfo
-            Me.IndexRowPairs = indexRowPairs
-            Me.Model = model
-        End Sub
-
-
-        Public Overrides Function DoSync() As HttpWebResponse
-            Dim dataJson = IndexRowPairsToJson(Me.IndexRowPairs)
-            Me.APIInfo.SetJsonRequestParameter("$data", dataJson)
-            Return MyBase.DoSync()
-        End Function
-    End Class
-
-    Private Class ActionOptimizer
-
-        Public Function Optimize(actions As ModelAdapterAction(), model As IModel) As ModelAdapterAction()
-            Dim dicRowIDActions As New Dictionary(Of Guid, ModelAdapterAction)
-            For Each action In actions
-                Select Case action.GetType
-                    Case GetType(AddRowAction)
-                        Dim addRowAction = CType(action, AddRowAction)
-                        For Each indexRowPair In addRowAction.IndexRowPairs
-                            If Not dicRowIDActions.ContainsKey(indexRowPair.RowID) Then
-                                dicRowIDActions.Add(indexRowPair.RowID, Nothing)
-                            End If
-                            Dim lastAction = dicRowIDActions(indexRowPair.RowID)
-                            If lastAction Is Nothing Then
-                                dicRowIDActions(indexRowPair.RowID) = New AddRowAction(addRowAction.APIInfo, {indexRowPair}, model)
-                            ElseIf lastAction.GetType() = GetType(RemoveRowAction) Then
-                                Continue For
-                            ElseIf lastAction.GetType = GetType(UpdateRowAction) Then
-                                Dim lastUpdateAction = CType(lastAction, UpdateRowAction)
-                                For Each field In lastUpdateAction.IndexRowPairs(0).RowData
-                                    If indexRowPair.RowData.ContainsKey(field.Key) Then
-                                        indexRowPair.RowData(field.Key) = field.Value
-                                    Else
-                                        indexRowPair.RowData.Add(field.Key, field.Value)
-                                    End If
-                                Next
-                                dicRowIDActions(indexRowPair.RowID) = New AddRowAction(addRowAction.APIInfo, {indexRowPair}, model)
-                            End If
-                        Next
-
-                    Case GetType(RemoveRowAction)
-                        Dim removeRowAction = CType(action, RemoveRowAction)
-                        For Each indexRowPair In removeRowAction.IndexRowPairs
-                            If Not dicRowIDActions.ContainsKey(indexRowPair.RowID) Then
-                                dicRowIDActions.Add(indexRowPair.RowID, New RemoveRowAction(removeRowAction.APIInfo, {indexRowPair}, model))
-                            Else
-                                Dim lastAction = dicRowIDActions(indexRowPair.RowID)
-                                If TypeOf (lastAction) Is AddRowAction Then
-                                    dicRowIDActions.Remove(indexRowPair.RowID)
-                                Else
-                                    dicRowIDActions(indexRowPair.RowID) = New RemoveRowAction(removeRowAction.APIInfo, {indexRowPair}, model)
-                                End If
-                            End If
-                        Next
-
-                    Case GetType(UpdateRowAction)
-                        Dim updateRowAction = CType(action, UpdateRowAction)
-                        For Each indexRowPair In updateRowAction.IndexRowPairs
-                            If Not dicRowIDActions.ContainsKey(indexRowPair.RowID) Then
-                                dicRowIDActions.Add(indexRowPair.RowID, Nothing)
-                            End If
-                            Dim lastAction = dicRowIDActions(indexRowPair.RowID)
-                            If lastAction Is Nothing Then
-                                dicRowIDActions(indexRowPair.RowID) = New UpdateRowAction(updateRowAction.APIInfo, {indexRowPair}, model)
-                            ElseIf lastAction.GetType() = GetType(RemoveRowAction) Then
-                                Continue For
-                            ElseIf lastAction.GetType = GetType(UpdateRowAction) Then
-                                Dim lastUpdateAction = CType(lastAction, UpdateRowAction)
-                                '后来的更新之前的
-                                For Each field In indexRowPair.RowData
-                                    If lastUpdateAction.IndexRowPairs(0).RowData.ContainsKey(field.Key) Then
-                                        lastUpdateAction.IndexRowPairs(0).RowData(field.Key) = field.Value
-                                    Else
-                                        lastUpdateAction.IndexRowPairs(0).RowData.Add(field.Key, field.Value)
-                                    End If
-                                Next
-                            ElseIf lastAction.GetType = GetType(AddRowAction) Then
-                                Dim lastAddAction = CType(lastAction, AddRowAction)
-                                '后来的更新之前的
-                                For Each field In indexRowPair.RowData
-                                    If lastAddAction.IndexRowPairs(0).RowData.ContainsKey(field.Key) Then
-                                        lastAddAction.IndexRowPairs(0).RowData(field.Key) = field.Value
-                                    Else
-                                        lastAddAction.IndexRowPairs(0).RowData.Add(field.Key, field.Value)
-                                    End If
-                                Next
-                            End If
-                        Next
-                End Select
-            Next
-            '将所有删除请求合并成一个
-            Dim nonRemoveActions As New List(Of ModelAdapterAction)
-            Dim lastRemoveAction As RemoveRowAction = Nothing
-            Dim removeIndexRowPairs As New List(Of IndexRowPair)
-            For Each curAction In dicRowIDActions.Values
-                If TypeOf curAction Is RemoveRowAction Then
-                    lastRemoveAction = curAction
-                    removeIndexRowPairs.AddRange(curAction.IndexRowPairs)
-                Else
-                    nonRemoveActions.Add(curAction)
-                End If
-            Next
-            If lastRemoveAction IsNot Nothing Then
-                lastRemoveAction.IndexRowPairs = removeIndexRowPairs.ToArray
-            End If
-            '生成最终结果
-            Dim result = nonRemoveActions
-            If lastRemoveAction IsNot Nothing Then
-                result.Add(lastRemoveAction)
-            End If
-            Return result.ToArray
-        End Function
-    End Class
 
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(JsonRESTSynchronizer))
