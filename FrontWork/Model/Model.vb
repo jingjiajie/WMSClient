@@ -189,18 +189,7 @@ Public Class Model
             If Not Me.Data.Columns.Contains(curField.Name) Then
                 Dim newColumn As New DataColumn
                 newColumn.ColumnName = curField.Name
-                Select Case curField.Type
-                    Case "int"
-                        newColumn.DataType = GetType(Integer)
-                    Case "double"
-                        newColumn.DataType = GetType(Double)
-                    Case "string"
-                        newColumn.DataType = GetType(String)
-                    Case "datetime"
-                        newColumn.DataType = GetType(DateTime)
-                    Case "bool"
-                        newColumn.DataType = GetType(Boolean)
-                End Select
+                newColumn.DataType = curField.Type.FieldType
                 Me.Data.Columns.Add(newColumn)
             End If
         Next
