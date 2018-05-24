@@ -38,6 +38,7 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
+            this.configuration1 = new FrontWork.Configuration();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.pagerView1 = new FrontWork.PagerView();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
@@ -50,7 +51,6 @@
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.panel1 = new System.Windows.Forms.Panel();
             this.basicView1 = new FrontWork.BasicView();
-            this.configuration1 = new FrontWork.Configuration();
             this.model1 = new FrontWork.Model();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
@@ -68,6 +68,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
@@ -113,6 +114,22 @@
             this.searchView1.Size = new System.Drawing.Size(852, 25);
             this.searchView1.TabIndex = 13;
             // 
+            // configuration1
+            // 
+            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
+            this.configuration1.Location = new System.Drawing.Point(137, 51);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormWarehouseEntry",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1};
+            this.configuration1.Name = "configuration1";
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.TabIndex = 11;
+            // 
             // panelPagerWidget
             // 
             this.panelPagerWidget.Controls.Add(this.pagerView1);
@@ -125,6 +142,7 @@
             // 
             // pagerView1
             // 
+            this.pagerView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pagerView1.Location = new System.Drawing.Point(0, 0);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(1);
@@ -258,28 +276,12 @@
             this.basicView1.Size = new System.Drawing.Size(846, 109);
             this.basicView1.TabIndex = 16;
             // 
-            // configuration1
-            // 
-            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(137, 51);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntry",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
-            this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
-            this.configuration1.TabIndex = 11;
-            // 
             // model1
             // 
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
-            this.model1.Location = new System.Drawing.Point(334, 44);
+            this.model1.Location = new System.Drawing.Point(321, 45);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -334,6 +336,7 @@
             // 
             // reoGridView1
             // 
+            this.reoGridView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.reoGridView1.Configuration = this.configuration1;
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
