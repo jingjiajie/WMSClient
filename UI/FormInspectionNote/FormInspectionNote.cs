@@ -47,5 +47,13 @@ namespace WMS.UI
             var rowData = this.model1.GetRows(new long[] { this.model1.SelectionRange.Row })[0];
             new FormInspectionNoteItem(rowData).Show();
         }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
+        }
     }
 }

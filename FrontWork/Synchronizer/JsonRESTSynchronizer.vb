@@ -377,7 +377,9 @@ Public Class JsonRESTSynchronizer
         If Me.Model Is Nothing Then
             Throw New FrontWorkException("Model not set!")
         End If
-
+        '获取焦点以触发所有视图的编辑完成保存
+        '防止最后一个编辑的单元格不能保存
+        Call Util.FindFirstVisibleParent(Me)?.Focus()
         For row = 0 To Me.Model.RowCount - 1
             Dim syncState = Me.Model.GetRowSynchronizationState(row)
             If syncState = SynchronizationState.SYNCHRONIZED Then Continue For

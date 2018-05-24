@@ -654,7 +654,7 @@ Public Class BasicView
     ''' <summary>
     ''' 导出所有数据到Model
     ''' </summary>
-    Protected Sub ExportData()
+    Public Sub ExportData()
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
         If Me.dicFieldEdited.Count = 0 Then
             Return

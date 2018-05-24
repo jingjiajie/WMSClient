@@ -86,7 +86,7 @@ Public Class Util
             If field.FieldType = GetType(String) OrElse field.FieldType.IsValueType Then
                 field.SetValue(newObj, srcValue)
             ElseIf field.FieldType.GetInterface("ICloneable") = Nothing Then
-                throw new FrontWorkException($"Field {field.Name} must implement ICloneable")
+                Throw New FrontWorkException($"Field {field.Name} must implement ICloneable")
             ElseIf srcValue Is Nothing Then
                 field.SetValue(newObj, srcValue)
             Else
@@ -95,4 +95,17 @@ Public Class Util
         Next
         Return newObj
     End Function
+
+    Public Shared Function FindFirstVisibleParent(c As Control) As Control
+        If c.Parent IsNot Nothing Then
+            If c.Parent.Visible Then
+                Return c.Parent
+            Else
+                Return FindFirstVisibleParent(c)
+            End If
+        Else
+            Return Nothing
+        End If
+    End Function
+
 End Class

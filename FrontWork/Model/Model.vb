@@ -525,7 +525,20 @@ Public Class Model
                 For Each item In dataOfEachRow(i)
                     Dim key = item.Key
                     Dim value = item.Value
-                    Me.Data.Rows(row)(key) = value
+                    If value Is Nothing Then
+                        Me.Data.Rows(row)(key) = DBNull.Value
+                    Else
+                        Dim colType = Me.Data.Columns(key).DataType
+                        If colType = value.GetType Then
+                            Me.Data.Rows(row)(key) = value
+                        Else
+                            Try
+                                Convert.ChangeType(value, colType)
+                            Catch ex As Exception
+                                Throw New FrontWorkException($"{Me.Name}: Cannot convert {value} to ""{key}"" type:{colType.Name} ")
+                            End Try
+                        End If
+                    End If
                 Next
                 '将被更新的行的同步状态修改为已更新或已添加
                 Dim curState = Me.GetRowSynchronizationState(row)
