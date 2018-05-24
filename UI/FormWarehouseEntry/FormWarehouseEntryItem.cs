@@ -208,21 +208,27 @@ namespace WMS.UI
             if (foundSupplies.Length == 1)
             {
                 this.model[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "expectedAmount", foundSupplies[0]["defaultEntryAmount"]);
-                this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultEntryAmount"]);
-                this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultEntryUnit"]);
-                this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
-                this.FillDefaultValue(row, "refuseUnit", foundSupplies[0]["defaultEntryUnit"]);
-                this.FillDefaultValue(row, "refuseUnitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
-                this.FillDefaultValue(row, "storageLocationId", foundSupplies[0]["defaultEntryStorageLocationId"]);
-                this.FillDefaultValue(row, "storageLocationNo", foundSupplies[0]["defaultInspectionStorageLocationNo"]);
-                this.FillDefaultValue(row, "storageLocationName", foundSupplies[0]["defaultEntryStorageLocationName"]);
+                this.FillValueIfEmpty(row, "expectedAmount", foundSupplies[0]["defaultEntryAmount"]);
+                this.FillValueIfEmpty(row, "realAmount", foundSupplies[0]["defaultEntryAmount"]);
+                this.FillValueIfEmpty(row, "unit", foundSupplies[0]["defaultEntryUnit"]);
+                this.FillValueIfEmpty(row, "unitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
+                this.FillValueIfEmpty(row, "refuseUnit", foundSupplies[0]["defaultEntryUnit"]);
+                this.FillValueIfEmpty(row, "refuseUnitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
+                if ((int)this.model[row, "storageLocationId"] == 0)
+                {
+                    this.model[row, "storageLocationId"] = foundSupplies[0]["defaultEntryStorageLocationId"];
+                    this.model[row, "storageLocationNo"] = foundSupplies[0]["defaultInspectionStorageLocationNo"];
+                    this.model[row, "storageLocationName"] = foundSupplies[0]["defaultEntryStorageLocationName"];
+                }
             }
         }
 
-        private void FillDefaultValue(int row, string fieldName, object value)
+        private void FillValueIfEmpty(int row, string fieldName, object value)
         {
-            this.model[row, fieldName] = value;
+            if (string.IsNullOrWhiteSpace(this.model[row, fieldName]?.ToString()))
+            {
+                this.model[row, fieldName] = value;
+            }
         }
 
         //=============天经地义的交互逻辑到这里结束===============
