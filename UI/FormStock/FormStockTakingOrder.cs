@@ -57,7 +57,7 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save()) { this.searchView1.Search(); }
         }
 
         private void buttonItems_Click(object sender, EventArgs e)
