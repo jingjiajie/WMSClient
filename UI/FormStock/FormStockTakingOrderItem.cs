@@ -18,24 +18,14 @@ namespace WMS.UI.FormStockTaking
         {
             MethodListenerContainer.Register(this);
             this.stockTakingOrder = srockTakingOrder;
-            InitializeComponent();
-            //this.model1.CellUpdated += this.model_CellUpdated;
-            this.searchView1.AddStaticCondition("stockTakingOrder", this.stockTakingOrder["id"]);
+            InitializeComponent();         
+            this.searchView1.AddStaticCondition("stockTakingOrderId", this.stockTakingOrder["id"]);
         }
 
-        private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
-        {
-            foreach (var cell in e.UpdatedCells)
-            {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
-                this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
-                this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
-            }
-        }
+      
 
         private void FormStockTakingOrderItem_Load(object sender, EventArgs e)
-        {            
+        {                       
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -63,6 +53,44 @@ namespace WMS.UI.FormStockTaking
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+            }
+        }
+
+        private void StorageLocationNameEditEnded(int row, string storageAreaName)
+        {
+            IDictionary<string, object> foundStorageLocations =
+                GlobalData.AllStorageLocations.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == storageAreaName;
+                });
+            if (foundStorageLocations == null)
+            {
+                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "storageLocationId"] = foundStorageLocations["id"];
+                this.model1[row, "storageLocationNo"] = foundStorageLocations["no"];
+            }
+        }
+
+        private void StorageLocationNoEditEnded(int row, string storageLocationName)
+        {
+            IDictionary<string, object> foundStorageLcations =
+                GlobalData.AllStorageLocations.Find((s) =>
+                {
+                    if (s["no"] == null) return false;
+                    return s["no"].ToString() == storageLocationName;
+                });
+            if (foundStorageLcations == null)
+            {
+                MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "storageLocationId"] = foundStorageLcations["id"];
+                this.model1[row, "storageLocationName"] = foundStorageLcations["name"];
             }
         }
 
@@ -169,35 +197,21 @@ namespace WMS.UI.FormStockTaking
             //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
             if (foundSupplies.Length == 1)
             {
-                this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "expectedAmount", foundSupplies[0]["defaultEntryAmount"]);
-                this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultEntryAmount"]);
-                this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultEntryUnit"]);
-                this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
-                this.FillDefaultValue(row, "refuseUnit", foundSupplies[0]["defaultEntryUnit"]);
-                this.FillDefaultValue(row, "refuseUnitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
-                this.FillDefaultValue(row, "storageLocationId", foundSupplies[0]["defaultEntryStorageLocationId"]);
-                this.FillDefaultValue(row, "storageLocationNo", foundSupplies[0]["defaultInspectionStorageLocationNo"]);
-                this.FillDefaultValue(row, "storageLocationName", foundSupplies[0]["defaultEntryStorageLocationName"]);
+                this.model1[row, "supplyId"] = foundSupplies[0]["id"];                                        
             }
-            else
-            {
-                MessageBox.Show("无此供货，请检查物料和供应商！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
         }
 
         private void FillDefaultValue(int row, string fieldName, object value)
         {
             this.model1[row, fieldName] = value;
-
-
-            //=============天经地义的交互逻辑到这里结束===============
-
-
-
         }
 
+        //=============天经地义的交互逻辑到这里结束===============
     }
+
+
+
 }
+
+    
+
