@@ -146,7 +146,9 @@
         {name:"unitAmount",displayName:"单位数量",type:"double"},
         {name:"personId",displayName:" 盘点人ID",type:"int",visible:false},
         {name:"personName",displayName:" 盘点人名称",type:"string"},
-        {name:"comment",displayName:" 备注",type:"string"},                    
+        {name:"comment",displayName:"备注",type:"string"},  
+        {name:"supplierId",displayName:"供应商ID",type:"int"},  
+        {name:"materialId",displayName:"物料ID",type:"int"}              
     ],
 httpAPIs:[
         {type:"get-count",
