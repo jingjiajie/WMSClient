@@ -9,7 +9,7 @@ Imports Jint.Native
 Public Class FieldConfiguration
     Implements ICloneable
     Private _name As String = Nothing
-    Private _type As String = "string"
+    Private _type As FieldType = FieldType.FromString("string")
     ''' <summary>
     ''' 显示名称
     ''' </summary>
@@ -20,20 +20,13 @@ Public Class FieldConfiguration
     ''' 字段类型
     ''' </summary>
     ''' <returns></returns>
-    Public Property Type As String
+    Public Property Type As FieldType
         Get
             Return _type
         End Get
-        Set(value As String)
-            Static supportTypes() = {
-                "string", "int", "double", "datetime", "bool"
-            }
+        Set(value As FieldType)
             If value Is Nothing Then
-                throw new FrontWorkException("Field Type cannot be null!")
-            End If
-            value = value.ToLower
-            If Not supportTypes.Contains(value) Then
-                throw new FrontWorkException($"Unsupported field type:{value.ToString}")
+                Throw New FrontWorkException("Field Type cannot be null!")
             End If
             Me._type = value
         End Set
@@ -192,14 +185,18 @@ Public Class FieldConfiguration
             '获取js字段对应的FieldConfiguration属性，找不到就跳过并报错
             Dim prop = typeFieldConfiguration.GetProperty(key, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.IgnoreCase)
             If prop Is Nothing Then
-                throw new FrontWorkException("can not resolve property:""" + key + """ in json configure")
+                Throw New FrontWorkException("can not resolve property:""" + key + """ in json configure")
                 Continue For
-            ElseIf prop.PropertyType <> GetType(FieldMethod) Then '如果不是FieldMethod，则直接赋值
-                prop.SetValue(newFieldConfiguration, value, Nothing)
-            Else '如果是FieldMethod，特殊处理
+            ElseIf prop.PropertyType = GetType(FieldMethod) Then '如果是FieldMethod，特殊处理
                 Dim jsProp = item.Value.Value
                 Dim newFieldMethod = FieldMethod.FromJsValue(jsProp, methodListenerNames)
                 prop.SetValue(newFieldConfiguration, newFieldMethod, Nothing)
+            ElseIf prop.PropertyType = GetType(FieldType) Then '如果是FieldType，则按FieldType处理
+                Dim jsProp = item.Value.Value
+                Dim newFieldType = FieldType.FromString(jsProp?.ToString)
+                prop.SetValue(newFieldConfiguration, newFieldType, Nothing)
+            Else '如果是其他类型，则直接赋值
+                prop.SetValue(newFieldConfiguration, value, Nothing)
             End If
         Next
         Return newFieldConfiguration

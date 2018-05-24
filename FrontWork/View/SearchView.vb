@@ -102,8 +102,18 @@ Public Class SearchView
 
         If Me.ComboBoxSearchKey.SelectedIndex <> 0 Then
             Dim searchDisplayName = Me.ComboBoxSearchKey.SelectedItem?.ToString
+            Dim fieldConfiguration = (From f In Me.Configuration.GetFieldConfigurations(Me.Mode)
+                                      Where f.DisplayName = searchDisplayName
+                                      Select f).FirstOrDefault
+            Dim text = Me.TextBoxSearchCondition.Text
+            Dim searchValue As Object
+            If fieldConfiguration.BackwardMapper IsNot Nothing Then
+                Dim mappedValue = fieldConfiguration.BackwardMapper.Invoke(Me, text)
+                searchValue = Convert.ChangeType(mappedValue, fieldConfiguration.Type.FieldType)
+            Else
+                searchValue = Convert.ChangeType(text, fieldConfiguration.Type.FieldType)
+            End If
             Dim relation As Relation
-            Dim searchValue = Me.TextBoxSearchCondition.Text
             Dim searchName = (From m In Me.Configuration.GetFieldConfigurations(Me.Mode)
                               Where m.DisplayName = searchDisplayName
                               Select m.Name).First
@@ -159,7 +169,7 @@ Public Class SearchView
             Me.TextBoxSearchCondition.Enabled = True
             Dim selectedDisplayName = Me.ComboBoxSearchKey.SelectedItem.ToString
             Dim field = (From f In Me.Configuration.GetFieldConfigurations(Me.Mode) Where f.DisplayName = selectedDisplayName Select f).First
-            Call Me.RefreshSearchByType(field.Type)
+            Call Me.RefreshSearchByType(field.Type.FieldType)
         End If
     End Sub
 
@@ -167,33 +177,39 @@ Public Class SearchView
     ''' 根据字段的类型刷新搜索面板
     ''' </summary>
     ''' <param name="type"></param>
-    Private Sub RefreshSearchByType(type As String)
-        If type.Equals("string", StringComparison.OrdinalIgnoreCase) Then
-            Me.ComboBoxSearchRelation.Items.Clear()
-            Me.ComboBoxSearchRelation.Items.AddRange({
-                "包含", "等于"
-            })
-            Me.ComboBoxSearchRelation.SelectedIndex = 0
-        ElseIf type.Equals("int", StringComparison.OrdinalIgnoreCase) _
-            OrElse type.Equals("double", StringComparison.OrdinalIgnoreCase) Then
-            Me.ComboBoxSearchRelation.Items.Clear()
-            Me.ComboBoxSearchRelation.Items.AddRange({
-                "等于", "大于等于", "小于等于"
-            })
-            Me.ComboBoxSearchRelation.SelectedIndex = 0
-        ElseIf type.Equals("datetime", StringComparison.OrdinalIgnoreCase) Then
-            Me.ComboBoxSearchRelation.Items.Clear()
-            Me.ComboBoxSearchRelation.Items.AddRange({
-                "介于"
-            })
-            Me.ComboBoxSearchRelation.SelectedIndex = 0
-        Else
-            Me.ComboBoxSearchRelation.Items.Clear()
-            Me.ComboBoxSearchRelation.Items.AddRange({
-                "包含", "等于", "大于等于", "小于等于", "介于"
-            })
-            Me.ComboBoxSearchRelation.SelectedIndex = 0
-        End If
+    Private Sub RefreshSearchByType(type As Type)
+        Select Case type
+            Case GetType(String)
+                Me.ComboBoxSearchRelation.Items.Clear()
+                Me.ComboBoxSearchRelation.Items.AddRange({
+                    "包含", "等于"
+                })
+                Me.ComboBoxSearchRelation.SelectedIndex = 0
+            Case GetType(Integer), GetType(Double)
+                Me.ComboBoxSearchRelation.Items.Clear()
+                Me.ComboBoxSearchRelation.Items.AddRange({
+                    "等于", "大于等于", "小于等于"
+                })
+                Me.ComboBoxSearchRelation.SelectedIndex = 0
+            Case GetType(DateTime)
+                Me.ComboBoxSearchRelation.Items.Clear()
+                Me.ComboBoxSearchRelation.Items.AddRange({
+                    "介于"
+                })
+                Me.ComboBoxSearchRelation.SelectedIndex = 0
+            Case GetType(Boolean)
+                Me.ComboBoxSearchRelation.Items.Clear()
+                Me.ComboBoxSearchRelation.Items.AddRange({
+                    "等于"
+                })
+                Me.ComboBoxSearchRelation.SelectedIndex = 0
+            Case Else
+                Me.ComboBoxSearchRelation.Items.Clear()
+                Me.ComboBoxSearchRelation.Items.AddRange({
+                    "包含", "等于", "大于等于", "小于等于", "介于"
+                })
+                Me.ComboBoxSearchRelation.SelectedIndex = 0
+        End Select
     End Sub
 
     Public Sub Search()
