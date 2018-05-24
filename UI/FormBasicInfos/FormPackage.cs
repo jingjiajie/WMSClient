@@ -36,6 +36,9 @@ namespace WMS.UI.FormBasicInfos
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
+                 { "warehouseId",GlobalData.Warehouse["id"]},
+                 { "warehouseName",GlobalData.Warehouse["name"]},
+                 { "enabled",1},
             });
         }
 
@@ -47,12 +50,21 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void buttonItems_Click(object sender, EventArgs e)
         {
-
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项发货套餐单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new long[] { this.model1.SelectionRange.Row })[0];
+            new FormPackageItem(rowData).Show();
         }
     }
 }

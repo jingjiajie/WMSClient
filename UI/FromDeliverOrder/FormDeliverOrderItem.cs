@@ -83,7 +83,7 @@ namespace WMS.UI.FromDeliverOrder
 
         private void SupplierNoEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -91,7 +91,7 @@ namespace WMS.UI.FromDeliverOrder
 
         private void SupplierNameEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);

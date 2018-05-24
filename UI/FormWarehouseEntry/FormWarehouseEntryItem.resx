@@ -127,7 +127,7 @@
   <data name="buttonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
         ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
         NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>
@@ -135,7 +135,7 @@
   <data name="buttonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAOeSURBVFhH7VZJaBRBFB1NNG6IEtyNiGLEg4kQEFxQcxJP
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOeSURBVFhH7VZJaBRBFB1NNG6IEtyNiGLEg4kQEFxQcxJP
         4iki4l3cSELEPTEacxAR9KDo1bsXJSc3EL2ZKKggiQsenOl09/RMT3XPpJfn++UEXBJ1kmHw4IOiqJnu
         /179/+pXJ/6j0nBPnYI6ehTFZWWRI3nu/HmoM2fgnzhRWRGa/MIFqJ4eKM7elSvI9/WVJsI/fBheW1vJ
         ylV7O3IXL0IVR+7cOSgKCD9+LD0LXkcH1NmzUK2tf/Wyx3pL2kcFyCwCvKtXEZvmxMrgsYaqsxMeAxV/
@@ -157,7 +157,7 @@
   <data name="buttonSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
         CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
         NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
         ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
@@ -194,7 +194,7 @@
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
         {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"storageLocationId",displayName:"收货库位ID",type:"int",visible:false},
+        {name:"storageLocationId",displayName:"收货库位ID",type:"int",visible:false,defaultValue:0},
         {name:"storageLocationNo",displayName:"收货库位编码",association:"#storageLocationNoAssociation",editEnded:"#storageLocationNoEditEnded"},
         {name:"storageLocationName",displayName:"收货库位名称",association:"#storageLocationNameAssociation",editEnded:"#storageLocationNameEditEnded"},
         {name:"expectedAmount",displayName:"订单数量",type:"double"},
