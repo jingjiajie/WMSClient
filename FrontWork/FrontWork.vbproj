@@ -95,6 +95,7 @@
     <Compile Include="Configuration\Configurator\ConfiguratorEditor.vb" />
     <Compile Include="Configuration\EventArgs\ConfigurationChangedEventArgs.vb" />
     <Compile Include="Configuration\Exceptions\MethodNotFoundException.vb" />
+    <Compile Include="Configuration\FieldType.vb" />
     <Compile Include="Configuration\HTTPAPIConfiguration.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
