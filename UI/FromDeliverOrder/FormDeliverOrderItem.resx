@@ -148,23 +148,23 @@
     ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order_item/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order_item/",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order_item/",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order_item/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
