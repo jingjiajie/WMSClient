@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPackageItem));
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -63,24 +64,30 @@
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView1.ItemsPerRow = 5;
-            this.basicView1.Location = new System.Drawing.Point(0, 65);
+            this.basicView1.Location = new System.Drawing.Point(0, 60);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 0);
-            this.basicView1.Size = new System.Drawing.Size(878, 170);
+            this.basicView1.Size = new System.Drawing.Size(775, 100);
             this.basicView1.TabIndex = 14;
             // 
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(49, 66);
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            this.configuration1.Location = new System.Drawing.Point(63, 66);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormPackageItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
-            this.configuration1.TabIndex = 1;
+            this.configuration1.TabIndex = 5;
             // 
             // model
             // 
@@ -114,7 +121,7 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(878, 35);
+            this.searchView1.Size = new System.Drawing.Size(775, 30);
             this.searchView1.TabIndex = 15;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -139,26 +146,26 @@
             // pagerView1
             // 
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(2, 451);
-            this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerView1.Location = new System.Drawing.Point(0, 395);
+            this.pagerView1.Margin = new System.Windows.Forms.Padding(0);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = ((long)(50));
-            this.pagerView1.Size = new System.Drawing.Size(874, 36);
+            this.pagerView1.Size = new System.Drawing.Size(775, 30);
             this.pagerView1.TabIndex = 12;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.configuration1);
             this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
             this.panel1.Controls.Add(this.synchronizer);
             this.panel1.Controls.Add(this.model);
-            this.panel1.Controls.Add(this.configuration1);
             this.panel1.Controls.Add(this.reoGridView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 235);
+            this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(878, 214);
+            this.panel1.Size = new System.Drawing.Size(775, 235);
             this.panel1.TabIndex = 13;
             // 
             // reoGridView1
@@ -170,7 +177,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(878, 214);
+            this.reoGridView1.Size = new System.Drawing.Size(775, 235);
             this.reoGridView1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -188,13 +195,13 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 170F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(878, 519);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(775, 456);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
             // toolStripTop
@@ -209,10 +216,10 @@
             this.buttonDelete,
             this.buttonSave,
             this.toolStripSeparator3});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 35);
+            this.toolStripTop.Location = new System.Drawing.Point(0, 30);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(878, 30);
+            this.toolStripTop.Size = new System.Drawing.Size(775, 30);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -251,35 +258,36 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lableStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 425);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(878, 30);
+            this.statusStrip1.Size = new System.Drawing.Size(775, 31);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 26);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(104, 25);
+            this.lableStatus.Size = new System.Drawing.Size(104, 26);
             this.lableStatus.Text = "发货套餐条目信息";
             // 
             // FormPackageItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 519);
+            this.ClientSize = new System.Drawing.Size(775, 456);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormPackageItem";
             this.Text = "FormPackageItem";
@@ -298,7 +306,6 @@
         #endregion
 
         private FrontWork.BasicView basicView1;
-        private FrontWork.Configuration configuration1;
         private FrontWork.Model model;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.SearchView searchView1;
@@ -315,5 +322,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lableStatus;
+        private FrontWork.Configuration configuration1;
     }
 }

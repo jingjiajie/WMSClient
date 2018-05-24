@@ -15,6 +15,7 @@ using System.Diagnostics;
 using WMS.UI.FormBasicInfos;
 using WMS.UI.FormStockTaking;
 using WMS.UI.FormStock;
+using WMS.UI.FromDeliverOrder;
 
 namespace WMS.UI
 {
@@ -41,6 +42,7 @@ namespace WMS.UI
                     MakeTreeNode("供应商管理"),
                     MakeTreeNode("供货管理"),
                     MakeTreeNode("物料管理"),
+                    MakeTreeNode("发货套餐管理"),
                     MakeTreeNode("安全库存管理"),
                     MakeTreeNode("人员管理"),
                     MakeTreeNode("库区管理"),
@@ -52,9 +54,9 @@ namespace WMS.UI
                     MakeTreeNode("上架单管理")
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
+                    MakeTreeNode("出库单管理"),
                     MakeTreeNode("工作任务单管理"),
-                    MakeTreeNode("翻包作业单管理"),
-                    MakeTreeNode("出库单管理")
+                    MakeTreeNode("翻包作业单管理")
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存批次"),
@@ -211,6 +213,9 @@ namespace WMS.UI
                 case "安全库存管理":
                     this.LoadSubWindow(new FormSafetyStock());
                     break;
+                case "发货套餐管理":
+                    this.LoadSubWindow(new FormPackage());
+                    break;
                 case "库区管理":
                     this.LoadSubWindow(new FormStorageArea());
                     break;
@@ -225,6 +230,12 @@ namespace WMS.UI
                     break;
                 case "移位记录":
                     this.LoadSubWindow(new FormTransferRecord());
+                    break;
+                case "出库单管理":
+                    this.LoadSubWindow(new FormDeliverOrder());
+                    break;
+                case "翻包作业单管理":
+                    this.LoadSubWindow(new FormTransferOrder.FormTransferOrder());
                     break;
             }            
             //if (treeViewLeft.SelectedNode.Text == "供应商管理")

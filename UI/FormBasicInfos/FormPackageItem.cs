@@ -24,7 +24,12 @@ namespace WMS.UI.FormBasicInfos
         //添加按钮点击事件
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            this.model.InsertRow(0, null);
+            this.model.InsertRow(0, new Dictionary<string, object>()
+            {
+                 { "packageId",this.package["id"]},
+                 { "packageName",this.package["name"]},
+                 { "enabled",1},
+            });
         }
 
         //删除按钮点击事件
@@ -52,7 +57,7 @@ namespace WMS.UI.FormBasicInfos
         //丧心病狂的交互逻辑
         private void SupplierNoEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model[row, "supplierNo"]?.ToString())) return;
             this.model[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -60,7 +65,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void SupplierNameEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model[row, "supplierName"]?.ToString())) return;
             this.model[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -93,13 +98,10 @@ namespace WMS.UI.FormBasicInfos
             this.model[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model[row, "materialNo"]?.ToString() ?? "";
             string materialName = this.model[row, "materialName"]?.ToString() ?? "";
-            string materialProductLine = this.model[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {

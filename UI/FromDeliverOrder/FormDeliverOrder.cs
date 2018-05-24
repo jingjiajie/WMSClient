@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WMS.UI.FromDeliverOrder
 {
-    public partial class FormDeliveryOrder : Form
+    public partial class FormDeliverOrder : Form
     {
-        public FormDeliveryOrder()
+        public FormDeliverOrder()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
