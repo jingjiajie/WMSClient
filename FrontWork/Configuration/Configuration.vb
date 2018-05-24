@@ -81,7 +81,8 @@ Public Class Configuration
         End Get
         Set(value As ModeMethodListenerNamesPair())
             Me._methodListeners = value
-            If Me.modeConfigurations.Count > 0 Then
+            If Me.DesignMode Then Return '设计器模式不要注册方法监听器
+            If Me.ModeConfigurations.Count > 0 Then
                 For Each modeMethodListeners In Me._methodListeners
                     Call Me.SetMethodListener(modeMethodListeners.MethodListenerNames, modeMethodListeners.Mode)
                 Next

@@ -1,4 +1,5 @@
-﻿Imports System.Linq
+﻿Imports System.ComponentModel.Design
+Imports System.Linq
 Imports System.Reflection
 Imports System.Text
 Imports Jint.Native
@@ -90,6 +91,11 @@ Public Class FieldMethod
         fieldMethod.MethodListenerNames = _methodListenerNames
         fieldMethod.Func =
             Sub()
+                '如果是设计器模式，直接返回空，不要调用方法监听器
+                If System.Diagnostics.Process.GetCurrentProcess.ProcessName = "devenv" Then
+                    fieldMethod.ReturnValue = Nothing
+                    Return
+                End If
                 For i = 0 To fieldMethod.MethodListenerNames.Length - 1
                     Dim methodListenerName = fieldMethod.MethodListenerNames(i)
                     Dim methodListener = MethodListenerContainer.Get(methodListenerName)
@@ -224,7 +230,7 @@ Public Class FieldMethod
         '如果是实现接口，返回1
         If subType.GetInterface(baseType.Name) IsNot Nothing Then Return 1
         If Not subType.IsSubclassOf(baseType) Then
-            throw new FrontWorkException($"SubType: {subType.Name} is not a sub type of BaseType: {baseType.Name}")
+            Throw New FrontWorkException($"SubType: {subType.Name} is not a sub type of BaseType: {baseType.Name}")
         End If
         Dim curType = subType
         While Not curType.Equals(baseType)
