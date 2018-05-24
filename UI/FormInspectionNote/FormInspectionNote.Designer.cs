@@ -42,10 +42,6 @@
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.basicView1 = new FrontWork.BasicView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,10 +49,14 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.basicView1 = new FrontWork.BasicView();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pagerSearchJsonRESTAdapter1
@@ -188,48 +188,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1040, 601);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.lableStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 561);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1040, 40);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 35);
-            this.toolStripStatusLabel1.Text = "状态：";
-            // 
-            // lableStatus
-            // 
-            this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(110, 35);
-            this.lableStatus.Text = "到货管理";
-            // 
-            // basicView1
-            // 
-            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.basicView1.Configuration = this.configuration1;
-            this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
-            this.basicView1.ItemsPerRow = 5;
-            this.basicView1.Location = new System.Drawing.Point(0, 88);
-            this.basicView1.Margin = new System.Windows.Forms.Padding(0);
-            this.basicView1.Mode = "default";
-            this.basicView1.Model = this.model1;
-            this.basicView1.Name = "basicView1";
-            this.basicView1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 0);
-            this.basicView1.Size = new System.Drawing.Size(1040, 130);
-            this.basicView1.TabIndex = 14;
-            // 
             // toolStripTop
             // 
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -274,6 +232,7 @@
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(134, 35);
             this.buttonSave.Text = "保存修改";
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // toolStripSeparator3
             // 
@@ -295,6 +254,48 @@
             this.buttonPreview.Size = new System.Drawing.Size(144, 35);
             this.buttonPreview.Text = "导出/打印";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.lableStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 561);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1040, 40);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 35);
+            this.toolStripStatusLabel1.Text = "状态：";
+            // 
+            // lableStatus
+            // 
+            this.lableStatus.Name = "lableStatus";
+            this.lableStatus.Size = new System.Drawing.Size(110, 35);
+            this.lableStatus.Text = "到货管理";
+            // 
+            // basicView1
+            // 
+            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.basicView1.Configuration = this.configuration1;
+            this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
+            this.basicView1.ItemsPerRow = 5;
+            this.basicView1.Location = new System.Drawing.Point(0, 88);
+            this.basicView1.Margin = new System.Windows.Forms.Padding(0);
+            this.basicView1.Mode = "default";
+            this.basicView1.Model = this.model1;
+            this.basicView1.Name = "basicView1";
+            this.basicView1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 0);
+            this.basicView1.Size = new System.Drawing.Size(1040, 130);
+            this.basicView1.TabIndex = 14;
+            // 
             // FormInspectionNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -307,10 +308,10 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }

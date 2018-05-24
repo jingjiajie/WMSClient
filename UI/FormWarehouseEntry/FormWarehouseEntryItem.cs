@@ -16,7 +16,7 @@ namespace WMS.UI
 
         public FormWarehouseEntryItem(IDictionary<string,object> warehouseEntry)
         {
-            MethodListenerContainer.Register(this);
+            MethodListenerContainer.Register("FormWarehouseEntryItem", this);
             this.warehouseEntry = warehouseEntry;
             InitializeComponent();
             this.searchView1.AddStaticCondition("warehouseEntryId", this.warehouseEntry["id"]);

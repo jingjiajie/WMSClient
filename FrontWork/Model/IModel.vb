@@ -330,6 +330,11 @@ Public Interface IModel
     Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs)
 
     ''' <summary>
+    ''' 删除行事件
+    ''' </summary>
+    Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs)
+
+    ''' <summary>
     ''' 单元格数据更新事件
     ''' </summary>
     Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs)

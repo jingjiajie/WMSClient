@@ -8,7 +8,13 @@ Public Enum SynchronizationState
     SYNCHRONIZED
 
     ''' <summary>
-    ''' 未同步
+    ''' 新增行
     ''' </summary>
-    UNSYNCHRONIZED
+    ADDED
+
+    ''' <summary>
+    ''' 已更新
+    ''' </summary>
+    UPDATED
+
 End Enum

@@ -111,6 +111,7 @@ Public Class ModelBox
         AddHandler model.Refreshed, AddressOf Me.RaiseRefreshedEvent
         AddHandler model.RowAdded, AddressOf Me.RaiseRowAddedEvent
         AddHandler model.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
+        AddHandler model.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
         AddHandler model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
         AddHandler model.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
         AddHandler model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
@@ -121,6 +122,7 @@ Public Class ModelBox
         RemoveHandler model.Refreshed, AddressOf Me.RaiseRefreshedEvent
         RemoveHandler model.RowAdded, AddressOf Me.RaiseRowAddedEvent
         RemoveHandler model.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
+        RemoveHandler model.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
         RemoveHandler model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
         RemoveHandler model.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
         RemoveHandler model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
@@ -194,6 +196,7 @@ Public Class ModelBox
     Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModel.RowAdded
     Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModel.RowUpdated
     Public Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModel.RowRemoved
+    Public Event BeforeRowRemoved As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModel.BeforeRowRemove
     Public Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModel.CellUpdated
     Public Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModel.SelectionRangeChanged
     Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
@@ -206,6 +209,9 @@ Public Class ModelBox
     End Sub
     Public Sub RaiseRowUpdatedEvent(sender As Object, e As EventArgs)
         RaiseEvent RowUpdated(sender, e)
+    End Sub
+    Public Sub RaiseBeforeRowRemoveEvent(sender As Object, e As EventArgs)
+        RaiseEvent BeforeRowRemoved(sender, e)
     End Sub
     Public Sub RaiseRowRemovedEvent(sender As Object, e As EventArgs)
         RaiseEvent RowRemoved(sender, e)

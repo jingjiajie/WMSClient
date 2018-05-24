@@ -63,6 +63,7 @@ namespace WMS.UI
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url",Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
         }
         

@@ -328,7 +328,7 @@ Public Class Model
     Public Sub InsertRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         If Me.Configuration Is Nothing Then Throw New FrontWorkException($"Configuration not set to Model:{Me.Name}!")
         Dim fields = Configuration.GetFieldConfigurations(Me.Mode)
-        Dim indexRowPairs As New List(Of IndexRowPair)
+        Dim indexRowPairs As New List(Of RowInfo)
         Dim oriRowCount = Me.Data.Rows.Count
         '原始行每次插入之后，行号会变，所以做调整
         Dim realRowsASC = (From r In rows Order By r Ascending Select r).ToArray
@@ -355,7 +355,7 @@ Public Class Model
                 newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
-            Dim newIndexRowPair As New IndexRowPair(realRow, Me.GetRowID(Me.Data.Rows(realRow)), If(curData, New Dictionary(Of String, Object)))
+            Dim newIndexRowPair As New RowInfo(realRow, Me.GetRowID(Me.Data.Rows(realRow)), If(curData, New Dictionary(Of String, Object)), Me.GetRowSynchronizationState(realRow))
             indexRowPairs.Add(newIndexRowPair)
         Next
 
@@ -376,7 +376,7 @@ Public Class Model
         Next
         Me.AllSelectionRanges = selectionRanges.ToArray
 
-        Me.UpdateRowSynchronizationStates(realRowsASC, Util.Times(SynchronizationState.UNSYNCHRONIZED, realRowsASC.Length))
+        Me.UpdateRowSynchronizationStates(realRowsASC, Util.Times(SynchronizationState.ADDED, realRowsASC.Length))
     End Sub
 
     ''' <summary>
@@ -427,7 +427,7 @@ Public Class Model
     ''' <param name="rows">删除行行号</param>
     Public Sub RemoveRows(rows As Long()) Implements IModel.RemoveRows
         If rows.Length = 0 Then Return
-        Dim indexRowList = New List(Of IndexRowPair)
+        Dim indexRowList = New List(Of RowInfo)
         Try
             '每次删除行后行号会变，所以要做调整
             Dim realRows(rows.Length - 1) As Long
@@ -435,8 +435,15 @@ Public Class Model
                 realRows(i) = rows(i) - i
             Next
             For Each curRowNum In realRows
-                Dim newIndexRowPair = New IndexRowPair(curRowNum, Me.GetRowID(Me.Data.Rows(curRowNum)), Me.DataRowToDictionary(Me.Data.Rows(curRowNum)))
+                Dim newIndexRowPair = New RowInfo(curRowNum, Me.GetRowID(Me.Data.Rows(curRowNum)), Me.DataRowToDictionary(Me.Data.Rows(curRowNum)), Me.GetRowSynchronizationState(Me.Data.Rows(rows(curRowNum))))
                 indexRowList.Add(newIndexRowPair)
+            Next
+            Dim beforeRowRemoveEventArgs As New ModelBeforeRowRemoveEventArgs With {
+                .RemoveRows = indexRowList.ToArray
+            }
+            RaiseEvent BeforeRowRemove(Me, beforeRowRemoveEventArgs)
+            If beforeRowRemoveEventArgs.Cancel Then Return
+            For Each curRowNum In realRows
                 If Me._dicRowGuid.ContainsKey(Me.Data.Rows(curRowNum)) Then
                     Me._dicRowGuid.Remove(Me.Data.Rows(curRowNum))
                 End If
@@ -511,20 +518,39 @@ Public Class Model
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
     Public Sub UpdateRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
+        Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         Try
             Dim i = 0
             For Each row In rows
                 For Each item In dataOfEachRow(i)
                     Dim key = item.Key
                     Dim value = item.Value
-                    Me.Data.Rows(row)(key) = value
+                    If value Is Nothing Then
+                        Me.Data.Rows(row)(key) = DBNull.Value
+                    Else
+                        Dim colType = Me.Data.Columns(key).DataType
+                        If colType = value.GetType Then
+                            Me.Data.Rows(row)(key) = value
+                        Else
+                            Try
+                                Convert.ChangeType(value, colType)
+                            Catch ex As Exception
+                                Throw New FrontWorkException($"{Me.Name}: Cannot convert {value} to ""{key}"" type:{colType.Name} ")
+                            End Try
+                        End If
+                    End If
                 Next
+                '将被更新的行的同步状态修改为已更新或已添加
+                Dim curState = Me.GetRowSynchronizationState(row)
+                If curState <> SynchronizationState.ADDED Then
+                    rowSyncStatePairs.Add(New RowSynchronizationStatePair(row, SynchronizationState.UPDATED))
+                End If
                 i += 1
             Next
 
-            Dim updatedRows(rows.Length - 1) As IndexRowPair
+            Dim updatedRows(rows.Length - 1) As RowInfo
             For i = 0 To rows.Length - 1
-                updatedRows(i) = New IndexRowPair(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), Me.DataRowToDictionary(Me.Data.Rows(rows(i))))
+                updatedRows(i) = New RowInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.GetRowSynchronizationState(Me.Data.Rows(rows(i))))
             Next
 
             Dim eventArgs = New ModelRowUpdatedEventArgs() With {
@@ -532,9 +558,12 @@ Public Class Model
                                    }
 
             RaiseEvent RowUpdated(Me, eventArgs)
-            '将被更新的行的同步状态修改为未同步
-            Me.UpdateRowSynchronizationStates(rows, Util.Times(SynchronizationState.UNSYNCHRONIZED, rows.Length))
-
+            Call Me.UpdateRowSynchronizationStates(rowSyncStatePairs.Select(Function(pair)
+                                                                                Return CLng(pair.Row)
+                                                                            End Function).ToArray,
+                                                   rowSyncStatePairs.Select(Function(pair)
+                                                                                Return pair.SynchronizationState
+                                                                            End Function).ToArray)
         Catch ex As Exception
             Throw New FrontWorkException("UpdateRows failed: " & ex.Message)
         End Try
@@ -587,7 +616,9 @@ Public Class Model
     ''' <param name="dataOfEachCell">相应的数据</param>
     Public Sub UpdateCells(rows As Long(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
         Dim posCellPairs As New List(Of PositionCellPair)
+        Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         For i = 0 To rows.Length - 1
+            Dim row = rows(i)
             Dim columnName = columnNames(i)
             Dim dataColumn = (From col As DataColumn In Me.Data.Columns
                               Where col.ColumnName.Equals(columnName, StringComparison.OrdinalIgnoreCase)
@@ -602,12 +633,22 @@ Public Class Model
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
             End Try
             posCellPairs.Add(New PositionCellPair(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
+            Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
+            If curState <> SynchronizationState.ADDED Then
+                rowSyncStatePairs.Add(New RowSynchronizationStatePair(row, SynchronizationState.UPDATED))
+            End If
         Next
 
         RaiseEvent CellUpdated(Me, New ModelCellUpdatedEventArgs() With {
                                     .UpdatedCells = posCellPairs.ToArray
                                })
-        Me.UpdateRowSynchronizationStates(rows, Util.Times(SynchronizationState.UNSYNCHRONIZED, rows.Length))
+        Me.UpdateRowSynchronizationStates(
+            rowSyncStatePairs.Select(Function(pair)
+                                         Return CLng(pair.Row)
+                                     End Function).ToArray,
+            rowSyncStatePairs.Select(Function(pair)
+                                         Return pair.SynchronizationState
+                                     End Function).ToArray)
     End Sub
 
     ''' <summary>
@@ -777,7 +818,7 @@ Public Class Model
 
     Private Function GetRowSynchronizationState(row As DataRow) As SynchronizationState
         If Not Me._dicRowSyncState.ContainsKey(row) Then
-            Me._dicRowSyncState.Add(row, SynchronizationState.UNSYNCHRONIZED)
+            Me._dicRowSyncState.Add(row, SynchronizationState.SYNCHRONIZED)
         End If
         Return Me._dicRowSyncState(row)
     End Function
@@ -849,6 +890,11 @@ Public Class Model
     ''' 更新行数据事件
     ''' </summary>
     Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModel.RowUpdated
+
+    ''' <summary>
+    ''' 删除行事件
+    ''' </summary>
+    Public Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModel.BeforeRowRemove
 
     ''' <summary>
     ''' 删除行事件
@@ -943,3 +989,13 @@ Public Class Model
         Return Me.Data.Columns.Contains(columnName)
     End Function
 End Class
+
+Friend Structure RowSynchronizationStatePair
+    Public Row As Integer
+    Public SynchronizationState As SynchronizationState
+
+    Public Sub New(row As Integer, state As SynchronizationState)
+        Me.Row = row
+        Me.SynchronizationState = state
+    End Sub
+End Structure

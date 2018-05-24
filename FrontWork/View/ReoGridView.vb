@@ -402,9 +402,9 @@ Public Class ReoGridView
                 Logger.PutMessage($"Row number {row} exceeded max row in the ReoGridView")
                 Return
             End If
-            If state = SynchronizationState.UNSYNCHRONIZED Then
+            If state <> SynchronizationState.SYNCHRONIZED Then
                 Call Me.AddCellState(row, CellState.UNSYNCHRONIZED)
-            ElseIf state = SynchronizationState.SYNCHRONIZED Then
+            Else
                 Call Me.RemoveCellState(row, CellState.UNSYNCHRONIZED)
             End If
         Next
@@ -441,7 +441,7 @@ Public Class ReoGridView
         End If
 
         '创建联想窗口
-        If Not Me.DesignMode Then
+        If Not Me.DesignMode AndAlso Me.textBox Is Nothing Then
             Me.Panel.StartEdit()
             Me.Panel.EndEdit(EndEditReason.NormalFinish)
             For Each control As Control In Me.ReoGridControl.Controls
@@ -530,7 +530,11 @@ Public Class ReoGridView
         Call Me.Panel.AutoFitColumnWidth(col)
         Dim columnHeader = Me.Panel.ColumnHeaders.Item(col)
         Dim columnHeaderText = columnHeader.Text
-        Dim width = 20 + columnHeaderText.Sum(
+        Dim width
+        If columnHeaderText Is Nothing Then
+            width = 20
+        Else
+            width = 20 + columnHeaderText.Sum(
             Function(c)
                 If Char.IsLetterOrDigit(c) OrElse
                     Char.IsWhiteSpace(c) OrElse
@@ -540,6 +544,7 @@ Public Class ReoGridView
                     Return 16
                 End If
             End Function)
+        End If
         Me.Panel.ColumnHeaders(col).Width = System.Math.Max(width, Me.Panel.ColumnHeaders.Item(col).Width + 10)
     End Sub
 
@@ -780,8 +785,9 @@ Public Class ReoGridView
         If Me.CurSyncMode = SyncMode.SYNC Then
             If Not Me.dicCellEdited.ContainsKey(e.Cell.Position) Then
                 Me.dicCellEdited.Add(e.Cell.Position, True)
-                '只要数据有修改，直接将Model对应行的同步状态改为未同步
-                Me.Model.UpdateRowSynchronizationState(e.Cell.Row, SynchronizationState.UNSYNCHRONIZED)
+                'TODO 注释掉了，看看有没有bug
+                ''只要数据有修改，直接将Model对应行的同步状态改为未同步
+                'Me.Model.UpdateRowSynchronizationState(e.Cell.Row, SynchronizationState.UNSYNCHRONIZED)
             End If
         End If
         '如果当前格是下拉框，验证数据是否在下拉框可选项范围中，如果不在，则标红

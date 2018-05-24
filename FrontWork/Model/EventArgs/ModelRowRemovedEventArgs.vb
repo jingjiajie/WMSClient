@@ -1,5 +1,5 @@
 ﻿''' <summary>
-''' Model删除行时间参数
+''' Model删除行事件参数
 ''' </summary>
 Public Class ModelRowRemovedEventArgs
     Inherits EventArgs
@@ -8,5 +8,5 @@ Public Class ModelRowRemovedEventArgs
     ''' 删除行的信息和数据
     ''' </summary>
     ''' <returns></returns>
-    Public Property RemovedRows As IndexRowPair()
+    Public Property RemovedRows As RowInfo()
 End Class
