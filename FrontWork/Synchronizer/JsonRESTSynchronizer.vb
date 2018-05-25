@@ -368,6 +368,9 @@ Public Class JsonRESTSynchronizer
             End If
             MessageBox.Show("查询失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
+        Catch ex As Exception
+            MessageBox.Show("查询失败：" & ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
         End Try
         Return True
     End Function
