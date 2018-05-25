@@ -34,14 +34,15 @@ namespace WMS.UI
         public static T Request<T>(string url, string method = "GET", string bodyStr = null)
         {
             string responseStr = null;
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;          
             try
             {
                 request.Method = method;
                 if (!string.IsNullOrWhiteSpace(bodyStr))
                 {
+                    request.ContentType = "application/json";
                     StreamWriter writer = new StreamWriter(request.GetRequestStream());
-                    writer.Write(bodyStr);
+                    writer.Write(bodyStr);                   
                 }
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
