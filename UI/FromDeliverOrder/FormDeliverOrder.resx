@@ -122,7 +122,7 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"出库单号",type:"string",placeHolder:"留空自动生成"},
+        {name:"no",displayName:"出库单号",type:"string",editable:false,placeHolder:"留空自动生成"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"description",displayName:"描述",type:"string"},
         {name:"state",displayName:"状态",type:"int",editable:false},
@@ -139,23 +139,23 @@
     ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/deliver_order/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/delivery_order/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
@@ -176,6 +176,14 @@
         VGEul8unhXjrqB0iPRWl7fAOIS4Jn0bqZBYiVpjcg7UBJHoqSpsCo51pbLrZ5NbA6OyqD/gWpc2pgX3v
         bN7qB2trB7fJgHU3/R1UqbOUGZ7wACzBZkxamcYhwv0CRMkAPtgGW6gVw4YGIeMmBqGnVXgTE7CcN2H+
         oKXxKYzOboRzPDauNRhZ/McaJI6v/OIM8wFK1jZHwjABHQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="buttonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -229,21 +237,6 @@
   <data name="buttonTransferOrder.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIOSURBVDhP3dHfS1NxGMfxp2hl2MmLIufy6KaWdbZzNkNY
-        jihrZW2JBEG0sBJiKV3UuojCjMHAILQIpl6Z1ijTC2mR/ZgRk0BYBGFpBUXQD9mSSeYpa5Hj06MesL/B
-        B14338P74YFDC2yU0FCmI5wUNvd8Xm6uqPO1njf8jHSJ6qProhrpENX+oCYkqj7vzi9aps2l5+7ih4mJ
-        8sFvqvgqlcys6Yh/7CZgmn1gb9kQi7GXhMunS6GVPP5ohvFWfGowDYwAsIwBdLB5Khag1Gw8wCLsHutl
-        fQT/Yem7VhMtDb7pbhtP4wfHk6xqlBdUNCajF+kPhjl4wO6wmYtCrIdQf+i/Babbw797fwHHXqfgHPiK
-        7Ge8YG/jWMzPF7zgIDwXzcbt7CbhZGXh/AJd8F1cF54A3f0Lus9xjLn8409O8AX9cwGusVYWZJ2LcMS9
-        OqXlPC2Tn+gxsLLpKbL3+7DK2wxT2R5U2guwb3sRdthyULVlPZw2A9x2Iw7sssBWZBjRaiJzbQA5dVeg
-        X1sAzyYTXGYjNubpcfxUA47WXsA6ZRuWCHnY6vIgX3FCyM/FGauQ0HL+CbszGspFXWAZUbrpagvOnqtH
-        liBMK4ry3m61JmyyLZprMKC98waqq2uwQp/V5SlcU6bl8yNZ7d4NoqjKFlmVZdnFT4sZ7yUqKSltE/mb
-        JEmjssNRPPO2IIboHzylHfB3S3LpAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="buttonDeliver.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIOSURBVDhP3dHvS1NxFMfxU7Qy7CYU5Fxe3dSytt27awjL
         EWWtrC2RIIgWi4RYSg9qPYjCjIVgEFoEUx+Z1ijTB9Ii+zEjJoGwCELLCoqgH7Ilk8xb1iLHp6NesL/B
         A68n38v7cODSAhs5NJTpCCeFzT2fl1sqav2t5ww/I12i+ui6qEY6RLU/qAmJqt+384uWaXPpubv4YWKi
@@ -254,6 +247,21 @@
         awvg2WSCy2LExjw9jp2sx5Ga81gnb8MSIQ9bXR7ky04I+bk4bRMSWs4/YXdGfbmoa1hGlG662oIzZ+uQ
         JQjTsiy/t9tsCUVSorkGA9o7b8DrrcYKfVaXp3BNmZbPj9lm920QRVWySqokSS5+Wsx4L1FJSWmbyN/M
         ZvOo5HAUz7wtiCH6ByuPHeh0yovVAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="buttonDeliver.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAINSURBVDhP3dHvS1NxFMfxU7Qy7CYU5Fxe3dSy7nbvZgjL
+        EWWtrC2RIIhWRkIspQe1HkRhxkAwCC2CqY9Ma5TpA2mR/ZgRk0BYBGVlBUXQD9mSSeYta5Hj03FesL/B
+        A68n38v7cODSPBslOJzpCCWEjb2fl5or6nxtZw0/w92i+uCqqIY7RXUgoAmKqs+7/YuWaXPhqbv4fnyi
+        fOibKr5MJjJrOmMfewiYZh/YWzbMouwF4eLJUmgljz+SYbwRmxpKASMALGMA7W+ZivopmY4HWZjdYX2s
+        n+A/JH3XaqLFgTc97eMp/OB4klWN8oKKpkTkPP3BKw7usVts5qIg6yXUH/hvgenm8999v4Ajr5NwDn5F
+        9hNesLtpLH3BMw5Cs1E67mDXCccrC+cW6ALvYrrQBOj2X9BdjqPM5R9/dIwvGJgNcIW1sQDrWoCD7hVJ
+        LedpnfxED4HlzY+RvdeHld4WmMp2odJegD1bi7DNloOqTWvhtBngthuxb4cFtiLDiFYTmWsbkVN3CfrV
+        BfBsMMFlNmJ9nh5HTzTgcO05rFG2YJGQh80uD/IVJ4T8XJyyCnEt55+wM6OhXNQ1LiFKNV9uxekz9cgS
+        hGlFUd7brda4TbZFcg0GdHRdQ3V1DZbps7o9havKtHxuJKvdu04UVdkiq7Isu/hpIeO9RCUlpe0if5Mk
+        aVR2OIpn3ubFEP0DIo8d5CLDnWIAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

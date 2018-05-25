@@ -32,11 +32,15 @@ namespace WMS.UI.FormStockTaking
             this.searchView1.Search();
         }
 
+        private int StockTakingOrderIDDefaultValue()
+        {
+            return (int)this.stockTakingOrder["id"];
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                {"stockTakingOrderId",this.stockTakingOrder["id"]},
+            {               
                 { "createPersonId",GlobalData.Person["id"]},             
                 { "createPersonName",GlobalData.Person["name"]}
             });
@@ -98,7 +102,7 @@ namespace WMS.UI.FormStockTaking
 
         private void SupplierNoEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -106,7 +110,7 @@ namespace WMS.UI.FormStockTaking
 
         private void SupplierNameEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -197,7 +201,12 @@ namespace WMS.UI.FormStockTaking
             //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
             if (foundSupplies.Length == 1)
             {
-                this.model1[row, "supplyId"] = foundSupplies[0]["id"];                                        
+                this.model1[row, "supplyId"] = foundSupplies[0]["id"];
+            }
+            else
+            {
+                MessageBox.Show("无此供货！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
 

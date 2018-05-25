@@ -19,7 +19,7 @@ namespace WMS.UI.FromDeliverOrder
             MethodListenerContainer.Register(this);
             this.deliverOrder = deliverOrder;
             InitializeComponent();
-            this.searchView1.AddStaticCondition("deliverOrderId", this.deliverOrder["id"]);
+            this.searchView1.AddStaticCondition("deliveryOrderId", this.deliverOrder["id"]);
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -29,6 +29,7 @@ namespace WMS.UI.FromDeliverOrder
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
@@ -42,6 +43,7 @@ namespace WMS.UI.FromDeliverOrder
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
         }
 
