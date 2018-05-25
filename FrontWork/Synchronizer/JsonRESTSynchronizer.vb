@@ -306,70 +306,72 @@ Public Class JsonRESTSynchronizer
                 httpWebRequest.ContentType = "application/json"
                 Dim body = Me.FindAPI.GetRequestBody
                 httpWebRequest.ContentLength = body.Length
-                Dim streamWrite As StreamWriter = New StreamWriter(httpWebRequest.GetRequestStream)
-                streamWrite.WriteLine(body)
+                Dim bytes = Encoding.UTF8.GetBytes(body)
+                httpWebRequest.GetRequestStream.Write(bytes, 0, bytes.Length)
             End If
 
-            Dim response As HttpWebResponse = httpWebRequest.GetResponse
-            Dim responseStreamReader = New StreamReader(response.GetResponseStream())
-            Me.FindAPI.SetResponseParameter("$data")
-            Dim data = Me.FindAPI.GetResponseParameters(responseStreamReader.ReadToEnd, {"$data"})(0)
-            If data Is Nothing Then Return False
+            Using response As HttpWebResponse = httpWebRequest.GetResponse
+                Dim responseStreamReader = New StreamReader(response.GetResponseStream())
+                Dim responseStr = responseStreamReader.ReadToEnd
+                Me.FindAPI.SetResponseParameter("$data")
+                Dim data = Me.FindAPI.GetResponseParameters(responseStr, {"$data"})(0)
+                If data Is Nothing Then Return False
 
-            '更新Model
-            Dim resultList As New List(Of IDictionary(Of String, Object))
-            '判断是对象还是对象数组
-            If TypeOf (data) Is IDictionary(Of String, Object) Then '如果是对象，则作为数组的第一项
-                Dim value = CType(data, IDictionary(Of String, Object))
-                resultList.Add(value)
-            Else '否则是数组
-                Dim valueArray = CType(data, Object())
-                For Each value In valueArray
+                '更新Model
+                Dim resultList As New List(Of IDictionary(Of String, Object))
+                '判断是对象还是对象数组
+                If TypeOf (data) Is IDictionary(Of String, Object) Then '如果是对象，则作为数组的第一项
+                    Dim value = CType(data, IDictionary(Of String, Object))
                     resultList.Add(value)
+                Else '否则是数组
+                    Dim valueArray = CType(data, Object())
+                    For Each value In valueArray
+                        resultList.Add(value)
+                    Next
+                End If
+                '直接操作源数据，不触发事件
+                Dim dataTable = Me.Model.GetDataTable
+                Call dataTable.Rows.Clear()
+                For Each resultRow In resultList
+                    Dim newRow = dataTable.NewRow
+                    For Each item In resultRow
+                        Dim key = Me.GetMappedModelFieldName(item.Key)
+                        Dim value = item.Value
+                        If Not dataTable.Columns.Contains(key) Then
+                            Logger.PutMessage("Column """ & key & """ not found in model", LogLevel.WARNING)
+                            Continue For
+                        Else
+                            newRow(key) = If(value, DBNull.Value)
+                        End If
+                    Next
+                    dataTable.Rows.Add(newRow)
                 Next
-            End If
-            '直接操作源数据，不触发事件
-            Dim dataTable = Me.Model.GetDataTable
-            Call dataTable.Rows.Clear()
-            For Each resultRow In resultList
-                Dim newRow = dataTable.NewRow
-                For Each item In resultRow
-                    Dim key = Me.GetMappedModelFieldName(item.Key)
-                    Dim value = item.Value
-                    If Not dataTable.Columns.Contains(key) Then
-                        Logger.PutMessage("Column """ & key & """ not found in model", LogLevel.WARNING)
-                        Continue For
-                    Else
-                        newRow(key) = If(value, DBNull.Value)
+                '修改完成后整体触发刷新事件
+                Dim selectionRanges As New List(Of Range)
+                For Each oriRange In Me.Model.AllSelectionRanges
+                    '截取选区，如果原选区超过了数据表的范围，则进行截取
+                    If oriRange.Row >= dataTable.Rows.Count Then Continue For
+                    If oriRange.Column >= dataTable.Columns.Count Then Continue For
+                    Dim newRow = oriRange.Row
+                    Dim newCol = oriRange.Column
+                    Dim newRows = oriRange.Rows
+                    Dim newCols = oriRange.Columns
+                    If oriRange.Row + oriRange.Rows >= dataTable.Rows.Count Then
+                        newRows = dataTable.Rows.Count - newRow
                     End If
+                    If oriRange.Column + oriRange.Columns >= dataTable.Columns.Count Then
+                        newRows = dataTable.Columns.Count - newCol
+                    End If
+                    selectionRanges.Add(New Range(newRow, newCol, newRows, newCols))
                 Next
-                dataTable.Rows.Add(newRow)
-            Next
-            '修改完成后整体触发刷新事件
-            Dim selectionRanges As New List(Of Range)
-            For Each oriRange In Me.Model.AllSelectionRanges
-                '截取选区，如果原选区超过了数据表的范围，则进行截取
-                If oriRange.Row >= dataTable.Rows.Count Then Continue For
-                If oriRange.Column >= dataTable.Columns.Count Then Continue For
-                Dim newRow = oriRange.Row
-                Dim newCol = oriRange.Column
-                Dim newRows = oriRange.Rows
-                Dim newCols = oriRange.Columns
-                If oriRange.Row + oriRange.Rows >= dataTable.Rows.Count Then
-                    newRows = dataTable.Rows.Count - newRow
+                '如果实在没有选区了，就自动选第一行第一列
+                If selectionRanges.Count = 0 AndAlso dataTable.Rows.Count > 0 Then
+                    selectionRanges.Add(New Range(0, 0, 1, 1))
                 End If
-                If oriRange.Column + oriRange.Columns >= dataTable.Columns.Count Then
-                    newRows = dataTable.Columns.Count - newCol
-                End If
-                selectionRanges.Add(New Range(newRow, newCol, newRows, newCols))
-            Next
-            '如果实在没有选区了，就自动选第一行第一列
-            If selectionRanges.Count = 0 AndAlso dataTable.Rows.Count > 0 Then
-                selectionRanges.Add(New Range(0, 0, 1, 1))
-            End If
-            Call Me.Model.Refresh(dataTable, selectionRanges.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, dataTable.Rows.Count))
+                Call Me.Model.Refresh(dataTable, selectionRanges.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, dataTable.Rows.Count))
 
-            Call Me.FindAPI.Callback?.Invoke(response, Nothing)
+                Call Me.FindAPI.Callback?.Invoke(response, Nothing)
+            End Using
         Catch ex As WebException
             Call Me.FindAPI.Callback?.Invoke(CType(ex.Response, HttpWebResponse), ex)
             Dim message = ex.Message

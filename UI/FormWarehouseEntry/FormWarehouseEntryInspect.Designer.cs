@@ -32,6 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseEntryInspect));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem1 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem2 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem3 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem4 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem5 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem6 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem7 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabView1 = new FrontWork.TabView();
@@ -176,8 +182,26 @@
             this.synchronizer.Configuration = this.configurationInspectionNoteItem;
             fieldMappingItem1.APIFieldName = "id";
             fieldMappingItem1.ModelFieldName = "warehouseEntryItemId";
+            fieldMappingItem2.APIFieldName = "defaultInspectionStorageLocationId";
+            fieldMappingItem2.ModelFieldName = "inspectionStorageLocationId";
+            fieldMappingItem3.APIFieldName = "defaultInspectionStorageLocationNo";
+            fieldMappingItem3.ModelFieldName = "inspectionStorageLocationNo";
+            fieldMappingItem4.APIFieldName = "defaultInspectionStorageLocationName";
+            fieldMappingItem4.ModelFieldName = "inspectionStorageLocationName";
+            fieldMappingItem5.APIFieldName = "defaultInspectionAmount";
+            fieldMappingItem5.ModelFieldName = "amount";
+            fieldMappingItem6.APIFieldName = "defaultInspectionUnit";
+            fieldMappingItem6.ModelFieldName = "unit";
+            fieldMappingItem7.APIFieldName = "defaultInspectionUnitAmount";
+            fieldMappingItem7.ModelFieldName = "unitAmount";
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[] {
-        fieldMappingItem1};
+        fieldMappingItem1,
+        fieldMappingItem2,
+        fieldMappingItem3,
+        fieldMappingItem4,
+        fieldMappingItem5,
+        fieldMappingItem6,
+        fieldMappingItem7};
             this.synchronizer.Location = new System.Drawing.Point(318, 53);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
