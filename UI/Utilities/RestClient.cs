@@ -41,8 +41,8 @@ namespace WMS.UI
                 if (!string.IsNullOrWhiteSpace(bodyStr))
                 {
                     request.ContentType = "application/json";
-                    StreamWriter writer = new StreamWriter(request.GetRequestStream());
-                    writer.Write(bodyStr);                   
+                    byte[] bytes = Encoding.UTF8.GetBytes(bodyStr);
+                    request.GetRequestStream().Write(bytes, 0, bytes.Length);     
                 }
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
