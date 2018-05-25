@@ -214,8 +214,15 @@ namespace WMS.UI.FormStockTaking
         {
             this.model1[row, fieldName] = value;
         }
-
         //=============天经地义的交互逻辑到这里结束===============
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            string body= "{\"stockTakingOrderId\":\"3\",\"warehouseId\":\"1\",\"personId\":\"19\"}";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all/";
+            MessageBox.Show(body);
+            MessageBox.Show(url);
+            var warehouseList = RestClient.Post<List<IDictionary<string, object>>>(url,body);
+        }
     }
 
 
