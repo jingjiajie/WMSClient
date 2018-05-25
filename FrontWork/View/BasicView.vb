@@ -82,7 +82,7 @@ Public Class BasicView
     End Sub
 
 
-    Private _targetRow As Long
+    Private _targetRow as Integer
     Private switcherModelDataUpdatedEvent As Boolean = True
     Private switcherLocalEvents As Boolean = True '本View内部事件开关，包括文本框文字变化等。不包括外部，例如Model数据变化事件开关
     Private dicFieldNameColumn As New Dictionary(Of String, Integer)
@@ -142,7 +142,7 @@ Public Class BasicView
         Call Me.InitEditPanel()
     End Sub
 
-    Private Function GetModelSelectedRow() As Long
+    Private Function GetModelSelectedRow() as Integer
         Logger.SetMode(LogMode.REFRESH_VIEW)
         If Me.Model Is Nothing Then
             Logger.PutMessage("Model not set!")
@@ -802,7 +802,7 @@ Public Class BasicView
     ''' <param name="row">行号，在BasicView中此参数被忽略</param>
     ''' <param name="fieldName">字段名</param>
     ''' <returns>单元格对象</returns>
-    Public Function GetViewComponent(row As Long, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
+    Public Function GetViewComponent(row as Integer, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
         Dim foundControls = Me.Panel.Controls.Find(fieldName, False)
         If foundControls.Length = 0 Then
             throw new FrontWorkException($"ViewComponent ""{fieldName}"" not found!")

@@ -53,9 +53,9 @@ Public Class Util
     ''' <param name="start">开始数字</param>
     ''' <param name="[end]">结束数字（不包含）</param>
     ''' <returns></returns>
-    Public Shared Function Range(start As Long, [end] As Long) As Long()
+    Public Shared Function Range(start as Integer, [end] as Integer) as Integer()
         Dim length = [end] - start
-        Dim result(length - 1) As Long
+        Dim result(length - 1) as Integer
         For i = 0 To length - 1
             result(i) = start + i
         Next
@@ -69,7 +69,7 @@ Public Class Util
     ''' <param name="data">要重复值</param>
     ''' <param name="repeatTimes">重复次数</param>
     ''' <returns>重复若干次的结果，数组</returns>
-    Public Shared Function Times(Of T)(data As T, repeatTimes As Long) As T()
+    Public Shared Function Times(Of T)(data As T, repeatTimes as Integer) As T()
         Dim result(repeatTimes - 1) As T
         For i = 0 To repeatTimes - 1
             result(i) = data

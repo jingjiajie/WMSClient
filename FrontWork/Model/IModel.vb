@@ -8,34 +8,34 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="data">新增行的数据</param>
     ''' <returns>新增行的行号</returns>
-    Function AddRow(data As IDictionary(Of String, Object)) As Long
+    Function AddRow(data As IDictionary(Of String, Object)) as Integer
 
     ''' <summary>
     ''' 增加若干行
     ''' </summary>
     ''' <param name="data">新增行的数据</param>
     ''' <returns>新增行的行号</returns>
-    Function AddRows(data As IDictionary(Of String, Object)()) As Long()
+    Function AddRows(data As IDictionary(Of String, Object)()) as Integer()
 
     ''' <summary>
     ''' 插入一行
     ''' </summary>
     ''' <param name="row">插入行号</param>
     ''' <param name="data">插入行数据</param>
-    Sub InsertRow(row As Long, data As IDictionary(Of String, Object))
+    Sub InsertRow(row as Integer, data As IDictionary(Of String, Object))
 
     ''' <summary>
     ''' 插入若干行
     ''' </summary>
     ''' <param name="rows">插入行的行号</param>
     ''' <param name="data">插入行的数据</param>
-    Sub InsertRows(rows As Long(), data As IDictionary(Of String, Object)())
+    Sub InsertRows(rows as Integer(), data As IDictionary(Of String, Object)())
 
     ''' <summary>
     ''' 删除一行
     ''' </summary>
     ''' <param name="row">删除的行号</param>
-    Sub RemoveRow(row As Long)
+    Sub RemoveRow(row as Integer)
 
     ''' <summary>
     ''' 删除一行
@@ -47,7 +47,7 @@ Public Interface IModel
     ''' 删除若干行
     ''' </summary>
     ''' <param name="rows">删除的行号</param>
-    Sub RemoveRows(rows As Long())
+    Sub RemoveRows(rows as Integer())
 
     ''' <summary>
     ''' 删除若干行
@@ -60,7 +60,7 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="startRow">起始行的行号</param>
     ''' <param name="rowCount">删除的行数</param>
-    Sub RemoveRows(startRow As Long, rowCount As Long)
+    Sub RemoveRows(startRow as Integer, rowCount as Integer)
 
     ''' <summary>
     ''' 删除选中的行
@@ -72,7 +72,7 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="row">更新的行号</param>
     ''' <param name="data">更新的数据</param>
-    Sub UpdateRow(row As Long, data As IDictionary(Of String, Object))
+    Sub UpdateRow(row as Integer, data As IDictionary(Of String, Object))
 
     ''' <summary>
     ''' 更新一行
@@ -86,7 +86,7 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rows">更新的行号</param>
     ''' <param name="dataOfEachRow">更新的数据，和行号一一对应</param>
-    Sub UpdateRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)())
+    Sub UpdateRows(rows as Integer(), dataOfEachRow As IDictionary(Of String, Object)())
 
     ''' <summary>
     ''' 更新若干行
@@ -101,7 +101,7 @@ Public Interface IModel
     ''' <param name="rows">更新的行号</param>
     ''' <param name="columnNames">更新的字段名，和行号一一对应</param>
     ''' <param name="dataOfEachCell">更新的数据，和行号一一对应</param>
-    Sub UpdateCells(rows As Long(), columnNames As String(), dataOfEachCell As Object())
+    Sub UpdateCells(rows as Integer(), columnNames As String(), dataOfEachCell As Object())
 
     ''' <summary>
     ''' 更新一个单元格
@@ -109,7 +109,7 @@ Public Interface IModel
     ''' <param name="row">更新的行号</param>
     ''' <param name="columnName">更新的字段名</param>
     ''' <param name="data">更新的数据</param>
-    Sub UpdateCell(row As Long, columnName As String, data As Object)
+    Sub UpdateCell(row as Integer, columnName As String, data As Object)
 
     ''' <summary>
     ''' 更新若干单元格
@@ -139,7 +139,7 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="syncStates">同步状态</param>
-    Sub UpdateRowSynchronizationStates(rows As Long(), syncStates As SynchronizationState())
+    Sub UpdateRowSynchronizationStates(rows as Integer(), syncStates As SynchronizationState())
 
     ''' <summary>
     ''' 更新一行的同步状态
@@ -153,7 +153,7 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <param name="syncState">同步状态</param>
-    Sub UpdateRowSynchronizationState(row As Long, syncState As SynchronizationState)
+    Sub UpdateRowSynchronizationState(row as Integer, syncState As SynchronizationState)
 
     ''' <summary>
     ''' 获取若干行同步状态
@@ -167,14 +167,14 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>对应的同步状态</returns>
-    Function GetRowSynchronizationStates(rows As Long()) As SynchronizationState()
+    Function GetRowSynchronizationStates(rows as Integer()) As SynchronizationState()
 
     ''' <summary>
     ''' 获取一行的同步状态
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <returns>对应的同步状态</returns>
-    Function GetRowSynchronizationState(row As Long) As SynchronizationState
+    Function GetRowSynchronizationState(row as Integer) As SynchronizationState
 
     ''' <summary>
     ''' 获取若干行的同步状态
@@ -188,21 +188,21 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rowNum">行号</param>
     ''' <returns>行ID</returns>
-    Function GetRowID(rowNum As Long) As Guid
+    Function GetRowID(rowNum as Integer) As Guid
 
     ''' <summary>
     ''' 根据行号获取行ID
     ''' </summary>
     ''' <param name="rowNums">行号</param>
     ''' <returns>行ID</returns>
-    Function GetRowIDs(rowNums As Long()) As Guid()
+    Function GetRowIDs(rowNums as Integer()) As Guid()
 
     ''' <summary>
     ''' 获取行号
     ''' </summary>
     ''' <param name="rowID">行ID</param>
     ''' <returns>行号</returns>
-    Function GetRowIndex(rowID As Guid) As Long
+    Function GetRowIndex(rowID As Guid) as Integer
 
     ''' <summary>
     ''' 更新行ID
@@ -216,7 +216,7 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>数据</returns>
-    Function GetRows(rows As Long()) As IDictionary(Of String, Object)()
+    Function GetRows(rows as Integer()) As IDictionary(Of String, Object)()
 
     ''' <summary>
     ''' 获取行数据
@@ -237,7 +237,7 @@ Public Interface IModel
     ''' <param name="row">行号</param>
     ''' <param name="column">列号</param>
     ''' <returns></returns>
-    Function GetCell(row As Long, column As Long) As Object
+    Function GetCell(row as Integer, column as Integer) As Object
 
     ''' <summary>
     ''' 获取单元格数据
@@ -245,7 +245,7 @@ Public Interface IModel
     ''' <param name="row">行号</param>
     ''' <param name="columnName">列名</param>
     ''' <returns></returns>
-    Function GetCell(row As Long, columnName As String) As Object
+    Function GetCell(row as Integer, columnName As String) As Object
 
     ''' <summary>
     ''' 刷新视图
@@ -279,13 +279,13 @@ Public Interface IModel
     ''' Model所存储数据的行数
     ''' </summary>
     ''' <returns></returns>
-    ReadOnly Property RowCount As Long
+    ReadOnly Property RowCount as Integer
 
     ''' <summary>
     ''' Model所存储数据的列数
     ''' </summary>
     ''' <returns></returns>
-    ReadOnly Property ColumnCount As Long
+    ReadOnly Property ColumnCount as Integer
 
     ''' <summary>
     ''' Model的选区
@@ -305,8 +305,8 @@ Public Interface IModel
     ''' <returns></returns>
     Property Name As String
 
-    Default Property Item(row As Long, column As Long) As Object
-    Default Property Item(row As Long, columnName As String) As Object
+    Default Property Item(row as Integer, column as Integer) As Object
+    Default Property Item(row as Integer, columnName As String) As Object
 
     '事件
     ''' <summary>

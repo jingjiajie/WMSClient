@@ -44,7 +44,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项送检单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new long[] { this.model1.SelectionRange.Row })[0];
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             new FormInspectionNoteItem(rowData).Show();
         }
 

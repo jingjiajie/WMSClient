@@ -6,7 +6,7 @@ Public Class RowInfo
     ''' 行号
     ''' </summary>
     ''' <returns></returns>
-    Public Property Index As Long
+    Public Property Index as Integer
 
     ''' <summary>
     ''' 行ID
@@ -26,7 +26,7 @@ Public Class RowInfo
     ''' <returns></returns>
     Public Property RowData As Dictionary(Of String, Object)
 
-    Public Sub New(index As Long, rowID As Guid, dataRow As Dictionary(Of String, Object), syncState As SynchronizationState)
+    Public Sub New(index as Integer, rowID As Guid, dataRow As Dictionary(Of String, Object), syncState As SynchronizationState)
         Me.Index = index
         Me.RowData = dataRow
         Me.RowID = rowID

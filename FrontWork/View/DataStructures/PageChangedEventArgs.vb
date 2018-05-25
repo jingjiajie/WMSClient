@@ -7,9 +7,9 @@ Public Class PageChangedEventArgs
     ''' 当前页（从1开始）
     ''' </summary>
     ''' <returns></returns>
-    Public Property CurrentPage As Long
+    Public Property CurrentPage as Integer
 
-    Public Sub New(currentPage As Long)
+    Public Sub New(currentPage as Integer)
         Me.CurrentPage = currentPage
     End Sub
 

@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Linq
+Imports System.Reflection
 Imports FrontWork
 
 ''' <summary>
@@ -63,7 +64,7 @@ Public Class Model
     ''' </summary>
     ''' <returns></returns>
     <Browsable(False)>
-    Public ReadOnly Property RowCount As Long Implements IModel.RowCount
+    Public ReadOnly Property RowCount As Integer Implements IModel.RowCount
         Get
             Return Me.Data.Rows.Count
         End Get
@@ -74,7 +75,7 @@ Public Class Model
     ''' </summary>
     ''' <returns></returns>
     <Browsable(False)>
-    Public ReadOnly Property ColumnCount As Long Implements IModel.ColumnCount
+    Public ReadOnly Property ColumnCount As Integer Implements IModel.ColumnCount
         Get
             Return Me.Data.Columns.Count
         End Get
@@ -143,7 +144,7 @@ Public Class Model
         End Set
     End Property
 
-    Default Public Property _Item(row As Long, column As Long) As Object Implements IModel.Item
+    Default Public Property _Item(row As Integer, column As Integer) As Object Implements IModel.Item
         Get
             Return Me.GetCell(row, column)
         End Get
@@ -152,7 +153,7 @@ Public Class Model
         End Set
     End Property
 
-    Default Public Property _Item(row As Long, columnName As String) As Object Implements IModel.Item
+    Default Public Property _Item(row As Integer, columnName As String) As Object Implements IModel.Item
         Get
             Return Me.GetCell(row, columnName)
         End Get
@@ -212,7 +213,7 @@ Public Class Model
         Exit Function
     End Function
 
-    Public Function GetCell(row As Long, column As Long) As Object Implements IModel.GetCell
+    Public Function GetCell(row As Integer, column As Integer) As Object Implements IModel.GetCell
         If row >= Me.Data.Rows.Count Then
             Throw New FrontWorkException($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
         End If
@@ -227,7 +228,7 @@ Public Class Model
         End If
     End Function
 
-    Public Function GetCell(row As Long, columnName As String) As Object Implements IModel.GetCell
+    Public Function GetCell(row As Integer, columnName As String) As Object Implements IModel.GetCell
         If row >= Me.Data.Rows.Count Then
             Throw New FrontWorkException($"Row:{row} exceeded the max row of Model({Me.Data.Rows.Count - 1})")
         End If
@@ -243,12 +244,27 @@ Public Class Model
     End Function
 
     ''' <summary>
+    ''' 获取行并自动转换成相应类型的对象返回
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="rows"></param>
+    ''' <returns></returns>
+    Public Function GetRows(Of T As New)(rows As Integer()) As T()
+        Dim rowData = Me.GetRows(rows)
+        Dim result(rows.Length - 1) As T
+        For i = 0 To result.Length - 1
+            result(i) = Me.DictionaryToObject(Of T)(rowData(i))
+        Next
+        Return result
+    End Function
+
+    ''' <summary>
     ''' 获取行
     ''' </summary>
     ''' <param name="rowIDs">行ID</param>
     ''' <returns>相应行数据</returns>
     Public Function GetRows(rowIDs As Guid()) As IDictionary(Of String, Object)() Implements IModel.GetRows
-        Dim rowNums(rowIDs.Length - 1) As Long
+        Dim rowNums(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
@@ -265,7 +281,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>相应行数据</returns>
-    Public Function GetRows(rows As Long()) As IDictionary(Of String, Object)() Implements IModel.GetRows
+    Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Dim result As New List(Of IDictionary(Of String, Object))
         Try
             For Each row In rows
@@ -283,7 +299,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="data">增加行的数据</param>
     ''' <returns>增加的行号</returns>
-    Public Function AddRow(data As IDictionary(Of String, Object)) As Long Implements IModel.AddRow
+    Public Function AddRow(data As IDictionary(Of String, Object)) As Integer Implements IModel.AddRow
         Return Me.AddRows({data})(0)
     End Function
 
@@ -292,7 +308,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="dataOfEachRow">增加行的数据</param>
     ''' <returns>增加的行号</returns>
-    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Long() Implements IModel.AddRows
+    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Integer() Implements IModel.AddRows
         Dim addRowCount = dataOfEachRow.Length
         Dim oriRowCount = Me.Data.Rows.Count
         Dim insertRows = Util.Range(RowCount, RowCount + addRowCount)
@@ -305,7 +321,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="row">插入行行号</param>
     ''' <param name="data">数据</param>
-    Public Sub InsertRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
+    Public Sub InsertRow(row As Integer, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
         Call Me.InsertRows({row}, {data})
     End Sub
 
@@ -314,7 +330,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
-    Public Sub InsertRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
+    Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         If Me.Configuration Is Nothing Then Throw New FrontWorkException($"Configuration not set to Model:{Me.Name}!")
         Dim fields = Configuration.GetFieldConfigurations(Me.Mode)
         Dim indexRowPairs As New List(Of RowInfo)
@@ -380,7 +396,7 @@ Public Class Model
     ''' 删除行
     ''' </summary>
     ''' <param name="row">删除行行号</param>
-    Public Sub RemoveRow(row As Long) Implements IModel.RemoveRow
+    Public Sub RemoveRow(row As Integer) Implements IModel.RemoveRow
         Me.RemoveRows({row})
     End Sub
 
@@ -389,7 +405,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="startRow">起始行号</param>
     ''' <param name="rowCount">删除行数</param>
-    Public Sub RemoveRows(startRow As Long, rowCount As Long) Implements IModel.RemoveRows
+    Public Sub RemoveRows(startRow As Integer, rowCount As Integer) Implements IModel.RemoveRows
         Me.RemoveRows(Util.Range(startRow, startRow + rowCount))
     End Sub
 
@@ -398,7 +414,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rowIDs">删除行ID</param>
     Public Sub RemoveRows(rowIDs As Guid()) Implements IModel.RemoveRows
-        Dim rowNums(rowIDs.Length - 1) As Long
+        Dim rowNums(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
@@ -414,12 +430,12 @@ Public Class Model
     ''' 删除行
     ''' </summary>
     ''' <param name="rows">删除行行号</param>
-    Public Sub RemoveRows(rows As Long()) Implements IModel.RemoveRows
+    Public Sub RemoveRows(rows As Integer()) Implements IModel.RemoveRows
         If rows.Length = 0 Then Return
         Dim indexRowList = New List(Of RowInfo)
         Try
             '每次删除行后行号会变，所以要做调整
-            Dim realRows(rows.Length - 1) As Long
+            Dim realRows(rows.Length - 1) As Integer
             For i = 0 To rows.Length - 1
                 realRows(i) = rows(i) - i
             Next
@@ -476,9 +492,9 @@ Public Class Model
     ''' </summary>
     ''' <param name="row">更新行行号</param>
     ''' <param name="data">数据</param>
-    Public Sub UpdateRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(row As Integer, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Call Me.UpdateRows(
-            New Long() {row},
+            New Integer() {row},
             New Dictionary(Of String, Object)() {data}
         )
     End Sub
@@ -489,7 +505,7 @@ Public Class Model
     ''' <param name="rowIDs">更新的行ID</param>
     ''' <param name="dataOfEachRow">相应的数据</param>
     Public Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
-        Dim rowNums(rowIDs.Length - 1) As Long
+        Dim rowNums(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
@@ -506,7 +522,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Sub UpdateRows(rows As Long(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         Try
             Dim i = 0
@@ -548,7 +564,7 @@ Public Class Model
 
             RaiseEvent RowUpdated(Me, eventArgs)
             Call Me.UpdateRowSynchronizationStates(rowSyncStatePairs.Select(Function(pair)
-                                                                                Return CLng(pair.Row)
+                                                                                Return CInt(pair.Row)
                                                                             End Function).ToArray,
                                                    rowSyncStatePairs.Select(Function(pair)
                                                                                 Return pair.SynchronizationState
@@ -574,8 +590,8 @@ Public Class Model
     ''' <param name="row">行号</param>
     ''' <param name="columnName">列名</param>
     ''' <param name="data">更新的数据</param>
-    Public Sub UpdateCell(row As Long, columnName As String, data As Object) Implements IModel.UpdateCell
-        Me.UpdateCells(New Long() {row}, New String() {columnName}, New Object() {data})
+    Public Sub UpdateCell(row As Integer, columnName As String, data As Object) Implements IModel.UpdateCell
+        Me.UpdateCells({row}, New String() {columnName}, New Object() {data})
     End Sub
 
     ''' <summary>
@@ -585,7 +601,7 @@ Public Class Model
     ''' <param name="columnNames">列名</param>
     ''' <param name="dataOfEachCell">对应的数据</param>
     Public Sub UpdateCells(rowIDs As Guid(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
-        Dim rowNums(rowIDs.Length - 1) As Long
+        Dim rowNums(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
@@ -603,7 +619,7 @@ Public Class Model
     ''' <param name="rows">行号</param>
     ''' <param name="columnNames">列名</param>
     ''' <param name="dataOfEachCell">相应的数据</param>
-    Public Sub UpdateCells(rows As Long(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
+    Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
         Dim posCellPairs As New List(Of PositionCellPair)
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         For i = 0 To rows.Length - 1
@@ -633,7 +649,7 @@ Public Class Model
                                })
         Me.UpdateRowSynchronizationStates(
             rowSyncStatePairs.Select(Function(pair)
-                                         Return CLng(pair.Row)
+                                         Return CInt(pair.Row)
                                      End Function).ToArray,
             rowSyncStatePairs.Select(Function(pair)
                                          Return pair.SynchronizationState
@@ -696,7 +712,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rowNum">行号</param>
     ''' <returns>行ID</returns>
-    Public Function GetRowID(rowNum As Long) As Guid Implements IModel.GetRowID
+    Public Function GetRowID(rowNum As Integer) As Guid Implements IModel.GetRowID
         Return Me.GetRowIDs({rowNum})(0)
     End Function
 
@@ -710,7 +726,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rowNums">行号</param>
     ''' <returns>行ID</returns>
-    Public Function GetRowIDs(rowNums As Long()) As Guid() Implements IModel.GetRowIDs
+    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModel.GetRowIDs
         Dim dataRows(rowNums.Length - 1) As DataRow
         Dim rowIDs(rowNums.Length - 1) As Guid
         For i = 0 To rowNums.Length - 1
@@ -724,7 +740,7 @@ Public Class Model
         Return rowIDs
     End Function
 
-    Public Function GetRowIndex(rowID As Guid) As Long Implements IModel.GetRowIndex
+    Public Function GetRowIndex(rowID As Guid) As Integer Implements IModel.GetRowIndex
         Dim dataRow = (From rg In Me._dicRowGuid Where rg.Value = rowID Select rg.Key).FirstOrDefault
         If dataRow Is Nothing Then Return -1
         Return Me.Data.Rows.IndexOf(dataRow)
@@ -743,7 +759,7 @@ Public Class Model
         If rowIDs.Length <> syncStates.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
-        Dim rowNums(rowIDs.Length - 1) As Long
+        Dim rowNums(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
             Dim rowNum = Me.GetRowIndex(rowID)
@@ -760,7 +776,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="syncStates">同步状态</param>
-    Public Sub UpdateRowSynchronizationStates(rows As Long(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
+    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
         If rows.Length <> syncStates.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
@@ -784,7 +800,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(row As Long, syncState As SynchronizationState) Implements IModel.UpdateRowSynchronizationState
+    Public Sub UpdateRowSynchronizationState(row As Integer, syncState As SynchronizationState) Implements IModel.UpdateRowSynchronizationState
         Call Me.UpdateRowSynchronizationStates({row}, {syncState})
     End Sub
 
@@ -817,7 +833,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rows As Long()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
+    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
         Dim states(rows.Length - 1) As SynchronizationState
         For i = 0 To rows.Length - 1
             Dim rowNum = rows(i)
@@ -836,7 +852,7 @@ Public Class Model
     ''' <param name="rowIDs">行ID</param>
     ''' <returns>同步状态</returns>
     Public Function GetRowSynchronizationStates(rowIDs As Guid()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
-        Dim rows(rowIDs.Length - 1) As Long
+        Dim rows(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim row = Me.GetRowIndex(rowIDs(i))
             If row < 0 Then
@@ -852,7 +868,7 @@ Public Class Model
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationState(row As Long) As SynchronizationState Implements IModel.GetRowSynchronizationState
+    Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
         Return Me.GetRowSynchronizationStates({row})(0)
     End Function
 
@@ -976,6 +992,38 @@ Public Class Model
 
     Public Function ContainsColumn(columnName As String) As Boolean Implements IModel.ContainsColumn
         Return Me.Data.Columns.Contains(columnName)
+    End Function
+
+    Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
+        Dim result As New T
+        Dim type = GetType(T)
+        For Each entry In dic
+            Dim key = entry.Key
+            Dim prop = type.GetProperty(key, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.IgnoreCase)
+            '如果找到了相应属性，优先为属性映射值
+            If prop IsNot Nothing Then
+                Dim value As Object = Nothing
+                Try
+                    value = Convert.ChangeType(entry.Value, prop.PropertyType)
+                Catch ex As Exception
+                    Throw New FrontWorkException($"Value {entry.Value} of ""{key}"" cannot be converted to {prop.PropertyType.Name} for {type.Name}.{prop.Name}")
+                End Try
+                prop.SetValue(result, value, Nothing)
+                Continue For
+            End If
+            '否则尝试寻找相应字段并赋值
+            Dim field = type.GetField(key, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.IgnoreCase)
+            If field IsNot Nothing Then
+                Dim value As Object = Nothing
+                Try
+                    value = Convert.ChangeType(entry.Value, field.FieldType)
+                Catch ex As Exception
+                    Throw New FrontWorkException($"Value {entry.Value} of ""{key}"" cannot be converted to {field.FieldType.Name} for {type.Name}.{field.Name}")
+                End Try
+                field.SetValue(result, value)
+            End If
+        Next
+        Return result
     End Function
 End Class
 
