@@ -217,11 +217,11 @@ namespace WMS.UI.FormStockTaking
         //=============天经地义的交互逻辑到这里结束===============
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            string body= "{\"stockTakingOrderId\":\"3\",\"warehouseId\":\"1\",\"personId\":\"19\"}";
+            string body= "{\"stockTakingOrderId\":\""+this.stockTakingOrder["id"]+ "\",\"warehouseId\":\""+GlobalData.Warehouse["id"]+"\",\"personId\":\""+GlobalData.Person["id"]+"\"}";
             string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
-            //string url = "http://localhost:9000/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
-            
-            var a = RestClient.Post<List<IDictionary<string, object>>>(url,body);
+            RestClient.Post<List<IDictionary<string, object>>>(url, body);
+            MessageBox.Show("添加成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            this.searchView1.Search();
         }
     }
 
