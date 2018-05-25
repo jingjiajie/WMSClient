@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair4 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseEntryInspect));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair5 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair6 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem1 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabView1 = new FrontWork.TabView();
             this.configurationWarehouseEntry = new FrontWork.Configuration();
@@ -101,23 +102,24 @@
             this.configurationWarehouseEntry.ConfigurationString = "[\r\n    {mode:\"default\",\r\n     fields:[\r\n        {name:\"id\",type:\"int\"},\r\n        " +
     "{name:\"no\",type:\"string\"},\r\n        {name:\"createTime\",type:\"datetime\"}\r\n     ]\r" +
     "\n    }\r\n]";
-            this.configurationWarehouseEntry.Location = new System.Drawing.Point(610, 12);
-            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
+            this.configurationWarehouseEntry.Location = new System.Drawing.Point(630, -36);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormWarehouseEntryInspect",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair4.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configurationWarehouseEntry.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair4};
+        modeMethodListenerNamesPair1};
             this.configurationWarehouseEntry.Name = "configurationWarehouseEntry";
             this.configurationWarehouseEntry.Size = new System.Drawing.Size(180, 180);
             this.configurationWarehouseEntry.TabIndex = 2;
+            this.configurationWarehouseEntry.Load += new System.EventHandler(this.configurationWarehouseEntry_Load);
             // 
             // modelWarehouseEntry
             // 
             this.modelWarehouseEntry.AllSelectionRanges = new FrontWork.Range[0];
             this.modelWarehouseEntry.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.modelWarehouseEntry.Configuration = this.configurationWarehouseEntry;
-            this.modelWarehouseEntry.Location = new System.Drawing.Point(473, 12);
+            this.modelWarehouseEntry.Location = new System.Drawing.Point(460, -36);
             this.modelWarehouseEntry.Mode = "default";
             this.modelWarehouseEntry.Name = "modelWarehouseEntry";
             this.modelWarehouseEntry.SelectionRange = null;
@@ -147,12 +149,12 @@
             this.configurationInspectionNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configurationInspectionNote.ConfigurationString = resources.GetString("configurationInspectionNote.ConfigurationString");
             this.configurationInspectionNote.Location = new System.Drawing.Point(526, 131);
-            modeMethodListenerNamesPair5.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormWarehouseEntryInspect",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair5.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configurationInspectionNote.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair5};
+        modeMethodListenerNamesPair2};
             this.configurationInspectionNote.Name = "configurationInspectionNote";
             this.configurationInspectionNote.Size = new System.Drawing.Size(180, 180);
             this.configurationInspectionNote.TabIndex = 1;
@@ -172,6 +174,10 @@
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configurationInspectionNoteItem;
+            fieldMappingItem1.APIFieldName = "id";
+            fieldMappingItem1.ModelFieldName = "warehouseEntryItemId";
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[] {
+        fieldMappingItem1};
             this.synchronizer.Location = new System.Drawing.Point(318, 53);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
@@ -185,12 +191,12 @@
             this.configurationInspectionNoteItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configurationInspectionNoteItem.ConfigurationString = resources.GetString("configurationInspectionNoteItem.ConfigurationString");
             this.configurationInspectionNoteItem.Location = new System.Drawing.Point(135, 53);
-            modeMethodListenerNamesPair6.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
         "FormWarehouseEntryInspect",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair6.Mode = "default";
+            modeMethodListenerNamesPair3.Mode = "default";
             this.configurationInspectionNoteItem.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair6};
+        modeMethodListenerNamesPair3};
             this.configurationInspectionNoteItem.Name = "configurationInspectionNoteItem";
             this.configurationInspectionNoteItem.Size = new System.Drawing.Size(180, 180);
             this.configurationInspectionNoteItem.TabIndex = 5;

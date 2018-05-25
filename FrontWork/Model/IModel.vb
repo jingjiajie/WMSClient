@@ -216,6 +216,13 @@ Public Interface IModel
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>数据</returns>
+    Function GetRows(Of T As New)(rows As Integer()) As T()
+
+    ''' <summary>
+    ''' 获取行数据
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <returns>数据</returns>
     Function GetRows(rows as Integer()) As IDictionary(Of String, Object)()
 
     ''' <summary>

@@ -354,6 +354,10 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowID(oriRowID, newID)
     End Sub
 
+    Function GetRows(Of T As New)(rows As Integer()) As T() Implements IModel.GetRows
+        Return Me.GetCurModel.GetRows(Of T)(rows)
+    End Function
+
     Public Function GetRows(rows() as Integer) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rows)
     End Function

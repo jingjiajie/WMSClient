@@ -86,6 +86,15 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            for (int row = 0; row < this.modelWarehouseEntry.RowCount; row++)
+            {
+                int warehouseEntryID = (int)this.modelWarehouseEntry[row, "id"];
+
+            }
+        }
+
+        private void configurationWarehouseEntry_Load(object sender, EventArgs e)
+        {
 
         }
     }

@@ -249,7 +249,7 @@ Public Class Model
     ''' <typeparam name="T"></typeparam>
     ''' <param name="rows"></param>
     ''' <returns></returns>
-    Public Function GetRows(Of T As New)(rows As Integer()) As T()
+    Public Function GetRows(Of T As New)(rows As Integer()) As T() Implements IModel.GetRows
         Dim rowData = Me.GetRows(rows)
         Dim result(rows.Length - 1) As T
         For i = 0 To result.Length - 1

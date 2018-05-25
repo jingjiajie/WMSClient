@@ -1,4 +1,6 @@
 ﻿Imports System.ComponentModel
+Imports System.Drawing.Design
+Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Net
@@ -22,6 +24,14 @@ Public Class JsonRESTSynchronizer
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+
+    ''' <summary>
+    ''' 字段映射配置
+    ''' </summary>
+    ''' <returns></returns>
+    <Description("API字段名和Model字段名的映射配置"), Category("FrontWork")>
+    <Editor(GetType(Design.ArrayEditor), GetType(UITypeEditor))>
+    Public Property FieldMapping As FieldMappingItem() = {}
 
     ''' <summary>
     ''' 增加行的API信息
@@ -324,7 +334,7 @@ Public Class JsonRESTSynchronizer
             For Each resultRow In resultList
                 Dim newRow = dataTable.NewRow
                 For Each item In resultRow
-                    Dim key = item.Key
+                    Dim key = Me.GetMappedModelFieldName(item.Key)
                     Dim value = item.Value
                     If Not dataTable.Columns.Contains(key) Then
                         Logger.PutMessage("Column """ & key & """ not found in model", LogLevel.WARNING)
@@ -394,7 +404,7 @@ Public Class JsonRESTSynchronizer
                     Case SynchronizationState.UPDATED
                         apiInfo = Me.UpdateAPI
                 End Select
-                Dim rowData = DataRowToDictionary(Me.Model.GetDataTable.Rows(row))
+                Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.GetDataTable.Rows(row))
                 apiInfo.SetRequestParameter("$data", {rowData})
                 Dim response = apiInfo.Invoke()
                 apiInfo.Callback.Invoke(response, Nothing)
@@ -419,13 +429,37 @@ Public Class JsonRESTSynchronizer
         Return True
     End Function
 
-    Private Function DataRowToDictionary(dataRow As DataRow) As Dictionary(Of String, Object)
+    Private Function ModelRowToAPIDictionary(dataRow As DataRow) As Dictionary(Of String, Object)
         Dim result As New Dictionary(Of String, Object)
         Dim columns = dataRow.Table.Columns
         For Each column As DataColumn In columns
-            result.Add(column.ColumnName, dataRow(column))
+            result.Add(Me.GetMappedAPIFieldName(column.ColumnName), dataRow(column))
         Next
         Return result
+    End Function
+
+    Private Function GetMappedModelFieldName(apiFieldName As String) As String
+        If String.IsNullOrWhiteSpace(apiFieldName) Then
+            Throw New FrontWorkException($"{Me.Name}: FieldMapping APIFieldName cannot be empty!")
+        End If
+        For Each fieldMappingItem In Me.FieldMapping
+            If fieldMappingItem.APIFieldName?.Equals(apiFieldName, StringComparison.OrdinalIgnoreCase) Then
+                Return fieldMappingItem.ModelFieldName
+            End If
+        Next
+        Return apiFieldName
+    End Function
+
+    Private Function GetMappedAPIFieldName(modelFieldName As String) As String
+        If String.IsNullOrWhiteSpace(modelFieldName) Then
+            Throw New FrontWorkException($"{Me.Name}: FieldMapping ModelFieldName cannot be empty!")
+        End If
+        For Each fieldMappingItem In Me.FieldMapping
+            If fieldMappingItem.ModelFieldName?.Equals(modelFieldName, StringComparison.OrdinalIgnoreCase) Then
+                Return fieldMappingItem.APIFieldName
+            End If
+        Next
+        Return modelFieldName
     End Function
 
     Private Sub InitializeComponent()
@@ -518,5 +552,25 @@ Public Class JsonRESTSynchronizer
     Private Class ModeParams
         Public Property Mode As String
         Public Property Params As Dictionary(Of String, Object)
+    End Class
+
+    <TypeConverter(GetType(FieldMappingItem.FieldMappingItemTypeConverter))>
+    Public Class FieldMappingItem
+        <Description("API的字段名称")>
+        Public Property APIFieldName As String = Nothing
+        <Description("Model中的字段名称")>
+        Public Property ModelFieldName As String = Nothing
+
+        Friend Class FieldMappingItemTypeConverter
+            Inherits TypeConverter
+
+            Public Overrides Function ConvertTo(context As ITypeDescriptorContext, culture As CultureInfo, value As Object, destinationType As Type) As Object
+                Dim pair = CType(value, FieldMappingItem)
+                If destinationType = GetType(String) Then
+                    Return $"{pair.APIFieldName} => {pair.ModelFieldName}"
+                End If
+                Return MyBase.ConvertTo(context, culture, value, destinationType)
+            End Function
+        End Class
     End Class
 End Class
