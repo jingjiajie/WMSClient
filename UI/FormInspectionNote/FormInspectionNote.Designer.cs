@@ -84,7 +84,7 @@
             this.pagerView1.Location = new System.Drawing.Point(3, 503);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((long)(50));
+            this.pagerView1.PageSize = ((int)(50));
             this.pagerView1.Size = new System.Drawing.Size(1034, 55);
             this.pagerView1.TabIndex = 12;
             // 

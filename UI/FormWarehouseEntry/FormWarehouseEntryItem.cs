@@ -108,7 +108,7 @@ namespace WMS.UI
 
         private void SupplierNoEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model[row, "supplierNo"]?.ToString())) return;
             this.model[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
@@ -116,7 +116,7 @@ namespace WMS.UI
 
         private void SupplierNameEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model[row, "supplierName"]?.ToString())) return;
             this.model[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);

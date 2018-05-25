@@ -1,4 +1,4 @@
 ﻿Public Interface IDataView
     Inherits IView
-    Function GetViewComponent(row As Long, fieldName As String) As IViewComponent
+    Function GetViewComponent(row as Integer, fieldName As String) As IViewComponent
 End Interface

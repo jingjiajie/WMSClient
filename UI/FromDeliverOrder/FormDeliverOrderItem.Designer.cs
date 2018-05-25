@@ -170,7 +170,7 @@
             this.pagerView1.Margin = new System.Windows.Forms.Padding(1);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((long)(50));
+            this.pagerView1.PageSize = ((int)(50));
             this.pagerView1.Size = new System.Drawing.Size(844, 24);
             this.pagerView1.TabIndex = 14;
             // 

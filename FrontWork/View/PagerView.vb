@@ -3,9 +3,9 @@ Imports FrontWork
 
 Public Class PagerView
     Implements IView
-    Private _currentPage As Long = 1
-    Private _totalPage As Long = 1
-    Private _pageSize As Long = 50
+    Private _currentPage as Integer = 1
+    Private _totalPage as Integer = 1
+    Private _pageSize as Integer = 50
     Private _mode As String = "default"
 
     ''' <summary>
@@ -13,11 +13,11 @@ Public Class PagerView
     ''' </summary>
     ''' <returns>总页码</returns>
     <Description("总页码（从1开始）"), Category("FrontWork"), Browsable(False), DesignerSerializationVisibility(False)>
-    Public Property TotalPage As Long
+    Public Property TotalPage as Integer
         Get
             Return Me._totalPage
         End Get
-        Set(value As Long)
+        Set(value as Integer)
             If value < 1 Then throw new FrontWorkException("TotalPage must be greater than 1")
             If value < Me.CurrentPage Then
                 throw new FrontWorkException($"TotalPage:{value} cannot be less than CurrentPage:{Me.CurrentPage}")
@@ -32,11 +32,11 @@ Public Class PagerView
     ''' </summary>
     ''' <returns>当前页码</returns>
     <Description("当前页（从1开始）"), Category("FrontWork"), Browsable(False), DesignerSerializationVisibility(False)>
-    Public Property CurrentPage As Long
+    Public Property CurrentPage as Integer
         Get
             Return Me._currentPage
         End Get
-        Set(value As Long)
+        Set(value as Integer)
             If value < 1 Then throw new FrontWorkException("Page must be greater than 1")
             If value > Me.TotalPage Then
                 throw new FrontWorkException($"CurrentPage:{value} exceeded TotalPage:{Me.TotalPage}")
@@ -53,11 +53,11 @@ Public Class PagerView
     ''' </summary>
     ''' <returns></returns>
     <Description("每页大小"), Category("FrontWork")>
-    Public Property PageSize As Long
+    Public Property PageSize as Integer
         Get
             Return Me._pageSize
         End Get
-        Set(value As Long)
+        Set(value as Integer)
             If value <= 0 Then
                 throw new FrontWorkException($"PageSize:{value} must be positive!")
             End If

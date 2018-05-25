@@ -67,7 +67,7 @@ namespace WMS.UI.FormStockTaking
                 MessageBox.Show("请选择一项盘点单查看盘点单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new long[] { this.model1.SelectionRange.Row })[0];
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             new FormStockTakingOrderItem(rowData).Show();
         }   
 

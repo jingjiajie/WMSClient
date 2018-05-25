@@ -144,13 +144,13 @@ Public Class ModelBox
         Next
     End Sub
 
-    Public ReadOnly Property RowCount As Long Implements IModel.RowCount
+    Public ReadOnly Property RowCount as Integer Implements IModel.RowCount
         Get
             Return Me.GetCurModel.RowCount
         End Get
     End Property
 
-    Public ReadOnly Property ColumnCount As Long Implements IModel.ColumnCount
+    Public ReadOnly Property ColumnCount as Integer Implements IModel.ColumnCount
         Get
             Return Me.GetCurModel.ColumnCount
         End Get
@@ -174,7 +174,7 @@ Public Class ModelBox
         End Set
     End Property
 
-    Public Property Item(row As Long, column As Long) As Object Implements IModel.Item
+    Public Property Item(row as Integer, column as Integer) As Object Implements IModel.Item
         Get
             Return Me.GetCurModel(row, column)
         End Get
@@ -183,7 +183,7 @@ Public Class ModelBox
         End Set
     End Property
 
-    Public Property Item(row As Long, columnName As String) As Object Implements IModel.Item
+    Public Property Item(row as Integer, columnName As String) As Object Implements IModel.Item
         Get
             Return Me.GetCurModel(row, columnName)
         End Get
@@ -226,15 +226,15 @@ Public Class ModelBox
         RaiseEvent RowSynchronizationStateChanged(sender, e)
     End Sub
 
-    Public Sub InsertRows(rows() As Long, data() As IDictionary(Of String, Object)) Implements IModel.InsertRows
+    Public Sub InsertRows(rows() as Integer, data() As IDictionary(Of String, Object)) Implements IModel.InsertRows
         Me.GetCurModel.InsertRows(rows, data)
     End Sub
 
-    Public Sub InsertRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
+    Public Sub InsertRow(row as Integer, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
         Me.GetCurModel.InsertRow(row, data)
     End Sub
 
-    Public Sub RemoveRow(row As Long) Implements IModel.RemoveRow
+    Public Sub RemoveRow(row as Integer) Implements IModel.RemoveRow
         Me.GetCurModel.RemoveRow(row)
     End Sub
 
@@ -242,7 +242,7 @@ Public Class ModelBox
         Me.GetCurModel.RemoveRow(rowID)
     End Sub
 
-    Public Sub RemoveRows(rows() As Long) Implements IModel.RemoveRows
+    Public Sub RemoveRows(rows() as Integer) Implements IModel.RemoveRows
         Me.GetCurModel.RemoveRows(rows)
     End Sub
 
@@ -250,7 +250,7 @@ Public Class ModelBox
         Me.GetCurModel.RemoveRows(rowIDs)
     End Sub
 
-    Public Sub RemoveRows(startRow As Long, rowCount As Long) Implements IModel.RemoveRows
+    Public Sub RemoveRows(startRow as Integer, rowCount as Integer) Implements IModel.RemoveRows
         Me.GetCurModel.RemoveRows(startRow, rowCount)
     End Sub
 
@@ -258,7 +258,7 @@ Public Class ModelBox
         Call Me.GetCurModel.RemoveSelectedRows()
     End Sub
 
-    Public Sub UpdateRow(row As Long, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(row as Integer, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Call Me.GetCurModel.UpdateRow(row, data)
     End Sub
 
@@ -266,7 +266,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRow(rowID, data)
     End Sub
 
-    Public Sub UpdateRows(rows() As Long, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rows() as Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModel.UpdateRows
         Me.GetCurModel.UpdateRows(rows, dataOfEachRow)
     End Sub
 
@@ -274,7 +274,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRows(rowIDs, dataOfEachRow)
     End Sub
 
-    Public Sub UpdateCells(rows() As Long, columnNames() As String, dataOfEachCell() As Object) Implements IModel.UpdateCells
+    Public Sub UpdateCells(rows() as Integer, columnNames() As String, dataOfEachCell() As Object) Implements IModel.UpdateCells
         Me.GetCurModel.UpdateCells(rows, columnNames, dataOfEachCell)
     End Sub
 
@@ -282,7 +282,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateCells(rowID, columnNames, dataOfEachCell)
     End Sub
 
-    Public Sub UpdateCell(row As Long, columnName As String, data As Object) Implements IModel.UpdateCell
+    Public Sub UpdateCell(row as Integer, columnName As String, data As Object) Implements IModel.UpdateCell
         Me.GetCurModel.UpdateCell(row, columnName, data)
     End Sub
 
@@ -294,7 +294,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowSynchronizationStates(rows, syncStates)
     End Sub
 
-    Public Sub UpdateRowSynchronizationStates(rows() As Long, syncStates() As SynchronizationState) Implements IModel.UpdateRowSynchronizationStates
+    Public Sub UpdateRowSynchronizationStates(rows() as Integer, syncStates() As SynchronizationState) Implements IModel.UpdateRowSynchronizationStates
         Me.GetCurModel.UpdateRowSynchronizationStates(rows, syncStates)
     End Sub
 
@@ -302,7 +302,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowSynchronizationState(row, syncState)
     End Sub
 
-    Public Sub UpdateRowSynchronizationState(row As Long, syncState As SynchronizationState) Implements IModel.UpdateRowSynchronizationState
+    Public Sub UpdateRowSynchronizationState(row as Integer, syncState As SynchronizationState) Implements IModel.UpdateRowSynchronizationState
         Me.GetCurModel.UpdateRowSynchronizationState(row, syncState)
     End Sub
 
@@ -314,11 +314,11 @@ Public Class ModelBox
 
     End Sub
 
-    Public Function AddRow(data As IDictionary(Of String, Object)) As Long Implements IModel.AddRow
+    Public Function AddRow(data As IDictionary(Of String, Object)) as Integer Implements IModel.AddRow
         Return Me.GetCurModel.AddRow(data)
     End Function
 
-    Public Function AddRows(data() As IDictionary(Of String, Object)) As Long() Implements IModel.AddRows
+    Public Function AddRows(data() As IDictionary(Of String, Object)) as Integer() Implements IModel.AddRows
         Return Me.GetCurModel.AddRows(data)
     End Function
 
@@ -326,11 +326,11 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRowSynchronizationStates(rows)
     End Function
 
-    Public Function GetRowSynchronizationStates(rows() As Long) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
+    Public Function GetRowSynchronizationStates(rows() as Integer) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
         Return Me.GetCurModel.GetRowSynchronizationStates(rows)
     End Function
 
-    Public Function GetRowSynchronizationState(row As Long) As SynchronizationState Implements IModel.GetRowSynchronizationState
+    Public Function GetRowSynchronizationState(row as Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
         Return Me.GetCurModel.GetRowSynchronizationState(row)
     End Function
 
@@ -338,15 +338,15 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRowSynchronizationState(row)
     End Function
 
-    Public Function GetRowID(rowNum As Long) As Guid Implements IModel.GetRowID
+    Public Function GetRowID(rowNum as Integer) As Guid Implements IModel.GetRowID
         Return Me.GetCurModel.GetRowID(rowNum)
     End Function
 
-    Public Function GetRowIDs(rowNums() As Long) As Guid() Implements IModel.GetRowIDs
+    Public Function GetRowIDs(rowNums() as Integer) As Guid() Implements IModel.GetRowIDs
         Return Me.GetCurModel.GetRowIDs(rowNums)
     End Function
 
-    Public Function GetRowIndex(rowID As Guid) As Long Implements IModel.GetRowIndex
+    Public Function GetRowIndex(rowID As Guid) as Integer Implements IModel.GetRowIndex
         Return Me.GetCurModel.GetRowIndex(rowID)
     End Function
 
@@ -354,7 +354,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowID(oriRowID, newID)
     End Sub
 
-    Public Function GetRows(rows() As Long) As IDictionary(Of String, Object)() Implements IModel.GetRows
+    Public Function GetRows(rows() as Integer) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rows)
     End Function
 
@@ -373,11 +373,11 @@ Public Class ModelBox
         Return Me.dicModels(Me.CurrentModelName)
     End Function
 
-    Public Function GetCell(row As Long, column As Long) As Object Implements IModel.GetCell
+    Public Function GetCell(row as Integer, column as Integer) As Object Implements IModel.GetCell
         Return Me.GetCurModel.GetCell(row, column)
     End Function
 
-    Public Function GetCell(row As Long, columnName As String) As Object Implements IModel.GetCell
+    Public Function GetCell(row as Integer, columnName As String) As Object Implements IModel.GetCell
         Return Me.GetCurModel.GetCell(row, columnName)
     End Function
 

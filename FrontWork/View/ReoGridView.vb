@@ -51,7 +51,7 @@ Public Class ReoGridView
     Private dicTextChangedEvent As New Dictionary(Of Integer, FieldMethod) '编辑框文本改变时触发的事件列表(ContentChanged)
     Private dicBeforeSelectionRangeChangeEvent As New Dictionary(Of Integer, FieldMethod) '选择编辑框改变时触发的事件列表(EditEnded)
     Private dicNameColumn As New Dictionary(Of String, Integer)
-    Private dicCellState As New Dictionary(Of Long, Dictionary(Of Long, Long))
+    Private dicCellState As New Dictionary(Of Integer, Dictionary(Of Integer, Long))
     Private textBox As TextBox = Nothing
     Private formAssociation As FormAssociation
     Private Workbook As ReoGridControl = Nothing
@@ -218,12 +218,12 @@ Public Class ReoGridView
             Call Me.ImportData()
             Return
         End If
-        Dim rows As Long() = (From item In e.UpdatedRows Select item.Index).ToArray
+        Dim rows As Integer() = (From item In e.UpdatedRows Select item.Index).ToArray
         Me.ImportData(rows)
     End Sub
 
     Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-        Dim oriRows As Long() = (From item In e.AddedRows Select item.Index).ToArray
+        Dim oriRows As Integer() = (From item In e.AddedRows Select item.Index).ToArray
         If Me.CurSyncMode = SyncMode.NOT_SYNC Then
             Call Me.ImportData()
             Return
@@ -286,7 +286,7 @@ Public Class ReoGridView
         Next
         Me.dicCellEdited = newDicCellEdited
 
-        Dim newDicCellState As New Dictionary(Of Long, Dictionary(Of Long, Long))
+        Dim newDicCellState As New Dictionary(Of Integer, Dictionary(Of Integer, Long))
         For Each entry In Me.dicCellState
             If entry.Key >= row And entry.Key <= row + count - 1 Then
                 '删掉
@@ -316,7 +316,7 @@ Public Class ReoGridView
         Next
         Me.dicCellEdited = newDicCellEdited
 
-        Dim newDicCellState As New Dictionary(Of Long, Dictionary(Of Long, Long))
+        Dim newDicCellState As New Dictionary(Of Integer, Dictionary(Of Integer, Long))
         For Each entry In Me.dicCellState
             If entry.Key >= row Then
                 newDicCellState.Add(entry.Key + count, entry.Value)
@@ -335,7 +335,7 @@ Public Class ReoGridView
     ''' <summary>
     ''' 根据各个单元格的状态，按行绘制单元格的颜色
     ''' </summary>
-    Private Sub PaintRows(Optional rows As Long() = Nothing)
+    Private Sub PaintRows(Optional rows As Integer() = Nothing)
         If rows Is Nothing Then
             rows = Util.Range(0, Me.Panel.Rows)
         End If
@@ -390,7 +390,7 @@ Public Class ReoGridView
     ''' 从Model同步各行同步状态
     ''' </summary>
     ''' <param name="rows"></param>
-    Protected Sub RefreshRowSynchronizationStates(Optional rows As Long() = Nothing)
+    Protected Sub RefreshRowSynchronizationStates(Optional rows As Integer() = Nothing)
         If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
         Logger.SetMode(LogMode.REFRESH_VIEW)
         If rows Is Nothing Then
@@ -820,7 +820,7 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="row">行</param>
     ''' <param name="col">列</param>
-    Private Sub ValidateComboBoxData(row As Long, col As Long)
+    Private Sub ValidateComboBoxData(row As Integer, col As Integer)
         Dim fieldName = (From nameCol In Me.dicNameColumn Where nameCol.Value = col Select nameCol.Key).First
         Dim fieldConfig = (From config In Me.Configuration.GetFieldConfigurations(Me.Mode) Where config.Name = fieldName Select config).First
         '验证数据
@@ -901,7 +901,7 @@ Public Class ReoGridView
     ''' <param name="row">要导入的行</param>
     ''' <param name="colName">要导入的列名</param>
     ''' <returns>是否导入成功</returns>
-    Protected Function ImportCell(row As Long, colName As String) As Boolean
+    Protected Function ImportCell(row As Integer, colName As String) As Boolean
         Logger.Debug("==ReoGrid ImportCell: " + Str(Me.GetHashCode))
         Logger.SetMode(LogMode.REFRESH_VIEW)
         If Me.Model.RowCount = 0 Then
@@ -980,7 +980,7 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="rows">要导入的行</param>
     ''' <returns>是否导入成功</returns>
-    Protected Function ImportData(Optional rows As Long() = Nothing) As Boolean
+    Protected Function ImportData(Optional rows As Integer() = Nothing) As Boolean
         Logger.Debug("==ReoGrid ImportData: " + Str(Me.GetHashCode))
         Logger.SetMode(LogMode.REFRESH_VIEW)
         If Me.Model.RowCount = 0 Then
@@ -1078,7 +1078,7 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="n"></param>
     ''' <returns></returns>
-    Private Function Range(n As Integer) As Long()
+    Private Function Range(n As Integer) As Integer()
         Return Me.Range(0, n)
     End Function
 
@@ -1088,8 +1088,8 @@ Public Class ReoGridView
     ''' <param name="start"></param>
     ''' <param name="end"></param>
     ''' <returns></returns>
-    Private Function Range(start As Long, [end] As Long) As Long()
-        Dim array([end] - start - 1) As Long
+    Private Function Range(start As Integer, [end] As Integer) As Integer()
+        Dim array([end] - start - 1) As Integer
         For i = 0 To array.Length - 1
             array(i) = start + i
         Next
@@ -1100,7 +1100,7 @@ Public Class ReoGridView
     ''' 清空行
     ''' </summary>
     ''' <param name="rows">要清空的行</param>
-    Protected Sub ClearRows(rows As Long())
+    Protected Sub ClearRows(rows As Integer())
         RemoveHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
         For Each row In rows
             For col = 0 To Me.Panel.Columns - 1
@@ -1120,7 +1120,7 @@ Public Class ReoGridView
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
         If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
 
-        Dim rowsUpdated As List(Of Long) = Me.Range(rangePosition.Row, System.Math.Min(Me.Model.RowCount, rangePosition.EndRow + 1)).ToList
+        Dim rowsUpdated As List(Of Integer) = Me.Range(rangePosition.Row, System.Math.Min(Me.Model.RowCount, rangePosition.EndRow + 1)).ToList
         Dim updateData = New List(Of Dictionary(Of String, Object))
 
         '删除掉没有真正修改内容的行
@@ -1160,7 +1160,7 @@ Public Class ReoGridView
             Throw New FrontWorkException("ExportCells() can only be used when single column selected")
         End If
 
-        Dim rowsUpdated As List(Of Long) = Me.Range(rangePosition.Row, System.Math.Min(Me.Model.RowCount, rangePosition.EndRow + 1)).ToList
+        Dim rowsUpdated As List(Of Integer) = Me.Range(rangePosition.Row, System.Math.Min(Me.Model.RowCount, rangePosition.EndRow + 1)).ToList
         Dim colUpdated As Integer = rangePosition.Col
         Dim fieldName = (From item In Me.dicNameColumn Where item.Value = colUpdated Select item.Key).FirstOrDefault
         Dim fieldConfiguration = (From fm In Me.Configuration.GetFieldConfigurations(Me.Mode) Where fm.Name = fieldName Select fm).FirstOrDefault
@@ -1204,7 +1204,7 @@ Public Class ReoGridView
     ''' <param name="col">列</param>
     ''' <param name="fieldConfiguration">字段的Configuration</param>
     ''' <returns></returns>
-    Protected Function GetMappedCellData(row As Long, col As Integer, fieldConfiguration As FieldConfiguration)
+    Protected Function GetMappedCellData(row As Integer, col As Integer, fieldConfiguration As FieldConfiguration)
         Dim curReoGridCell = Me.Panel.GetCell(row, col)
         '获取Cell中的文字
         Dim text As String
@@ -1229,7 +1229,7 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <returns>生成的字典</returns>
-    Protected Function RowToDictionary(row As Long) As Dictionary(Of String, Object)
+    Protected Function RowToDictionary(row As Integer) As Dictionary(Of String, Object)
         Dim dic = New Dictionary(Of String, Object)
 
         For Each curField As FieldConfiguration In Me.Configuration.GetFieldConfigurations(Me.Mode)
@@ -1270,7 +1270,7 @@ Public Class ReoGridView
     ''' <param name="row">行号</param>
     ''' <param name="col">列号</param>
     ''' <returns>单元格状态</returns>
-    Protected Function GetCellState(row As Long, col As Long) As CellState
+    Protected Function GetCellState(row As Integer, col As Integer) As CellState
         If Me.dicCellState.ContainsKey(row) AndAlso Me.dicCellState(row).ContainsKey(col) Then
             Return Me.dicCellState(row)(col)
         Else
@@ -1284,10 +1284,10 @@ Public Class ReoGridView
     ''' <param name="row">行号</param>
     ''' <param name="col">列号</param>
     ''' <param name="cellState">单元格状态</param>
-    Protected Sub AddCellState(row As Long, col As Long, cellState As CellState)
+    Protected Sub AddCellState(row As Integer, col As Integer, cellState As CellState)
         Dim oriCellState = Me.GetCellState(row, col)
         cellState = oriCellState Or cellState
-        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Long, Long))
+        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Integer, Long))
         If Not Me.dicCellState(row).ContainsKey(col) Then
             Me.dicCellState(row).Add(col, cellState)
         Else
@@ -1300,8 +1300,8 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <param name="cellState">单元格状态</param>
-    Protected Sub AddCellState(row As Long, cellState As CellState)
-        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Long, Long))
+    Protected Sub AddCellState(row As Integer, cellState As CellState)
+        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Integer, Long))
         Dim cols = Util.Range(0, Me.Panel.Columns)
         For Each col In cols
             Dim oriCellState = Me.GetCellState(row, col)
@@ -1316,10 +1316,10 @@ Public Class ReoGridView
     ''' <param name="row">行号</param>
     ''' <param name="col">列号</param>
     ''' <param name="cellState">要去除的状态</param>
-    Protected Sub RemoveCellState(row As Long, col As Long, cellState As CellState)
+    Protected Sub RemoveCellState(row As Integer, col As Integer, cellState As CellState)
         Dim oriCellState = Me.GetCellState(row, col)
         Dim newCellState = oriCellState And Not cellState
-        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Long, Long))
+        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Integer, Long))
         If Not Me.dicCellState(row).ContainsKey(col) Then
             Me.dicCellState(row).Add(col, newCellState)
         Else
@@ -1332,8 +1332,8 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <param name="cellState">要去除的状态</param>
-    Protected Sub RemoveCellState(row As Long, cellState As CellState)
-        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Long, Long))
+    Protected Sub RemoveCellState(row As Integer, cellState As CellState)
+        If Not Me.dicCellState.ContainsKey(row) Then Me.dicCellState.Add(row, New Dictionary(Of Integer, Long))
         Dim cols = Util.Range(0, Me.Panel.Columns)
         For Each col In cols
             Dim oriCellState = Me.GetCellState(row, col)
@@ -1346,7 +1346,7 @@ Public Class ReoGridView
     ''' 清除整行的单元格状态
     ''' </summary>
     ''' <param name="row">行号</param>
-    Protected Sub ClearCellState(row As Long)
+    Protected Sub ClearCellState(row as Integer)
         If Me.dicCellState.ContainsKey(row) Then
             Call Me.dicCellState.Remove(row)
         End If
@@ -1358,7 +1358,7 @@ Public Class ReoGridView
     ''' <param name="row">行号</param>
     ''' <param name="fieldName">字段名</param>
     ''' <returns>单元格对象</returns>
-    Public Function GetViewComponent(row As Long, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
+    Public Function GetViewComponent(row as Integer, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
         If Me.Panel.RowCount <= row Then
             Throw New FrontWorkException($"Row {row} exceeded the last row of ReoGridView")
         End If

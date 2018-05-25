@@ -6,7 +6,7 @@ Public Class IndexRowSynchronizationStatePair
     ''' 行号
     ''' </summary>
     ''' <returns></returns>
-    Public Property Index As Long
+    Public Property Index as Integer
 
     ''' <summary>
     ''' 行ID
@@ -20,7 +20,7 @@ Public Class IndexRowSynchronizationStatePair
     ''' <returns></returns>
     Public Property SynchronizationState As SynchronizationState
 
-    Public Sub New(index As Long, rowID As Guid, synchronizationState As SynchronizationState)
+    Public Sub New(index as Integer, rowID As Guid, synchronizationState As SynchronizationState)
         Me.Index = index
         Me.RowID = rowID
         Me.SynchronizationState = synchronizationState

@@ -84,12 +84,16 @@ Public Class JsonRESTAPIInfo
     ''' <param name="paramName">参数名</param>
     ''' <param name="value">参数值</param>
     Public Sub SetRequestParameter(paramName As String, value As Object)
-        If TypeOf (value) Is JsValue Then
+        If value Is Nothing Then '如果是Nothing，直接设置为null
+            Me.requestJSEngine.SetValue(paramName, JsValue.Null)
+        ElseIf TypeOf (value) Is JsValue Then '如果是JsValue，原样置入
             Call Me.requestJSEngine.SetValue(paramName, value)
-        Else
+        ElseIf value.GetType.IsValueType OrElse TypeOf value Is String Then '对于基本类型，直接设置值
+            Me.requestJSEngine.SetValue(paramName, value)
+        Else '对于其他对象，序列化成json对象
             Dim serializer As New JavaScriptSerializer
-        Dim serializedStr = serializer.Serialize(value)
-        serializedStr = Regex.Replace(serializedStr, "\\/Date\((\d+)\)\\/",
+            Dim serializedStr = serializer.Serialize(value)
+            serializedStr = Regex.Replace(serializedStr, "\\/Date\((\d+)\)\\/",
                                       Function(match)
                                           Dim dt = New DateTime(1970, 1, 1)
                                           dt = dt.AddMilliseconds(Long.Parse(match.Groups(1).Value))
@@ -107,7 +111,11 @@ Public Class JsonRESTAPIInfo
     ''' <param name="jsonString">参数值</param>
     Public Sub SetJsonRequestParameter(paramName As String, jsonString As String)
         Try
-            Me.requestJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
+            If jsonString Is Nothing Then
+                Me.requestJSEngine.Execute($"{paramName} = null;")
+            Else
+                Me.requestJSEngine.Execute($"{paramName} = JSON.parse('{jsonString}');")
+            End If
         Catch
             Throw New FrontWorkException($"Invalid jsonString: ""{jsonString}""")
         End Try

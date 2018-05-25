@@ -6,7 +6,7 @@ Public Class PositionCellPair
     ''' 所在行号
     ''' </summary>
     ''' <returns></returns>
-    Public Property Row As Long
+    Public Property Row as Integer
 
     ''' <summary>
     ''' 所在行ID
@@ -26,7 +26,7 @@ Public Class PositionCellPair
     ''' <returns></returns>
     Public Property CellData As Object
 
-    Public Sub New(row As Long, rowID As Guid, columnName As String, cellData As Object)
+    Public Sub New(row as Integer, rowID As Guid, columnName As String, cellData As Object)
         Me.Row = row
         Me.CellData = cellData
         Me.ColumnName = columnName
