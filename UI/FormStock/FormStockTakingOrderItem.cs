@@ -218,14 +218,14 @@ namespace WMS.UI.FormStockTaking
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             string body= "{\"stockTakingOrderId\":\"3\",\"warehouseId\":\"1\",\"personId\":\"19\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all/";
-            MessageBox.Show(body);
-            MessageBox.Show(url);
-            var warehouseList = RestClient.Post<List<IDictionary<string, object>>>(url,body);
+            //string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
+            string url = "http://localhost:9000/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
+            
+            var a = RestClient.Post<List<IDictionary<string, object>>>(url,body);
         }
     }
 
-
+     
 
 }
 
