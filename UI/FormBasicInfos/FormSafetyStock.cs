@@ -126,6 +126,7 @@ namespace WMS.UI.FormBasicInfos
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
+            this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
@@ -134,6 +135,7 @@ namespace WMS.UI.FormBasicInfos
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
+            this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
@@ -141,6 +143,7 @@ namespace WMS.UI.FormBasicInfos
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.model1[row, "materialName"] = "";
+            this.FindSupplierID(row);
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -150,6 +153,7 @@ namespace WMS.UI.FormBasicInfos
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
+            this.FindSupplierID(row);
             this.TryGetSupplyID(row);
         }
 
@@ -218,6 +222,7 @@ namespace WMS.UI.FormBasicInfos
             //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
             if (foundSupplies.Length == 1)
             {
+                int a = (int)foundSupplies[0]["id"];
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
                 this.FillDefaultValue(row, "amount", foundSupplies[0]["defaultDeliveryAmount"]);
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
@@ -228,6 +233,11 @@ namespace WMS.UI.FormBasicInfos
                 this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
                 this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
                 this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
+            }
+            else
+            {
+                MessageBox.Show("供应信息不存在，请重新选择物料——供货商！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
 

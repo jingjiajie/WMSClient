@@ -16,6 +16,7 @@ namespace WMS.UI.FormBasicInfos
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.CellUpdated += this.model_CellUpdated;
         }
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)

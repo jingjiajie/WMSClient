@@ -123,7 +123,7 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-        {name:"transferOrderId",displayName:"移库单ID",type:"string",visible:false},
+        {name:"transferOrderId",displayName:"移库单ID",type:"string",defaultValue:"#transferOrderIdDefaultValue"},
         {name:"transferOrderNo",displayName:"移库单号",type:"string"},
         {name:"scheduledAmount",displayName:"计划数量",type:"double"},
         {name:"realAmount",displayName:"实际数量",type:"double"},
@@ -151,23 +151,23 @@
  ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/transfer_order/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/transfer_order_item/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/transfer_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/transfer_order_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/transfer_order/",
+            url:"{$url}/warehouse/{$accountBook}/transfer_order_item/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/transfer_order/",
+            url:"{$url}/warehouse/{$accountBook}/transfer_order_item/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/transfer_order/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/transfer_order_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }

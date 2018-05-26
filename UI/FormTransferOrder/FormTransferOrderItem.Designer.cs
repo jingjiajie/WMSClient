@@ -227,7 +227,7 @@
             this.configuration1.Location = new System.Drawing.Point(137, 34);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntry",
+        "FormTransferOrderItem",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -289,7 +289,7 @@
             this.pagerView1.Margin = new System.Windows.Forms.Padding(0);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
+            this.pagerView1.PageSize = 50;
             this.pagerView1.Size = new System.Drawing.Size(791, 24);
             this.pagerView1.TabIndex = 15;
             // 
@@ -308,6 +308,7 @@
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(489, 54);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";

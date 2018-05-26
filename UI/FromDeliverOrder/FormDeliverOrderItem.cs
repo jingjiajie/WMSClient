@@ -12,19 +12,28 @@ namespace WMS.UI.FromDeliverOrder
 {
     public partial class FormDeliverOrderItem : Form
     {
-        private IDictionary<string, object> deliverOrder = null;
+        private IDictionary<string, object> deliveryOrder = null;
 
-        public FormDeliverOrderItem(IDictionary<string, object> deliverOrder)
+        public FormDeliverOrderItem(IDictionary<string, object> deliveryOrder)
         {
             MethodListenerContainer.Register(this);
-            this.deliverOrder = deliverOrder;
+            this.deliveryOrder = deliveryOrder;
             InitializeComponent();
-            this.searchView1.AddStaticCondition("deliveryOrderId", this.deliverOrder["id"]);
+            this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
         }
 
+        private int deliveryOrderIdDefaultValue()
+        {
+            return (int)this.deliveryOrder["id"];
+        }
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, null);
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "personId",GlobalData.Person["id"]},
+                { "personName",GlobalData.Person["name"]},
+                { "deliveryOrderNo", this.deliveryOrder["no"]}
+            });
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -35,7 +44,10 @@ namespace WMS.UI.FromDeliverOrder
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void FormDeliverOrderItem_Load(object sender, EventArgs e)
@@ -43,7 +55,6 @@ namespace WMS.UI.FromDeliverOrder
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
         }
 
@@ -126,13 +137,10 @@ namespace WMS.UI.FromDeliverOrder
             this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
-            string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -141,6 +149,7 @@ namespace WMS.UI.FromDeliverOrder
             this.model1[row, "materialId"] = foundMaterials[0]["id"];
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
+            this.model1[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:

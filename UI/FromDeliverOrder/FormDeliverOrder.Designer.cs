@@ -148,8 +148,8 @@
             this.buttonOpen,
             this.toolStripSeparator2,
             this.toolStripButtonAdd,
-            this.buttonAlter,
             this.buttonDelete,
+            this.buttonAlter,
             this.toolStripSeparator1,
             this.buttonTransferOrder,
             this.buttonDeliver,
@@ -168,8 +168,8 @@
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(92, 19);
-            this.buttonOpen.Text = "查看出库单";
+            this.buttonOpen.Size = new System.Drawing.Size(116, 19);
+            this.buttonOpen.Text = "查看出库单条目";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
             // toolStripSeparator2
@@ -278,7 +278,7 @@
             this.pagerView1.Margin = new System.Windows.Forms.Padding(1);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((50));
+            this.pagerView1.PageSize = 50;
             this.pagerView1.Size = new System.Drawing.Size(787, 26);
             this.pagerView1.TabIndex = 13;
             // 
@@ -357,6 +357,7 @@
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(409, 51);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
