@@ -223,6 +223,17 @@ namespace WMS.UI.FormStockTaking
             MessageBox.Show("添加成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
             this.searchView1.Search();
         }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {     
+            this.model1.InsertRow(0, null);
+            this.model1.
+            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"1000\"}";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
+            RestClient.Post<List<IDictionary<string, object>>>(url, body);
+            MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.searchView1.Search();    
+        }
     }
 
      
