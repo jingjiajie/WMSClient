@@ -264,9 +264,14 @@ Public Class ReoGridView
             Return
         End If
 
-        For Each indexDataRow In e.RemovedRows
-            If Me.Panel.Rows > indexDataRow.Index Then
-                Me.DeleteRows(indexDataRow.Index, 1)
+        '因为每次删除行会导致行号改变，所以倒序删除
+        Dim rowDESC = (From indexRow In e.RemovedRows
+                       Order By indexRow.Index Descending
+                       Select indexRow.Index).ToArray
+
+        For Each curRow In rowDESC
+            If Me.Panel.Rows > curRow Then
+                Me.DeleteRows(curRow, 1)
             End If
         Next
     End Sub
