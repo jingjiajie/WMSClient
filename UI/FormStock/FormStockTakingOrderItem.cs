@@ -225,15 +225,70 @@ namespace WMS.UI.FormStockTaking
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
-        {     
-            this.model1.InsertRow(0, null);
-            this.model1.
-            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"1000\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
+        {
+            this.model1.Mode = "addSingle";
+            this.synchronizer.Mode = "addSingle";
+            this.reoGridView1.Mode = "addSingle";
+            this.basicView1.Mode = "addSingle";
+            this.model1.InsertRow(0, null);  
+        }
+
+        private void SupplierNoEditEnded1(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
+            this.model1[row, "supplierName"] = "";
+            this.FindSupplierID(row);
+            this.TryGetSupplyID(row);
+            this.TryAddItem(row);
+        }
+
+        private void SupplierNameEditEnded1(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
+            this.model1[row, "supplierNo"] = "";
+            this.FindSupplierID(row);
+            this.TryGetSupplyID(row);
+            this.TryAddItem(row);
+        }
+
+        private void MaterialNoEditEnded1(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
+            this.model1[row, "materialName"] = "";
+            this.FindMaterialID(row);
+            this.TryGetSupplyID(row);
+            this.TryAddItem(row);
+        }
+
+        private void MaterialNameEditEnded1(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
+            this.model1[row, "materialNo"] = "";
+            this.FindMaterialID(row);
+            this.TryGetSupplyID(row);
+            this.TryAddItem(row);
+        }
+
+        private void MaterialProductLineEditEnded1(int row)
+        {
+            this.FindMaterialID(row);
+            this.TryGetSupplyID(row);
+            this.TryAddItem(row);
+        }
+
+
+        private void TryAddItem(int row)
+        {
+            int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
+            if (supplyId == 0) return;
+            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\""+supplyId+"\"}";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";       
             RestClient.Post<List<IDictionary<string, object>>>(url, body);
             MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.searchView1.Search();    
+            this.searchView1.Search();          
         }
+
+
     }
 
      
