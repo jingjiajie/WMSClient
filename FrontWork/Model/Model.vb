@@ -435,12 +435,19 @@ Public Class Model
         Dim indexRowList = New List(Of RowInfo)
         Try
             '每次删除行后行号会变，所以要做调整
-            Dim realRows(rows.Length - 1) As Integer
-            For i = 0 To rows.Length - 1
-                realRows(i) = rows(i) - i
+            Dim rowsASC = (From r In rows
+                           Order By r Ascending
+                           Select r).ToArray
+            Dim realRows(rowsASC.Length - 1) As Integer
+            For i = 0 To rowsASC.Length - 1
+                realRows(i) = rowsASC(i) - i
             Next
-            For Each curRowNum In realRows
-                Dim newIndexRowPair = New RowInfo(curRowNum, Me.GetRowID(Me.Data.Rows(curRowNum)), Me.DataRowToDictionary(Me.Data.Rows(curRowNum)), Me.GetRowSynchronizationState(Me.Data.Rows(rows(curRowNum))))
+            '触发事件时的行按传入的行号，和行ID。
+            For Each curRowNum In rowsASC
+                Dim newIndexRowPair = New RowInfo(curRowNum,
+                                                  Me.GetRowID(Me.Data.Rows(curRowNum)),
+                                                  Me.DataRowToDictionary(Me.Data.Rows(curRowNum)),
+                                                  Me.GetRowSynchronizationState(Me.Data.Rows(curRowNum)))
                 indexRowList.Add(newIndexRowPair)
             Next
             Dim beforeRowRemoveEventArgs As New ModelBeforeRowRemoveEventArgs With {
