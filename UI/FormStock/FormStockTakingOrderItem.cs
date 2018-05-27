@@ -281,14 +281,28 @@ namespace WMS.UI.FormStockTaking
         {
             int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
             if (supplyId == 0) return;
-            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\""+supplyId+"\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";       
-            RestClient.Post<List<IDictionary<string, object>>>(url, body);
-            MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.searchView1.Search();          
+            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"" + supplyId + "\"}";
+            string url = Defines.ServerURL + "/warehouse1/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
+            try
+            {
+                RestClient.Post<bool>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.model1.Mode = "default";
+                this.synchronizer.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.searchView1.Search();
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.Mode = "default";
+                this.synchronizer.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.searchView1.Search();
+            }
         }
-
-
     }
 
      
