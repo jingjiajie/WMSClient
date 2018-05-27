@@ -41,8 +41,8 @@
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
+            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonTransferOrder = new System.Windows.Forms.ToolStripButton();
             this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
@@ -187,15 +187,6 @@
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
-            // buttonAlter
-            // 
-            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
-            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(80, 19);
-            this.buttonAlter.Text = "保存修改";
-            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
-            // 
             // buttonDelete
             // 
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
@@ -204,6 +195,15 @@
             this.buttonDelete.Size = new System.Drawing.Size(56, 19);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // buttonAlter
+            // 
+            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
+            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAlter.Name = "buttonAlter";
+            this.buttonAlter.Size = new System.Drawing.Size(80, 19);
+            this.buttonAlter.Text = "保存修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // toolStripSeparator1
             // 
@@ -319,6 +319,7 @@
             this.model1.SelectionRange = null;
             this.model1.Size = new System.Drawing.Size(180, 180);
             this.model1.TabIndex = 7;
+            this.model1.Load += new System.EventHandler(this.model1_Load);
             // 
             // panel2
             // 

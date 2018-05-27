@@ -117,27 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="configurationInspectionNoteItem.ConfigurationString" xml:space="preserve">
+  <data name="configurationTransferOrderItem.ConfigurationString" xml:space="preserve">
     <value>[
     {mode:"default",
      fields:[
-        {name:"warehouseEntryItemId",displayName:"入库单条目ID",type:"int",visible:true},
-        {name:"amount",displayName:"送检数量",type:"double",placeHolder:"必填项"},
-        {name:"unit",displayName:"送检单位",placeHolder:"必填项"},
-        {name:"unitAmount",displayName:"送检单位数量",type:"double",placeHolder:"必填项"},
-        {name:"inspectionStorageLocationId",displayName:"待检库位ID",type:"int",visible:false},
-        {name:"inspectionStorageLocationNo",displayName:"待检库位编码",placeHolder:"必填项"},
-        {name:"inspectionStorageLocationName",displayName:"待检库位名称",placeHolder:"必填项"},
-        {name:"materialNo",displayName:"物料代号",editable:false},
-        {name:"materialName",displayName:"物料名称",editable:false},
-        {name:"materialProductLine",displayName:"物料系列",editable:false},
-        {name:"supplierName",displayName:"供货商名称",editable:false},
-        {name:"inspectionAmount",displayName:"已分配送检数量",type:"double"},
-        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"}
+        {name:"transferOrderId",displayName:"移库单ID",type:"string",defaultValue:"#transferOrderIdDefaultValue"},
+        {name:"scheduledAmount",displayName:"计划数量",type:"double"},
+        {name:"unit",displayName:"单位"},
+        {name:"unitAmount",displayName:"单位数量",type:"double"},
+        {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0},
+        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
+        {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false},
+        {name:"targetStorageLocationNo",displayName:"目标库位编码",placeHolder:"必填项",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded"},
+        {name:"targetStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#targetStorageLocationNameEditEnded"},
+        {name:"sourceStorageLocationId",displayName:"源库位ID",type:"int",visible:false},
+        {name:"sourceStorageLocationNo",displayName:"源库位编码",placeHolder:"必填项",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
+        {name:"sourceStorageLocationName",displayName:"源库位名称",association:"#storageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded"},       
+        {name:"PersonId",displayName:"作业人ID",type:"int",visible:false},
+        {name:"PersonName",displayName:"作业人名称",type:"string",editable:true},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:true,defaultValue:0},
+        {name:"materialId",displayName:"物料ID",type:"int",visible:true,defaultValue:0},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,defaultValue:0},
+        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
      ],
     httpAPIs:[
         {type:"find",
-         url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/{$condStr}",
+         url:"{$url}/warehouse/{$accountBook}/transfer_order_item/{$condStr}",
          method:"GET",
          responseBody:"$data"
         }
@@ -145,19 +153,21 @@
     }
 ]</value>
   </data>
-  <data name="configurationInspectionNote.ConfigurationString" xml:space="preserve">
+  <data name="configurationTransferOrder.ConfigurationString" xml:space="preserve">
     <value>[
     {mode:"default",
      fields:[
-        {name:"warehouseEntryId",type:"int",displayName:"入库单ID",visible:false},
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"no",displayName:"移库单号",type:"string",placeHolder:"留空自动生成"},
+        {name:"printTimes",displayName:"打印次数",type:"int",editable:false,defaultValue:"0"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
-        {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
         {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
-        {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
         {name:"createPersonId",type:"int",displayName:"创建用户ID",visible:false,defaultValue:"#createPersonIDDefaultValue"},
         {name:"createPersonName",displayName:"创建用户",editable:false,defaultValue:"#createPersonNameDefaultValue"},
         {name:"createTime",type:"datetime",displayName:"创建时间",defaultValue:"#now",editable:false}
-     ]
+
+    ],
+
     }
 ]</value>
   </data>

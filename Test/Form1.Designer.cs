@@ -37,20 +37,20 @@
             // 
             this.basicView1.Configuration = this.configuration1;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
-            this.basicView1.ItemsPerRow = 1;
-            this.basicView1.Location = new System.Drawing.Point(0, 9);
+            this.basicView1.ItemsPerRow = 3;
+            this.basicView1.Location = new System.Drawing.Point(9, 9);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
             this.basicView1.Model = null;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(315, 192);
+            this.basicView1.Size = new System.Drawing.Size(825, 192);
             this.basicView1.TabIndex = 1;
             // 
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(531, 179);
+            this.configuration1.Location = new System.Drawing.Point(1199, 9);
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
@@ -60,7 +60,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 395);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(1391, 502);
             this.Controls.Add(this.basicView1);
             this.Controls.Add(this.configuration1);
             this.Name = "Form1";

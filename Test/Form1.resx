@@ -119,28 +119,14 @@
   </resheader>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>[
-{"mode":"default",
-	"fields":[
-		{"name":"123","displayName":"123","visible":true,"editable":true},
-		{"name":"name","displayName":"ab","visible":false,"editable":false,"values":"[1,2,3]"}
-	]
-	,"httpAPIs":[
-		{"type":"pull","method":"GET"},
-		{"type":"pull","method":"GET"}
-	]
-}
-]</value>
-  </data>
-  <data name="configuration1.ConfiguratorGUI" xml:space="preserve">
-    <value>[
-{"mode":"default",
-	"fields":[
-		{"name":"123","displayName":"123","visible":true,"editable":true},
-		{"name":"name","displayName":"ab","visible":false,"editable":false,"values":"[1,2,3]"}
-	]
-	,"httpAPIs":[
-		{"type":"pull","method":"GET"},
-		{"type":"pull","method":"GET"}
+{mode:"default",
+	fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"name",displayName:"姓名",placeHolder:"点击填写姓名"},
+        {name:"age",displayName:"年龄",type:"int"},
+        {name:"password",displayName:"密码"},
+        {name:"role",displayName:"角色",values:"#roleValues"},
+        {name:"authority",displayName:"权限"}
 	]
 }
 ]</value>

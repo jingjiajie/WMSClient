@@ -117,22 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="configurationInspectionNote.ConfigurationString" xml:space="preserve">
-    <value>[
-    {mode:"default",
-     fields:[
-        {name:"warehouseEntryNo",displayName:"入库单号",visible:false},
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
-        {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
-        {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
-        {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
-        {name:"createPersonId",type:"int",displayName:"创建用户ID",visible:false,defaultValue:"#createPersonIDDefaultValue"},
-        {name:"createPersonName",displayName:"创建用户",editable:false,defaultValue:"#createPersonNameDefaultValue"},
-        {name:"createTime",type:"datetime",displayName:"创建时间",defaultValue:"#now",editable:false}
-     ]
-    }
-]</value>
-  </data>
   <data name="configurationInspectionNoteItem.ConfigurationString" xml:space="preserve">
     <value>[
     {mode:"default",
@@ -158,6 +142,22 @@
          method:"GET",
          responseBody:"$data"
         }
+     ]
+    }
+]</value>
+  </data>
+  <data name="configurationInspectionNote.ConfigurationString" xml:space="preserve">
+    <value>[
+    {mode:"default",
+     fields:[
+        {name:"warehouseEntryNo",displayName:"入库单号",visible:false},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
+        {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
+        {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
+        {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
+        {name:"createPersonId",type:"int",displayName:"创建用户ID",visible:false,defaultValue:"#createPersonIDDefaultValue"},
+        {name:"createPersonName",displayName:"创建用户",editable:false,defaultValue:"#createPersonNameDefaultValue"},
+        {name:"createTime",type:"datetime",displayName:"创建时间",defaultValue:"#now",editable:false}
      ]
     }
 ]</value>

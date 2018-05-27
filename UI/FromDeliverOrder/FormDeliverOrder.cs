@@ -70,13 +70,7 @@ namespace WMS.UI.FromDeliverOrder
         //进入备货
         private void buttonTransferOrder_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows != 1)
-            {
-                MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormTransferOrder.FormTransferOrderItem(rowData).Show();
+            new FormDeliveryOrderReady().Show();
         }
 
         private void buttonDeliver_Click(object sender, EventArgs e)
@@ -94,6 +88,11 @@ namespace WMS.UI.FromDeliverOrder
                 { "createTime",DateTime.Now},
                 { "state",1}
             });
+        }
+
+        private void model1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
