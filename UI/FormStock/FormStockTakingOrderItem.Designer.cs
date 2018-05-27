@@ -58,6 +58,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.buttonCancel = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -283,7 +284,8 @@
             this.toolStripSeparator3,
             this.toolStripSeparator1,
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.buttonCancel});
             this.toolStripTop.Location = new System.Drawing.Point(0, 31);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(1104, 28);
@@ -353,6 +355,16 @@
             this.toolStripButton2.Text = "添加供货记录";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCancel.Image")));
+            this.buttonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(93, 25);
+            this.buttonCancel.Text = "取消添加";
+            this.buttonCancel.Visible = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
             // FormStockTakingOrderItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -404,5 +416,6 @@
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton buttonCancel;
     }
 }
