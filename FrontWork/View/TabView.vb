@@ -5,55 +5,19 @@ Imports FrontWork
 
 Public Class TabView
     Implements IView
-    Private _configuration As Configuration
-    Private _model As IModel
-    Private _mode As String = "default"
-    Private _columnName As String
+    Private _modelBox As ModelBox
 
-    <Description("配置中心"), Category("FrontWork")>
-    Public Property Configuration As Configuration
+    <Description("绑定的ModelBox对象"), Category("FrontWork")>
+    Public Property ModelBox As ModelBox
         Get
-            Return _configuration
+            Return _modelBox
         End Get
-        Set(value As Configuration)
-            _configuration = value
-            Call Me.TryBindModel()
-        End Set
-    End Property
-
-    <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As IModel
-        Get
-            Return _model
-        End Get
-        Set(value As IModel)
-            If Me._model IsNot Nothing Then
-                Call Me.UnbindModel()
+        Set(value As ModelBox)
+            If Me._modelBox IsNot Nothing Then
+                Call Me.UnbindModelBox()
             End If
-            _model = value
-            Call Me.TryBindModel()
-        End Set
-    End Property
-
-    <Description("绑定Model的列名"), Category("FrontWork")>
-    Public Property ColumnName As String
-        Get
-            Return _columnName
-        End Get
-        Set(value As String)
-            _columnName = value
-            Call Me.TryBindModel()
-        End Set
-    End Property
-
-    <Description("配置模式"), Category("FrontWork")>
-    Public Property Mode As String Implements IView.Mode
-        Get
-            Return _mode
-        End Get
-        Set(value As String)
-            _mode = value
-            Call Me.TryBindModel()
+            _modelBox = value
+            Call Me.TryBindModelBox()
         End Set
     End Property
 
@@ -75,101 +39,53 @@ Public Class TabView
         Me.TabControl.ItemSize = New Size(oriItemSize.Width, Me.Height / rowCount)
     End Sub
 
-    Private Sub TryBindModel()
+    Private Sub TryBindModelBox()
         If Me.DesignMode Then Return
-        If String.IsNullOrWhiteSpace(Me.Mode) Then
-            Return
-        ElseIf String.IsNullOrWhiteSpace(Me.ColumnName) Then
-            Return
-        ElseIf Me.Model Is Nothing Then
-            Return
-        ElseIf Me.Configuration Is Nothing Then
+
+        If Me.ModelBox Is Nothing Then
             Return
         End If
-        Call Me.BindModel()
+        Call Me.BindModelBox()
     End Sub
 
-    Private Sub BindModel()
+    Private Sub BindModelBox()
         If Me.DesignMode Then Return
-        AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
-        AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-        AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        AddHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
-        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        AddHandler Me.ModelBox.ModelCollectionChangedEvent, AddressOf Me.ModelCollectionChangedEvent
+        AddHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
 
-        Call Me.ImportCells()
+        Call Me.ImportModelNames()
         Call Me.RefreshSelectionRange()
     End Sub
 
-    Private Sub UnbindModel()
+    Private Sub UnbindModelBox()
         If Me.DesignMode Then Return
-        RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
-        RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-        RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        RemoveHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
-        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-
+        RemoveHandler Me.ModelBox.ModelCollectionChangedEvent, AddressOf Me.ModelCollectionChangedEvent
+        RemoveHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
     End Sub
 
-    Private Sub ModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
-        Call Me.ImportCells()
+    Private Sub ModelCollectionChangedEvent(sender As Object, e As ModelCollectionChangedEventArgs)
+        Call Me.ImportModelNames()
         Call Me.RefreshSelectionRange()
     End Sub
 
-    Private Sub ImportCells(Optional rows As Integer() = Nothing)
+    Private Sub ImportModelNames()
         If Me.DesignMode Then Return
-        If Me.Model Is Nothing Then
-            Throw New FrontWorkException($"Model not set in {Me.Name}!")
+        If Me.ModelBox Is Nothing Then
+            Throw New FrontWorkException($"ModelBox not set in {Me.Name}!")
         End If
-        Dim fieldConfigurations = Me.Configuration.GetFieldConfigurations(Me.Mode)
-        If fieldConfigurations Is Nothing Then
-            Throw New FrontWorkException($"Mode Configuration:""{Me.Mode}"" not found!")
-        End If
-        Dim field = (From f In fieldConfigurations Where f.Name.Equals(Me.ColumnName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
-        '如果列名在Configuration里不存在，或者在Model里不存在的情况，直接返回
-        If field Is Nothing Then Return
-        If Not Me.Model.ContainsColumn(Me.ColumnName) Then Return
         RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
-        If rows Is Nothing Then
-            Call Me.TabControl.TabPages.Clear()
-            For i = 0 To Me.Model.RowCount - 1
-                Me.TabControl.TabPages.Add(String.Empty)
-            Next
-            rows = Util.ToArray(Of Integer)(Util.Range(0, Me.Model.RowCount))
-        End If
-        AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
-        For i = 0 To rows.Length - 1
-            Dim row = rows(i)
-            Dim value = Me.Model(row, Me.ColumnName)
-            Dim text As String
-            If field.ForwardMapper IsNot Nothing Then
-                Dim ret = field.ForwardMapper.Invoke(Me, value)
-                If String.IsNullOrWhiteSpace(ret) Then
-                    text = vbTab
-                Else
-                    text = ret.ToString
-                End If
-            Else
-                If String.IsNullOrWhiteSpace(value) Then
-                    text = vbTab
-                Else
-                    text = value.ToString
-                End If
-            End If
-            Me.TabControl.TabPages.Item(row).Text = text
+        Call Me.TabControl.TabPages.Clear()
+        For Each model As IModel In Me.ModelBox.Models
+            Me.TabControl.TabPages.Add(New TabPage With {
+                .Name = model.Name,
+                .Text = model.Name
+            })
         Next
+        AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
     End Sub
 
-    Private Sub ModelSelectionRangeChangedEvent(sender As Object, e As ModelSelectionRangeChangedEventArgs)
+    Private Sub SelectedModelChangedEvent(sender As Object, e As SelectedModelChangedEventArgs)
         Call Me.RefreshSelectionRange()
-    End Sub
-
-    Private Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
-        Call Me.ImportCells((From posCell In e.UpdatedCells
-                             Where posCell.ColumnName.Equals(Me.ColumnName, StringComparison.OrdinalIgnoreCase)
-                             Select CInt(posCell.Row)).ToArray)
     End Sub
 
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
@@ -180,41 +96,29 @@ Public Class TabView
         AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
     End Sub
 
-    Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
-        Call Me.ImportCells((From indexRow In e.UpdatedRows
-                             Select CInt(indexRow.Index)).ToArray)
-    End Sub
-
-    Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-        Dim rows As Integer() = (From item In e.AddedRows Select CInt(item.Index)).ToArray
-        For i = 0 To rows.Length - 1
-            Dim row = rows(i)
-            Me.TabControl.TabPages.Insert(row, "")
-            Me.TabControl.TabPages(row).Margin = New Padding(0)
-            Me.TabControl.TabPages(row).Padding = New Padding(0)
-        Next
-        '刷新数据
-        Call Me.ImportCells(rows)
-    End Sub
-
     Private Sub TabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl.SelectedIndexChanged
         If Me.DesignMode Then Return
-        If Me.Model Is Nothing Then
-            Throw New FrontWorkException($"Model not set in {Me.Name}!")
+        If Me.ModelBox Is Nothing Then
+            Throw New FrontWorkException($"ModelBox not set in {Me.Name}!")
         End If
-        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        Me.Model.SelectionRange = New Range(Me.TabControl.SelectedIndex, 0, 1, Me.Model.ColumnCount)
-        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        RemoveHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
+        Me.ModelBox.CurrentModelName = Me.TabControl.SelectedTab.Name
+        AddHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
     End Sub
 
     Private Sub RefreshSelectionRange()
         If Me.DesignMode Then Return
-        If Me.Model Is Nothing Then
-            Throw New FrontWorkException($"Model not set in {Me.Name}!")
+        If Me.ModelBox Is Nothing Then
+            Throw New FrontWorkException($"ModelBox not set in {Me.Name}!")
         End If
         RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
-        If Me.Model.SelectionRange IsNot Nothing Then
-            Me.TabControl.SelectedIndex = Me.Model.SelectionRange.Row
+        If Me.ModelBox.CurrentModelName IsNot Nothing Then
+            For Each tabPage As TabPage In Me.TabControl.TabPages
+                If tabPage.Name = Me.ModelBox.CurrentModelName Then
+                    Me.TabControl.SelectedTab = tabPage
+                    Exit For
+                End If
+            Next
         End If
         AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
     End Sub

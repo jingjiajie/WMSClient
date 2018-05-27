@@ -56,6 +56,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
@@ -108,7 +109,9 @@
     <Compile Include="Model\DataStructures\IndexRowSynchronizationStatePair.vb" />
     <Compile Include="Model\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelCollectionChangedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowSynchronizationStateChangedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\SelectedModelChangedEventArgs.vb" />
     <Compile Include="Model\ModelBox.Designer.vb">
       <DependentUpon>ModelBox.vb</DependentUpon>
     </Compile>

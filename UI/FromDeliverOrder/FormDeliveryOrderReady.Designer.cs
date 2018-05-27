@@ -300,15 +300,12 @@
             // tabView1
             // 
             this.tabView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.tabView1.ColumnName = "no";
-            this.tabView1.Configuration = this.configurationWarehouseEntry;
             this.tabView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabView1.Font = new System.Drawing.Font("宋体", 10F);
             this.tabView1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabView1.Location = new System.Drawing.Point(0, 0);
             this.tabView1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabView1.Mode = "default";
-            this.tabView1.Model = this.modelWarehouseEntry;
+            this.tabView1.ModelBox = this.modelBoxInspectionNoteItems;
             this.tabView1.Name = "tabView1";
             this.tabView1.Size = new System.Drawing.Size(889, 25);
             this.tabView1.TabIndex = 0;

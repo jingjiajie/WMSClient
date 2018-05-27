@@ -121,7 +121,7 @@
     <value>[
     {mode:"default",
      fields:[
-        {name:"warehouseEntryId",type:"int",displayName:"入库单ID",visible:false},
+        {name:"warehouseEntryNo",displayName:"入库单号",visible:false},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
         {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
         {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
@@ -137,6 +137,7 @@
     <value>[
     {mode:"default",
      fields:[
+        {name:"warehouseEntryNo",displayName:"入库单号",visible:true},
         {name:"warehouseEntryItemId",displayName:"入库单条目ID",type:"int",visible:true},
         {name:"amount",displayName:"送检数量",type:"double",placeHolder:"必填项"},
         {name:"unit",displayName:"送检单位",placeHolder:"必填项"},

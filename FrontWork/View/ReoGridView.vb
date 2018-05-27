@@ -134,7 +134,7 @@ Public Class ReoGridView
     ''' </summary>
     ''' <returns></returns>
     <Description("当前配置模式"), Category("FrontWork")>
-    Public Property Mode As String Implements IView.Mode
+    Public Property Mode As String
         Get
             Return Me._mode
         End Get

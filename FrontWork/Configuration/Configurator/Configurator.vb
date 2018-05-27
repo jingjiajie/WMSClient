@@ -37,52 +37,52 @@ Public Class Configurator
     End Sub
 
     Public Function ToJson() As String
-        Dim sbJson As New StringBuilder
-        sbJson.AppendLine("[")
-        For i = 0 To Me.ModelBoxFields.Models.Length - 1
-            Dim modelFields = Me.ModelBoxFields.Models(i)
-            Dim datatableFields = modelFields.GetDataTable
-            sbJson.AppendLine($"{{""mode"":""{modelFields.Name}"",")
-            '生成字段配置
-            sbJson.AppendLine(vbTab & """fields"":[")
-            For j = 0 To datatableFields.Rows.Count - 1
-                Dim row = datatableFields.Rows(j)
-                Dim curField = Me.GenerateFieldConfiguration(row)
-                If curField IsNot Nothing Then
-                    sbJson.Append(curField)
-                    If j <> datatableFields.Rows.Count - 1 Then
-                        sbJson.Append(",")
-                    End If
-                    sbJson.AppendLine()
-                End If
-            Next
-            sbJson.Append(vbTab)
-            sbJson.AppendLine("]")
-            '生成API配置
-            Dim modelHTTPAPIs = Me.ModelBoxHTTPAPIs.Models(modelFields.Name)
-            Dim datatableHTTPAPIs = modelHTTPAPIs.GetDataTable
-            sbJson.AppendLine(vbTab & ",""httpAPIs"":[")
-            For j = 0 To datatableHTTPAPIs.Rows.Count - 1
-                Dim row = datatableHTTPAPIs.Rows(j)
-                Dim curAPI = Me.GenerateHTTPAPIConfiguration(row)
-                If curAPI IsNot Nothing Then
-                    sbJson.Append(curAPI)
-                    If j <> datatableHTTPAPIs.Rows.Count - 1 Then
-                        sbJson.Append(",")
-                    End If
-                    sbJson.AppendLine()
-                End If
-            Next
-            sbJson.Append(vbTab)
-            sbJson.AppendLine("]")
-            sbJson.Append("}")
-            If i <> Me.ModelBoxFields.Models.Length - 1 Then
-                sbJson.Append(",")
-            End If
-            sbJson.AppendLine()
-        Next
-        sbJson.Append("]")
-        Return sbJson.ToString
+        'Dim sbJson As New StringBuilder
+        'sbJson.AppendLine("[")
+        'For i = 0 To Me.ModelBoxFields.Models.Length - 1
+        '    Dim modelFields = Me.ModelBoxFields.Models(i)
+        '    Dim datatableFields = modelFields.GetDataTable
+        '    sbJson.AppendLine($"{{""mode"":""{modelFields.Name}"",")
+        '    '生成字段配置
+        '    sbJson.AppendLine(vbTab & """fields"":[")
+        '    For j = 0 To datatableFields.Rows.Count - 1
+        '        Dim row = datatableFields.Rows(j)
+        '        Dim curField = Me.GenerateFieldConfiguration(row)
+        '        If curField IsNot Nothing Then
+        '            sbJson.Append(curField)
+        '            If j <> datatableFields.Rows.Count - 1 Then
+        '                sbJson.Append(",")
+        '            End If
+        '            sbJson.AppendLine()
+        '        End If
+        '    Next
+        '    sbJson.Append(vbTab)
+        '    sbJson.AppendLine("]")
+        '    '生成API配置
+        '    Dim modelHTTPAPIs = Me.ModelBoxHTTPAPIs.Models(modelFields.Name)
+        '    Dim datatableHTTPAPIs = modelHTTPAPIs.GetDataTable
+        '    sbJson.AppendLine(vbTab & ",""httpAPIs"":[")
+        '    For j = 0 To datatableHTTPAPIs.Rows.Count - 1
+        '        Dim row = datatableHTTPAPIs.Rows(j)
+        '        Dim curAPI = Me.GenerateHTTPAPIConfiguration(row)
+        '        If curAPI IsNot Nothing Then
+        '            sbJson.Append(curAPI)
+        '            If j <> datatableHTTPAPIs.Rows.Count - 1 Then
+        '                sbJson.Append(",")
+        '            End If
+        '            sbJson.AppendLine()
+        '        End If
+        '    Next
+        '    sbJson.Append(vbTab)
+        '    sbJson.AppendLine("]")
+        '    sbJson.Append("}")
+        '    If i <> Me.ModelBoxFields.Models.Length - 1 Then
+        '        sbJson.Append(",")
+        '    End If
+        '    sbJson.AppendLine()
+        'Next
+        'sbJson.Append("]")
+        'Return sbJson.ToString
 
     End Function
 
@@ -231,16 +231,16 @@ Public Class Configurator
     End Sub
 
     Private Sub ButtonRemoveMode_Click(sender As Object, e As EventArgs) Handles ButtonRemoveMode.Click
-        If Me.ModelModes.SelectionRange.Rows = Me.ModelModes.RowCount Then
-            MessageBox.Show("不允许删除所有模式", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-        For row = Me.ModelModes.SelectionRange.Row To Me.ModelModes.SelectionRange.Row + Me.ModelModes.SelectionRange.Rows - 1
-            Dim modelName = Me.ModelModes(row, "name")
-            Me.ModelBoxFields.RemoveModel(modelName)
-            Me.ModelBoxHTTPAPIs.RemoveModel(modelName)
-        Next
-        Call Me.ModelModes.RemoveSelectedRows()
+        'If Me.ModelModes.SelectionRange.Rows = Me.ModelModes.RowCount Then
+        '    MessageBox.Show("不允许删除所有模式", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        '    Return
+        'End If
+        'For row = Me.ModelModes.SelectionRange.Row To Me.ModelModes.SelectionRange.Row + Me.ModelModes.SelectionRange.Rows - 1
+        '    Dim modelName = Me.ModelModes(row, "name")
+        '    Me.ModelBoxFields.RemoveModel(modelName)
+        '    Me.ModelBoxHTTPAPIs.RemoveModel(modelName)
+        'Next
+        'Call Me.ModelModes.RemoveSelectedRows()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click

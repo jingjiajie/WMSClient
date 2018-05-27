@@ -8,7 +8,7 @@ Public Class ModelBox
     Private _configuration As Configuration
     Private _mode As String = "default"
 
-    Private dicModels As New Dictionary(Of String, IModel)
+    Private _models As New ModelCollection
 
     Public Shadows Property Name As String Implements IModel.Name
         Get
@@ -20,30 +20,9 @@ Public Class ModelBox
     End Property
 
     <DesignerSerializationVisibility(False)>
-    Public ReadOnly Property Models As IModel()
+    Public ReadOnly Property Models As ModelCollection
         Get
-            Return (From m In Me.dicModels.Values Select m).ToArray
-        End Get
-    End Property
-
-    <DesignerSerializationVisibility(False)>
-    Public ReadOnly Property Models(name As String) As IModel
-        Get
-            If Not Me.dicModels.ContainsKey(name) Then
-                throw new FrontWorkException($"Modelbox doesn't contain model:{name}")
-            End If
-            Return Me.dicModels(name)
-        End Get
-    End Property
-
-    <DesignerSerializationVisibility(False)>
-    Public ReadOnly Property Models(index As Integer) As IModel
-        Get
-            Dim _models = Me.Models
-            If _models.Length <= index Then
-                throw new FrontWorkException($"ModelBox {Me.Name} doesn't have model {index}")
-            End If
-            Return _models(index)
+            Return Me._models
         End Get
     End Property
 
@@ -58,7 +37,7 @@ Public Class ModelBox
         End Get
         Set(value As String)
             Me._mode = value
-            For Each model In Me.dicModels.Values
+            For Each model As IModel In Me._models
                 model.Mode = Me._mode
             Next
         End Set
@@ -70,18 +49,23 @@ Public Class ModelBox
             Return Me._currentModelName
         End Get
         Set(value As String)
-            If String.IsNullOrWhiteSpace(value) Then
-                throw new FrontWorkException("ModelName cannot be null or whitespace!")
+            If value Is Nothing Then
+                Throw New FrontWorkException("ModelName cannot be null!")
             End If
-            If Not Me.dicModels.ContainsKey(value) Then
+            Dim targetModel As IModel = Nothing
+            If Not Me._models.Contains(value) Then
                 Dim newModel As New Model
                 newModel.Name = value
                 newModel.Configuration = Me.Configuration
-                Me.dicModels.Add(value, newModel)
+                targetModel = newModel
+                Me._models.SetModel(newModel)
+            Else
+                targetModel = Me._models(value)
             End If
-            If Not String.IsNullOrWhiteSpace(Me._currentModelName) Then Call Me.UnBindModel(Me.dicModels(value))
+            If Me._currentModelName IsNot Nothing Then Call Me.UnBindModel(targetModel)
             Me._currentModelName = value
-            If Not String.IsNullOrWhiteSpace(Me._currentModelName) Then Call Me.BindModel(Me.dicModels(value))
+            If Me._currentModelName IsNot Nothing Then Call Me.BindModel(targetModel)
+            RaiseEvent SelectedModelChangedEvent(Me, New SelectedModelChangedEventArgs)
             Call Me.RaiseRefreshedEvent(Me, New ModelRefreshedEventArgs)
         End Set
     End Property
@@ -104,7 +88,10 @@ Public Class ModelBox
         InitializeComponent()
 
         ' 在 InitializeComponent() 调用之后添加任何初始化。
-
+        AddHandler Me.Models.ModelCollectionChanged,
+            Sub(sender, e)
+                RaiseEvent ModelCollectionChangedEvent(sender, e)
+            End Sub
     End Sub
 
     Private Sub BindModel(model As IModel)
@@ -129,28 +116,28 @@ Public Class ModelBox
         RemoveHandler model.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
     End Sub
 
-    ''' <summary>
-    ''' 是否包含指定名称的Model
-    ''' </summary>
-    ''' <param name="modelName">Model名称</param>
-    ''' <returns>是否包含此Model</returns>
-    Public Function ContainsModel(modelName As String) As Boolean
-        Return Me.dicModels.ContainsKey(modelName)
-    End Function
+    '''' <summary>
+    '''' 是否包含指定名称的Model
+    '''' </summary>
+    '''' <param name="modelName">Model名称</param>
+    '''' <returns>是否包含此Model</returns>
+    'Public Function ContainsModel(modelName As String) As Boolean
+    '    Return Me.dicModels.ContainsKey(modelName)
+    'End Function
 
     Private Sub ConfigurationChanged(sender As Object, args As ConfigurationChangedEventArgs)
-        For Each model In Me.dicModels.Values
+        For Each model In Me.Models
             model.Configuration = Me.Configuration
         Next
     End Sub
 
-    Public ReadOnly Property RowCount as Integer Implements IModel.RowCount
+    Public ReadOnly Property RowCount As Integer Implements IModel.RowCount
         Get
             Return Me.GetCurModel.RowCount
         End Get
     End Property
 
-    Public ReadOnly Property ColumnCount as Integer Implements IModel.ColumnCount
+    Public ReadOnly Property ColumnCount As Integer Implements IModel.ColumnCount
         Get
             Return Me.GetCurModel.ColumnCount
         End Get
@@ -174,7 +161,7 @@ Public Class ModelBox
         End Set
     End Property
 
-    Public Property Item(row as Integer, column as Integer) As Object Implements IModel.Item
+    Public Property Item(row As Integer, column As Integer) As Object Implements IModel.Item
         Get
             Return Me.GetCurModel(row, column)
         End Get
@@ -183,7 +170,7 @@ Public Class ModelBox
         End Set
     End Property
 
-    Public Property Item(row as Integer, columnName As String) As Object Implements IModel.Item
+    Public Property Item(row As Integer, columnName As String) As Object Implements IModel.Item
         Get
             Return Me.GetCurModel(row, columnName)
         End Get
@@ -192,6 +179,7 @@ Public Class ModelBox
         End Set
     End Property
 
+    'IModel的事件
     Public Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModel.Refreshed
     Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModel.RowAdded
     Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModel.RowUpdated
@@ -200,6 +188,10 @@ Public Class ModelBox
     Public Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModel.CellUpdated
     Public Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModel.SelectionRangeChanged
     Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
+
+    'ModelBox的事件
+    Public Event SelectedModelChangedEvent As EventHandler(Of SelectedModelChangedEventArgs)
+    Public Event ModelCollectionChangedEvent As EventHandler(Of ModelCollectionChangedEventArgs)
 
     Public Sub RaiseRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
         RaiseEvent Refreshed(sender, e)
@@ -226,15 +218,15 @@ Public Class ModelBox
         RaiseEvent RowSynchronizationStateChanged(sender, e)
     End Sub
 
-    Public Sub InsertRows(rows() as Integer, data() As IDictionary(Of String, Object)) Implements IModel.InsertRows
+    Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IModel.InsertRows
         Me.GetCurModel.InsertRows(rows, data)
     End Sub
 
-    Public Sub InsertRow(row as Integer, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
+    Public Sub InsertRow(row As Integer, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
         Me.GetCurModel.InsertRow(row, data)
     End Sub
 
-    Public Sub RemoveRow(row as Integer) Implements IModel.RemoveRow
+    Public Sub RemoveRow(row As Integer) Implements IModel.RemoveRow
         Me.GetCurModel.RemoveRow(row)
     End Sub
 
@@ -242,7 +234,7 @@ Public Class ModelBox
         Me.GetCurModel.RemoveRow(rowID)
     End Sub
 
-    Public Sub RemoveRows(rows() as Integer) Implements IModel.RemoveRows
+    Public Sub RemoveRows(rows() As Integer) Implements IModel.RemoveRows
         Me.GetCurModel.RemoveRows(rows)
     End Sub
 
@@ -250,7 +242,7 @@ Public Class ModelBox
         Me.GetCurModel.RemoveRows(rowIDs)
     End Sub
 
-    Public Sub RemoveRows(startRow as Integer, rowCount as Integer) Implements IModel.RemoveRows
+    Public Sub RemoveRows(startRow As Integer, rowCount As Integer) Implements IModel.RemoveRows
         Me.GetCurModel.RemoveRows(startRow, rowCount)
     End Sub
 
@@ -258,7 +250,7 @@ Public Class ModelBox
         Call Me.GetCurModel.RemoveSelectedRows()
     End Sub
 
-    Public Sub UpdateRow(row as Integer, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
+    Public Sub UpdateRow(row As Integer, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
         Call Me.GetCurModel.UpdateRow(row, data)
     End Sub
 
@@ -266,7 +258,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRow(rowID, data)
     End Sub
 
-    Public Sub UpdateRows(rows() as Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModel.UpdateRows
+    Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModel.UpdateRows
         Me.GetCurModel.UpdateRows(rows, dataOfEachRow)
     End Sub
 
@@ -274,7 +266,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRows(rowIDs, dataOfEachRow)
     End Sub
 
-    Public Sub UpdateCells(rows() as Integer, columnNames() As String, dataOfEachCell() As Object) Implements IModel.UpdateCells
+    Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IModel.UpdateCells
         Me.GetCurModel.UpdateCells(rows, columnNames, dataOfEachCell)
     End Sub
 
@@ -282,7 +274,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateCells(rowID, columnNames, dataOfEachCell)
     End Sub
 
-    Public Sub UpdateCell(row as Integer, columnName As String, data As Object) Implements IModel.UpdateCell
+    Public Sub UpdateCell(row As Integer, columnName As String, data As Object) Implements IModel.UpdateCell
         Me.GetCurModel.UpdateCell(row, columnName, data)
     End Sub
 
@@ -294,7 +286,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowSynchronizationStates(rows, syncStates)
     End Sub
 
-    Public Sub UpdateRowSynchronizationStates(rows() as Integer, syncStates() As SynchronizationState) Implements IModel.UpdateRowSynchronizationStates
+    Public Sub UpdateRowSynchronizationStates(rows() As Integer, syncStates() As SynchronizationState) Implements IModel.UpdateRowSynchronizationStates
         Me.GetCurModel.UpdateRowSynchronizationStates(rows, syncStates)
     End Sub
 
@@ -302,7 +294,7 @@ Public Class ModelBox
         Me.GetCurModel.UpdateRowSynchronizationState(row, syncState)
     End Sub
 
-    Public Sub UpdateRowSynchronizationState(row as Integer, syncState As SynchronizationState) Implements IModel.UpdateRowSynchronizationState
+    Public Sub UpdateRowSynchronizationState(row As Integer, syncState As SynchronizationState) Implements IModel.UpdateRowSynchronizationState
         Me.GetCurModel.UpdateRowSynchronizationState(row, syncState)
     End Sub
 
@@ -314,11 +306,11 @@ Public Class ModelBox
 
     End Sub
 
-    Public Function AddRow(data As IDictionary(Of String, Object)) as Integer Implements IModel.AddRow
+    Public Function AddRow(data As IDictionary(Of String, Object)) As Integer Implements IModel.AddRow
         Return Me.GetCurModel.AddRow(data)
     End Function
 
-    Public Function AddRows(data() As IDictionary(Of String, Object)) as Integer() Implements IModel.AddRows
+    Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IModel.AddRows
         Return Me.GetCurModel.AddRows(data)
     End Function
 
@@ -326,11 +318,11 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRowSynchronizationStates(rows)
     End Function
 
-    Public Function GetRowSynchronizationStates(rows() as Integer) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
+    Public Function GetRowSynchronizationStates(rows() As Integer) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
         Return Me.GetCurModel.GetRowSynchronizationStates(rows)
     End Function
 
-    Public Function GetRowSynchronizationState(row as Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
+    Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
         Return Me.GetCurModel.GetRowSynchronizationState(row)
     End Function
 
@@ -338,15 +330,15 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRowSynchronizationState(row)
     End Function
 
-    Public Function GetRowID(rowNum as Integer) As Guid Implements IModel.GetRowID
+    Public Function GetRowID(rowNum As Integer) As Guid Implements IModel.GetRowID
         Return Me.GetCurModel.GetRowID(rowNum)
     End Function
 
-    Public Function GetRowIDs(rowNums() as Integer) As Guid() Implements IModel.GetRowIDs
+    Public Function GetRowIDs(rowNums() As Integer) As Guid() Implements IModel.GetRowIDs
         Return Me.GetCurModel.GetRowIDs(rowNums)
     End Function
 
-    Public Function GetRowIndex(rowID As Guid) as Integer Implements IModel.GetRowIndex
+    Public Function GetRowIndex(rowID As Guid) As Integer Implements IModel.GetRowIndex
         Return Me.GetCurModel.GetRowIndex(rowID)
     End Function
 
@@ -358,7 +350,7 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRows(Of T)(rows)
     End Function
 
-    Public Function GetRows(rows() as Integer) As IDictionary(Of String, Object)() Implements IModel.GetRows
+    Public Function GetRows(rows() As Integer) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rows)
     End Function
 
@@ -371,28 +363,103 @@ Public Class ModelBox
     End Function
 
     Private Function GetCurModel() As IModel
-        If Not Me.dicModels.ContainsKey(Me.CurrentModelName) Then
-            throw new FrontWorkException($"ModelBook doesn't have model:""{Me.CurrentModelName}""")
+        If Not Me.Models.Contains(Me.CurrentModelName) Then
+            Throw New FrontWorkException($"ModelBook doesn't have model:""{Me.CurrentModelName}""")
         End If
-        Return Me.dicModels(Me.CurrentModelName)
+        Return Me.Models(Me.CurrentModelName)
     End Function
 
-    Public Function GetCell(row as Integer, column as Integer) As Object Implements IModel.GetCell
+    Public Function GetCell(row As Integer, column As Integer) As Object Implements IModel.GetCell
         Return Me.GetCurModel.GetCell(row, column)
     End Function
 
-    Public Function GetCell(row as Integer, columnName As String) As Object Implements IModel.GetCell
+    Public Function GetCell(row As Integer, columnName As String) As Object Implements IModel.GetCell
         Return Me.GetCurModel.GetCell(row, columnName)
     End Function
-
-    Public Sub RemoveModel(modelName As String)
-        If Not Me.dicModels.ContainsKey(modelName) Then
-            throw new FrontWorkException($"Model ""{modelName}"" not exist in {Me.Name}")
-        End If
-        Me.dicModels.Remove(modelName)
-    End Sub
 
     Public Function ContainsColumn(columnName As String) As Boolean Implements IModel.ContainsColumn
         Return Me.GetCurModel.ContainsColumn(columnName)
     End Function
+
+    Public Sub GroupBy(fieldName As String)
+        Dim datatable = Me.GetCurModel.GetDataTable
+        If Not datatable.Columns.Contains(fieldName) Then
+            Throw New FrontWorkException($"""{fieldName}"" not exist in {Me.Name}")
+        End If
+        Dim groups = (From row In datatable.AsEnumerable
+                      Group By key = CStr(If(row(fieldName), "")) Into g = Group
+                      Select New With {.Key = key, .Values = g}).ToArray
+        Call Me.Models.Clear() '清空所有Model
+        For Each group In groups
+            Dim groupName = group.Key
+            Dim rows = group.Values
+            '创建新的Model
+            Dim newDataTable = datatable.Clone
+            For Each row In rows
+                newDataTable.Rows.Add(row.ItemArray)
+            Next
+            Dim newModel = New Model
+            newModel.Refresh(newDataTable, {New Range(0, 0, 1, 1)}, Nothing)
+            newModel.Name = groupName
+            Me.Models.SetModel(newModel)
+        Next
+        If groups.Length > 0 Then
+            Dim firstGroup = groups(0)
+            Me.CurrentModelName = firstGroup.Key
+        End If
+    End Sub
+End Class
+
+Public Class ModelCollection
+    Inherits CollectionBase
+
+    Default Public Property Item(modelName As String) As IModel
+        Get
+            Return Me.GetModel(modelName)
+        End Get
+        Set(value As IModel)
+            Call Me.SetModel(value)
+        End Set
+    End Property
+
+    Public Function GetModel(modelName As String) As IModel
+        If Not Me.Contains(modelName) Then
+            Throw New FrontWorkException($"Model ""{modelName}"" not exist in ModelCollection!")
+        End If
+        For Each model As IModel In Me.InnerList
+            If model.Name.Equals(modelName, StringComparison.OrdinalIgnoreCase) Then
+                Return model
+            End If
+        Next
+        Return Nothing
+    End Function
+
+    Public Sub SetModel(model As IModel)
+        For i = 0 To Me.InnerList.Count - 1
+            Dim curModel As IModel = Me.InnerList(i)
+            If curModel.Name.Equals(model.Name, StringComparison.OrdinalIgnoreCase) Then
+                Me.InnerList(i) = model
+                RaiseEvent ModelCollectionChanged(Me, New ModelCollectionChangedEventArgs)
+                Return
+            End If
+        Next
+        Me.InnerList.Add(model)
+        RaiseEvent ModelCollectionChanged(Me, New ModelCollectionChangedEventArgs)
+    End Sub
+
+    Public Sub Remove(model As IModel)
+        Call Me.InnerList.Remove(model)
+        RaiseEvent ModelCollectionChanged(Me, New ModelCollectionChangedEventArgs)
+    End Sub
+
+    Public Function Contains(modelName As String) As Boolean
+        For Each model As IModel In Me.InnerList
+            If model.Name.Equals(modelName, StringComparison.OrdinalIgnoreCase) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
+    Public Event ModelCollectionChanged As EventHandler(Of ModelCollectionChangedEventArgs)
 End Class

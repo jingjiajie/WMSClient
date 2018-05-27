@@ -20,7 +20,7 @@ Public Class SearchView
     Public Event OnSearch As EventHandler(Of OnSearchEventArgs)
 
     <Description("当前配置模式"), Category("FrontWork")>
-    Public Property Mode As String Implements IView.Mode
+    Public Property Mode As String
         Get
             Return Me._mode
         End Get
