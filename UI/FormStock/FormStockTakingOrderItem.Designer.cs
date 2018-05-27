@@ -305,6 +305,7 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonDelete
