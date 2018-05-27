@@ -16,6 +16,18 @@ namespace WMS.UI.FormTransferOrder
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.CellUpdated += this.model_CellUpdated;
+        }
+
+        private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
+        {
+            foreach (var cell in e.UpdatedCells)
+            {
+                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+                this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
+                this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
+            }
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -37,7 +49,10 @@ namespace WMS.UI.FormTransferOrder
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void FormTransferOrder_Load(object sender, EventArgs e)

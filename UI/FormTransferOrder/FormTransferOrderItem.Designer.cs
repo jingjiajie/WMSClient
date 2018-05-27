@@ -59,7 +59,6 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -95,7 +94,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -107,7 +106,7 @@
             // 
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 58);
+            this.panel1.Location = new System.Drawing.Point(3, 63);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(791, 134);
             this.panel1.TabIndex = 0;
@@ -123,6 +122,7 @@
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -133,9 +133,10 @@
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(544, 3);
+            this.panel3.Location = new System.Drawing.Point(541, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(244, 128);
+            this.panel3.Size = new System.Drawing.Size(250, 134);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -158,7 +159,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(244, 128);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(250, 134);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonFinish
@@ -170,7 +171,7 @@
             this.buttonFinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFinish.FlatAppearance.BorderSize = 0;
             this.buttonFinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinish.Location = new System.Drawing.Point(40, 67);
+            this.buttonFinish.Location = new System.Drawing.Point(43, 70);
             this.buttonFinish.Name = "buttonFinish";
             this.buttonFinish.Size = new System.Drawing.Size(164, 44);
             this.buttonFinish.TabIndex = 2;
@@ -187,7 +188,7 @@
             this.buttonFinishAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFinishAll.FlatAppearance.BorderSize = 0;
             this.buttonFinishAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinishAll.Location = new System.Drawing.Point(40, 17);
+            this.buttonFinishAll.Location = new System.Drawing.Point(43, 20);
             this.buttonFinishAll.Name = "buttonFinishAll";
             this.buttonFinishAll.Size = new System.Drawing.Size(164, 44);
             this.buttonFinishAll.TabIndex = 3;
@@ -199,9 +200,10 @@
             // 
             this.panel4.Controls.Add(this.basicView1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(535, 128);
+            this.panel4.Size = new System.Drawing.Size(541, 134);
             this.panel4.TabIndex = 2;
             // 
             // basicView1
@@ -217,7 +219,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 0);
-            this.basicView1.Size = new System.Drawing.Size(535, 128);
+            this.basicView1.Size = new System.Drawing.Size(541, 134);
             this.basicView1.TabIndex = 17;
             // 
             // configuration1
@@ -257,9 +259,9 @@
             this.panel2.Controls.Add(this.configuration1);
             this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 198);
+            this.panel2.Location = new System.Drawing.Point(3, 203);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(791, 194);
+            this.panel2.Size = new System.Drawing.Size(791, 189);
             this.panel2.TabIndex = 1;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -327,7 +329,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(791, 194);
+            this.reoGridView1.Size = new System.Drawing.Size(791, 189);
             this.reoGridView1.TabIndex = 19;
             // 
             // panel5
@@ -388,7 +390,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 33);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(791, 19);
+            this.panel8.Size = new System.Drawing.Size(791, 24);
             this.panel8.TabIndex = 5;
             // 
             // toolStripTop
@@ -400,14 +402,13 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
-            this.toolStripButtonAdd,
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(791, 19);
+            this.toolStripTop.Size = new System.Drawing.Size(791, 24);
             this.toolStripTop.TabIndex = 10;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -417,21 +418,12 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
             // 
-            // toolStripButtonAdd
-            // 
-            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 16);
-            this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
-            // 
             // toolStripButtonDelete
             // 
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 16);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 21);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -440,7 +432,7 @@
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 16);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 21);
             this.toolStripButtonAlter.Text = "保存修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -507,7 +499,6 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
