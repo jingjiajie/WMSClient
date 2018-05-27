@@ -215,13 +215,21 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, fieldName] = value;
         }
         //=============天经地义的交互逻辑到这里结束===============
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            string body= "{\"stockTakingOrderId\":\""+this.stockTakingOrder["id"]+ "\",\"warehouseId\":\""+GlobalData.Warehouse["id"]+"\",\"personId\":\""+GlobalData.Person["id"]+"\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
-            RestClient.Post<List<IDictionary<string, object>>>(url, body);
-            MessageBox.Show("添加成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            this.searchView1.Search();
+            try
+            {
+                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
+                RestClient.Post<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -282,10 +290,10 @@ namespace WMS.UI.FormStockTaking
             int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
             if (supplyId == 0) return;
             string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"" + supplyId + "\"}";
-            string url = Defines.ServerURL + "/warehouse1/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
             try
             {
-                RestClient.Post<bool>(url, body);
+                RestClient.Post<int[]>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.model1.Mode = "default";
                 this.synchronizer.Mode = "default";
