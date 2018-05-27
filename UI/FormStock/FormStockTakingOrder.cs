@@ -45,7 +45,7 @@ namespace WMS.UI.FormStockTaking
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},               
+                { "createTime",DateTime.Now},
             });
         }
 
@@ -67,9 +67,13 @@ namespace WMS.UI.FormStockTaking
                 MessageBox.Show("请选择一项盘点单查看盘点单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormStockTakingOrderItem(rowData).Show();
-        }   
-
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row})[0];
+            var a1 = new FormStockTakingOrderItem(rowData);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
+        }
     }
 }

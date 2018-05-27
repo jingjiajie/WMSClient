@@ -13,7 +13,7 @@ namespace WMS.UI.FormStockTaking
     public partial class FormStockTakingOrderItem : Form
     {
         private IDictionary<string, object> stockTakingOrder = null;
-
+        private Action addFinishedCallback = null;
         public FormStockTakingOrderItem(IDictionary<string, object> srockTakingOrder)
         {
             MethodListenerContainer.Register(this);
@@ -215,13 +215,26 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, fieldName] = value;
         }
         //=============天经地义的交互逻辑到这里结束===============
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            string body= "{\"stockTakingOrderId\":\""+this.stockTakingOrder["id"]+ "\",\"warehouseId\":\""+GlobalData.Warehouse["id"]+"\",\"personId\":\""+GlobalData.Person["id"]+"\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
-            RestClient.Post<List<IDictionary<string, object>>>(url, body);
-            MessageBox.Show("添加成功！","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            this.searchView1.Search();
+            try
+            {
+                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
+                RestClient.Post<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+                if (this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback();
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -230,6 +243,14 @@ namespace WMS.UI.FormStockTaking
             this.synchronizer.Mode = "addSingle";
             this.reoGridView1.Mode = "addSingle";
             this.basicView1.Mode = "addSingle";
+            this.searchView1.Enabled = false;
+            this.toolStripButton1.Enabled = false;
+            this.toolStripButton2.Visible =false;
+            this.pagerView1.Enabled = false;
+            this.toolStripButtonAdd.Enabled = false;
+            this.toolStripButtonDelete.Enabled = false;
+            this.toolStripButtonAlter.Enabled = false;
+            this.buttonCancel.Visible = true;
             this.model1.InsertRow(0, null);  
         }
 
@@ -281,18 +302,67 @@ namespace WMS.UI.FormStockTaking
         {
             int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
             if (supplyId == 0) return;
-            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\""+supplyId+"\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";       
-            RestClient.Post<List<IDictionary<string, object>>>(url, body);
-            MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.searchView1.Search();          
+            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"" + supplyId + "\"}";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
+            try
+            {
+                RestClient.Post<int[]>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.model1.Mode = "default";
+                this.synchronizer.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.searchView1.Enabled = true;
+                this.toolStripButton1.Enabled = true;
+                this.toolStripButton2.Visible = true;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.pagerView1.Enabled = true;
+                this.buttonCancel.Visible = false;
+                this.searchView1.Search();
+                if (this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.Mode = "default";
+                this.synchronizer.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.searchView1.Enabled = true;
+                this.toolStripButton1.Enabled = true;
+                this.toolStripButton2.Visible =true;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.pagerView1.Enabled = true;
+                this.buttonCancel.Visible = false;
+                this.searchView1.Search();
+            }
         }
 
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
 
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.buttonCancel.Visible = false;
+            this.searchView1.Enabled = true;
+            this.toolStripButton1.Enabled = true;
+            this.toolStripButton2.Visible = true;
+            this.toolStripButtonAdd.Enabled = true;
+            this.toolStripButtonDelete.Enabled = true;
+            this.toolStripButtonAlter.Enabled = true;
+            this.pagerView1.Enabled = true;
+            this.searchView1.Search();
+        }
     }
-
-     
-
 }
 
     

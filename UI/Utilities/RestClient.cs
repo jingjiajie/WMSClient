@@ -35,8 +35,8 @@ namespace WMS.UI
         {
             string responseStr = null;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;          
-            try
-            {
+            //try
+            //{
                 request.Method = method;
                 if (!string.IsNullOrWhiteSpace(bodyStr))
                 {
@@ -49,12 +49,15 @@ namespace WMS.UI
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     responseStr = reader.ReadToEnd();
                 }
+            /*
             }
             catch (WebException ex)
             {
-                MessageBox.Show("加载失败：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               MessageBox.Show("加载失败：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return default(T);
+                throw new Exception(ex.ToString());              
             }
+            */
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T result = serializer.Deserialize<T>(responseStr);
             return result;
