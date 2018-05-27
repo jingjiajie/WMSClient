@@ -12,13 +12,15 @@ namespace WMS.UI
 {
     public partial class FormWarehouseEntryInspect : Form
     {
+        private IDictionary<string, object>[] warehouseEntries = null;
+
         public FormWarehouseEntryInspect(IDictionary<String,object>[] warehouseEntries)
         {
             MethodListenerContainer.Register(this);
+            this.warehouseEntries = warehouseEntries;
             InitializeComponent();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.modelWarehouseEntry.AddRows(warehouseEntries);
 
             Condition condition = new Condition()
     .AddCondition("warehouseEntryId", warehouseEntries.Select((item) => item["id"]).ToArray(), ConditionItemRelation.IN);
@@ -52,17 +54,10 @@ namespace WMS.UI
 
         private DateTime? InspectionTimeDefaultValue()
         {
-            int row = (int)this.modelWarehouseEntry.SelectionRange.Row;
-            DateTime? createTime = this.modelWarehouseEntry[row, "createTime"] as DateTime?;
+            string selectedWarehouseEntryNo = (string)this.modelBoxInspectionNoteItems.CurrentModelName;
+            var warehouseEntry = this.warehouseEntries.Where((item) => (string)item["no"] == selectedWarehouseEntryNo).First();
+            DateTime? createTime = warehouseEntry["createTime"] as DateTime?;
             return createTime;
-        }
-
-        private void modelWarehouseEntry_SelectionRangeChanged(object sender, FrontWork.ModelSelectionRangeChangedEventArgs e)
-        {
-            string selectedWarehouseEntryNo = (string)this.modelWarehouseEntry[this.modelWarehouseEntry.SelectionRange.Row, "no"];
-            this.modelBoxInspectionNoteItems.CurrentModelName = selectedWarehouseEntryNo;
-
-            this.ModelInspectionNoteAddOrSelect(selectedWarehouseEntryNo);
         }
 
         /// <summary>
@@ -89,11 +84,7 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            for (int row = 0; row < this.modelWarehouseEntry.RowCount; row++)
-            {
-                int warehouseEntryID = (int)this.modelWarehouseEntry[row, "id"];
 
-            }
         }
 
         private void configurationWarehouseEntry_Load(object sender, EventArgs e)
