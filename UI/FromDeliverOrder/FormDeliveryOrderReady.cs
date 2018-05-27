@@ -44,11 +44,11 @@ namespace WMS.UI.FromDeliverOrder
         {
             return (string)GlobalData.Person["name"];
         }
-        private DateTime? InspectionTimeDefaultValue()
-        {
-            int row = (int)this.modelWarehouseEntry.SelectionRange.Row;
-            DateTime? createTime = this.modelWarehouseEntry[row, "createTime"] as DateTime?;
-            return createTime;
-        }
+        //private DateTime? InspectionTimeDefaultValue()
+        //{
+        //    int row = (int)this.modelWarehouseEntry.SelectionRange.Row;
+        //    DateTime? createTime = this.modelWarehouseEntry[row, "createTime"] as DateTime?;
+        //    return createTime;
+        //}
     }
 }

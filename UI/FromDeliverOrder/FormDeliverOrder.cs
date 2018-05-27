@@ -89,5 +89,10 @@ namespace WMS.UI.FromDeliverOrder
                 { "state",1}
             });
         }
+
+        private void model1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
