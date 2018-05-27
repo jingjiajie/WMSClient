@@ -167,7 +167,7 @@ httpAPIs:[
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/stocktaking_order_item/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse1/{$accountBook}/stocktaking_order_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
 },

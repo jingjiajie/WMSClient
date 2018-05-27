@@ -16,7 +16,7 @@ namespace WMS.UI.FormStockTaking
         private Action addFinishedCallback = null;
         public FormStockTakingOrderItem(IDictionary<string, object> srockTakingOrder)
         {
-            MethodListenerContainer.Register(this);
+            MethodListenerContainer.Register(this);            
             this.stockTakingOrder = srockTakingOrder;
             InitializeComponent();         
             this.searchView1.AddStaticCondition("stockTakingOrderId", this.stockTakingOrder["id"]);
@@ -49,7 +49,30 @@ namespace WMS.UI.FormStockTaking
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.model1.RemoveSelectedRows();
+            if (this.model1.SelectionRange.Rows == 0) {
+                MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                return;
+            }
+            int a =this.model1.SelectionRange.Row;
+            try
+            {
+                string body = "{\"deleteIds\":" + GlobalData.Warehouse["id"] + ",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/remove";
+                RestClient.Post<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+                if (this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback();
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            //this.model1.RemoveSelectedRows();           
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
