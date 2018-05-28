@@ -12,6 +12,8 @@ namespace WMS.UI.FromDeliverOrder
 {
     public partial class FormDeliverOrder : Form
     {
+        private IDictionary<string, object> stockTakingOrder = null;
+        private Action addFinishedCallback = null;
         public FormDeliverOrder()
         {
             MethodListenerContainer.Register(this);
@@ -93,6 +95,24 @@ namespace WMS.UI.FromDeliverOrder
         private void model1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripAutoTransfer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body1= "{ \"transferItems\":[{\"transferOrder\":{\"warehouseId\":" + GlobalData.Warehouse["id"] + ",\"createPersonId\":" + GlobalData.Person["id"] + "}, \"transferOrderItems\":[{\"supplyId\":5} ]}]}";
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer";
+                RestClient.Post<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

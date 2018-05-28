@@ -81,7 +81,7 @@
             // 
             this.configurationTransferOrderItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configurationTransferOrderItem.ConfigurationString = resources.GetString("configurationTransferOrderItem.ConfigurationString");
-            this.configurationTransferOrderItem.Location = new System.Drawing.Point(320, 15);
+            this.configurationTransferOrderItem.Location = new System.Drawing.Point(320, 28);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormDeliveryOrderReady",
         "AssociationMethodListener"};
@@ -141,7 +141,7 @@
             // 
             this.configurationTransferOrder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configurationTransferOrder.ConfigurationString = resources.GetString("configurationTransferOrder.ConfigurationString");
-            this.configurationTransferOrder.Location = new System.Drawing.Point(506, 15);
+            this.configurationTransferOrder.Location = new System.Drawing.Point(506, 49);
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormDeliveryOrderReady",
         "AssociationMethodListener"};
@@ -157,7 +157,7 @@
             this.modelTransferOrder.AllSelectionRanges = new FrontWork.Range[0];
             this.modelTransferOrder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.modelTransferOrder.Configuration = this.configurationTransferOrder;
-            this.modelTransferOrder.Location = new System.Drawing.Point(692, 55);
+            this.modelTransferOrder.Location = new System.Drawing.Point(692, 71);
             this.modelTransferOrder.Mode = "default";
             this.modelTransferOrder.Name = "modelTransferOrder";
             this.modelTransferOrder.SelectionRange = null;
@@ -245,7 +245,7 @@
         fieldMappingItem5,
         fieldMappingItem6,
         fieldMappingItem7};
-            this.synchronizer.Location = new System.Drawing.Point(150, 26);
+            this.synchronizer.Location = new System.Drawing.Point(150, 52);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.modelBoxTransferOrderItems;
