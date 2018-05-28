@@ -132,22 +132,22 @@
         {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
         {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false},
-        {name:"targetStorageLocationNo",displayName:"目标库位编码",editable:false},
-        {name:"targetStorageLocationName",displayName:"目标库位名称",editable:false},
+        {name:"targetStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded"},
+        {name:"targetStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded"},
         {name:"sourceStorageLocationId",displayName:"源库位ID",type:"int",visible:false},
-        {name:"sourceStorageLocationNo",displayName:"源库位编码",editable:false},
-        {name:"sourceStorageLocationName",displayName:"源库位名称",editable:false},       
+        {name:"sourceStorageLocationNo",displayName:"源库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
+        {name:"sourceStorageLocationName",displayName:"源库位名称",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},       
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称",type:"string",editable:true},
         {name:"operateTime",displayName:"作业时间",type:"datetime",editable:true},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:true,defaultValue:0},
         {name:"materialId",displayName:"物料ID",type:"int",visible:true,defaultValue:0},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,defaultValue:0},
-        {name:"materialNo",displayName:"物料代号",editable:false},
-        {name:"materialName",displayName:"物料名称",editable:false},
-        {name:"materialProductLine",displayName:"物料系列",editable:false},
-        {name:"supplierNo",displayName:"供应商代号",editable:false},
-        {name:"supplierName",displayName:"供货商名称",editable:false},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供应商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
  ],
     httpAPIs:[
         {type:"get-count",
@@ -179,13 +179,15 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 97</value>
   </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 97</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="toolStripButtonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

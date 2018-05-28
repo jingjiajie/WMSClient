@@ -104,7 +104,7 @@ namespace WMS.UI.FromDeliverOrder
                 string body1= "{ \"transferItems\":[{\"transferOrder\":{\"warehouseId\":" + GlobalData.Warehouse["id"] + ",\"createPersonId\":" + GlobalData.Person["id"] + "}, \"transferOrderItems\":[{\"supplyId\":5} ]}]}";
                 string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer";
-                RestClient.Post<List<IDictionary<string, object>>>(url, body);
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
 
