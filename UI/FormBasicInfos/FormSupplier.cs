@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -18,6 +19,8 @@ namespace WMS.UI.FormBasicInfos
            this.model1.CellUpdated+= this.model_CellUpdated;
         }
 
+        private List<int> rowChange = new List<int>();
+
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {            
             foreach (var cell in e.UpdatedCells)
@@ -25,11 +28,15 @@ namespace WMS.UI.FormBasicInfos
                 if (cell.ColumnName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;            
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;                
+                if (!rowChange.Contains(cell.Row))
+                {
+                    rowChange.Add(cell.Row);
+                }                
             }
         }
 
-
+        
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
@@ -43,13 +50,23 @@ namespace WMS.UI.FormBasicInfos
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
-        {         
-            if (this.synchronizer.Save())
+        {
+            if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
-                this.searchView1.Search();
-                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
+                if (this.synchronizer.Save())
+                {
+                    this.searchView1.Search();
+                    Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                    GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
+                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
+                }
+            }
+            else
+            {
+                int[] row = rowChange.ToArray();
+                var rowData = this.model1.GetRows(row);
+                string json=(new JavaScriptSerializer()).Serialize(rowData);
+
             }
         }
 

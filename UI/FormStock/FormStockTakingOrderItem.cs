@@ -48,31 +48,40 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             if (this.model1.SelectionRange.Rows == 0) {
                 MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 return;
             }
-            int a =this.model1.SelectionRange.Row;
+            int startRow = this.model1.SelectionRange.Row;
+            int selectRows = this.model1.SelectionRange.Rows;
+            int[] rows= Enumerable.Range(startRow, selectRows).ToArray();
+            //List<int> ids = new List<int>(selectRows);
+            StringBuilder ids = new StringBuilder();
+            var rowData = this.model1.GetRows(rows);
+            foreach (Dictionary<string, object> a in rowData)
+            {                
+                ids.Append((int)a["id"]);
+                ids.Append(",");
+            }
+            ids.Remove(ids.Length-1, 1);
             try
             {
-                string body = "{\"deleteIds\":" + GlobalData.Warehouse["id"] + ",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+                string body = "{\"deleteIds\":[" + ids+ "],\"personId\":\"" + GlobalData.Person["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/remove";
-                RestClient.Post<List<IDictionary<string, object>>>(url, body);
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show(body);
+                //MessageBox.Show(url);
+                RestClient.Post<List<IDictionary<string, object>>>(url, body);               
                 this.searchView1.Search();
                 if (this.addFinishedCallback != null)
                 {
                     this.addFinishedCallback();
                 }
-
             }
             catch
             {
-                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-            //this.model1.RemoveSelectedRows();           
+                MessageBox.Show("删除失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }         
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -80,6 +89,10 @@ namespace WMS.UI.FormStockTaking
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+                if (this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback();
+                }
             }
         }
 
@@ -245,7 +258,7 @@ namespace WMS.UI.FormStockTaking
             {
                 string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
-                RestClient.Post<List<IDictionary<string, object>>>(url, body);
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
                 if (this.addFinishedCallback != null)
@@ -329,7 +342,7 @@ namespace WMS.UI.FormStockTaking
             string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
             try
             {
-                RestClient.Post<int[]>(url, body);
+                RestClient.RequestPost<int[]>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.model1.Mode = "default";
                 this.synchronizer.Mode = "default";
@@ -376,6 +389,10 @@ namespace WMS.UI.FormStockTaking
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.buttonCancel.Visible = false;
+            this.model1.Mode = "default";
+            this.synchronizer.Mode = "default";
+            this.reoGridView1.Mode = "default";
+            this.basicView1.Mode = "default";
             this.searchView1.Enabled = true;
             this.toolStripButton1.Enabled = true;
             this.toolStripButton2.Visible = true;

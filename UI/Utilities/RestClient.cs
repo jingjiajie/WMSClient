@@ -35,8 +35,8 @@ namespace WMS.UI
         {
             string responseStr = null;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;          
-            //try
-            //{
+            try
+            {
                 request.Method = method;
                 if (!string.IsNullOrWhiteSpace(bodyStr))
                 {
@@ -48,16 +48,35 @@ namespace WMS.UI
                 {
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     responseStr = reader.ReadToEnd();
-                }
-            /*
+                }           
             }
             catch (WebException ex)
             {
                MessageBox.Show("加载失败：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return default(T);
                 throw new Exception(ex.ToString());              
-            }
-            */
+            }           
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            T result = serializer.Deserialize<T>(responseStr);
+            return result;
+        }
+
+        public static T RequestPost<T>(string url,string bodyStr = null,string method = "POST")
+        {
+            string responseStr = null;
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                request.Method = method;
+                if (!string.IsNullOrWhiteSpace(bodyStr))
+                {
+                    request.ContentType = "application/json";
+                    byte[] bytes = Encoding.UTF8.GetBytes(bodyStr);
+                    request.GetRequestStream().Write(bytes, 0, bytes.Length);
+                }
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    responseStr = reader.ReadToEnd();
+                }          
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T result = serializer.Deserialize<T>(responseStr);
             return result;
