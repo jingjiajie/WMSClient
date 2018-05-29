@@ -70,6 +70,19 @@ namespace WMS.UI
             return (int)this.warehouseEntry["id"];
         }
 
+        private string StateForwardMapper(int state)
+        {
+            switch (state)
+            {
+                case 0: return "待入库";
+                case 1: return "已入库";
+                case 2: return "送检中";
+                case 3: return "送件不合格";
+                case 4: return "送检全部合格";
+                default: throw new Exception("状态错误:" + state);
+            }
+        }
+
         private void StorageLocationNoEditEnded(int row,string storageLocationNo)
         {
             this.model[row, "storageLocationId"] = 0;//先清除库位ID

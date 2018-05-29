@@ -161,7 +161,7 @@ Public Class ModelBox
         End Set
     End Property
 
-    Public Property Item(row As Integer, column As Integer) As Object Implements IModel.Item
+    Default Public Property Item(row As Integer, column As Integer) As Object Implements IModel.Item
         Get
             Return Me.GetCurModel(row, column)
         End Get
@@ -170,7 +170,7 @@ Public Class ModelBox
         End Set
     End Property
 
-    Public Property Item(row As Integer, columnName As String) As Object Implements IModel.Item
+    Default Public Property Item(row As Integer, columnName As String) As Object Implements IModel.Item
         Get
             Return Me.GetCurModel(row, columnName)
         End Get
@@ -350,6 +350,10 @@ Public Class ModelBox
         Return Me.GetCurModel.GetRows(Of T)(rows)
     End Function
 
+    Function GetRow(Of T As New)(row As Integer) As T Implements IModel.GetRow
+        Return Me.GetCurModel.GetRow(Of T)(row)
+    End Function
+
     Public Function GetRows(rows() As Integer) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.GetCurModel.GetRows(rows)
     End Function
@@ -406,6 +410,8 @@ Public Class ModelBox
         If groups.Length > 0 Then
             Dim firstGroup = groups(0)
             Me.CurrentModelName = firstGroup.Key
+        Else
+            Me._currentModelName = Nothing
         End If
     End Sub
 End Class

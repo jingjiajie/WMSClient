@@ -47,7 +47,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -84,7 +83,7 @@
             this.pagerView1.Location = new System.Drawing.Point(3, 503);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
+            this.pagerView1.PageSize = 50;
             this.pagerView1.Size = new System.Drawing.Size(1034, 55);
             this.pagerView1.TabIndex = 12;
             // 
@@ -118,6 +117,7 @@
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(363, 163);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
@@ -200,7 +200,6 @@
             this.toolStripSeparator2,
             this.buttonSave,
             this.toolStripSeparator3,
-            this.toolStripSeparator5,
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 50);
             this.toolStripTop.Name = "toolStripTop";
@@ -239,12 +238,6 @@
             this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(10, 28);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.AutoSize = false;
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(10, 28);
             // 
             // buttonPreview
             // 
@@ -327,7 +320,6 @@
         private FrontWork.ReoGridView reoGridView1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripButton buttonPreview;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton buttonSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

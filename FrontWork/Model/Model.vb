@@ -258,6 +258,10 @@ Public Class Model
         Return result
     End Function
 
+    Public Function GetRow(Of T As New)(row As Integer) As T Implements IModel.GetRow
+        Return Me.GetRows(Of T)({row})(0)
+    End Function
+
     ''' <summary>
     ''' 获取行
     ''' </summary>
@@ -636,7 +640,7 @@ Public Class Model
                               Where col.ColumnName.Equals(columnName, StringComparison.OrdinalIgnoreCase)
                               Select col).FirstOrDefault
             If dataColumn Is Nothing Then
-                Throw New FrontWorkException("UpdateCells failed: column """ & columnName & """ not found in model")
+                Throw New FrontWorkException($"UpdateCells failed: column ""{columnName}"" not found in {Me.Name}")
             End If
             Try
                 Me.Data.Rows(rows(i))(dataColumn) = If(dataOfEachCell(i), DBNull.Value)
@@ -702,7 +706,7 @@ Public Class Model
         Dim result As New Dictionary(Of String, Object)
         Dim columns = dataRow.Table.Columns
         For Each column As DataColumn In columns
-            result.Add(column.ColumnName, dataRow(column))
+            result.Add(column.ColumnName, If(dataRow(column) Is DBNull.Value, Nothing, dataRow(column)))
         Next
         Return result
     End Function
@@ -1022,12 +1026,16 @@ Public Class Model
             Dim field = type.GetField(key, BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.IgnoreCase)
             If field IsNot Nothing Then
                 Dim value As Object = Nothing
-                Try
-                    value = Convert.ChangeType(entry.Value, field.FieldType)
-                Catch ex As Exception
-                    Throw New FrontWorkException($"Value {entry.Value} of ""{key}"" cannot be converted to {field.FieldType.Name} for {type.Name}.{field.Name}")
-                End Try
-                field.SetValue(result, value)
+                If entry.Value Is Nothing Then
+                    Continue For
+                Else
+                    Try
+                        value = Convert.ChangeType(entry.Value, field.FieldType)
+                    Catch ex As Exception
+                        Throw New FrontWorkException($"Value ""{entry.Value}"" of ""{key}"" cannot be converted to {field.FieldType.Name} for {type.Name}.{field.Name}")
+                    End Try
+                    field.SetValue(result, value)
+                End If
             End If
         Next
         Return result

@@ -21,7 +21,7 @@ namespace WMS.UI
             return Request<T>(url, "POST", bodyStr);
         }
 
-        public static T PUT<T>(string url,string bodyStr)
+        public static T Put<T>(string url,string bodyStr)
         {
             return Request<T>(url, "PUT", bodyStr);
         }

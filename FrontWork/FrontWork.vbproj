@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Common\Exceptions\InvalidDataException.vb" />
+    <Compile Include="Common\Util\JsonSerializer.vb" />
     <Compile Include="Configuration\Configuration.vb">
       <SubType>UserControl</SubType>
     </Compile>
