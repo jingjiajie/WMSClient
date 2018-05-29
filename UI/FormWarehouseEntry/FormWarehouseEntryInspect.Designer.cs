@@ -38,6 +38,7 @@
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem5 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem6 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem7 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
+            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem8 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabView1 = new FrontWork.TabView();
             this.modelBoxInspectionNoteItems = new FrontWork.ModelBox();
@@ -183,6 +184,8 @@
             fieldMappingItem6.ModelFieldName = "unit";
             fieldMappingItem7.APIFieldName = "defaultInspectionUnitAmount";
             fieldMappingItem7.ModelFieldName = "unitAmount";
+            fieldMappingItem8.APIFieldName = "realAmount";
+            fieldMappingItem8.ModelFieldName = "receivedAmount";
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[] {
         fieldMappingItem1,
         fieldMappingItem2,
@@ -190,7 +193,8 @@
         fieldMappingItem4,
         fieldMappingItem5,
         fieldMappingItem6,
-        fieldMappingItem7};
+        fieldMappingItem7,
+        fieldMappingItem8};
             this.synchronizer.Location = new System.Drawing.Point(318, 53);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
