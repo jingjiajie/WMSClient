@@ -152,7 +152,7 @@
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(144, 144);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // synchronizer
@@ -164,7 +164,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(144, 144);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
@@ -177,7 +177,7 @@
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(144, 144);
+            this.model1.Size = new System.Drawing.Size(180, 180);
             this.model1.TabIndex = 2;
             // 
             // reoGridView1

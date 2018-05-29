@@ -211,7 +211,7 @@
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/supplier/",
+            url:"{$url}/warehouse/{$accountBook}/supplier/{$save}",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",

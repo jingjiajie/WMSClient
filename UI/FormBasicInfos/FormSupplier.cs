@@ -19,7 +19,7 @@ namespace WMS.UI.FormBasicInfos
            this.model1.CellUpdated+= this.model_CellUpdated;
         }
 
-        private List<int> rowChange = new List<int>();
+        //private List<int> rowChange = new List<int>();
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {            
@@ -29,10 +29,10 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;                
-                if (!rowChange.Contains(cell.Row))
-                {
-                    rowChange.Add(cell.Row);
-                }                
+                //if (!rowChange.Contains(cell.Row))
+                //{
+               //     rowChange.Add(cell.Row);
+                //}                
             }
         }
 
@@ -51,24 +51,44 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            bool update = false;
+
+            for (int i = 0; i < this.model1.RowCount - 1; i++)
+            {                             
+                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.UPDATED)
+                {
+                    update = true;
+                    break;
+                }
+            }
+            if (update == true)
             {
-                if (this.synchronizer.Save())
+                if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.synchronizer.UpdateAPI.SetRequestParameter("$save", "save_history");
+                }
+                else
+                {
+                    this.synchronizer.UpdateAPI.SetRequestParameter("$save", "");
+                }
+            }
+           
+            if (this.synchronizer.Save())
                 {
                     this.searchView1.Search();
                     Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                     GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
                        $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
                 }
-            }
-            else
-            {
-                int[] row = rowChange.ToArray();
-                var rowData = this.model1.GetRows(row);
-                string json=(new JavaScriptSerializer()).Serialize(rowData);
+                // }
+                /* else
+                 //{
+                     int[] row = rowChange.ToArray();
+                     var rowData = this.model1.GetRows(row);
+                     string json=(new JavaScriptSerializer()).Serialize(rowData);
 
+                 }*/
             }
-        }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
