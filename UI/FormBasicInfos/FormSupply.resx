@@ -200,7 +200,7 @@
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
 		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
 		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
-		{name:"CreateTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
 		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},

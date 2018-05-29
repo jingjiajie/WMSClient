@@ -63,6 +63,7 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -151,6 +152,7 @@
             this.buttonDelete,
             this.buttonAlter,
             this.toolStripSeparator1,
+            this.toolStripAutoTransfer,
             this.buttonTransferOrder,
             this.buttonDeliver,
             this.toolStripSeparator3,
@@ -216,8 +218,8 @@
             this.buttonTransferOrder.Image = ((System.Drawing.Image)(resources.GetObject("buttonTransferOrder.Image")));
             this.buttonTransferOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonTransferOrder.Name = "buttonTransferOrder";
-            this.buttonTransferOrder.Size = new System.Drawing.Size(80, 19);
-            this.buttonTransferOrder.Text = "备货作业";
+            this.buttonTransferOrder.Size = new System.Drawing.Size(104, 19);
+            this.buttonTransferOrder.Text = "设置备货作业";
             this.buttonTransferOrder.ToolTipText = "发运";
             this.buttonTransferOrder.Click += new System.EventHandler(this.buttonTransferOrder_Click);
             // 
@@ -258,7 +260,7 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
+            this.buttonPreview.Size = new System.Drawing.Size(85, 24);
             this.buttonPreview.Text = "导出/打印";
             // 
             // panelPagerWidget
@@ -418,6 +420,16 @@
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripAutoTransfer
+            // 
+            this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
+            this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
+            this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
+            this.toolStripAutoTransfer.Text = "一键备货";
+            this.toolStripAutoTransfer.ToolTipText = "发运";
+            this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
+            // 
             // FormDeliverOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -475,5 +487,6 @@
         private FrontWork.Model model1;
         private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
     }
 }
