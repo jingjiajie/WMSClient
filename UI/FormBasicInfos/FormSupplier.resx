@@ -236,6 +236,22 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>566, 17</value>
   </metadata>
+  <data name="ButtonFindHistory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABvSURBVDhPtZNRCgAhCAW7/6m8WdtWG8/tmUIl9CMyjpIp
+        HY5ceN9DtJWf2uc3OkQBjPwM2DFATbSw8kt9BQB9Nl4FsS5ebhjUwn8XERkAYqBM7gBwrJCBsQdvP22B
+        kS2v6vYBRJ+dWPhDHb5PB/cAKe+5y3pJwKwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonFindAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABvSURBVDhPtZNRCgAhCAW7/6m8WdtWG8/tmUIl9CMyjpIp
+        HY5ceN9DtJWf2uc3OkQBjPwM2DFATbSw8kt9BQB9Nl4FsS5ebhjUwn8XERkAYqBM7gBwrJCBsQdvP22B
+        kS2v6vYBRJ+dWPhDHb5PB/cAKe+5y3pJwKwAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>715, 17</value>
   </metadata>
