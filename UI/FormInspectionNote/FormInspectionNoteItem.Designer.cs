@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInspectionNoteItem));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.configuration1 = new FrontWork.Configuration();
             this.model = new FrontWork.Model();
@@ -42,6 +42,12 @@
             this.pagerView1 = new FrontWork.PagerView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAllPass = new System.Windows.Forms.Button();
+            this.buttonModify = new System.Windows.Forms.Button();
+            this.buttonFinished = new System.Windows.Forms.Button();
+            this.basicView1 = new FrontWork.BasicView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.buttonSave = new System.Windows.Forms.ToolStripButton();
@@ -49,18 +55,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.basicView1 = new FrontWork.BasicView();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonAllPass = new System.Windows.Forms.Button();
-            this.buttonModify = new System.Windows.Forms.Button();
-            this.buttonFinished = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.toolStripTop.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.toolStripTop.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // synchronizer
@@ -80,12 +80,12 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(57, 74);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormInspectionNoteItem",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -128,14 +128,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(654, 54);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -192,6 +192,114 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1074, 529);
             this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.basicView1, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 65);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1074, 150);
+            this.tableLayoutPanel2.TabIndex = 5;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonAllPass, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 2);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(899, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 5;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(175, 150);
+            this.tableLayoutPanel3.TabIndex = 15;
+            // 
+            // buttonAllPass
+            // 
+            this.buttonAllPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllPass.BackgroundImage")));
+            this.buttonAllPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAllPass.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAllPass.FlatAppearance.BorderSize = 0;
+            this.buttonAllPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonAllPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonAllPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAllPass.Location = new System.Drawing.Point(3, 6);
+            this.buttonAllPass.Name = "buttonAllPass";
+            this.buttonAllPass.Size = new System.Drawing.Size(169, 39);
+            this.buttonAllPass.TabIndex = 0;
+            this.buttonAllPass.Text = "所有条目合格";
+            this.buttonAllPass.UseVisualStyleBackColor = true;
+            this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
+            // 
+            // buttonModify
+            // 
+            this.buttonModify.BackColor = System.Drawing.Color.White;
+            this.buttonModify.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonModify.FlatAppearance.BorderSize = 0;
+            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonModify.Font = new System.Drawing.Font("黑体", 10F);
+            this.buttonModify.Image = ((System.Drawing.Image)(resources.GetObject("buttonModify.Image")));
+            this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonModify.Location = new System.Drawing.Point(3, 96);
+            this.buttonModify.Name = "buttonModify";
+            this.buttonModify.Size = new System.Drawing.Size(169, 39);
+            this.buttonModify.TabIndex = 2;
+            this.buttonModify.Text = "确认修改";
+            this.buttonModify.UseVisualStyleBackColor = false;
+            // 
+            // buttonFinished
+            // 
+            this.buttonFinished.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonFinished.BackgroundImage")));
+            this.buttonFinished.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonFinished.FlatAppearance.BorderSize = 0;
+            this.buttonFinished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonFinished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonFinished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonFinished.Location = new System.Drawing.Point(3, 51);
+            this.buttonFinished.Name = "buttonFinished";
+            this.buttonFinished.Size = new System.Drawing.Size(169, 39);
+            this.buttonFinished.TabIndex = 3;
+            this.buttonFinished.Text = "送检完成";
+            this.buttonFinished.UseVisualStyleBackColor = true;
+            // 
+            // basicView1
+            // 
+            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.basicView1.Configuration = this.configuration1;
+            this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
+            this.basicView1.ItemsPerRow = 5;
+            this.basicView1.Location = new System.Drawing.Point(0, 0);
+            this.basicView1.Margin = new System.Windows.Forms.Padding(0);
+            this.basicView1.Mode = "default";
+            this.basicView1.Model = this.model;
+            this.basicView1.Name = "basicView1";
+            this.basicView1.Padding = new System.Windows.Forms.Padding(7, 7, 7, 0);
+            this.basicView1.Size = new System.Drawing.Size(899, 150);
+            this.basicView1.TabIndex = 14;
             // 
             // toolStripTop
             // 
@@ -261,113 +369,6 @@
             this.lableStatus.Size = new System.Drawing.Size(182, 29);
             this.lableStatus.Text = "入库单物料列表";
             // 
-            // basicView1
-            // 
-            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.basicView1.Configuration = this.configuration1;
-            this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
-            this.basicView1.ItemsPerRow = 5;
-            this.basicView1.Location = new System.Drawing.Point(0, 0);
-            this.basicView1.Margin = new System.Windows.Forms.Padding(0);
-            this.basicView1.Mode = "default";
-            this.basicView1.Model = this.model;
-            this.basicView1.Name = "basicView1";
-            this.basicView1.Padding = new System.Windows.Forms.Padding(7, 7, 7, 0);
-            this.basicView1.Size = new System.Drawing.Size(899, 150);
-            this.basicView1.TabIndex = 14;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.basicView1, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 65);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1074, 150);
-            this.tableLayoutPanel2.TabIndex = 5;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonAllPass, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 2);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(899, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 5;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(175, 150);
-            this.tableLayoutPanel3.TabIndex = 15;
-            // 
-            // buttonAllPass
-            // 
-            this.buttonAllPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllPass.BackgroundImage")));
-            this.buttonAllPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAllPass.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAllPass.FlatAppearance.BorderSize = 0;
-            this.buttonAllPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonAllPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonAllPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAllPass.Location = new System.Drawing.Point(3, 6);
-            this.buttonAllPass.Name = "buttonAllPass";
-            this.buttonAllPass.Size = new System.Drawing.Size(169, 39);
-            this.buttonAllPass.TabIndex = 0;
-            this.buttonAllPass.Text = "所有条目合格";
-            this.buttonAllPass.UseVisualStyleBackColor = true;
-            // 
-            // buttonModify
-            // 
-            this.buttonModify.BackColor = System.Drawing.Color.White;
-            this.buttonModify.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonModify.FlatAppearance.BorderSize = 0;
-            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonModify.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonModify.Image = ((System.Drawing.Image)(resources.GetObject("buttonModify.Image")));
-            this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(3, 96);
-            this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(169, 39);
-            this.buttonModify.TabIndex = 2;
-            this.buttonModify.Text = "确认修改";
-            this.buttonModify.UseVisualStyleBackColor = false;
-            // 
-            // buttonFinished
-            // 
-            this.buttonFinished.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonFinished.BackgroundImage")));
-            this.buttonFinished.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonFinished.FlatAppearance.BorderSize = 0;
-            this.buttonFinished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonFinished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonFinished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinished.Location = new System.Drawing.Point(3, 51);
-            this.buttonFinished.Name = "buttonFinished";
-            this.buttonFinished.Size = new System.Drawing.Size(169, 39);
-            this.buttonFinished.TabIndex = 3;
-            this.buttonFinished.Text = "送检完成";
-            this.buttonFinished.UseVisualStyleBackColor = true;
-            // 
             // FormInspectionNoteItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
@@ -382,12 +383,12 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

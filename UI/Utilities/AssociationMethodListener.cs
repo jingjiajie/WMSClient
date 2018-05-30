@@ -79,5 +79,13 @@ namespace WMS.UI
                     where s["name"] != null && s["name"].ToString().StartsWith(str)
                     select s["name"]).ToArray();
         }
+
+        //人员名称输入联想
+        private object[] PersonAssociation(string str)
+        {
+            return (from s in GlobalData.AllPersons
+                    where s["name"] != null && s["name"].ToString().StartsWith(str)
+                    select s["name"]).ToArray();
+        }
     }
 }

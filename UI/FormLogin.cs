@@ -251,6 +251,9 @@ namespace WMS.UI
 
             GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");
+
+            GlobalData.AllPersons = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/ledger/{GlobalData.AccountBook}/person/{{}}");
         }
     }
 }

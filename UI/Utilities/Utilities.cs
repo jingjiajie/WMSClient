@@ -744,6 +744,13 @@ namespace WMS.UI
             }
         }
 
+        public static void BindBlueButton(Button button)
+        {
+            button.MouseDown += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q; };
+            button.MouseEnter += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s; };
+            button.MouseLeave += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s; };
+        }
+
     }
 
     class Translator
@@ -784,5 +791,6 @@ namespace WMS.UI
                 throw new Exception("BoolTranslator只接受整数型或字符串数据！");
             }
         }
+
     }
 }

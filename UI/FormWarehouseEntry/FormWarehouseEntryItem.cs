@@ -53,6 +53,23 @@ namespace WMS.UI
             this.searchView1.Search();
         }
 
+        private void PersonEditEnded(int row, string personName)
+        {
+            this.model[row, "personId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(personName)) return;
+            var foundPersons = (from s in GlobalData.AllPersons
+                                where s["name"]?.ToString() == personName
+                                select s).ToArray();
+            if (foundPersons.Length != 1) goto FAILED;
+            this.model[row, "personId"] = (int)foundPersons[0]["id"];
+            this.model[row, "personName"] = foundPersons[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
         private void buttonInspect_Click(object sender, EventArgs e)
         {
             var selectionRange = this.model.SelectionRange;
@@ -75,10 +92,9 @@ namespace WMS.UI
             switch (state)
             {
                 case 0: return "待入库";
-                case 1: return "已入库";
-                case 2: return "送检中";
-                case 3: return "送件不合格";
-                case 4: return "送检全部合格";
+                case 1: return "送检中";
+                case 2: return "正品入库";
+                case 3: return "不良品入库";
                 default: throw new Exception("状态错误:" + state);
             }
         }
@@ -110,6 +126,75 @@ namespace WMS.UI
             if (foundStorageLocations.Length != 1) goto FAILED;
             this.model[row, "storageLocationId"] = (int)foundStorageLocations[0]["id"];
             this.model[row, "storageLocationNo"] = foundStorageLocations[0]["no"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"库位\"{storageLocationName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+
+        private void QualifiedStorageLocationNoEditEnded(int row, string storageLocationNo)
+        {
+            this.model[row, "qualifiedStorageLocationId"] = 0;//先清除库位ID
+            if (string.IsNullOrWhiteSpace(storageLocationNo)) return;
+            var foundStorageLocations = (from s in GlobalData.AllStorageLocations
+                                         where s["no"]?.ToString() == storageLocationNo
+                                         select s).ToArray();
+            if (foundStorageLocations.Length != 1) goto FAILED;
+            this.model[row, "qualifiedStorageLocationId"] = (int)foundStorageLocations[0]["id"];
+            this.model[row, "qualifiedStorageLocationName"] = foundStorageLocations[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"库位\"{storageLocationNo}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        private void QualifiedStorageLocationNameEditEnded(int row, string storageLocationName)
+        {
+            this.model[row, "qualifiedStorageLocationId"] = 0;//先清除库位ID
+            if (string.IsNullOrWhiteSpace(storageLocationName)) return;
+            var foundStorageLocations = (from s in GlobalData.AllStorageLocations
+                                         where s["name"]?.ToString() == storageLocationName
+                                         select s).ToArray();
+            if (foundStorageLocations.Length != 1) goto FAILED;
+            this.model[row, "qualifiedStorageLocationId"] = (int)foundStorageLocations[0]["id"];
+            this.model[row, "qualifiedStorageLocationNo"] = foundStorageLocations[0]["no"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"库位\"{storageLocationName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        private void UnqualifiedStorageLocationNoEditEnded(int row, string storageLocationNo)
+        {
+            this.model[row, "unqualifiedStorageLocationId"] = 0;//先清除库位ID
+            if (string.IsNullOrWhiteSpace(storageLocationNo)) return;
+            var foundStorageLocations = (from s in GlobalData.AllStorageLocations
+                                         where s["no"]?.ToString() == storageLocationNo
+                                         select s).ToArray();
+            if (foundStorageLocations.Length != 1) goto FAILED;
+            this.model[row, "unqualifiedStorageLocationId"] = (int)foundStorageLocations[0]["id"];
+            this.model[row, "unqualifiedStorageLocationName"] = foundStorageLocations[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"库位\"{storageLocationNo}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        private void UnqualifiedStorageLocationNameEditEnded(int row, string storageLocationName)
+        {
+            this.model[row, "unqualifiedStorageLocationId"] = 0;//先清除库位ID
+            if (string.IsNullOrWhiteSpace(storageLocationName)) return;
+            var foundStorageLocations = (from s in GlobalData.AllStorageLocations
+                                         where s["name"]?.ToString() == storageLocationName
+                                         select s).ToArray();
+            if (foundStorageLocations.Length != 1) goto FAILED;
+            this.model[row, "unqualifiedStorageLocationId"] = (int)foundStorageLocations[0]["id"];
+            this.model[row, "unqualifiedStorageLocationNo"] = foundStorageLocations[0]["no"];
             return;
 
             FAILED:
