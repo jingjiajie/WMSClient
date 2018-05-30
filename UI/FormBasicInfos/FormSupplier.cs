@@ -65,7 +65,7 @@ namespace WMS.UI.FormBasicInfos
             {
                 if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    this.synchronizer.UpdateAPI.SetRequestParameter("$save", "save_history");
+                    this.synchronizer.UpdateAPI.SetRequestParameter("$save", "history_save");
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace WMS.UI.FormBasicInfos
                     this.searchView1.Search();
                     Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                     GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
+                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
                 }
                 // }
                 /* else
@@ -99,9 +99,45 @@ namespace WMS.UI.FormBasicInfos
         private void FormSupplier_Load(object sender, EventArgs e)
         {
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.synchronizer.FindAPI.SetRequestParameter("$history","new");
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
+
+        private void ButtonFindHistory_Click(object sender, EventArgs e)
+        {
+            this.synchronizer.FindAPI.SetRequestParameter("$history", "history");
+            this.basicView1.Enabled = false;
+            this.searchView1.Enabled = false;
+            this.toolStripButtonAdd.Visible = false;
+            this.toolStripButtonAlter.Visible = false;
+            this.toolStripButtonDelete.Visible = false;
+            this.ButtonFindHistory.Visible = false;
+            this.toolStripButtonFindAll.Visible = true;
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项查看历史信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            this.searchView1.AddStaticCondition("newestId", rowData["id"]);
+            this.searchView1.Search();         
+        }
+
+        private void toolStripButtonFindAll_Click(object sender, EventArgs e)
+        {
+            this.synchronizer.FindAPI.SetRequestParameter("$history", "new");
+            this.basicView1.Enabled = true;
+            this.searchView1.Enabled = true;
+            this.toolStripButtonAdd.Visible = true;
+            this.toolStripButtonAlter.Visible = true;
+            this.toolStripButtonDelete.Visible = true;
+            this.ButtonFindHistory.Visible = true;
+            this.toolStripButtonFindAll.Visible = false;
+            //清除
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
         }
     }
