@@ -16,6 +16,7 @@ namespace WMS.UI
         public static List<IDictionary<string, object>> AllSupplies;
         public static List<IDictionary<string, object>> AllStorageLocations;
         public static List<IDictionary<string, object>> AllStorageAreas;
+        public static List<IDictionary<string, object>> AllPersons;
 
         private static int projectID = -1;
         private static int warehouseID = -1;
