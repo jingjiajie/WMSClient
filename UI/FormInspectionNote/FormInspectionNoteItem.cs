@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -24,10 +26,29 @@ namespace WMS.UI
         private void FormInspectionNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonFinished);
+            Utilities.BindBlueButton(this.buttonAllPass);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView.Search();
+        }
+
+        private void PersonEditEnded(int row, string personName)
+        {
+            this.model[row, "personId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(personName)) return;
+            var foundPersons = (from s in GlobalData.AllPersons
+                                         where s["name"]?.ToString() == personName
+                                         select s).ToArray();
+            if (foundPersons.Length != 1) goto FAILED;
+            this.model[row, "personId"] = (int)foundPersons[0]["id"];
+            this.model[row, "personName"] = foundPersons[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
         }
 
         private string StateForwardMapper(int state)
@@ -127,5 +148,49 @@ namespace WMS.UI
                 this.searchView.Search();
             }
         }
+
+        private void buttonAllPass_Click(object sender, EventArgs e)
+        {
+            var inspectFinishArgs = new InspectFinishArgs();
+            inspectFinishArgs.allFinish = true;
+            inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/inspect_finish",
+                     serializer.Serialize(inspectFinishArgs),
+                    "PUT");
+                this.searchView.Search();
+                MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch(WebException ex)
+            {
+                string msg = ex.Message;
+                if(ex.Response != null)
+                {
+                    msg = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("操作失败：" + msg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
+}
+
+public class InspectFinishArgs
+{
+    public bool allFinish = false;
+    public int inspectionNoteId = -1;
+    public bool qualified = true;
+    public int personId = -1;
+    public InspectFinishItem[] inspectFinishItems = new InspectFinishItem[] { };
+}
+
+public class InspectFinishItem
+{
+    public int inspectionNoteItemId = -1;
+    public bool qualified = true;
+    public double returnAmount;
+    public String returnUnit;
+    public double returnUnitAmount;
+    public int personId = -1;
 }

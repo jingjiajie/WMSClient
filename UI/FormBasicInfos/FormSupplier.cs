@@ -65,7 +65,7 @@ namespace WMS.UI.FormBasicInfos
             {
                 if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    this.synchronizer.UpdateAPI.SetRequestParameter("$save", "save_history");
+                    this.synchronizer.UpdateAPI.SetRequestParameter("$save", "history_save");
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace WMS.UI.FormBasicInfos
                     this.searchView1.Search();
                     Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                     GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}");
+                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
                 }
                 // }
                 /* else
@@ -99,6 +99,7 @@ namespace WMS.UI.FormBasicInfos
         private void FormSupplier_Load(object sender, EventArgs e)
         {
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.synchronizer.FindAPI.SetRequestParameter("$history","new");
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);

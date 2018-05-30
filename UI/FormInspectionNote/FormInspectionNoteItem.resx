@@ -133,18 +133,12 @@
         {name:"unit",displayName:"送检单位",editable:false},
         {name:"unitAmount",displayName:"送检单位数量",type:"double",editable:false},
         {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
-        {name:"inspectionStorageLocationId",displayName:"待检物料存放库位ID",type:"int",visible:false},
-        {name:"inspectionStorageLocationNo",displayName:"待检库位编码",association:"#storageLocationNoAssociation",editEnded:"#inspectionStorageLocationNoEditEnded"},
-        {name:"inspectionStorageLocationName",displayName:"待检库位名称",association:"#storageLocationNameAssociation",editEnded:"#inspectionStorageLocationNameEditEnded"},
         {name:"returnAmount",displayName:"返回数量",type:"double"},
         {name:"returnUnit",displayName:"返回单位"},
         {name:"returnUnitAmount",displayName:"返回单位数量",type:"double"},
-        {name:"returnStorageLocationId",displayName:"返回库位ID",type:"int",visible:false},
-        {name:"returnStorageLocationNo",displayName:"返回库位编码",association:"#storageLocationNoAssociation",editEnded:"#returnStorageLocationNoEditEnded"},
-        {name:"returnStorageLocationName",displayName:"返回库位名称",association:"#storageLocationNameAssociation",editEnded:"#returnStorageLocationNameEditEnded"},
         {name:"comment",displayName:"备注"},
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
-        {name:"personName",displayName:"作业人名称",association:"#personAssociation"}
+        {name:"personName",displayName:"作业人名称",association:"#personAssociation",editEnded:"#personEditEnded"}
     ],
     httpAPIs:[
         {type:"get-count",
@@ -772,9 +766,6 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 72</value>
   </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>237, 72</value>
-  </metadata>
   <data name="buttonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -823,4 +814,7 @@
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>237, 72</value>
+  </metadata>
 </root>
