@@ -17,6 +17,7 @@ namespace WMS.UI.FormBasicInfos
         {            
             InitializeComponent();
            this.model1.CellUpdated+= this.model_CellUpdated;
+
         }
 
         //private List<int> rowChange = new List<int>();
@@ -100,6 +101,7 @@ namespace WMS.UI.FormBasicInfos
         {
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.synchronizer.FindAPI.SetRequestParameter("$history","new");
+            this.synchronizer.GetCountAPI.SetRequestParameter("$history", "new");
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -109,8 +111,8 @@ namespace WMS.UI.FormBasicInfos
         private void ButtonFindHistory_Click(object sender, EventArgs e)
         {
             this.synchronizer.FindAPI.SetRequestParameter("$history", "history");
-            this.basicView1.Enabled = false;
-            this.searchView1.Enabled = false;
+            this.synchronizer.GetCountAPI.SetRequestParameter("$history", "history");
+            this.basicView1.Enabled = false;          
             this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAlter.Visible = false;
             this.toolStripButtonDelete.Visible = false;
@@ -119,16 +121,29 @@ namespace WMS.UI.FormBasicInfos
             if (this.model1.SelectionRange.Rows != 1)
             {
                 MessageBox.Show("请选择一项查看历史信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.synchronizer.FindAPI.SetRequestParameter("$history", "new");
+                this.synchronizer.GetCountAPI.SetRequestParameter("$history", "new");
+                this.basicView1.Enabled = true;
+                this.searchView1.Enabled = true;
+                this.toolStripButtonAdd.Visible = true;
+                this.toolStripButtonAlter.Visible = true;
+                this.toolStripButtonDelete.Visible = true;
+                this.ButtonFindHistory.Visible = true;
+                this.toolStripButtonFindAll.Visible = false;
+                this.searchView1.ClearStaticCondition("newestSupplierId");
+                this.searchView1.Search();
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];          
             this.searchView1.AddStaticCondition("newestSupplierId", rowData["id"]);
-            this.searchView1.Search();         
+            this.searchView1.Search();
+            this.searchView1.Enabled = false;
         }
 
         private void toolStripButtonFindAll_Click(object sender, EventArgs e)
         {
-            this.synchronizer.FindAPI.SetRequestParameter("$history", "new");
+            this.synchronizer.FindAPI.SetRequestParameter("$history","new");
+            this.synchronizer.GetCountAPI.SetRequestParameter("$history", "new");
             this.basicView1.Enabled = true;
             this.searchView1.Enabled = true;
             this.toolStripButtonAdd.Visible = true;
@@ -136,8 +151,7 @@ namespace WMS.UI.FormBasicInfos
             this.toolStripButtonDelete.Visible = true;
             this.ButtonFindHistory.Visible = true;
             this.toolStripButtonFindAll.Visible = false;
-            
-           
+            this.searchView1.ClearStaticCondition("newestSupplierId");           
             this.searchView1.Search();
         }
     }

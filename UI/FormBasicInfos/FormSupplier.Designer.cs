@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSupplier));
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
@@ -49,13 +49,13 @@
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ButtonFindHistory = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFindAll = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.basicView1 = new FrontWork.BasicView();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonFindAll = new System.Windows.Forms.ToolStripButton();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -104,14 +104,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(644, 50);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -260,6 +260,18 @@
             this.ButtonFindHistory.ToolTipText = "查询历史";
             this.ButtonFindHistory.Click += new System.EventHandler(this.ButtonFindHistory_Click);
             // 
+            // toolStripButtonFindAll
+            // 
+            this.toolStripButtonFindAll.AutoSize = false;
+            this.toolStripButtonFindAll.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFindAll.Image")));
+            this.toolStripButtonFindAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFindAll.Name = "toolStripButtonFindAll";
+            this.toolStripButtonFindAll.Size = new System.Drawing.Size(100, 25);
+            this.toolStripButtonFindAll.Text = "查看全部信息";
+            this.toolStripButtonFindAll.ToolTipText = "查询历史";
+            this.toolStripButtonFindAll.Visible = false;
+            this.toolStripButtonFindAll.Click += new System.EventHandler(this.toolStripButtonFindAll_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
@@ -331,18 +343,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 6;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButtonFindAll
-            // 
-            this.toolStripButtonFindAll.AutoSize = false;
-            this.toolStripButtonFindAll.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFindAll.Image")));
-            this.toolStripButtonFindAll.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonFindAll.Name = "toolStripButtonFindAll";
-            this.toolStripButtonFindAll.Size = new System.Drawing.Size(100, 25);
-            this.toolStripButtonFindAll.Text = "查看全部信息";
-            this.toolStripButtonFindAll.ToolTipText = "查询历史";
-            this.toolStripButtonFindAll.Visible = false;
-            this.toolStripButtonFindAll.Click += new System.EventHandler(this.toolStripButtonFindAll_Click);
             // 
             // FormSupplier
             // 
