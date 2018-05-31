@@ -34,7 +34,7 @@ namespace WMS.UI
         public static T Request<T>(string url, string method = "GET", string bodyStr = null)
         {
             string responseStr = null;
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;          
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             try
             {
                 request.Method = method;
@@ -42,19 +42,24 @@ namespace WMS.UI
                 {
                     request.ContentType = "application/json";
                     byte[] bytes = Encoding.UTF8.GetBytes(bodyStr);
-                    request.GetRequestStream().Write(bytes, 0, bytes.Length);     
+                    request.GetRequestStream().Write(bytes, 0, bytes.Length);
                 }
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     responseStr = reader.ReadToEnd();
-                }           
+                }
             }
             catch (WebException ex)
             {
-               MessageBox.Show("加载失败：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("加载失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return default(T);
-                throw new Exception(ex.ToString());              
+                throw new Exception(ex.ToString());
             }           
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T result = serializer.Deserialize<T>(responseStr);

@@ -16,11 +16,15 @@ namespace WMS.UI
     public partial class FormWarehouseEntryInspect : Form
     {
         private IDictionary<string, object>[] warehouseEntries = null;
+        Action<int[]> ToInspectionNoteCallback = null;
+        Action RefreshWarehouseEntryCallback = null;
 
-        public FormWarehouseEntryInspect(IDictionary<String, object>[] warehouseEntries)
+        public FormWarehouseEntryInspect(IDictionary<String, object>[] warehouseEntries,Action<int[]> toInspectionNoteCallback,Action refreshWarehouseEntryCallback)
         {
             MethodListenerContainer.Register(this);
             this.warehouseEntries = warehouseEntries;
+            this.RefreshWarehouseEntryCallback = refreshWarehouseEntryCallback;
+            this.ToInspectionNoteCallback = toInspectionNoteCallback;
             InitializeComponent();
         }
 
@@ -162,8 +166,18 @@ namespace WMS.UI
             string strInspectArgs = serializer.Serialize(inspectArgs);
             try
             {
-                RestClient.Post<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/inspect", strInspectArgs);
-                this.Close();
+                int[] inspectionNoteIDs = RestClient.RequestPost<int[]>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/inspect", strInspectArgs);
+                string strIDs = serializer.Serialize(inspectionNoteIDs);
+                if (MessageBox.Show("送检成功！是否查看送检单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.ToInspectionNoteCallback?.Invoke(inspectionNoteIDs);
+                    this.Close();
+                }
+                else
+                {
+                    this.RefreshWarehouseEntryCallback?.Invoke();
+                    this.Close();
+                }
             } catch(WebException ex)
             {
                 string message = ex.Message;
@@ -172,6 +186,7 @@ namespace WMS.UI
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show("送检失败：" + message,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
         }
 

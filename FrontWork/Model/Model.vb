@@ -91,6 +91,9 @@ Public Class Model
             Return Me._selectionRange
         End Get
         Set(value As Range())
+            If value Is Nothing Then
+                value = {}
+            End If
             Me._selectionRange = value
             For Each range In value
                 Me.BindRangeChangedEventToSelectionRangeChangedEvent(range)
@@ -1004,6 +1007,43 @@ Public Class Model
     Public Function ContainsColumn(columnName As String) As Boolean Implements IModel.ContainsColumn
         Return Me.Data.Columns.Contains(columnName)
     End Function
+
+    Public Sub SelectRowsByValues(Of T)(columnName As String, values As T())
+        If values Is Nothing Then
+            Me.AllSelectionRanges = {}
+            Return
+        End If
+        Dim targetRows As New List(Of Integer)
+        For i = 0 To Me.Data.Rows.Count - 1
+            Dim curRowValue = Me.Data.Rows(i)(columnName)
+            If values.Contains(curRowValue) Then
+                targetRows.Add(i)
+            End If
+        Next
+        '对目标行号分组
+        Dim rowGroups As New List(Of List(Of Integer))
+        For Each row In targetRows
+            Dim lastGroup As List(Of Integer)
+            If rowGroups.Count = 0 Then
+                lastGroup = New List(Of Integer)
+                rowGroups.Add(lastGroup)
+            Else
+                lastGroup = rowGroups.Last
+            End If
+            If lastGroup.Count = 0 OrElse lastGroup.Last + 1 = row Then
+                lastGroup.Add(row)
+            Else
+                rowGroups.Add(New List(Of Integer)({row}))
+            End If
+        Next
+        '生成选区
+        Dim ranges As New List(Of Range)
+        For Each rowGroup In rowGroups
+            Dim newRange = New Range(rowGroup(0), 0, rowGroup.Count, Me.Data.Columns.Count)
+            ranges.Add(newRange)
+        Next
+        Me.AllSelectionRanges = ranges.ToArray
+    End Sub
 
     Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
         Dim result As New T

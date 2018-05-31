@@ -58,7 +58,7 @@ namespace WMS.UI
                 case 0: return "待检";
                 case 1: return "全部合格";
                 case 2: return "不合格";
-                default: throw new Exception("状态错误:" + state);
+                default: return "未知状态";
             }
         }
 
@@ -154,12 +154,16 @@ namespace WMS.UI
             var inspectFinishArgs = new InspectFinishArgs();
             inspectFinishArgs.allFinish = true;
             inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
+            inspectFinishArgs.personId = (int)GlobalData.Person["id"];
             JsonSerializer serializer = new JsonSerializer();
             try
             {
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/inspect_finish",
                      serializer.Serialize(inspectFinishArgs),
                     "PUT");
+                int warehouseEntryID = (int)this.inspectionNote["warehouseEntryId"];
+                string strIDs = $"[{warehouseEntryID}]";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/update_state", strIDs, "PUT");
                 this.searchView.Search();
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

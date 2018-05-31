@@ -45,7 +45,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAllPass = new System.Windows.Forms.Button();
-            this.buttonModify = new System.Windows.Forms.Button();
             this.buttonFinished = new System.Windows.Forms.Button();
             this.basicView1 = new FrontWork.BasicView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
@@ -215,8 +214,7 @@
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAllPass, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(899, 0);
@@ -224,9 +222,9 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(175, 150);
             this.tableLayoutPanel3.TabIndex = 15;
@@ -240,34 +238,13 @@
             this.buttonAllPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonAllPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonAllPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAllPass.Location = new System.Drawing.Point(3, 6);
+            this.buttonAllPass.Location = new System.Drawing.Point(3, 10);
             this.buttonAllPass.Name = "buttonAllPass";
-            this.buttonAllPass.Size = new System.Drawing.Size(169, 39);
+            this.buttonAllPass.Size = new System.Drawing.Size(169, 49);
             this.buttonAllPass.TabIndex = 0;
             this.buttonAllPass.Text = "所有条目合格";
             this.buttonAllPass.UseVisualStyleBackColor = true;
             this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
-            // 
-            // buttonModify
-            // 
-            this.buttonModify.BackColor = System.Drawing.Color.White;
-            this.buttonModify.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonModify.FlatAppearance.BorderSize = 0;
-            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonModify.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonModify.Image = ((System.Drawing.Image)(resources.GetObject("buttonModify.Image")));
-            this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(3, 96);
-            this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(169, 39);
-            this.buttonModify.TabIndex = 2;
-            this.buttonModify.Text = "确认修改";
-            this.buttonModify.UseVisualStyleBackColor = false;
             // 
             // buttonFinished
             // 
@@ -278,9 +255,9 @@
             this.buttonFinished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonFinished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonFinished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinished.Location = new System.Drawing.Point(3, 51);
+            this.buttonFinished.Location = new System.Drawing.Point(3, 70);
             this.buttonFinished.Name = "buttonFinished";
-            this.buttonFinished.Size = new System.Drawing.Size(169, 39);
+            this.buttonFinished.Size = new System.Drawing.Size(169, 49);
             this.buttonFinished.TabIndex = 3;
             this.buttonFinished.Text = "送检完成";
             this.buttonFinished.UseVisualStyleBackColor = true;
@@ -415,7 +392,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonAllPass;
-        private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.Button buttonFinished;
     }
 }
