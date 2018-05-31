@@ -235,4 +235,22 @@ Public Class SearchView
     Public Sub AddStaticCondition(key As String, value As Object, Optional relation As Relation = Relation.EQUAL)
         Call Me.AddStaticCondition(key, {value}, relation)
     End Sub
+
+    ''' <summary>
+    ''' 清除静态搜索条件，即每一次搜索都会自动附加的条件
+    ''' </summary>
+    Public Sub ClearStaticCondition()
+        Call Me.StaticConditions.Clear()
+    End Sub
+
+    ''' <summary>
+    ''' 清除静态搜索条件，即每一次搜索都会自动附加的条件
+    ''' </summary>
+    ''' <param name="key">要删除的key</param>
+    Public Sub ClearStaticCondition(key As String)
+        Call Me.StaticConditions.RemoveAll(
+            Function(cond)
+                Return cond.Key.Equals(key, StringComparison.OrdinalIgnoreCase)
+            End Function)
+    End Sub
 End Class
