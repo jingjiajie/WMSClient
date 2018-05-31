@@ -44,6 +44,7 @@
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
             this.buttonTransferOrder = new System.Windows.Forms.ToolStripButton();
             this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -63,7 +64,6 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -213,6 +213,16 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
+            // toolStripAutoTransfer
+            // 
+            this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
+            this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
+            this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
+            this.toolStripAutoTransfer.Text = "一键备货";
+            this.toolStripAutoTransfer.ToolTipText = "发运";
+            this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
+            // 
             // buttonTransferOrder
             // 
             this.buttonTransferOrder.Image = ((System.Drawing.Image)(resources.GetObject("buttonTransferOrder.Image")));
@@ -221,6 +231,7 @@
             this.buttonTransferOrder.Size = new System.Drawing.Size(104, 19);
             this.buttonTransferOrder.Text = "设置备货作业";
             this.buttonTransferOrder.ToolTipText = "发运";
+            this.buttonTransferOrder.Visible = false;
             this.buttonTransferOrder.Click += new System.EventHandler(this.buttonTransferOrder_Click);
             // 
             // buttonDeliver
@@ -419,16 +430,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(791, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripAutoTransfer
-            // 
-            this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
-            this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
-            this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
-            this.toolStripAutoTransfer.Text = "一键备货";
-            this.toolStripAutoTransfer.ToolTipText = "发运";
-            this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
             // 
             // FormDeliverOrder
             // 
