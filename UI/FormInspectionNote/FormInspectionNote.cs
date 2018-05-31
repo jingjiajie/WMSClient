@@ -51,7 +51,7 @@ namespace WMS.UI
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormInspectionNoteItem(rowData).Show();
+            new FormInspectionNoteItem(rowData,()=>this.searchView1.Search()).Show();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)

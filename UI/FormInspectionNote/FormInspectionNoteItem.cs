@@ -15,9 +15,11 @@ namespace WMS.UI
     public partial class FormInspectionNoteItem : Form
     {
         private IDictionary<string, object> inspectionNote = null;
-        public FormInspectionNoteItem(IDictionary<string, object>  inspectionNote)
+        Action RefreshInspectionNoteCallback = null;
+        public FormInspectionNoteItem(IDictionary<string, object>  inspectionNote,Action refreshInspectionNoteCallback)
         {
             MethodListenerContainer.Register(this);
+            this.RefreshInspectionNoteCallback = refreshInspectionNoteCallback;
             this.inspectionNote = inspectionNote;
             InitializeComponent();
             this.searchView.AddStaticCondition("inspectionNoteId", this.inspectionNote["id"]);
@@ -162,8 +164,11 @@ namespace WMS.UI
                      serializer.Serialize(inspectFinishArgs),
                     "PUT");
                 int warehouseEntryID = (int)this.inspectionNote["warehouseEntryId"];
-                string strIDs = $"[{warehouseEntryID}]";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/update_state", strIDs, "PUT");
+                string strWarehouseEntryIDs = $"[{warehouseEntryID}]";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/update_state", strWarehouseEntryIDs, "PUT");
+                string strInspectionNoteIDs = $"[{(int)this.inspectionNote["id"]}]";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/update_state", strInspectionNoteIDs, "PUT");
+                this.RefreshInspectionNoteCallback?.Invoke();
                 this.searchView.Search();
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
