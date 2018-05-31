@@ -122,7 +122,7 @@ namespace WMS.UI.FormBasicInfos
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            this.searchView1.AddStaticCondition("newestId", rowData["id"]);
+            this.searchView1.AddStaticCondition("newestSupplierId", rowData["id"]);
             this.searchView1.Search();         
         }
 
@@ -136,8 +136,8 @@ namespace WMS.UI.FormBasicInfos
             this.toolStripButtonDelete.Visible = true;
             this.ButtonFindHistory.Visible = true;
             this.toolStripButtonFindAll.Visible = false;
-            //清除
-            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            
+           
             this.searchView1.Search();
         }
     }
