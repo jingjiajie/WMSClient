@@ -12,8 +12,10 @@ namespace WMS.UI
 {
     public partial class FormWarehouseEntry : Form
     {
-        public FormWarehouseEntry()
+        Action<int[]> ToInspectionNoteCallback = null;
+        public FormWarehouseEntry(Action<int[]> toInspectionNoteCallback)
         {
+            this.ToInspectionNoteCallback = toInspectionNoteCallback;
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
@@ -116,7 +118,7 @@ namespace WMS.UI
                 return;
             }
             var warehouseEntries = this.model1.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
-            new FormWarehouseEntryInspect(warehouseEntries).Show();
+            new FormWarehouseEntryInspect(warehouseEntries, this.ToInspectionNoteCallback, () => this.searchView1.Search()).Show();
         }
 
         private void buttonItems_Click(object sender, EventArgs e)
@@ -128,6 +130,19 @@ namespace WMS.UI
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             new FormWarehouseEntryItem(rowData).Show();
+        }
+
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0:return "待入库";
+                case 1:return "送检中";
+                case 2:return "全部入库";
+                case 3:return "部分入库";
+                default:return "未知状态";
+            }
         }
     }
 }
