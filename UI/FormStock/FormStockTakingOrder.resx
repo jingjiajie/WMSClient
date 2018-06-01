@@ -123,7 +123,7 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"no",displayName:"盘点单号",type:"string"},
+        {name:"no",displayName:"盘点单号",type:"string",placeHolder:"留空自动生成"},
         {name:"description",displayName:"描述",type:"string"},
         {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},       

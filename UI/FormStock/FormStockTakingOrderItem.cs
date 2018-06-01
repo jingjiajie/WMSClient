@@ -55,8 +55,7 @@ namespace WMS.UI.FormStockTaking
             }
             int startRow = this.model1.SelectionRange.Row;
             int selectRows = this.model1.SelectionRange.Rows;
-            int[] rows= Enumerable.Range(startRow, selectRows).ToArray();
-            //List<int> ids = new List<int>(selectRows);
+            int[] rows= Enumerable.Range(startRow, selectRows).ToArray();           
             StringBuilder ids = new StringBuilder();
             var rowData = this.model1.GetRows(rows);
             foreach (Dictionary<string, object> a in rowData)
