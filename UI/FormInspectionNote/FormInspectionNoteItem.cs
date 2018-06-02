@@ -156,6 +156,7 @@ namespace WMS.UI
             var inspectFinishArgs = new InspectFinishArgs();
             inspectFinishArgs.allFinish = true;
             inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
+            inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
             inspectFinishArgs.personId = (int)GlobalData.Person["id"];
             JsonSerializer serializer = new JsonSerializer();
             try
@@ -163,12 +164,6 @@ namespace WMS.UI
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/inspect_finish",
                      serializer.Serialize(inspectFinishArgs),
                     "PUT");
-                int warehouseEntryID = (int)this.inspectionNote["warehouseEntryId"];
-                string strWarehouseEntryIDs = $"[{warehouseEntryID}]";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/update_state", strWarehouseEntryIDs, "PUT");
-                string strInspectionNoteIDs = $"[{(int)this.inspectionNote["id"]}]";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/update_state", strInspectionNoteIDs, "PUT");
-                this.RefreshInspectionNoteCallback?.Invoke();
                 this.searchView.Search();
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -182,6 +177,57 @@ namespace WMS.UI
                 MessageBox.Show("操作失败：" + msg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void buttonFinished_Click(object sender, EventArgs e)
+        {
+            if(this.model.SelectionRange == null)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int row = this.model.SelectionRange.Row;
+            var inspectFinishArgs = new InspectFinishArgs();
+            inspectFinishArgs.allFinish = false;
+            inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
+            inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
+            InspectFinishItem inspectFinishItem = new InspectFinishItem();
+            inspectFinishArgs.inspectFinishItems = new InspectFinishItem[] { inspectFinishItem };
+            if(this.model.SelectionRange == null)
+            {
+                MessageBox.Show("请选择一项进行操作！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int selectedRow = this.model.SelectionRange.Row;
+            inspectFinishItem.inspectionNoteItemId = (int)this.model[selectedRow, "id"];
+            inspectFinishItem.personId = (int?)this.model[selectedRow,"personId"];
+            inspectFinishItem.qualified = true;
+            inspectFinishItem.returnAmount = (double?)this.model[selectedRow, "returnAmount"];
+            inspectFinishItem.returnUnit = (string)this.model[selectedRow, "returnUnit"];
+            inspectFinishItem.returnUnitAmount = (double?)this.model[selectedRow, "returnUnitAmount"];
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/inspect_finish",
+                     serializer.Serialize(inspectFinishArgs),
+                    "PUT");
+                this.searchView.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string msg = ex.Message;
+                if (ex.Response != null)
+                {
+                    msg = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("操作失败：" + msg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void FormInspectionNoteItem_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.RefreshInspectionNoteCallback?.Invoke();
+        }
     }
 }
 
@@ -189,6 +235,7 @@ public class InspectFinishArgs
 {
     public bool allFinish = false;
     public int inspectionNoteId = -1;
+    public int warehouseEntryId = -1;
     public bool qualified = true;
     public int personId = -1;
     public InspectFinishItem[] inspectFinishItems = new InspectFinishItem[] { };
@@ -198,8 +245,8 @@ public class InspectFinishItem
 {
     public int inspectionNoteItemId = -1;
     public bool qualified = true;
-    public double returnAmount;
+    public double? returnAmount;
     public String returnUnit;
-    public double returnUnitAmount;
-    public int personId = -1;
+    public double? returnUnitAmount;
+    public int? personId = -1;
 }

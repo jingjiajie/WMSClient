@@ -261,6 +261,7 @@
             this.buttonFinished.TabIndex = 3;
             this.buttonFinished.Text = "送检完成";
             this.buttonFinished.UseVisualStyleBackColor = true;
+            this.buttonFinished.Click += new System.EventHandler(this.buttonFinished_Click);
             // 
             // basicView1
             // 
@@ -356,6 +357,7 @@
             this.Name = "FormInspectionNoteItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "送检单物料条目";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInspectionNoteItem_FormClosing);
             this.Load += new System.EventHandler(this.FormInspectionNoteItem_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
