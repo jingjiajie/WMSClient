@@ -25,7 +25,7 @@ namespace WMS.UI
         private void FormLogin_Load(object sender, EventArgs e)
         {
             //设置一下区域与语言
-            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("zh-CHS");
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("zh-CN");
         }
 
         //启用双缓冲技术
