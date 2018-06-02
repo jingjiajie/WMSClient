@@ -135,7 +135,7 @@ namespace WMS.UI.FormBasicInfos
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];          
-            this.searchView1.AddStaticCondition("newestSupplierId", rowData["id"]);
+            this.searchView1.AddStaticCondition("newestSupplierId", rowData["id"]);          
             this.searchView1.Search();
             this.searchView1.Enabled = false;
         }
