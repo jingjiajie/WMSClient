@@ -414,6 +414,10 @@ Public Class ModelBox
             Me._currentModelName = Nothing
         End If
     End Sub
+
+    Public Function GetRow(row As Integer) As IDictionary(Of String, Object) Implements IModel.GetRow
+        Return Me.GetCurModel.GetRow(row)
+    End Function
 End Class
 
 Public Class ModelCollection

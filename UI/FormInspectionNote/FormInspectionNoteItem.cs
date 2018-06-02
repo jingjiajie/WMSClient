@@ -28,8 +28,9 @@ namespace WMS.UI
         private void FormInspectionNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-            Utilities.BindBlueButton(this.buttonFinished);
+            Utilities.BindBlueButton(this.buttonQualified);
             Utilities.BindBlueButton(this.buttonAllPass);
+            Utilities.BindBlueButton(this.buttonUnqualified);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -178,9 +179,9 @@ namespace WMS.UI
             }
         }
 
-        private void buttonFinished_Click(object sender, EventArgs e)
+        private void itemInspectFinish(bool isQualified)
         {
-            if(this.model.SelectionRange == null)
+            if (this.model.SelectionRange == null)
             {
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -192,15 +193,15 @@ namespace WMS.UI
             inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
             InspectFinishItem inspectFinishItem = new InspectFinishItem();
             inspectFinishArgs.inspectFinishItems = new InspectFinishItem[] { inspectFinishItem };
-            if(this.model.SelectionRange == null)
+            if (this.model.SelectionRange == null)
             {
-                MessageBox.Show("请选择一项进行操作！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             int selectedRow = this.model.SelectionRange.Row;
             inspectFinishItem.inspectionNoteItemId = (int)this.model[selectedRow, "id"];
-            inspectFinishItem.personId = (int?)this.model[selectedRow,"personId"];
-            inspectFinishItem.qualified = true;
+            inspectFinishItem.personId = (int?)this.model[selectedRow, "personId"];
+            inspectFinishItem.qualified = isQualified;
             inspectFinishItem.returnAmount = (double?)this.model[selectedRow, "returnAmount"];
             inspectFinishItem.returnUnit = (string)this.model[selectedRow, "returnUnit"];
             inspectFinishItem.returnUnitAmount = (double?)this.model[selectedRow, "returnUnitAmount"];
@@ -227,6 +228,16 @@ namespace WMS.UI
         private void FormInspectionNoteItem_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.RefreshInspectionNoteCallback?.Invoke();
+        }
+
+        private void buttonUnqualified_Click(object sender, EventArgs e)
+        {
+            this.itemInspectFinish(false);
+        }
+
+        private void buttonQualified_Click(object sender, EventArgs e)
+        {
+            this.itemInspectFinish(true);
         }
     }
 }

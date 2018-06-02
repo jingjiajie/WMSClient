@@ -147,6 +147,15 @@ Public Class Model
         End Set
     End Property
 
+    Default Public Property _Item(row As Integer) As IDictionary
+        Get
+            Return Me.GetRow(row)
+        End Get
+        Set(value As IDictionary)
+            Call Me.UpdateRow(row, value)
+        End Set
+    End Property
+
     Default Public Property _Item(row As Integer, column As Integer) As Object Implements IModel.Item
         Get
             Return Me.GetCell(row, column)
@@ -299,6 +308,15 @@ Public Class Model
         End Try
 
         Return result.ToArray
+    End Function
+
+    ''' <summary>
+    ''' 获取行
+    ''' </summary>
+    ''' <param name="row">行号</param>
+    ''' <returns>相应行数据</returns>
+    Public Function GetRow(row As Integer) As IDictionary(Of String, Object) Implements IModel.GetRow
+        Return Me.GetRows({row})(0)
     End Function
 
     ''' <summary>

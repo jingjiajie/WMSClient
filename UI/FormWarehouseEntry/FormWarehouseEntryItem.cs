@@ -44,6 +44,16 @@ namespace WMS.UI
             }
         }
 
+        private int SupplierIDDefaultValue()
+        {
+            return (int)this.warehouseEntry["supplierId"];
+        }
+
+        private string SupplierNameDefaultValue()
+        {
+            return (string)this.warehouseEntry["supplierName"];
+        }
+
         private void FormWarehouseEntry_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
