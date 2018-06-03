@@ -274,6 +274,8 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+
+            this.model1.CurrentModelName = "addSingle";
             this.model1.Mode = "addSingle";
             this.synchronizer.Mode = "addSingle";
             this.reoGridView1.Mode = "addSingle";
@@ -343,6 +345,7 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            this.model1.CurrentModelName = "default";
             this.ButtonCancel.Visible = false;
             this.buttonStartAdd.Visible = false;
             this.model1.Mode = "default";
@@ -361,6 +364,7 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonStartAdd_Click(object sender, EventArgs e)
         {
+            
             //int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
             //if (supplyId == 0) return;
             //首先得到supplyid
@@ -374,8 +378,7 @@ namespace WMS.UI.FormStockTaking
             }
             ids.Remove(ids.Length - 1, 1);
             ids.Append("]");
-            this.TryAddItem(ids.ToString());
-
+            this.TryAddItem(ids.ToString());       
         }
 
         private void TryAddItem(string ids)
@@ -387,6 +390,7 @@ namespace WMS.UI.FormStockTaking
             {
                 RestClient.RequestPost<int[]>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.model1.CurrentModelName = "default";
                 this.model1.Mode = "default";
                 this.synchronizer.Mode = "default";
                 this.reoGridView1.Mode = "default";
@@ -410,6 +414,7 @@ namespace WMS.UI.FormStockTaking
             {
                 MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.model1.Mode = "default";
+                this.model1.CurrentModelName = "default";
                 this.synchronizer.Mode = "default";
                 this.reoGridView1.Mode = "default";
                 this.basicView1.Mode = "default";
