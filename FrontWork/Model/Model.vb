@@ -357,6 +357,9 @@ Public Class Model
     ''' <param name="dataOfEachRow">数据</param>
     Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         If Me.Configuration Is Nothing Then Throw New FrontWorkException($"Configuration not set to Model:{Me.Name}!")
+        If dataOfEachRow Is Nothing Then
+            dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
+        End If
         Dim fields = Configuration.GetFieldConfigurations(Me.Mode)
         Dim indexRowPairs As New List(Of RowInfo)
         Dim oriRowCount = Me.Data.Rows.Count
