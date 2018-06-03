@@ -82,8 +82,7 @@ Public Class SearchView
     End Sub
 
     Private Sub ButtonSearch_Click(sender As Object, e As EventArgs) Handles ButtonSearch.Click
-        Dim eventArgs = Me.GetSearchEventArgs
-        RaiseEvent OnSearch(Me, eventArgs)
+        Call Me.Search()
     End Sub
 
     Private Sub ConfigurationChanged(sender As Object, e As ConfigurationChangedEventArgs)
@@ -213,7 +212,8 @@ Public Class SearchView
     End Sub
 
     Public Sub Search()
-        Call Me.ButtonSearch.PerformClick()
+        Dim eventArgs = Me.GetSearchEventArgs
+        RaiseEvent OnSearch(Me, eventArgs)
     End Sub
 
     ''' <summary>
@@ -252,5 +252,9 @@ Public Class SearchView
             Function(cond)
                 Return cond.Key.Equals(key, StringComparison.OrdinalIgnoreCase)
             End Function)
+    End Sub
+
+    Private Sub SearchView_EnabledChanged(sender As Object, e As EventArgs) Handles MyBase.EnabledChanged
+
     End Sub
 End Class

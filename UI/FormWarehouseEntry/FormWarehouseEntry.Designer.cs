@@ -53,10 +53,10 @@ namespace WMS.UI
             this.ButtonToSubmission = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.pagerView1 = new FrontWork.PagerView();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
@@ -90,7 +90,7 @@ namespace WMS.UI
             this.statusStrip1.Location = new System.Drawing.Point(0, 661);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1299, 40);
+            this.statusStrip1.Size = new System.Drawing.Size(1480, 40);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -115,7 +115,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1299, 701);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1480, 701);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // toolStripTop
@@ -142,9 +142,10 @@ namespace WMS.UI
             this.toolStripTop.Location = new System.Drawing.Point(0, 50);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1299, 38);
+            this.toolStripTop.Size = new System.Drawing.Size(1480, 38);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
+            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // buttonItems
             // 
@@ -249,6 +250,20 @@ namespace WMS.UI
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
+            this.panel1.Controls.Add(this.synchronizer);
+            this.panel1.Controls.Add(this.model1);
+            this.panel1.Controls.Add(this.configuration1);
+            this.panel1.Controls.Add(this.reoGridView1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 218);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1480, 382);
+            this.panel1.TabIndex = 13;
+            // 
             // searchView1
             // 
             this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -258,7 +273,7 @@ namespace WMS.UI
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(1299, 50);
+            this.searchView1.Size = new System.Drawing.Size(1480, 50);
             this.searchView1.TabIndex = 11;
             // 
             // configuration1
@@ -283,22 +298,8 @@ namespace WMS.UI
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(1293, 55);
+            this.pagerView1.Size = new System.Drawing.Size(1474, 55);
             this.pagerView1.TabIndex = 12;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
-            this.panel1.Controls.Add(this.synchronizer);
-            this.panel1.Controls.Add(this.model1);
-            this.panel1.Controls.Add(this.configuration1);
-            this.panel1.Controls.Add(this.reoGridView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 218);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1299, 382);
-            this.panel1.TabIndex = 13;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
@@ -352,7 +353,7 @@ namespace WMS.UI
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(1299, 382);
+            this.reoGridView1.Size = new System.Drawing.Size(1480, 382);
             this.reoGridView1.TabIndex = 0;
             // 
             // basicView1
@@ -368,14 +369,14 @@ namespace WMS.UI
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 0);
-            this.basicView1.Size = new System.Drawing.Size(1299, 130);
+            this.basicView1.Size = new System.Drawing.Size(1480, 130);
             this.basicView1.TabIndex = 14;
             // 
             // FormWarehouseEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1299, 701);
+            this.ClientSize = new System.Drawing.Size(1480, 701);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormWarehouseEntry";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

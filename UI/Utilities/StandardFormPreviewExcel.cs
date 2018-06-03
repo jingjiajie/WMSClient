@@ -127,6 +127,7 @@ namespace WMS.UI
 
         private void StandardFormPreviewExcel_Load(object sender, EventArgs e)
         {
+            this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowHorScroll,false);
             try
             {
                 this.reoGridControlMain.Worksheets.Clear();

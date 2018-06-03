@@ -163,6 +163,22 @@ namespace WMS.UI
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(ids);
             var previewData = RestClient.Get<List<IDictionary<string,object>>>(Defines.ServerURL + "/warehouse/WMS_Template/warehouse_entry/preview/" + strIDs);
+            if (previewData == null) return;
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("入库单预览");
+            foreach (IDictionary<string,object> entryAndItem in previewData)
+            {
+                IDictionary<string, object> warehouseEntry = (IDictionary<string, object>)entryAndItem["warehouseEntry"];
+                object[] warehouseEntryItems = (object[])entryAndItem["warehouseEntryItems"];
+                string no = (string)warehouseEntry["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/WarehouseEntry.xlsx", no)) return;
+                formPreviewExcel.AddData("warehouseEntry",warehouseEntry,no);
+                formPreviewExcel.AddData("warehouseEntryItems", warehouseEntryItems,no);
+            }
+            formPreviewExcel.Show();
+        }
+
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
         }
     }
