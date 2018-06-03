@@ -285,8 +285,9 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonDelete.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
-            this.buttonCancel.Visible = true;
-            this.model1.InsertRow(0, null);  
+            this.ButtonCancel.Visible = true;
+            this.buttonStartAdd.Visible = true;
+            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4, 5 }, null);
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -354,7 +355,8 @@ namespace WMS.UI.FormStockTaking
                 this.toolStripButtonDelete.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
                 this.pagerView1.Enabled = true;
-                this.buttonCancel.Visible = false;
+                this.ButtonCancel.Visible = false;
+                this.buttonStartAdd.Visible = false;
                 this.searchView1.Search();
                 if (this.addFinishedCallback != null)
                 {
@@ -375,7 +377,8 @@ namespace WMS.UI.FormStockTaking
                 this.toolStripButtonDelete.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
                 this.pagerView1.Enabled = true;
-                this.buttonCancel.Visible = false;
+                this.ButtonCancel.Visible = false;
+                this.buttonStartAdd.Visible = false;
                 this.searchView1.Search();
             }
         }
@@ -387,7 +390,8 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.buttonCancel.Visible = false;
+            this.ButtonCancel.Visible = false;
+            this.buttonStartAdd.Visible = false;
             this.model1.Mode = "default";
             this.synchronizer.Mode = "default";
             this.reoGridView1.Mode = "default";
@@ -400,6 +404,11 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAlter.Enabled = true;
             this.pagerView1.Enabled = true;
             this.searchView1.Search();
+        }
+
+        private void buttonStartAdd_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
