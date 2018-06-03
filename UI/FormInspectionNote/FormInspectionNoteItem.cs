@@ -15,9 +15,11 @@ namespace WMS.UI
     public partial class FormInspectionNoteItem : Form
     {
         private IDictionary<string, object> inspectionNote = null;
-        public FormInspectionNoteItem(IDictionary<string, object>  inspectionNote)
+        Action RefreshInspectionNoteCallback = null;
+        public FormInspectionNoteItem(IDictionary<string, object>  inspectionNote,Action refreshInspectionNoteCallback)
         {
             MethodListenerContainer.Register(this);
+            this.RefreshInspectionNoteCallback = refreshInspectionNoteCallback;
             this.inspectionNote = inspectionNote;
             InitializeComponent();
             this.searchView.AddStaticCondition("inspectionNoteId", this.inspectionNote["id"]);
@@ -26,8 +28,9 @@ namespace WMS.UI
         private void FormInspectionNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-            Utilities.BindBlueButton(this.buttonFinished);
+            Utilities.BindBlueButton(this.buttonQualified);
             Utilities.BindBlueButton(this.buttonAllPass);
+            Utilities.BindBlueButton(this.buttonUnqualified);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -58,7 +61,7 @@ namespace WMS.UI
                 case 0: return "待检";
                 case 1: return "全部合格";
                 case 2: return "不合格";
-                default: throw new Exception("状态错误:" + state);
+                default: return "未知状态";
             }
         }
 
@@ -154,6 +157,8 @@ namespace WMS.UI
             var inspectFinishArgs = new InspectFinishArgs();
             inspectFinishArgs.allFinish = true;
             inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
+            inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
+            inspectFinishArgs.personId = (int)GlobalData.Person["id"];
             JsonSerializer serializer = new JsonSerializer();
             try
             {
@@ -173,6 +178,67 @@ namespace WMS.UI
                 MessageBox.Show("操作失败：" + msg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void itemInspectFinish(bool isQualified)
+        {
+            if (this.model.SelectionRange == null)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int row = this.model.SelectionRange.Row;
+            var inspectFinishArgs = new InspectFinishArgs();
+            inspectFinishArgs.allFinish = false;
+            inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
+            inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
+            InspectFinishItem inspectFinishItem = new InspectFinishItem();
+            inspectFinishArgs.inspectFinishItems = new InspectFinishItem[] { inspectFinishItem };
+            if (this.model.SelectionRange == null)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int selectedRow = this.model.SelectionRange.Row;
+            inspectFinishItem.inspectionNoteItemId = (int)this.model[selectedRow, "id"];
+            inspectFinishItem.personId = (int?)this.model[selectedRow, "personId"];
+            inspectFinishItem.qualified = isQualified;
+            inspectFinishItem.returnAmount = (double?)this.model[selectedRow, "returnAmount"];
+            inspectFinishItem.returnUnit = (string)this.model[selectedRow, "returnUnit"];
+            inspectFinishItem.returnUnitAmount = (double?)this.model[selectedRow, "returnUnitAmount"];
+            JsonSerializer serializer = new JsonSerializer();
+            try
+            {
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/inspection_note/inspect_finish",
+                     serializer.Serialize(inspectFinishArgs),
+                    "PUT");
+                this.searchView.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string msg = ex.Message;
+                if (ex.Response != null)
+                {
+                    msg = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("操作失败：" + msg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void FormInspectionNoteItem_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.RefreshInspectionNoteCallback?.Invoke();
+        }
+
+        private void buttonUnqualified_Click(object sender, EventArgs e)
+        {
+            this.itemInspectFinish(false);
+        }
+
+        private void buttonQualified_Click(object sender, EventArgs e)
+        {
+            this.itemInspectFinish(true);
+        }
     }
 }
 
@@ -180,6 +246,7 @@ public class InspectFinishArgs
 {
     public bool allFinish = false;
     public int inspectionNoteId = -1;
+    public int warehouseEntryId = -1;
     public bool qualified = true;
     public int personId = -1;
     public InspectFinishItem[] inspectFinishItems = new InspectFinishItem[] { };
@@ -189,8 +256,8 @@ public class InspectFinishItem
 {
     public int inspectionNoteItemId = -1;
     public bool qualified = true;
-    public double returnAmount;
+    public double? returnAmount;
     public String returnUnit;
-    public double returnUnitAmount;
-    public int personId = -1;
+    public double? returnUnitAmount;
+    public int? personId = -1;
 }

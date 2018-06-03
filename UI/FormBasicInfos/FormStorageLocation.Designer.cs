@@ -73,15 +73,15 @@
             this.tableLayoutPanel1.Controls.Add(this.pagerView1, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1116, 417);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1073, 455);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // panelSearchWidget
@@ -91,7 +91,7 @@
             this.panelSearchWidget.Location = new System.Drawing.Point(0, 0);
             this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
             this.panelSearchWidget.Name = "panelSearchWidget";
-            this.panelSearchWidget.Size = new System.Drawing.Size(1116, 31);
+            this.panelSearchWidget.Size = new System.Drawing.Size(1073, 31);
             this.panelSearchWidget.TabIndex = 12;
             // 
             // searchView1
@@ -103,7 +103,7 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(1116, 31);
+            this.searchView1.Size = new System.Drawing.Size(1073, 31);
             this.searchView1.TabIndex = 0;
             // 
             // configuration1
@@ -119,7 +119,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(240, 225);
             this.configuration1.TabIndex = 1;
             // 
             // panelPager
@@ -134,7 +134,7 @@
             this.panelPager.Location = new System.Drawing.Point(0, 90);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1116, 272);
+            this.panelPager.Size = new System.Drawing.Size(1073, 306);
             this.panelPager.TabIndex = 8;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -161,23 +161,24 @@
             // 
             this.pagerView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(3, 364);
+            this.pagerView1.Location = new System.Drawing.Point(3, 398);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
-            this.pagerView1.Size = new System.Drawing.Size(1110, 51);
+            this.pagerView1.PageSize = 50;
+            this.pagerView1.Size = new System.Drawing.Size(1067, 55);
             this.pagerView1.TabIndex = 14;
             // 
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(677, 58);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(180, 180);
+            this.synchronizer.Size = new System.Drawing.Size(240, 225);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
@@ -190,7 +191,7 @@
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(180, 180);
+            this.model1.Size = new System.Drawing.Size(240, 225);
             this.model1.TabIndex = 2;
             // 
             // reoGridView1
@@ -203,7 +204,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(1116, 272);
+            this.reoGridView1.Size = new System.Drawing.Size(1073, 306);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop
@@ -222,7 +223,7 @@
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 31);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1116, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(1073, 28);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -283,8 +284,8 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Padding = new System.Windows.Forms.Padding(4);
-            this.basicView1.Size = new System.Drawing.Size(1116, 31);
+            this.basicView1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.basicView1.Size = new System.Drawing.Size(1073, 31);
             this.basicView1.TabIndex = 13;
             // 
             // toolStrip1
@@ -292,7 +293,7 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(493, 476);
+            this.toolStrip1.Location = new System.Drawing.Point(472, 513);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 15;
@@ -317,10 +318,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 417);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 455);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1116, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1073, 25);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -328,7 +329,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 442);
+            this.ClientSize = new System.Drawing.Size(1073, 480);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);

@@ -180,28 +180,28 @@
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="buttonReceipt.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="buttonReceive.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAEySURBVDhPnZG7SgRBEEUvgo9AjE0MREzMBBMjMxHMFmS6
-        V2GMTATRRBNxU0EEf0EM/AlBA8FEf2JDA4V9sCLbXd4uakBZV1sPNEzfrrr1GPwHH3DmIvZ2BKMm5eMC
-        LrxAVpoINClNzsMJTlOynoiTDcG0Pf0Oq+1+Sj4yOQ8mLPsWuimZI5ybnAfbnPR9PGnlgBvex+wpD7be
-        0OQ3PLOTeZPzKCLmXBctbZ07MHmQUjBhn1+ofpnr42Fo66yymmasC7ZNUqjP1Hp4SQb1iJrJg7DKpc6Y
-        KgVcb0XMqh6xn7RC8LgWMa7B37EZMcXgY99BW43e0eS95MZv1TTiwEJ/hoFLrHZXdaPJXGDVURZpUTQ6
-        LHp4VRPupiEYsed8aLLIzd9zjCuT/g53s0CjdbsOAfgA60OcbIJL7UkAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAEySURBVDhPnZE7S0NBEIUPgo9CrG0sRGzsBBsrOxHsAnJ3
+        o3CtbATRRhsxrSCCf0Es/BOCFoKN9taWFgYSQ0Sys54d5oISo6sfLNw9O3PmcfEffMCJE+xsRQyblI8L
+        OPMRcekRgSalyXm4iOOUrEdwtBYxaU+/w2rbn5IPTM6DCYu+hU5K5ginJufBNsd9Dw9aOeCK9xF7yoOt
+        NzT5Dc/sZNbkPArBjOugpa1zByb3U0aM2ecXql/mergb2DqrLKcZ6xGbJinUp2pdvCSDuqBmcj+scq4z
+        pkoBlxuCadUFu0krIu5XBKMa/B3rggkGH/pXtNXoHU+8l9z4tZoK9iz0Zxi4wGo3VTeazAVWHWWRFkWj
+        /aKLpppwN42IIXvOhybz3Pwtx7gw6e9wN3M0WrXrAIAPx3GcYt3xL3oAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="buttonReceiptCancel.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="buttonReject.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAGYSURBVDhPjVI7SwNhEBwfIIoPkrsvGAhWglhY2NhY2FpY
-        iNgpEiws0oiof0AhCKYTbOxUsLDSTrAIWAh2amEjgoWFoIWF+LjcnbN3e95JYpKBkGRndvbxLXyg1YW9
-        7cGaQ5OgvujDXmJuCzyYdR/Gf4Rx+XtNNTXhId3L5H3Ve9QXJDhWgXUtQfm4MCXpSnN+QV2OfDmhO/Rg
-        jyppZ+l8FpNSJdsVkATHG6rAvk3wRaVikOgmcRCLzKmYsPKwg/S9xMK2rVVNqQZbb6PJTmTC0S6i5Bek
-        P9npokrrg9U3WM2JjL6QeubCZpRuDA+ZkXeYt7gTc+VhsEPp+pCFObAeJFFmjkzY1YmHXKfKasNHasCB
-        uZOEcGYzK+PEJvI61U8cwEdfik91KUI5Kn7nlZLL241NTEnDMeja7sI6jkTc9rJSAULeHCX4FaVC8K63
-        IpLCTQ3/AXfTw07ORfME802TKSVMIZG8FwT/ATX90UXKK/G15hnMTH/AvDJYbrhlQi5T7oJHdsPikxo0
-        C2xpIvjTBFgsz5xxAPgBeabn45kLqXUAAAAASUVORK5CYII=
+        iNgpEiws0oiof0AhCKYTbOxUsLDSTrAIWAh2apFGtLIQtLAQH5e7c/ZuzztJNBkISXZmZx/fwgdaXdjb
+        Hqw5NAnqiz7sJea2wINZ92H8CozL32uqqQsP6V4m76veo74gwbEqrGsJyseFKUlXmvMD6nLkywndoQd7
+        VEk7S+ezmJQq2a6AJDjeUBX2bYIvKhWDRDeJg1hkTsWElYcdpO8kFrZtrWpKLdh6G012IhOOdhElPyP9
+        wU4XVfo/WH3jAcaJjD6ReuLCZpRuDA+ZkTeY17gTc+VhsEPp/yELc2DdS6LMHJmwqxMPuU6V1YeP1IAD
+        U5GEcGYzK+PEJvI6tU8cwEdfik91KUI5Kn7nlZLL241NTEnDMeja7sI6jkTc9rJSAULeHCX4FaVC8K63
+        IpLCTQ3/AnfTw07ORfMI80WTKSVMIZG8FwT/ADX90UXKK/G15hnMTL/DvDBYbrhlQi5T7oJHdsPikxo0
+        C2xpIvjTBFgsz5xxAPgG7M/nr36MBjUAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="buttonInspect.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -247,14 +247,14 @@
     <value>[
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"id",displayName:"ID",type:"int",visible:false,defaultValue:0},
         {name:"no",displayName:"入库单号",type:"string",placeHolder:"留空自动生成"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false},
         {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
         {name:"supplierName",displayName:"供应商名",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"description",displayName:"描述",type:"string"},
-        {name:"state",displayName:"状态",type:"int",editable:false},
+        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
         {name:"deliverOrderNoSRM",displayName:"送货单号（SRM)",type:"string"},
         {name:"inboundDeliveryOrderNo",displayName:"内向交货单号",type:"string"},
         {name:"outboundDeliveryOrderNo",displayName:"外向交货单号",type:"string"},

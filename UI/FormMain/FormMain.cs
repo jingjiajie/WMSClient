@@ -8,10 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using WMS.UI.FormReceipt;
-using WMS.UI.FormBase;
-using WMS.DataAccess;
-using System.Diagnostics;
 using WMS.UI.FormBasicInfos;
 using WMS.UI.FormStockTaking;
 using WMS.UI.FormStock;
@@ -196,7 +192,7 @@ namespace WMS.UI
                     this.LoadSubWindow(new FormPerson());
                     break;
                 case "入库单管理":
-                    this.LoadSubWindow(new FormWarehouseEntry());
+                    this.LoadSubWindow(new FormWarehouseEntry(this.ToInspectionNoteCallback));
                     break;
                 case "送检单管理":
                     this.LoadSubWindow(new FormInspectionNote());
@@ -237,245 +233,15 @@ namespace WMS.UI
                 case "翻包作业单管理":
                     this.LoadSubWindow(new FormTransferOrder.FormTransferOrder());
                     break;
-            }            
-            //if (treeViewLeft.SelectedNode.Text == "供应商管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormBaseSupplier l = new FormBaseSupplier(user.Authority, this.supplierid, this.user.ID);//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "供货管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormBaseSupply l = new FormBaseSupply(user.Authority, this.supplierid, this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "零件管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormBaseComponent l = new FormBaseComponent(user.Authority, this.supplierid, this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "其他")
-            //{
-            //    this.setitem = 0;
-            //    this.LoadSubWindow(new FormOtherInfo(this.setitem));
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "项目管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    this.setitem = 1;
-            //    FormBaseProject l = new FormBaseProject();//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "人员管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormBase.FormBasePerson l = new FormBase.FormBasePerson();//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "到货单管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID, this.supplierid);//实例化子窗口
-            //    l.SetActionTo(0, new Action<string, string>((string key, string value) =>
-            //    {
-            //        this.panelRight.Controls.Clear();
-            //        FormSubmissionManage s = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
-            //        s.setActionTo(new Action<string, string>((string key1, string value1) =>
-            //        {
-            //            this.panelRight.Controls.Clear();
-            //            FormReceiptShelves t = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID, key1, value1);
-            //            t.TopLevel = false;
-            //            t.Dock = System.Windows.Forms.DockStyle.Fill;
-            //            t.FormBorderStyle = FormBorderStyle.None;
-            //            //s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //            this.panelRight.Controls.Add(t);
-
-            //            t.Show();
-            //            SetTreeViewSelectedNodeByText("上架单管理");
-            //            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
-            //        }));
-
-            //        s.TopLevel = false;
-            //        s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        this.panelRight.Controls.Clear();//清空
-            //        s.FormBorderStyle = FormBorderStyle.None;
-            //        this.panelRight.Controls.Add(s);
-            //        s.Show();
-            //        SetTreeViewSelectedNodeByText("送检单管理");
-            //        //treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("送检单管理", true)[0];
-            //        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
-            //    }));
-            //    l.SetActionTo(1, new Action<string, string>((key, value) =>
-            //    {
-            //        this.panelRight.Controls.Clear();
-            //        FormReceiptShelves s = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
-            //        s.TopLevel = false;
-            //        s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        s.FormBorderStyle = FormBorderStyle.None;
-            //        //s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        this.panelRight.Controls.Add(s);
-
-            //        s.SetToPutaway(new Action<string, string>((key1, value1) =>
-            //        {
-            //            this.panelRight.Controls.Clear();
-            //            FormShelvesItem a = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, key1, value1);
-            //            a.TopLevel = false;
-            //            a.Dock = System.Windows.Forms.DockStyle.Fill;
-            //            a.FormBorderStyle = FormBorderStyle.None;
-            //            //s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //            this.panelRight.Controls.Add(a);
-            //            a.Show();
-            //            //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
-            //            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
-            //        }));
-
-            //        s.Show();
-            //        SetTreeViewSelectedNodeByText("上架单管理");
-            //        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
-            //    }));
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-
-            //if (treeViewLeft.SelectedNode.Text == "上架单管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormReceiptShelves l = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    l.SetToPutaway(new Action<string, string>((key, value) =>
-            //    {
-            //        this.panelRight.Controls.Clear();
-            //        FormShelvesItem s = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
-            //        s.TopLevel = false;
-            //        s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        s.FormBorderStyle = FormBorderStyle.None;
-            //        //s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        this.panelRight.Controls.Add(s);
-            //        s.Show();
-            //        SetTreeViewSelectedNodeByText("上架零件管理");
-            //        //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
-            //        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
-            //    }));
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-
-            //if (treeViewLeft.SelectedNode.Text == "上架零件管理")
-            //{
-            //    this.panelRight.Controls.Clear();
-            //    FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, null, null);
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;
-            //    l.FormBorderStyle = FormBorderStyle.None;
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-
-            //if (treeViewLeft.SelectedNode.Text == "工作任务单管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormShipmentTicket formShipmentTicket = new FormShipmentTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-            //    formShipmentTicket.SetToJobTicketCallback(this.ToJobTicketCallback);
-            //    formShipmentTicket.TopLevel = false;
-            //    formShipmentTicket.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    formShipmentTicket.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(formShipmentTicket);
-            //    formShipmentTicket.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "翻包作业单管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormJobTicket l = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-            //    l.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "出库单管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-            //    l.TopLevel = false;
-            //    l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-            //    l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(l);
-            //    l.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "库存批次")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    var formBaseStock = new FormStockInfo(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-            //    formBaseStock.TopLevel = false;
-            //    formBaseStock.Dock = DockStyle.Fill;//窗口大小
-            //    formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(formBaseStock);
-            //    formBaseStock.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "库存盘点")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    var formBaseStock = new FormStockInfoCheckTicket(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
-            //    formBaseStock.TopLevel = false;
-            //    formBaseStock.Dock = DockStyle.Fill;//窗口大小
-            //    formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(formBaseStock);
-            //    formBaseStock.Show();
-            //}
-            //if (treeViewLeft.SelectedNode.Text == "送检单管理")
-            //{
-            //    this.panelRight.Controls.Clear();//清空
-            //    var formSubmissionManage = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
-            //    formSubmissionManage.setActionTo(new Action<string, string>((string key, string value) =>
-            //    {
-            //        this.panelRight.Controls.Clear();
-            //        FormReceiptShelves t = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
-            //        t.TopLevel = false;
-            //        t.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        t.FormBorderStyle = FormBorderStyle.None;
-            //        //s.Dock = System.Windows.Forms.DockStyle.Fill;
-            //        this.panelRight.Controls.Add(t);
-
-            //        t.Show();
-            //        SetTreeViewSelectedNodeByText("上架单管理");
-            //        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
-            //    }));
-            //    formSubmissionManage.TopLevel = false;
-            //    formSubmissionManage.Dock = DockStyle.Fill;//窗口大小
-            //    formSubmissionManage.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-            //    this.panelRight.Controls.Add(formSubmissionManage);
-            //    formSubmissionManage.Show();
-            //}
+            }
             this.panelRight.ResumeLayout();
             this.panelRight.Show();
+        }
+
+        private void ToInspectionNoteCallback(int[] selectedIDs)
+        {
+            this.SetTreeViewSelectedNodeByText("送检单管理");
+            this.LoadSubWindow(new FormInspectionNote(selectedIDs));
         }
 
         //private void ToJobTicketCallback(string condition, string value)

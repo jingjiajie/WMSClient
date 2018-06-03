@@ -31,10 +31,10 @@ namespace WMS.UI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouseEntry));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -46,8 +46,8 @@ namespace WMS.UI
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.buttonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
+            this.buttonReceive = new System.Windows.Forms.ToolStripButton();
+            this.buttonReject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonInspect = new System.Windows.Forms.ToolStripButton();
             this.ButtonToSubmission = new System.Windows.Forms.ToolStripButton();
@@ -90,7 +90,7 @@ namespace WMS.UI
             this.statusStrip1.Location = new System.Drawing.Point(0, 661);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1299, 40);
+            this.statusStrip1.Size = new System.Drawing.Size(1480, 40);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -115,7 +115,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1299, 701);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1480, 701);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // toolStripTop
@@ -132,8 +132,8 @@ namespace WMS.UI
             this.buttonDelete,
             this.buttonSave,
             this.toolStripSeparator3,
-            this.buttonReceipt,
-            this.buttonReceiptCancel,
+            this.buttonReceive,
+            this.buttonReject,
             this.toolStripSeparator4,
             this.buttonInspect,
             this.ButtonToSubmission,
@@ -142,9 +142,10 @@ namespace WMS.UI
             this.toolStripTop.Location = new System.Drawing.Point(0, 50);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1299, 38);
+            this.toolStripTop.Size = new System.Drawing.Size(1480, 38);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
+            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // buttonItems
             // 
@@ -195,21 +196,23 @@ namespace WMS.UI
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(10, 28);
             // 
-            // buttonReceipt
+            // buttonReceive
             // 
-            this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
-            this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceipt.Name = "buttonReceipt";
-            this.buttonReceipt.Size = new System.Drawing.Size(86, 35);
-            this.buttonReceipt.Text = "收货";
+            this.buttonReceive.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceive.Image")));
+            this.buttonReceive.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceive.Name = "buttonReceive";
+            this.buttonReceive.Size = new System.Drawing.Size(182, 35);
+            this.buttonReceive.Text = "直接正品入库";
+            this.buttonReceive.Click += new System.EventHandler(this.buttonReceive_Click);
             // 
-            // buttonReceiptCancel
+            // buttonReject
             // 
-            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
-            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
-            this.buttonReceiptCancel.Size = new System.Drawing.Size(134, 35);
-            this.buttonReceiptCancel.Text = "取消收货";
+            this.buttonReject.Image = ((System.Drawing.Image)(resources.GetObject("buttonReject.Image")));
+            this.buttonReject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReject.Name = "buttonReject";
+            this.buttonReject.Size = new System.Drawing.Size(206, 35);
+            this.buttonReject.Text = "直接不良品入库";
+            this.buttonReject.Click += new System.EventHandler(this.buttonReject_Click);
             // 
             // toolStripSeparator4
             // 
@@ -247,6 +250,7 @@ namespace WMS.UI
             this.buttonPreview.Name = "buttonPreview";
             this.buttonPreview.Size = new System.Drawing.Size(144, 35);
             this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // panel1
             // 
@@ -259,7 +263,7 @@ namespace WMS.UI
             this.panel1.Location = new System.Drawing.Point(0, 218);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1299, 382);
+            this.panel1.Size = new System.Drawing.Size(1480, 382);
             this.panel1.TabIndex = 13;
             // 
             // searchView1
@@ -271,7 +275,7 @@ namespace WMS.UI
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(1299, 50);
+            this.searchView1.Size = new System.Drawing.Size(1480, 50);
             this.searchView1.TabIndex = 11;
             // 
             // configuration1
@@ -279,12 +283,12 @@ namespace WMS.UI
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(3, 163);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormWarehouseEntry",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -295,20 +299,20 @@ namespace WMS.UI
             this.pagerView1.Location = new System.Drawing.Point(3, 603);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
-            this.pagerView1.Size = new System.Drawing.Size(1293, 55);
+            this.pagerView1.PageSize = 50;
+            this.pagerView1.Size = new System.Drawing.Size(1474, 55);
             this.pagerView1.TabIndex = 12;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(537, 163);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -321,6 +325,7 @@ namespace WMS.UI
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(363, 163);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
@@ -350,7 +355,7 @@ namespace WMS.UI
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(1299, 382);
+            this.reoGridView1.Size = new System.Drawing.Size(1480, 382);
             this.reoGridView1.TabIndex = 0;
             // 
             // basicView1
@@ -366,14 +371,14 @@ namespace WMS.UI
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 0);
-            this.basicView1.Size = new System.Drawing.Size(1299, 130);
+            this.basicView1.Size = new System.Drawing.Size(1480, 130);
             this.basicView1.TabIndex = 14;
             // 
             // FormWarehouseEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1299, 701);
+            this.ClientSize = new System.Drawing.Size(1480, 701);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormWarehouseEntry";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -399,8 +404,8 @@ namespace WMS.UI
         private System.Windows.Forms.ToolStripButton ButtonToSubmission;
         private System.Windows.Forms.ToolStripButton buttonInspect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
-        private System.Windows.Forms.ToolStripButton buttonReceipt;
+        private System.Windows.Forms.ToolStripButton buttonReject;
+        private System.Windows.Forms.ToolStripButton buttonReceive;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.ToolStripButton buttonSave;

@@ -12,9 +12,11 @@ namespace WMS.UI
 {
     public partial class FormInspectionNote : Form
     {
-        public FormInspectionNote()
+        private int[] initialSelectedIDs = null;
+        public FormInspectionNote(int[] initialSelectedIDs = null)
         {
             MethodListenerContainer.Register(this);
+            this.initialSelectedIDs = initialSelectedIDs;
             InitializeComponent();
         }
 
@@ -24,6 +26,10 @@ namespace WMS.UI
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
+            if (initialSelectedIDs != null)
+            {
+                this.model1.SelectRowsByValues("id", initialSelectedIDs);
+            }
         }
 
         private string StateForwardMapper(int state)
@@ -33,7 +39,7 @@ namespace WMS.UI
                 case 0: return "送检中";
                 case 1: return "部分送检完成";
                 case 2: return "全部送检完成";
-                default: throw new Exception("状态错误:" + state);
+                default: return "未知状态";
             }
         }
 
@@ -45,7 +51,7 @@ namespace WMS.UI
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormInspectionNoteItem(rowData).Show();
+            new FormInspectionNoteItem(rowData,()=>this.searchView1.Search()).Show();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)

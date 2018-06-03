@@ -55,8 +55,7 @@ namespace WMS.UI.FormStockTaking
             }
             int startRow = this.model1.SelectionRange.Row;
             int selectRows = this.model1.SelectionRange.Rows;
-            int[] rows= Enumerable.Range(startRow, selectRows).ToArray();
-            //List<int> ids = new List<int>(selectRows);
+            int[] rows= Enumerable.Range(startRow, selectRows).ToArray();           
             StringBuilder ids = new StringBuilder();
             var rowData = this.model1.GetRows(rows);
             foreach (Dictionary<string, object> a in rowData)
@@ -275,6 +274,8 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+
+            this.model1.CurrentModelName = "addSingle";
             this.model1.Mode = "addSingle";
             this.synchronizer.Mode = "addSingle";
             this.reoGridView1.Mode = "addSingle";
@@ -286,8 +287,9 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonDelete.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
-            this.buttonCancel.Visible = true;
-            this.model1.InsertRow(0, null);  
+            this.ButtonCancel.Visible = true;
+            this.buttonStartAdd.Visible = true;
+            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4, 5 }, null);
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -296,7 +298,7 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
         private void SupplierNameEditEnded1(int row)
@@ -305,7 +307,7 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
         private void MaterialNoEditEnded1(int row)
@@ -314,7 +316,7 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+           // this.TryAddItem(row);
         }
 
         private void MaterialNameEditEnded1(int row)
@@ -323,63 +325,18 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
         private void MaterialProductLineEditEnded1(int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
 
-        private void TryAddItem(int row)
-        {
-            int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
-            if (supplyId == 0) return;
-            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"" + supplyId + "\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
-            try
-            {
-                RestClient.RequestPost<int[]>(url, body);
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.model1.Mode = "default";
-                this.synchronizer.Mode = "default";
-                this.reoGridView1.Mode = "default";
-                this.basicView1.Mode = "default";
-                this.searchView1.Enabled = true;
-                this.toolStripButton1.Enabled = true;
-                this.toolStripButton2.Visible = true;
-                this.toolStripButtonAdd.Enabled = true;
-                this.toolStripButtonDelete.Enabled = true;
-                this.toolStripButtonAlter.Enabled = true;
-                this.pagerView1.Enabled = true;
-                this.buttonCancel.Visible = false;
-                this.searchView1.Search();
-                if (this.addFinishedCallback != null)
-                {
-                    this.addFinishedCallback();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.model1.Mode = "default";
-                this.synchronizer.Mode = "default";
-                this.reoGridView1.Mode = "default";
-                this.basicView1.Mode = "default";
-                this.searchView1.Enabled = true;
-                this.toolStripButton1.Enabled = true;
-                this.toolStripButton2.Visible =true;
-                this.toolStripButtonAdd.Enabled = true;
-                this.toolStripButtonDelete.Enabled = true;
-                this.toolStripButtonAlter.Enabled = true;
-                this.pagerView1.Enabled = true;
-                this.buttonCancel.Visible = false;
-                this.searchView1.Search();
-            }
-        }
+       
 
         public void SetAddFinishedCallback(Action callback)
         {
@@ -388,7 +345,9 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.buttonCancel.Visible = false;
+            this.model1.CurrentModelName = "default";
+            this.ButtonCancel.Visible = false;
+            this.buttonStartAdd.Visible = false;
             this.model1.Mode = "default";
             this.synchronizer.Mode = "default";
             this.reoGridView1.Mode = "default";
@@ -401,6 +360,75 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAlter.Enabled = true;
             this.pagerView1.Enabled = true;
             this.searchView1.Search();
+        }
+
+        private void buttonStartAdd_Click(object sender, EventArgs e)
+        {
+            
+            //int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
+            //if (supplyId == 0) return;
+            //首先得到supplyid
+            int[] supplyIds = { 5 };
+            StringBuilder ids = new StringBuilder();
+            ids.Append("[");
+            foreach (int a in supplyIds)
+            {
+                ids.Append(a);
+                ids.Append(",");
+            }
+            ids.Remove(ids.Length - 1, 1);
+            ids.Append("]");
+            this.TryAddItem(ids.ToString());       
+        }
+
+        private void TryAddItem(string ids)
+        {
+            
+            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single/"+ids;
+            try
+            {
+                RestClient.RequestPost<int[]>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.model1.CurrentModelName = "default";
+                this.model1.Mode = "default";
+                this.synchronizer.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.searchView1.Enabled = true;
+                this.toolStripButton1.Enabled = true;
+                this.toolStripButton2.Visible = true;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.pagerView1.Enabled = true;
+                this.ButtonCancel.Visible = false;
+                this.buttonStartAdd.Visible = false;
+                this.searchView1.Search();
+                if (this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.Mode = "default";
+                this.model1.CurrentModelName = "default";
+                this.synchronizer.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.searchView1.Enabled = true;
+                this.toolStripButton1.Enabled = true;
+                this.toolStripButton2.Visible = true;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.pagerView1.Enabled = true;
+                this.ButtonCancel.Visible = false;
+                this.buttonStartAdd.Visible = false;
+                this.searchView1.Search();
+            }
         }
     }
 }

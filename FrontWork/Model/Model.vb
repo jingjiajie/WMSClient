@@ -91,6 +91,9 @@ Public Class Model
             Return Me._selectionRange
         End Get
         Set(value As Range())
+            If value Is Nothing Then
+                value = {}
+            End If
             Me._selectionRange = value
             For Each range In value
                 Me.BindRangeChangedEventToSelectionRangeChangedEvent(range)
@@ -141,6 +144,15 @@ Public Class Model
             RaiseEvent SelectionRangeChanged(Me, New ModelSelectionRangeChangedEventArgs() With {
                                          .NewSelectionRange = Me._selectionRange
                                         })
+        End Set
+    End Property
+
+    Default Public Property _Item(row As Integer) As IDictionary
+        Get
+            Return Me.GetRow(row)
+        End Get
+        Set(value As IDictionary)
+            Call Me.UpdateRow(row, value)
         End Set
     End Property
 
@@ -299,6 +311,15 @@ Public Class Model
     End Function
 
     ''' <summary>
+    ''' 获取行
+    ''' </summary>
+    ''' <param name="row">行号</param>
+    ''' <returns>相应行数据</returns>
+    Public Function GetRow(row As Integer) As IDictionary(Of String, Object) Implements IModel.GetRow
+        Return Me.GetRows({row})(0)
+    End Function
+
+    ''' <summary>
     ''' 增加行
     ''' </summary>
     ''' <param name="data">增加行的数据</param>
@@ -336,6 +357,9 @@ Public Class Model
     ''' <param name="dataOfEachRow">数据</param>
     Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         If Me.Configuration Is Nothing Then Throw New FrontWorkException($"Configuration not set to Model:{Me.Name}!")
+        If dataOfEachRow Is Nothing Then
+            dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
+        End If
         Dim fields = Configuration.GetFieldConfigurations(Me.Mode)
         Dim indexRowPairs As New List(Of RowInfo)
         Dim oriRowCount = Me.Data.Rows.Count
@@ -1005,6 +1029,43 @@ Public Class Model
         Return Me.Data.Columns.Contains(columnName)
     End Function
 
+    Public Sub SelectRowsByValues(Of T)(columnName As String, values As T())
+        If values Is Nothing Then
+            Me.AllSelectionRanges = {}
+            Return
+        End If
+        Dim targetRows As New List(Of Integer)
+        For i = 0 To Me.Data.Rows.Count - 1
+            Dim curRowValue = Me.Data.Rows(i)(columnName)
+            If values.Contains(curRowValue) Then
+                targetRows.Add(i)
+            End If
+        Next
+        '对目标行号分组
+        Dim rowGroups As New List(Of List(Of Integer))
+        For Each row In targetRows
+            Dim lastGroup As List(Of Integer)
+            If rowGroups.Count = 0 Then
+                lastGroup = New List(Of Integer)
+                rowGroups.Add(lastGroup)
+            Else
+                lastGroup = rowGroups.Last
+            End If
+            If lastGroup.Count = 0 OrElse lastGroup.Last + 1 = row Then
+                lastGroup.Add(row)
+            Else
+                rowGroups.Add(New List(Of Integer)({row}))
+            End If
+        Next
+        '生成选区
+        Dim ranges As New List(Of Range)
+        For Each rowGroup In rowGroups
+            Dim newRange = New Range(rowGroup(0), 0, rowGroup.Count, Me.Data.Columns.Count)
+            ranges.Add(newRange)
+        Next
+        Me.AllSelectionRanges = ranges.ToArray
+    End Sub
+
     Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
         Dim result As New T
         Dim type = GetType(T)
@@ -1039,6 +1100,53 @@ Public Class Model
             End If
         Next
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 获取所有选中行
+    ''' </summary>
+    ''' <typeparam name="T">要映射成的类型</typeparam>
+    ''' <returns>选中行映射后的对象数组</returns>
+    Public Function GetSelectedRows(Of T As New)() As T()
+        If Me.AllSelectionRanges.Length = 0 Then Return {}
+        Dim selectedRows As New List(Of Integer)
+        For Each curSelectionRange In Me.AllSelectionRanges
+            Dim row = curSelectionRange.Row
+            Dim rows = curSelectionRange.Rows
+            For i = 0 To rows
+                Dim curRow = row + i
+                selectedRows.Add(curRow)
+            Next
+        Next
+        Return Me.GetRows(Of T)(selectedRows.ToArray)
+    End Function
+
+    ''' <summary>
+    ''' 获取所有选中行的某一列
+    ''' </summary>
+    ''' <typeparam name="T">返回类型</typeparam>
+    ''' <param name="columnName">列名</param>
+    ''' <returns>所有选中行指定列的数据</returns>
+    Public Function GetSelectedRows(Of T As New)(columnName As String) As T()
+        If Me.AllSelectionRanges.Length = 0 Then Return {}
+        Dim selectedRows As New List(Of Integer)
+        For Each curSelectionRange In Me.AllSelectionRanges
+            Dim row = curSelectionRange.Row
+            Dim rows = curSelectionRange.Rows
+            For i = 0 To rows - 1
+                Dim curRow = row + i
+                selectedRows.Add(curRow)
+            Next
+        Next
+        Dim rowData = Me.GetRows(selectedRows.ToArray)
+        Dim result As New List(Of T)
+        For Each curRowData In rowData
+            If Not curRowData.ContainsKey(columnName) Then
+                Throw New FrontWorkException($"{Me.Name} doesn't contains column ""{columnName}""!")
+            End If
+            result.Add(curRowData(columnName))
+        Next
+        Return result.ToArray
     End Function
 End Class
 

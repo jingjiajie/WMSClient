@@ -128,7 +128,9 @@
         {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
 		{name:"warehouseName",type:"string",displayName:"仓库名称"},
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
-		{name:"materialName",type:"string",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:true,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:true,editable:true},

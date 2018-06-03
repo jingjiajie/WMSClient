@@ -44,6 +44,16 @@ namespace WMS.UI
             }
         }
 
+        private int SupplierIDDefaultValue()
+        {
+            return (int)this.warehouseEntry["supplierId"];
+        }
+
+        private string SupplierNameDefaultValue()
+        {
+            return (string)this.warehouseEntry["supplierName"];
+        }
+
         private void FormWarehouseEntry_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
@@ -70,17 +80,17 @@ namespace WMS.UI
             return;
         }
 
-        private void buttonInspect_Click(object sender, EventArgs e)
-        {
-            var selectionRange = this.model.SelectionRange;
-            if(selectionRange == null)
-            {
-                MessageBox.Show("请选择要生成送检单的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            var warehouseEntries = this.model.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
-            new FormWarehouseEntryInspect(warehouseEntries).Show();
-        }
+        //private void buttonInspect_Click(object sender, EventArgs e)
+        //{
+        //    var selectionRange = this.model.SelectionRange;
+        //    if(selectionRange == null)
+        //    {
+        //        MessageBox.Show("请选择要生成送检单的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
+        //    var warehouseEntries = this.model.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
+        //    new FormWarehouseEntryInspect(warehouseEntries).Show();
+        //}
 
         private int WarehouseEntryIDDefaultValue()
         {
@@ -95,7 +105,7 @@ namespace WMS.UI
                 case 1: return "送检中";
                 case 2: return "正品入库";
                 case 3: return "不良品入库";
-                default: throw new Exception("状态错误:" + state);
+                default: return "未知状态";
             }
         }
 
@@ -249,11 +259,10 @@ namespace WMS.UI
             string materialName = this.model[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  && (string.IsNullOrWhiteSpace(materialProductLine) ? true : materialProductLine == (m["productLine"]?.ToString() ?? ""))
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -262,9 +271,11 @@ namespace WMS.UI
             this.model[row, "materialId"] = foundMaterials[0]["id"];
             this.model[row, "materialNo"] = foundMaterials[0]["no"];
             this.model[row, "materialName"] = foundMaterials[0]["name"];
+            this.model[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
@@ -312,7 +323,7 @@ namespace WMS.UI
                 this.FillValueIfEmpty(row, "unitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
                 this.FillValueIfEmpty(row, "refuseUnit", foundSupplies[0]["defaultEntryUnit"]);
                 this.FillValueIfEmpty(row, "refuseUnitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
-                if ((int)this.model[row, "storageLocationId"] == 0)
+                if (((int?)this.model[row, "storageLocationId"] ?? 0) == 0)
                 {
                     this.model[row, "storageLocationId"] = foundSupplies[0]["defaultEntryStorageLocationId"];
                     this.model[row, "storageLocationNo"] = foundSupplies[0]["defaultInspectionStorageLocationNo"];
