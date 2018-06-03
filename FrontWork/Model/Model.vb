@@ -1101,6 +1101,53 @@ Public Class Model
         Next
         Return result
     End Function
+
+    ''' <summary>
+    ''' 获取所有选中行
+    ''' </summary>
+    ''' <typeparam name="T">要映射成的类型</typeparam>
+    ''' <returns>选中行映射后的对象数组</returns>
+    Public Function GetSelectedRows(Of T As New)() As T()
+        If Me.AllSelectionRanges.Length = 0 Then Return {}
+        Dim selectedRows As New List(Of Integer)
+        For Each curSelectionRange In Me.AllSelectionRanges
+            Dim row = curSelectionRange.Row
+            Dim rows = curSelectionRange.Rows
+            For i = 0 To rows
+                Dim curRow = row + i
+                selectedRows.Add(curRow)
+            Next
+        Next
+        Return Me.GetRows(Of T)(selectedRows.ToArray)
+    End Function
+
+    ''' <summary>
+    ''' 获取所有选中行的某一列
+    ''' </summary>
+    ''' <typeparam name="T">返回类型</typeparam>
+    ''' <param name="columnName">列名</param>
+    ''' <returns>所有选中行指定列的数据</returns>
+    Public Function GetSelectedRows(Of T As New)(columnName As String) As T()
+        If Me.AllSelectionRanges.Length = 0 Then Return {}
+        Dim selectedRows As New List(Of Integer)
+        For Each curSelectionRange In Me.AllSelectionRanges
+            Dim row = curSelectionRange.Row
+            Dim rows = curSelectionRange.Rows
+            For i = 0 To rows - 1
+                Dim curRow = row + i
+                selectedRows.Add(curRow)
+            Next
+        Next
+        Dim rowData = Me.GetRows(selectedRows.ToArray)
+        Dim result As New List(Of T)
+        For Each curRowData In rowData
+            If Not curRowData.ContainsKey(columnName) Then
+                Throw New FrontWorkException($"{Me.Name} doesn't contains column ""{columnName}""!")
+            End If
+            result.Add(curRowData(columnName))
+        Next
+        Return result.ToArray
+    End Function
 End Class
 
 Friend Structure RowSynchronizationStatePair

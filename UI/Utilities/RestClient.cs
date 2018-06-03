@@ -11,27 +11,27 @@ namespace WMS.UI
 {
     class RestClient
     {
-        public static T Get<T>(string url) 
+        public static T Get<T>(string url,string failHint = "加载失败")
         {
-            return Request<T>(url,"GET");
+            return Request<T>(url,"GET",null,failHint);
         }
 
-        public static T Post<T>(string url,string bodyStr)
+        public static T Post<T>(string url,string bodyStr, string failHint = "加载失败")
         {
-            return Request<T>(url, "POST", bodyStr);
+            return Request<T>(url, "POST", bodyStr,failHint);
         }
 
-        public static T Put<T>(string url,string bodyStr)
+        public static T Put<T>(string url,string bodyStr, string failHint = "加载失败")
         {
-            return Request<T>(url, "PUT", bodyStr);
+            return Request<T>(url, "PUT", bodyStr,failHint);
         }
 
-        public static T Delete<T> (string url,string bodyStr)
+        public static T Delete<T> (string url,string bodyStr, string failHint = "加载失败")
         {
-            return Request<T>(url, "DELETE", bodyStr);
+            return Request<T>(url, "DELETE", bodyStr,failHint);
         }
 
-        public static T Request<T>(string url, string method = "GET", string bodyStr = null)
+        public static T Request<T>(string url, string method = "GET", string bodyStr = null,string failHint = "加载失败")
         {
             string responseStr = null;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -57,7 +57,7 @@ namespace WMS.UI
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show("加载失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(failHint + "：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return default(T);
                 throw new Exception(ex.ToString());
             }           

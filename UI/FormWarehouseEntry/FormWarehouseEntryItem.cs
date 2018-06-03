@@ -271,6 +271,7 @@ namespace WMS.UI
             this.model[row, "materialId"] = foundMaterials[0]["id"];
             this.model[row, "materialNo"] = foundMaterials[0]["no"];
             this.model[row, "materialName"] = foundMaterials[0]["name"];
+            this.model[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
