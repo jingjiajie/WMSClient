@@ -117,18 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>[
-{mode:"default",
-	fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"name",displayName:"姓名",placeHolder:"点击填写姓名"},
-        {name:"age",displayName:"年龄",type:"int"},
-        {name:"password",displayName:"密码"},
-        {name:"role",displayName:"角色",values:"#roleValues"},
-        {name:"authority",displayName:"权限"}
-	]
-}
-]</value>
-  </data>
 </root>
