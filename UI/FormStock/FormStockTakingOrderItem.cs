@@ -296,7 +296,7 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
         private void SupplierNameEditEnded1(int row)
@@ -305,7 +305,7 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
         private void MaterialNoEditEnded1(int row)
@@ -314,7 +314,7 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+           // this.TryAddItem(row);
         }
 
         private void MaterialNameEditEnded1(int row)
@@ -323,23 +323,66 @@ namespace WMS.UI.FormStockTaking
             this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
         private void MaterialProductLineEditEnded1(int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            this.TryAddItem(row);
+            //this.TryAddItem(row);
         }
 
 
-        private void TryAddItem(int row)
+       
+
+        public void SetAddFinishedCallback(Action callback)
         {
-            int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
-            if (supplyId == 0) return;
-            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"supplyId\":\"" + supplyId + "\"}";
-            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single";
+            this.addFinishedCallback = callback;
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.ButtonCancel.Visible = false;
+            this.buttonStartAdd.Visible = false;
+            this.model1.Mode = "default";
+            this.synchronizer.Mode = "default";
+            this.reoGridView1.Mode = "default";
+            this.basicView1.Mode = "default";
+            this.searchView1.Enabled = true;
+            this.toolStripButton1.Enabled = true;
+            this.toolStripButton2.Visible = true;
+            this.toolStripButtonAdd.Enabled = true;
+            this.toolStripButtonDelete.Enabled = true;
+            this.toolStripButtonAlter.Enabled = true;
+            this.pagerView1.Enabled = true;
+            this.searchView1.Search();
+        }
+
+        private void buttonStartAdd_Click(object sender, EventArgs e)
+        {
+            //int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
+            //if (supplyId == 0) return;
+            //首先得到supplyid
+            int[] supplyIds = { 5 };
+            StringBuilder ids = new StringBuilder();
+            ids.Append("[");
+            foreach (int a in supplyIds)
+            {
+                ids.Append(a);
+                ids.Append(",");
+            }
+            ids.Remove(ids.Length - 1, 1);
+            ids.Append("]");
+            this.TryAddItem(ids.ToString());
+
+        }
+
+        private void TryAddItem(string ids)
+        {
+            
+            string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single/"+ids;
             try
             {
                 RestClient.RequestPost<int[]>(url, body);
@@ -372,7 +415,7 @@ namespace WMS.UI.FormStockTaking
                 this.basicView1.Mode = "default";
                 this.searchView1.Enabled = true;
                 this.toolStripButton1.Enabled = true;
-                this.toolStripButton2.Visible =true;
+                this.toolStripButton2.Visible = true;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
@@ -381,34 +424,6 @@ namespace WMS.UI.FormStockTaking
                 this.buttonStartAdd.Visible = false;
                 this.searchView1.Search();
             }
-        }
-
-        public void SetAddFinishedCallback(Action callback)
-        {
-            this.addFinishedCallback = callback;
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            this.ButtonCancel.Visible = false;
-            this.buttonStartAdd.Visible = false;
-            this.model1.Mode = "default";
-            this.synchronizer.Mode = "default";
-            this.reoGridView1.Mode = "default";
-            this.basicView1.Mode = "default";
-            this.searchView1.Enabled = true;
-            this.toolStripButton1.Enabled = true;
-            this.toolStripButton2.Visible = true;
-            this.toolStripButtonAdd.Enabled = true;
-            this.toolStripButtonDelete.Enabled = true;
-            this.toolStripButtonAlter.Enabled = true;
-            this.pagerView1.Enabled = true;
-            this.searchView1.Search();
-        }
-
-        private void buttonStartAdd_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
