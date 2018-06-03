@@ -62,7 +62,19 @@ namespace WMS.UI.FormTransferOrder
         //待工整单完成
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
 
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
