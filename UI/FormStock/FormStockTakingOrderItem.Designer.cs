@@ -40,6 +40,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.basicView1 = new FrontWork.BasicView();
             this.configuration1 = new FrontWork.Configuration();
+            this.model1 = new FrontWork.ModelBox();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.pagerView1 = new FrontWork.PagerView();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
@@ -59,7 +60,6 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.buttonStartAdd = new System.Windows.Forms.ToolStripButton();
             this.ButtonCancel = new System.Windows.Forms.ToolStripButton();
-            this.model1 = new FrontWork.ModelBox();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -138,8 +138,22 @@
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(95, 101);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
+            // 
+            // model1
+            // 
+            this.model1.AllSelectionRanges = new FrontWork.Range[0];
+            this.model1.Configuration = this.configuration1;
+            this.model1.CurrentModelName = "default";
+            this.model1.Location = new System.Drawing.Point(279, 27);
+            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Mode = "default";
+            this.model1.Name = "model1";
+            this.model1.SelectionRange = null;
+            this.model1.Size = new System.Drawing.Size(115, 131);
+            this.model1.TabIndex = 6;
+            this.model1.Visible = false;
             // 
             // synchronizer
             // 
@@ -150,7 +164,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(98, 99);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // pagerView1
@@ -366,20 +380,6 @@
             this.ButtonCancel.Text = "取消添加";
             this.ButtonCancel.Visible = false;
             this.ButtonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // model1
-            // 
-            this.model1.AllSelectionRanges = new FrontWork.Range[0];
-            this.model1.Configuration = this.configuration1;
-            this.model1.CurrentModelName = "default";
-            this.model1.Location = new System.Drawing.Point(279, 27);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.model1.Mode = "default";
-            this.model1.Name = "model1";
-            this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(115, 131);
-            this.model1.TabIndex = 6;
-            this.model1.Visible = false;
             // 
             // FormStockTakingOrderItem
             // 

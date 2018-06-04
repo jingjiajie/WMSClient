@@ -364,11 +364,18 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonStartAdd_Click(object sender, EventArgs e)
         {
-            
-            //int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
-            //if (supplyId == 0) return;
+            List<int> supplyId = new List<int>();
+            for(int i = 0; i < this.model1.RowCount - 1; i++)
+            {
+                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED&& (int)this.model1[i, "supplyId"]!=0)
+                {                   
+                    supplyId.Add((int)this.model1[i, "supplyId"]);
+                }
+            }          
+            if (supplyId.Count== 0) return;
             //首先得到supplyid
-            int[] supplyIds = { 5 };
+            int[] supplyIds = supplyId.ToArray();
+            //supplyIds = new int[] { 15 };
             StringBuilder ids = new StringBuilder();
             ids.Append("[");
             foreach (int a in supplyIds)
