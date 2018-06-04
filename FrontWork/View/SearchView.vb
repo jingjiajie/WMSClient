@@ -104,14 +104,27 @@ Public Class SearchView
             Dim fieldConfiguration = (From f In Me.Configuration.GetFieldConfigurations(Me.Mode)
                                       Where f.DisplayName = searchDisplayName
                                       Select f).FirstOrDefault
-            Dim text = Me.TextBoxSearchCondition.Text
-            Dim searchValue As Object
+            Dim valueCount = 1 '最终上传的Value个数
+            Dim texts = {Me.TextBoxSearchCondition.Text, Me.TextBoxSearchCondition1.Text} '输入字符串
+            Dim mappedValues(texts.Length - 1) As Object '映射后的值
+            Dim searchValues(texts.Length - 1) As Object '转型后最终用于搜索的值
             If fieldConfiguration.BackwardMapper IsNot Nothing Then
-                Dim mappedValue = fieldConfiguration.BackwardMapper.Invoke(Me, text)
-                searchValue = Convert.ChangeType(mappedValue, fieldConfiguration.Type.FieldType)
+                For i = 0 To texts.Length - 1
+                    mappedValues(i) = fieldConfiguration.BackwardMapper.Invoke(Me, texts(i))
+                Next
             Else
-                searchValue = Convert.ChangeType(text, fieldConfiguration.Type.FieldType)
+                For i = 0 To texts.Length - 1
+                    mappedValues(i) = texts(i)
+                Next
             End If
+            For i = 0 To texts.Length - 1
+                Try
+                    searchValues(i) = Convert.ChangeType(mappedValues(i), fieldConfiguration.Type.FieldType)
+                Catch
+                    MessageBox.Show($"""{texts(i)}""不是合法的数据，请检查输入！")
+                    Return Nothing
+                End Try
+            Next
             Dim relation As Relation
             Dim searchName = (From m In Me.Configuration.GetFieldConfigurations(Me.Mode)
                               Where m.DisplayName = searchDisplayName
@@ -122,13 +135,18 @@ Public Class SearchView
                 Case "等于"
                     relation = Relation.EQUAL
                 Case "介于"
+                    valueCount = 2
                     relation = Relation.BETWEEN
                 Case "大于等于"
                     relation = Relation.GREATER_THAN_OR_EQUAL_TO
                 Case "小于等于"
                     relation = Relation.LESS_THAN_OR_EQUAL_TO
             End Select
-            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, {searchValue})}).ToArray
+            Dim finalSearchValues(valueCount - 1)
+            For i = 0 To finalSearchValues.Length - 1
+                finalSearchValues(i) = searchValues(i)
+            Next
+            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, finalSearchValues)}).ToArray
         Else
             newSearchArgs.Conditions = Me.StaticConditions.ToArray
         End If
@@ -163,9 +181,11 @@ Public Class SearchView
         If Me.ComboBoxSearchKey.SelectedIndex = 0 Then
             Me.ComboBoxSearchRelation.Enabled = False
             Me.TextBoxSearchCondition.Enabled = False
+            Me.TextBoxSearchCondition1.Enabled = False
         Else '否则允许设置搜索值和搜索关系。并根据字段的类型提供不同的关系
             Me.ComboBoxSearchRelation.Enabled = True
             Me.TextBoxSearchCondition.Enabled = True
+            Me.TextBoxSearchCondition1.Enabled = True
             Dim selectedDisplayName = Me.ComboBoxSearchKey.SelectedItem.ToString
             Dim field = (From f In Me.Configuration.GetFieldConfigurations(Me.Mode) Where f.DisplayName = selectedDisplayName Select f).First
             Call Me.RefreshSearchByType(field.Type.FieldType)
@@ -213,6 +233,7 @@ Public Class SearchView
 
     Public Sub Search()
         Dim eventArgs = Me.GetSearchEventArgs
+        If eventArgs Is Nothing Then Return
         RaiseEvent OnSearch(Me, eventArgs)
     End Sub
 
@@ -256,5 +277,20 @@ Public Class SearchView
 
     Private Sub SearchView_EnabledChanged(sender As Object, e As EventArgs) Handles MyBase.EnabledChanged
 
+    End Sub
+
+    Private Sub ComboBoxSearchRelation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxSearchRelation.SelectedIndexChanged
+        Dim relationStr = ComboBoxSearchRelation.SelectedItem.ToString
+        Call Me.TableLayoutPanel1.SuspendLayout()
+        If relationStr = "介于" Then
+            Me.TableLayoutPanel1.SetColumnSpan(Me.TextBoxSearchCondition, 1)
+            Me.TableLayoutPanel1.SetCellPosition(Me.TextBoxSearchCondition1, New TableLayoutPanelCellPosition(5, 2))
+            Me.TextBoxSearchCondition1.Visible = True
+        Else
+            Me.TextBoxSearchCondition1.Visible = False
+            Me.TableLayoutPanel1.SetCellPosition(Me.TextBoxSearchCondition1, New TableLayoutPanelCellPosition(5, 1))
+            Me.TableLayoutPanel1.SetColumnSpan(Me.TextBoxSearchCondition, 2)
+        End If
+        Call Me.TableLayoutPanel1.ResumeLayout()
     End Sub
 End Class

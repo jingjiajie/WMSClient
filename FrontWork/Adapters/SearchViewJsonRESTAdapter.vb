@@ -76,7 +76,7 @@ Public Class SearchViewJsonRESTAdapter
 
     Protected Sub SetConditionAndOrdersToAPI(api As JsonRESTAPIInfo, args As OnSearchEventArgs)
         Dim jsEngine As New Jint.Engine
-        Dim jsSerializer = New JavaScriptSerializer
+        Dim jsSerializer = New JsonSerializer
         '添加搜索条件
         Dim conditions = args.Conditions
         jsEngine.Execute("var $conditions = [];")
@@ -113,7 +113,7 @@ Public Class SearchViewJsonRESTAdapter
 
     Protected Overridable Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
         If Me.Synchronizer.FindAPI Is Nothing Then
-            throw new FrontWorkException("PullAPI not set!")
+            Throw New FrontWorkException("FindAPI not set!")
         End If
         Me.SetConditionAndOrdersToAPI(Me.Synchronizer.FindAPI, args)
         Return Me.Synchronizer.Find()
