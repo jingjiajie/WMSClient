@@ -395,8 +395,7 @@ namespace WMS.UI.FormStockTaking
             string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single/"+ids;
             try
             {
-                RestClient.RequestPost<int[]>(url, body);
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RestClient.RequestPost<int[]>(url, body);                
                 this.model1.CurrentModelName = "default";
                 this.model1.Mode = "default";
                 this.synchronizer.Mode = "default";
@@ -416,6 +415,7 @@ namespace WMS.UI.FormStockTaking
                 {
                     this.addFinishedCallback();
                 }
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {
