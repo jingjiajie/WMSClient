@@ -45,6 +45,9 @@ namespace WMS.UI.FormStockTaking
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
+                { "lastUpdatePersonId",GlobalData.Person["id"]},
+                { "lastUpdatePersonName",GlobalData.Person["name"]},
+                { "lastUpdateTime",DateTime.Now},              
                 { "createTime",DateTime.Now},
             });
         }
