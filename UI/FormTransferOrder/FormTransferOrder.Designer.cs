@@ -57,6 +57,7 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.reoGridView2 = new FrontWork.ReoGridView();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPagerWidget.SuspendLayout();
@@ -148,7 +149,7 @@
             this.pagerView1.Margin = new System.Windows.Forms.Padding(1);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
+            this.pagerView1.PageSize = 50;
             this.pagerView1.Size = new System.Drawing.Size(848, 26);
             this.pagerView1.TabIndex = 14;
             // 
@@ -243,7 +244,8 @@
             this.toolStripSeparator2,
             this.buttonDelete,
             this.buttonAlter,
-            this.toolStripSeparator3});
+            this.toolStripSeparator3,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0);
@@ -326,6 +328,7 @@
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(471, 51);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
@@ -360,6 +363,15 @@
             this.reoGridView2.Name = "reoGridView2";
             this.reoGridView2.Size = new System.Drawing.Size(846, 224);
             this.reoGridView2.TabIndex = 6;
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // FormTransferOrder
             // 
@@ -411,5 +423,6 @@
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.ReoGridView reoGridView1;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }

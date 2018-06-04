@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace WMS.UI.FormTransferOrder
@@ -61,6 +62,24 @@ namespace WMS.UI.FormTransferOrder
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
         }
     }
 }

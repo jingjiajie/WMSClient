@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FormStockTaking
 {
@@ -77,6 +78,37 @@ namespace WMS.UI.FormStockTaking
                 this.searchView1.Search();
             });
             a1.Show();
+        }
+      
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
+            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/stocktaking_order/preview/" + strIDs);
+            if (previewData == null) return;
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("盘点单预览");
+            foreach (IDictionary<string, object> entryAndItem in previewData)
+            {
+                IDictionary<string, object> stockTakingOrder = (IDictionary<string, object>)entryAndItem["stockTakingOrderView"];
+                object[] stockTakingOrderItem = (object[])entryAndItem["stockTakingOrderItems"];
+                string no = (string)stockTakingOrder["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/WarehouseEntry.xlsx", no)) return;
+                formPreviewExcel.AddData("warehouseEntry", stockTakingOrder, no);
+                formPreviewExcel.AddData("warehouseEntryItems", stockTakingOrderItem, no);
+            }
+            formPreviewExcel.Show();
         }
     }
 }
