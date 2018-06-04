@@ -124,10 +124,10 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
         {name:"storageAreaId",displayName:"库区id",type:"string",visible:false},
-        {name:"no",displayName:"库位编码",type:"string"},
-        {name:"name",displayName:"库位名称",type:"string"},
         {name:"storageAreaName",displayName:"库区名称",type:"string",association:"#storageAreaNameAssociation",editEnded:"#storageAreaNameEditEnded"},
         {name:"storageAreaNo",displayName:"库区编码",type:"string",association:"#storageAreaNoAssociation",editEnded:"#storageAreaNoEditEnded"},   
+        {name:"no",displayName:"库位编码",type:"string"},
+        {name:"name",displayName:"库位名称",type:"string"},      
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},   
         {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
     httpAPIs:[
