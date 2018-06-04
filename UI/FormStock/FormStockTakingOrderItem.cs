@@ -289,7 +289,7 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAlter.Enabled = false;
             this.ButtonCancel.Visible = true;
             this.buttonStartAdd.Visible = true;
-            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4, 5 }, null);
+            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4 }, null);
         }
 
         private void SupplierNoEditEnded1(int row)
