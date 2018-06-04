@@ -99,7 +99,7 @@ namespace WMS.UI.FormTransferOrder
             try
             {
                 string operatioName = "transfer_some";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfe_order/" + operatioName, strIDs, "PUT");
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfe_order/" + operatioName, strIDs, "POST");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
