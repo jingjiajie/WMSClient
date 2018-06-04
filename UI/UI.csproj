@@ -121,6 +121,12 @@
     <Compile Include="FormInspectionNote\FormInspectionNote.Designer.cs">
       <DependentUpon>FormInspectionNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormInspectionNote\FormInspectionNoteChoosePreviewType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInspectionNote\FormInspectionNoteChoosePreviewType.Designer.cs">
+      <DependentUpon>FormInspectionNoteChoosePreviewType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormInspectionNote\FormInspectionNoteItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,6 +270,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNote.resx">
       <DependentUpon>FormInspectionNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInspectionNote\FormInspectionNoteChoosePreviewType.resx">
+      <DependentUpon>FormInspectionNoteChoosePreviewType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNoteItem.resx">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>

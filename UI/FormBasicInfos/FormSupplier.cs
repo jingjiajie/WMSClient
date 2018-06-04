@@ -124,7 +124,7 @@ namespace WMS.UI.FormBasicInfos
                 this.synchronizer.FindAPI.SetRequestParameter("$history", "new");
                 this.synchronizer.GetCountAPI.SetRequestParameter("$history", "new");
                 this.basicView1.Enabled = true;
-                this.searchView1.Enabled = true;
+                this.searchView1.Visible = false;
                 this.toolStripButtonAdd.Visible = true;
                 this.toolStripButtonAlter.Visible = true;
                 this.toolStripButtonDelete.Visible = true;
@@ -137,7 +137,7 @@ namespace WMS.UI.FormBasicInfos
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             this.searchView1.AddStaticCondition("newestSupplierId", rowData["id"]);
             this.searchView1.Search();
-            this.searchView1.Enabled = false;
+            this.searchView1.Visible = false;
         }
 
         private void toolStripButtonFindAll_Click(object sender, EventArgs e)
@@ -145,7 +145,7 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.FindAPI.SetRequestParameter("$history","new");
             this.synchronizer.GetCountAPI.SetRequestParameter("$history", "new");
             this.basicView1.Enabled = true;
-            this.searchView1.Enabled = true;
+            this.searchView1.Visible = true;
             this.toolStripButtonAdd.Visible = true;
             this.toolStripButtonAlter.Visible = true;
             this.toolStripButtonDelete.Visible = true;

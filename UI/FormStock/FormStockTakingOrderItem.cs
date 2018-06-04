@@ -289,7 +289,7 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAlter.Enabled = false;
             this.ButtonCancel.Visible = true;
             this.buttonStartAdd.Visible = true;
-            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4, 5 }, null);
+            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4 }, null);
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -364,11 +364,18 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonStartAdd_Click(object sender, EventArgs e)
         {
-            
-            //int supplyId = (int?)this.model1[row, "supplyId"] ?? 0;
-            //if (supplyId == 0) return;
+            List<int> supplyId = new List<int>();
+            for(int i = 0; i < this.model1.RowCount - 1; i++)
+            {
+                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED&& (int)this.model1[i, "supplyId"]!=0)
+                {                   
+                    supplyId.Add((int)this.model1[i, "supplyId"]);
+                }
+            }          
+            if (supplyId.Count== 0) return;
             //首先得到supplyid
-            int[] supplyIds = { 5 };
+            int[] supplyIds = supplyId.ToArray();
+            //supplyIds = new int[] { 15 };
             StringBuilder ids = new StringBuilder();
             ids.Append("[");
             foreach (int a in supplyIds)
@@ -388,8 +395,7 @@ namespace WMS.UI.FormStockTaking
             string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_single/"+ids;
             try
             {
-                RestClient.RequestPost<int[]>(url, body);
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RestClient.RequestPost<int[]>(url, body);                
                 this.model1.CurrentModelName = "default";
                 this.model1.Mode = "default";
                 this.synchronizer.Mode = "default";
@@ -409,6 +415,7 @@ namespace WMS.UI.FormStockTaking
                 {
                     this.addFinishedCallback();
                 }
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
             {
