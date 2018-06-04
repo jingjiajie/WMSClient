@@ -112,7 +112,7 @@ namespace WMS.UI.FormBasicInfos
         {
             this.synchronizer.FindAPI.SetRequestParameter("$history", "history");
             this.synchronizer.GetCountAPI.SetRequestParameter("$history", "history");
-            this.basicView1.Enabled = false;          
+            this.basicView1.Enabled = false;
             this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAlter.Visible = false;
             this.toolStripButtonDelete.Visible = false;
@@ -134,7 +134,7 @@ namespace WMS.UI.FormBasicInfos
                 this.searchView1.Search();
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];          
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             this.searchView1.AddStaticCondition("newestSupplierId", rowData["id"]);
             this.searchView1.Search();
             this.searchView1.Enabled = false;

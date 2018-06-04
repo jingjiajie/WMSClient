@@ -62,23 +62,68 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.Save();
         }
 
-        private void MaterialNameEditEnded(int row, string materialName)
+        //private void MaterialNameEditEnded(int row, string materialName)
+        //{
+        //    IDictionary<string, object> foundMaterial =
+        //        GlobalData.AllMaterials.Find((s) =>
+        //        {
+        //            if (s["name"] == null) return false;
+        //            return s["name"].ToString() == materialName;
+        //        });
+        //    if (foundMaterial == null)
+        //    {
+        //        MessageBox.Show($"物料\"{materialName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //    else
+        //    {
+        //        this.model1[row, "materialId"] = foundMaterial["id"];
+        //        this.model1[row, "materialName"] = foundMaterial["name"];
+        //    }
+        //}
+
+        private void MaterialNoEditEnded(int row)
         {
-            IDictionary<string, object> foundMaterial =
-                GlobalData.AllMaterials.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == materialName;
-                });
-            if (foundMaterial == null)
+            if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
+            this.model1[row, "materialName"] = "";
+            this.FindMaterialID(row);
+        }
+
+        private void MaterialNameEditEnded(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
+            this.model1[row, "materialNo"] = "";
+            this.FindMaterialID(row);
+        }
+
+        private void MaterialProductLineEditEnded(int row)
+        {
+            this.FindMaterialID(row);
+        }
+        private void FindMaterialID(int row)
+        {
+            this.model1[row, "materialId"] = 0; //先清除物料ID
+            string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
+            string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
+            string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
+            var foundMaterials = (from m in GlobalData.AllMaterials
+                                  where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
+                                  && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
+                                     && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  select m).ToArray();
+            if (foundMaterials.Length != 1)
             {
-                MessageBox.Show($"物料\"{materialName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                goto FAILED;
             }
-            else
-            {
-                this.model1[row, "materialId"] = foundMaterial["id"];
-                this.model1[row, "materialName"] = foundMaterial["name"];
-            }
+            this.model1[row, "materialId"] = foundMaterials[0]["id"];
+            this.model1[row, "materialNo"] = foundMaterials[0]["no"];
+            this.model1[row, "materialName"] = foundMaterials[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
         }
         //供应商名称编辑完成，根据名称自动搜索ID和No
         private void SupplierNameEditEnded(int row, string supplierName)

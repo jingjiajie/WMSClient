@@ -44,8 +44,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonUnqualified = new System.Windows.Forms.Button();
             this.buttonAllPass = new System.Windows.Forms.Button();
-            this.buttonFinished = new System.Windows.Forms.Button();
+            this.buttonQualified = new System.Windows.Forms.Button();
             this.basicView1 = new FrontWork.BasicView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
@@ -213,21 +214,41 @@
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonUnqualified, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.buttonAllPass, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonQualified, 0, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(899, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 5;
+            this.tableLayoutPanel3.RowCount = 7;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(175, 150);
             this.tableLayoutPanel3.TabIndex = 15;
+            // 
+            // buttonUnqualified
+            // 
+            this.buttonUnqualified.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonUnqualified.BackgroundImage")));
+            this.buttonUnqualified.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonUnqualified.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUnqualified.FlatAppearance.BorderSize = 0;
+            this.buttonUnqualified.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonUnqualified.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonUnqualified.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonUnqualified.Location = new System.Drawing.Point(3, 104);
+            this.buttonUnqualified.Name = "buttonUnqualified";
+            this.buttonUnqualified.Size = new System.Drawing.Size(169, 39);
+            this.buttonUnqualified.TabIndex = 4;
+            this.buttonUnqualified.Text = "条目不合格";
+            this.buttonUnqualified.UseVisualStyleBackColor = true;
+            this.buttonUnqualified.Click += new System.EventHandler(this.buttonUnqualified_Click);
             // 
             // buttonAllPass
             // 
@@ -238,29 +259,30 @@
             this.buttonAllPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonAllPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonAllPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAllPass.Location = new System.Drawing.Point(3, 10);
+            this.buttonAllPass.Location = new System.Drawing.Point(3, 4);
             this.buttonAllPass.Name = "buttonAllPass";
-            this.buttonAllPass.Size = new System.Drawing.Size(169, 49);
+            this.buttonAllPass.Size = new System.Drawing.Size(169, 39);
             this.buttonAllPass.TabIndex = 0;
             this.buttonAllPass.Text = "所有条目合格";
             this.buttonAllPass.UseVisualStyleBackColor = true;
             this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
             // 
-            // buttonFinished
+            // buttonQualified
             // 
-            this.buttonFinished.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonFinished.BackgroundImage")));
-            this.buttonFinished.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonFinished.FlatAppearance.BorderSize = 0;
-            this.buttonFinished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonFinished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonFinished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinished.Location = new System.Drawing.Point(3, 70);
-            this.buttonFinished.Name = "buttonFinished";
-            this.buttonFinished.Size = new System.Drawing.Size(169, 49);
-            this.buttonFinished.TabIndex = 3;
-            this.buttonFinished.Text = "送检完成";
-            this.buttonFinished.UseVisualStyleBackColor = true;
+            this.buttonQualified.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonQualified.BackgroundImage")));
+            this.buttonQualified.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonQualified.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonQualified.FlatAppearance.BorderSize = 0;
+            this.buttonQualified.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonQualified.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonQualified.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonQualified.Location = new System.Drawing.Point(3, 54);
+            this.buttonQualified.Name = "buttonQualified";
+            this.buttonQualified.Size = new System.Drawing.Size(169, 39);
+            this.buttonQualified.TabIndex = 3;
+            this.buttonQualified.Text = "条目合格";
+            this.buttonQualified.UseVisualStyleBackColor = true;
+            this.buttonQualified.Click += new System.EventHandler(this.buttonQualified_Click);
             // 
             // basicView1
             // 
@@ -356,6 +378,7 @@
             this.Name = "FormInspectionNoteItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "送检单物料条目";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInspectionNoteItem_FormClosing);
             this.Load += new System.EventHandler(this.FormInspectionNoteItem_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -392,6 +415,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonAllPass;
-        private System.Windows.Forms.Button buttonFinished;
+        private System.Windows.Forms.Button buttonQualified;
+        private System.Windows.Forms.Button buttonUnqualified;
     }
 }

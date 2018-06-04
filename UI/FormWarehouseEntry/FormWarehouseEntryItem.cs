@@ -44,6 +44,16 @@ namespace WMS.UI
             }
         }
 
+        private int SupplierIDDefaultValue()
+        {
+            return (int)this.warehouseEntry["supplierId"];
+        }
+
+        private string SupplierNameDefaultValue()
+        {
+            return (string)this.warehouseEntry["supplierName"];
+        }
+
         private void FormWarehouseEntry_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
@@ -249,11 +259,10 @@ namespace WMS.UI
             string materialName = this.model[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  && (string.IsNullOrWhiteSpace(materialProductLine) ? true : materialProductLine == (m["productLine"]?.ToString() ?? ""))
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -262,9 +271,11 @@ namespace WMS.UI
             this.model[row, "materialId"] = foundMaterials[0]["id"];
             this.model[row, "materialNo"] = foundMaterials[0]["no"];
             this.model[row, "materialName"] = foundMaterials[0]["name"];
+            this.model[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }

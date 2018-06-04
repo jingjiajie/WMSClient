@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace WMS.UI
@@ -143,6 +146,81 @@ namespace WMS.UI
                 case 3:return "部分入库";
                 default:return "未知状态";
             }
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if(this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for(int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
+            var previewData = RestClient.Get<List<IDictionary<string,object>>>(Defines.ServerURL + "/warehouse/WMS_Template/warehouse_entry/preview/" + strIDs);
+            if (previewData == null) return;
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("入库单预览");
+            foreach (IDictionary<string,object> entryAndItem in previewData)
+            {
+                IDictionary<string, object> warehouseEntry = (IDictionary<string, object>)entryAndItem["warehouseEntry"];
+                object[] warehouseEntryItems = (object[])entryAndItem["warehouseEntryItems"];
+                string no = (string)warehouseEntry["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/WarehouseEntry.xlsx", no)) return;
+                formPreviewExcel.AddData("warehouseEntry",warehouseEntry,no);
+                formPreviewExcel.AddData("warehouseEntryItems", warehouseEntryItems,no);
+            }
+            formPreviewExcel.Show();
+        }
+
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void PutIn(bool qualified)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = qualified ? "receive" : "reject";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse_entry/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show((qualified ? "直接正品入库" : "直接不良品入库") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void buttonReceive_Click(object sender, EventArgs e)
+        {
+            this.PutIn(true);
+        }
+
+        private void buttonReject_Click(object sender, EventArgs e)
+        {
+            this.PutIn(false);
         }
     }
 }
