@@ -514,7 +514,8 @@ namespace WMS.UI
 
         public static void BindBlueButton(Button button)
         {
-            button.MouseDown += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q; };
+            button.BackgroundImageLayout = ImageLayout.Stretch;
+            button.MouseDown += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;};
             button.MouseEnter += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s; };
             button.MouseLeave += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s; };
         }

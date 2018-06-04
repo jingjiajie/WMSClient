@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using FrontWork;
 
@@ -60,6 +61,19 @@ namespace WMS.UI
             {
                 this.searchView1.Search();
             }
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var formChooseType = new FormInspectionNoteChoosePreviewType(selectedIDs);
+            formChooseType.Show();
         }
     }
 }

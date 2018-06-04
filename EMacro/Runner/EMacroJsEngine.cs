@@ -62,7 +62,12 @@ namespace EMacro
                 }else{
                     return colorFromArgb(arguments[0],arguments[1],arguments[2],arguments[3]);
                 }
-            }"
+            }",
+            @"function choose(value){
+                if(arguments.length <= value + 1) return null;
+                return arguments[value + 1];
+            }
+            "
         };
 
     }
