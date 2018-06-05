@@ -123,9 +123,9 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"deliveryOrderId",displayName:"出库单ID",type:"int",defaultValue:"#deliveryOrderIdDefaultValue"},
-        {name:"supplyId",displayName:"供货ID",type:"int",visible:true},
-        {name:"materialId",displayName:"物料ID",type:"int",visible:true},
-        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:true,editable:false},
+        {name:"materialId",displayName:"物料ID",type:"int",visible:true,editable:false},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,editable:false},
         {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
