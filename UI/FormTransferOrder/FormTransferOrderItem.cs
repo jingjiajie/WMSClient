@@ -141,7 +141,7 @@ namespace WMS.UI.FormTransferOrder
 
         private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
         {
-            this.model1[row, "sourcestorageLocationId"] = 0;//先清除库位ID
+            this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
                                          where s["name"]?.ToString() == sourceStorageLocationName
