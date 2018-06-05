@@ -92,8 +92,8 @@ namespace WMS.UI.FromDeliverOrder
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "delivey_finish";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivey_order/" + operatioName, strIDs, "PUT");
+                string operatioName = "delivery_finish";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
