@@ -103,6 +103,12 @@
     <Compile Include="FormBasicInfos\FormSupplier.Designer.cs">
       <DependentUpon>FormSupplier.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasicInfos\FormSupplierHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormSupplierHistory.Designer.cs">
+      <DependentUpon>FormSupplierHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBasicInfos\FormSupply.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormSupplier.resx">
       <DependentUpon>FormSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormSupplierHistory.resx">
+      <DependentUpon>FormSupplierHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBasicInfos\FormSupply.resx">
       <DependentUpon>FormSupply.cs</DependentUpon>
