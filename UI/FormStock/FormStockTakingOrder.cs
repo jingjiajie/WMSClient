@@ -104,9 +104,9 @@ namespace WMS.UI.FormStockTaking
                 IDictionary<string, object> stockTakingOrder = (IDictionary<string, object>)entryAndItem["stockTakingOrderView"];
                 object[] stockTakingOrderItem = (object[])entryAndItem["stockTakingOrderItems"];
                 string no = (string)stockTakingOrder["no"];
-                if (!formPreviewExcel.AddPatternTable("Excel/WarehouseEntry.xlsx", no)) return;
-                formPreviewExcel.AddData("warehouseEntry", stockTakingOrder, no);
-                formPreviewExcel.AddData("warehouseEntryItems", stockTakingOrderItem, no);
+                if (!formPreviewExcel.AddPatternTable("Excel/StockInfoCheckTicket.xlsx", no)) return;
+                formPreviewExcel.AddData("StockInfoCheckTicket", stockTakingOrder, no);
+                formPreviewExcel.AddData("StockInfoCheckTicketItem", stockTakingOrderItem, no);
             }
             formPreviewExcel.Show();
         }
