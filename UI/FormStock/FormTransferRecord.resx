@@ -138,10 +138,10 @@
         {name:"originalUnitAmount",displayName:"原单位数量",type:"double"},
         {name:"sourceStorageLocationID",displayName:"源库位ID",type:"int",visible:false},
         {name:"sourceStorageLocationNo",displayName:"源库位编码",type:"string"},
-        {name:"sourceStorageLocationName",displayName:"库位名称",type:"string"},
+        {name:"sourceStorageLocationName",displayName:"源库位名称",type:"string"},
         {name:"newStorageLocationID",displayName:"目标库位ID",type:"int",visible:false},
         {name:"newStorageLocationNo",displayName:"源库位编码",type:"string"},
-        {name:"newStorageLocationName",displayName:"库位名称",type:"string"},
+        {name:"newStorageLocationName",displayName:"目标库位名称",type:"string"},
         {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
     ],
 httpAPIs:[
