@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockRecord));
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -54,6 +55,8 @@
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -118,9 +121,14 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(118, -9);
+            this.configuration1.Location = new System.Drawing.Point(107, 25);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormStockRecord",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -313,16 +321,37 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
+            this.buttonReturnSupply,
+            this.toolStripButton1,
+            this.toolStripSeparator3,
             this.toolStripButtonAdd,
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
-            this.toolStripSeparator3,
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(742, 22);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // buttonReturnSupply
+            // 
+            this.buttonReturnSupply.Image = global::WMS.UI.Properties.Resources.check;
+            this.buttonReturnSupply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReturnSupply.Name = "buttonReturnSupply";
+            this.buttonReturnSupply.Size = new System.Drawing.Size(80, 19);
+            this.buttonReturnSupply.Text = "批量退件";
+            this.buttonReturnSupply.ToolTipText = "批量退件";
+            this.buttonReturnSupply.Click += new System.EventHandler(this.buttonReturnSupply_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(80, 19);
+            this.toolStripButton1.Text = "保存修改";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // FormStockRecord
             // 
@@ -371,5 +400,7 @@
         private System.Windows.Forms.Panel panelSearchWidget;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStripTop;
+        private System.Windows.Forms.ToolStripButton buttonReturnSupply;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
