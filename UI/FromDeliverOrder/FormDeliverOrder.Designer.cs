@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDeliverOrder));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
@@ -48,7 +48,6 @@
             this.buttonTransferOrder = new System.Windows.Forms.ToolStripButton();
             this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
@@ -80,7 +79,7 @@
             this.panelSearchWidget.Location = new System.Drawing.Point(0, 0);
             this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
             this.panelSearchWidget.Name = "panelSearchWidget";
-            this.panelSearchWidget.Size = new System.Drawing.Size(791, 25);
+            this.panelSearchWidget.Size = new System.Drawing.Size(874, 25);
             this.panelSearchWidget.TabIndex = 14;
             // 
             // searchView1
@@ -92,7 +91,7 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(791, 25);
+            this.searchView1.Size = new System.Drawing.Size(874, 25);
             this.searchView1.TabIndex = 12;
             // 
             // configuration1
@@ -101,12 +100,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(75, 51);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormWarehouseEntry",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -135,7 +134,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(791, 386);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(874, 421);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
             // toolStripTop
@@ -156,12 +155,11 @@
             this.buttonTransferOrder,
             this.buttonDeliver,
             this.toolStripSeparator3,
-            this.buttonReturnSupply,
             this.toolStripSeparator4,
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(791, 22);
+            this.toolStripTop.Size = new System.Drawing.Size(874, 22);
             this.toolStripTop.TabIndex = 11;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -250,16 +248,6 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
             // 
-            // buttonReturnSupply
-            // 
-            this.buttonReturnSupply.Image = global::WMS.UI.Properties.Resources.check;
-            this.buttonReturnSupply.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReturnSupply.Name = "buttonReturnSupply";
-            this.buttonReturnSupply.Size = new System.Drawing.Size(80, 19);
-            this.buttonReturnSupply.Text = "批量退件";
-            this.buttonReturnSupply.ToolTipText = "批量退件";
-            this.buttonReturnSupply.Click += new System.EventHandler(this.buttonReturnSupply_Click);
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.AutoSize = false;
@@ -271,17 +259,18 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(85, 24);
+            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
             this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // panelPagerWidget
             // 
             this.panelPagerWidget.Controls.Add(this.pagerView1);
             this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(2, 358);
+            this.panelPagerWidget.Location = new System.Drawing.Point(2, 392);
             this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2);
             this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(787, 26);
+            this.panelPagerWidget.Size = new System.Drawing.Size(870, 27);
             this.panelPagerWidget.TabIndex = 13;
             // 
             // pagerView1
@@ -292,7 +281,7 @@
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(787, 26);
+            this.pagerView1.Size = new System.Drawing.Size(870, 27);
             this.pagerView1.TabIndex = 13;
             // 
             // panel1
@@ -301,7 +290,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 50);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(785, 97);
+            this.panel1.Size = new System.Drawing.Size(868, 108);
             this.panel1.TabIndex = 15;
             // 
             // basicView1
@@ -317,7 +306,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 0);
-            this.basicView1.Size = new System.Drawing.Size(785, 97);
+            this.basicView1.Size = new System.Drawing.Size(868, 108);
             this.basicView1.TabIndex = 15;
             // 
             // model1
@@ -343,21 +332,21 @@
             this.panel2.Controls.Add(this.reoGridView2);
             this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 153);
+            this.panel2.Location = new System.Drawing.Point(3, 164);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(785, 200);
+            this.panel2.Size = new System.Drawing.Size(868, 223);
             this.panel2.TabIndex = 16;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(576, 71);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -390,7 +379,7 @@
             this.reoGridView2.Mode = "default";
             this.reoGridView2.Model = this.model1;
             this.reoGridView2.Name = "reoGridView2";
-            this.reoGridView2.Size = new System.Drawing.Size(785, 200);
+            this.reoGridView2.Size = new System.Drawing.Size(868, 223);
             this.reoGridView2.TabIndex = 5;
             // 
             // reoGridView1
@@ -403,7 +392,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = null;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(785, 200);
+            this.reoGridView1.Size = new System.Drawing.Size(868, 223);
             this.reoGridView1.TabIndex = 1;
             // 
             // labelStatus
@@ -424,10 +413,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 386);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 421);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 7, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(791, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(874, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -435,7 +424,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(791, 408);
+            this.ClientSize = new System.Drawing.Size(874, 443);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormDeliverOrder";
@@ -461,7 +450,6 @@
         private System.Windows.Forms.Panel panelSearchWidget;
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton buttonReturnSupply;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton buttonTransferOrder;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

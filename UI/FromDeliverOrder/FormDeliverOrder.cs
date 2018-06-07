@@ -93,7 +93,7 @@ namespace WMS.UI.FromDeliverOrder
             try
             {
                 string operatioName = "delivery_finish";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "PUT");
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -140,6 +140,37 @@ namespace WMS.UI.FromDeliverOrder
             {
                 MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的出库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
+            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/delivery_order/preview/" + strIDs);
+            if (previewData == null) return;
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
+            foreach (IDictionary<string, object> orderAndItem in previewData)
+            {
+                IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
+                object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
+                string no = (string)deliveryOrder["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketNormal.xlsx", no)) return;
+                formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
+                formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
+            }
+            formPreviewExcel.Show();
         }
     }
 }
