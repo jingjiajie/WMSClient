@@ -54,6 +54,7 @@
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -317,12 +318,22 @@
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this.buttonReturnSupply});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(742, 22);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // buttonReturnSupply
+            // 
+            this.buttonReturnSupply.Image = global::WMS.UI.Properties.Resources.check;
+            this.buttonReturnSupply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReturnSupply.Name = "buttonReturnSupply";
+            this.buttonReturnSupply.Size = new System.Drawing.Size(80, 19);
+            this.buttonReturnSupply.Text = "批量退件";
+            this.buttonReturnSupply.ToolTipText = "批量退件";
             // 
             // FormStockRecord
             // 
@@ -371,5 +382,6 @@
         private System.Windows.Forms.Panel panelSearchWidget;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStripTop;
+        private System.Windows.Forms.ToolStripButton buttonReturnSupply;
     }
 }
