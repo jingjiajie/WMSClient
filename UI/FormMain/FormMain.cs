@@ -51,8 +51,8 @@ namespace WMS.UI
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
                     MakeTreeNode("出库单管理"),
-                    MakeTreeNode("工作任务单管理"),
-                    MakeTreeNode("翻包作业单管理")
+                    //MakeTreeNode("工作任务单管理"),
+                    MakeTreeNode("备货作业单管理")
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存批次"),

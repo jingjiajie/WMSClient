@@ -160,17 +160,19 @@ namespace WMS.UI.FromDeliverOrder
             string strIDs = serializer.Serialize(ids);
             var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/delivery_order/preview/" + strIDs);
             if (previewData == null) return;
-            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
-            foreach (IDictionary<string, object> orderAndItem in previewData)
-            {
-                IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
-                object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
-                string no = (string)deliveryOrder["no"];
-                if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketNormal.xlsx", no)) return;
-                formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
-                formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
-            }
-            formPreviewExcel.Show();
+            FormDeliveryOrderChooseExcelType form = new FormDeliveryOrderChooseExcelType(previewData);
+            form.Show();
+            //StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
+            //foreach (IDictionary<string, object> orderAndItem in previewData)
+            //{
+            //    IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
+            //    object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
+            //    string no = (string)deliveryOrder["no"];
+            //    if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketNormal.xlsx", no)) return;
+            //    formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
+            //    formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
+            //}
+            //formPreviewExcel.Show();
         }
     }
 }
