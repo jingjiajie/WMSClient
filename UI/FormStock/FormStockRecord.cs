@@ -208,14 +208,13 @@ namespace WMS.UI.FormStock
             this.model1[row, fieldName] = value;
         }
 
+        //=============天经地义的交互逻辑到这里结束===============
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
-             
             }
         }
-        //=============天经地义的交互逻辑到这里结束===============
     }
 }
