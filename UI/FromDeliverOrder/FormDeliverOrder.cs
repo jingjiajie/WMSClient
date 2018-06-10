@@ -43,6 +43,20 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待装车";
+                case 1: return "装车中";
+                case 2: return "整单装车";
+                case 3: return "发运在途";
+                case 4: return "核减完成";
+                default: return "未知状态";
+            }
+        }
+
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -173,6 +187,35 @@ namespace WMS.UI.FromDeliverOrder
             //    formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
             //}
             //formPreviewExcel.Show();
+        }
+
+        private void toolStripButtonDecrease_Click(object sender, EventArgs e)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "decrease_in_accounting";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

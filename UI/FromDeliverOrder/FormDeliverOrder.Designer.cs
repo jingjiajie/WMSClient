@@ -48,6 +48,7 @@
             this.buttonTransferOrder = new System.Windows.Forms.ToolStripButton();
             this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonDecrease = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
@@ -101,7 +102,7 @@
             this.configuration1.Location = new System.Drawing.Point(75, 51);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntry",
+        "FormDeliverOrder",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -150,6 +151,7 @@
             this.buttonTransferOrder,
             this.buttonDeliver,
             this.toolStripSeparator3,
+            this.toolStripButtonDecrease,
             this.toolStripSeparator4,
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
@@ -242,6 +244,15 @@
             this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripButtonDecrease
+            // 
+            this.toolStripButtonDecrease.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDecrease.Image")));
+            this.toolStripButtonDecrease.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDecrease.Name = "toolStripButtonDecrease";
+            this.toolStripButtonDecrease.Size = new System.Drawing.Size(56, 19);
+            this.toolStripButtonDecrease.Text = "核减";
+            this.toolStripButtonDecrease.Click += new System.EventHandler(this.toolStripButtonDecrease_Click);
             // 
             // toolStripSeparator4
             // 
@@ -472,5 +483,6 @@
         private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDecrease;
     }
 }

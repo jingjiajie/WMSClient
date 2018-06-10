@@ -56,6 +56,18 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待移库";
+                case 1: return "部分移库";
+                case 2: return "移库完成";
+                default: return "未知状态";
+            }
+        }
+
         private void FormTransferOrder_Load(object sender, EventArgs e)
         {
             //设置两个请求参数

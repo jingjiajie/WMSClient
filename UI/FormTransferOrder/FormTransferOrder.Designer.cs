@@ -49,6 +49,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.basicView1 = new FrontWork.BasicView();
             this.model1 = new FrontWork.Model();
@@ -57,7 +58,6 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.reoGridView2 = new FrontWork.ReoGridView();
-            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPagerWidget.SuspendLayout();
@@ -122,7 +122,7 @@
             this.configuration1.Location = new System.Drawing.Point(137, 51);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntry",
+        "FormTransferOrder",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -253,6 +253,15 @@
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.basicView1);
@@ -363,15 +372,6 @@
             this.reoGridView2.Name = "reoGridView2";
             this.reoGridView2.Size = new System.Drawing.Size(846, 224);
             this.reoGridView2.TabIndex = 6;
-            // 
-            // buttonPreview
-            // 
-            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
-            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
-            this.buttonPreview.Text = "导出/打印";
-            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // FormTransferOrder
             // 

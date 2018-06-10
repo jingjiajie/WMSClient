@@ -244,6 +244,18 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待装车";
+                case 1: return "装车中";
+                case 2: return "装车完成";
+                default: return "未知状态";
+            }
+        }
+
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             //获取选中行ID，过滤掉新建的行（ID为0的）
