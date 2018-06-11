@@ -139,7 +139,7 @@
         {name:"realAmount",displayName:"实际装车数量（个）",type:"double"},
         {name:"unit",displayName:"单位"},
         {name:"unitAmount",displayName:"单位数量",type:"double"},
-        {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0},
+        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
         {name:"deliveryOrderNo",displayName:"出库单号"},
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},

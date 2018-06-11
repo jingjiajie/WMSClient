@@ -230,7 +230,7 @@ namespace WMS.UI
                 case "出库单管理":
                     this.LoadSubWindow(new FormDeliverOrder());
                     break;
-                case "翻包作业单管理":
+                case "备货作业单管理":
                     this.LoadSubWindow(new FormTransferOrder.FormTransferOrder());
                     break;
             }
