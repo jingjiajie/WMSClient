@@ -354,7 +354,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormSupplier";
-            this.Text = "FormSupplier";
+            this.Text = "供应商历史信息";
             this.Load += new System.EventHandler(this.FormSupplier_Load);
             this.panelPager.ResumeLayout(false);
             this.panelSearchWidget.ResumeLayout(false);
