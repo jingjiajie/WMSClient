@@ -130,7 +130,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(84, 68);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // model1
@@ -361,7 +361,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormStockRecord";
-            this.Text = "FormStockRecord";
+            this.Text = "库存记录";
             this.Load += new System.EventHandler(this.FormStockRecord_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

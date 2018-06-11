@@ -318,7 +318,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormTransferRecord";
-            this.Text = "FormTransferRecord";
+            this.Text = "移位记录";
             this.Load += new System.EventHandler(this.FormTransferRecord_Load);
             this.panelSearchWidget.ResumeLayout(false);
             this.panelPager.ResumeLayout(false);
