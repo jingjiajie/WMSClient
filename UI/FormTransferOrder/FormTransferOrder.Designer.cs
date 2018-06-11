@@ -266,9 +266,10 @@
             // 
             this.panel1.Controls.Add(this.basicView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 50);
+            this.panel1.Location = new System.Drawing.Point(0, 47);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(846, 109);
+            this.panel1.Size = new System.Drawing.Size(852, 115);
             this.panel1.TabIndex = 9;
             // 
             // basicView1
@@ -284,7 +285,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 0);
-            this.basicView1.Size = new System.Drawing.Size(846, 109);
+            this.basicView1.Size = new System.Drawing.Size(852, 115);
             this.basicView1.TabIndex = 16;
             // 
             // model1

@@ -217,6 +217,12 @@
     <Compile Include="FromDeliverOrder\FormDeliveryOrderReady.Designer.cs">
       <DependentUpon>FormDeliveryOrderReady.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromDeliverOrder\FormSelectPakage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FromDeliverOrder\FormSelectPakage.Designer.cs">
+      <DependentUpon>FormSelectPakage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\AssociationMethodListener.cs" />
     <Compile Include="Utilities\CommonDataStructures.cs" />
     <Compile Include="Utilities\Condition.cs" />
@@ -332,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FromDeliverOrder\FormDeliveryOrderReady.resx">
       <DependentUpon>FormDeliveryOrderReady.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FromDeliverOrder\FormSelectPakage.resx">
+      <DependentUpon>FormSelectPakage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormLoading.resx">
       <DependentUpon>FormLoading.cs</DependentUpon>

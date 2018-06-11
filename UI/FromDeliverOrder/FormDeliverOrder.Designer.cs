@@ -64,6 +64,8 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -146,6 +148,8 @@
             this.toolStripButtonAdd,
             this.buttonDelete,
             this.buttonAlter,
+            this.toolStripSeparator5,
+            this.toolStripButtonDeliveyPakage,
             this.toolStripSeparator1,
             this.toolStripAutoTransfer,
             this.buttonTransferOrder,
@@ -265,7 +269,7 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
+            this.buttonPreview.Size = new System.Drawing.Size(85, 24);
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
@@ -294,9 +298,10 @@
             // 
             this.panel1.Controls.Add(this.basicView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 50);
+            this.panel1.Location = new System.Drawing.Point(0, 47);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(868, 94);
+            this.panel1.Size = new System.Drawing.Size(874, 100);
             this.panel1.TabIndex = 15;
             // 
             // basicView1
@@ -312,7 +317,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 0);
-            this.basicView1.Size = new System.Drawing.Size(868, 94);
+            this.basicView1.Size = new System.Drawing.Size(874, 100);
             this.basicView1.TabIndex = 15;
             // 
             // model1
@@ -381,7 +386,7 @@
             this.reoGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView2.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView2.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView2.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridView2.Margin = new System.Windows.Forms.Padding(0);
             this.reoGridView2.Mode = "default";
             this.reoGridView2.Model = this.model1;
             this.reoGridView2.Name = "reoGridView2";
@@ -425,6 +430,21 @@
             this.statusStrip1.Size = new System.Drawing.Size(874, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripButtonDeliveyPakage
+            // 
+            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
+            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 19);
+            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
+            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.AutoSize = false;
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(15, 28);
             // 
             // FormDeliverOrder
             // 
@@ -484,5 +504,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
         private System.Windows.Forms.ToolStripButton toolStripButtonDecrease;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDeliveyPakage;
     }
 }

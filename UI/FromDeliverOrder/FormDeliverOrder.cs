@@ -130,7 +130,7 @@ namespace WMS.UI.FromDeliverOrder
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
                 { "createTime",DateTime.Now},
-                { "state",1}
+                { "state",0}
             });
         }
 
@@ -216,6 +216,11 @@ namespace WMS.UI.FromDeliverOrder
                 }
                 MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
