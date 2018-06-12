@@ -139,6 +139,12 @@
     <Compile Include="FormInspectionNote\FormInspectionNoteItem.Designer.cs">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStock\FormAddStockRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStock\FormAddStockRecord.Designer.cs">
+      <DependentUpon>FormAddStockRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStock\FormReturnSupply.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNoteItem.resx">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStock\FormAddStockRecord.resx">
+      <DependentUpon>FormAddStockRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormReturnSupply.resx">
       <DependentUpon>FormReturnSupply.cs</DependentUpon>
