@@ -128,13 +128,17 @@
         {name:"defaultDeliveryAmount",displayName:"默认发货数量（个）",type:"double",visible:true,defaultValue:0},
         {name:"defaultDeliveryUnit",displayName:"默认发货单位",type:"string",visible:true,defaultValue:0},
         {name:"defaultDeliveryUnitAmount",displayName:"默认发货单位数量",type:"double",visible:true,defaultValue:0},
-        {name:"materialId",displayName:"物料ID",type:"int",visible:true,defaultValue:0},
-        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,defaultValue:0},
+        {name:"materialId",displayName:"物料ID",type:"int",visible:true,editable:false},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,editable:false},
         {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
         {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+
+        {name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
+		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+
 
 
     ],

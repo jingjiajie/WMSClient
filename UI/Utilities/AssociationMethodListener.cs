@@ -87,5 +87,13 @@ namespace WMS.UI
                     where s["name"] != null && s["name"].ToString().StartsWith(str)
                     select s["name"]).ToArray();
         }
+
+        //套餐名称输入联想
+        private object[] PackageAssociation(string str)
+        {
+            return (from s in GlobalData.AllPackage
+                    where s["name"] != null && s["name"].ToString().StartsWith(str)
+                    select s["name"]).ToArray();
+        }
     }
 }

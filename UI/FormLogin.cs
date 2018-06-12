@@ -254,6 +254,9 @@ namespace WMS.UI
 
             GlobalData.AllPersons = RestClient.Get<List<IDictionary<string, object>>>(
                $"{Defines.ServerURL}/ledger/{GlobalData.AccountBook}/person/{{}}");
+
+            GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
+              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
         }
     }
 }

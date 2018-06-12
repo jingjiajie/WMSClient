@@ -220,7 +220,12 @@ namespace WMS.UI.FromDeliverOrder
 
         private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
         {
-
+            var a1 = new FormSelectPakage();
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
     }
 }
