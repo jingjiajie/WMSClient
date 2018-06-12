@@ -42,7 +42,7 @@ namespace WMS.UI.FromDeliverOrder
             {
                 try
                 {
-                    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"personId\":\"" + this.packageId + "\"}";
+                    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"packageId\":\"" + this.packageId + "\"}";
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/delivery_by_package";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                     MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
