@@ -21,7 +21,7 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            Dictionary<string, object>[] a = new Dictionary<string, object>[]{
+            /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "supplyId",0} },
@@ -37,7 +37,11 @@ namespace WMS.UI.FormStock
                 new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "supplyId",0} }};
-            this.model1.InsertRows(new int[] {0,1,2,3,4},a );
+            this.model1.InsertRows(new int[] {0,1,2,3,4},a );*/
+            this.model1.InsertRow(0, new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} }); 
+
         }
 
         private void FormAddStockRecord_Load(object sender, EventArgs e)
@@ -210,6 +214,11 @@ namespace WMS.UI.FormStock
         {
             if (this.addFinishedCallback != null)
             { this.addFinishedCallback(); }
+        }
+
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        {
+            this.synchronizer.Save();
         }
     }
 }
