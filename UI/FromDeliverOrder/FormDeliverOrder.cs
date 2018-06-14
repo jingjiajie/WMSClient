@@ -198,24 +198,48 @@ namespace WMS.UI.FromDeliverOrder
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string strIDs = serializer.Serialize(selectedIDs);
-            try
+            if (this.model1.SelectionRange.Rows != 1)
             {
-                string operatioName = "decrease_in_accounting";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
-                this.searchView1.Search();
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (WebException ex)
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                string message = ex.Message;
-                if (ex.Response != null)
+                if (rowData[i]["returnNoteNo"] == null)
                 {
-                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    MessageBox.Show("请输入相应回单号以继续核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if ((int)rowData[i]["state"] != 3)
+                {
+                    MessageBox.Show("选中出库单未发运无法进行核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            this.model1[this.model1.SelectionRange.Row, "state"] =4;
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //string strIDs = serializer.Serialize(selectedIDs);
+            //try
+            //{
+            //    string operatioName = "decrease_in_accounting";
+            //    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
+            //    this.searchView1.Search();
+            //    MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //catch (WebException ex)
+            //{
+            //    string message = ex.Message;
+            //    if (ex.Response != null)
+            //    {
+            //        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+            //    }
+            //    MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
 
         private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
