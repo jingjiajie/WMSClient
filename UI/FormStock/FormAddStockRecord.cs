@@ -10,52 +10,44 @@ using FrontWork;
 
 namespace WMS.UI.FormStock
 {
-    public partial class FormStockRecord : Form
-    {    
-        public FormStockRecord()
+    public partial class FormAddStockRecord : Form
+    {
+        private Action addFinishedCallback = null;
+        public FormAddStockRecord()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
-        private void FormStockRecord_Load(object sender, EventArgs e)
-        {
-            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
-            //设置两个请求参数
-            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
-            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.searchView1.Search();
-        }
-
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            FormAddStockRecord form = new FormAddStockRecord();
-            form.SetAddFinishedCallback(() =>
-            {
-                this.searchView1.Search();
-            });
-            form.Show();
+            /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
+               new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} },
+                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} },
+                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} },
+                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} },
+                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} }};
+            this.model1.InsertRows(new int[] {0,1,2,3,4},a );*/
+            this.model1.InsertRow(0, new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "supplyId",0} }); 
+
         }
 
-        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        private void FormAddStockRecord_Load(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.model1.RemoveSelectedRows();
-        }
-
-        private void toolStripButtonAlter_Click(object sender, EventArgs e)
-        {
-            this.synchronizer.Save();
-        }
-
-        private void buttonReturnSupply_Click(object sender, EventArgs e)
-        {
-            FormReturnSupply form = new FormReturnSupply();
-            form.SetAddFinishedCallback(() =>
-            {
-                this.searchView1.Search();
-            });
-            form.Show();
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
         }
 
         private void StorageLocationNameEditEnded(int row, string storageAreaName)
@@ -213,13 +205,20 @@ namespace WMS.UI.FormStock
             this.model1[row, fieldName] = value;
         }
 
-        //=============天经地义的交互逻辑到这里结束===============
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        public void SetAddFinishedCallback(Action callback)
         {
-            if (this.synchronizer.Save())
-            {
-                this.searchView1.Search();
-            }
+            this.addFinishedCallback = callback;
+        }
+
+        private void FormReturnSupply_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            { this.addFinishedCallback(); }
+        }
+
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        {
+            if (this.synchronizer.Save()) { this.Close(); }
         }
     }
 }

@@ -117,29 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 101</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripButtonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOySURBVFhH7ZZJaBRBFIYnLjFREUWicUWUKB7UgCAYxeUk
-        niQnRcS7uKGiuCcmLgcJQnJQ9Jp7LoonN5B4cwMVRBPFgzOd7p6e6anumfTy+79KAtEYnUmGOWWgKIrp
-        fv/3Xv31qhOJqV+FK+BevAh14gQqLDskl6N47to1qMuX4Z8/X1kILd7eDnXjBhRnr6MD+cePS4Pwjx2D
-        d/p0aS8xc3XmDHLXr0MNj9zVq1AECL99KzlWwjt7FurKFahTp4p62eN+S9lHAGQWAO/OHcSmWVSMMX7x
-        uIeqpQUeA/3LTN7Ro3q/ddlHsm9rQ47vFu7dA3x/YgAi6sk+3rwJdeHCX4No8UuXhoQJoCsg4mLABw8Q
-        ffwIZLMTB9AQElQgOHujXO2fPKmNpm7f1iN369YQQGsr8hQPP3xAPDiI4PXryQFoCGalxFSshDp+HIpG
-        zZ07pzN16RWXszYdgfJdXQi/fAHiGOGbN5MXH9n/9IYNMJYsgblwIay6OliLF8Osr8fAokUY4Oxs2QKP
-        UBFdHwMI3r4tn7hAOHPmIDVzJpJVVUglEhjgMDmsadPgNDXB7+xE+P49UCiUX1wA0jU1MAlh1NYiVV0N
-        g8OcPh3O2rUosOyxUogm4/jxjlqaQgMUF1GLgqasBWLWLCS5tjdvRv7uXYTv3pW35AJkS6YiTjEpv5Td
-        nj8ftuz9vHlIEiQ5Ywbshga4zc3lBTBFlMF/UlT2PLNjB3w2l/D5cxS6u+FwnSKc/C+Q1vLlyOzcWR4I
-        g0F1YGaY3r5dt+Xg4UPAMIAwxOCTJ3APHIC1Zo2G0Mbks9bKlcjs3TtxCIuBDCm1HLONG+EeOoTg0SPA
-        dRGnUoh+/PgteGbXLpjLlmkI8YjMFtfZfftKh9DGEqOxlOrwYYQUjr5+Rew4CD9/Hjegs2kTTPYH8Yj2
-        C49let063ayK+iCxhs+zzcaS3b9f72/ENhr19yN8+bKoIFJ68YkGEOPyuDpbt8LnrfpPCJsvOczYPXgQ
-        +fv3ETx7hpAXSPT9e1HCI8EdZiwdUZ+W4eNpLFiA7O7d48fJUDi7Zw983mLBixeIksmSRP/MzF6/Hinp
-        lmJKgZAuuWIFCj09Y+O6jY36q6fw9CmCvr5JCY8GMVmF5OzZSIohBYCGDF69Klv8/3rKWbUKqblzdYeU
-        puWwKmE5ruP/Ko96wFy6FAa7pL16NbwjRxBbVuUqoG9NVsHZtg0ev5CD3l7ey0FlAQRCUXyQJypi5ww/
-        fao8QClbNvVsRSrwCxgM5vv90QpNAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
+        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
+        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},              
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+        {name:"storageLocationId",displayName:"库位ID",type:"int",visible:false},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:false},
+        {name:"materialId",displayName:"物料ID",type:"int",visible:false},
+        {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"amount",displayName:"数量(个)",type:"double",placeHolder:"必填项"},
+        {name:"availableAmount",displayName:"可用数量",type:"double",placeHolder:"必填项"},
+        {name:"unit",displayName:"单位",type:"string",placeHolder:"必填项"},
+        {name:"unitAmount",displayName:"单位数量",type:"string",placeHolder:"必填项"},
+        {name:"storageLocationNo",displayName:"库位编码",type:"string",association:"#storageLocationNoAssociation",editEnded:"#storageLocationNoEditEnded"},
+        {name:"storageLocationName",displayName:"库位名称",type:"string",association:"#storageLocationNameAssociation",editEnded:"#storageLocationNameEditEnded"},
+        {name:"batchNo",displayName:"批次号",type:"string",placeHolder:"留空自动生成",editable:false},       
+        {name:"relatedOrderNo",displayName:"相关单号",type:"string"},
+        {name:"inventoryDate",displayName:"存货日期",type:"datetime",placeHolder:"留空自动生成",editable:false},
+        {name:"manufactureDate",displayName:"生产日期",type:"datetime"},
+        {name:"expiryDate",displayName:"失效日期",type:"datetime"},
+        {name:"time",displayName:"记录时间",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation",editable:false},
+        {name:"warehouseName",displayName:"仓库名",type:"string",visible:false}      
+    ],
+httpAPIs:[
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/stock_record/return_supply",
+            method:"POST",
+            requestBody:"$data"},
+		
+	]
+    }
+]</value>
+  </data>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>310, 101</value>
+  </metadata>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>161, 101</value>
+  </metadata>
   <data name="toolStripButtonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -166,96 +201,4 @@
         iktK0NPd8/iBiSC9crslenDuwIHdOvA7jR9uIAdEjT8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},       
-        {name:"no",displayName:"供应商代号",type:"string",placeHolder:"必填项"},
-        {name:"name",displayName:"供应商名",type:"string",placeHolder:"必填项"},
-        {name:"fullName",displayName:"供应商全名",type:"string"},        
-        {name:"contractNo",displayName:"合同编码",type:"string"},
-        {name:"enterpriseCode",displayName:"企业编码",type:"string"},
-        {name:"contractStartTime",displayName:"合同生效时间",type:"DateTime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
-        {name:"contractEndTime",displayName:"合同截止时间",type:"DateTime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
-        {name:"invoiceDelayMonth",displayName:"开票延迟月",type:"double"},
-        {name:"balanceDelayMonth",displayName:"结算延迟月",type:"double"},
-        {name:"netArea",displayName:"净面积",type:"double"},
-        {name:"taxpayerNumber",displayName:"纳税人识别号",type:"string"},
-        {name:"address",displayName:"地址",type:"string"},
-        {name:"tel",displayName:"电话",type:"string"},
-        {name:"bankName",displayName:"开户行",type:"string"},
-        {name:"zipCode",displayName:"邮编",type:"string"},
-        {name:"recipientName",displayName:"收件人",type:"string"},
-        {name:"contractState",displayName:"合同状态",values:["已签合同","未签合同"]},
-        {name:"isHistory",displayName:"是否历史信息",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-        {name:"enabled",displayName:"是否启用",type:"int",values:["启用","禁用"],defaultValue:0,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"},
-        {name:"newestSupplierID",displayName:"最新供应商信息ID",type:"int",visible:false},
-        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false,placeHolder:"留空自动生成"},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false}, 
-        {name:"lastUpdatePersonName",displayName:"最后修改用户名称",type:"string",editable:false,placeHolder:"修改时自动生成"},     
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
-    ],
-    httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/supplier/count/{{conditions:$conditions,orders:$orders}}/{$history}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}/{$history}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{$save}",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/supplier/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
-  </data>
-  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
-        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
-        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
-</value>
-  </data>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>566, 17</value>
-  </metadata>
-  <data name="ButtonFindHistory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABvSURBVDhPtZNRCgAhCAW7/6m8WdtWG8/tmUIl9CMyjpIp
-        HY5ceN9DtJWf2uc3OkQBjPwM2DFATbSw8kt9BQB9Nl4FsS5ebhjUwn8XERkAYqBM7gBwrJCBsQdvP22B
-        kS2v6vYBRJ+dWPhDHb5PB/cAKe+5y3pJwKwAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="toolStripButtonFindAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABvSURBVDhPtZNRCgAhCAW7/6m8WdtWG8/tmUIl9CMyjpIp
-        HY5ceN9DtJWf2uc3OkQBjPwM2DFATbSw8kt9BQB9Nl4FsS5ebhjUwn8XERkAYqBM7gBwrJCBsQdvP22B
-        kS2v6vYBRJ+dWPhDHb5PB/cAKe+5y3pJwKwAAAAASUVORK5CYII=
-</value>
-  </data>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>715, 17</value>
-  </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>859, 17</value>
-  </metadata>
 </root>
