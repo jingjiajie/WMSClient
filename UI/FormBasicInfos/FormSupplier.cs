@@ -14,8 +14,9 @@ namespace WMS.UI.FormBasicInfos
     public partial class FormSupplier : Form
     {
         public FormSupplier()
-        {            
-            InitializeComponent();
+        {
+           MethodListenerContainer.Register("FormSupplier", this);
+           InitializeComponent();
            this.model1.CellUpdated+= this.model_CellUpdated;
 
         }
@@ -37,7 +38,26 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        
+        private string EnableForwardMapper(int state)
+        {
+            switch (state)
+            {
+                case 0: return "禁用";
+                case 1: return "启用";              
+                default: return "未知状态";
+            }
+        }
+
+        private int EnableBackwardMapper(string enable)
+        {
+            switch (enable)
+            {
+                case "禁用": return 0;
+                case "启用": return 1;
+                default: return -1;
+            }
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
