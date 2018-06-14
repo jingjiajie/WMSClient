@@ -7,6 +7,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Net;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FromDeliverOrder
 {
@@ -37,6 +40,20 @@ namespace WMS.UI.FromDeliverOrder
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+            }
+        }
+
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待装车";
+                case 1: return "装车中";
+                case 2: return "整单装车";
+                case 3: return "发运在途";
+                case 4: return "核减完成";
+                default: return "未知状态";
             }
         }
 
@@ -75,9 +92,34 @@ namespace WMS.UI.FromDeliverOrder
             new FormDeliveryOrderReady().Show();
         }
 
+        //完成发货
         private void buttonDeliver_Click(object sender, EventArgs e)
         {
-
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "delivery_finish";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -88,7 +130,7 @@ namespace WMS.UI.FromDeliverOrder
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
                 { "createTime",DateTime.Now},
-                { "state",1}
+                { "state",0}
             });
         }
 
@@ -112,6 +154,78 @@ namespace WMS.UI.FromDeliverOrder
             {
                 MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的出库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
+            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/delivery_order/preview/" + strIDs);
+            if (previewData == null) return;
+            FormDeliveryOrderChooseExcelType form = new FormDeliveryOrderChooseExcelType(previewData);
+            form.Show();
+            //StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
+            //foreach (IDictionary<string, object> orderAndItem in previewData)
+            //{
+            //    IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
+            //    object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
+            //    string no = (string)deliveryOrder["no"];
+            //    if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketNormal.xlsx", no)) return;
+            //    formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
+            //    formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
+            //}
+            //formPreviewExcel.Show();
+        }
+
+        private void toolStripButtonDecrease_Click(object sender, EventArgs e)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "decrease_in_accounting";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormSelectPakage();
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
     }
 }

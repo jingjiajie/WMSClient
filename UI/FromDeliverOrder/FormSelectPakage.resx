@@ -117,66 +117,57 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 55</value>
+  </metadata>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>276, 55</value>
+  </metadata>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>276, 55</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>[
+    <value>
+[
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"deliveryOrderId",displayName:"出库单ID",type:"int",defaultValue:"#deliveryOrderIdDefaultValue"},
-        {name:"supplyId",displayName:"供货ID",type:"int",visible:true,editable:false},
-        {name:"materialId",displayName:"物料ID",type:"int",visible:true,editable:false},
-        {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,editable:false},
-        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
-        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
-        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"sourceStorageLocationId",displayName:"出货库位ID",type:"int",visible:false},
-        {name:"sourceStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
-        {name:"sourceStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded"},
-        {name:"scheduledAmount",displayName:"计划装车数量（个）",type:"double"},
-        {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
-        {name:"realAmount",displayName:"实际装车数量（个）",type:"double"},
-        {name:"unit",displayName:"单位"},
-        {name:"unitAmount",displayName:"单位数量",type:"double"},
-        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
-        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
-        {name:"deliveryOrderNo",displayName:"出库单号"},
-        {name:"personId",displayName:"作业人ID",type:"int",visible:false},
-        {name:"personName",displayName:"作业人名称"}
-
+        {name:"id",displayName:"ID",type:"int",visible:false},       
+        {name:"name",displayName:"套餐名",type:"string",association:"#packageAssociation",editEnded:"#packageNameEditEnded"},
+        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
+        {name:"warehouseName",displayName:"仓库名称",type:"string",editable:false},
+        {name:"enabled",displayName:"是否启用",type:"int",visible:false},
     ],
-    httpAPIs:[
+httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/package/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/package/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/",
+            url:"{$url}/warehouse/{$accountBook}/package/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/",
+            url:"{$url}/warehouse/{$accountBook}/package/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/delivery_order_item/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/package/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
 ]</value>
   </data>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>528, 17</value>
-  </metadata>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>402, 17</value>
-  </metadata>
-  <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>638, 17</value>
-  </metadata>
 </root>

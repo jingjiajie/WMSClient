@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace WMS.UI.FormTransferOrder
@@ -55,12 +56,42 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待移库";
+                case 1: return "部分移库";
+                case 2: return "移库完成";
+                default: return "未知状态";
+            }
+        }
+
         private void FormTransferOrder_Load(object sender, EventArgs e)
         {
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
         }
     }
 }

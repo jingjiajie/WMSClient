@@ -68,8 +68,8 @@ namespace WMS.UI.FormTransferOrder
             try
             {
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.transferOrder["id"] + "\"}";
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfe_order/transfer_finish";
-                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/transfer_finish";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body, "PUT");
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
 
@@ -83,6 +83,18 @@ namespace WMS.UI.FormTransferOrder
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             this.TransferDone();
+        }
+
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待移库";
+                case 1: return "部分移库";
+                case 2: return "移库完成";
+                default: return "未知状态";
+            }
         }
 
         private void TransferDone()
@@ -99,7 +111,7 @@ namespace WMS.UI.FormTransferOrder
             try
             {
                 string operatioName = "transfer_some";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfe_order/" + operatioName, strIDs, "POST");
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -141,7 +153,7 @@ namespace WMS.UI.FormTransferOrder
 
         private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
         {
-            this.model1[row, "sourcestorageLocationId"] = 0;//先清除库位ID
+            this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
                                          where s["name"]?.ToString() == sourceStorageLocationName

@@ -71,11 +71,7 @@ namespace WMS.UI.FormStockTaking
                 //MessageBox.Show(body);
                 //MessageBox.Show(url);
                 RestClient.Post<List<IDictionary<string, object>>>(url, body);               
-                this.searchView1.Search();
-                if (this.addFinishedCallback != null)
-                {
-                    this.addFinishedCallback();
-                }
+                this.searchView1.Search();            
             }
             catch
             {
@@ -88,10 +84,6 @@ namespace WMS.UI.FormStockTaking
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
-                if (this.addFinishedCallback != null)
-                {
-                    this.addFinishedCallback();
-                }
             }
         }
 
@@ -259,11 +251,7 @@ namespace WMS.UI.FormStockTaking
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
-                if (this.addFinishedCallback != null)
-                {
-                    this.addFinishedCallback();
-                }
+                this.searchView1.Search();           
 
             }
             catch
@@ -410,11 +398,7 @@ namespace WMS.UI.FormStockTaking
                 this.pagerView1.Enabled = true;
                 this.ButtonCancel.Visible = false;
                 this.buttonStartAdd.Visible = false;
-                this.searchView1.Search();
-                if (this.addFinishedCallback != null)
-                {
-                    this.addFinishedCallback();
-                }
+                this.searchView1.Search();         
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch
@@ -435,6 +419,14 @@ namespace WMS.UI.FormStockTaking
                 this.ButtonCancel.Visible = false;
                 this.buttonStartAdd.Visible = false;
                 this.searchView1.Search();
+            }
+        }
+
+        private void FormStockTakingOrderItem_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
             }
         }
     }

@@ -53,6 +53,24 @@ namespace WMS.UI.FormBasicInfos
             this.searchView1.Search();
         }
 
+        private void defaultDeliveryStorageLocationNameEditEnded(int row, string defaultDeliveryStorageLocationName)
+        {
+            IDictionary<string, object> foundStorageLocation =
+                GlobalData.AllStorageLocations.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == defaultDeliveryStorageLocationName;
+                });
+            if (foundStorageLocation == null)
+            {
+                MessageBox.Show($"库位\"{defaultDeliveryStorageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model[row, "defaultDeliveryStorageLocationId"] = foundStorageLocation["id"];
+            }
+        }
+
         //写了一个小时发感觉不太对然后发现有这个东西
         //丧心病狂的交互逻辑
         private void SupplierNoEditEnded(int row)

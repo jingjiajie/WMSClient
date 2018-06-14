@@ -49,6 +49,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.basicView1 = new FrontWork.BasicView();
             this.model1 = new FrontWork.Model();
@@ -121,7 +122,7 @@
             this.configuration1.Location = new System.Drawing.Point(137, 51);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormWarehouseEntry",
+        "FormTransferOrder",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -148,7 +149,7 @@
             this.pagerView1.Margin = new System.Windows.Forms.Padding(1);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
+            this.pagerView1.PageSize = 50;
             this.pagerView1.Size = new System.Drawing.Size(848, 26);
             this.pagerView1.TabIndex = 14;
             // 
@@ -243,7 +244,8 @@
             this.toolStripSeparator2,
             this.buttonDelete,
             this.buttonAlter,
-            this.toolStripSeparator3});
+            this.toolStripSeparator3,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0);
@@ -251,13 +253,23 @@
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(85, 19);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.basicView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 50);
+            this.panel1.Location = new System.Drawing.Point(0, 47);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(846, 109);
+            this.panel1.Size = new System.Drawing.Size(852, 115);
             this.panel1.TabIndex = 9;
             // 
             // basicView1
@@ -273,7 +285,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 0);
-            this.basicView1.Size = new System.Drawing.Size(846, 109);
+            this.basicView1.Size = new System.Drawing.Size(852, 115);
             this.basicView1.TabIndex = 16;
             // 
             // model1
@@ -326,6 +338,7 @@
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.synchronizer.Location = new System.Drawing.Point(471, 51);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
@@ -411,5 +424,6 @@
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.ReoGridView reoGridView1;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }

@@ -129,7 +129,7 @@
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库",type:"string",editable:false},
         {name:"description",displayName:"描述",type:"string"},
-        {name:"state",displayName:"状态",type:"int",editable:false},
+        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
         {name:"printTimes",displayName:"打印次数",type:"int"},
         {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
         {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
@@ -230,4 +230,18 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 55</value>
   </metadata>
+  <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG/SURBVDhPndI/SAJxFAfw29raanCsPShobYi2hraopKCI
+        QrLDmiKTpCiiWmoJl6CSkzsU5ZLQkBosIQm8ED1CIZJCSigFE0ny27vzjCiy7MGH+/feu98/5nPw8Tj+
+        Qkv/HsrHapTLZZTe3lAovSJbLCLz8oJ0PgebJP3eIPn0BF8yiaNEAl5yeH0NkZzd3mLr8rJ2A+XPcibz
+        pViGR5ZxenOD9XC4doNCqQQpnYab7l3EGYtBIHw0iuNkAkuhUO0Gz4UCLlIpOK4kcDRfuxSBPRLBAfHS
+        KOaDwe8Nmq0raFnbRD/vhMnnx7hHhF5wQk/PQ7yAQYeAAQePYXrXvbsPJV8rrcRq8Exd5cd8Hg+fpHM5
+        1T25U2SzSBHlaj45rTRpWlwGF40hQvOuh626Gw3sLLZDFxBo/vVYro6A0Y/A4j/G+vl5XUyiqDXo7QPr
+        9mA+EMCwy42e3b2aprxeNXeUFlWt1xmMGLNz2KYD0rt/gBxt409ccRkT4iE26Cx0rW2g07wAZobj0Mqa
+        VI0TBgTouP5EmWrzpAEt06zKRLXMFg2nqm3OjI7FJY21wmJFu0ZnZDG0Y/vIVzBHtKL/F8c7y1WZOtry
+        EfkAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

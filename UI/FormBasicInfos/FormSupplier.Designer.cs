@@ -112,7 +112,7 @@
             orderParamNamesType1.Order = "order";
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(644, 50);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(703, 59);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -161,7 +161,7 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(462, -7);
+            this.synchronizer.Location = new System.Drawing.Point(471, -7);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -174,7 +174,7 @@
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
-            this.model1.Location = new System.Drawing.Point(313, 12);
+            this.model1.Location = new System.Drawing.Point(280, 2);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -354,7 +354,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormSupplier";
-            this.Text = "FormSupplier";
+            this.Text = "供应商历史信息";
             this.Load += new System.EventHandler(this.FormSupplier_Load);
             this.panelPager.ResumeLayout(false);
             this.panelSearchWidget.ResumeLayout(false);

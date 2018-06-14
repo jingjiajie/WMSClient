@@ -124,7 +124,7 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(74, 57);
+            this.configuration1.Location = new System.Drawing.Point(65, 57);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormStockTakingOrderItem",
@@ -390,7 +390,8 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormStockTakingOrderItem";
-            this.Text = "FormStockTakingOrderItem";
+            this.Text = "盘点单条目管理";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormStockTakingOrderItem_FormClosed);
             this.Load += new System.EventHandler(this.FormStockTakingOrderItem_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

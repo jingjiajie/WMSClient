@@ -6,6 +6,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Net;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace WMS.UI.FromDeliverOrder
@@ -77,7 +80,7 @@ namespace WMS.UI.FromDeliverOrder
 
         private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
         {
-            this.model1[row, "storageLocationId"] = 0;//先清除库位ID
+            this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
                                          where s["name"]?.ToString() == sourceStorageLocationName
@@ -215,7 +218,73 @@ namespace WMS.UI.FromDeliverOrder
         {
             this.model1[row, fieldName] = value;
         }
-
         //=============天经地义的交互逻辑到这里结束===============
+
+        private void buttonAllLoad_Click(object sender, EventArgs e)
+        {
+
+            int[] selectedIDs = { (int)this.deliveryOrder["id"] } ;
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "loading_all";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order_item/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private string StateForwardMapper(int state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case 0: return "待装车";
+                case 1: return "装车中";
+                case 2: return "装车完成";
+                default: return "未知状态";
+            }
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "loading_some";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order_item/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
     }
 }

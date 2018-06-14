@@ -59,7 +59,12 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save()) {
+                this.searchView1.Search();
+                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
+            }
         }
 
         //private void MaterialNameEditEnded(int row, string materialName)
