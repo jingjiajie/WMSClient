@@ -218,7 +218,7 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save()) { this.Close(); }
         }
     }
 }

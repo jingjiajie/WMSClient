@@ -36,8 +36,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.basicView1 = new FrontWork.BasicView();
-            this.model1 = new FrontWork.Model();
             this.configuration1 = new FrontWork.Configuration();
+            this.model1 = new FrontWork.Model();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
@@ -91,6 +91,17 @@
             this.basicView1.Size = new System.Drawing.Size(978, 121);
             this.basicView1.TabIndex = 13;
             // 
+            // configuration1
+            // 
+            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
+            this.configuration1.Location = new System.Drawing.Point(121, 40);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            this.configuration1.Name = "configuration1";
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.TabIndex = 6;
+            // 
             // model1
             // 
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
@@ -103,17 +114,6 @@
             this.model1.SelectionRange = null;
             this.model1.Size = new System.Drawing.Size(180, 180);
             this.model1.TabIndex = 2;
-            // 
-            // configuration1
-            // 
-            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(121, 40);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
-            this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(140, 99);
-            this.configuration1.TabIndex = 6;
             // 
             // tableLayoutPanel1
             // 
@@ -254,7 +254,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormSupplierHistory";
-            this.Text = "FormSupplierHistory";
+            this.Text = " 供应商历史信息";
             this.Load += new System.EventHandler(this.FormSupplierHistory_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panelSearchWidget.ResumeLayout(false);
