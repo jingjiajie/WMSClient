@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using WMS.UI.FormBasicInfos;
@@ -147,6 +146,18 @@ namespace WMS.UI
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
 
+            //刷新仓库
+            this.comboBoxWarehouse.Items.AddRange((from item in GlobalData.AllWarehouses
+                                                   select new ComboBoxItem(item["name"]?.ToString(),item)).ToArray());
+            for(int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
+            {
+                if(GlobalData.AllWarehouses[i] == GlobalData.Warehouse)
+                {
+                    this.comboBoxWarehouse.SelectedIndexChanged -= this.comboBoxWarehouse_SelectedIndexChanged;
+                    this.comboBoxWarehouse.SelectedIndex = i;
+                    this.comboBoxWarehouse.SelectedIndexChanged += this.comboBoxWarehouse_SelectedIndexChanged;
+                }
+            }
             //new Thread(() =>
             //{
             //    RestClient.Get<List<IDictionary<string,object>>>
@@ -192,7 +203,7 @@ namespace WMS.UI
                     this.LoadSubWindow(new FormPerson());
                     break;
                 case "入库单管理":
-                    this.LoadSubWindow(new FormWarehouseEntry(this.ToInspectionNoteCallback));
+                    this.LoadSubWindow(new FormWarehouseEntry(ToInspectionNoteSelectIDsCallback, ToInspectionNoteSearchNoCallback));
                     break;
                 case "送检单管理":
                     this.LoadSubWindow(new FormInspectionNote());
@@ -238,10 +249,16 @@ namespace WMS.UI
             this.panelRight.Show();
         }
 
-        private void ToInspectionNoteCallback(int[] selectedIDs)
+        private void ToInspectionNoteSelectIDsCallback(int[] selectedIDs)
         {
             this.SetTreeViewSelectedNodeByText("送检单管理");
             this.LoadSubWindow(new FormInspectionNote(selectedIDs));
+        }
+
+        private void ToInspectionNoteSearchNoCallback(string searchNo)
+        {
+            this.SetTreeViewSelectedNodeByText("送检单管理");
+            this.LoadSubWindow(new FormInspectionNote(null,searchNo));
         }
 
         //private void ToJobTicketCallback(string condition, string value)
@@ -300,16 +317,9 @@ namespace WMS.UI
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
-            //GlobalData.WarehouseID = this.warehouse.ID;
-            //this.panelRight.Controls.Clear();
-            //if (this.Run ==true  )
-            //{
-            //    FormSupplyRemind.RemindStockinfo();
-               
-            //}
-            //this.Run = true;
-            //this.treeViewLeft.SelectedNode = null;
+            GlobalData.Warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as IDictionary<string,object>;
+            this.panelRight.Controls.Clear();
+            this.treeViewLeft.SelectedNode = null;
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

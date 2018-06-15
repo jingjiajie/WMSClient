@@ -1127,7 +1127,7 @@ Public Class Model
     ''' <typeparam name="T">返回类型</typeparam>
     ''' <param name="columnName">列名</param>
     ''' <returns>所有选中行指定列的数据</returns>
-    Public Function GetSelectedRows(Of T As New)(columnName As String) As T()
+    Public Function GetSelectedRows(Of T)(columnName As String) As T()
         If Me.AllSelectionRanges.Length = 0 Then Return {}
         Dim selectedRows As New List(Of Integer)
         For Each curSelectionRange In Me.AllSelectionRanges

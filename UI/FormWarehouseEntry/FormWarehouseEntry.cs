@@ -16,9 +16,11 @@ namespace WMS.UI
     public partial class FormWarehouseEntry : Form
     {
         Action<int[]> ToInspectionNoteCallback = null;
-        public FormWarehouseEntry(Action<int[]> toInspectionNoteCallback)
+        Action<string> ToInspectionNoteSearchNoCallback = null;
+        public FormWarehouseEntry(Action<int[]> toInspectionNoteCallback,Action<string> toInspectionNoteSearchNoCallback)
         {
             this.ToInspectionNoteCallback = toInspectionNoteCallback;
+            this.ToInspectionNoteSearchNoCallback = toInspectionNoteSearchNoCallback;
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
@@ -221,6 +223,18 @@ namespace WMS.UI
         private void buttonReject_Click(object sender, EventArgs e)
         {
             this.PutIn(false);
+        }
+
+        private void ButtonToInspectionNote_Click(object sender, EventArgs e)
+        {
+            String[] selectedNos = this.model1.GetSelectedRows<string>("no");
+            if(selectedNos.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.ToInspectionNoteSearchNoCallback?.Invoke(selectedNos[0]);
+            return;
         }
     }
 }

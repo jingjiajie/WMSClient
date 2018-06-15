@@ -31,7 +31,7 @@ namespace WMS.UI
             return Request<T>(url, "DELETE", bodyStr,failHint);
         }
 
-        public static T Request<T>(string url, string method = "GET", string bodyStr = null,string failHint = "加载失败")
+        public static T Request<T>(string url, string method = "GET", string bodyStr = null, string failHint = "加载失败")
         {
             string responseStr = null;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
@@ -49,6 +49,7 @@ namespace WMS.UI
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     responseStr = reader.ReadToEnd();
                 }
+
             }
             catch (WebException ex)
             {
@@ -60,7 +61,8 @@ namespace WMS.UI
                 MessageBox.Show(failHint + "：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return default(T);
                 throw new Exception(ex.ToString());
-            }           
+            }
+
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T result = serializer.Deserialize<T>(responseStr);
             return result;
