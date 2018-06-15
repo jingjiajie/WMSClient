@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockRecord));
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -41,8 +42,6 @@
             this.model1 = new FrontWork.Model();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
@@ -54,6 +53,7 @@
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -118,11 +118,16 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(118, -9);
+            this.configuration1.Location = new System.Drawing.Point(103, 19);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormStockRecord",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(125, 135);
             this.configuration1.TabIndex = 1;
             // 
             // model1
@@ -130,7 +135,7 @@
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
-            this.model1.Location = new System.Drawing.Point(301, -32);
+            this.model1.Location = new System.Drawing.Point(311, 19);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -150,26 +155,6 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
             // 
-            // toolStripButtonAlter
-            // 
-            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
-            this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 19);
-            this.toolStripButtonAlter.Text = "保存修改";
-            this.toolStripButtonAlter.Visible = false;
-            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
-            // 
-            // toolStripButtonDelete
-            // 
-            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
-            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 19);
-            this.toolStripButtonDelete.Text = "删除";
-            this.toolStripButtonDelete.Visible = false;
-            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
-            // 
             // toolStripButtonAdd
             // 
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
@@ -177,7 +162,6 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
             this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripSeparator2
@@ -313,16 +297,25 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
-            this.toolStripButtonAdd,
-            this.toolStripButtonDelete,
-            this.toolStripButtonAlter,
+            this.buttonReturnSupply,
             this.toolStripSeparator3,
+            this.toolStripButtonAdd,
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(742, 22);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // buttonReturnSupply
+            // 
+            this.buttonReturnSupply.Image = global::WMS.UI.Properties.Resources.check;
+            this.buttonReturnSupply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReturnSupply.Name = "buttonReturnSupply";
+            this.buttonReturnSupply.Size = new System.Drawing.Size(80, 19);
+            this.buttonReturnSupply.Text = "批量退件";
+            this.buttonReturnSupply.ToolTipText = "批量退件";
+            this.buttonReturnSupply.Click += new System.EventHandler(this.buttonReturnSupply_Click);
             // 
             // FormStockRecord
             // 
@@ -332,7 +325,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormStockRecord";
-            this.Text = "FormStockRecord";
+            this.Text = "库存记录";
             this.Load += new System.EventHandler(this.FormStockRecord_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -358,8 +351,6 @@
         private FrontWork.Model model1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private FrontWork.JsonRESTSynchronizer synchronizer;
@@ -371,5 +362,6 @@
         private System.Windows.Forms.Panel panelSearchWidget;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStripTop;
+        private System.Windows.Forms.ToolStripButton buttonReturnSupply;
     }
 }

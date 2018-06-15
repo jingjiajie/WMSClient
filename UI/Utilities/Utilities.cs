@@ -501,7 +501,11 @@ namespace WMS.UI
             }
             return string.Format(format.ToString(), value);
         }
-        
+
+        public static string DoubleToString(double value, int precision = 3)
+        {
+            return DecimalToString(Convert.ToDecimal(value));
+        }
 
         public static void CopyProperties<T>(T srcObject,T targetObject)
         {

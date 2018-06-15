@@ -73,7 +73,9 @@ namespace WMS.UI
             GlobalData.Warehouse = GlobalData.AllWarehouses[this.comboBoxWarehouse.SelectedIndex];
             this.RefreshAssociationData();
             this.labelStatus.Visible = false;
-            new FormMain().Show();
+            FormMain formMain = new FormMain();
+            formMain.FormClosed += (s,ev) => { this.Dispose(); };
+            formMain.Show();
             this.Hide();
         }
 
@@ -254,6 +256,9 @@ namespace WMS.UI
 
             GlobalData.AllPersons = RestClient.Get<List<IDictionary<string, object>>>(
                $"{Defines.ServerURL}/ledger/{GlobalData.AccountBook}/person/{{}}");
+
+            GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
+              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
         }
     }
 }

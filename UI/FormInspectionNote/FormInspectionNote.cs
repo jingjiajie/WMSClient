@@ -14,10 +14,12 @@ namespace WMS.UI
     public partial class FormInspectionNote : Form
     {
         private int[] initialSelectedIDs = null;
-        public FormInspectionNote(int[] initialSelectedIDs = null)
+        private string searchNo = null;
+        public FormInspectionNote(int[] initialSelectedIDs = null,string searchNo = null)
         {
             MethodListenerContainer.Register(this);
             this.initialSelectedIDs = initialSelectedIDs;
+            this.searchNo = searchNo;
             InitializeComponent();
         }
 
@@ -26,6 +28,10 @@ namespace WMS.UI
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            if (searchNo != null)
+            {
+                this.searchView1.AddCondition("warehouseEntryNo", searchNo);
+            }
             this.searchView1.Search();
             if (initialSelectedIDs != null)
             {

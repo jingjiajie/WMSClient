@@ -83,7 +83,7 @@ Public Class Configurator
         'Next
         'sbJson.Append("]")
         'Return sbJson.ToString
-
+        Return Nothing
     End Function
 
 

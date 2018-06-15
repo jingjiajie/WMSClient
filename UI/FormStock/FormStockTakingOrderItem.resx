@@ -127,27 +127,27 @@
     <value>
 [{mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:true},       
+        {name:"id",displayName:"ID",type:"int",visible:false},       
         {name:"stockTakingOrderId",displayName:"盘点单id",type:"int",visible:true,defaultValue:"#stockTakingOrderIdDefaultValue"},
         {name:"stockTakingOrderNo",displayName:"盘点单号",type:"string",placeHolder:"留空自动生成",editable:false},
-        {name:"storageLocationId",displayName:"库位id",type:"int",visible:true},
+        {name:"storageLocationId",displayName:"库位id",type:"int",visible:false},
         {name:"storageLocationNo",displayName:"收货库位编码",type:"string",association:"#storageLocationNoAssociation",editEnded:"#storageLocationNoEditEnded",editable:false},
         {name:"storageLocationName",displayName:"收货库位名称",type:"string",association:"#storageLocationNameAssociation",editEnded:"#storageLocationNameEditEnded",editable:false},
-        {name:"supplyId",displayName:"供货ID",type:"int",visible:true,defaultValue:0},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:false,defaultValue:0},
         {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",editable:false},
         {name:"supplierName",displayName:"供应商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",editable:false},
         {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded",editable:false},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded",editable:false},
         {name:"materialProductLine",displayName:"系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded",editable:false},
-        {name:"amount",displayName:"数量(个)",type:"double",editable:false},
-        {name:"realAmount",displayName:"实际数量(个)",type:"double"},
+        {name:"amount",displayName:"数量(个)",type:"double",editable:false,forwardMapper:"#AmountForwardMapper",backwardMapper:"#AmountBackwardMapper"},
+        {name:"realAmount",displayName:"实际数量(个)",type:"double",forwardMapper:"#RealAmountForwardMapper",backwardMapper:"#RealAmountBackwardMapper"},
         {name:"unit",displayName:"单位",type:"string",editable:false},
         {name:"unitAmount",displayName:"单位数量",type:"double",editable:false},
         {name:"personId",displayName:" 盘点人ID",type:"int",visible:false},
         {name:"personName",displayName:" 盘点人名称",type:"string",editable:false},
         {name:"comment",displayName:"备注",type:"string"},  
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,defaultValue:0},  
-        {name:"materialId",displayName:"物料ID",type:"int",visible:true,defaultValue:0}              
+        {name:"materialId",displayName:"物料ID",type:"int",visible:false,defaultValue:0}              
     ],
 httpAPIs:[
         {type:"get-count",

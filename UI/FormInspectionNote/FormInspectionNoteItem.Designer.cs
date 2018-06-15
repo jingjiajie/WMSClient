@@ -148,11 +148,12 @@
             // pagerView1
             // 
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(3, 453);
+            this.pagerView1.Location = new System.Drawing.Point(2, 452);
+            this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(1068, 39);
+            this.pagerView1.Size = new System.Drawing.Size(1070, 41);
             this.pagerView1.TabIndex = 12;
             // 
             // panel1
@@ -323,7 +324,7 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(86, 27);
+            this.buttonDelete.Size = new System.Drawing.Size(63, 27);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -332,7 +333,7 @@
             this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
             this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(134, 27);
+            this.buttonSave.Size = new System.Drawing.Size(93, 27);
             this.buttonSave.Text = "保存修改";
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -359,18 +360,18 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 29);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 29);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(182, 29);
+            this.lableStatus.Size = new System.Drawing.Size(114, 29);
             this.lableStatus.Text = "入库单物料列表";
             // 
             // FormInspectionNoteItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 529);
             this.Controls.Add(this.tableLayoutPanel1);

@@ -56,6 +56,17 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private string StateForwardMapper(int state)
+        {
+            switch (state)
+            {
+                case 0: return "待移库";
+                case 1: return "部分移库";
+                case 2: return "移库完成";
+                default: return "未知状态";
+            }
+        }
+
         private void FormTransferOrder_Load(object sender, EventArgs e)
         {
             //设置两个请求参数
@@ -80,6 +91,35 @@ namespace WMS.UI.FormTransferOrder
             }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(ids);
+        }
+
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "createPersonId",GlobalData.Person["id"]},
+                { "createPersonName",GlobalData.Person["name"]},
+                { "createTime",DateTime.Now},
+                { "state",0}
+            });
+        }
+
+        private void toolStripAutoTransfer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 0 + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

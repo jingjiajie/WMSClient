@@ -72,7 +72,7 @@ Public Class PagerSearchJsonRESTAdapter
         If count = 0 Then
             Me.PagerView.TotalPage = 1
         Else
-            Me.PagerView.TotalPage = count / Me.PagerView.PageSize + If(count Mod Me.PagerView.PageSize = 0, 0, 1)
+            Me.PagerView.TotalPage = Math.Floor(count / Me.PagerView.PageSize) + If(count Mod Me.PagerView.PageSize = 0, 0, 1)
         End If
         Return True
     End Function
