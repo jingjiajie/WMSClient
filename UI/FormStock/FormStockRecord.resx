@@ -131,7 +131,7 @@
         {name:"id",displayName:"ID",type:"int",visible:false},              
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"storageLocationId",displayName:"库位ID",type:"int",visible:false},
-        {name:"supplyId",displayName:"供货ID",type:"int",visible:true},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:false},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false},
         {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
@@ -139,10 +139,10 @@
         {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
         {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
         {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"amount",displayName:"数量(个)",type:"double"},
-        {name:"availableAmount",displayName:"可用数量",type:"double"},
+        {name:"amount",displayName:"数量(个)",type:"double",forwardMapper:"#AmountForwardMapper",backwardMapper:"#AmountBackwardMapper"},
+        {name:"availableAmount",displayName:"可用数量",type:"double",forwardMapper:"#AvailableAmountForwardMapper",backwardMapper:"#AvailableAmountBackwardMapper"},
         {name:"unit",displayName:"单位",type:"string"},
-        {name:"unitAmount",displayName:"单位数量",type:"string"},
+        {name:"unitAmount",displayName:"单位数量",type:"double"},
         {name:"storageLocationNo",displayName:"库位编码",type:"string",association:"#storageLocationNoAssociation",editEnded:"#storageLocationNoEditEnded"},
         {name:"storageLocationName",displayName:"库位名称",type:"string",association:"#storageLocationNameAssociation",editEnded:"#storageLocationNameEditEnded"},
         {name:"batchNo",displayName:"批次号",type:"string",placeHolder:"留空自动生成",editable:false},       
@@ -178,9 +178,9 @@ httpAPIs:[
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
+        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
+        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
