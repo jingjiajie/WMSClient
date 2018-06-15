@@ -92,5 +92,34 @@ namespace WMS.UI.FormTransferOrder
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(ids);
         }
+
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "createPersonId",GlobalData.Person["id"]},
+                { "createPersonName",GlobalData.Person["name"]},
+                { "createTime",DateTime.Now},
+                { "state",0}
+            });
+        }
+
+        private void toolStripAutoTransfer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 0 + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }

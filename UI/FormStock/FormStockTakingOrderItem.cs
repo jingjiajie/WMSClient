@@ -125,6 +125,34 @@ namespace WMS.UI.FormStockTaking
             }
         }
 
+        private double AmountForwardMapper(double amount, int row)
+        {
+            var rowDate = this.model1.GetRow(row);
+            double unitAmount = (double)rowDate["unitAmount"];
+            return amount / unitAmount;
+        }
+
+        private double AmountBackMapper(double amount, int row)
+        {
+            var rowDate = this.model1.GetRow(row);
+            double unitAmount = (double)rowDate["unitAmount"];
+            return amount * unitAmount;
+        }
+
+        private double RealAmountForwardMapper(double amount, int row)
+        {
+            var rowDate = this.model1.GetRow(row);
+            double unitAmount = (double)rowDate["unitAmount"];
+            return amount / unitAmount;
+        }
+
+        private double RealAmountBackMapper(double amount, int row)
+        {
+            var rowDate = this.model1.GetRow(row);
+            double unitAmount = (double)rowDate["unitAmount"];
+            return amount * unitAmount;
+        }
+
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
         private void SupplierNoEditEnded(int row)

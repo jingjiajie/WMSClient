@@ -58,6 +58,8 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.reoGridView2 = new FrontWork.ReoGridView();
+            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPagerWidget.SuspendLayout();
@@ -242,6 +244,8 @@
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonOpen,
             this.toolStripSeparator2,
+            this.toolStripAutoTransfer,
+            this.toolStripButtonAdd,
             this.buttonDelete,
             this.buttonAlter,
             this.toolStripSeparator3,
@@ -374,6 +378,25 @@
             this.reoGridView2.Size = new System.Drawing.Size(846, 224);
             this.reoGridView2.TabIndex = 6;
             // 
+            // toolStripButtonAdd
+            // 
+            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
+            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
+            this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
+            // 
+            // toolStripAutoTransfer
+            // 
+            this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
+            this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
+            this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
+            this.toolStripAutoTransfer.Text = "一键备货";
+            this.toolStripAutoTransfer.ToolTipText = "发运";
+            this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
+            // 
             // FormTransferOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -425,5 +448,7 @@
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.ReoGridView reoGridView1;
         private System.Windows.Forms.ToolStripButton buttonPreview;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
     }
 }
