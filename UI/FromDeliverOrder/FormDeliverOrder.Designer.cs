@@ -43,6 +43,8 @@
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
             this.buttonTransferOrder = new System.Windows.Forms.ToolStripButton();
@@ -64,8 +66,6 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -206,6 +206,21 @@
             this.buttonAlter.Text = "保存修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.AutoSize = false;
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripButtonDeliveyPakage
+            // 
+            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
+            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 19);
+            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
+            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.AutoSize = false;
@@ -220,6 +235,7 @@
             this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
             this.toolStripAutoTransfer.Text = "一键备货";
             this.toolStripAutoTransfer.ToolTipText = "发运";
+            this.toolStripAutoTransfer.Visible = false;
             this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
             // 
             // buttonTransferOrder
@@ -430,21 +446,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(874, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripButtonDeliveyPakage
-            // 
-            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
-            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
-            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 19);
-            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
-            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.AutoSize = false;
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(15, 28);
             // 
             // FormDeliverOrder
             // 
