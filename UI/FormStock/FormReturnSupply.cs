@@ -57,28 +57,30 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AmountForwardMapper(double amount, int row)
+        private string AmountForwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
+            if (rowDate["unitAmount"] == null) { return ""; }
             double unitAmount = (double)rowDate["unitAmount"];
-            return amount / unitAmount;
+            return Utilities.DoubleToString(amount / unitAmount);
         }
 
-        private double AmountBackMapper(double amount, int row)
+        private double AmountBackwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
             double unitAmount = (double)rowDate["unitAmount"];
             return amount * unitAmount;
         }
 
-        private double AvailableAmountForwardMapper(double amount, int row)
+        private string AvailableAmountForwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
+            if (rowDate["unitAmount"] == null) { return ""; }
             double unitAmount = (double)rowDate["unitAmount"];
-            return amount / unitAmount;
+            return Utilities.DoubleToString(amount / unitAmount);
         }
 
-        private double AvailableAmountBackMapper(double amount, int row)
+        private double AvailableAmountBackwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
             double unitAmount = (double)rowDate["unitAmount"];

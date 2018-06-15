@@ -88,32 +88,36 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AmountForwardMapper(double amount, int row)
+        private string AmountForwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
+            if (rowDate["unitAmount"] == null) { return ""; }
             double unitAmount = (double)rowDate["unitAmount"];
-            return amount / unitAmount;
+            return Utilities.DoubleToString(amount/unitAmount);
         }
 
-        private double AmountBackMapper(double amount, int row)
+        private string  AmountBackwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
+            if (rowDate["unitAmount"] == null) { return ""; }
             double unitAmount = (double)rowDate["unitAmount"];
-            return amount * unitAmount;
+            return Utilities.DoubleToString(amount * unitAmount);
         }
 
-        private double AvailableAmountForwardMapper(double amount, int row)
+        private string AvailableAmountForwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
+            if (rowDate["unitAmount"] == null) { return""; }
             double unitAmount = (double)rowDate["unitAmount"];
-            return amount / unitAmount;
+            return Utilities.DoubleToString( amount / unitAmount);
         }
 
-        private double AvailableAmountBackMapper(double amount, int row)
+        private string AvailableAmountBackwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
+            if (rowDate["unitAmount"] == null) { return ""; }            
             double unitAmount = (double)rowDate["unitAmount"];
-            return amount * unitAmount;
+            return Utilities.DoubleToString( amount * unitAmount);
         }
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
