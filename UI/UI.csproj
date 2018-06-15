@@ -139,6 +139,18 @@
     <Compile Include="FormInspectionNote\FormInspectionNoteItem.Designer.cs">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPutAwayNote\FormPutAwayNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutAwayNote\FormPutAwayNote.Designer.cs">
+      <DependentUpon>FormPutAwayNote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPutAwayNote\FormPutAwayNoteItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutAwayNote\FormPutAwayNoteItem.Designer.cs">
+      <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStock\FormAddStockRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +321,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormInspectionNote\FormInspectionNoteItem.resx">
       <DependentUpon>FormInspectionNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPutAwayNote\FormPutAwayNote.resx">
+      <DependentUpon>FormPutAwayNote.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPutAwayNote\FormPutAwayNoteItem.resx">
+      <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormAddStockRecord.resx">
       <DependentUpon>FormAddStockRecord.cs</DependentUpon>

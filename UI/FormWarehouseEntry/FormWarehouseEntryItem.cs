@@ -63,6 +63,35 @@ namespace WMS.UI
             this.searchView1.Search();
         }
 
+        private string AmountForwardMapper(double amount,int row)
+        {
+            double? unitAmount = (double?)this.model[row, "unitAmount"];
+            if(unitAmount.HasValue == false)
+            {
+                return null;
+            }else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountReverseMapper(string strAmount, int row)
+        {
+            if(!Double.TryParse(strAmount,out double amount))
+            {
+                return -1;
+            }
+            double? unitAmount = (double?)this.model[row, "unitAmount"];
+            if (unitAmount.HasValue == false)
+            {
+                return -1;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
         private void PersonEditEnded(int row, string personName)
         {
             this.model[row, "personId"] = 0;//先清除ID
@@ -341,5 +370,35 @@ namespace WMS.UI
         }
 
         //=============天经地义的交互逻辑到这里结束===============
+
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+            return (from s in GlobalData.AllSupplies
+                    where s["materialName"] != null &&
+                    s["materialName"].ToString().StartsWith(str) &&
+                    s["supplierId"] == this.warehouseEntry["supplierId"]
+                    select s["materialName"]).ToArray();
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            return (from s in GlobalData.AllSupplies
+                    where s["materialNo"] != null &&
+                    s["materialNo"].ToString().StartsWith(str) &&
+                    s["supplierId"] == this.warehouseEntry["supplierId"]
+                    select s["materialNo"]).ToArray();
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        {
+            return (from s in GlobalData.AllSupplies
+                    where s["materialProductLine"] != null &&
+                    s["materialProductLine"].ToString().StartsWith(str) &&
+                    s["supplierId"] == this.warehouseEntry["supplierId"]
+                    select s["materialProductLine"]).ToArray();
+        }
     }
 }

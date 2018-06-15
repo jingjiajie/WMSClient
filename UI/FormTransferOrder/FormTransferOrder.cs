@@ -58,7 +58,6 @@ namespace WMS.UI.FormTransferOrder
 
         private string StateForwardMapper(int state)
         {
-            //0待入库 1送检中 2.全部入库 3.部分入库
             switch (state)
             {
                 case 0: return "待移库";

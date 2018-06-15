@@ -208,6 +208,9 @@ namespace WMS.UI
                 case "送检单管理":
                     this.LoadSubWindow(new FormInspectionNote());
                     break;
+                case "上架单管理":
+                    this.LoadSubWindow(new FormPutAwayNote());
+                    break;
                 case "供应商管理":
                     this.LoadSubWindow(new FormSupplier());
                     break;
