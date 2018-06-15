@@ -293,4 +293,75 @@ Public Class SearchView
         End If
         Call Me.TableLayoutPanel1.ResumeLayout()
     End Sub
+
+    Public Sub AddCondition(key As String, values As Object(), Optional relation As Relation = Relation.EQUAL)
+        If values.Length = 0 Then
+            Throw New FrontWorkException($"{Me.Name}: Values of condition cannot be empty!")
+        End If
+        Dim displayName = Nothing
+        Dim strRelation = Me.RelationToString(relation)
+        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+
+        '如果能找到Name对应的字段，则直接取出
+        For Each field In fields
+            If field.Name.Equals(key, StringComparison.OrdinalIgnoreCase) Then
+                displayName = field.DisplayName
+            End If
+        Next
+        '若找不到，则按DisplayName查找，再找不到就抛错
+        If displayName Is Nothing Then
+            For Each field In fields
+                If field.DisplayName.Equals(key, StringComparison.OrdinalIgnoreCase) Then
+                    displayName = field.DisplayName
+                End If
+            Next
+        End If
+        If displayName Is Nothing Then
+            Throw New FrontWorkException($"{Me.Name}: field ""{key}"" not found in configuration!")
+        End If
+        Me.ComboBoxSearchKey.SelectedItem = displayName
+        Me.TextBoxSearchCondition.Text = values(0)
+        If values.Length > 1 Then
+            Me.TextBoxSearchCondition1.Text = values(1)
+        End If
+        Me.ComboBoxSearchRelation.SelectedItem = strRelation
+    End Sub
+
+    Public Sub AddCondition(key As String, value As Object, Optional relation As Relation = Relation.EQUAL)
+        Call Me.AddCondition(key, {value}, relation)
+    End Sub
+
+    Private Function RelationToString(relation As Relation) As String
+        Select Case relation
+            Case Relation.GREATER_THAN_OR_EQUAL_TO
+                Return "大于等于"
+            Case Relation.LESS_THAN_OR_EQUAL_TO
+                Return "小于等于"
+            Case Relation.EQUAL
+                Return "等于"
+            Case Relation.CONTAINS
+                Return "包含"
+            Case Relation.BETWEEN
+                Return "介于"
+            Case Else
+                Throw New FrontWorkException("Unknown Relation " + relation.ToString)
+        End Select
+    End Function
+
+    Private Function StringToRelation(str As String) As Relation
+        Select Case str
+            Case "大于等于"
+                Return Relation.GREATER_THAN_OR_EQUAL_TO
+            Case "小于等于"
+                Return Relation.LESS_THAN_OR_EQUAL_TO
+            Case "等于"
+                Return Relation.EQUAL
+            Case "介于"
+                Return Relation.BETWEEN
+            Case "包含"
+                Return Relation.CONTAINS
+            Case Else
+                Throw New FrontWorkException("Unknown Relation " + str)
+        End Select
+    End Function
 End Class
