@@ -139,7 +139,7 @@
         {name:"amount",displayName:"数量(个)",type:"double",placeHolder:"必填项",forwardMapper:"#AmountForwardMapper",backwardMapper:"#AmountBackwardMapper"},
         {name:"availableAmount",displayName:"可用数量",type:"double",placeHolder:"必填项",forwardMapper:"#AvailableAmountForwardMapper",backwardMapper:"#AvailableAmountBackwardMapper"},
         {name:"unit",displayName:"单位",type:"string",placeHolder:"必填项"},
-        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填项"},
+        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填项",editEnded:"#unitAmountEditEnded"},
         {name:"storageLocationNo",displayName:"库位编码",type:"string",association:"#storageLocationNoAssociation",editEnded:"#storageLocationNoEditEnded"},
         {name:"storageLocationName",displayName:"库位名称",type:"string",association:"#storageLocationNameAssociation",editEnded:"#storageLocationNameEditEnded"},
         {name:"batchNo",displayName:"批次号",type:"string",placeHolder:"留空自动生成",editable:false},       

@@ -18,7 +18,7 @@ namespace WMS.UI.FormStock
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
-
+        private double amountTemp ;
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
@@ -91,7 +91,7 @@ namespace WMS.UI.FormStock
         private string AmountForwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return ""; }
+            if (rowDate["unitAmount"] == null) { return null; }
             double unitAmount = (double)rowDate["unitAmount"];
             return Utilities.DoubleToString(amount/unitAmount);
         }
@@ -99,7 +99,10 @@ namespace WMS.UI.FormStock
         private string  AmountBackwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return ""; }
+            if (rowDate["unitAmount"] == null) {
+
+                this.amountTemp = amount;
+                return null; }
             double unitAmount = (double)rowDate["unitAmount"];
             return Utilities.DoubleToString(amount * unitAmount);
         }
@@ -107,7 +110,7 @@ namespace WMS.UI.FormStock
         private string AvailableAmountForwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return""; }
+            if (rowDate["unitAmount"] == null) { return null; }
             double unitAmount = (double)rowDate["unitAmount"];
             return Utilities.DoubleToString( amount / unitAmount);
         }
@@ -115,9 +118,22 @@ namespace WMS.UI.FormStock
         private string AvailableAmountBackwardMapper(double amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return ""; }            
+            if (rowDate["unitAmount"] == null) { return null; }            
             double unitAmount = (double)rowDate["unitAmount"];
             return Utilities.DoubleToString( amount * unitAmount);
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;
+            
+            this.GetAmount(row, (double)this.model1[row,"unitAmount"]);
+        }
+
+        private void GetAmount(int row,double unitAmount)
+        {
+            if (this.amountTemp ==0) { return; }
+            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp/unitAmount);
         }
 
         //===========为了实现一个看起来天经地义的交互逻辑=========

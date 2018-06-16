@@ -98,7 +98,7 @@ namespace WMS.UI.FormStock
 
         private string AmountForwardMapper(double amount,int row)
         {
-            var rowDate = this.model1.GetRow(row  );
+            var rowDate = this.model1.GetRow(row );
             double unitAmount = (double)rowDate["unitAmount"];
             return Utilities.DoubleToString( amount/unitAmount);
         }
