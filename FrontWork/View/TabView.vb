@@ -50,8 +50,8 @@ Public Class TabView
 
     Private Sub BindModelBox()
         If Me.DesignMode Then Return
-        AddHandler Me.ModelBox.ModelCollectionChangedEvent, AddressOf Me.ModelCollectionChangedEvent
-        AddHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
+        AddHandler Me.ModelBox.ModelCollectionChanged, AddressOf Me.ModelCollectionChangedEvent
+        AddHandler Me.ModelBox.SelectedModelChanged, AddressOf Me.SelectedModelChangedEvent
 
         Call Me.ImportModelNames()
         Call Me.RefreshSelectionRange()
@@ -59,8 +59,8 @@ Public Class TabView
 
     Private Sub UnbindModelBox()
         If Me.DesignMode Then Return
-        RemoveHandler Me.ModelBox.ModelCollectionChangedEvent, AddressOf Me.ModelCollectionChangedEvent
-        RemoveHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
+        RemoveHandler Me.ModelBox.ModelCollectionChanged, AddressOf Me.ModelCollectionChangedEvent
+        RemoveHandler Me.ModelBox.SelectedModelChanged, AddressOf Me.SelectedModelChangedEvent
     End Sub
 
     Private Sub ModelCollectionChangedEvent(sender As Object, e As ModelCollectionChangedEventArgs)
@@ -75,7 +75,7 @@ Public Class TabView
         End If
         RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
         Call Me.TabControl.TabPages.Clear()
-        For Each model As IModel In Me.ModelBox.Models
+        For Each model As Model In Me.ModelBox.Models
             Me.TabControl.TabPages.Add(New TabPage With {
                 .Name = model.Name,
                 .Text = model.Name
@@ -101,9 +101,9 @@ Public Class TabView
         If Me.ModelBox Is Nothing Then
             Throw New FrontWorkException($"ModelBox not set in {Me.Name}!")
         End If
-        RemoveHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
+        RemoveHandler Me.ModelBox.SelectedModelChanged, AddressOf Me.SelectedModelChangedEvent
         Me.ModelBox.CurrentModelName = Me.TabControl.SelectedTab.Name
-        AddHandler Me.ModelBox.SelectedModelChangedEvent, AddressOf Me.SelectedModelChangedEvent
+        AddHandler Me.ModelBox.SelectedModelChanged, AddressOf Me.SelectedModelChangedEvent
     End Sub
 
     Private Sub RefreshSelectionRange()

@@ -108,6 +108,7 @@
     <Compile Include="Configuration\FieldConfiguration.vb" />
     <Compile Include="Configuration\FieldMethod.vb" />
     <Compile Include="Model\DataStructures\IndexRowSynchronizationStatePair.vb" />
+    <Compile Include="Model\ModelSchema\ModelColumn.vb" />
     <Compile Include="Model\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelCollectionChangedEventArgs.vb" />
@@ -119,6 +120,7 @@
     <Compile Include="Model\ModelBox.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Model\ModelCore.vb" />
     <Compile Include="Synchronizer\JsonRESTSynchronizer.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,14 +131,13 @@
     <Compile Include="Model\EventArgs\ModelRowAddedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowRemovedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowUpdatedEventArgs.vb" />
-    <Compile Include="Model\IModel.vb" />
+    <Compile Include="Model\IModelCore.vb" />
     <Compile Include="Model\DataStructures\IndexRowPair.vb" />
     <Compile Include="Model\Model.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Model\DataStructures\PositionCellPair.vb" />
     <Compile Include="Model\DataStructures\Range.vb" />
-    <Compile Include="Model\EventArgs\RangeChangedEventArgs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

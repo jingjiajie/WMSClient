@@ -87,7 +87,7 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
-            foreach (IModel model in this.modelBoxInspectionNoteItems.Models)
+            foreach (Model model in this.modelBoxInspectionNoteItems.Models)
             {
                 string warehouseEntryNo = model.Name;
                 int warehouseEntryID = (int)(this.warehouseEntries.Where((item) => ((string)item["no"]) == warehouseEntryNo).First()["id"]);
@@ -98,7 +98,7 @@ namespace WMS.UI
                 });
             }
             this.ModelInspectionNoteSelect(this.modelBoxInspectionNoteItems.CurrentModelName);
-            this.modelBoxInspectionNoteItems.SelectedModelChangedEvent += ModelBoxInspectionNoteItems_SelectedModelChangedEvent;
+            this.modelBoxInspectionNoteItems.SelectedModelChanged += ModelBoxInspectionNoteItems_SelectedModelChangedEvent;
         }
 
         private int WarehouseIdDefaultValue()
@@ -130,7 +130,7 @@ namespace WMS.UI
         /// <param name="warehouseEntryID">入库单ID</param>
         private void ModelInspectionNoteSelect(string warehouseEntryNo)
         {
-            DataTable dataTable = this.modelInspectionNotes.GetDataTable();
+            DataTable dataTable = this.modelInspectionNotes.ToDataTable();
             for (int row = 0; row < dataTable.Rows.Count; row++)
             {
                 string curNo = (string)dataTable.Rows[row]["warehouseEntryNo"];
@@ -146,7 +146,7 @@ namespace WMS.UI
         private void buttonOK_Click(object sender, EventArgs e)
         {
             InspectArgs inspectArgs = new InspectArgs();
-            foreach (IModel modelInspectionNoteItems in this.modelBoxInspectionNoteItems.Models)
+            foreach (Model modelInspectionNoteItems in this.modelBoxInspectionNoteItems.Models)
             {
                 string warehouseEntryNo = modelInspectionNoteItems.Name;
                 InspectItem inspectItem = new InspectItem();

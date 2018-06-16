@@ -8,9 +8,14 @@ Public Enum SynchronizationState
     SYNCHRONIZED
 
     ''' <summary>
-    ''' 新增行
+    ''' 新增未编辑的行
     ''' </summary>
     ADDED
+
+    ''' <summary>
+    ''' 新增并编辑的行
+    ''' </summary>
+    ADDED_UPDATED
 
     ''' <summary>
     ''' 已更新

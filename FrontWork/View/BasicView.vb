@@ -13,7 +13,7 @@ Public Class BasicView
 
     Private _itemsPerRow As Integer = 3
     Private _configuration As Configuration
-    Private _model As IModel
+    Private _model As Model
     Private _mode As String = "default"
 
     Private Property JsEngine As New Jint.Engine
@@ -24,11 +24,11 @@ Public Class BasicView
     ''' </summary>
     ''' <returns>Model对象</returns>
     <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As IModel
+    Public Property Model As Model
         Get
             Return Me._model
         End Get
-        Set(value As IModel)
+        Set(value As Model)
             If Me._model IsNot Nothing Then
                 Call Me.UnbindModel()
             End If

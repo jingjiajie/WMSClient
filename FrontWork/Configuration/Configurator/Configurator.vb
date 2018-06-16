@@ -185,7 +185,7 @@ Public Class Configurator
             Me.ModelBoxFields.CurrentModelName = modeConfiguration.Mode
             Me.ModelBoxHTTPAPIs.CurrentModelName = modeConfiguration.Mode
             '添加Fields配置
-            Dim dataTableFields = Me.ModelBoxFields.GetDataTable
+            Dim dataTableFields = Me.ModelBoxFields.ToDataTable
             Call dataTableFields.Rows.Clear()
             For Each curField In modeConfiguration.Fields
                 Dim newRow = dataTableFields.NewRow
@@ -204,7 +204,7 @@ Public Class Configurator
             Next
             Call Me.ModelBoxFields.Refresh(dataTableFields, {New Range(0, 0, 1, 1)}, Nothing)
             '添加HTTPAPI配置
-            Dim dataTableAPIs = ModelBoxHTTPAPIs.GetDataTable
+            Dim dataTableAPIs = ModelBoxHTTPAPIs.ToDataTable
             Call dataTableAPIs.Rows.Clear()
             For Each curAPI In modeConfiguration.HTTPAPIs
                 Dim newRow = dataTableAPIs.NewRow

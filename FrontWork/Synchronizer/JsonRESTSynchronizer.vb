@@ -13,7 +13,7 @@ Imports Jint.Native
 Public Class JsonRESTSynchronizer
     Inherits UserControl
     Implements ISynchronizer
-    Private _model As IModel
+    Private _model As Model
     Private _configuration As Configuration
     Private _mode As String = "default"
     Private Property RequestParams As New List(Of ModeParams)
@@ -86,11 +86,11 @@ Public Class JsonRESTSynchronizer
     ''' </summary>
     ''' <returns></returns>
     <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As IModel
+    Public Property Model As Model
         Get
             Return Me._model
         End Get
-        Set(value As IModel)
+        Set(value As Model)
             If Me._model IsNot Nothing Then
                 'TODO 保存数据
                 Call Me.UnbindModel()
@@ -171,7 +171,7 @@ Public Class JsonRESTSynchronizer
     End Sub
 
     Public Sub SetJsonRequestParameter(name As String, jsonValue As String, Optional mode As String = "default")
-        '如果目标模式正式当前模式，则对各API设置请求参数
+        '如果目标模式正是当前模式，则对各API设置请求参数
         If mode = Me.Mode Then
             Me.FindAPI?.SetJsonRequestParameter(name, jsonValue)
             Me.AddAPI?.SetJsonRequestParameter(name, jsonValue)
@@ -271,23 +271,26 @@ Public Class JsonRESTSynchronizer
                          Select indexRow.RowID).ToArray
         '如果是新增的行，不要将删除操作同步到服务器。
         Dim rowDataList = (From rowInfo In e.RemoveRows
+                           Where rowInfo.SynchronizationState <> SynchronizationState.ADDED _
+                           AndAlso rowInfo.SynchronizationState <> SynchronizationState.ADDED_UPDATED
                            Select rowInfo.RowData).ToArray
-        Me.RemoveAPI.SetRequestParameter("$data", rowDataList)
-        Try
-            Dim response = Me.RemoveAPI.Invoke()
-            Me.RemoveAPI.Callback.Invoke(response, Nothing)
-            MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Catch ex As WebException
-            e.Cancel = True
-            Dim message = ex.Message
-            If ex.Response IsNot Nothing Then
-                message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
-            End If
-            MessageBox.Show("删除失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            If Me.RemoveAPI.Callback IsNot Nothing Then
-                Me.RemoveAPI.Callback.Invoke(ex.Response, ex)
-            End If
-        End Try
+        If rowDataList.Count > 0 Then
+            Try
+                Me.RemoveAPI.SetRequestParameter("$data", rowDataList)
+                Dim response = Me.RemoveAPI.Invoke()
+                MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Catch ex As WebException
+                e.Cancel = True
+                Dim message = ex.Message
+                If ex.Response IsNot Nothing Then
+                    message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
+                End If
+                MessageBox.Show("删除失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                If Me.RemoveAPI.Callback IsNot Nothing Then
+                    Me.RemoveAPI.Callback.Invoke(ex.Response, ex)
+                End If
+            End Try
+        End If
     End Sub
 
     Public Function Find() As Boolean Implements ISynchronizer.Find
@@ -330,7 +333,7 @@ Public Class JsonRESTSynchronizer
                     Next
                 End If
                 '直接操作源数据，不触发事件
-                Dim dataTable = Me.Model.GetDataTable
+                Dim dataTable = Me.Model.ToDataTable
                 Call dataTable.Rows.Clear()
                 For Each resultRow In resultList
                     Dim newRow = dataTable.NewRow
@@ -356,12 +359,12 @@ Public Class JsonRESTSynchronizer
                     Dim newCol = oriRange.Column
                     Dim newRows = oriRange.Rows
                     Dim newCols = oriRange.Columns
-                    If oriRange.Row + oriRange.Rows >= dataTable.Rows.Count Then
+                    If oriRange.Row + oriRange.Rows > dataTable.Rows.Count Then
                         newRows = dataTable.Rows.Count - newRow
                     End If
-                    If oriRange.Column + oriRange.Columns >= dataTable.Columns.Count Then
-                        newRows = dataTable.Columns.Count - newCol
-                    End If
+                    'If oriRange.Column + oriRange.Columns > dataTable.Columns.Count Then
+                    '    newCols = dataTable.Columns.Count - newCol
+                    'End If
                     selectionRanges.Add(New Range(newRow, newCol, newRows, newCols))
                 Next
                 '如果实在没有选区了，就自动选第一行第一列
@@ -395,39 +398,58 @@ Public Class JsonRESTSynchronizer
         '获取焦点以触发所有视图的编辑完成保存
         '防止最后一个编辑的单元格不能保存
         Call Util.FindFirstVisibleParent(Me)?.Focus()
+        Dim addedData As New List(Of IDictionary(Of String, Object))
+        Dim addedRows As New List(Of Integer)
+        Dim updatedData As New List(Of IDictionary(Of String, Object))
+        Dim updatdRows As New List(Of Integer)
         For row = 0 To Me.Model.RowCount - 1
             Dim syncState = Me.Model.GetRowSynchronizationState(row)
             If syncState = SynchronizationState.SYNCHRONIZED Then Continue For
-            Dim apiInfo As JsonRESTAPIInfo = Nothing
+            Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.toDataTable.Rows(row))
+            Select Case syncState
+                Case SynchronizationState.ADDED_UPDATED
+                    addedData.Add(rowData)
+                    addedRows.Add(row)
+                Case SynchronizationState.UPDATED
+                    updatedData.Add(rowData)
+                    updatdRows.Add(row)
+            End Select
+        Next
+
+        If addedData.Count > 0 Then
             Try
-                Select Case syncState
-                    Case SynchronizationState.ADDED
-                        apiInfo = Me.AddAPI
-                    Case SynchronizationState.UPDATED
-                        apiInfo = Me.UpdateAPI
-                End Select
-                Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.GetDataTable.Rows(row))
-                apiInfo.SetRequestParameter("$data", {rowData})
-                Dim response = apiInfo.Invoke()
-                apiInfo.Callback.Invoke(response, Nothing)
+                Call Me.AddAPI.SetRequestParameter("$data", addedData.ToArray)
+                Call Me.AddAPI.Invoke()
                 '将相应行的同步状态更新为已同步
-                Me.Model.UpdateRowSynchronizationState(row, SynchronizationState.SYNCHRONIZED)
+                Me.Model.UpdateRowSynchronizationStates(addedRows.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, addedRows.Count))
             Catch ex As WebException
                 Dim message = ex.Message
                 If ex.Response IsNot Nothing Then
                     message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
                 End If
-                MessageBox.Show($"行{row + 1}：保存失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                If apiInfo.Callback Is Nothing Then Continue For
-                Dim ifContinue = apiInfo.Callback.Invoke(ex.Response, ex)
-                If Not ifContinue Then
-                    Return False
-                End If
+                MessageBox.Show($"保存失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return False
             End Try
-        Next
+        End If
 
+        If updatedData.Count > 0 Then
+            Try
+                Call Me.UpdateAPI.SetRequestParameter("$data", updatedData.ToArray)
+                Call Me.UpdateAPI.Invoke()
+                '将相应行的同步状态更新为已同步
+                Me.Model.UpdateRowSynchronizationStates(updatdRows.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, updatdRows.Count))
+            Catch ex As WebException
+                Dim message = ex.Message
+                If ex.Response IsNot Nothing Then
+                    message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
+                End If
+                MessageBox.Show($"保存失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return False
+            End Try
+        End If
+
+        Call Me.Model.RemoveUneditedNewRows()
         MessageBox.Show("保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Call Me.PushFinishedCallback?.Invoke
         Return True
     End Function
 

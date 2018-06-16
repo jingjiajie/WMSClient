@@ -61,7 +61,7 @@ Public Class ReoGridView
     Private dicCellEdited As New Dictionary(Of CellPosition, Boolean)
     Private _curSyncMode = SyncMode.NOT_SYNC
     Private _configuration As Configuration
-    Private _model As IModel
+    Private _model As Model
 
     Public Property Panel As Worksheet
     Private Property JsEngine As New Jint.Engine
@@ -93,11 +93,11 @@ Public Class ReoGridView
     ''' </summary>
     ''' <returns>Model对象</returns>
     <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As IModel
+    Public Property Model As Model
         Get
             Return Me._model
         End Get
-        Set(value As IModel)
+        Set(value As Model)
             If Me._model IsNot Nothing Then
                 Call Me.UnbindModel()
             End If
@@ -1011,7 +1011,7 @@ Public Class ReoGridView
             Logger.PutMessage("Configuration not found!")
             Return False
         End If
-        Dim dataTable = Me.Model.GetDataTable
+        Dim dataTable = Me.Model.ToDataTable
         '清空ReoGrid相应行
         If rows Is Nothing Then
             Me.Panel.DeleteRangeData(RangePosition.EntireRange)
@@ -1249,7 +1249,7 @@ Public Class ReoGridView
             Dim curReoGridCell = Panel.GetCell(row, curReoGridColumnNum)
 
             '获取DataTable的列
-            Dim modelDataTable = Model.GetDataTable
+            Dim modelDataTable = Model.ToDataTable
             Dim curColumn As DataColumn = (From c As DataColumn In modelDataTable.Columns
                                            Where c.ColumnName = curField.Name
                                            Select c).FirstOrDefault
