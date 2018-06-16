@@ -39,6 +39,7 @@ Public Class ModelBox
     End Property
 
     Public Sub New()
+        Call MyBase.New
         If Not Me.DesignMode Then Me.Visible = False
         Me.CurrentModelName = "default"
         ' 此调用是设计器所必需的。

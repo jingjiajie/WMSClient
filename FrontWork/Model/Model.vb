@@ -13,9 +13,9 @@ Public Class Model
     Private _configuration As Configuration
     Private _mode As String = "default"
     Private _modelCore As IModelCore
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents Label1 As Label
+    Public WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Public WithEvents PanelIcon As Panel
+    Public WithEvents LabelText As Label
 
     Protected Property ModelCore As IModelCore
         Get
@@ -695,63 +695,60 @@ Public Class Model
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Model))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LabelText = New System.Windows.Forms.Label()
+        Me.PanelIcon = New System.Windows.Forms.Panel()
         Me.TableLayoutPanel1.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.PictureBox1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Label1, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.LabelText, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.PanelIcon, 0, 0)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 2
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(180, 180)
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(150, 150)
         Me.TableLayoutPanel1.TabIndex = 0
         '
-        'PictureBox1
+        'LabelText
         '
-        Me.PictureBox1.BackgroundImage = CType(resources.GetObject("PictureBox1.BackgroundImage"), System.Drawing.Image)
-        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(0)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(180, 140)
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.TabStop = False
+        Me.LabelText.AutoSize = True
+        Me.LabelText.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LabelText.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.5!)
+        Me.LabelText.Location = New System.Drawing.Point(0, 125)
+        Me.LabelText.Margin = New System.Windows.Forms.Padding(0)
+        Me.LabelText.Name = "LabelText"
+        Me.LabelText.Size = New System.Drawing.Size(150, 25)
+        Me.LabelText.TabIndex = 1
+        Me.LabelText.Text = "Model"
+        Me.LabelText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Label1
+        'PanelIcon
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.5!)
-        Me.Label1.Location = New System.Drawing.Point(0, 140)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(180, 40)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Model"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.PanelIcon.BackgroundImage = CType(resources.GetObject("PanelIcon.BackgroundImage"), System.Drawing.Image)
+        Me.PanelIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PanelIcon.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PanelIcon.Location = New System.Drawing.Point(0, 0)
+        Me.PanelIcon.Margin = New System.Windows.Forms.Padding(0)
+        Me.PanelIcon.Name = "PanelIcon"
+        Me.PanelIcon.Size = New System.Drawing.Size(150, 125)
+        Me.PanelIcon.TabIndex = 2
         '
         'Model
         '
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DoubleBuffered = True
+        Me.Font = New System.Drawing.Font("宋体", 10.0!)
         Me.Name = "Model"
-        Me.Size = New System.Drawing.Size(180, 180)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

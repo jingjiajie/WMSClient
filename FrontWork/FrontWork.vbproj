@@ -108,7 +108,7 @@
     <Compile Include="Configuration\FieldConfiguration.vb" />
     <Compile Include="Configuration\FieldMethod.vb" />
     <Compile Include="Model\DataStructures\IndexRowSynchronizationStatePair.vb" />
-    <Compile Include="Model\ModelSchema\ModelColumn.vb" />
+    <Compile Include="Model\DataStructures\ModelSchema\ModelColumn.vb" />
     <Compile Include="Model\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelCollectionChangedEventArgs.vb" />

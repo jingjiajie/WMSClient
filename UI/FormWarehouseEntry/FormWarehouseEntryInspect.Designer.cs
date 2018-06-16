@@ -100,13 +100,15 @@
             // modelBoxInspectionNoteItems
             // 
             this.modelBoxInspectionNoteItems.AllSelectionRanges = new FrontWork.Range[0];
+            this.modelBoxInspectionNoteItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.modelBoxInspectionNoteItems.Configuration = this.configurationInspectionNoteItem;
             this.modelBoxInspectionNoteItems.CurrentModelName = "default";
-            this.modelBoxInspectionNoteItems.Location = new System.Drawing.Point(3, 102);
+            this.modelBoxInspectionNoteItems.Location = new System.Drawing.Point(2, 53);
+            this.modelBoxInspectionNoteItems.Margin = new System.Windows.Forms.Padding(2);
             this.modelBoxInspectionNoteItems.Mode = "default";
             this.modelBoxInspectionNoteItems.Name = "modelBoxInspectionNoteItems";
             this.modelBoxInspectionNoteItems.SelectionRange = null;
-            this.modelBoxInspectionNoteItems.Size = new System.Drawing.Size(126, 131);
+            this.modelBoxInspectionNoteItems.Size = new System.Drawing.Size(180, 180);
             this.modelBoxInspectionNoteItems.TabIndex = 4;
             this.modelBoxInspectionNoteItems.Visible = false;
             // 
@@ -114,7 +116,7 @@
             // 
             this.configurationInspectionNoteItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configurationInspectionNoteItem.ConfigurationString = resources.GetString("configurationInspectionNoteItem.ConfigurationString");
-            this.configurationInspectionNoteItem.Location = new System.Drawing.Point(135, 53);
+            this.configurationInspectionNoteItem.Location = new System.Drawing.Point(187, 41);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormWarehouseEntryInspect",
         "AssociationMethodListener"};
@@ -144,7 +146,7 @@
             // 
             this.configurationInspectionNote.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configurationInspectionNote.ConfigurationString = resources.GetString("configurationInspectionNote.ConfigurationString");
-            this.configurationInspectionNote.Location = new System.Drawing.Point(534, 63);
+            this.configurationInspectionNote.Location = new System.Drawing.Point(545, 53);
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormWarehouseEntryInspect",
         "AssociationMethodListener"};
@@ -160,7 +162,7 @@
             this.modelInspectionNotes.AllSelectionRanges = new FrontWork.Range[0];
             this.modelInspectionNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.modelInspectionNotes.Configuration = this.configurationInspectionNote;
-            this.modelInspectionNotes.Location = new System.Drawing.Point(694, 53);
+            this.modelInspectionNotes.Location = new System.Drawing.Point(694, 63);
             this.modelInspectionNotes.Mode = "default";
             this.modelInspectionNotes.Name = "modelInspectionNotes";
             this.modelInspectionNotes.SelectionRange = null;
@@ -195,7 +197,7 @@
         fieldMappingItem6,
         fieldMappingItem7,
         fieldMappingItem8};
-            this.synchronizer.Location = new System.Drawing.Point(318, 53);
+            this.synchronizer.Location = new System.Drawing.Point(362, 41);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.modelBoxInspectionNoteItems;
@@ -280,13 +282,13 @@
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView1.ItemsPerRow = 3;
-            this.basicView1.Location = new System.Drawing.Point(0, 34);
+            this.basicView1.Location = new System.Drawing.Point(0, 23);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.modelInspectionNotes;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(6);
-            this.basicView1.Size = new System.Drawing.Size(874, 66);
+            this.basicView1.Size = new System.Drawing.Size(874, 77);
             this.basicView1.TabIndex = 0;
             // 
             // groupBox2
@@ -310,17 +312,17 @@
             this.basicView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView2.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView2.ItemsPerRow = 4;
-            this.basicView2.Location = new System.Drawing.Point(3, 34);
+            this.basicView2.Location = new System.Drawing.Point(3, 23);
             this.basicView2.Margin = new System.Windows.Forms.Padding(0);
             this.basicView2.Mode = "default";
             this.basicView2.Model = this.modelBoxInspectionNoteItems;
             this.basicView2.Name = "basicView2";
-            this.basicView2.Size = new System.Drawing.Size(868, 100);
+            this.basicView2.Size = new System.Drawing.Size(868, 111);
             this.basicView2.TabIndex = 4;
             // 
             // FormWarehouseEntryInspect
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 529);
             this.Controls.Add(this.tableLayoutPanel1);
