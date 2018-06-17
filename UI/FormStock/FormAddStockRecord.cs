@@ -91,56 +91,88 @@ namespace WMS.UI.FormStock
 
         private string AmountForwardMapper(double amount, int row)
         {
-            var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return null; }
-            double unitAmount = (double)rowDate["unitAmount"];
-            return Utilities.DoubleToString(amount/unitAmount);
-        }
-
-        private double  AmountBackwardMapper(string amount, int row)
-        {
-            var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) {
-                this.amountTemp =Convert.ToDouble(amount);
-                return amountTemp; }
-            double unitAmount = (double)rowDate["unitAmount"];
-            double amount1 = Convert.ToDouble(amount);
-            return amount1 * unitAmount;
-        }
-
-        private string AvailableAmountForwardMapper(double amount, int row)
-        {
-            var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return null; }
-            double unitAmount = (double)rowDate["unitAmount"];
-            return Utilities.DoubleToString( amount / unitAmount);
-        }
-
-        private double AvailableAmountBackwardMapper(string amount, int row)
-        {
-            var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null)
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.availableAmountTemp= Convert.ToDouble(amount);
-                return availableAmountTemp;
+                return amount.ToString();
             }
-            double unitAmount = (double)rowDate["unitAmount"];
-            double amount1 = Convert.ToDouble(amount);
-            return amount1 * unitAmount;
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                this.amountTemp = amount;
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
         }
 
         private void UnitAmountEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;
-            
-            this.GetAmount(row, (double)this.model1[row,"unitAmount"]);
+            this.GetAmount(row, (double)this.model1[row, "unitAmount"]);
+            this.GetAvailableAmount(row, (double)this.model1[row, "unitAmount"]);
         }
 
-        private void GetAmount(int row,double unitAmount)
+        private void GetAmount(int row, double unitAmount)
         {
-            if (this.amountTemp ==0) { return; }
-            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp*unitAmount);
+            if (this.amountTemp == 0) { return; }
+            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp * unitAmount);
         }
+
+        private void GetAvailableAmount(int row, double unitAmount)
+        {
+            if (this.availableAmountTemp == 0) { return; }
+            this.model1[row, "availableAmount"] = Utilities.DoubleToString(this.availableAmountTemp * unitAmount);
+        }
+
+        private string AvailableAmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AvailableAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                this.availableAmountTemp = amount;
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
