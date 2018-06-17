@@ -501,7 +501,7 @@ Public Class BasicView
         '先计算值，过一遍Mapper
         Dim text As String
         If Not field.ForwardMapper Is Nothing Then
-            text = field.ForwardMapper.Invoke(Me, value)
+            text = field.ForwardMapper.Invoke(Me, value, modelSelectedRow)
         Else
             text = If(value?.ToString, "")
             End If
@@ -579,7 +579,7 @@ Public Class BasicView
             Dim text As String
 
             If Not curField.ForwardMapper Is Nothing Then
-                text = curField.ForwardMapper.Invoke(Me, value)
+                text = curField.ForwardMapper.Invoke(Me, value, modelSelectedRow)
             Else
                 text = If(value?.ToString, "")
             End If
@@ -724,7 +724,7 @@ Public Class BasicView
         '将文字经过ReverseMapper映射成转换后的value
         Dim value As Object
         If Not fieldConfiguration.BackwardMapper Is Nothing Then
-            value = fieldConfiguration.BackwardMapper.Invoke(Me, text)
+            value = fieldConfiguration.BackwardMapper.Invoke(Me, text, Me.GetModelSelectedRow)
         Else
             value = text
         End If

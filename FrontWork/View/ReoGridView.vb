@@ -940,7 +940,7 @@ Public Class ReoGridView
         Dim value = Me.Model(row, colName)
         Dim text As String
         If Not field.ForwardMapper Is Nothing Then
-            text = field.ForwardMapper.Invoke(value, Me)
+            text = field.ForwardMapper.Invoke(value, row, Me)
         Else
             text = If(value?.ToString, "")
         End If
@@ -1040,7 +1040,7 @@ Public Class ReoGridView
                 Dim value = curDataRow(curDataColumn)
                 Dim text As String
                 If Not curField.ForwardMapper Is Nothing Then
-                    text = curField.ForwardMapper.Invoke(value, Me)
+                    text = curField.ForwardMapper.Invoke(value, curDataRowNum, Me)
                 Else
                     text = If(value?.ToString, "")
                 End If
@@ -1222,7 +1222,7 @@ Public Class ReoGridView
         '将文字经过ReverseMapper映射成转换后的value
         Dim value As Object
         If Not fieldConfiguration.BackwardMapper Is Nothing Then
-            value = fieldConfiguration.BackwardMapper.Invoke(text, Me)
+            value = fieldConfiguration.BackwardMapper.Invoke(text, row, Me)
         Else
             value = text
         End If

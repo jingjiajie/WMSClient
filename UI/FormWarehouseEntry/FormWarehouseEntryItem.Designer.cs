@@ -62,13 +62,13 @@ namespace WMS.UI
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(182, 25);
+            this.lableStatus.Size = new System.Drawing.Size(114, 25);
             this.lableStatus.Text = "入库单物料列表";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 25);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // statusStrip1
@@ -133,7 +133,7 @@ namespace WMS.UI
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(86, 27);
+            this.buttonAdd.Size = new System.Drawing.Size(63, 27);
             this.buttonAdd.Text = "添加";
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -142,7 +142,7 @@ namespace WMS.UI
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(86, 27);
+            this.buttonDelete.Size = new System.Drawing.Size(63, 27);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -151,7 +151,7 @@ namespace WMS.UI
             this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
             this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(134, 27);
+            this.buttonSave.Size = new System.Drawing.Size(93, 27);
             this.buttonSave.Text = "保存修改";
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -164,11 +164,12 @@ namespace WMS.UI
             // pagerView1
             // 
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(3, 462);
+            this.pagerView1.Location = new System.Drawing.Point(2, 461);
+            this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(968, 34);
+            this.pagerView1.Size = new System.Drawing.Size(970, 36);
             this.pagerView1.TabIndex = 12;
             // 
             // panel1
@@ -248,6 +249,7 @@ namespace WMS.UI
             this.model.AllSelectionRanges = new FrontWork.Range[0];
             this.model.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model.Configuration = this.configuration1;
+            this.model.Font = new System.Drawing.Font("宋体", 10F);
             this.model.Location = new System.Drawing.Point(224, 66);
             this.model.Mode = "default";
             this.model.Name = "model";
@@ -285,7 +287,7 @@ namespace WMS.UI
             // 
             // FormWarehouseEntryItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);

@@ -75,7 +75,7 @@ namespace WMS.UI
             }
         }
 
-        private double AmountReverseMapper(string strAmount, int row)
+        private double AmountBackwardMapper(string strAmount, int row)
         {
             if(!Double.TryParse(strAmount,out double amount))
             {
