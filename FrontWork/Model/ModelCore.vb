@@ -14,9 +14,6 @@ Public Class ModelCore
     Private _configuration As Configuration
     Private _dicRowGuid As New Dictionary(Of DataRow, Guid)
     Private _mode As String = "default"
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents Label1 As Label
     Private _dicRowSyncState As New Dictionary(Of DataRow, SynchronizationState)
 
     ''' <summary>
