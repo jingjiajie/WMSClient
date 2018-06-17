@@ -94,7 +94,7 @@ namespace WMS.UI.FormTransferOrder
             StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("移库单预览");
             foreach (IDictionary<string, object> entryAndItem in previewData)
             {
-                IDictionary<string, object> transferOrder = (IDictionary<string, object>)entryAndItem["transferOrderView"];
+                IDictionary<string, object> transferOrder = (IDictionary<string, object>)entryAndItem["transferOrder"];
                 object[] transferOrderItems = (object[])entryAndItem["transferOrderItems"];
                 string no = (string)transferOrder["no"];
                 if (!formPreviewExcel.AddPatternTable("Excel/TransferOrderNote.xlsx", no)) return;
