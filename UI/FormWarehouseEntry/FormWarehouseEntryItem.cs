@@ -66,9 +66,9 @@ namespace WMS.UI
         private string AmountForwardMapper(double amount,int row)
         {
             double? unitAmount = (double?)this.model[row, "unitAmount"];
-            if(unitAmount.HasValue == false)
+            if(unitAmount.HasValue == false || unitAmount == 0)
             {
-                return null;
+                return amount.ToString();
             }else
             {
                 return Utilities.DoubleToString(amount / unitAmount.Value);
@@ -79,17 +79,23 @@ namespace WMS.UI
         {
             if(!Double.TryParse(strAmount,out double amount))
             {
-                return -1;
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
             }
             double? unitAmount = (double?)this.model[row, "unitAmount"];
-            if (unitAmount.HasValue == false)
+            if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                return -1;
+                return amount;
             }
             else
             {
                 return amount * unitAmount.Value;
             }
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            this.model.RefreshView(row);
         }
 
         private void PersonEditEnded(int row, string personName)

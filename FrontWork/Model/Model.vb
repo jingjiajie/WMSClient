@@ -6,7 +6,7 @@ Imports FrontWork
 ''' <summary>
 ''' 模型类
 ''' </summary>
-Public Class Model
+Partial Public Class Model
     Inherits UserControl
     Implements IModelCore
 
@@ -247,10 +247,6 @@ Public Class Model
 
     Public Function GetCell(row As Integer, columnName As String) As Object
         Return Me.ModelCore.GetCells({row}, {columnName})(0)
-    End Function
-
-    Public Function GetCells(rows As Integer(), columnNames As String()) As Object()
-        Return ModelCore.GetCells(rows, columnNames)
     End Function
 
     ''' <summary>
@@ -912,13 +908,24 @@ Public Class Model
         Return Me.ModelCore.GetColumns(columnNames)
     End Function
 
-    Private Function IModelCore_GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModelCore.GetCells
-        Throw New NotImplementedException()
+    Public Function GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModelCore.GetCells
+        Return Me.ModelCore.GetCells(rows, columnNames)
     End Function
 
     Public Function ToDataTable() As DataTable Implements IModelCore.ToDataTable
         Return Me.ModelCore.ToDataTable
     End Function
+
+    Public Sub RefreshView(rows As Integer())
+        Dim args = New ModelRowUpdatedEventArgs() With {
+            .UpdatedRows = (From row In rows Select New RowInfo(row, Me.GetRowID(row), Me(row), Me.GetRowSynchronizationState(row))).ToArray
+        }
+        RaiseEvent RowUpdated(Me, args)
+    End Sub
+
+    Public Sub RefreshView(row As Integer)
+        Call Me.RefreshView({row})
+    End Sub
 
     Protected Sub RaiseRefreshedEvent(sender As Object, args As ModelRefreshedEventArgs)
         RaiseEvent Refreshed(sender, args)
