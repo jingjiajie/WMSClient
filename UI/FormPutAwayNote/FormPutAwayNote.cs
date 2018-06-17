@@ -55,10 +55,7 @@ namespace WMS.UI
         //保存按钮点击事件
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (this.synchronizer.Save())
-            {
-                this.searchView1.Search();
-            }
+
         }
 
         private void FormWarehouseEntry_Load(object sender, EventArgs e)
@@ -127,6 +124,28 @@ namespace WMS.UI
         private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void buttonAutoPutAway_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 0 + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+
+            }
+            catch(WebException ex)
+            {
+                string message = ex.Message;
+                if(ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("添加失败："+message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
