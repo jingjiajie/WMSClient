@@ -88,6 +88,20 @@ namespace WMS.UI.FormTransferOrder
             }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(ids);
+
+            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/transfer_order/preview/" + strIDs);
+            if (previewData == null) return;
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("移库单预览");
+            foreach (IDictionary<string, object> entryAndItem in previewData)
+            {
+                IDictionary<string, object> transferOrder = (IDictionary<string, object>)entryAndItem["transferOrderView"];
+                object[] transferOrderItems = (object[])entryAndItem["transferOrderItems"];
+                string no = (string)transferOrder["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/TransferOrderNote.xlsx", no)) return;
+                formPreviewExcel.AddData("transferOrder", transferOrder, no);
+                formPreviewExcel.AddData("transferOrderItems", transferOrderItems, no);
+            }
+            formPreviewExcel.Show();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -106,7 +120,7 @@ namespace WMS.UI.FormTransferOrder
         {
             try
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 1 + "\"}";
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 0 + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
