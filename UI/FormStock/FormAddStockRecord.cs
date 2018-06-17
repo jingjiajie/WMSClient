@@ -19,6 +19,7 @@ namespace WMS.UI.FormStock
             InitializeComponent();
         }
         private double amountTemp ;
+        private double availableAmountTemp;
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
@@ -96,15 +97,15 @@ namespace WMS.UI.FormStock
             return Utilities.DoubleToString(amount/unitAmount);
         }
 
-        private string  AmountBackwardMapper(double amount, int row)
+        private double  AmountBackwardMapper(string amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
             if (rowDate["unitAmount"] == null) {
-
-                this.amountTemp = amount;
-                return null; }
+                this.amountTemp =Convert.ToDouble(amount);
+                return amountTemp; }
             double unitAmount = (double)rowDate["unitAmount"];
-            return Utilities.DoubleToString(amount * unitAmount);
+            double amount1 = Convert.ToDouble(amount);
+            return amount1 * unitAmount;
         }
 
         private string AvailableAmountForwardMapper(double amount, int row)
@@ -115,12 +116,17 @@ namespace WMS.UI.FormStock
             return Utilities.DoubleToString( amount / unitAmount);
         }
 
-        private string AvailableAmountBackwardMapper(double amount, int row)
+        private double AvailableAmountBackwardMapper(string amount, int row)
         {
             var rowDate = this.model1.GetRow(row);
-            if (rowDate["unitAmount"] == null) { return null; }            
+            if (rowDate["unitAmount"] == null)
+            {
+                this.availableAmountTemp= Convert.ToDouble(amount);
+                return availableAmountTemp;
+            }
             double unitAmount = (double)rowDate["unitAmount"];
-            return Utilities.DoubleToString( amount * unitAmount);
+            double amount1 = Convert.ToDouble(amount);
+            return amount1 * unitAmount;
         }
 
         private void UnitAmountEditEnded(int row)
@@ -133,7 +139,7 @@ namespace WMS.UI.FormStock
         private void GetAmount(int row,double unitAmount)
         {
             if (this.amountTemp ==0) { return; }
-            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp/unitAmount);
+            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp*unitAmount);
         }
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
