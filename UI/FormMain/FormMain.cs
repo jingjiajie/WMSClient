@@ -39,7 +39,6 @@ namespace WMS.UI
                     MakeTreeNode("物料管理"),
                     MakeTreeNode("发货套餐管理"),
                     MakeTreeNode("安全库存管理"),
-                    MakeTreeNode("人员管理"),
                     MakeTreeNode("库区管理"),
                     MakeTreeNode("库位管理")
                     }),

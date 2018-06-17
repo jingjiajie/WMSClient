@@ -383,7 +383,7 @@ namespace WMS.UI
             return (from s in GlobalData.AllSupplies
                     where s["materialName"] != null &&
                     s["materialName"].ToString().StartsWith(str) &&
-                    s["supplierId"] == this.warehouseEntry["supplierId"]
+                    (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
                     select s["materialName"]).ToArray();
         }
 
@@ -393,7 +393,7 @@ namespace WMS.UI
             return (from s in GlobalData.AllSupplies
                     where s["materialNo"] != null &&
                     s["materialNo"].ToString().StartsWith(str) &&
-                    s["supplierId"] == this.warehouseEntry["supplierId"]
+                    (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
                     select s["materialNo"]).ToArray();
         }
 
@@ -403,7 +403,7 @@ namespace WMS.UI
             return (from s in GlobalData.AllSupplies
                     where s["materialProductLine"] != null &&
                     s["materialProductLine"].ToString().StartsWith(str) &&
-                    s["supplierId"] == this.warehouseEntry["supplierId"]
+                    (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
                     select s["materialProductLine"]).ToArray();
         }
     }

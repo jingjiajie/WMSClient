@@ -31,10 +31,10 @@ namespace WMS.UI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPutAwayNote));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -44,7 +44,7 @@ namespace WMS.UI
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
-            this.buttonSave = new System.Windows.Forms.ToolStripButton();
+            this.buttonAutoPutAway = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.searchView1 = new FrontWork.SearchView();
@@ -56,6 +56,8 @@ namespace WMS.UI
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -124,7 +126,9 @@ namespace WMS.UI
             this.toolStripSeparator2,
             this.buttonAdd,
             this.buttonDelete,
-            this.buttonSave,
+            this.toolStripButton1,
+            this.toolStripSeparator1,
+            this.buttonAutoPutAway,
             this.toolStripSeparator5,
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 31);
@@ -168,14 +172,14 @@ namespace WMS.UI
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // buttonSave
+            // buttonAutoPutAway
             // 
-            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
-            this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(93, 21);
-            this.buttonSave.Text = "保存修改";
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonAutoPutAway.Image = ((System.Drawing.Image)(resources.GetObject("buttonAutoPutAway.Image")));
+            this.buttonAutoPutAway.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAutoPutAway.Name = "buttonAutoPutAway";
+            this.buttonAutoPutAway.Size = new System.Drawing.Size(138, 21);
+            this.buttonAutoPutAway.Text = "自动生成上架单";
+            this.buttonAutoPutAway.Click += new System.EventHandler(this.buttonAutoPutAway_Click);
             // 
             // toolStripSeparator5
             // 
@@ -210,14 +214,14 @@ namespace WMS.UI
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(3, 102);
             this.configuration1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPutAwayNote",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(160, 180);
             this.configuration1.TabIndex = 1;
             // 
             // pagerView1
@@ -247,14 +251,14 @@ namespace WMS.UI
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(486, 147);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -269,7 +273,7 @@ namespace WMS.UI
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(243, 102);
+            this.synchronizer.Location = new System.Drawing.Point(320, 102);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -282,7 +286,8 @@ namespace WMS.UI
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
-            this.model1.Location = new System.Drawing.Point(120, 102);
+            this.model1.Font = new System.Drawing.Font("宋体", 10F);
+            this.model1.Location = new System.Drawing.Point(169, 102);
             this.model1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -319,6 +324,19 @@ namespace WMS.UI
             this.basicView1.Size = new System.Drawing.Size(1259, 81);
             this.basicView1.TabIndex = 14;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 24);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(93, 21);
+            this.toolStripButton1.Text = "保存修改";
+            // 
             // FormPutAwayNote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -348,7 +366,7 @@ namespace WMS.UI
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton buttonDelete;
-        private System.Windows.Forms.ToolStripButton buttonSave;
+        private System.Windows.Forms.ToolStripButton buttonAutoPutAway;
         private System.Windows.Forms.ToolStripButton buttonAdd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton buttonItems;
@@ -363,5 +381,7 @@ namespace WMS.UI
         private FrontWork.BasicView basicView1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
+        private ToolStripButton toolStripButton1;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }
