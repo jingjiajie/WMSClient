@@ -59,12 +59,17 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            if (this.synchronizer.Save()) {
+            if (this.synchronizer.Save())
+            {
+                this.flesh();
+            }
+        }
+        private void flesh()
+        {
                 this.searchView1.Search();
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                 GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
                    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
-            }
         }
 
         //private void MaterialNameEditEnded(int row, string materialName)
@@ -251,6 +256,47 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "defaultPrepareTargetStorageLocationId"] = foundStorageLocation["id"];
             }
         }
+
+        private void toolStripButtonSupplySingleBoxTranPackingInfo_Click(object sender, EventArgs e)
+        {
+            this.model1.Mode = "default1";
+            this.basicView1.Mode = "default1";
+            this.reoGridView1.Mode = "default1";
+            this.synchronizer.Mode = "default1";
+            this.toolStripButton1.Visible = true;
+            this.searchView1.Search();
+        }
+
+        private void toolStripButtonSupplyOuterPackingSize_Click(object sender, EventArgs e)
+        {
+            this.model1.Mode = "default2";
+            this.basicView1.Mode = "default2";
+            this.reoGridView1.Mode = "default2";
+            this.synchronizer.Mode = "default2";
+            this.toolStripButton1.Visible = true;
+            this.searchView1.Search();
+        }
+
+        private void toolStripButtonSupplyShipmentInfo_Click(object sender, EventArgs e)
+        {
+            this.model1.Mode = "default3";
+            this.basicView1.Mode = "default3";
+            this.reoGridView1.Mode = "default3";
+            this.synchronizer.Mode = "default3";
+            this.toolStripButton1.Visible = true;
+            this.searchView1.Search();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.model1.Mode = "default";
+            this.basicView1.Mode = "default";
+            this.reoGridView1.Mode = "default";
+            this.synchronizer.Mode = "default";
+            this.toolStripButton1.Visible = false;
+            this.searchView1.Search();
+        }
+
 
     }
      
