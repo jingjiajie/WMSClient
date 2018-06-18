@@ -130,10 +130,10 @@
         {name:"materialName",displayName:"物料名称",type:"string"},
         {name:"supplierNo",displayName:"供应商代号",type:"string"},
         {name:"supplierName",displayName:"供货商名称",type:"string"},
-        {name:"transferAmount",displayName:"移位数量(个)",type:"double"},
+        {name:"transferAmount",displayName:"移位数量(个)",type:"double",forwardMapper:"#transferAmountForwardMapper"},
         {name:"transferUnit",displayName:"移位单位",type:"string"},
         {name:"transferUnitAmount",displayName:"移位单位数量",type:"double"},
-        {name:"originalAmount",displayName:"原库位数量(个)",type:"double"},
+        {name:"originalAmount",displayName:"原库位数量(个)",type:"double",forwardMapper:"#originalAmountForwardMapper"},
         {name:"originalUnit",displayName:"原单位",type:"string"},
         {name:"originalUnitAmount",displayName:"原单位数量",type:"double"},
         {name:"sourceStorageLocationID",displayName:"源库位ID",type:"int",visible:false},
@@ -174,7 +174,7 @@ httpAPIs:[
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
         ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
         NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>
@@ -182,7 +182,7 @@ httpAPIs:[
   <data name="toolStripButtonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
         CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
         NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
         ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
