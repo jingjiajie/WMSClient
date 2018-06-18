@@ -45,10 +45,11 @@
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
-            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.basicView1 = new FrontWork.BasicView();
@@ -58,8 +59,7 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.reoGridView2 = new FrontWork.ReoGridView();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDelect = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPagerWidget.SuspendLayout();
@@ -195,16 +195,6 @@
             this.buttonAlter.Text = "保存修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
-            // buttonDelete
-            // 
-            this.buttonDelete.AutoSize = false;
-            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
-            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(86, 57);
-            this.buttonDelete.Text = "删除";
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.AutoSize = false;
@@ -246,7 +236,7 @@
             this.toolStripSeparator2,
             this.toolStripAutoTransfer,
             this.toolStripButtonAdd,
-            this.buttonDelete,
+            this.toolStripButtonDelect,
             this.buttonAlter,
             this.toolStripSeparator3,
             this.buttonPreview});
@@ -256,6 +246,25 @@
             this.toolStripTop.Size = new System.Drawing.Size(852, 22);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // toolStripAutoTransfer
+            // 
+            this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
+            this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
+            this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
+            this.toolStripAutoTransfer.Text = "一键备货";
+            this.toolStripAutoTransfer.ToolTipText = "发运";
+            this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
+            // 
+            // toolStripButtonAdd
+            // 
+            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
+            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
+            this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // buttonPreview
             // 
@@ -297,6 +306,7 @@
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
+            this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(321, 45);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
@@ -378,24 +388,14 @@
             this.reoGridView2.Size = new System.Drawing.Size(846, 224);
             this.reoGridView2.TabIndex = 6;
             // 
-            // toolStripButtonAdd
+            // toolStripButtonDelect
             // 
-            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
-            this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
-            // 
-            // toolStripAutoTransfer
-            // 
-            this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
-            this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
-            this.toolStripAutoTransfer.Size = new System.Drawing.Size(80, 19);
-            this.toolStripAutoTransfer.Text = "一键备货";
-            this.toolStripAutoTransfer.ToolTipText = "发运";
-            this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
+            this.toolStripButtonDelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelect.Image")));
+            this.toolStripButtonDelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDelect.Name = "toolStripButtonDelect";
+            this.toolStripButtonDelect.Size = new System.Drawing.Size(56, 19);
+            this.toolStripButtonDelect.Text = "删除";
+            this.toolStripButtonDelect.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // FormTransferOrder
             // 
@@ -432,7 +432,6 @@
         private System.Windows.Forms.ToolStripButton buttonOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton buttonAlter;
-        private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStripTop;
@@ -450,5 +449,6 @@
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDelect;
     }
 }
