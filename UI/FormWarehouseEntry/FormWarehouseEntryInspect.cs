@@ -67,6 +67,42 @@ namespace WMS.UI
             return;
         }
 
+        private string AmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.modelBoxInspectionNoteItems[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.modelBoxInspectionNoteItems[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            this.modelBoxInspectionNoteItems.RefreshView(row);
+        }
+
         private void FormWarehouseEntryInspect_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();

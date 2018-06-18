@@ -37,6 +37,78 @@ namespace WMS.UI
             this.searchView.Search();
         }
 
+        private string AmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private string ReturnAmountForwardMapper(double amount, int row)
+        {
+            double? returnUnitAmount = (double?)this.model[row, "returnUnitAmount"];
+            if (returnUnitAmount.HasValue == false || returnUnitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / returnUnitAmount.Value);
+            }
+        }
+
+        private double ReturnAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? returnUnitAmount = (double?)this.model[row, "returnUnitAmount"];
+            if (returnUnitAmount.HasValue == false || returnUnitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * returnUnitAmount.Value;
+            }
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            this.model.RefreshView(row);
+        }
+
+        private void ReturnUnitAmountEditEnded(int row)
+        {
+            this.model.RefreshView(row);
+        }
+
         private void PersonEditEnded(int row, string personName)
         {
             this.model[row, "personId"] = 0;//先清除ID
