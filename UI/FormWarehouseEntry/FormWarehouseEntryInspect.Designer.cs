@@ -103,6 +103,7 @@
             this.modelBoxInspectionNoteItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.modelBoxInspectionNoteItems.Configuration = this.configurationInspectionNoteItem;
             this.modelBoxInspectionNoteItems.CurrentModelName = "default";
+            this.modelBoxInspectionNoteItems.Font = new System.Drawing.Font("宋体", 10F);
             this.modelBoxInspectionNoteItems.Location = new System.Drawing.Point(2, 53);
             this.modelBoxInspectionNoteItems.Margin = new System.Windows.Forms.Padding(2);
             this.modelBoxInspectionNoteItems.Mode = "default";
@@ -162,6 +163,7 @@
             this.modelInspectionNotes.AllSelectionRanges = new FrontWork.Range[0];
             this.modelInspectionNotes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.modelInspectionNotes.Configuration = this.configurationInspectionNote;
+            this.modelInspectionNotes.Font = new System.Drawing.Font("宋体", 10F);
             this.modelInspectionNotes.Location = new System.Drawing.Point(694, 63);
             this.modelInspectionNotes.Mode = "default";
             this.modelInspectionNotes.Name = "modelInspectionNotes";

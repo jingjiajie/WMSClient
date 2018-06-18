@@ -85,16 +85,71 @@ namespace WMS.UI
             this.TransferDone();
         }
 
-        private string StateForwardMapper(int state)
+        private string ScheduledAmountForwardMapper(double amount, int row)
         {
-            //0待入库 1送检中 2.全部入库 3.部分入库
-            switch (state)
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                case 0: return "待移库";
-                case 1: return "部分移库";
-                case 2: return "移库完成";
-                default: return "未知状态";
+                return amount.ToString();
             }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double ScheduledAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+
+        private string RealAmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double RealAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+        private void UnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
         }
 
         private void TransferDone()
@@ -201,6 +256,17 @@ namespace WMS.UI
             FAILED:
             MessageBox.Show($"库位\"{targetStorageLocationName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
+        }
+
+        private string StateForwardMapper(int state)
+        {
+            switch (state)
+            {
+                case 0: return "待上架";
+                case 1: return "部分上架";
+                case 2: return "全部上架";
+                default: return "未知状态";
+            }
         }
 
         //===========为了实现一个看起来天经地义的交互逻辑=========

@@ -83,9 +83,9 @@ namespace WMS.UI
         {
             switch (state)
             {
-                case 0: return "待移库";
-                case 1: return "部分移库";
-                case 2: return "移库完成";
+                case 0: return "待上架";
+                case 1: return "部分上架完成";
+                case 2: return "全部上架完成";
                 default: return "未知状态";
             }
         }

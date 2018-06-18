@@ -95,6 +95,7 @@
             this.model.AllSelectionRanges = new FrontWork.Range[0];
             this.model.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model.Configuration = this.configuration1;
+            this.model.Font = new System.Drawing.Font("宋体", 10F);
             this.model.Location = new System.Drawing.Point(261, 74);
             this.model.Mode = "default";
             this.model.Name = "model";
