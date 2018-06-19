@@ -296,6 +296,7 @@
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
+            this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(324, 25);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
@@ -447,7 +448,9 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormDeliverOrderItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormDeliverOrderItem";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDeliverOrderItemClosed);
             this.Load += new System.EventHandler(this.FormDeliverOrderItem_Load);
             this.panelSearchWidget.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

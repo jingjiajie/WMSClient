@@ -16,6 +16,7 @@ namespace WMS.UI.FormTransferOrder
     public partial class FormTransferOrderItem : Form
     {
         private IDictionary<string, object> transferOrder = null;
+        private Action addFinishedCallback = null;
         public FormTransferOrderItem(IDictionary<string, object> transferOrder)
         {
             MethodListenerContainer.Register(this);
@@ -62,6 +63,43 @@ namespace WMS.UI.FormTransferOrder
                 this.searchView1.Search();
             }
         }
+
+        private string AmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
+        }
+
         //待工整单完成
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
@@ -74,9 +112,14 @@ namespace WMS.UI.FormTransferOrder
                 this.searchView1.Search();
 
             }
-            catch
+            catch (WebException ex)
             {
-                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("整单完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         //部分完成
@@ -321,6 +364,39 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            return (from s in GlobalData.AllSupplies
+                    where s["materialName"] != null &&
+                    s["materialName"].ToString().StartsWith(str) &&
+                    (int)s["supplierId"] == selectedIDs[0]
+                    select s["materialName"]).ToArray();
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            return (from s in GlobalData.AllSupplies
+                    where s["materialNo"] != null &&
+                    s["materialNo"].ToString().StartsWith(str) &&
+                    (int)s["supplierId"] == selectedIDs[0]
+                    select s["materialNo"]).ToArray();
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            return (from s in GlobalData.AllSupplies
+                    where s["materialProductLine"] != null &&
+                    s["materialProductLine"].ToString().StartsWith(str) &&
+                    (int)s["supplierId"] == selectedIDs[0]
+                    select s["materialProductLine"]).ToArray();
+        }
+
         private void FillDefaultValue(int row, string fieldName, object value)
         {
             this.model1[row, fieldName] = value;
@@ -335,6 +411,19 @@ namespace WMS.UI.FormTransferOrder
                 { "transferOrderNo", this.transferOrder["no"]},
                 { "operateTime", DateTime.Now},
             });
+        }
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
+
+        private void FormTransferOrderItemClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
         }
 
         //=============天经地义的交互逻辑到这里结束===============
