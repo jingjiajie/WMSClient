@@ -17,15 +17,10 @@ namespace WMS.UI.FormStock
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-            this.model1.CellUpdated += this.model_CellUpdated;      
+            
         }
   
-        private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
-        {
 
-        }
-        private double[] amountTemp=new  double[10];
-        private double[] availableAmountTemp=new double[10];
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
@@ -53,6 +48,7 @@ namespace WMS.UI.FormStock
 
         private void FormAddStockRecord_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
         }
@@ -118,7 +114,6 @@ namespace WMS.UI.FormStock
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.amountTemp[row] = amount;
                 return amount;
             }
             else
@@ -129,12 +124,14 @@ namespace WMS.UI.FormStock
 
         private void UnitAmountEditEnded(int row)
         {
+            /*
             if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;            
             this.GetAmount(row, (double)this.model1[row, "unitAmount"]);
             this.GetAvailableAmount(row, (double)this.model1[row, "unitAmount"]);
-            
+            */
+            this.model1.RefreshView(row);
         }
-
+    /*
         private void GetAmount(int row, double unitAmount)
         {
             //if (this.amountTemp == 0) { return; }
@@ -146,7 +143,7 @@ namespace WMS.UI.FormStock
             //if (this.availableAmountTemp == 0) { return; }
             this.model1[row, "availableAmount"] = Utilities.DoubleToString(this.availableAmountTemp[row] * unitAmount);
         }
-
+        */
         private string AvailableAmountForwardMapper(double amount, int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
@@ -169,8 +166,7 @@ namespace WMS.UI.FormStock
             }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
-            {
-                this.availableAmountTemp[row] = amount;
+            {              
                 return amount;
             }
             else
