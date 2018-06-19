@@ -152,6 +152,7 @@
             this.ClientSize = new System.Drawing.Size(682, 82);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormDeliveryOrderChooseExcelType";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormDeliveryOrderChooseExcelType";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
