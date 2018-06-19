@@ -297,7 +297,10 @@ namespace WMS.UI.FormBasicInfos
             this.searchView1.Search();
         }
 
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
+        }
     }
      
 }
