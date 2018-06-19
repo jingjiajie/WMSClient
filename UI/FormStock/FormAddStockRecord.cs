@@ -17,9 +17,15 @@ namespace WMS.UI.FormStock
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.CellUpdated += this.model_CellUpdated;      
         }
-        private double amountTemp ;
-        private double availableAmountTemp;
+  
+        private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
+        {
+
+        }
+        private double[] amountTemp=new  double[10];
+        private double[] availableAmountTemp=new double[10];
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
@@ -112,7 +118,7 @@ namespace WMS.UI.FormStock
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.amountTemp = amount;
+                this.amountTemp[row] = amount;
                 return amount;
             }
             else
@@ -123,21 +129,22 @@ namespace WMS.UI.FormStock
 
         private void UnitAmountEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;
+            if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;            
             this.GetAmount(row, (double)this.model1[row, "unitAmount"]);
             this.GetAvailableAmount(row, (double)this.model1[row, "unitAmount"]);
+            
         }
 
         private void GetAmount(int row, double unitAmount)
         {
-            if (this.amountTemp == 0) { return; }
-            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp * unitAmount);
+            //if (this.amountTemp == 0) { return; }
+            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp[row] * unitAmount);
         }
 
         private void GetAvailableAmount(int row, double unitAmount)
         {
-            if (this.availableAmountTemp == 0) { return; }
-            this.model1[row, "availableAmount"] = Utilities.DoubleToString(this.availableAmountTemp * unitAmount);
+            //if (this.availableAmountTemp == 0) { return; }
+            this.model1[row, "availableAmount"] = Utilities.DoubleToString(this.availableAmountTemp[row] * unitAmount);
         }
 
         private string AvailableAmountForwardMapper(double amount, int row)
@@ -163,7 +170,7 @@ namespace WMS.UI.FormStock
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.availableAmountTemp = amount;
+                this.availableAmountTemp[row] = amount;
                 return amount;
             }
             else
@@ -171,8 +178,6 @@ namespace WMS.UI.FormStock
                 return amount * unitAmount.Value;
             }
         }
-
-
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
@@ -305,6 +310,12 @@ namespace WMS.UI.FormStock
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save()) { this.Close(); }
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.model1.RemoveSelectedRows();
         }
     }
 }

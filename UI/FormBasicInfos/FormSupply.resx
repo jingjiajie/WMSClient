@@ -157,9 +157,7 @@
         {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
 		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
 
-        {name:"defaultDeliveryAmount",type:"double",displayName:"默认发货数量（个）",visible:true,editable:true},
-		{name:"defaultDeliveryUnit",type:"string",displayName:"默认发货单位",visible:true},
-		{name:"defaultDeliveryUnitAmount",type:"double",displayName:"默认发货单位数量",visible:true,editable:true},
+
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:true,editable:true},
         {name:"photoIndex",type:"string",displayName:"照片索引",visible:true,editable:true},
@@ -171,32 +169,36 @@
         {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:true,editable:true},
         {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:true,editable:true},
 
-        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:true,editable:true},
-        {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:true,editable:true},
-		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:true,editable:true},
-		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:true,editable:true},
-		{name:"singleBoxHeight",type:"double",displayName:"单箱高",visible:true,editable:true},
-		{name:"singleBoxSNP",type:"double",displayName:"单箱SNP",visible:true,editable:true},
-		{name:"singleBoxRatedMinimumBoxCount",type:"double",displayName:"单箱额定托拍对应小箱数",visible:true,editable:true},
-		{name:"singleBoxWeight",type:"double",displayName:"单箱重量",visible:true,editable:true},
-		{name:"singleBoxLayerCount",type:"double",displayName:"单箱包装现状码放层数",visible:true,editable:true},
-		{name:"singleBoxStorageCount",type:"double",displayName:"单箱包装现状码放个数",visible:true,editable:true},
-		{name:"singleBoxTheoreticalLayerCount",type:"double",displayName:"单箱理论码放层数",visible:true,editable:true},
-		{name:"singleBoxTheoreticalStorageHeight",type:"double",displayName:"单箱理论码放高度",visible:true,editable:true},
-		{name:"singleBoxThroreticalStorageCount",type:"double",displayName:"单箱理论码放个数",visible:true,editable:true},
+        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:false,editable:true},
+        {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:false,editable:true},
+		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:false,editable:true},
+		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:false,editable:true},
+		{name:"singleBoxHeight",type:"double",displayName:"单箱高",visible:false,editable:true},
+		{name:"singleBoxSNP",type:"double",displayName:"单箱SNP",visible:false,editable:true},
+		{name:"singleBoxRatedMinimumBoxCount",type:"double",displayName:"单箱额定托拍对应小箱数",visible:false,editable:true},
+		{name:"singleBoxWeight",type:"double",displayName:"单箱重量",visible:false,editable:true},
+		{name:"singleBoxLayerCount",type:"double",displayName:"单箱包装现状码放层数",visible:false,editable:true},
+		{name:"singleBoxStorageCount",type:"double",displayName:"单箱包装现状码放个数",visible:false,editable:true},
+		{name:"singleBoxTheoreticalLayerCount",type:"double",displayName:"单箱理论码放层数",visible:false,editable:true},
+		{name:"singleBoxTheoreticalStorageHeight",type:"double",displayName:"单箱理论码放高度",visible:false,editable:true},
+		{name:"singleBoxThroreticalStorageCount",type:"double",displayName:"单箱理论码放个数",visible:false,editable:true},
 
-        {name:"outerPackingPhotoIndex",type:"string",displayName:"外包装照片索引（标签，单包）",visible:true,editable:true},
-		{name:"outerPackingBoxType",type:"string",displayName:"外包装包装箱类型",visible:true,editable:true},
-		{name:"outerPackingLength",type:"double",displayName:"外包装长",visible:true,editable:true},
-		{name:"outerPackingWidth",type:"double",displayName:"外包装宽",visible:true,editable:true},
-		{name:"outerPackingHeight",type:"double",displayName:"外包装高",visible:true,editable:true},
-		{name:"outerPackingSNP",type:"string",displayName:"外包装SNP",visible:true,editable:true},
-		{name:"outerPackingComment",type:"string",displayName:"外包装备注（SNP）",visible:true,editable:true},
-		{name:"outerPackingRequiredLayers",type:"double",displayName:"外包装包装要求码放层数",visible:true,editable:true},
-		{name:"deliveryBoxType",type:"string",displayName:"出货箱型",visible:true,editable:true},
-		{name:"deliveryBoxLength",type:"double",displayName:"出货箱体长度",visible:true,editable:true},
-		{name:"deliveryBoxWidth",type:"double",displayName:"出货箱体宽度",visible:true,editable:true},
-		{name:"deliveryBoxHeight",type:"double",displayName:"出货箱体高度",visible:true,editable:true},
+        {name:"outerPackingPhotoIndex",type:"string",displayName:"外包装照片索引（标签，单包）",visible:false,editable:true},
+		{name:"outerPackingBoxType",type:"string",displayName:"外包装包装箱类型",visible:false,editable:true},
+		{name:"outerPackingLength",type:"double",displayName:"外包装长",visible:false,editable:true},
+		{name:"outerPackingWidth",type:"double",displayName:"外包装宽",visible:false,editable:true},
+		{name:"outerPackingHeight",type:"double",displayName:"外包装高",visible:false,editable:true},
+		{name:"outerPackingSNP",type:"string",displayName:"外包装SNP",visible:false,editable:true},
+		{name:"outerPackingComment",type:"string",displayName:"外包装备注（SNP）",visible:false,editable:true},
+		{name:"outerPackingRequiredLayers",type:"double",displayName:"外包装包装要求码放层数",visible:false,editable:true},
+
+		{name:"deliveryBoxType",type:"string",displayName:"出货箱型",visible:false,editable:true},
+		{name:"deliveryBoxLength",type:"double",displayName:"出货箱体长度",visible:false,editable:true},
+		{name:"deliveryBoxWidth",type:"double",displayName:"出货箱体宽度",visible:false,editable:true},
+		{name:"deliveryBoxHeight",type:"double",displayName:"出货箱体高度",visible:false,editable:true},
+        {name:"defaultDeliveryAmount",type:"double",displayName:"默认发货数量（个）",visible:false,editable:true},
+		{name:"defaultDeliveryUnit",type:"string",displayName:"默认发货单位",visible:false},
+		{name:"defaultDeliveryUnitAmount",type:"double",displayName:"默认发货单位数量",visible:false,editable:true},
 
 		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
@@ -231,7 +233,289 @@
             url:"{$url}/warehouse/{$accountBook}/supply/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
-    }
+    
+},
+{ mode:"default1",
+
+        fields:[
+		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
+		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
+		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+        {name:"materialId",type:"int",displayName:"物料ID",visible:false},
+		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+
+        {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
+		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
+		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:false},
+		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
+		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
+		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:false,editable:true},
+		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
+		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
+
+
+		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
+		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
+
+		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
+		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
+
+		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
+		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+
+		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
+		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+
+        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
+		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+
+
+
+        {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
+        {name:"photoIndex",type:"string",displayName:"照片索引",visible:false,editable:true},
+        {name:"containerNo",type:"string",displayName:"容器号",visible:false,editable:true},
+        {name:"factroy",type:"string",displayName:"工厂",visible:false,editable:true},
+        {name:"workPosition",type:"string",displayName:"工厂",visible:false,editable:true},
+        {name:"supplierType",type:"string",displayName:"A系列/B系列供应商",visible:false,editable:true},
+        {name:"type",type:"string",displayName:"机型区分",visible:false,editable:true},
+        {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:false,editable:true},
+        {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:false,editable:true},
+
+        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:true,editable:true},
+        {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:true,editable:true},
+		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:true,editable:true},
+		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:true,editable:true},
+		{name:"singleBoxHeight",type:"double",displayName:"单箱高",visible:true,editable:true},
+		{name:"singleBoxSNP",type:"double",displayName:"单箱SNP",visible:true,editable:true},
+		{name:"singleBoxRatedMinimumBoxCount",type:"double",displayName:"单箱额定托拍对应小箱数",visible:true,editable:true},
+		{name:"singleBoxWeight",type:"double",displayName:"单箱重量",visible:true,editable:true},
+		{name:"singleBoxLayerCount",type:"double",displayName:"单箱包装现状码放层数",visible:true,editable:true},
+		{name:"singleBoxStorageCount",type:"double",displayName:"单箱包装现状码放个数",visible:true,editable:true},
+		{name:"singleBoxTheoreticalLayerCount",type:"double",displayName:"单箱理论码放层数",visible:true,editable:true},
+		{name:"singleBoxTheoreticalStorageHeight",type:"double",displayName:"单箱理论码放高度",visible:true,editable:true},
+		{name:"singleBoxThroreticalStorageCount",type:"double",displayName:"单箱理论码放个数",visible:true,editable:true},
+
+        {name:"outerPackingPhotoIndex",type:"string",displayName:"外包装照片索引（标签，单包）",visible:false,editable:true},
+		{name:"outerPackingBoxType",type:"string",displayName:"外包装包装箱类型",visible:false,editable:true},
+		{name:"outerPackingLength",type:"double",displayName:"外包装长",visible:false,editable:true},
+		{name:"outerPackingWidth",type:"double",displayName:"外包装宽",visible:false,editable:true},
+		{name:"outerPackingHeight",type:"double",displayName:"外包装高",visible:false,editable:true},
+		{name:"outerPackingSNP",type:"string",displayName:"外包装SNP",visible:false,editable:true},
+		{name:"outerPackingComment",type:"string",displayName:"外包装备注（SNP）",visible:false,editable:true},
+		{name:"outerPackingRequiredLayers",type:"double",displayName:"外包装包装要求码放层数",visible:false,editable:true},
+
+		{name:"deliveryBoxType",type:"string",displayName:"出货箱型",visible:false,editable:true},
+		{name:"deliveryBoxLength",type:"double",displayName:"出货箱体长度",visible:false,editable:true},
+		{name:"deliveryBoxWidth",type:"double",displayName:"出货箱体宽度",visible:false,editable:true},
+		{name:"deliveryBoxHeight",type:"double",displayName:"出货箱体高度",visible:false,editable:true},
+        {name:"defaultDeliveryAmount",type:"double",displayName:"默认发货数量（个）",visible:false,editable:true},
+		{name:"defaultDeliveryUnit",type:"string",displayName:"默认发货单位",visible:false},
+		{name:"defaultDeliveryUnitAmount",type:"double",displayName:"默认发货单位数量",visible:false,editable:true},
+
+		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
+		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
+		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
+		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
+		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
+		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
+		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
+		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+
+	]
+	
+    
+},
+{mode:"default2",
+        fields:[
+		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
+		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
+		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+        {name:"materialId",type:"int",displayName:"物料ID",visible:false},
+		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+
+        {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
+		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
+		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:false},
+		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
+		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
+		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:false,editable:true},
+		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
+		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
+
+
+		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
+		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
+
+		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
+		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
+
+		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
+		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+
+		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
+		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+
+        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
+		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+
+
+
+        {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
+        {name:"photoIndex",type:"string",displayName:"照片索引",visible:false,editable:true},
+        {name:"containerNo",type:"string",displayName:"容器号",visible:false,editable:true},
+        {name:"factroy",type:"string",displayName:"工厂",visible:false,editable:true},
+        {name:"workPosition",type:"string",displayName:"工厂",visible:false,editable:true},
+        {name:"supplierType",type:"string",displayName:"A系列/B系列供应商",visible:false,editable:true},
+        {name:"type",type:"string",displayName:"机型区分",visible:false,editable:true},
+        {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:false,editable:true},
+        {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:false,editable:true},
+
+        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:false,editable:true},
+        {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:false,editable:true},
+		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:false,editable:true},
+		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:false,editable:true},
+		{name:"singleBoxHeight",type:"double",displayName:"单箱高",visible:false,editable:true},
+		{name:"singleBoxSNP",type:"double",displayName:"单箱SNP",visible:false,editable:true},
+		{name:"singleBoxRatedMinimumBoxCount",type:"double",displayName:"单箱额定托拍对应小箱数",visible:false,editable:true},
+		{name:"singleBoxWeight",type:"double",displayName:"单箱重量",visible:false,editable:true},
+		{name:"singleBoxLayerCount",type:"double",displayName:"单箱包装现状码放层数",visible:false,editable:true},
+		{name:"singleBoxStorageCount",type:"double",displayName:"单箱包装现状码放个数",visible:false,editable:true},
+		{name:"singleBoxTheoreticalLayerCount",type:"double",displayName:"单箱理论码放层数",visible:false,editable:true},
+		{name:"singleBoxTheoreticalStorageHeight",type:"double",displayName:"单箱理论码放高度",visible:false,editable:true},
+		{name:"singleBoxThroreticalStorageCount",type:"double",displayName:"单箱理论码放个数",visible:false,editable:true},
+
+        {name:"outerPackingPhotoIndex",type:"string",displayName:"外包装照片索引（标签，单包）",visible:true,editable:true},
+		{name:"outerPackingBoxType",type:"string",displayName:"外包装包装箱类型",visible:true,editable:true},
+		{name:"outerPackingLength",type:"double",displayName:"外包装长",visible:true,editable:true},
+		{name:"outerPackingWidth",type:"double",displayName:"外包装宽",visible:true,editable:true},
+		{name:"outerPackingHeight",type:"double",displayName:"外包装高",visible:true,editable:true},
+		{name:"outerPackingSNP",type:"string",displayName:"外包装SNP",visible:true,editable:true},
+		{name:"outerPackingComment",type:"string",displayName:"外包装备注（SNP）",visible:true,editable:true},
+		{name:"outerPackingRequiredLayers",type:"double",displayName:"外包装包装要求码放层数",visible:true,editable:true},
+
+		{name:"deliveryBoxType",type:"string",displayName:"出货箱型",visible:false,editable:true},
+		{name:"deliveryBoxLength",type:"double",displayName:"出货箱体长度",visible:false,editable:true},
+		{name:"deliveryBoxWidth",type:"double",displayName:"出货箱体宽度",visible:false,editable:true},
+		{name:"deliveryBoxHeight",type:"double",displayName:"出货箱体高度",visible:false,editable:true},
+        {name:"defaultDeliveryAmount",type:"double",displayName:"默认发货数量（个）",visible:false,editable:true},
+		{name:"defaultDeliveryUnit",type:"string",displayName:"默认发货单位",visible:false},
+		{name:"defaultDeliveryUnitAmount",type:"double",displayName:"默认发货单位数量",visible:false,editable:true},
+
+		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
+		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
+		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
+		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
+		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
+		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
+		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
+		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+	]
+
+    
+},
+{mode:"default3",
+        fields:[
+		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
+		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
+		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+        {name:"materialId",type:"int",displayName:"物料ID",visible:false},
+		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+
+        {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
+		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
+		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:false},
+		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
+		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
+		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:false,editable:true},
+		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
+		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
+
+
+		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
+		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
+
+		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
+		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
+
+		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
+		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+
+		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
+		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+
+        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
+		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+
+
+
+        {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
+        {name:"photoIndex",type:"string",displayName:"照片索引",visible:false,editable:true},
+        {name:"containerNo",type:"string",displayName:"容器号",visible:false,editable:true},
+        {name:"factroy",type:"string",displayName:"工厂",visible:false,editable:true},
+        {name:"workPosition",type:"string",displayName:"工厂",visible:false,editable:true},
+        {name:"supplierType",type:"string",displayName:"A系列/B系列供应商",visible:false,editable:true},
+        {name:"type",type:"string",displayName:"机型区分",visible:false,editable:true},
+        {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:false,editable:true},
+        {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:false,editable:true},
+
+        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:false,editable:true},
+        {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:false,editable:true},
+		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:false,editable:true},
+		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:false,editable:true},
+		{name:"singleBoxHeight",type:"double",displayName:"单箱高",visible:false,editable:true},
+		{name:"singleBoxSNP",type:"double",displayName:"单箱SNP",visible:false,editable:true},
+		{name:"singleBoxRatedMinimumBoxCount",type:"double",displayName:"单箱额定托拍对应小箱数",visible:false,editable:true},
+		{name:"singleBoxWeight",type:"double",displayName:"单箱重量",visible:false,editable:true},
+		{name:"singleBoxLayerCount",type:"double",displayName:"单箱包装现状码放层数",visible:false,editable:true},
+		{name:"singleBoxStorageCount",type:"double",displayName:"单箱包装现状码放个数",visible:false,editable:true},
+		{name:"singleBoxTheoreticalLayerCount",type:"double",displayName:"单箱理论码放层数",visible:false,editable:true},
+		{name:"singleBoxTheoreticalStorageHeight",type:"double",displayName:"单箱理论码放高度",visible:false,editable:true},
+		{name:"singleBoxThroreticalStorageCount",type:"double",displayName:"单箱理论码放个数",visible:false,editable:true},
+
+        {name:"outerPackingPhotoIndex",type:"string",displayName:"外包装照片索引（标签，单包）",visible:false,editable:true},
+		{name:"outerPackingBoxType",type:"string",displayName:"外包装包装箱类型",visible:false,editable:true},
+		{name:"outerPackingLength",type:"double",displayName:"外包装长",visible:false,editable:true},
+		{name:"outerPackingWidth",type:"double",displayName:"外包装宽",visible:false,editable:true},
+		{name:"outerPackingHeight",type:"double",displayName:"外包装高",visible:false,editable:true},
+		{name:"outerPackingSNP",type:"string",displayName:"外包装SNP",visible:false,editable:true},
+		{name:"outerPackingComment",type:"string",displayName:"外包装备注（SNP）",visible:false,editable:true},
+		{name:"outerPackingRequiredLayers",type:"double",displayName:"外包装包装要求码放层数",visible:false,editable:true},
+
+		{name:"deliveryBoxType",type:"string",displayName:"出货箱型",visible:true,editable:true},
+		{name:"deliveryBoxLength",type:"double",displayName:"出货箱体长度",visible:true,editable:true},
+		{name:"deliveryBoxWidth",type:"double",displayName:"出货箱体宽度",visible:true,editable:true},
+		{name:"deliveryBoxHeight",type:"double",displayName:"出货箱体高度",visible:true,editable:true},
+        {name:"defaultDeliveryAmount",type:"double",displayName:"默认发货数量（个）",visible:true,editable:true},
+		{name:"defaultDeliveryUnit",type:"string",displayName:"默认发货单位",visible:true},
+		{name:"defaultDeliveryUnitAmount",type:"double",displayName:"默认发货单位数量",visible:true,editable:true},
+
+		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
+		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
+		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
+		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
+		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
+		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
+		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
+		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+
+	]	
+    
+}
 ]</value>
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
