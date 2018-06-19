@@ -16,7 +16,7 @@ namespace WMS.UI.FormStock
         private double amountTemp;
         private double availableAmountTemp;
         public FormReturnSupply()
-        {
+        {         
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
@@ -82,7 +82,6 @@ namespace WMS.UI.FormStock
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.amountTemp = amount;
                 return amount;
             }
             else
@@ -90,26 +89,29 @@ namespace WMS.UI.FormStock
                 return amount * unitAmount.Value;
             }
         }
-    
+
         private void UnitAmountEditEnded(int row)
         {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;
+            /*
+            if (string.IsNullOrWhiteSpace(this.model1[row, "unitAmount"]?.ToString())) return;            
             this.GetAmount(row, (double)this.model1[row, "unitAmount"]);
             this.GetAvailableAmount(row, (double)this.model1[row, "unitAmount"]);
+            */
+            this.model1.RefreshView(row);
         }
+        /*
+            private void GetAmount(int row, double unitAmount)
+            {
+                //if (this.amountTemp == 0) { return; }
+                this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp[row] * unitAmount);
+            }
 
-        private void GetAmount(int row, double unitAmount)
-        {
-            if (this.amountTemp == 0) { return; }
-            this.model1[row, "amount"] = Utilities.DoubleToString(this.amountTemp * unitAmount);          
-        }
-
-        private void GetAvailableAmount(int row, double unitAmount)
-        {
-            if (this.availableAmountTemp == 0) { return; }
-            this.model1 [row, "availableAmount"] = Utilities.DoubleToString(this.availableAmountTemp* unitAmount);
-        }
-
+            private void GetAvailableAmount(int row, double unitAmount)
+            {
+                //if (this.availableAmountTemp == 0) { return; }
+                this.model1[row, "availableAmount"] = Utilities.DoubleToString(this.availableAmountTemp[row] * unitAmount);
+            }
+            */
         private string AvailableAmountForwardMapper(double amount, int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
@@ -133,7 +135,6 @@ namespace WMS.UI.FormStock
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.availableAmountTemp = amount;
                 return amount;
             }
             else
@@ -141,6 +142,8 @@ namespace WMS.UI.FormStock
                 return amount * unitAmount.Value;
             }
         }
+
+
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
@@ -277,6 +280,7 @@ namespace WMS.UI.FormStock
 
         private void FormReturnSupply_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
         }
