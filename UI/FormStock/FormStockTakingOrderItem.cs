@@ -14,6 +14,8 @@ namespace WMS.UI.FormStockTaking
     {
         private IDictionary<string, object> stockTakingOrder = null;
         private Action addFinishedCallback = null;
+        private double amountTemp;
+        private double availableAmountTemp;
         public FormStockTakingOrderItem(IDictionary<string, object> srockTakingOrder)
         {
             MethodListenerContainer.Register(this);            
@@ -125,33 +127,40 @@ namespace WMS.UI.FormStockTaking
             }
         }
 
-        private double AmountForwardMapper(double amount, int row)
+
+
+        private string AmountForwardMapper(double amount, int row)
         {
-            var rowDate = this.model1.GetRow(row);
-            double unitAmount = (double)rowDate["unitAmount"];
-            return amount / unitAmount;
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
         }
 
-        private double AmountBackMapper(double amount, int row)
-        {
-            var rowDate = this.model1.GetRow(row);
-            double unitAmount = (double)rowDate["unitAmount"];
-            return amount * unitAmount;
-        }
 
-        private double RealAmountForwardMapper(double amount, int row)
-        {
-            var rowDate = this.model1.GetRow(row);
-            double unitAmount = (double)rowDate["unitAmount"];
-            return amount / unitAmount;
-        }
 
-        private double RealAmountBackMapper(double amount, int row)
+
+        private string RealAmountForwardMapper(double amount, int row)
         {
-            var rowDate = this.model1.GetRow(row);
-            double unitAmount = (double)rowDate["unitAmount"];
-            return amount * unitAmount;
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
         }
+        
+
+
+
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
@@ -305,7 +314,7 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAlter.Enabled = false;
             this.ButtonCancel.Visible = true;
             this.buttonStartAdd.Visible = true;
-            this.model1.InsertRows(new int[] { 0, 1, 2, 3, 4 }, null);
+            this.model1.InsertRows(new int[] { 0,1,2,3,4 }, null);
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -383,7 +392,8 @@ namespace WMS.UI.FormStockTaking
             List<int> supplyId = new List<int>();
             for(int i = 0; i < this.model1.RowCount - 1; i++)
             {
-                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED&& (int)this.model1[i, "supplyId"]!=0)
+
+                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED_UPDATED && (int)this.model1[i, "supplyId"]!=0)
                 {                   
                     supplyId.Add((int)this.model1[i, "supplyId"]);
                 }
