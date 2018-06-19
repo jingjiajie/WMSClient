@@ -355,8 +355,7 @@ namespace WMS.UI.FormTransferOrder
                 this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
 
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
-                this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
-                
+                this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);               
                 //在备货完成的库位里发货
                 this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
                 this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
