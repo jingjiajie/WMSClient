@@ -117,6 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},       
+        {name:"storageAreaId",displayName:"库区id",type:"string",visible:false},      
+        {name:"no",displayName:"库位编码",type:"string"},
+        {name:"name",displayName:"库位名称",type:"string"},
+        {name:"storageAreaNo",displayName:"库区编码",type:"string",association:"#storageAreaNoAssociation",editEnded:"#storageAreaNoEditEnded"}, 
+        {name:"storageAreaName",displayName:"库区名称",type:"string",association:"#storageAreaNameAssociation",editEnded:"#storageAreaNameEditEnded"},                
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},   
+        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/storage_location/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
+  </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>440, 59</value>
   </metadata>
@@ -176,43 +213,6 @@
         +e6NFHQfToXU+joHbjU0xHkgckn7/0fbjt4Ig1hMD7u08VAKOmTPwnr2leSpz87O5jee3gVaPklTtduL
         iktK0NPd8/iBiSC9crslenDuwIHdOvA7jR9uIAdEjT8AAAAASUVORK5CYII=
 </value>
-  </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"storageAreaId",displayName:"库区id",type:"string",visible:false},      
-        {name:"no",displayName:"库位编码",type:"string"},
-        {name:"name",displayName:"库位名称",type:"string"},
-        {name:"storageAreaNo",displayName:"库区编码",type:"string",association:"#storageAreaNoAssociation",editEnded:"#storageAreaNoEditEnded"}, 
-        {name:"storageAreaName",displayName:"库区名称",type:"string",association:"#storageAreaNameAssociation",editEnded:"#storageAreaNameEditEnded"},                
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},   
-        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
-    httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/storage_location/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/storage_location/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/storage_location/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/storage_location/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/storage_location/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>589, 59</value>
