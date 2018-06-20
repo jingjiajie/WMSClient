@@ -150,12 +150,12 @@
             // pagerView1
             // 
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(2, 312);
+            this.pagerView1.Location = new System.Drawing.Point(2, 317);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(955, 31);
+            this.pagerView1.Size = new System.Drawing.Size(955, 26);
             this.pagerView1.TabIndex = 14;
             // 
             // searchView1
@@ -229,7 +229,7 @@
             this.panelPager.Location = new System.Drawing.Point(0, 72);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(959, 238);
+            this.panelPager.Size = new System.Drawing.Size(959, 243);
             this.panelPager.TabIndex = 8;
             // 
             // reoGridView1
@@ -242,7 +242,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(959, 238);
+            this.reoGridView1.Size = new System.Drawing.Size(959, 243);
             this.reoGridView1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -262,7 +262,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(959, 364);
             this.tableLayoutPanel1.TabIndex = 14;
