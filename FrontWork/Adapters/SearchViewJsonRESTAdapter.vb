@@ -85,6 +85,9 @@ Public Class SearchViewJsonRESTAdapter
                 Dim key = condition.Key
                 Dim relation = condition.Relation
                 Dim values = condition.Values
+                For i = 0 To values.Length - 1
+                    values(i) = Util.UrlEncode(values(i))
+                Next
                 Dim jsonValues = jsSerializer.Serialize(values)
 
                 Dim fieldKey = Me.APIFieldNames.ConditionParamNames.Key
