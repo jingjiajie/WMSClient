@@ -171,7 +171,7 @@
             // 
             // pagerView1
             // 
-            this.pagerView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.pagerView1.BackColor = System.Drawing.SystemColors.Control;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pagerView1.Location = new System.Drawing.Point(2, 481);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -203,7 +203,7 @@
             // 
             // searchView1
             // 
-            this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
