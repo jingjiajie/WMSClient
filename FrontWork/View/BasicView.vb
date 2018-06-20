@@ -16,7 +16,7 @@ Public Class BasicView
     Private _model As Model
     Private _mode As String = "default"
 
-    Private Property JsEngine As New Jint.Engine
+    'Private Property JsEngine As New Jint.Engine
     Private Property FormAssociation As New FormAssociation
 
     ''' <summary>
@@ -440,7 +440,7 @@ Public Class BasicView
         RemoveHandler Me.Panel.Enter, AddressOf Me.TableLayoutPanel_Enter
         AddHandler Me.Panel.Enter, AddressOf Me.TableLayoutPanel_Enter
 
-        Call Me.BindViewToJsEngine()
+        'Call Me.BindViewToJsEngine()
     End Sub
 
     Private Sub TableLayoutPanel_Leave(sender, e)
@@ -731,58 +731,58 @@ Public Class BasicView
         Return value
     End Function
 
-    Private Sub BindViewToJsEngine()
-        Dim jsEngine = Me.JsEngine
-        Dim viewObj = jsEngine.Execute("view = {}").GetValue("view").AsObject
-        For Each control In Me.Panel.Controls
-            If TypeOf control Is Label Then Continue For '提示标签就不用加到js里了
-            Try
-                viewObj.Put(control.Name, JsValue.FromObject(jsEngine, control), True)
+    'Private Sub BindViewToJsEngine()
+    '    Dim jsEngine = Me.JsEngine
+    '    Dim viewObj = jsEngine.Execute("view = {}").GetValue("view").AsObject
+    '    For Each control In Me.Panel.Controls
+    '        If TypeOf control Is Label Then Continue For '提示标签就不用加到js里了
+    '        Try
+    '            viewObj.Put(control.Name, JsValue.FromObject(jsEngine, control), True)
 
-                If TypeOf control Is TextBox Then
-                    Dim tmp = String.Format(
-                         <string>
-                             {0} = undefined
-                             Object.defineProperty(
-                                this,
-                                "{0}",
-                                {{get: function(){{
-                                    return view.{0}.Text
-                                }},
-                                set: function(val){{
-                                    view.{0}.Text = val
-                                }} }}
-                            )
-                         </string>.Value, control.Name)
-                    jsEngine.Execute(tmp)
-                ElseIf TypeOf control Is ComboBox Then
-                    Dim tmp = String.Format(
-                         <string>
-                             {0} = undefined
-                             Object.defineProperty(
-                                this,
-                                "{0}",
-                                {{get: function(){{
-                                    return view.{0}.SelectedItem
-                                }},
-                                set: function(val){{
-                                    for(var i=0;i &lt; view.{0}.Items.Count;i++){{
-                                        if(view.{0}.Items[i] == val){{
-                                            view.{0}.SelectedIndex = i; 
-                                            return;
-                                        }}
-                                    }}
-                                }} }}
-                            )
-                         </string>.Value, control.Name)
-                    jsEngine.Execute(tmp)
-                End If
-            Catch ex As Exception
-                Logger.SetMode(LogMode.INIT_VIEW)
-                Logger.PutMessage(ex.Message)
-            End Try
-        Next
-    End Sub
+    '            If TypeOf control Is TextBox Then
+    '                Dim tmp = String.Format(
+    '                     <string>
+    '                         {0} = undefined
+    '                         Object.defineProperty(
+    '                            this,
+    '                            "{0}",
+    '                            {{get: function(){{
+    '                                return view.{0}.Text
+    '                            }},
+    '                            set: function(val){{
+    '                                view.{0}.Text = val
+    '                            }} }}
+    '                        )
+    '                     </string>.Value, control.Name)
+    '                jsEngine.Execute(tmp)
+    '            ElseIf TypeOf control Is ComboBox Then
+    '                Dim tmp = String.Format(
+    '                     <string>
+    '                         {0} = undefined
+    '                         Object.defineProperty(
+    '                            this,
+    '                            "{0}",
+    '                            {{get: function(){{
+    '                                return view.{0}.SelectedItem
+    '                            }},
+    '                            set: function(val){{
+    '                                for(var i=0;i &lt; view.{0}.Items.Count;i++){{
+    '                                    if(view.{0}.Items[i] == val){{
+    '                                        view.{0}.SelectedIndex = i; 
+    '                                        return;
+    '                                    }}
+    '                                }}
+    '                            }} }}
+    '                        )
+    '                     </string>.Value, control.Name)
+    '                jsEngine.Execute(tmp)
+    '            End If
+    '        Catch ex As Exception
+    '            Logger.SetMode(LogMode.INIT_VIEW)
+    '            Logger.PutMessage(ex.Message)
+    '        End Try
+    '    Next
+    'End Sub
 
     Private Sub BasicView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

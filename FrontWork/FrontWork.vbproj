@@ -201,6 +201,7 @@
     <Compile Include="View\TabView.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="View\ViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Adapters\SearchViewJsonRESTAdapter.resx">
