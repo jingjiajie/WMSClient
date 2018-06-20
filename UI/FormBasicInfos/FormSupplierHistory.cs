@@ -22,6 +22,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void FormSupplierHistory_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.synchronizer.FindAPI.SetRequestParameter("$history", "history");
             this.synchronizer.GetCountAPI.SetRequestParameter("$history", "history");
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
