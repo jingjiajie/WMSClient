@@ -80,7 +80,7 @@
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(853, 25);
@@ -102,20 +102,21 @@
             // 
             this.panelPager.Controls.Add(this.pagerView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(3, 449);
+            this.panelPager.Location = new System.Drawing.Point(0, 446);
+            this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(847, 24);
+            this.panelPager.Size = new System.Drawing.Size(853, 30);
             this.panelPager.TabIndex = 5;
             // 
             // pagerView1
             // 
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pagerView1.Location = new System.Drawing.Point(0, 0);
-            this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerView1.Margin = new System.Windows.Forms.Padding(0);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = ((int)(50));
-            this.pagerView1.Size = new System.Drawing.Size(847, 24);
+            this.pagerView1.PageSize = 50;
+            this.pagerView1.Size = new System.Drawing.Size(853, 30);
             this.pagerView1.TabIndex = 15;
             // 
             // tableLayoutPanel
@@ -253,6 +254,7 @@
             // jsonRESTSynchronizer1
             // 
             this.jsonRESTSynchronizer1.Configuration = this.configuration1;
+            this.jsonRESTSynchronizer1.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
             this.jsonRESTSynchronizer1.Location = new System.Drawing.Point(441, 113);
             this.jsonRESTSynchronizer1.Margin = new System.Windows.Forms.Padding(0);
             this.jsonRESTSynchronizer1.Mode = "default";
@@ -266,6 +268,7 @@
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
+            this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(247, 113);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
@@ -280,7 +283,7 @@
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView1.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridView1.Margin = new System.Windows.Forms.Padding(0);
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
@@ -291,9 +294,10 @@
             // 
             this.panel2.Controls.Add(this.basicView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 48);
+            this.panel2.Location = new System.Drawing.Point(0, 45);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(847, 74);
+            this.panel2.Size = new System.Drawing.Size(853, 80);
             this.panel2.TabIndex = 8;
             // 
             // basicView1
@@ -308,7 +312,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(847, 74);
+            this.basicView1.Size = new System.Drawing.Size(853, 80);
             this.basicView1.TabIndex = 15;
             // 
             // tableLayoutPanel1

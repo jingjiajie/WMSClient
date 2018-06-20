@@ -41,7 +41,12 @@ namespace WMS.UI.FormTransferOrder
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormTransferOrderItem(rowData).Show();
+            var a1= new FormTransferOrderItem(rowData);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)

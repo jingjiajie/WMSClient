@@ -27,7 +27,8 @@ namespace WMS.UI.FormStockTaking
       
 
         private void FormStockTakingOrderItem_Load(object sender, EventArgs e)
-        {                       
+        {
+            this.CenterToScreen();
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);

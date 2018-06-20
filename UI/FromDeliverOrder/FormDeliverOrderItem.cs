@@ -16,7 +16,7 @@ namespace WMS.UI.FromDeliverOrder
     public partial class FormDeliverOrderItem : Form
     {
         private IDictionary<string, object> deliveryOrder = null;
-
+        private Action addFinishedCallback = null;
         public FormDeliverOrderItem(IDictionary<string, object> deliveryOrder)
         {
             MethodListenerContainer.Register(this);
@@ -285,6 +285,17 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
 
+        private void FormDeliverOrderItemClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
+        }
     }
 }
