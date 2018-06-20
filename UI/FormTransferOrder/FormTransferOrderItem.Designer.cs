@@ -81,7 +81,7 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
@@ -92,24 +92,26 @@
             this.tableLayoutPanel1.Controls.Add(this.panel8, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 198F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(797, 450);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1182, 553);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 63);
+            this.panel1.Location = new System.Drawing.Point(0, 70);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(791, 134);
+            this.panel1.Size = new System.Drawing.Size(1182, 198);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -127,17 +129,17 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(791, 134);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1182, 198);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(541, 0);
+            this.panel3.Location = new System.Drawing.Point(821, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(250, 134);
+            this.panel3.Size = new System.Drawing.Size(375, 198);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -145,7 +147,7 @@
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonFinish, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonFinishAll, 1, 1);
@@ -156,11 +158,11 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 4;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(250, 134);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(375, 198);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonFinish
@@ -172,9 +174,10 @@
             this.buttonFinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFinish.FlatAppearance.BorderSize = 0;
             this.buttonFinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinish.Location = new System.Drawing.Point(43, 70);
+            this.buttonFinish.Location = new System.Drawing.Point(64, 104);
+            this.buttonFinish.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(164, 44);
+            this.buttonFinish.Size = new System.Drawing.Size(247, 60);
             this.buttonFinish.TabIndex = 2;
             this.buttonFinish.Text = "完成选中条目";
             this.buttonFinish.UseVisualStyleBackColor = false;
@@ -189,9 +192,10 @@
             this.buttonFinishAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFinishAll.FlatAppearance.BorderSize = 0;
             this.buttonFinishAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinishAll.Location = new System.Drawing.Point(43, 20);
+            this.buttonFinishAll.Location = new System.Drawing.Point(64, 34);
+            this.buttonFinishAll.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonFinishAll.Name = "buttonFinishAll";
-            this.buttonFinishAll.Size = new System.Drawing.Size(164, 44);
+            this.buttonFinishAll.Size = new System.Drawing.Size(247, 60);
             this.buttonFinishAll.TabIndex = 3;
             this.buttonFinishAll.Text = "完成所有条目";
             this.buttonFinishAll.UseVisualStyleBackColor = false;
@@ -204,7 +208,7 @@
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(541, 134);
+            this.panel4.Size = new System.Drawing.Size(821, 198);
             this.panel4.TabIndex = 2;
             // 
             // basicView1
@@ -219,16 +223,16 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 0);
-            this.basicView1.Size = new System.Drawing.Size(541, 134);
+            this.basicView1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 0);
+            this.basicView1.Size = new System.Drawing.Size(821, 198);
             this.basicView1.TabIndex = 17;
             // 
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(137, 34);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.configuration1.Location = new System.Drawing.Point(206, 48);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormTransferOrderItem",
         "AssociationMethodListener"};
@@ -236,7 +240,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(135, 144);
+            this.configuration1.Size = new System.Drawing.Size(270, 255);
             this.configuration1.TabIndex = 15;
             // 
             // model1
@@ -244,12 +248,13 @@
             this.model1.AllSelectionRanges = new FrontWork.Range[0];
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
-            this.model1.Location = new System.Drawing.Point(317, 54);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Font = new System.Drawing.Font("宋体", 10F);
+            this.model1.Location = new System.Drawing.Point(476, 77);
+            this.model1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(135, 144);
+            this.model1.Size = new System.Drawing.Size(202, 204);
             this.model1.TabIndex = 16;
             // 
             // panel2
@@ -260,9 +265,10 @@
             this.panel2.Controls.Add(this.configuration1);
             this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 203);
+            this.panel2.Location = new System.Drawing.Point(4, 273);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(791, 189);
+            this.panel2.Size = new System.Drawing.Size(1174, 205);
             this.panel2.TabIndex = 1;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -275,12 +281,12 @@
             orderParamNamesType1.Order = "order";
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(649, 65);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(973, 92);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(90, 90);
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(135, 127);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 18;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
@@ -293,7 +299,7 @@
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(791, 24);
+            this.pagerView1.Size = new System.Drawing.Size(1174, 25);
             this.pagerView1.TabIndex = 15;
             // 
             // searchView1
@@ -305,19 +311,19 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(791, 24);
+            this.searchView1.Size = new System.Drawing.Size(1182, 35);
             this.searchView1.TabIndex = 14;
             // 
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(489, 54);
+            this.synchronizer.Location = new System.Drawing.Point(734, 77);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(135, 144);
+            this.synchronizer.Size = new System.Drawing.Size(270, 255);
             this.synchronizer.TabIndex = 17;
             // 
             // reoGridView1
@@ -330,16 +336,17 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(791, 189);
+            this.reoGridView1.Size = new System.Drawing.Size(1174, 205);
             this.reoGridView1.TabIndex = 19;
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.statusStrip1);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(3, 428);
+            this.panel5.Location = new System.Drawing.Point(4, 523);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(791, 19);
+            this.panel5.Size = new System.Drawing.Size(1174, 25);
             this.panel5.TabIndex = 2;
             // 
             // statusStrip1
@@ -348,50 +355,53 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, -3);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(791, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 24, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1174, 25);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(92, 17);
+            this.labelStatus.Size = new System.Drawing.Size(114, 20);
             this.labelStatus.Text = "查看移库单条目";
             // 
             // panel6
             // 
             this.panel6.Controls.Add(this.pagerView1);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(3, 398);
+            this.panel6.Location = new System.Drawing.Point(4, 488);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(791, 24);
+            this.panel6.Size = new System.Drawing.Size(1174, 25);
             this.panel6.TabIndex = 3;
             // 
             // panel7
             // 
             this.panel7.Controls.Add(this.searchView1);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 3);
+            this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Margin = new System.Windows.Forms.Padding(0);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(791, 24);
+            this.panel7.Size = new System.Drawing.Size(1182, 35);
             this.panel7.TabIndex = 4;
             // 
             // panel8
             // 
             this.panel8.Controls.Add(this.toolStripTop);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(3, 33);
+            this.panel8.Location = new System.Drawing.Point(0, 35);
+            this.panel8.Margin = new System.Windows.Forms.Padding(0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(791, 24);
+            this.panel8.Size = new System.Drawing.Size(1182, 35);
             this.panel8.TabIndex = 5;
             // 
             // toolStripTop
@@ -410,7 +420,7 @@
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(791, 24);
+            this.toolStripTop.Size = new System.Drawing.Size(1182, 35);
             this.toolStripTop.TabIndex = 10;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -425,7 +435,7 @@
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 21);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 32);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click_1);
             // 
@@ -434,7 +444,7 @@
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 21);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 32);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -443,7 +453,7 @@
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 21);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(93, 32);
             this.toolStripButtonAlter.Text = "保存修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -461,11 +471,14 @@
             // 
             // FormTransferOrderItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 450);
+            this.ClientSize = new System.Drawing.Size(1182, 553);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Font = new System.Drawing.Font("宋体", 10F);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormTransferOrderItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormTransferOrderItem";
             this.Load += new System.EventHandler(this.FormTransferOrderItem_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
