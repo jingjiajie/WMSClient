@@ -94,7 +94,7 @@ namespace WMS.UI
         {
             if (this.model1.SelectionRange == null)
             {
-                MessageBox.Show("请选择要预览的上架单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             List<int> ids = new List<int>();
@@ -106,17 +106,18 @@ namespace WMS.UI
             }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(ids);
-            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/warehouse_entry/preview/" + strIDs);
+
+            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/transfer_order/preview/" + strIDs);
             if (previewData == null) return;
-            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("入库单预览");
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("上架单预览");
             foreach (IDictionary<string, object> entryAndItem in previewData)
             {
-                IDictionary<string, object> warehouseEntry = (IDictionary<string, object>)entryAndItem["warehouseEntry"];
-                object[] warehouseEntryItems = (object[])entryAndItem["warehouseEntryItems"];
-                string no = (string)warehouseEntry["no"];
-                if (!formPreviewExcel.AddPatternTable("Excel/WarehouseEntry.xlsx", no)) return;
-                formPreviewExcel.AddData("warehouseEntry", warehouseEntry, no);
-                formPreviewExcel.AddData("warehouseEntryItems", warehouseEntryItems, no);
+                IDictionary<string, object> transferOrder = (IDictionary<string, object>)entryAndItem["transferOrder"];
+                object[] transferOrderItems = (object[])entryAndItem["transferOrderItems"];
+                string no = (string)transferOrder["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/PutAwayNote.xlsx", no)) return;
+                formPreviewExcel.AddData("putAwayTicket", transferOrder, no);
+                formPreviewExcel.AddData("putAwayTicketItems", transferOrderItems, no);
             }
             formPreviewExcel.Show();
         }
