@@ -257,6 +257,36 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+            var a = (from s in GlobalData.AllMaterials
+                     where s["name"] != null &&
+                     s["name"].ToString().StartsWith(str)
+                     select s["name"]).ToArray();
+            return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            var a = (from s in GlobalData.AllMaterials
+                     where s["no"] != null &&
+                     s["no"].ToString().StartsWith(str)
+                     select s["no"]).ToArray();
+            return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        { 
+                var a = (from s in GlobalData.AllMaterials
+                         where s["productLine"] != null &&
+                         s["productLine"].ToString().StartsWith(str)
+                         select s["productLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+        }
+
         private void toolStripButtonSupplySingleBoxTranPackingInfo_Click(object sender, EventArgs e)
         {
             this.model1.Mode = "default1";

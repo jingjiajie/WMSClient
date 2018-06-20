@@ -372,33 +372,69 @@ namespace WMS.UI.FormTransferOrder
         private object[] MaterialNameAssociation(string str)
         {
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
-            return (from s in GlobalData.AllSupplies
-                    where s["materialName"] != null &&
-                    s["materialName"].ToString().StartsWith(str) &&
-                    (int)s["supplierId"] == selectedIDs[0]
-                    select s["materialName"]).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
         }
 
         //物料代号输入联想
         private object[] MaterialNoAssociation(string str)
         {
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
-            return (from s in GlobalData.AllSupplies
-                    where s["materialNo"] != null &&
-                    s["materialNo"].ToString().StartsWith(str) &&
-                    (int)s["supplierId"] == selectedIDs[0]
-                    select s["materialNo"]).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str)
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
         }
 
         //物料系列输入联想
         private object[] MaterialProductLineAssociation(string str)
         {
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
-            return (from s in GlobalData.AllSupplies
-                    where s["materialProductLine"] != null &&
-                    s["materialProductLine"].ToString().StartsWith(str) &&
-                    (int)s["supplierId"] == selectedIDs[0]
-                    select s["materialProductLine"]).ToArray();
+            if (selectedIDs.Length == 0) {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str) 
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
         }
 
         private void FillDefaultValue(int row, string fieldName, object value)
