@@ -143,6 +143,8 @@
         {name:"newStorageLocationNo",displayName:"目标库位编码",type:"string",editable:false},
         {name:"newStorageLocationName",displayName:"目标库位名称",type:"string",editable:false},
         {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
+        {name:"supplyId",displayName:"供货id",type:"int",visible:false}, 
+        
     ],
 httpAPIs:[
         {type:"get-count",

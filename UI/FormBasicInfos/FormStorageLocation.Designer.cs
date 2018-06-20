@@ -76,7 +76,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(805, 362);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
@@ -130,7 +130,7 @@
             this.panelPager.Location = new System.Drawing.Point(0, 83);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(805, 248);
+            this.panelPager.Size = new System.Drawing.Size(805, 246);
             this.panelPager.TabIndex = 8;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -157,12 +157,12 @@
             // 
             this.pagerView1.BackColor = System.Drawing.SystemColors.Control;
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(2, 333);
+            this.pagerView1.Location = new System.Drawing.Point(2, 331);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(801, 27);
+            this.pagerView1.Size = new System.Drawing.Size(801, 29);
             this.pagerView1.TabIndex = 14;
             // 
             // synchronizer
@@ -201,7 +201,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(805, 248);
+            this.reoGridView1.Size = new System.Drawing.Size(805, 246);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop
