@@ -18,15 +18,68 @@ namespace WMS.UI.FormBasicInfos
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView2.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView2.Enabled = true;
+            }
+
+        }
+
+        //private List<int> rowChange = new List<int>();
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
             });
+        }
+
+        private string EnableForwardMapper(int state)
+        {
+            switch (state)
+            {
+                case 0: return "收货上架库位";
+                case 1: return "备货库位";
+                case 2: return "其他";
+                default: return "未知状态";
+            }
+        }
+
+        private int EnableBackwardMapper(string enable)
+        {
+            switch (enable)
+            {
+                case "收货上架库位": return 0;
+                case "备货库位": return 1;
+                case "其他": return 2;
+                default: return -1;
+            }
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -48,7 +101,9 @@ namespace WMS.UI.FormBasicInfos
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
         }
         //关于目标库位
         private void TargetStorageLocationNoEditEnded(int row, string targetStorageLocationNo)

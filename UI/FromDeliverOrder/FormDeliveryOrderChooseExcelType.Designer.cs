@@ -66,6 +66,8 @@
             this.buttonNormal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonNormal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonNormal.FlatAppearance.BorderSize = 0;
+            this.buttonNormal.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonNormal.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonNormal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNormal.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonNormal.Location = new System.Drawing.Point(4, 4);
@@ -154,6 +156,7 @@
             this.Name = "FormDeliveryOrderChooseExcelType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormDeliveryOrderChooseExcelType";
+            this.Load += new System.EventHandler(this.FormDeliveryOrderChooseExcelType_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
