@@ -29,6 +29,28 @@ namespace WMS.UI.FormBasicInfos
             });
         }
 
+        private string EnableForwardMapper(int state)
+        {
+            switch (state)
+            {
+                case 0: return "收货上架库位";
+                case 1: return "备货库位";
+                case 2: return "其他";
+                default: return "未知状态";
+            }
+        }
+
+        private int EnableBackwardMapper(string enable)
+        {
+            switch (enable)
+            {
+                case "收货上架库位": return 0;
+                case "备货库位": return 1;
+                case "其他": return 2;
+                default: return -1;
+            }
+        }
+
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -48,6 +70,7 @@ namespace WMS.UI.FormBasicInfos
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
         }
         //关于目标库位

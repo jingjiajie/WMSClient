@@ -176,6 +176,8 @@ namespace WMS.UI.FormTransferOrder
         private void FormTransferOrderItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonFinish);
+            Utilities.BindBlueButton(this.buttonFinishAll);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -469,6 +471,11 @@ namespace WMS.UI.FormTransferOrder
             {
                 this.addFinishedCallback();
             }
+        }
+
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
 
         //=============天经地义的交互逻辑到这里结束===============
