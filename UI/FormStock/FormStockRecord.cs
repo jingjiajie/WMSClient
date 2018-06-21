@@ -16,6 +16,7 @@ namespace WMS.UI.FormStock
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.Refreshed += this.model_Refreshed;
         }
 
         private void FormStockRecord_Load(object sender, EventArgs e)
@@ -26,6 +27,27 @@ namespace WMS.UI.FormStock
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
+        }
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -34,6 +56,7 @@ namespace WMS.UI.FormStock
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
+                this.updateBasicAndReoGridView();
             });
             form.Show();
         }
@@ -55,6 +78,7 @@ namespace WMS.UI.FormStock
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
+                this.updateBasicAndReoGridView();
             });
             form.Show();
         }
@@ -250,5 +274,7 @@ namespace WMS.UI.FormStock
                 this.searchView1.Search();
             }
         }
+
+
     }
 }

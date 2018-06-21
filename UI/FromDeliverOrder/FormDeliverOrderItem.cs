@@ -55,6 +55,9 @@ namespace WMS.UI.FromDeliverOrder
 
         private void FormDeliverOrderItem_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonAllLoad);
+            Utilities.BindBlueButton(this.buttonLoad);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -312,7 +315,7 @@ namespace WMS.UI.FromDeliverOrder
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -355,7 +358,7 @@ namespace WMS.UI.FromDeliverOrder
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

@@ -26,18 +26,25 @@ namespace WMS.UI.FromDeliverOrder
         //查看条目
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows != 1)
+            try{
+                if (this.model1.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+                var a1 = new FormDeliverOrderItem(rowData);
+                a1.SetAddFinishedCallback(() =>
+                {
+                    this.searchView1.Search();
+                });
+                a1.Show();
+            }
+            catch
             {
-                MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("无任何信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            var a1 =new FormDeliverOrderItem(rowData);
-            a1.SetAddFinishedCallback(() =>
-            {
-                this.searchView1.Search();
-            });
-            a1.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -211,7 +218,7 @@ namespace WMS.UI.FromDeliverOrder
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show("添加失败！"+ message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("添加失败！"+ message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

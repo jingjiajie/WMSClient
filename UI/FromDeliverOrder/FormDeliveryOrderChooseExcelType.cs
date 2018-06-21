@@ -85,17 +85,34 @@ namespace WMS.UI.FromDeliverOrder
         private void buttonZhongDuFlow_Click(object sender, EventArgs e)
         {
             StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
+            object[] deliveryOrderItems=null;
             foreach (IDictionary<string, object> orderAndItem in previewData)
             {
                 IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
-                object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
-                string no = (string)deliveryOrder["no"];
-                if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketZhongDuFlow.xlsx", no)) return;
-                formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
-                formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
+                object[] deliveryOrderItem = (object[])orderAndItem["deliveryOrderItems"];
+                if (deliveryOrderItems == null)
+                {
+                    deliveryOrderItems = deliveryOrderItem;
+                }
+                else {
+                    deliveryOrderItems = deliveryOrderItems.Concat(deliveryOrderItem).ToArray();
+                }
+                
             }
+            formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketZhongDuFlow.xlsx");
+            formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems);
             formPreviewExcel.Show();
             this.Close();
+        }
+
+        private void FormDeliveryOrderChooseExcelType_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonNormal);
+            Utilities.BindBlueButton(this.buttonCover);
+            Utilities.BindBlueButton(this.buttonMoBiSi);
+            Utilities.BindBlueButton(this.buttonZhongDu);
+            Utilities.BindBlueButton(this.buttonZhongDuFlow);
         }
     }
 }
