@@ -28,9 +28,9 @@ Public Class ModelBox
                 Dim newModel As New Model
                 newModel.Name = value
                 Me._Models.SetModel(newModel)
-                Me.ModelCore = newModel
+                Me.ModelOperationsWrapper.ModelCore = newModel
             Else
-                Me.ModelCore = Me._Models(value)
+                Me.ModelOperationsWrapper.ModelCore = Me._Models(value)
             End If
             Me._currentModelName = value
             RaiseEvent SelectedModelChanged(Me, New SelectedModelChangedEventArgs)

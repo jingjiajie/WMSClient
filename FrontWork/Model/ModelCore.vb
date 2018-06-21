@@ -321,7 +321,7 @@ Public Class ModelCore
     ''' <param name="columnNames">列名</param>
     ''' <param name="dataOfEachCell">相应的数据</param>
     Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModelCore.UpdateCells
-        Dim posCellPairs As New List(Of PositionCellPair)
+        Dim posCellPairs As New List(Of CellInfo)
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
@@ -338,7 +338,7 @@ Public Class ModelCore
                 Me.Data.Rows(rows(i))(dataColumn) = DBNull.Value
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
             End Try
-            posCellPairs.Add(New PositionCellPair(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
+            posCellPairs.Add(New CellInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
             Select Case curState
                 Case SynchronizationState.ADDED
@@ -453,7 +453,7 @@ Public Class ModelCore
         If rows.Length <> syncStates.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
-        Dim updatedRows = New List(Of IndexRowSynchronizationStatePair)
+        Dim updatedRows = New List(Of RowInfo)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim syncState = syncStates(i)
@@ -461,7 +461,7 @@ Public Class ModelCore
                 Throw New FrontWorkException($"Row {row} exceeded the max row of model")
             End If
             Me.SetRowSynchronizationState(Me.Data.Rows(row), syncState)
-            Dim newIndexRowSynchronizationStatePair = New IndexRowSynchronizationStatePair(row, Me.GetRowIDs({row})(0), syncState)
+            Dim newIndexRowSynchronizationStatePair = New RowInfo(row, Me.GetRowIDs({row})(0), Me.GetRows({row})(0), syncState)
             updatedRows.Add(newIndexRowSynchronizationStatePair)
         Next
         Dim eventArgs = New ModelRowSynchronizationStateChangedEventArgs(updatedRows.ToArray)

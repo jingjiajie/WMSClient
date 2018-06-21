@@ -8,5 +8,5 @@ Public Class ModelCellUpdatedEventArgs
     ''' 更新的单元格和数据信息
     ''' </summary>
     ''' <returns></returns>
-    Public Property UpdatedCells As PositionCellPair()
+    Public Property UpdatedCells As CellInfo()
 End Class

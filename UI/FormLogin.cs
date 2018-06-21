@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WMS.UI
@@ -17,6 +18,15 @@ namespace WMS.UI
 
         public FormLogin()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("zh-CN", true)
+            {
+                DateTimeFormat = {
+                    ShortDatePattern = "yyyy-MM-dd",
+                    FullDateTimePattern = "yyyy-MM-dd HH:mm:ss",
+                    LongTimePattern = "HH:mm:ss" 
+                }
+            };
+
             InitializeComponent();
             this.comboBoxAccountBook.Items.Add("测试账套");
             this.comboBoxAccountBook.SelectedIndex = 0;
@@ -24,8 +34,7 @@ namespace WMS.UI
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            //设置一下区域与语言
-            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("zh-CN");
+
         }
 
         //启用双缓冲技术

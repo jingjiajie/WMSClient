@@ -1,12 +1,12 @@
 ﻿''' <summary>
 ''' 一个单元格的索引和数据
 ''' </summary>
-Public Class PositionCellPair
+Public Class CellInfo
     ''' <summary>
     ''' 所在行号
     ''' </summary>
     ''' <returns></returns>
-    Public Property Row as Integer
+    Public Property Row As Integer
 
     ''' <summary>
     ''' 所在行ID
@@ -26,7 +26,7 @@ Public Class PositionCellPair
     ''' <returns></returns>
     Public Property CellData As Object
 
-    Public Sub New(row as Integer, rowID As Guid, columnName As String, cellData As Object)
+    Public Sub New(row As Integer, rowID As Guid, columnName As String, cellData As Object)
         Me.Row = row
         Me.CellData = cellData
         Me.ColumnName = columnName

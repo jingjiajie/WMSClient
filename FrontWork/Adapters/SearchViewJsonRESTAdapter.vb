@@ -75,8 +75,8 @@ Public Class SearchViewJsonRESTAdapter
     End Function
 
     Protected Sub SetConditionAndOrdersToAPI(api As JsonRESTAPIInfo, args As OnSearchEventArgs)
-        Dim jsEngine As New Jint.Engine
-        Dim jsSerializer = New JsonSerializer
+        Static jsEngine As New Jint.Engine
+        Static jsSerializer = New JsonSerializer
         '添加搜索条件
         Dim conditions = args.Conditions
         jsEngine.Execute("var $conditions = [];")

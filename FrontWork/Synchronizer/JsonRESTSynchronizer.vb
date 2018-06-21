@@ -4,6 +4,7 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Net
+Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Web.Script.Serialization
@@ -299,21 +300,7 @@ Public Class JsonRESTSynchronizer
             Throw New FrontWorkException("Find API Not set!")
         End If
         Try
-            Console.WriteLine(Me.FindAPI.HTTPMethod.ToString & " " & Me.FindAPI.GetURL)
-
-            Dim url = Me.FindAPI.GetURL
-            Dim httpWebRequest = CType(WebRequest.Create(url), HttpWebRequest)
-            httpWebRequest.Timeout = 5000
-            httpWebRequest.Method = Me.FindAPI.HTTPMethod.ToString
-            If Me.FindAPI.HTTPMethod = HTTPMethod.PUT OrElse Me.FindAPI.HTTPMethod = HTTPMethod.POST Then
-                httpWebRequest.ContentType = "application/json"
-                Dim body = Me.FindAPI.GetRequestBody
-                httpWebRequest.ContentLength = body.Length
-                Dim bytes = Encoding.UTF8.GetBytes(body)
-                httpWebRequest.GetRequestStream.Write(bytes, 0, bytes.Length)
-            End If
-
-            Using response As HttpWebResponse = httpWebRequest.GetResponse
+            Using response As HttpWebResponse = Me.FindAPI.Invoke
                 Dim responseStreamReader = New StreamReader(response.GetResponseStream())
                 Dim responseStr = responseStreamReader.ReadToEnd
                 Me.FindAPI.SetResponseParameter("$data")
@@ -405,7 +392,7 @@ Public Class JsonRESTSynchronizer
         For row = 0 To Me.Model.RowCount - 1
             Dim syncState = Me.Model.GetRowSynchronizationState(row)
             If syncState = SynchronizationState.SYNCHRONIZED Then Continue For
-            Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.toDataTable.Rows(row))
+            Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.ToDataTable.Rows(row))
             Select Case syncState
                 Case SynchronizationState.ADDED_UPDATED
                     addedData.Add(rowData)

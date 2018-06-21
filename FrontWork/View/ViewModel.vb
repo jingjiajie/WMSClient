@@ -1,18 +1,37 @@
 ﻿'Imports System.ComponentModel
 
 'Public Class ViewModel
-'    Private _model As Model
+'    Private _model As ModelOperationsWrapper
+'    Private _view As ViewOperationsWrapper
 
 '    ''' <summary>
 '    ''' Model对象，用来存取数据
 '    ''' </summary>
 '    ''' <returns>Model对象</returns>
-'    <Description("Model对象"), Category("FrontWork")>
-'    Public Property Model As Model
+'    Public Property Model As ModelOperationsWrapper
 '        Get
 '            Return Me._model
 '        End Get
-'        Set(value As Model)
+'        Set(value As ModelOperationsWrapper)
+'            If Me._model IsNot Nothing Then
+'                Call Me.UnbindModel()
+'            End If
+'            Me._model = value
+'            If Me._model IsNot Nothing Then
+'                Call Me.BindModel()
+'            End If
+'        End Set
+'    End Property
+
+'    ''' <summary>
+'    ''' View对象，用来存取数据
+'    ''' </summary>
+'    ''' <returns>Model对象</returns>
+'    Public Property View As IDataView
+'        Get
+'            Return Me._view
+'        End Get
+'        Set(value As IDataView)
 '            If Me._model IsNot Nothing Then
 '                Call Me.UnbindModel()
 '            End If
@@ -33,8 +52,6 @@
 '        AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
 '        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
 '        AddHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
-
-'        Me.ImportData()
 '    End Sub
 
 '    ''' <summary>
@@ -47,7 +64,6 @@
 '        RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
 '        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
 '        RemoveHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
-
 '    End Sub
 
 
@@ -62,7 +78,7 @@
 '    End Sub
 
 '    Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-'        Logger.Debug("TableLayoutView ModelRowAddedEvent: " & Str(Me.GetHashCode))
+'        Call 
 '    End Sub
 
 '    Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)

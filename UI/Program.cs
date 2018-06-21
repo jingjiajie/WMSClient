@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WMS.UI
@@ -17,5 +20,6 @@ namespace WMS.UI
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormLogin());
         }
+
     }
 }

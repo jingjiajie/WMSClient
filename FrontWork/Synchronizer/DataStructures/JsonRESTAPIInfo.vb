@@ -1,5 +1,6 @@
 ﻿Imports Jint.Native
 Imports System.Net
+Imports System.Reflection
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Web.Script.Serialization
@@ -293,13 +294,19 @@ Public Class JsonRESTAPIInfo
     End Function
 
     Public Function Invoke() As HttpWebResponse
-        Logger.Debug(Me.HTTPMethod.ToString & " " & Me.GetURL & vbCrLf & Me.GetRequestBody)
-
-        Dim httpWebRequest = CType(WebRequest.Create(Me.GetURL), HttpWebRequest)
+        Static calledLeaveDotsAndSlashesEscaped As Boolean = False
+        If Not calledLeaveDotsAndSlashesEscaped Then
+            Call LeaveDotsAndSlashesEscaped()
+            calledLeaveDotsAndSlashesEscaped = True
+        End If
+        Dim strUrl = Me.GetURL
+        Dim uri = New Uri(strUrl)
+        Dim requestBody = Me.GetRequestBody
+        Logger.Debug(Me.HTTPMethod.ToString & " " & strUrl & vbCrLf & requestBody)
+        Dim httpWebRequest = CType(WebRequest.Create(uri), HttpWebRequest)
         httpWebRequest.Method = Me.HTTPMethod.ToString
         If Me.HTTPMethod = HTTPMethod.POST OrElse Me.HTTPMethod = HTTPMethod.PUT Then
             httpWebRequest.ContentType = "application/json"
-            Dim requestBody = Me.GetRequestBody
             Dim bytes = Encoding.UTF8.GetBytes(requestBody)
             Dim stream = httpWebRequest.GetRequestStream
             stream.Write(bytes, 0, bytes.Length)
@@ -308,4 +315,25 @@ Public Class JsonRESTAPIInfo
         Dim response = httpWebRequest.GetResponse
         Return response
     End Function
+
+    Private Const UnEscapeDotsAndSlashes As Integer = &H2000000
+
+    Private Shared Sub LeaveDotsAndSlashesEscaped()
+        Dim getSyntaxMethod = GetType(UriParser).GetMethod("GetSyntax", BindingFlags.[Static] Or BindingFlags.NonPublic)
+
+        If getSyntaxMethod Is Nothing Then
+            Throw New MissingMethodException("UriParser", "GetSyntax")
+        End If
+
+        Dim uriParser = getSyntaxMethod.Invoke(Nothing, New Object() {"http"})
+        Dim flagsFieldInfo As FieldInfo = GetType(UriParser).GetField("m_Flags", BindingFlags.NonPublic Or BindingFlags.GetField Or BindingFlags.SetField Or BindingFlags.Instance)
+
+        If flagsFieldInfo Is Nothing Then
+            Throw New MissingFieldException("UriParser", "m_Flags")
+        End If
+
+        Dim flags As Integer = CInt(flagsFieldInfo.GetValue(uriParser))
+        flags = flags And Not UnEscapeDotsAndSlashes
+        flagsFieldInfo.SetValue(uriParser, flags)
+    End Sub
 End Class

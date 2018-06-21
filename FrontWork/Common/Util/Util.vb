@@ -109,7 +109,7 @@ Public Class Util
     End Function
 
     Public Shared Function UrlEncode(str As String) As String
-        str = str.Replace("/", "%2f")
+        'str = str.Replace("/", "%2f")
         str = Web.HttpUtility.UrlEncode(str)
         Return str
     End Function

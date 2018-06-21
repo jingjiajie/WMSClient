@@ -1,15 +1,17 @@
 ﻿Imports FrontWork
 Imports Jint.Native
 Imports System.ComponentModel
+Imports System.Globalization
 Imports System.Linq
 Imports System.Reflection
+Imports System.Threading
 
 ''' <summary>
 ''' 基本视图，以文本框，下拉框等形式提供数据的交互
 ''' </summary>
 Public Class BasicView
     Inherits UserControl
-    Implements IDataView
+    Implements IView
 
     Private _itemsPerRow As Integer = 3
     Private _configuration As Configuration
@@ -82,7 +84,7 @@ Public Class BasicView
     End Sub
 
 
-    Private _targetRow as Integer
+    Private _targetRow As Integer
     Private switcherModelDataUpdatedEvent As Boolean = True
     Private switcherLocalEvents As Boolean = True '本View内部事件开关，包括文本框文字变化等。不包括外部，例如Model数据变化事件开关
     Private dicFieldNameColumn As New Dictionary(Of String, Integer)
@@ -142,7 +144,7 @@ Public Class BasicView
         Call Me.InitEditPanel()
     End Sub
 
-    Private Function GetModelSelectedRow() as Integer
+    Private Function GetModelSelectedRow() As Integer
         Logger.SetMode(LogMode.REFRESH_VIEW)
         If Me.Model Is Nothing Then
             Logger.PutMessage("Model not set!")
@@ -504,33 +506,33 @@ Public Class BasicView
             text = field.ForwardMapper.Invoke(Me, value, modelSelectedRow)
         Else
             text = If(value?.ToString, "")
-            End If
-            Logger.SetMode(LogMode.REFRESH_VIEW)
+        End If
+        Logger.SetMode(LogMode.REFRESH_VIEW)
         '然后获取Control
         Dim curControl = (From control As Control In Me.Panel.Controls
                           Where control.Name = field.Name
                           Select control).FirstOrDefault()
         '根据Control是文本框还是ComboBox，有不一样的行为
         Me.switcherLocalEvents = False '关闭本地事件开关， 防止连锁事件
-            Select Case curControl.GetType()
-                Case GetType(TextBox)
-                    Dim textBox = CType(curControl, TextBox)
-                    textBox.Text = text
-                Case GetType(ComboBox)
-                    Dim comboBox = CType(curControl, ComboBox)
-                    Dim found = False
-                    For i As Integer = 0 To comboBox.Items.Count - 1
-                        If comboBox.Items(i).ToString = text Then
-                            found = True
-                            RemoveHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBoxSelectedIndexChangedEvent
-                            comboBox.SelectedIndex = i
-                            AddHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBoxSelectedIndexChangedEvent
-                        End If
-                    Next
-                    If found = False Then
+        Select Case curControl.GetType()
+            Case GetType(TextBox)
+                Dim textBox = CType(curControl, TextBox)
+                textBox.Text = text
+            Case GetType(ComboBox)
+                Dim comboBox = CType(curControl, ComboBox)
+                Dim found = False
+                For i As Integer = 0 To comboBox.Items.Count - 1
+                    If comboBox.Items(i).ToString = text Then
+                        found = True
+                        RemoveHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBoxSelectedIndexChangedEvent
+                        comboBox.SelectedIndex = i
+                        AddHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBoxSelectedIndexChangedEvent
+                    End If
+                Next
+                If found = False Then
                     Logger.PutMessage("Value """ + text + """" + " not found in comboBox """ + fieldName + """")
                 End If
-            End Select
+        End Select
         Me.switcherLocalEvents = True
         Return True
     End Function
@@ -796,26 +798,26 @@ Public Class BasicView
         MessageBox.Show(Me.Size.Width & " x " & Me.Size.Height)
     End Sub
 
-    ''' <summary>
-    ''' 获取视图中的单元格
-    ''' </summary>
-    ''' <param name="row">行号，在BasicView中此参数被忽略</param>
-    ''' <param name="fieldName">字段名</param>
-    ''' <returns>单元格对象</returns>
-    Public Function GetViewComponent(row as Integer, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
-        Dim foundControls = Me.Panel.Controls.Find(fieldName, False)
-        If foundControls.Length = 0 Then
-            throw new FrontWorkException($"ViewComponent ""{fieldName}"" not found!")
-        End If
-        Return New BasicViewComponent(foundControls(0))
-    End Function
+    '''' <summary>
+    '''' 获取视图中的单元格
+    '''' </summary>
+    '''' <param name="row">行号，在BasicView中此参数被忽略</param>
+    '''' <param name="fieldName">字段名</param>
+    '''' <returns>单元格对象</returns>
+    'Public Function GetViewComponent(row as Integer, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
+    '    Dim foundControls = Me.Panel.Controls.Find(fieldName, False)
+    '    If foundControls.Length = 0 Then
+    '        throw new FrontWorkException($"ViewComponent ""{fieldName}"" not found!")
+    '    End If
+    '    Return New BasicViewComponent(foundControls(0))
+    'End Function
 
-    ''' <summary>
-    ''' 获取视图中的单元格
-    ''' </summary>
-    ''' <param name="fieldName">字段名</param>
-    ''' <returns>单元格对象</returns>
-    Public Function GetViewComponent(fieldName As String) As IViewComponent
-        Return Me.GetViewComponent(0, fieldName)
-    End Function
+    '''' <summary>
+    '''' 获取视图中的单元格
+    '''' </summary>
+    '''' <param name="fieldName">字段名</param>
+    '''' <returns>单元格对象</returns>
+    'Public Function GetViewComponent(fieldName As String) As IViewComponent
+    '    Return Me.GetViewComponent(0, fieldName)
+    'End Function
 End Class
