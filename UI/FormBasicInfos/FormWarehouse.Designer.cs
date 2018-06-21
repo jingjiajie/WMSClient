@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWarehouse));
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -96,7 +97,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(931, 28);
+            this.basicView1.Size = new System.Drawing.Size(931, 64);
             this.basicView1.TabIndex = 13;
             // 
             // configuration1
@@ -105,7 +106,11 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(207, 21);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormWarehouse"};
+            modeMethodListenerNamesPair2.Mode = "default";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -126,14 +131,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(668, 122);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -194,7 +199,7 @@
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(931, 334);
@@ -219,10 +224,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 75);
+            this.panelPager.Location = new System.Drawing.Point(0, 111);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(931, 228);
+            this.panelPager.Size = new System.Drawing.Size(931, 192);
             this.panelPager.TabIndex = 8;
             // 
             // reoGridView1
@@ -235,7 +240,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(931, 228);
+            this.reoGridView1.Size = new System.Drawing.Size(931, 192);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop
@@ -257,7 +262,6 @@
             this.toolStripTop.Size = new System.Drawing.Size(931, 22);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
-           
             // 
             // toolStripSeparator2
             // 

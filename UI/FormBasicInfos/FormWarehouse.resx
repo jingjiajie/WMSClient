@@ -129,7 +129,7 @@
         {name:"name",displayName:"仓库名",type:"string"},
         {name:"address",displayName:"仓库地址",type:"string"},
         {name:"tel",displayName:"仓库电话",type:"string"},
-        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
+        {name:"enabled",displayName:"是否启用",type:"int",values:["启用","禁用"],defaultValue:1,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"}],
     httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/warehouse/count/{{conditions:$conditions,orders:$orders}}",
@@ -148,7 +148,7 @@
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/warehouser/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/warehouse/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
