@@ -17,6 +17,8 @@ namespace WMS.UI.FormStockTaking
         {
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
         }
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {
@@ -36,6 +38,34 @@ namespace WMS.UI.FormStockTaking
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
+
+        }
+
+        //private List<int> rowChange = new List<int>();
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -51,6 +81,8 @@ namespace WMS.UI.FormStockTaking
                 { "lastUpdateTime",DateTime.Now},              
                 { "createTime",DateTime.Now},
             });
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -66,49 +98,66 @@ namespace WMS.UI.FormStockTaking
 
         private void buttonItems_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows != 1)
+            try
             {
-                MessageBox.Show("请选择一项盘点单查看盘点单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (this.model1.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项盘点单查看盘点单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+                var a1 = new FormStockTakingOrderItem(rowData);
+                a1.SetAddFinishedCallback(() =>
+                {
+                    this.searchView1.Search();
+                    this.updateBasicAndReoGridView();
+                });
+                a1.Show();
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row})[0];
-            var a1 = new FormStockTakingOrderItem(rowData);
-            a1.SetAddFinishedCallback(() =>
-            {
-                this.searchView1.Search();
-            });
-            a1.Show();
+            catch {
+                MessageBox.Show("无任何数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+
+            }
         }
       
         private void buttonPreview_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange == null)
+            try
             {
-                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (this.model1.SelectionRange == null)
+                {
+                    MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                List<int> ids = new List<int>();
+                for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+                {
+                    int curRow = this.model1.SelectionRange.Row + i;
+                    if (this.model1[curRow, "id"] == null) continue;
+                    ids.Add((int)this.model1[curRow, "id"]);
+                }
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string strIDs = serializer.Serialize(ids);
+                var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/stocktaking_order/preview/" + strIDs);
+                if (previewData == null) return;
+                StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("盘点单预览");
+                foreach (IDictionary<string, object> entryAndItem in previewData)
+                {
+                    IDictionary<string, object> stockTakingOrder = (IDictionary<string, object>)entryAndItem["stockTakingOrderView"];
+                    object[] stockTakingOrderItem = (object[])entryAndItem["stockTakingOrderItems"];
+                    string no = (string)stockTakingOrder["no"];
+                    if (!formPreviewExcel.AddPatternTable("Excel/StockInfoCheckTicket.xlsx", no)) return;
+                    formPreviewExcel.AddData("StockInfoCheckTicket", stockTakingOrder, no);
+                    formPreviewExcel.AddData("StockInfoCheckTicketItem", stockTakingOrderItem, no);
+                }
+                formPreviewExcel.Show();
+            }
+            catch
+            {
+                MessageBox.Show("无任何数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            List<int> ids = new List<int>();
-            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
-            {
-                int curRow = this.model1.SelectionRange.Row + i;
-                if (this.model1[curRow, "id"] == null) continue;
-                ids.Add((int)this.model1[curRow, "id"]);
-            }
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string strIDs = serializer.Serialize(ids);
-            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/stocktaking_order/preview/" + strIDs);
-            if (previewData == null) return;
-            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("盘点单预览");
-            foreach (IDictionary<string, object> entryAndItem in previewData)
-            {
-                IDictionary<string, object> stockTakingOrder = (IDictionary<string, object>)entryAndItem["stockTakingOrderView"];
-                object[] stockTakingOrderItem = (object[])entryAndItem["stockTakingOrderItems"];
-                string no = (string)stockTakingOrder["no"];
-                if (!formPreviewExcel.AddPatternTable("Excel/StockInfoCheckTicket.xlsx", no)) return;
-                formPreviewExcel.AddData("StockInfoCheckTicket", stockTakingOrder, no);
-                formPreviewExcel.AddData("StockInfoCheckTicketItem", stockTakingOrderItem, no);
-            }
-            formPreviewExcel.Show();
         }
     }
 }

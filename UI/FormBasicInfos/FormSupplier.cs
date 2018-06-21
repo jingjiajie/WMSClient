@@ -18,10 +18,38 @@ namespace WMS.UI.FormBasicInfos
            MethodListenerContainer.Register("FormSupplier", this);
            InitializeComponent();
            this.model1.CellUpdated+= this.model_CellUpdated;
+           this.model1.RowRemoved+= this.model_RowRemoved;
+           this.model1.Refreshed += this.model_Refreshed;
+           
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+        
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
 
         }
 
         //private List<int> rowChange = new List<int>();
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {            
@@ -30,12 +58,12 @@ namespace WMS.UI.FormBasicInfos
                 if (cell.ColumnName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;                
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;               
                 //if (!rowChange.Contains(cell.Row))
                 //{
                //     rowChange.Add(cell.Row);
                 //}                
-            }
+            }          
         }
 
         private string EnableForwardMapper(int state)
@@ -60,6 +88,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
@@ -126,19 +156,31 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
         }
 
         private void ButtonFindHistory_Click(object sender, EventArgs e)
-        {                 
-            if (this.model1.SelectionRange.Rows != 1)
+        {
+            try
             {
-                MessageBox.Show("请选择一项查看历史信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (this.model1.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项查看历史信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
+                var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+                FormSupplierHistory form = new FormSupplierHistory((int)rowData["id"]);
+                form.Show();
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            FormSupplierHistory form = new FormSupplierHistory((int)rowData["id"]);
-            form.Show();
-            //this.searchView1.Search();         
+            //this.searchView1.Search();
+            catch
+            {
+                MessageBox.Show("无任何信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+
+            }
         }
 
         private void toolStripButtonFindAll_Click(object sender, EventArgs e)
