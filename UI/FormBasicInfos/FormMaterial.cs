@@ -16,6 +16,35 @@ namespace WMS.UI.FormBasicInfos
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
+
+        }
+
+        //private List<int> rowChange = new List<int>();
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
         }
 
         private void FormMaterial_Load(object sender, EventArgs e)
@@ -25,6 +54,7 @@ namespace WMS.UI.FormBasicInfos
             this.jsonRESTSynchronizer1.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
         }
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
@@ -35,6 +65,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
