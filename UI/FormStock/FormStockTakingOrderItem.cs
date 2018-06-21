@@ -339,7 +339,7 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButton1.Enabled = false;
             this.toolStripButton2.Visible =false;
             this.pagerView1.Enabled = false;
-            this.toolStripButtonAdd.Enabled = false;
+           // this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonDelete.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
             this.ButtonCancel.Visible = true;
@@ -412,7 +412,7 @@ namespace WMS.UI.FormStockTaking
             this.searchView1.Enabled = true;
             this.toolStripButton1.Enabled = true;
             this.toolStripButton2.Visible = true;
-            this.toolStripButtonAdd.Enabled = true;
+            //this.toolStripButtonAdd.Enabled = true;
             this.toolStripButtonDelete.Enabled = true;
             this.toolStripButtonAlter.Enabled = true;
             this.pagerView1.Enabled = true;
@@ -463,7 +463,7 @@ namespace WMS.UI.FormStockTaking
                 this.searchView1.Enabled = true;
                 this.toolStripButton1.Enabled = true;
                 this.toolStripButton2.Visible = true;
-                this.toolStripButtonAdd.Enabled = true;
+               // this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
                 this.pagerView1.Enabled = true;
@@ -483,7 +483,7 @@ namespace WMS.UI.FormStockTaking
                 this.searchView1.Enabled = true;
                 this.toolStripButton1.Enabled = true;
                 this.toolStripButton2.Visible = true;
-                this.toolStripButtonAdd.Enabled = true;
+                //this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
                 this.pagerView1.Enabled = true;
