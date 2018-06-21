@@ -16,6 +16,8 @@ namespace WMS.UI.FormBasicInfos
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
         }
 
         private void FormPackage_Load(object sender, EventArgs e)
@@ -27,6 +29,32 @@ namespace WMS.UI.FormBasicInfos
             this.searchView1.Search();
         }
 
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
+
+        }
+
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -35,6 +63,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                  { "warehouseId",GlobalData.Warehouse["id"]},
@@ -59,6 +89,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void buttonItems_Click(object sender, EventArgs e)
         {
+            try { 
             if (this.model1.SelectionRange.Rows != 1)
             {
                 MessageBox.Show("请选择一项发货套餐单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -66,6 +97,12 @@ namespace WMS.UI.FormBasicInfos
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             new FormPackageItem(rowData).Show();
-        }
+            }
+            catch
+            {
+                MessageBox.Show("无任何信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+}
     }
 }
