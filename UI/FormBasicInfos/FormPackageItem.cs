@@ -19,11 +19,42 @@ namespace WMS.UI.FormBasicInfos
             this.package = package;
             InitializeComponent();
             this.searchView1.AddStaticCondition("packageId", this.package["id"]);
+            this.model.RowRemoved += this.model_RowRemoved;
+            this.model.Refreshed += this.model_Refreshed;
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
+
+        }
+
+        //private List<int> rowChange = new List<int>();
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
         }
 
         //添加按钮点击事件
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             this.model.InsertRow(0, new Dictionary<string, object>()
             {
                  { "packageId",this.package["id"]},
@@ -257,5 +288,6 @@ namespace WMS.UI.FormBasicInfos
             }
 
         }
+
     }
 }
