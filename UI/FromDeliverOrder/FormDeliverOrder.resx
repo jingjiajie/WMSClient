@@ -127,6 +127,8 @@
         {name:"description",displayName:"描述",type:"string"},
         {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
         {name:"deliverTime",displayName:"发运时间",type:"datetime"},
+        {name:"liscensePlateNumber",displayName:"车牌号",type:"string"},
+        {name:"driverName",displayName:"司机",type:"string"},
         {name:"returnNoteNo",displayName:"回单号",type:"string"},
         {name:"returnNoteTime",displayName:"回单时间",type:"datetime"},
         {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},

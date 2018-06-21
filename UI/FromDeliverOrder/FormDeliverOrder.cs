@@ -107,24 +107,73 @@ namespace WMS.UI.FromDeliverOrder
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string strIDs = serializer.Serialize(selectedIDs);
-            try
+            if (this.model1.SelectionRange.Rows != 1)
             {
-                string operatioName = "delivery_finish";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
-                this.searchView1.Search();
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (WebException ex)
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                string message = ex.Message;
-                if (ex.Response != null)
+                if (rowData[i]["driverName"] == null)
                 {
-                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
+                if (rowData[i]["liscensePlateNumber"] == null)
+                {
+                    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] == 4)
+                {
+                    MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] == 3)
+                {
+                    MessageBox.Show("选中出库单已经发运无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] != 2)
+                {
+                    MessageBox.Show("选中出库单未完成装车无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            this.model1[this.model1.SelectionRange.Row, "state"] = 3;
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
+
+            ////获取选中行ID，过滤掉新建的行（ID为0的）
+            //int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            //if (selectedIDs.Length == 0)
+            //{
+            //    MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //string strIDs = serializer.Serialize(selectedIDs);
+            //string body = "{\"deliveryOrderIds\":\"" + strIDs + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"driverName\":\"" + GlobalData.Person["id"] + "\",\"liscensePlateNumber\":\"" + GlobalData.Person["id"] + "\"}";
+            //try
+            //{
+            //    string operatioName = "delivery_finish";
+            //    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/" + operatioName, strIDs, "POST");
+            //    this.searchView1.Search();
+            //    MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //catch (WebException ex)
+            //{
+            //    string message = ex.Message;
+            //    if (ex.Response != null)
+            //    {
+            //        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+            //    }
+            //    MessageBox.Show(("批量完成发运") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -155,9 +204,14 @@ namespace WMS.UI.FromDeliverOrder
                 this.searchView1.Search();
 
             }
-            catch
+            catch(WebException ex)
             {
-                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("添加失败！"+ message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -205,7 +259,7 @@ namespace WMS.UI.FromDeliverOrder
             }
             if (this.model1.SelectionRange.Rows != 1)
             {
-                MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
@@ -214,6 +268,11 @@ namespace WMS.UI.FromDeliverOrder
                 if (rowData[i]["returnNoteNo"] == null)
                 {
                     MessageBox.Show("请输入相应回单号以继续核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] == 4)
+                {
+                    MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if ((int)rowData[i]["state"] != 3)
