@@ -48,9 +48,10 @@ namespace WMS.UI.FormBasicInfos
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();            
-                GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/warehouse/{{}}");
+                //GlobalData.Warehouse =(IDictionary<string,object>) RestClient.Get<List<IDictionary<string, object>>>(
+                   //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/warehouse/{{}}");
             }
         }
+
     }
 }
