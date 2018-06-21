@@ -22,9 +22,14 @@ namespace WMS.UI.FormStockTaking
             this.stockTakingOrder = srockTakingOrder;
             InitializeComponent();         
             this.searchView1.AddStaticCondition("stockTakingOrderId", this.stockTakingOrder["id"]);
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
         }
 
-      
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
 
         private void FormStockTakingOrderItem_Load(object sender, EventArgs e)
         {
@@ -33,6 +38,28 @@ namespace WMS.UI.FormStockTaking
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
         }
 
         private int StockTakingOrderIDDefaultValue()
@@ -283,24 +310,26 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             try
             {
                 string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();           
-
+                this.searchView1.Search();
+                this.updateBasicAndReoGridView();
             }
             catch
             {
                 MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.updateBasicAndReoGridView();
             }
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-
             this.model1.CurrentModelName = "addSingle";
             this.model1.Mode = "addSingle";
             this.synchronizer.Mode = "addSingle";
@@ -316,6 +345,8 @@ namespace WMS.UI.FormStockTaking
             this.ButtonCancel.Visible = true;
             this.buttonStartAdd.Visible = true;
             this.model1.InsertRows(new int[] { 0,1,2,3,4 }, null);
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -386,6 +417,7 @@ namespace WMS.UI.FormStockTaking
             this.toolStripButtonAlter.Enabled = true;
             this.pagerView1.Enabled = true;
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
         }
 
         private void buttonStartAdd_Click(object sender, EventArgs e)
