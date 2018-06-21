@@ -1148,7 +1148,12 @@ Public Class ReoGridView
 
         If rowsUpdated.Count > 0 Then
             RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-            Me.Model.UpdateRows(rowsUpdated.ToArray, updateData.ToArray)
+            Try
+                Me.Model.UpdateRows(rowsUpdated.ToArray, updateData.ToArray)
+            Catch ex As FrontWorkException
+                MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End Try
             AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
         End If
 
@@ -1197,7 +1202,12 @@ Public Class ReoGridView
 
         If rowsUpdated.Count > 0 Then
             RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-            Me.Model.UpdateCells(rowsUpdated.ToArray, Util.Times(fieldName, rowsUpdated.LongCount), updateCellData.ToArray)
+            Try
+                Me.Model.UpdateCells(rowsUpdated.ToArray, Util.Times(fieldName, rowsUpdated.LongCount), updateCellData.ToArray)
+            Catch ex As FrontWorkException
+                MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End Try
             AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         End If
 
