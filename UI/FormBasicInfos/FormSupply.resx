@@ -124,13 +124,13 @@
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
-		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+		{name:"supplierName",type:"string",displayName:"供货商名称",placeHolder:"请输入必填信息",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+		{name:"warehouseName",type:"string",displayName:"仓库名称",visible:false},
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
-		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
-        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
-        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+		{name:"materialNo",displayName:"物料代号",type:"string",placeHolder:"请输入必填信息",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",placeHolder:"请输入必填信息",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",placeHolder:"请输入必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:true,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:true,editable:true},
@@ -140,7 +140,6 @@
 		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:true,editable:true},
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:true},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:true,editable:true},
-
 
 		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
 		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
@@ -157,14 +156,12 @@
         {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
 		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
 
-
-
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:true,editable:true},
         {name:"photoIndex",type:"string",displayName:"照片索引",visible:true,editable:true},
         {name:"containerNo",type:"string",displayName:"容器号",visible:true,editable:true},
         {name:"factroy",type:"string",displayName:"工厂",visible:true,editable:true},
         {name:"workPosition",type:"string",displayName:"工位",visible:true,editable:true},
-        {name:"supplierType",type:"string",displayName:"A系列/B系列供应商",visible:true,editable:true},
+        {name:"supplierType",type:"string",displayName:"A系列/B系列供应商",visible:false,editable:true},
         {name:"type",type:"string",displayName:"机型区分",visible:true,editable:true},
         {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:true,editable:true},
         {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:true,editable:true},
@@ -203,10 +200,10 @@
 		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
 		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
-		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
+		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false,placeHolder:"创建时自动生成"},
 		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
-		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
+		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false,placeHolder:"修改时自动生成"},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
 		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
 
