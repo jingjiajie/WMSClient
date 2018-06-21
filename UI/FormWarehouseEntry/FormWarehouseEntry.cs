@@ -67,13 +67,29 @@ namespace WMS.UI
 
         private void FormWarehouseEntry_Load(object sender, EventArgs e)
         {
+            this.model1.SelectionRangeChanged += Model1_SelectionRangeChanged;
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url",Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
         }
-        
+
+        private void Model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            int?[] selectedIDs = this.model1.GetSelectedRows<int?>("id");
+            if (selectedIDs.Length == 0 || selectedIDs[0].HasValue == false)
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+            else
+            {
+                this.basicView1.Mode = "supplier-not-editable";
+                this.reoGridView1.Mode = "supplier-not-editable";
+            }
+        }
+
         //供应商名称编辑完成，根据名称自动搜索ID和No
         private void SupplierNameEditEnded(int row, string supplierName)
         {
