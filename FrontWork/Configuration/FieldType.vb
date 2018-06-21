@@ -1,4 +1,5 @@
 ﻿Public Class FieldType
+    Implements ICloneable
     Public Property FieldType As Type
 
     Public Shared Function FromString(typeName As String) As FieldType
@@ -21,5 +22,11 @@
                                          "now only ""int"",""double"",""string"",""bool"",""datetime"" are supported.")
         End If
         Return newInstance
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Dim newObj = New FieldType
+        newObj.FieldType = Me.FieldType
+        Return newObj
     End Function
 End Class

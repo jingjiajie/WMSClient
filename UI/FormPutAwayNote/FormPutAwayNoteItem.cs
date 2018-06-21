@@ -184,6 +184,8 @@ namespace WMS.UI
         private void FormTransferOrderItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonFinish);
+            Utilities.BindBlueButton(this.buttonFinishAll);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);

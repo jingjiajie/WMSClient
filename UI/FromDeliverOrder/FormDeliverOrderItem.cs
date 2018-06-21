@@ -292,6 +292,8 @@ namespace WMS.UI.FromDeliverOrder
 
         private void buttonAllLoad_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
 
             int[] selectedIDs = { (int)this.deliveryOrder["id"] } ;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -328,6 +330,8 @@ namespace WMS.UI.FromDeliverOrder
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并完成选中条目装车吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
             //获取选中行ID，过滤掉新建的行（ID为0的）
             int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
