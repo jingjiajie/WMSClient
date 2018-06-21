@@ -103,6 +103,8 @@ namespace WMS.UI.FormTransferOrder
         //待工整单完成
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
             try
             {
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.transferOrder["id"] + "\"}";
@@ -125,6 +127,8 @@ namespace WMS.UI.FormTransferOrder
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
             this.TransferDone();
         }
 
