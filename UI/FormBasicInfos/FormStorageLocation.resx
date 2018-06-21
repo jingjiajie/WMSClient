@@ -129,7 +129,7 @@
         {name:"storageAreaNo",displayName:"库区编码",type:"string",association:"#storageAreaNoAssociation",editEnded:"#storageAreaNoEditEnded"}, 
         {name:"storageAreaName",displayName:"库区名称",type:"string",association:"#storageAreaNameAssociation",editEnded:"#storageAreaNameEditEnded"},                
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},   
-        {name:"enabled",displayName:"是否启用",type:"int",visible:false}],
+        {name:"enabled",displayName:"是否启用",type:"int",values:["启用","禁用"],defaultValue:1,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"}],
     httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/storage_location/count/{{conditions:$conditions,orders:$orders}}",

@@ -82,6 +82,7 @@ Public Class ReoGridView
             Call Me.dicCellState.Clear()
             If value = SyncMode.SYNC Then
                 Me.formAssociation.StayUnvisible = False
+                'Me.ReoGridControl.Readonly = False
             Else
                 Me.formAssociation.StayUnvisible = True
             End If
@@ -139,6 +140,7 @@ Public Class ReoGridView
             Return Me._mode
         End Get
         Set(value As String)
+            If Me._mode.Equals(value, StringComparison.OrdinalIgnoreCase) Then Return
             Me._mode = value
             Call Me.ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
         End Set
@@ -182,6 +184,9 @@ Public Class ReoGridView
 
     Private Sub ConfigurationChanged(sender As Object, e As ConfigurationChangedEventArgs)
         Call Me.InitEditPanel()
+        If Me.Model IsNot Nothing Then
+            Call Me.ImportData()
+        End If
     End Sub
 
     Private Sub ModelRowSynchronizationStateChangedEvent(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
@@ -422,6 +427,7 @@ Public Class ReoGridView
     Protected Sub ShowDefaultPage()
         Me.CurSyncMode = SyncMode.NOT_SYNC
         Call Me.Panel.DeleteRangeData(RangePosition.EntireRange)
+        'Me.ReoGridControl.Readonly = True
         '设定表格初始有10行，非同步模式
         Me.Panel.Rows = 10
         '设定提示文本

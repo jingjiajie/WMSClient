@@ -35,10 +35,11 @@ namespace WMS.UI
                 MakeTreeNode("基本信息",new TreeNode[]{
                     MakeTreeNode("用户管理"),
                     MakeTreeNode("供应商管理"),
-                    MakeTreeNode("供货管理"),
                     MakeTreeNode("物料管理"),
+                    MakeTreeNode("供货管理"),
                     MakeTreeNode("发货套餐管理"),
                     MakeTreeNode("安全库存管理"),
+                    MakeTreeNode("仓库管理"),
                     MakeTreeNode("库区管理"),
                     MakeTreeNode("库位管理")
                     }),
@@ -48,9 +49,10 @@ namespace WMS.UI
                     MakeTreeNode("上架单管理")
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
-                    MakeTreeNode("出库单管理"),
+                    MakeTreeNode("备货作业单管理"),
+                    MakeTreeNode("出库单管理")
                     //MakeTreeNode("工作任务单管理"),
-                    MakeTreeNode("备货作业单管理")
+
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存批次"),
@@ -224,6 +226,9 @@ namespace WMS.UI
                     break;
                 case "发货套餐管理":
                     this.LoadSubWindow(new FormPackage());
+                    break;
+                case "仓库管理":
+                    this.LoadSubWindow(new FormWarehouse());
                     break;
                 case "库区管理":
                     this.LoadSubWindow(new FormStorageArea());

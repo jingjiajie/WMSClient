@@ -155,7 +155,9 @@ Public Class JsonRESTAPIInfo
                 End If
             Else '增加上次匹配结束到本次匹配开始中间的字符串
                 Dim lastSpanIndex = lastMatch.Index + lastMatch.Value.Length '上一个匹配到此匹配中间间隔的字符串的起始下标
-                resultURL.Append(Me.URLTemplate.Substring(lastSpanIndex, curMatch.Index - lastSpanIndex))
+                '将变量替换好的字符串
+                Dim replacedStr = Me.URLTemplate.Substring(lastSpanIndex, curMatch.Index - lastSpanIndex)
+                resultURL.Append(replacedStr)
             End If
             resultURL.Append(value)
             lastMatch = curMatch
