@@ -327,6 +327,27 @@ namespace WMS.UI
             GlobalData.Warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as IDictionary<string,object>;
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
+            Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+            GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
+
+            GlobalData.AllMaterials = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{condWarehouse.ToString()}");
+
+            GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
+
+            GlobalData.AllStorageLocations = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_location/{condWarehouse.ToString()}");
+
+            GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");
+
+            GlobalData.AllPersons = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/ledger/{GlobalData.AccountBook}/person/{{}}");
+
+            GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
+              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
