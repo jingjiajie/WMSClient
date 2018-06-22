@@ -350,6 +350,8 @@ namespace WMS.UI
             this.model1.SelectionRange = null;
             this.model1.Size = new System.Drawing.Size(180, 180);
             this.model1.TabIndex = 2;
+            this.model1.Refreshed += new System.EventHandler<FrontWork.ModelRefreshedEventArgs>(this.model1_Refreshed);
+            this.model1.SelectionRangeChanged += new System.EventHandler<FrontWork.ModelSelectionRangeChangedEventArgs>(this.model1_SelectionRangeChanged);
             // 
             // reoGridView1
             // 
