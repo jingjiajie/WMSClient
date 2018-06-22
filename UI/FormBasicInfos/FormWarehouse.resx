@@ -126,7 +126,7 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"name",displayName:"仓库名",type:"string"},
+        {name:"name",displayName:"仓库名",type:"string",placeHolder:"必填项"},
         {name:"address",displayName:"仓库地址",type:"string"},
         {name:"tel",displayName:"仓库电话",type:"string"},
         {name:"enabled",displayName:"是否启用",type:"int",values:["启用","禁用"],defaultValue:1,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"}],
