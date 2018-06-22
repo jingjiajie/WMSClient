@@ -291,9 +291,13 @@ namespace WMS.UI.FormBasicInfos
         //物料名称输入联想
         private object[] MaterialNameAssociation(string str)
         {
+            string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";           
             var a = (from s in GlobalData.AllMaterials
                      where s["name"] != null &&
                      s["name"].ToString().StartsWith(str)
+                     && s["warehouseId"] != GlobalData.Warehouse["id"]
+                     &&(string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
+                                 
                      select s["name"]).ToArray();
             return a.GroupBy(p => p).Select(p => p.Key).ToArray();
         }
@@ -301,9 +305,12 @@ namespace WMS.UI.FormBasicInfos
         //物料代号输入联想
         private object[] MaterialNoAssociation(string str)
         {
+            string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
             var a = (from s in GlobalData.AllMaterials
                      where s["no"] != null &&
                      s["no"].ToString().StartsWith(str)
+                     && s["warehouseId"] != GlobalData.Warehouse["id"]
+                      && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
                      select s["no"]).ToArray();
             return a.GroupBy(p => p).Select(p => p.Key).ToArray();
         }
@@ -314,6 +321,7 @@ namespace WMS.UI.FormBasicInfos
                 var a = (from s in GlobalData.AllMaterials
                          where s["productLine"] != null &&
                          s["productLine"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
                          select s["productLine"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
         }

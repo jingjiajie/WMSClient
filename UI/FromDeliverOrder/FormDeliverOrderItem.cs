@@ -226,12 +226,16 @@ namespace WMS.UI.FromDeliverOrder
         //物料名称输入联想
         private object[] MaterialNameAssociation(string str)
         {
+
+            string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
             {
                 var a = (from s in GlobalData.AllSupplies
                          where s["materialName"] != null &&
                          s["materialName"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
                          select s["materialName"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -241,6 +245,8 @@ namespace WMS.UI.FromDeliverOrder
                          where s["materialName"] != null &&
                          s["materialName"].ToString().StartsWith(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
                          select s["materialName"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -249,12 +255,16 @@ namespace WMS.UI.FromDeliverOrder
         //物料代号输入联想
         private object[] MaterialNoAssociation(string str)
         {
+            string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
+
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
             {
                 var a = (from s in GlobalData.AllSupplies
                          where s["materialNo"] != null &&
                          s["materialNo"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -264,6 +274,9 @@ namespace WMS.UI.FromDeliverOrder
                          where s["materialNo"] != null &&
                          s["materialNo"].ToString().StartsWith(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
+
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -278,6 +291,7 @@ namespace WMS.UI.FromDeliverOrder
                 var a = (from s in GlobalData.AllSupplies
                          where s["materialProductLine"] != null &&
                          s["materialProductLine"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
                          select s["materialProductLine"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -287,6 +301,7 @@ namespace WMS.UI.FromDeliverOrder
                          where s["materialProductLine"] != null &&
                          s["materialProductLine"].ToString().StartsWith(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
                          select s["materialProductLine"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
