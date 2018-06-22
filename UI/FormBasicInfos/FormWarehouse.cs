@@ -78,6 +78,16 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            foreach (var date in rowData)
+            {
+                if ((int)date["id"] == (int)GlobalData.Warehouse["id"])
+                {
+                    MessageBox.Show("无法删除正在查看的仓库!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+            }
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
             GlobalData.AllWarehouses = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse/" +
@@ -88,8 +98,8 @@ namespace WMS.UI.FormBasicInfos
             for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
             {
                 if ((int)GlobalData.AllWarehouses[i]["id"] == (int)GlobalData.Warehouse["id"])
-                {                 
-                    this.comboBoxWarehouse.SelectedIndex = i;                 
+                {
+                    this.comboBoxWarehouse.Text = (string)GlobalData.AllWarehouses[i]["name"];
                 }
             }
         }
@@ -108,20 +118,14 @@ namespace WMS.UI.FormBasicInfos
                 for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
                 {                  
                     if ((int)GlobalData.AllWarehouses[i]["id"] == (int)GlobalData.Warehouse["id"])
-                    {                      
-                        this.comboBoxWarehouse.SelectedIndex = i;                     
+                    {                       
+                        this.comboBoxWarehouse.Text = (string)GlobalData.AllWarehouses[i]["name"];                     
                     }
                 }
 
             }
         }
 
-        private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GlobalData.Warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as IDictionary<string, object>;
-            this.panelRight.Controls.Clear();
-            this.treeViewLeft.SelectedNode ="123";
-        }
 
 
         private string EnableForwardMapper(int state)
