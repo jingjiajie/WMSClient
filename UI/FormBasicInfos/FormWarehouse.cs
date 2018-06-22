@@ -12,12 +12,18 @@ namespace WMS.UI.FormBasicInfos
 {
     public partial class FormWarehouse : Form
     {
-        public FormWarehouse()
+        private ComboBox comboBoxWarehouse;
+        private Panel panelRight;
+        private TreeView treeViewLeft;
+        public FormWarehouse(ComboBox comboBoxWarehouse, Panel panelRight, TreeView treeViewLeft)
         {
             MethodListenerContainer.Register("FormWarehouse", this);
             InitializeComponent();
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
+            this.comboBoxWarehouse = comboBoxWarehouse;
+            this.panelRight = panelRight;
+            this.treeViewLeft = treeViewLeft;
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -74,17 +80,49 @@ namespace WMS.UI.FormBasicInfos
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+            GlobalData.AllWarehouses = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse/" +
+            new Condition().AddOrder("name"));
+            this.comboBoxWarehouse.Items.Clear();
+            this.comboBoxWarehouse.Items.AddRange((from item in GlobalData.AllWarehouses
+                                                   select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+            for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
+            {
+                if ((int)GlobalData.AllWarehouses[i]["id"] == (int)GlobalData.Warehouse["id"])
+                {                 
+                    this.comboBoxWarehouse.SelectedIndex = i;                 
+                }
+            }
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
+
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();            
-                //GlobalData.Warehouse =(IDictionary<string,object>) RestClient.Get<List<IDictionary<string, object>>>(
-                   //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/warehouse/{{}}");
+                this.searchView1.Search();           
+                GlobalData.AllWarehouses = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/warehouse/" +
+                new Condition().AddOrder("name"));
+                this.comboBoxWarehouse.Items.Clear();           
+                this.comboBoxWarehouse.Items.AddRange((from item in GlobalData.AllWarehouses
+                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());             
+                for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
+                {                  
+                    if ((int)GlobalData.AllWarehouses[i]["id"] == (int)GlobalData.Warehouse["id"])
+                    {                      
+                        this.comboBoxWarehouse.SelectedIndex = i;                     
+                    }
+                }
+
             }
         }
+
+        private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalData.Warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as IDictionary<string, object>;
+            this.panelRight.Controls.Clear();
+            this.treeViewLeft.SelectedNode ="123";
+        }
+
 
         private string EnableForwardMapper(int state)
         {

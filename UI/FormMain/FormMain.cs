@@ -228,7 +228,7 @@ namespace WMS.UI
                     this.LoadSubWindow(new FormPackage());
                     break;
                 case "仓库管理":
-                    this.LoadSubWindow(new FormWarehouse());
+                    this.LoadSubWindow(new FormWarehouse(this.comboBoxWarehouse,this.panelRight,this.treeViewLeft));
                     break;
                 case "库区管理":
                     this.LoadSubWindow(new FormStorageArea());
