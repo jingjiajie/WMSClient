@@ -15,6 +15,8 @@ namespace WMS.UI
 {
     public partial class FormWarehouseEntry : Form
     {
+        const int STATE_WAIT_FOR_PUT_IN = 0;
+
         Action<int[]> ToInspectionNoteCallback = null;
         Action<string> ToInspectionNoteSearchNoCallback = null;
         public FormWarehouseEntry(Action<int[]> toInspectionNoteCallback,Action<string> toInspectionNoteSearchNoCallback)
@@ -137,6 +139,14 @@ namespace WMS.UI
             {
                 MessageBox.Show("请选择要生成送检单的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+            foreach(var row in this.model1.GetSelectedRows())
+            {
+                if(((int?)row["state"] ?? 0) != STATE_WAIT_FOR_PUT_IN)
+                {
+                    MessageBox.Show($"入库单\"{row["no"]}\"已送检/入库，请勿重复送检！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
             var warehouseEntries = this.model1.GetRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows));
             new FormWarehouseEntryInspect(warehouseEntries, this.ToInspectionNoteCallback, () => this.searchView1.Search()).Show();

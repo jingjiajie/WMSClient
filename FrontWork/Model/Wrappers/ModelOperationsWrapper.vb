@@ -49,6 +49,7 @@ Public Class ModelOperationsWrapper
         Me.ModelCore = modelCore
     End Sub
 
+
     Private Sub BindModelCore(modelCore As IModelCore)
         AddHandler Me.ModelCore.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
         AddHandler Me.ModelCore.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
@@ -612,12 +613,26 @@ Public Class ModelOperationsWrapper
         For Each curSelectionRange In Me.AllSelectionRanges
             Dim row = curSelectionRange.Row
             Dim rows = curSelectionRange.Rows
-            For i = 0 To rows
+            For i = 0 To rows - 1
                 Dim curRow = row + i
                 selectedRows.Add(curRow)
             Next
         Next
         Return Me.GetRows(Of T)(selectedRows.ToArray)
+    End Function
+
+    Public Function GetSelectedRows() As IDictionary(Of String, Object)()
+        If Me.AllSelectionRanges.Length = 0 Then Return {}
+        Dim selectedRows As New List(Of Integer)
+        For Each curSelectionRange In Me.AllSelectionRanges
+            Dim row = curSelectionRange.Row
+            Dim rows = curSelectionRange.Rows
+            For i = 0 To rows - 1
+                Dim curRow = row + i
+                selectedRows.Add(curRow)
+            Next
+        Next
+        Return Me.GetRows(selectedRows.ToArray)
     End Function
 
     ''' <summary>

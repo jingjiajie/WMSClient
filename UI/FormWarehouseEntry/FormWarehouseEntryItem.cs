@@ -12,6 +12,8 @@ namespace WMS.UI
 {
     public partial class FormWarehouseEntryItem : Form
     {
+        const int STATE_WAIT_FOR_PUT_IN = 0;
+
         private IDictionary<string, object> warehouseEntry = null;
 
         public FormWarehouseEntryItem(IDictionary<string,object> warehouseEntry)
@@ -405,6 +407,22 @@ namespace WMS.UI
                     s["materialProductLine"].ToString().StartsWith(str) &&
                     (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
                     select s["materialProductLine"]).ToArray();
+        }
+
+        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            var rows = this.model.GetSelectedRows();
+            if (rows.Length == 0) return;
+            if((int)rows[0]["state"] == STATE_WAIT_FOR_PUT_IN)
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+            else
+            {
+                this.basicView1.Mode = "put_in";
+                this.reoGridView1.Mode = "put_in";
+            }
         }
     }
 }

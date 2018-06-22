@@ -92,6 +92,28 @@ Public Class ViewOperationsWrapper
         End RaiseEvent
     End Event
 
+    Public Custom Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements IDataView.BeforeSelectionRangeChange
+        AddHandler(value As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs))
+            AddHandler View.BeforeSelectionRangeChange, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs))
+            RemoveHandler View.BeforeSelectionRangeChange, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As BeforeViewSelectionRangeChangeEventArgs)
+        End RaiseEvent
+    End Event
+
+    Public Custom Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs) Implements IDataView.SelectionRangeChanged
+        AddHandler(value As EventHandler(Of ViewSelectionRangeChangedEventArgs))
+            AddHandler View.SelectionRangeChanged, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ViewSelectionRangeChangedEventArgs))
+            RemoveHandler View.SelectionRangeChanged, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ViewSelectionRangeChangedEventArgs)
+        End RaiseEvent
+    End Event
+
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
         View.InsertRows(rows, data)
     End Sub
@@ -155,5 +177,29 @@ Public Class ViewOperationsWrapper
         Else
             Return ranges(0)
         End If
+    End Function
+
+    Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IDataView.AddColumns
+        Return View.AddColumns(columns)
+    End Function
+
+    Public Function InsertColumns(columns() As ViewColumn) As Object Implements IDataView.InsertColumns
+        Return View.InsertColumns(columns)
+    End Function
+
+    Public Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
+        Return View.RemoveColumns(columnNames)
+    End Function
+
+    Public Function GetColumns() As ViewColumn() Implements IDataView.GetColumns
+        Return View.GetColumns()
+    End Function
+
+    Public Function ContainsColumn(columnName As String) As Boolean
+        Dim allColumns = Me.GetColumns
+        For Each column In allColumns
+            If column.Name.Equals(columnName, StringComparison.OrdinalIgnoreCase) Then Return True
+        Next
+        Return False
     End Function
 End Class

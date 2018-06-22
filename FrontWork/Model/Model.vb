@@ -698,6 +698,10 @@ Partial Public Class Model
         Return Me.ModelOperationsWrapper.GetSelectedRows(Of T)(columnName)
     End Function
 
+    Public Function GetSelectedRows() As IDictionary(Of String, Object)()
+        Return Me.ModelOperationsWrapper.GetSelectedRows
+    End Function
+
     ''' <summary>
     ''' 删除新增但未编辑的行
     ''' </summary>

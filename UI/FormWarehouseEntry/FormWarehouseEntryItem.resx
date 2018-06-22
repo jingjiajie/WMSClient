@@ -241,6 +241,12 @@
             url:"{$url}/warehouse/{$accountBook}/warehouse_entry_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
+    },
+    {mode:"put_in",
+     ref:"default",
+     fields:[
+     {name:"expectedAmount",editable:false}
+    ]
     }
 ]</value>
   </data>

@@ -101,8 +101,8 @@ Public Class BasicView
         Set(value As String)
             If Me._mode = value Then Return
             Me._mode = value
-            Call Me.ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
             Call Me.ExportData()
+            Call Me.ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
             Call Me.ImportData()
         End Set
     End Property
@@ -579,7 +579,6 @@ Public Class BasicView
             '先计算值，过一遍Mapper
             Dim value = rowData(curField.Name)
             Dim text As String
-
             If Not curField.ForwardMapper Is Nothing Then
                 text = curField.ForwardMapper.Invoke(Me, value, modelSelectedRow)
             Else
@@ -615,6 +614,7 @@ Public Class BasicView
                         Logger.PutMessage("Value """ + text + """" + " not found in comboBox """ + curField.Name + """")
                     End If
             End Select
+            'curField.EditEnded?.Invoke(Me, text, Me.GetModelSelectedRow)
             Me.switcherLocalEvents = True
         Next
         Return True

@@ -105,14 +105,17 @@
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
+    <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />
     <Compile Include="View\EventArgs\BeforeViewCellUpdateEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowAddEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowRemoveEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowUpdateEventArgs.vb" />
+    <Compile Include="View\EventArgs\BeforeViewSelectionRangeChangeEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewCellUpdatedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowAddedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowRemovedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowUpdatedEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewSelectionRangeChangedEventArgs.vb" />
     <Compile Include="View\Interfaces\IDataView.vb" />
     <Compile Include="Logger\Logger.vb" />
     <Compile Include="Configuration\ModeConfiguration.vb" />

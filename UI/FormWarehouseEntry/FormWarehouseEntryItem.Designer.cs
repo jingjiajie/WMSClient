@@ -35,6 +35,7 @@ namespace WMS.UI
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -226,8 +227,13 @@ namespace WMS.UI
         "FormWarehouseEntryItem",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormWarehouseEntryItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair2.Mode = "put_in";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair1,
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -256,6 +262,7 @@ namespace WMS.UI
             this.model.SelectionRange = null;
             this.model.Size = new System.Drawing.Size(180, 180);
             this.model.TabIndex = 2;
+            this.model.SelectionRangeChanged += new System.EventHandler<FrontWork.ModelSelectionRangeChangedEventArgs>(this.model_SelectionRangeChanged);
             // 
             // reoGridView1
             // 

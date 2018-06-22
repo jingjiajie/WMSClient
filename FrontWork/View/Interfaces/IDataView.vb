@@ -1,6 +1,11 @@
 ﻿Public Interface IDataView
     Inherits IView
 
+    Function AddColumns(columns As ViewColumn()) As Boolean
+    Function InsertColumns(columns As ViewColumn())
+    Function RemoveColumns(columnNames As String())
+    Function GetColumns() As ViewColumn()
+
     ''' <summary>
     ''' 增加若干行
     ''' </summary>
@@ -64,9 +69,11 @@
     Event BeforeRowAdded As EventHandler(Of BeforeViewRowAddEventArgs)
     Event BeforeRowRemoved As EventHandler(Of BeforeViewRowRemoveEventArgs)
     Event BeforeCellUpdated As EventHandler(Of BeforeViewCellUpdateEventArgs)
+    Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs)
 
     Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs)
     Event RowAdded As EventHandler(Of ViewRowAddedEventArgs)
     Event RowRemoved As EventHandler(Of ViewRowRemovedEventArgs)
     Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs)
+    Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs)
 End Interface
