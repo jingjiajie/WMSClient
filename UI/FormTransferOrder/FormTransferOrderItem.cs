@@ -273,7 +273,6 @@ namespace WMS.UI.FormTransferOrder
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
-            this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -281,7 +280,6 @@ namespace WMS.UI.FormTransferOrder
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
-            this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -387,7 +385,7 @@ namespace WMS.UI.FormTransferOrder
                          where s["materialName"] != null &&
                          s["materialName"].ToString().StartsWith(str)
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
                          select s["materialName"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -398,7 +396,7 @@ namespace WMS.UI.FormTransferOrder
                          s["materialName"].ToString().StartsWith(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
                          select s["materialName"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -416,7 +414,7 @@ namespace WMS.UI.FormTransferOrder
                          where s["materialNo"] != null &&
                          s["materialNo"].ToString().StartsWith(str)
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -427,7 +425,7 @@ namespace WMS.UI.FormTransferOrder
                          s["materialNo"].ToString().StartsWith(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
 
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();

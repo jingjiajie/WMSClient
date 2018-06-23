@@ -123,7 +123,6 @@ namespace WMS.UI.FormBasicInfos
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
-            this.model[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -131,7 +130,6 @@ namespace WMS.UI.FormBasicInfos
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
-            this.model[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -225,27 +223,29 @@ namespace WMS.UI.FormBasicInfos
             
             string materialNo = this.model[this.model.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
             int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
-            if (selectedIDs.Length == 0)
-            {
-                var a = (from s in GlobalData.AllSupplies
-                         where s["materialName"] != null &&
-                         s["materialName"].ToString().StartsWith(str)
-                         && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
-                         select s["materialName"]).ToArray();
-                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
-            }
-            else
-            {
-                var a = (from s in GlobalData.AllSupplies
-                         where s["materialName"] != null &&
-                         s["materialName"].ToString().StartsWith(str) &&
-                         (int)s["supplierId"] == selectedIDs[0]
-                         && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["no"]?.ToString() ?? "") == materialNo)
-                         select s["materialName"]).ToArray();
-                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
-            }
+
+                if (selectedIDs.Length == 0)
+                {
+                    var a = (from s in GlobalData.AllSupplies
+                             where s["materialName"] != null &&
+                             s["materialName"].ToString().StartsWith(str)
+                             && s["warehouseId"] != GlobalData.Warehouse["id"]
+                             && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                             select s["materialName"]).ToArray();
+                    return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+                }
+                else
+                {
+                    var a = (from s in GlobalData.AllSupplies
+                             where s["materialName"] != null &&
+                             s["materialName"].ToString().StartsWith(str) &&
+                             (int)s["supplierId"] == selectedIDs[0]
+                             && s["warehouseId"] != GlobalData.Warehouse["id"]
+                             && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                             select s["materialName"]).ToArray();
+                    return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+                }
+
         }
 
         //物料代号输入联想
@@ -260,7 +260,7 @@ namespace WMS.UI.FormBasicInfos
                          where s["materialNo"] != null &&
                          s["materialNo"].ToString().StartsWith(str)
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
@@ -271,7 +271,7 @@ namespace WMS.UI.FormBasicInfos
                          s["materialNo"].ToString().StartsWith(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
-                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["name"]?.ToString() ?? "") == materialName)
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
                          
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
