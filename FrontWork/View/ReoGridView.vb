@@ -82,7 +82,7 @@ Public Class ReoGridView
             Call Me.dicCellState.Clear()
             If value = SyncMode.SYNC Then
                 Me.formAssociation.StayUnvisible = False
-                'Me.ReoGridControl.Readonly = False
+                Me.ReoGridControl.Enabled = True
             Else
                 Me.formAssociation.StayUnvisible = True
             End If
@@ -427,7 +427,7 @@ Public Class ReoGridView
     Protected Sub ShowDefaultPage()
         Me.CurSyncMode = SyncMode.NOT_SYNC
         Call Me.Panel.DeleteRangeData(RangePosition.EntireRange)
-        'Me.ReoGridControl.Readonly = True
+        Me.ReoGridControl.Enabled = False
         '设定表格初始有10行，非同步模式
         Me.Panel.Rows = 10
         '设定提示文本

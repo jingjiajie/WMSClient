@@ -166,9 +166,11 @@ Public Class BasicView
     Private Sub ModelSelectionRangeChangedEvent(sender As Object, e As ModelSelectionRangeChangedEventArgs)
         Dim modelSelectedRow = Me.GetModelSelectedRow
         If modelSelectedRow < 0 Then
+            Me.Panel.Enabled = False
             Call Me.ClearPanelData()
             Return
         Else
+            Me.Panel.Enabled = True
             Me.ImportData()
         End If
     End Sub
@@ -487,9 +489,11 @@ Public Class BasicView
         End If
         Dim modelSelectedRow = Me.GetModelSelectedRow
         If modelSelectedRow < 0 Then
+            Me.Panel.Enabled = False
             Call Me.ClearPanelData()
             Return True
         End If
+        Me.Panel.Enabled = True
         '遍历Configuration的字段
         Dim fieldConfigurations = Me.Configuration.GetFieldConfigurations(Me.Mode)
         If fieldConfigurations Is Nothing Then
@@ -553,9 +557,11 @@ Public Class BasicView
         End If
         Dim modelSelectedRow = Me.GetModelSelectedRow
         If modelSelectedRow < 0 Then
+            Me.Panel.Enabled = False
             Call Me.ClearPanelData()
             Return True
         End If
+        Me.Panel.Enabled = True
         If modelSelectedRow >= Me.Model.RowCount Then
             Logger.PutMessage("TargetRow(" & Str(modelSelectedRow) & ") exceeded the max row of model: " & Me.Model.RowCount - 1)
             Return False
