@@ -369,6 +369,114 @@ namespace WMS.UI.FormBasicInfos
         {
 
         }
+
+        private string EntryAmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "defaultEntryUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double EntryAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "defaultEntryUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void EntryUnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
+        }
+
+        private string InspectionAmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "defaultInspectionUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double InspectionAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "defaultInspectionUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void InspectionUnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
+        }
+
+        private string DeliveryAmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "defaultDeliveryUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double DeliveryAmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "defaultDeliveryUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void DeliveryUnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
+        }
     }
      
 }

@@ -474,7 +474,7 @@
             this.Font = new System.Drawing.Font("宋体", 10F);
             this.Name = "FormTransferOrderItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormTransferOrderItem";
+            this.Text = "移库单条目信息";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormTransferOrderItemClosed);
             this.Load += new System.EventHandler(this.FormTransferOrderItem_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
