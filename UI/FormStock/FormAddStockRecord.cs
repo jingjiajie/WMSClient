@@ -23,6 +23,8 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
@@ -51,6 +53,22 @@ namespace WMS.UI.FormStock
             this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
         }
 
         private void StorageLocationNameEditEnded(int row, string storageAreaName)
@@ -305,6 +323,8 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             if (this.synchronizer.Save()) { this.Close(); }
         }
 

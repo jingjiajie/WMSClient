@@ -80,8 +80,8 @@ namespace WMS.UI.FormBasicInfos
         {
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             foreach (var date in rowData)
-            {
-                if ((int)date["id"] == (int)GlobalData.Warehouse["id"])
+            {              
+                if (((int?)date["id"]??-1) == (int)GlobalData.Warehouse["id"])
                 {
                     MessageBox.Show("无法删除正在查看的仓库!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
