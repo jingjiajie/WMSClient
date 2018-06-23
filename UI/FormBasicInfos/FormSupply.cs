@@ -125,14 +125,12 @@ namespace WMS.UI.FormBasicInfos
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
-            this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
         }
 
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
-            this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
         }
 
@@ -152,6 +150,7 @@ namespace WMS.UI.FormBasicInfos
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
                                      && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                     && m["warehouseId"] != GlobalData.Warehouse["id"]
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -173,7 +172,7 @@ namespace WMS.UI.FormBasicInfos
                 GlobalData.AllSuppliers.Find((s) =>
                 {
                     if (s["name"] == null) return false;
-                    return s["name"].ToString() == supplierName;
+                    return s["name"].ToString() == supplierName&& s["warehouseId"] != GlobalData.Warehouse["id"];
                 });
             if (foundSupplier == null)
             {
