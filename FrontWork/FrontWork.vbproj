@@ -211,7 +211,7 @@
     <Compile Include="View\TabView.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\ViewModel.vb" />
+    <Compile Include="ViewModel\ViewModel.vb" />
     <Compile Include="View\ViewOperationsWrapper.vb" />
   </ItemGroup>
   <ItemGroup>
