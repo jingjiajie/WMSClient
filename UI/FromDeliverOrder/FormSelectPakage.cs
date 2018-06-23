@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -49,9 +51,14 @@ namespace WMS.UI.FromDeliverOrder
                     this.Close();
 
                 }
-                catch
+                catch (WebException ex)
                 {
-                    MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string message = ex.Message;
+                    if (ex.Response != null)
+                    {
+                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    }
+                    MessageBox.Show(("按套餐添加出库单") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }

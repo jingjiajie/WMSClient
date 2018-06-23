@@ -86,6 +86,7 @@ namespace WMS.UI.FormBasicInfos
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)

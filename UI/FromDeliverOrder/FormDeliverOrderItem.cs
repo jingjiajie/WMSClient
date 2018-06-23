@@ -23,6 +23,34 @@ namespace WMS.UI.FromDeliverOrder
             this.deliveryOrder = deliveryOrder;
             InitializeComponent();
             this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView2.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView2.Enabled = true;
+            }
+
+        }
+
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
         }
 
         private int deliveryOrderIdDefaultValue()
@@ -31,6 +59,8 @@ namespace WMS.UI.FromDeliverOrder
         }
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Enabled = true;
+            this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
@@ -43,6 +73,7 @@ namespace WMS.UI.FromDeliverOrder
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -62,6 +93,7 @@ namespace WMS.UI.FromDeliverOrder
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.updateBasicAndReoGridView();
         }
 
         private void SourceStorageLocationNoEditEnded(int row, string sourceStorageLocationNo)
