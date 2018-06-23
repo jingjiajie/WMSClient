@@ -365,7 +365,7 @@ Public Class ModelOperationsWrapper
     ''' </summary>
     ''' <param name="rowIDs">更新的行ID</param>
     ''' <param name="dataOfEachRow">相应的数据</param>
-    Public Overloads Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)())
+    Public Shadows Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)())
         Dim rowNums(rowIDs.Length - 1) As Integer
         For i = 0 To rowIDs.Length - 1
             Dim rowID = rowIDs(i)
@@ -376,6 +376,32 @@ Public Class ModelOperationsWrapper
             rowNums(i) = rowNum
         Next
         Call Me.UpdateRows(rowNums, dataOfEachRow)
+    End Sub
+
+    ''' <summary>
+    ''' 更新行
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="dataOfEachRow">对应的数据</param>
+    Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.UpdateRows
+        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        '删除不可编辑的字段的值
+        Dim uneditableFields As New List(Of String)
+        For Each field In fields
+            If field.Editable = False Then
+                uneditableFields.Add(field.Name)
+            End If
+        Next
+        If uneditableFields.Count > 0 Then
+            For Each curData In dataOfEachRow
+                For Each uneditableFieldName In uneditableFields
+                    If curData.ContainsKey(uneditableFieldName) Then
+                        curData.Remove(uneditableFieldName)
+                    End If
+                Next
+            Next
+        End If
+        Call Me.ModelCore.UpdateRows(rows, dataOfEachRow)
     End Sub
 
 

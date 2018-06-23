@@ -1146,22 +1146,21 @@ Public Class ReoGridView
             updateData.Add(Me.RowToDictionary(curReoGridRowNum))
         Next
 
-        If rowsUpdated.Count > 0 Then
-            RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-            Try
+        Try
+            If rowsUpdated.Count > 0 Then
+                RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
                 Me.Model.UpdateRows(rowsUpdated.ToArray, updateData.ToArray)
-            Catch ex As FrontWorkException
-                MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Return
-            End Try
-            AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        End If
-
-        '删除dicCellEdited中所有在本次同步的选区之内的单元格
-        Dim removeKeys = (From k In Me.dicCellEdited.Keys Where rangePosition.Contains(k) Select k).ToArray
-        For Each removeKey In removeKeys
-            Me.dicCellEdited.Remove(removeKey)
-        Next
+                AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+            End If
+        Catch ex As FrontWorkException
+            MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Finally
+            '删除dicCellEdited中所有在本次同步的选区之内的单元格
+            Dim removeKeys = (From k In Me.dicCellEdited.Keys Where rangePosition.Contains(k) Select k).ToArray
+            For Each removeKey In removeKeys
+                Me.dicCellEdited.Remove(removeKey)
+            Next
+        End Try
     End Sub
 
     ''' <summary>
@@ -1237,7 +1236,7 @@ Public Class ReoGridView
 
         '将文字经过ReverseMapper映射成转换后的value
         Dim value As Object
-        If Not fieldConfiguration.BackwardMapper Is Nothing Then
+        If fieldConfiguration.BackwardMapper IsNot Nothing Then
             value = fieldConfiguration.BackwardMapper.Invoke(text, row, Me)
         Else
             value = text
@@ -1274,6 +1273,9 @@ Public Class ReoGridView
                 Continue For
             End If
             '获取Cell中的内容
+            If curField.Name = "state" Then
+                Console.WriteLine()
+            End If
             Dim value = Me.GetMappedCellData(row, curReoGridColumnNum, curField)
             '将新的值赋予Model中的相应单元格
             dic.Add(curField.Name, value)
