@@ -22,11 +22,11 @@ namespace WMS.UI
             this.warehouseEntry = warehouseEntry;
             InitializeComponent();
             this.searchView1.AddStaticCondition("warehouseEntryId", this.warehouseEntry["id"]);
-            if((int)warehouseEntry["state"] != STATE_WAIT_FOR_PUT_IN)
-            {
-                this.buttonAdd.Enabled = false;
-                this.buttonDelete.Enabled = false;
-            }
+            //if((int)warehouseEntry["state"] != STATE_WAIT_FOR_PUT_IN)
+            //{
+            //    this.buttonAdd.Enabled = false;
+            //    this.buttonDelete.Enabled = false;
+            //}
         }
 
         //添加按钮点击事件

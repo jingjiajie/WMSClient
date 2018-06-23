@@ -278,7 +278,7 @@ Public Class ModelCore
                             Try
                                 Convert.ChangeType(value, colType)
                             Catch ex As Exception
-                                Throw New FrontWorkException($"Cannot convert {value} to ""{key}"" type:{colType.Name} ")
+                                Throw New InvalidDataException($"""{value}""不是有效的格式")
                             End Try
                         End If
                     End If
