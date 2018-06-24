@@ -51,6 +51,28 @@ Public Class FieldMethod
 
     Private Property MethodListenerNames As String() = {}
 
+    Public Shared Operator =(fieldMethod1 As FieldMethod, fieldMethod2 As FieldMethod) As Boolean
+        If fieldMethod1.ReturnsStaticValue <> fieldMethod2.ReturnsStaticValue Then Return False
+        '返回静态值的情况
+        If fieldMethod1.ReturnsStaticValue Then
+            If fieldMethod1.StaticReturnValue.Equals(fieldMethod2.StaticReturnValue) Then
+                Return True
+            Else
+                Return False
+            End If
+        End If
+        '动态调用的情况
+        If Not fieldMethod1.TargetMethodName.Equals(fieldMethod2.TargetMethodName) Then Return False
+        If Not fieldMethod1.MethodListenerNames?.Length = fieldMethod2.MethodListenerNames?.Length Then Return False
+        For i = 0 To fieldMethod1.MethodListenerNames.Length - 1
+            If Not fieldMethod1.MethodListenerNames(i).Equals(fieldMethod2.MethodListenerNames(i)) Then Return False
+        Next
+        Return True
+    End Operator
+
+    Public Shared Operator <>(fieldMethod1 As FieldMethod, fieldMethod2 As FieldMethod) As Boolean
+        Return Not fieldMethod1 = fieldMethod2
+    End Operator
     ''' <summary>
     ''' 重新设置方法监听器
     ''' </summary>

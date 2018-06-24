@@ -56,9 +56,14 @@ namespace WMS.UI
             {
                 MessageBox.Show("请选择一项送检单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            } 
+            var inspectionNote = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            if (inspectionNote["id"] == null)
+            {
+                MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormInspectionNoteItem(rowData,()=>this.searchView1.Search()).Show();
+            new FormInspectionNoteItem(inspectionNote, ()=>this.searchView1.Search()).Show();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)

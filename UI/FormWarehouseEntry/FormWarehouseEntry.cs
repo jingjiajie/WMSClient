@@ -143,8 +143,13 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项入库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormWarehouseEntryItem(rowData).Show();
+            var warehouseEntry = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            if(warehouseEntry["id"] == null)
+            {
+                MessageBox.Show("请先保存单据再查看条目！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            new FormWarehouseEntryItem(warehouseEntry).Show();
         }
 
         private string StateForwardMapper(int state)

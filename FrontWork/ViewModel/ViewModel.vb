@@ -23,22 +23,27 @@ Public Class ViewModel
             If Me._Configuration IsNot Nothing Then
                 newFields = Me._Configuration.GetFieldConfigurations(Me.Mode)
                 AddHandler Me._Configuration.ConfigurationChanged, AddressOf Me.ConfigurationChangedEvent
+                Call Me.ConfigurationChangedEvent(Me, Nothing)
             End If
         End Set
     End Property
-
-    Private Sub ConfigurationChangedEvent(sender As Object, e As ConfigurationChangedEventArgs)
-        'Call Me.RefreshViewSchema()
-    End Sub
 
     Public Property Mode As String
         Get
             Return Me._Mode
         End Get
         Set(value As String)
+            If Me._Mode IsNot Nothing AndAlso Me._Mode.Equals(value, StringComparison.OrdinalIgnoreCase) Then
+                Return
+            End If
             Me._Mode = value
+            Call Me.ConfigurationChangedEvent(Me, Nothing)
         End Set
     End Property
+
+    Private Sub ConfigurationChangedEvent(sender As Object, e As ConfigurationChangedEventArgs)
+        Call Me.RefreshViewSchema()
+    End Sub
 
     ''' <summary>
     ''' ModelOperationsWrapper对象，用来存取数据
@@ -78,9 +83,24 @@ Public Class ViewModel
         End Set
     End Property
 
-    Private Sub RefreshViewSchema(oldFields As FieldConfiguration(), newFields As FieldConfiguration())
-
+    Private Sub RefreshViewSchema()
+        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim newColumns
+        Me.Configuration.GetFieldConfigurations(Me.Mode)
     End Sub
+
+    Private Function FieldConfigurationsToViewColumn(fields As FieldConfiguration()) As ViewColumn()
+        Dim result(fields.Length - 1) As ViewColumn
+        For i = 0 To fields.Length - 1
+            Dim curField = fields(i)
+            Dim newViewColumn = New ViewColumn
+            newViewColumn.Name = curField.Name
+            newViewColumn.Type = curField.Type.FieldType
+            newViewColumn.Values = curField.Values
+            result(i) = newViewColumn
+        Next
+        Return result
+    End Function
 
     ''' <summary>
     ''' 绑定新的Model，将本View的各种事件绑定到Model上以实现数据变化的同步

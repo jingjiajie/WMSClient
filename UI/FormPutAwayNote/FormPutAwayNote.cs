@@ -75,8 +75,13 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项上架单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormPutAwayNoteItem(rowData).Show();
+            var putAwayNote = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            if (putAwayNote["id"] == null)
+            {
+                MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            new FormPutAwayNoteItem(putAwayNote).Show();
         }
 
         private string StateForwardMapper(int state)
