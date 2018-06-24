@@ -54,7 +54,7 @@ namespace WMS.UI
 
         private void buttonItems_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows != 1)
+            if (this.model1.SelectionRange == null && this.model1.SelectionRange.Rows != 1)
             {
                 MessageBox.Show("请选择一项送检单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

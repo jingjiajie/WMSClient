@@ -391,7 +391,7 @@ namespace WMS.UI
                     where s["materialName"] != null &&
                     s["materialName"].ToString().StartsWith(str) &&
                     (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
-                    select s["materialName"]).ToArray();
+                    select s["materialName"]).Distinct().ToArray();
         }
 
         //物料代号输入联想
@@ -401,7 +401,7 @@ namespace WMS.UI
                     where s["materialNo"] != null &&
                     s["materialNo"].ToString().StartsWith(str) &&
                     (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
-                    select s["materialNo"]).ToArray();
+                    select s["materialNo"]).Distinct().ToArray();
         }
 
         //物料系列输入联想
@@ -411,7 +411,7 @@ namespace WMS.UI
                     where s["materialProductLine"] != null &&
                     s["materialProductLine"].ToString().StartsWith(str) &&
                     (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
-                    select s["materialProductLine"]).ToArray();
+                    select s["materialProductLine"]).Distinct().ToArray();
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
