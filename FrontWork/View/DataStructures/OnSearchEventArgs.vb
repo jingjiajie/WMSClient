@@ -124,4 +124,9 @@ Public Enum Relation
     ''' 介于
     ''' </summary>
     BETWEEN
+
+    ''' <summary>
+    ''' 包含于
+    ''' </summary>
+    [IN]
 End Enum

@@ -32,11 +32,13 @@ namespace WMS.UI
             {
                 this.searchView1.AddCondition("warehouseEntryNo", searchNo);
             }
-            this.searchView1.Search();
             if (initialSelectedIDs != null)
             {
-                this.model1.SelectRowsByValues("id", initialSelectedIDs);
+                this.searchView1.AddStaticCondition("id", (from id in initialSelectedIDs select (object)id).ToArray(), Relation.IN);
             }
+            this.searchView1.Search();
+            this.model1.SelectRowsByValues("id", initialSelectedIDs);
+            this.searchView1.ClearStaticCondition("id");
         }
 
         private string StateForwardMapper(int state)
