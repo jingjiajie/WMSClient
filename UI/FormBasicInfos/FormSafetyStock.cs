@@ -109,6 +109,10 @@ namespace WMS.UI.FormBasicInfos
         //关于目标库位
         private void TargetStorageLocationNoEditEnded(int row, string targetStorageLocationNo)
         {
+            if ((string)this.model1[row, "sourceStorageLocationNo"] == targetStorageLocationNo)
+            {
+                MessageBox.Show($"库位与移出库位不能相同，库位代号 ：\"{targetStorageLocationNo}\"，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             this.model1[row, "targetStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(targetStorageLocationNo)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
@@ -126,6 +130,10 @@ namespace WMS.UI.FormBasicInfos
 
         private void TargetStorageLocationNameEditEnded(int row, string targetStorageLocationName)
         {
+            if ((string)this.model1[row, "sourceStorageLocationName"] == targetStorageLocationName)
+            {
+                MessageBox.Show($"库位与移出库位不能相同，库位名称 ：\"{targetStorageLocationName}\"，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             this.model1[row, "targetStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(targetStorageLocationName)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
@@ -143,6 +151,10 @@ namespace WMS.UI.FormBasicInfos
         //关于移出库位
         private void SourceStorageLocationNoEditEnded(int row, string sourceStorageLocationNo)
         {
+            if ((string)this.model1[row, "targetStorageLocationNo"] == sourceStorageLocationNo)
+            {
+                MessageBox.Show($"库位与移出库位不能相同，库位代号 ：\"{sourceStorageLocationNo}\"，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationNo)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
@@ -160,6 +172,10 @@ namespace WMS.UI.FormBasicInfos
 
         private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
         {
+            if ((string)this.model1[row, "targetStorageLocationName"] == sourceStorageLocationName)
+            {
+                MessageBox.Show($"库位与移出库位不能相同，库位名称 ：\"{sourceStorageLocationName}\"，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
