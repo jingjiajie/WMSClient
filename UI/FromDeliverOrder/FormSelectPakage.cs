@@ -40,6 +40,7 @@ namespace WMS.UI.FromDeliverOrder
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+            this.basicView1.Focus();
             if (this.packageId != -1)
             {
                 try

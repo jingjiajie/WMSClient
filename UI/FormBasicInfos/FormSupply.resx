@@ -141,9 +141,6 @@
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:true},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:true,editable:true,editEnded:"#inspectionunitAmountEditEnded"},
 
-		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
-		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
-
 		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
 		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
 
