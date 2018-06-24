@@ -455,7 +455,7 @@
             this.Font = new System.Drawing.Font("宋体", 10F);
             this.Name = "FormDeliverOrderItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormDeliverOrderItem";
+            this.Text = "出库单条目信息";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormDeliverOrderItemClosed);
             this.Load += new System.EventHandler(this.FormDeliverOrderItem_Load);
             this.panelSearchWidget.ResumeLayout(false);

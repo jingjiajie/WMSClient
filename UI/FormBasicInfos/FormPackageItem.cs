@@ -44,7 +44,6 @@ namespace WMS.UI.FormBasicInfos
 
         }
 
-        //private List<int> rowChange = new List<int>();
         private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
         {
             this.updateBasicAndReoGridView();

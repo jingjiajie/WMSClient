@@ -36,12 +36,12 @@ namespace WMS.UI
                     MakeTreeNode("用户管理"),
                     MakeTreeNode("供应商管理"),
                     MakeTreeNode("物料管理"),
-                    MakeTreeNode("供货管理"),
-                    MakeTreeNode("发货套餐管理"),
-                    MakeTreeNode("安全库存管理"),
                     MakeTreeNode("仓库管理"),
                     MakeTreeNode("库区管理"),
-                    MakeTreeNode("库位管理")
+                    MakeTreeNode("库位管理"),
+                    MakeTreeNode("供货管理"),
+                    MakeTreeNode("发货套餐管理"),
+                    MakeTreeNode("安全库存管理")                  
                     }),
                 MakeTreeNode("入库管理",new TreeNode[]{
                     MakeTreeNode("入库单管理"),

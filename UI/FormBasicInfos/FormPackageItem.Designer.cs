@@ -296,7 +296,7 @@
             this.Font = new System.Drawing.Font("宋体", 10F);
             this.Name = "FormPackageItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormPackageItem";
+            this.Text = "发货套餐条目信息";
             this.Load += new System.EventHandler(this.FormPackageItem_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

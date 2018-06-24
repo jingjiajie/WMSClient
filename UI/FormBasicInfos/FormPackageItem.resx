@@ -128,16 +128,16 @@
 
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,editable:false},
-        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
-        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"请输入必填信息"},
+        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"请输入必填信息"},
+        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded",placeHolder:"请输入必填信息"},
+        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded",placeHolder:"请输入必填信息"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"defaultDeliveryAmount",displayName:"默认发货数量（个）",type:"double",visible:true,defaultValue:0},
-        {name:"defaultDeliveryUnit",displayName:"默认发货单位",type:"string",visible:true,defaultValue:0},
-        {name:"defaultDeliveryUnitAmount",displayName:"默认发货单位数量",type:"double",visible:true,defaultValue:0},
+        {name:"defaultDeliveryAmount",displayName:"默认发货数量（个）",type:"double",visible:true,placeHolder:"必填信息"},
+        {name:"defaultDeliveryUnit",displayName:"默认发货单位",type:"string",visible:true,placeHolder:"必填信息"},
+        {name:"defaultDeliveryUnitAmount",displayName:"默认发货单位数量",type:"double",visible:true,placeHolder:"必填信息"},
         {name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
-		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",placeHolder:"必填信息",association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
 
 
 
