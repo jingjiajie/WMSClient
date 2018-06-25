@@ -7,6 +7,7 @@ Public Class ViewModel
     Private _ViewOperationsWrapper As ViewOperationsWrapper
     Private _Configuration As Configuration
     Private _Mode As String = "default"
+    Private _ViewColumns As ViewColumn() = {}
 
     Public Property Configuration As Configuration
         Get
@@ -42,7 +43,10 @@ Public Class ViewModel
     End Property
 
     Private Sub ConfigurationChangedEvent(sender As Object, e As ConfigurationChangedEventArgs)
-        Call Me.RefreshViewSchema()
+        Dim oldColumns = Me._ViewColumns
+        Dim newColumns = Me.FieldConfigurationsToViewColumn(Me.Configuration.GetFieldConfigurations(Me.Mode))
+        Call Me.RefreshViewSchema(oldColumns, newColumns)
+        Me._ViewColumns = newColumns
     End Sub
 
     ''' <summary>
@@ -83,10 +87,36 @@ Public Class ViewModel
         End Set
     End Property
 
-    Private Sub RefreshViewSchema()
-        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
-        Dim newColumns
-        Me.Configuration.GetFieldConfigurations(Me.Mode)
+    ''' <summary>
+    ''' 自动比对新视图与原视图的差别，并命令视图更新。
+    ''' 采用各字段位置不变，新视图字段改变更新，字段增加则增加，字段减少则删除的策略
+    ''' </summary>
+    Private Sub RefreshViewSchema(oldColumns As ViewColumn(), newColumns As ViewColumn())
+        If oldColumns.Length = 0 AndAlso newColumns.Length = 0 Then Return
+        Dim updateColumns As New List(Of KeyValuePair(Of String, ViewColumn))
+        Dim addColumns As New List(Of ViewColumn)
+        Dim removeColumns As New List(Of String)
+        For i = 0 To Math.Max(oldColumns.Length, newColumns.Length) - 1
+            If oldColumns.Length > i AndAlso newColumns.Length > i Then
+                If oldColumns(i) = newColumns(i) Then Continue For
+                updateColumns.Add(New KeyValuePair(Of String, ViewColumn)(oldColumns(i).Name, newColumns(i)))
+            ElseIf oldColumns.Length > i AndAlso newColumns.Length <= i Then
+                removeColumns.Add(oldColumns(i).Name)
+            ElseIf oldColumns.Length <= i AndAlso newColumns.Length > i Then
+                addColumns.Add(newColumns(i))
+            Else
+                Throw New FrontWorkException("Unexpected exception")
+            End If
+        Next
+        If updateColumns.Count > 0 Then
+            Call Me.ViewOperationsWrapper.UpdateColumns((From kv In updateColumns Select kv.Key).ToArray, (From kv In updateColumns Select kv.Value).ToArray)
+        End If
+        If addColumns.Count > 0 Then
+            Call Me.ViewOperationsWrapper.AddColumns(addColumns.ToArray)
+        End If
+        If removeColumns.Count > 0 Then
+            Call Me.ViewOperationsWrapper.RemoveColumns(removeColumns.ToArray)
+        End If
     End Sub
 
     Private Function FieldConfigurationsToViewColumn(fields As FieldConfiguration()) As ViewColumn()
@@ -132,6 +162,7 @@ Public Class ViewModel
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        Me._ViewColumns = {}
     End Sub
 
     Private Sub ViewSelectionRangeChangedEvent(sender As Object, e As ViewSelectionRangeChangedEventArgs)

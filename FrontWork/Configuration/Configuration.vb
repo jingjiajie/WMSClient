@@ -127,10 +127,21 @@ Public Class Configuration
     Public Function GetFieldConfigurations(mode As String) As FieldConfiguration()
         Dim foundModeConfiguration = (From m In modeConfigurations Where m.Mode = mode Select m).FirstOrDefault
         If foundModeConfiguration Is Nothing Then
-            throw new FrontWorkException($"Mode ""{mode}"" not found!")
+            Throw New FrontWorkException($"Mode ""{mode}"" not found!")
         Else
             Return foundModeConfiguration.Fields
         End If
+    End Function
+
+    ''' <summary>
+    ''' 获取当前模式的字段配置
+    ''' </summary>
+    ''' <returns>字段的配置信息</returns>
+    Public Function GetFieldConfiguration(mode As String, fieldName As String) As FieldConfiguration
+        Dim fields = Me.GetFieldConfigurations(mode)
+        Dim field = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
+        If field Is Nothing Then Throw New FrontWorkException($"Field ""{fieldName}"" not found in mode ""{mode}""!")
+        Return field
     End Function
 
     ''' <summary>

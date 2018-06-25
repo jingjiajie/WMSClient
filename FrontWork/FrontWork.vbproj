@@ -105,6 +105,9 @@
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
+    <Compile Include="View\BasicView\BasicViewTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />
     <Compile Include="View\EventArgs\BeforeViewCellUpdateEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowAddEventArgs.vb" />
@@ -169,10 +172,10 @@
     <Compile Include="Synchronizer\ISynchronizer.vb" />
     <Compile Include="Common\Util\Util.vb" />
     <Compile Include="View\DataStructures\AssociationItem.vb" />
-    <Compile Include="View\BasicView.Designer.vb">
+    <Compile Include="View\BasicView\BasicView.Designer.vb">
       <DependentUpon>BasicView.vb</DependentUpon>
     </Compile>
-    <Compile Include="View\BasicView.vb">
+    <Compile Include="View\BasicView\BasicView.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="View\FormAssociation.Designer.vb">
@@ -239,7 +242,7 @@
     <EmbeddedResource Include="Synchronizer\JsonRESTSynchronizer.resx">
       <DependentUpon>JsonRESTSynchronizer.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\BasicView.resx">
+    <EmbeddedResource Include="View\BasicView\BasicView.resx">
       <DependentUpon>BasicView.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormAssociation.resx">

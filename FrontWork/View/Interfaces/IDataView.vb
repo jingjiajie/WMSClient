@@ -1,8 +1,8 @@
 ﻿Public Interface IDataView
     Inherits IView
 
-    Function AddColumns(columns As ViewColumn()) As Boolean
-    Function InsertColumns(columns As ViewColumn())
+    Function AddColumns(viewColumns As ViewColumn()) As Boolean
+    Function UpdateColumns(oriColumnNames As String(), newViewColumns As ViewColumn())
     Function RemoveColumns(columnNames As String())
     Function GetColumns() As ViewColumn()
 

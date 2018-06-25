@@ -31,7 +31,7 @@ Partial Class BasicView
         Me.TableLayoutPanel.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel.ColumnCount = 3
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500.0!))
+        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 312.0!))
         Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel.Controls.Add(Me.Label1, 1, 1)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -41,9 +41,9 @@ Partial Class BasicView
         Me.TableLayoutPanel.Name = "TableLayoutPanel"
         Me.TableLayoutPanel.RowCount = 3
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel.Size = New System.Drawing.Size(729, 425)
+        Me.TableLayoutPanel.Size = New System.Drawing.Size(456, 266)
         Me.TableLayoutPanel.TabIndex = 0
         '
         'Label1
@@ -51,22 +51,23 @@ Partial Class BasicView
         Me.Label1.AutoSize = True
         Me.Label1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Label1.Font = New System.Drawing.Font("黑体", 19.875!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(117, 172)
+        Me.Label1.Location = New System.Drawing.Point(74, 108)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(494, 80)
+        Me.Label1.Size = New System.Drawing.Size(308, 50)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Basic View"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'BasicView
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(192.0!, 192.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Controls.Add(Me.TableLayoutPanel)
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "BasicView"
-        Me.Size = New System.Drawing.Size(729, 425)
+        Me.Size = New System.Drawing.Size(456, 266)
         Me.TableLayoutPanel.ResumeLayout(False)
         Me.TableLayoutPanel.PerformLayout()
         Me.ResumeLayout(False)

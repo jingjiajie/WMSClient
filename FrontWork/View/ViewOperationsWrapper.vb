@@ -114,6 +114,10 @@ Public Class ViewOperationsWrapper
         End RaiseEvent
     End Event
 
+    Public Sub New(view As IDataView)
+        Me.View = view
+    End Sub
+
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
         View.InsertRows(rows, data)
     End Sub
@@ -201,5 +205,9 @@ Public Class ViewOperationsWrapper
             If column.Name.Equals(columnName, StringComparison.OrdinalIgnoreCase) Then Return True
         Next
         Return False
+    End Function
+
+    Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IDataView.UpdateColumns
+        Return View.UpdateColumns(columnNames, columns)
     End Function
 End Class
