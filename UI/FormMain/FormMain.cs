@@ -41,7 +41,8 @@ namespace WMS.UI
                     MakeTreeNode("库位管理"),
                     MakeTreeNode("供货管理"),
                     MakeTreeNode("发货套餐管理"),
-                    MakeTreeNode("安全库存管理")                  
+                    MakeTreeNode("上架库存设置"),
+                    MakeTreeNode("备货库存设置")                    
                     }),
                 MakeTreeNode("入库管理",new TreeNode[]{
                     MakeTreeNode("入库单管理"),
@@ -221,8 +222,11 @@ namespace WMS.UI
                 case "物料管理":
                     this.LoadSubWindow(new FormMaterial());
                     break;
-                case "安全库存管理":
-                    this.LoadSubWindow(new FormSafetyStock());
+                case "备货库存设置":
+                    this.LoadSubWindow(new FormSafetyStock(1));
+                    break;
+                case "上架库存设置":
+                    this.LoadSubWindow(new FormSafetyStock(0));
                     break;
                 case "发货套餐管理":
                     this.LoadSubWindow(new FormPackage());
