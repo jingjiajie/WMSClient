@@ -49,6 +49,7 @@ namespace WMS.UI
                 if (!formPreviewExcel.AddPatternTable("Excel/InspectionNote.xlsx", no)) return;
                 formPreviewExcel.AddData("inspectionNote", inspectionNote, no);
                 formPreviewExcel.AddData("inspectionNoteItems", inspectionNoteItems, no);
+                formPreviewExcel.SetPrintScale(0.8f,no);
             }
             formPreviewExcel.Show();
             this.Close();
