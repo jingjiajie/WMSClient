@@ -70,7 +70,7 @@
             this.basicView1.Model = this.model;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(7, 7, 7, 0);
-            this.basicView1.Size = new System.Drawing.Size(904, 100);
+            this.basicView1.Size = new System.Drawing.Size(1057, 100);
             this.basicView1.TabIndex = 14;
             // 
             // configuration1
@@ -123,7 +123,7 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(904, 25);
+            this.searchView1.Size = new System.Drawing.Size(1057, 25);
             this.searchView1.TabIndex = 15;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -154,7 +154,7 @@
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(904, 35);
+            this.pagerView1.Size = new System.Drawing.Size(1057, 35);
             this.pagerView1.TabIndex = 12;
             // 
             // panel1
@@ -168,7 +168,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 150);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(904, 284);
+            this.panel1.Size = new System.Drawing.Size(1057, 284);
             this.panel1.TabIndex = 13;
             // 
             // reoGridView1
@@ -181,7 +181,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(904, 284);
+            this.reoGridView1.Size = new System.Drawing.Size(1057, 284);
             this.reoGridView1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -205,7 +205,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 494);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1057, 494);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
             // toolStripTop
@@ -223,7 +223,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(904, 25);
+            this.toolStripTop.Size = new System.Drawing.Size(1057, 25);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -232,7 +232,7 @@
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(56, 22);
+            this.buttonAdd.Size = new System.Drawing.Size(63, 22);
             this.buttonAdd.Text = "添加";
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -241,7 +241,7 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(56, 22);
+            this.buttonDelete.Size = new System.Drawing.Size(63, 22);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -250,7 +250,7 @@
             this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
             this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(80, 22);
+            this.buttonSave.Size = new System.Drawing.Size(93, 22);
             this.buttonSave.Text = "保存修改";
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -271,27 +271,27 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 469);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(904, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1057, 25);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(104, 20);
+            this.lableStatus.Size = new System.Drawing.Size(129, 20);
             this.lableStatus.Text = "发货套餐条目信息";
             // 
             // FormPackageItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 494);
+            this.ClientSize = new System.Drawing.Size(1057, 494);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("宋体", 10F);
             this.Name = "FormPackageItem";

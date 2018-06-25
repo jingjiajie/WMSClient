@@ -53,7 +53,6 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.buttonStartAdd = new System.Windows.Forms.ToolStripButton();
@@ -117,6 +116,7 @@
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
             this.basicView1.Size = new System.Drawing.Size(1184, 110);
             this.basicView1.TabIndex = 13;
+            this.basicView1.Load += new System.EventHandler(this.basicView1_Load);
             // 
             // configuration1
             // 
@@ -284,7 +284,6 @@
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
-            this.toolStripSeparator1,
             this.toolStripButton1,
             this.toolStripButton2,
             this.buttonStartAdd,
@@ -318,12 +317,6 @@
             this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.AutoSize = false;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
             // toolStripButton1
             // 
@@ -398,7 +391,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private FrontWork.BasicView basicView1;
         private FrontWork.Configuration configuration1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;

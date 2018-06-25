@@ -78,7 +78,7 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             if (this.model1.SelectionRange.Rows == 0) {
                 MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 return;
@@ -309,7 +309,7 @@ namespace WMS.UI.FormStockTaking
         //=============天经地义的交互逻辑到这里结束===============
 
         private void toolStripButton1_Click(object sender, EventArgs e)
-        {
+        {        
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
             try
@@ -330,6 +330,15 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+
+            WMS.UI.FormStock.FormAddStockTakingOrderItemsBySupply form = new FormStock.FormAddStockTakingOrderItemsBySupply(this.stockTakingOrder);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+                this.updateBasicAndReoGridView();
+            });
+            form.Show();
+            /*
             this.model1.CurrentModelName = "addSingle";
             this.model1.Mode = "addSingle";
             this.synchronizer.Mode = "addSingle";
@@ -346,7 +355,7 @@ namespace WMS.UI.FormStockTaking
             this.buttonStartAdd.Visible = true;
             this.model1.InsertRows(new int[] { 0,1,2,3,4 }, null);
             this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            this.reoGridView1.Enabled = true;*/
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -499,6 +508,11 @@ namespace WMS.UI.FormStockTaking
             {
                 this.addFinishedCallback();
             }
+        }
+
+        private void basicView1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
