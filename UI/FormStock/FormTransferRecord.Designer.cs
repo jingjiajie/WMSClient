@@ -75,7 +75,7 @@
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(981, 27);
@@ -95,6 +95,7 @@
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
+            this.configuration1.Load += new System.EventHandler(this.configuration1_Load);
             // 
             // panelPager
             // 
