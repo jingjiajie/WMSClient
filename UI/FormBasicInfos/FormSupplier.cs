@@ -104,7 +104,7 @@ namespace WMS.UI.FormBasicInfos
         {
             bool update = false;
 
-            for (int i = 0; i < this.model1.RowCount - 1; i++)
+            for (int i = 0; i < this.model1.RowCount; i++)
             {                             
                 if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.UPDATED)
                 {
