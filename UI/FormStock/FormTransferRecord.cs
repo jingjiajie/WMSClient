@@ -52,69 +52,67 @@ namespace WMS.UI.FormStock
         private string SourceStorageLocationOriginalAmountMapper(double amount, int row)
         {
             double? unitAmount = (double?)this.model1[row, "sourceStorageLocationUnitAmount"];
+            double? sourceStorageLocationNewAmount = (double?)this.model1[row, "sourceStorageLocationNewAmount"];
             string sourceStorageLocationUnit = (string)this.model1[row, "sourceStorageLocationUnit"];
+            double sourceStorageLocationNewAmountDouble;
             StringBuilder sb = new StringBuilder();
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
                 sb.Append(Utilities.DoubleToString(amount));
-                sb.Append("->");
-                sb.Append("源库位原数量");
-                sb.Append("[" + "个" + "(" + "1" + ")]");
+                sb.Append("-->");
+                if (double.TryParse(sourceStorageLocationNewAmount.ToString(), out sourceStorageLocationNewAmountDouble))
+                { sb.Append(Utilities.DoubleToString(0)); }
+                else
+                {
+                    sb.Append("[" + "个" + "(" + "1" + ")]");
+                }
                 return sb.ToString();
-            }
+            }   
             else
             {
                 sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
-                sb.Append("->");
-                sb.Append("源库位原数量");
-                sb.Append("[" + "个" + "(" + unitAmount + ")]");
+                sb.Append("-->");
+                if (double.TryParse(sourceStorageLocationNewAmount.ToString(), out sourceStorageLocationNewAmountDouble))
+                {
+                    sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmountDouble / unitAmount.Value));
+                }
+                else { sb.Append(Utilities.DoubleToString(1)); }
+                sb.Append("[" +sourceStorageLocationUnit+ "(" + unitAmount + ")]");
                 return sb.ToString();
             }
         }
 
-        private string TargetStorageLocationNewAmountMapper(double amount, int row)
-        {
-            double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];
-            string targetStorageLocationUnit = (string)this.model1[row, "targetStorageLocationUnit"];
-            StringBuilder sb = new StringBuilder();
-            if (unitAmount.HasValue == false || unitAmount == 0)
-            {
-                sb.Append(Utilities.DoubleToString(amount));
-                sb.Append("->");
-                sb.Append("新库位新数量");
-                sb.Append("[" + "个" + "(" + "1" + ")]");
-                return sb.ToString();
-            }
-            else
-            {
-                sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
-                sb.Append("->");
-                sb.Append("新库位新数量");
-                sb.Append("[" + targetStorageLocationUnit + "(" + unitAmount + ")]");
-                return sb.ToString();
-            }
-        }
 
         private string TargetStorageLocationOriginalAmountMapper(double amount, int row)
         {
-
-            double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];                    
+ 
+            double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];
+            double? targetStorageLocationNewAmount = (double?)this.model1[row, "targetStorageLocationNewAmount"];
             String targetStorageLocationUnit =(string)this.model1[row, "targetStorageLocationUnit"];
             StringBuilder sb = new StringBuilder();
-            
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
                 sb.Append(Utilities.DoubleToString(amount));
-                sb.Append("->");
-                sb.Append("新库位原数量");
+                sb.Append("-->");
+                if (targetStorageLocationNewAmount.HasValue == false || unitAmount == 0)
+                { sb.Append(Utilities.DoubleToString(1)); }
+                else
+                {
+                    sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
+                }
                 sb.Append("[" + "个" + "(" + "1" + ")]");
                 return sb.ToString();
             }
             else
             {
                 sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
-                sb.Append("->");
-                sb.Append("新库位原数量");
+                sb.Append("-->");
+                if (targetStorageLocationNewAmount.HasValue == false || unitAmount == 0)
+                { sb.Append(Utilities.DoubleToString(1)); }
+                else
+                {
+                    sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
+                }
                 sb.Append("[" + targetStorageLocationUnit + "(" + unitAmount + ")]");
                 return sb.ToString();
             }

@@ -14,8 +14,10 @@ namespace WMS.UI.FormBasicInfos
     {
         //private int materialId = -1;
         //private int supplierId = -1;
-        public FormSafetyStock()
+        private int stockType = -1;
+        public FormSafetyStock(int stockType)
         {
+            this.stockType = stockType;
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.RowRemoved += this.model_RowRemoved;
@@ -57,6 +59,7 @@ namespace WMS.UI.FormBasicInfos
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
+                { "type",this.stockType},
             });
         }
 
@@ -64,8 +67,8 @@ namespace WMS.UI.FormBasicInfos
         {
             switch (state)
             {
-                case 0: return "收货上架库位";
-                case 1: return "备货库位";
+                case 0: return "收货上架";
+                case 1: return "备货";
                 case 2: return "其他";
                 default: return "未知状态";
             }
@@ -75,8 +78,8 @@ namespace WMS.UI.FormBasicInfos
         {
             switch (enable)
             {
-                case "收货上架库位": return 0;
-                case "备货库位": return 1;
+                case "收货上架": return 0;
+                case "备货": return 1;
                 case "其他": return 2;
                 default: return -1;
             }
@@ -103,6 +106,7 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.searchView1.AddStaticCondition("type", this.stockType);
             this.searchView1.Search();
             this.updateBasicAndReoGridView();
         }
