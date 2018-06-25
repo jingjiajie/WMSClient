@@ -17,7 +17,6 @@ namespace WMS.UI.FormStock
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
-
         private void FormTransferRecord_Load(object sender, EventArgs e)
         {
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
@@ -98,9 +97,11 @@ namespace WMS.UI.FormStock
 
         private string TargetStorageLocationOriginalAmountMapper(double amount, int row)
         {
-            double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];
-            string targetStorageLocationUnit = (string)this.model1[row, "targetStorageLocationUnit"];
+
+            double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];                    
+            String targetStorageLocationUnit =(string)this.model1[row, "targetStorageLocationUnit"];
             StringBuilder sb = new StringBuilder();
+            
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
                 sb.Append(Utilities.DoubleToString(amount));
@@ -117,6 +118,7 @@ namespace WMS.UI.FormStock
                 sb.Append("[" + targetStorageLocationUnit + "(" + unitAmount + ")]");
                 return sb.ToString();
             }
+         
         }
 
         private string OriginalAmountForwardMapper(double amount, int row)
