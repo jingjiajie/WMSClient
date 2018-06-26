@@ -136,7 +136,7 @@
             this.configuration1.Location = new System.Drawing.Point(89, 67);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormStockTakingOrderItem",
+        "FormAddStockTakingOrderItemsBySupply",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -312,7 +312,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Font = new System.Drawing.Font("宋体", 10F);
             this.Name = "FormAddStockTakingOrderItemsBySupply";
-            this.Text = "FormAddStockTakingOrderItemsBySupply";
+            this.Text = "按供货盘点";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormStockTakingOrderItem_FormClosed);
             this.Load += new System.EventHandler(this.FormAddStockTakingOrderItemsBySupply_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
