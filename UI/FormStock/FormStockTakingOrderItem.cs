@@ -14,8 +14,6 @@ namespace WMS.UI.FormStockTaking
     {
         private IDictionary<string, object> stockTakingOrder = null;
         private Action addFinishedCallback = null;
-        private double amountTemp;
-        private double availableAmountTemp;
         public FormStockTakingOrderItem(IDictionary<string, object> srockTakingOrder)
         {
             MethodListenerContainer.Register(this);            
@@ -313,8 +311,8 @@ namespace WMS.UI.FormStockTaking
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
             try
-            {
-                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+            {             
+                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\",\"checkTime\":\""+this.stockTakingOrder["createTime"]+ "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
