@@ -15,6 +15,7 @@ namespace WMS.UI.FormBasicInfos
         //private int materialId = -1;
         //private int supplierId = -1;
         private int stockType = -1;
+
         public FormSafetyStock(int stockType)
         {
             this.stockType = stockType;
@@ -304,12 +305,23 @@ namespace WMS.UI.FormBasicInfos
                 this.FillDefaultValue(row, "amount", foundSupplies[0]["defaultDeliveryAmount"]);
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
                 this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
-                this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultPrepareTargetStorageLocationId"]);
-                this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
-                this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
-                this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
-                this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
-                this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
+                if (this.stockType == 1) {
+                    this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
+                    this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
+                    this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
+                    this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultQualifiedStorageLocationId"]);
+                    this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultQualifiedStorageLocationNo"]);
+                    this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultQualifiedStorageLocationName"]);
+                }
+                if (this.stockType == 0) {
+                    this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultPrepareTargetStorageLocationId"]);
+                    this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
+                    this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
+                    this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
+                    this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
+                    this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
+                }
+                
             }
             else
             {
