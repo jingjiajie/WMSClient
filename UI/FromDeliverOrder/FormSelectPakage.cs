@@ -16,9 +16,11 @@ namespace WMS.UI.FromDeliverOrder
     public partial class FormSelectPakage : Form
     {
         private int packageId = -1;
+        private int deliveryId = -1;
         private Action addFinishedCallback = null;
-        public FormSelectPakage()
+        public FormSelectPakage(int deliveryId=-1)
         {
+            this.deliveryId = deliveryId;
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
@@ -87,7 +89,7 @@ namespace WMS.UI.FromDeliverOrder
             {
                 try
                 {
-                    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"packageId\":\"" + this.packageId + "\"}";
+                    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"packageId\":\"" + this.packageId + "\",\"deliveryOrderId\":\"" + this.deliveryId+ "\"}"; 
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/delivery_by_package";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                     MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
