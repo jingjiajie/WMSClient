@@ -26,57 +26,27 @@ namespace WMS.UI.FormStock
             this.searchView1.Search();
         }
 
-        private string SourceStorageLocationNewAmountMapper(double amount, int row)
-        {
-            double? unitAmount = (double?)this.model1[row, "sourceStorageLocationUnitAmount"];
-            string sourceStorageLocationUnit=(string)this.model1[row, "sourceStorageLocationUnit"];
-            StringBuilder sb = new StringBuilder();
-            if (unitAmount.HasValue == false || unitAmount == 0)
-            {
-                sb.Append(Utilities.DoubleToString(amount));
-                sb.Append("->");
-                sb.Append("源库位新数量");
-                sb.Append("[" + sourceStorageLocationUnit + "(" + "1" + ")]");
-                return sb.ToString();
-            }
-            else
-            {
-                sb.Append(Utilities.DoubleToString(amount/unitAmount.Value));
-                sb.Append("->");
-                sb.Append("源库位新数量");
-                sb.Append("[" + sourceStorageLocationUnit + "(" + unitAmount + ")]");
-                return sb.ToString();
-            }
-        }
 
         private string SourceStorageLocationOriginalAmountMapper(double amount, int row)
         {
             double? unitAmount = (double?)this.model1[row, "sourceStorageLocationUnitAmount"];
             double? sourceStorageLocationNewAmount = (double?)this.model1[row, "sourceStorageLocationNewAmount"];
             string sourceStorageLocationUnit = (string)this.model1[row, "sourceStorageLocationUnit"];
-            double sourceStorageLocationNewAmountDouble;
+            if (sourceStorageLocationNewAmount.HasValue == false) { return ""; }
             StringBuilder sb = new StringBuilder();
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
                 sb.Append(Utilities.DoubleToString(amount));
                 sb.Append("-->");
-                if (double.TryParse(sourceStorageLocationNewAmount.ToString(), out sourceStorageLocationNewAmountDouble))
-                { sb.Append(Utilities.DoubleToString(0)); }
-                else
-                {
-                    sb.Append("[" + "个" + "(" + "1" + ")]");
-                }
+                sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmount.Value));              
+                sb.Append("[" + "个" + "(" + "1" + ")]");
                 return sb.ToString();
             }   
             else
             {
                 sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
                 sb.Append("-->");
-                if (double.TryParse(sourceStorageLocationNewAmount.ToString(), out sourceStorageLocationNewAmountDouble))
-                {
-                    sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmountDouble / unitAmount.Value));
-                }
-                else { sb.Append(Utilities.DoubleToString(1)); }
+                sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmount.Value/ unitAmount.Value));
                 sb.Append("[" +sourceStorageLocationUnit+ "(" + unitAmount + ")]");
                 return sb.ToString();
             }
@@ -88,18 +58,14 @@ namespace WMS.UI.FormStock
  
             double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];
             double? targetStorageLocationNewAmount = (double?)this.model1[row, "targetStorageLocationNewAmount"];
+            if (targetStorageLocationNewAmount.HasValue == false) { return ""; }
             String targetStorageLocationUnit =(string)this.model1[row, "targetStorageLocationUnit"];
             StringBuilder sb = new StringBuilder();
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
                 sb.Append(Utilities.DoubleToString(amount));
-                sb.Append("-->");
-                if (targetStorageLocationNewAmount.HasValue == false || unitAmount == 0)
-                { sb.Append(Utilities.DoubleToString(1)); }
-                else
-                {
-                    sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
-                }
+                sb.Append("-->");                       
+                sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value));          
                 sb.Append("[" + "个" + "(" + "1" + ")]");
                 return sb.ToString();
             }
@@ -107,12 +73,7 @@ namespace WMS.UI.FormStock
             {
                 sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
                 sb.Append("-->");
-                if (targetStorageLocationNewAmount.HasValue == false || unitAmount == 0)
-                { sb.Append(Utilities.DoubleToString(1)); }
-                else
-                {
-                    sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
-                }
+                sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
                 sb.Append("[" + targetStorageLocationUnit + "(" + unitAmount + ")]");
                 return sb.ToString();
             }

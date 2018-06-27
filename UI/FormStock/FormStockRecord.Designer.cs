@@ -205,7 +205,6 @@
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(866, 27);
             this.searchView1.TabIndex = 0;
-            
             // 
             // panelPager
             // 
