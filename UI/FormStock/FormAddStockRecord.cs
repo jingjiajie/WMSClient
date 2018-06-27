@@ -333,5 +333,27 @@ namespace WMS.UI.FormStock
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
+
+        private int StateBackwardMapper(string enable)
+        {
+            switch (enable)
+            {
+                case "待检测": return 0;
+                case "不合格": return 1;
+                case "合格": return 2;
+                default: return -1;
+            }
+        }
+
+        private string StateForwardMapper(int enable)
+        {
+            switch (enable)
+            {
+                case 0: return "待检测";
+                case 1: return "不合格";
+                case 2: return "合格";
+                default: return "未知状态";
+            }
+        }
     }
 }
