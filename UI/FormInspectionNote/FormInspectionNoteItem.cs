@@ -14,6 +14,8 @@ namespace WMS.UI
 {
     public partial class FormInspectionNoteItem : Form
     {
+        const int STATE_NOT_INSPECTED = 0;
+
         private IDictionary<string, object> inspectionNote = null;
         Action RefreshInspectionNoteCallback = null;
         public FormInspectionNoteItem(IDictionary<string, object>  inspectionNote,Action refreshInspectionNoteCallback)
@@ -310,6 +312,30 @@ namespace WMS.UI
         private void buttonQualified_Click(object sender, EventArgs e)
         {
             this.itemInspectFinish(true);
+        }
+
+        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void RefreshMode()
+        {
+            if (this.model.GetSelectedRow<int>("state") != STATE_NOT_INSPECTED)
+            {
+                this.basicView1.Mode = "inspected";
+                this.reoGridView1.Mode = "inspected";
+            }
+            else
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
         }
     }
 }

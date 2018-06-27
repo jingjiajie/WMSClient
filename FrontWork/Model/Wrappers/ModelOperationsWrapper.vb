@@ -689,6 +689,33 @@ Public Class ModelOperationsWrapper
         Return result.ToArray
     End Function
 
+    Public Function GetSelectedRow() As IDictionary(Of String, Object)
+        Dim selectedData = Me.GetSelectedRows()
+        If selectedData.Length > 0 Then
+            Return selectedData(0)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Public Function GetSelectedRow(Of T As New)() As IDictionary(Of String, Object)
+        Dim selectedData() As T = Me.GetSelectedRows(Of T)
+        If selectedData.Length > 0 Then
+            Return selectedData(0)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    Public Function GetSelectedRow(Of T)(columnName As String) As T
+        Dim selectedData = Me.GetSelectedRows(Of T)(columnName)
+        If selectedData.Length > 0 Then
+            Return selectedData(0)
+        Else
+            Return Nothing
+        End If
+    End Function
+
     ''' <summary>
     ''' 删除新增但未编辑的行
     ''' </summary>
