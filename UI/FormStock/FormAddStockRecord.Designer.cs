@@ -264,6 +264,7 @@
             this.toolStripTop.Size = new System.Drawing.Size(974, 28);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // toolStripButtonAdd
             // 
