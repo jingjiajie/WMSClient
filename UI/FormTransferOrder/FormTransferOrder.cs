@@ -110,6 +110,7 @@ namespace WMS.UI.FormTransferOrder
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.searchView1.AddStaticCondition("type",1);
             this.searchView1.Search();
             this.updateBasicAndReoGridView();
         }

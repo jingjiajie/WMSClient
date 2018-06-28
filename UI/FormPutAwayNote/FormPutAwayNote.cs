@@ -81,7 +81,12 @@ namespace WMS.UI
                 MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            new FormPutAwayNoteItem(putAwayNote).Show();
+            var a1=new FormPutAwayNoteItem(putAwayNote);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
 
         private string StateForwardMapper(int state)

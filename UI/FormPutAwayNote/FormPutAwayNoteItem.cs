@@ -16,6 +16,7 @@ namespace WMS.UI
     public partial class FormPutAwayNoteItem : Form
     {
         private IDictionary<string, object> putAwayNote = null;
+        private Action addFinishedCallback = null;
         public FormPutAwayNoteItem(IDictionary<string, object> putAwayNote)
         {
             MethodListenerContainer.Register(this);
@@ -65,6 +66,8 @@ namespace WMS.UI
         //待工整单完成
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
             try
             {
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.putAwayNote["id"] + "\"}";
@@ -82,6 +85,8 @@ namespace WMS.UI
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
             this.TransferDone();
         }
 
@@ -407,5 +412,17 @@ namespace WMS.UI
         }
 
         //=============天经地义的交互逻辑到这里结束===============
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
+
+        private void FormPutAwayClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
+        }
     }
 }
