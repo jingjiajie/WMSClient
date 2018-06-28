@@ -145,10 +145,10 @@
 {name:"sourceStorageLocationName",displayName:"库位名称",type:"string",editable:false},
 {name:"targetStorageLocationNo",displayName:"目标库位编码",type:"string",editable:false},
 {name:"targetStorageLocationName",displayName:"目标库位名称",type:"string",editable:false},
-{name:"warehouseName",displayName:"仓库名",type:"string",editable:false,visible:false}
-
-
-        
+{name:"warehouseName",displayName:"仓库名",type:"string",editable:false,visible:false},
+{name:"TransferAmount",displayName:"移动数量",type:"double"},
+{name:"TransferUnit",displayName:"移动单位",type:"string"},
+{name:"TransferUnitAmount",displayName:"移动单位数量",type:"double"}       
     ],
 httpAPIs:[
         {type:"get-count",
