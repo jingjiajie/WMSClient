@@ -13,8 +13,6 @@ namespace WMS.UI.FormStock
     public partial class FormReturnSupply : Form
     {
         private Action addFinishedCallback = null;
-        private double amountTemp;
-        private double availableAmountTemp;
         public FormReturnSupply()
         {         
             MethodListenerContainer.Register(this);
@@ -264,8 +262,8 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAdd_Click_1(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            //this.basicView1.Enabled = true;
+            //this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
@@ -285,12 +283,12 @@ namespace WMS.UI.FormStock
             this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
         private void updateBasicAndReoGridView()
         {
-
+            /*
             if (this.model1.RowCount == 0)
             {
                 this.basicView1.Enabled = false;
@@ -300,7 +298,7 @@ namespace WMS.UI.FormStock
             {
                 this.basicView1.Enabled = true;
                 this.reoGridView1.Enabled = true;
-            }
+            }*/
         }
 
         public void SetAddFinishedCallback(Action callback)
