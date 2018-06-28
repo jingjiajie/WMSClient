@@ -419,5 +419,15 @@ namespace WMS.UI.FromDeliverOrder
                 this.addFinishedCallback();
             }
         }
+
+        private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormSelectPakage((int)this.deliveryOrder["id"]);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
+        }
     }
 }

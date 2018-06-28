@@ -63,6 +63,7 @@
             this.buttonAllLoad = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -195,6 +196,7 @@
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
+            this.toolStripButtonDeliveyPakage,
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 27);
             this.toolStripTop.Name = "toolStripTop";
@@ -445,6 +447,15 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(956, 470);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
+            // toolStripButtonDeliveyPakage
+            // 
+            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
+            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 24);
+            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
+            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
+            // 
             // FormDeliverOrderItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -507,5 +518,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button buttonAllLoad;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDeliveyPakage;
     }
 }
