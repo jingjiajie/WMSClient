@@ -6,9 +6,6 @@ Public Class ModelOperationsWrapper
     Inherits ModelWrapperBase
     Implements IModelCore
 
-    Private _configuration As Configuration
-    Private _mode As String = "default"
-
     Public Overrides Property ModelCore As IModelCore
         Get
             Return MyBase.ModelCore
@@ -73,65 +70,6 @@ Public Class ModelOperationsWrapper
     End Sub
 
     Public Property Name As String
-
-    ''' <summary>
-    ''' 配置中心对象
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Configuration As Configuration
-        Get
-            Return Me._configuration
-        End Get
-        Set(value As Configuration)
-            If Me._configuration IsNot Nothing Then
-                RemoveHandler Me._configuration.ConfigurationChanged, AddressOf Me.ConfigurationChanged
-            End If
-            Me._configuration = value
-            If Me._configuration IsNot Nothing Then
-                Call Me.RefreshCoreSchema(Me._configuration)
-                AddHandler Me._configuration.ConfigurationChanged, AddressOf Me.ConfigurationChanged
-            End If
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' 当前模式
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Mode As String
-        Get
-            Return Me._mode
-        End Get
-        Set(value As String)
-            Me._mode = value
-            Call Me.ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
-        End Set
-    End Property
-
-    Private Sub ConfigurationChanged(sender As Object, e As ConfigurationChangedEventArgs)
-        Call Me.RefreshCoreSchema(Me.Configuration)
-        Call Me.RaiseRefreshedEvent(Me, New ModelRefreshedEventArgs)
-    End Sub
-
-    Private Sub RefreshCoreSchema(config As Configuration)
-        Dim fields = config.GetFieldConfigurations(Me.Mode)
-        Dim addColumns As New List(Of ModelColumn)
-        For Each field In fields
-            If Not Me.ContainsColumn(field.Name) Then
-                Dim newColumn As New ModelColumn
-                With newColumn
-                    .Name = field.Name
-                    .Type = field.Type.FieldType
-                    .Nullable = True
-                    .DefaultValue = field.DefaultValue
-                End With
-                addColumns.Add(newColumn)
-            End If
-        Next
-        If addColumns.Count > 0 Then
-            Call Me.ModelCore.AddColumns(addColumns.ToArray)
-        End If
-    End Sub
 
 
     ''' <summary>
@@ -384,23 +322,24 @@ Public Class ModelOperationsWrapper
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
     Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.UpdateRows
-        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
-        '删除不可编辑的字段的值
-        Dim uneditableFields As New List(Of String)
-        For Each field In fields
-            If field.Editable = False Then
-                uneditableFields.Add(field.Name)
-            End If
-        Next
-        If uneditableFields.Count > 0 Then
-            For Each curData In dataOfEachRow
-                For Each uneditableFieldName In uneditableFields
-                    If curData.ContainsKey(uneditableFieldName) Then
-                        curData.Remove(uneditableFieldName)
-                    End If
-                Next
-            Next
-        End If
+        'TODO 删除不可编辑字段值
+        'Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        ''删除不可编辑的字段的值
+        'Dim uneditableFields As New List(Of String)
+        'For Each field In fields
+        '    If field.Editable = False Then
+        '        uneditableFields.Add(field.Name)
+        '    End If
+        'Next
+        'If uneditableFields.Count > 0 Then
+        '    For Each curData In dataOfEachRow
+        '        For Each uneditableFieldName In uneditableFields
+        '            If curData.ContainsKey(uneditableFieldName) Then
+        '                curData.Remove(uneditableFieldName)
+        '            End If
+        '        Next
+        '    Next
+        'End If
         Call Me.ModelCore.UpdateRows(rows, dataOfEachRow)
     End Sub
 

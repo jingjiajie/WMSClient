@@ -83,6 +83,12 @@
     <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Adapters\PivotTableAdapter.Designer.vb">
+      <DependentUpon>PivotTableAdapter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adapters\PivotTableAdapter.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Common\Exceptions\InvalidDataException.vb" />
     <Compile Include="Common\Util\JsonSerializer.vb" />
@@ -103,6 +109,7 @@
     <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
+    <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
     <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />

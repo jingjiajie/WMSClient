@@ -15,6 +15,7 @@ Partial Public Class Model
     Public WithEvents LabelText As Label
 
     Protected Property ModelOperationsWrapper As ModelOperationsWrapper
+    Protected Property ModelConfigurationWrapper As ModelConfigurationWrapper
 
     Public Shadows Property Name As String
         Get
@@ -33,10 +34,10 @@ Partial Public Class Model
     <Description("配置中心对象"), Category("FrontWork")>
     Public Property Configuration As Configuration
         Get
-            Return Me.ModelOperationsWrapper.Configuration
+            Return Me.ModelConfigurationWrapper.Configuration
         End Get
         Set(value As Configuration)
-            Me.ModelOperationsWrapper.Configuration = value
+            Me.ModelConfigurationWrapper.Configuration = value
         End Set
     End Property
 
@@ -162,15 +163,17 @@ Partial Public Class Model
     <Description("当前配置模式"), Category("FrontWork")>
     Public Property Mode As String
         Get
-            Return Me.ModelOperationsWrapper.Mode
+            Return Me.ModelConfigurationWrapper.Mode
         End Get
         Set(value As String)
-            ModelOperationsWrapper.Mode = value
+            ModelConfigurationWrapper.Mode = value
         End Set
     End Property
 
     Public Sub New()
-        Me.ModelOperationsWrapper = New ModelOperationsWrapper(New ModelCore)
+        Dim core As New ModelCore
+        Me.ModelOperationsWrapper = New ModelOperationsWrapper(core)
+        Me.ModelConfigurationWrapper = New ModelConfigurationWrapper(core)
     End Sub
 
     Public Function GetCell(row As Integer, columnName As String) As Object
