@@ -162,14 +162,6 @@ Public Class ViewOperationsWrapper
         Return Me.AddRows({data})(0)
     End Function
 
-    Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
-        Return View.GetRowCount()
-    End Function
-
-    Public Function GetColumnCount() As Integer Implements IDataView.GetColumnCount
-        Return View.GetColumnCount()
-    End Function
-
     Public Function GetSelectionRanges() As Range() Implements IDataView.GetSelectionRanges
         Return View.GetSelectionRanges()
     End Function
@@ -187,27 +179,23 @@ Public Class ViewOperationsWrapper
         Return View.AddColumns(columns)
     End Function
 
-    Public Function InsertColumns(columns() As ViewColumn) As Object Implements IDataView.InsertColumns
-        Return View.InsertColumns(columns)
-    End Function
-
     Public Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
         Return View.RemoveColumns(columnNames)
+    End Function
+
+    Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IDataView.UpdateColumns
+        Return View.UpdateColumns(columnNames, columns)
     End Function
 
     Public Function GetColumns() As ViewColumn() Implements IDataView.GetColumns
         Return View.GetColumns()
     End Function
 
-    Public Function ContainsColumn(columnName As String) As Boolean
-        Dim allColumns = Me.GetColumns
-        For Each column In allColumns
-            If column.Name.Equals(columnName, StringComparison.OrdinalIgnoreCase) Then Return True
-        Next
-        Return False
+    Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
+        Return View.GetRowCount()
     End Function
 
-    Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IDataView.UpdateColumns
-        Return View.UpdateColumns(columnNames, columns)
+    Public Function GetColumnCount() As Integer Implements IDataView.GetColumnCount
+        Return View.GetColumnCount()
     End Function
 End Class

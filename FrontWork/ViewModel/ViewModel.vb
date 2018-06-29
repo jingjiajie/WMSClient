@@ -7,7 +7,6 @@ Public Class ViewModel
     Private _ViewOperationsWrapper As ViewOperationsWrapper
     Private _Configuration As Configuration
     Private _Mode As String = "default"
-    Private _ViewColumns As ViewColumn() = {}
 
     Public Property Configuration As Configuration
         Get
@@ -43,10 +42,11 @@ Public Class ViewModel
     End Property
 
     Private Sub ConfigurationChangedEvent(sender As Object, e As ConfigurationChangedEventArgs)
-        Dim oldColumns = Me._ViewColumns
-        Dim newColumns = Me.FieldConfigurationsToViewColumn(Me.Configuration.GetFieldConfigurations(Me.Mode))
+        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim allFields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
+        Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
-        Me._ViewColumns = newColumns
     End Sub
 
     ''' <summary>
@@ -124,7 +124,9 @@ Public Class ViewModel
         For i = 0 To fields.Length - 1
             Dim curField = fields(i)
             Dim newViewColumn = New ViewColumn
+            newViewColumn.DisplayName = curField.DisplayName
             newViewColumn.Name = curField.Name
+            newViewColumn.Editable = curField.Editable
             newViewColumn.Type = curField.Type.FieldType
             newViewColumn.Values = curField.Values
             result(i) = newViewColumn
@@ -142,6 +144,8 @@ Public Class ViewModel
         AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
         AddHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
+
+        Call Me.ModelRefreshedEvent(Me, Nothing)
     End Sub
 
     ''' <summary>
@@ -162,7 +166,11 @@ Public Class ViewModel
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        Me._ViewColumns = {}
+
+        If Me.Configuration IsNot Nothing Then
+            Call Me.ConfigurationChangedEvent(Me, Nothing)
+            Call Me.ModelRefreshedEvent(Me, Nothing)
+        End If
     End Sub
 
     Private Sub ViewSelectionRangeChangedEvent(sender As Object, e As ViewSelectionRangeChangedEventArgs)
@@ -261,7 +269,7 @@ Public Class ViewModel
     End Sub
 
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
-        Dim indexes = (From r In e.RemovedRows Select r.Index)
+        Dim indexes = (From r In e.RemovedRows Select r.Index).ToArray
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         Call Me._ViewOperationsWrapper.RemoveRows(indexes)
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
@@ -291,17 +299,20 @@ Public Class ViewModel
 
     Private Sub ModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
         'TODO 待优化
-        Dim rowCount = Me._ViewOperationsWrapper.GetRowCount
-        Dim data = Me._ModelOperationsWrapper.GetRows(Util.Range(0, rowCount))
-        For i = 0 To data.Length - 1
+        Dim data = Me._ModelOperationsWrapper.GetRows(Util.Range(0, Me.ModelOperationsWrapper.GetRowCount))
+        Dim dataCount = data.Length
+        For i = 0 To dataCount - 1
             data(i) = Me.GetForwardMappedRowData(data(i), i)
         Next
         RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        Call Me._ViewOperationsWrapper.RemoveRows(Util.Range(0, rowCount))
+        RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        Call Me._ViewOperationsWrapper.RemoveRows(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
         Call Me._ViewOperationsWrapper.AddRows(data)
+        Call Me._ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
     End Sub
 
     Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
@@ -319,11 +330,12 @@ Public Class ViewModel
     End Sub
 
     Private Function GetForwardMappedRowData(rowData As IDictionary(Of String, Object), rowNum As Integer) As IDictionary(Of String, Object)
+        Dim result As New Dictionary(Of String, Object)
         For Each kv In rowData
             Dim key = kv.Key
-            rowData(key) = Me.GetForwardMappedCellData(rowData(key), key, rowNum)
+            result.Add(key, Me.GetForwardMappedCellData(rowData(key), key, rowNum))
         Next
-        Return rowData
+        Return result
     End Function
 
     Private Function GetForwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
@@ -332,10 +344,13 @@ Public Class ViewModel
         If curField Is Nothing Then
             Throw New FrontWorkException($"Field ""{fieldName}"" not found in Configuration!")
         End If
+        Dim result = Nothing
         If curField.ForwardMapper IsNot Nothing Then
-            cellData = curField.ForwardMapper.Invoke(cellData, Me, rowNum)
+            result = curField.ForwardMapper.Invoke(cellData, Me, rowNum)
+        Else
+            result = cellData
         End If
-        Return cellData
+        Return result
     End Function
 
 

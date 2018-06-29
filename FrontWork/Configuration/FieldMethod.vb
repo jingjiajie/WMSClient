@@ -52,6 +52,8 @@ Public Class FieldMethod
     Private Property MethodListenerNames As String() = {}
 
     Public Shared Operator =(fieldMethod1 As FieldMethod, fieldMethod2 As FieldMethod) As Boolean
+        If fieldMethod1 Is fieldMethod2 Then Return True
+        If fieldMethod1 Is Nothing OrElse fieldMethod2 Is Nothing Then Return False
         If fieldMethod1.ReturnsStaticValue <> fieldMethod2.ReturnsStaticValue Then Return False
         '返回静态值的情况
         If fieldMethod1.ReturnsStaticValue Then

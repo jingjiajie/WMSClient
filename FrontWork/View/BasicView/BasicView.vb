@@ -21,9 +21,10 @@ Partial Public Class BasicView
     Private Property _TextBoxManager As New TextBoxManager
     Private Property _ComboBoxManager As New ComboBoxManager
     Private Property _LabelManager As New LabelManager
-    Private Property _ViewModel As New ViewModel
+    Private Property _ViewModel As ViewModel
 
     Private Property _RecordedRows As New List(Of IDictionary(Of String, Object))
+    Private Property _Columns As New List(Of ViewColumn)
 
     ''' <summary>
     ''' Model对象，用来存取数据
@@ -65,7 +66,8 @@ Partial Public Class BasicView
         Set(value As Integer)
             If Me._itemsPerRow = value Then Return
             Me._itemsPerRow = value
-            'Call Me.InitEditPanel()
+            Call Me.AdjustPanelFieldWidth()
+            Call Me.AdjustRowStyles()
         End Set
     End Property
 
@@ -103,7 +105,21 @@ Partial Public Class BasicView
         Call InitializeComponent()
         Me.Font = New Font("黑体", 10)
         Me.Panel = Me.TableLayoutPanel
+        Me._ViewModel = New ViewModel()
         Me._ViewModel.ViewOperationsWrapper = New ViewOperationsWrapper(Me)
+
+        Me.BorderStyle = BorderStyle.None
+        'Me.Panel.Focus() '把焦点转移走，以免有未保存的编辑框被清除数据
+        Me.Panel.Controls.Clear()
+
+        '初始化行列数量和大小
+        Me.Panel.ColumnStyles.Clear()
+        Dim fieldsPerRow As Integer = Me.ItemsPerRow
+        If fieldsPerRow = 0 Then
+            Call Me.Panel.ResumeLayout()
+            Return
+        End If
+        Me.Panel.ColumnCount = fieldsPerRow * 2 '计算列数
     End Sub
 
     Private Sub UnbindComboBox(comboBox As ComboBox)
@@ -481,9 +497,12 @@ Partial Public Class BasicView
     ''' 从缓存中将整行数据更新到视图上
     ''' </summary>
     Protected Sub PushRow(row As Integer)
+        Call Me.ClearPanelData() '清空面板
+        If row = -1 Then
+            Me.Panel.Enabled = False
+            Return
+        End If
         Me.Panel.Enabled = True
-        '清空面板
-        Call Me.ClearPanelData()
         Dim rowData = Me._RecordedRows(row)
         For Each kv As KeyValuePair(Of String, Object) In rowData
             Dim key = kv.Key
@@ -530,27 +549,27 @@ Partial Public Class BasicView
     Protected Sub ExportField(fieldName As String)
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
-        Dim args As New ViewCellUpdatedEventArgs({New CellInfo(Me._targetRow, Nothing, fieldName, Me.GetFieldValue(fieldName))})
+        Dim fieldValue = Me.GetFieldValue(fieldName)
+        Me._RecordedRows(Me._TargetRow)(fieldName) = fieldValue
+        Dim args As New ViewCellUpdatedEventArgs({New CellInfo(Me._TargetRow, Nothing, fieldName, fieldValue)})
         RaiseEvent CellUpdated(Me, args)
         Me.dicFieldEdited.Remove(fieldName)
     End Sub
 
-    ''' <summary>
-    ''' 导出所有数据到Model
-    ''' </summary>
-    Public Sub ExportData()
-        Dim dicData As New Dictionary(Of String, Object)
-        For Each curField As FieldConfiguration In Me.Configuration.GetFieldConfigurations(Me.Mode)
-            '如果字段不可见，则忽略
-            If Not curField.Visible Then Continue For
-            Dim value = Me.GetFieldValue(curField.Name)
-            '将新的值加入更新字典中
-            dicData.Add(curField.Name, value)
-        Next
-        Dim args As New ViewRowUpdatedEventArgs({New RowInfo(Me._targetRow, Nothing, dicData, Nothing)})
-        RaiseEvent RowUpdated(Me, args)
-        Call Me.dicFieldEdited.Clear()
-    End Sub
+    '''' <summary>
+    '''' 导出所有数据到Model
+    '''' </summary>
+    'Public Sub ExportData()
+    '    Dim dicData As New Dictionary(Of String, Object)
+    '    For Each curField As FieldConfiguration In Me.Configuration.GetFieldConfigurations(Me.Mode)
+    '        Dim value = Me.GetFieldValue(curField.Name)
+    '        '将新的值加入更新字典中
+    '        dicData.Add(curField.Name, value)
+    '    Next
+    '    Dim args As New ViewRowUpdatedEventArgs({New RowInfo(Me._targetRow, Nothing, dicData, Nothing)})
+    '    RaiseEvent RowUpdated(Me, args)
+    '    Call Me.dicFieldEdited.Clear()
+    'End Sub
 
     ''' <summary>
     ''' 获取字段的数据（经过Mapper等操作之后的最终结果）
@@ -635,8 +654,28 @@ Partial Public Class BasicView
         Call Me.BindComboBox(comboBox)
     End Sub
 
+    Private Sub AdjustRowStyles()
+        '重新计算行数。如果行数发生变化，则调整行高
+        Dim rowCount = System.Math.Floor(Me._Columns.Count / Me.ItemsPerRow) + If(Me._Columns.Count Mod Me.ItemsPerRow = 0, 0, 1) '计算行数
+        If rowCount <> Me.TableLayoutPanel.RowCount Then
+            Me.Panel.RowStyles.Clear()
+            For j = 0 To Me.Panel.RowCount
+                Me.Panel.RowStyles.Add(New RowStyle(SizeType.Percent, 100.0F / Me.Panel.RowCount))
+            Next
+        End If
+    End Sub
+
+    'Private Sub RearrangeControls()
+
+    '    Me.Panel.GetControlFromPosition()
+    'End Sub
+
     Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IDataView.AddColumns
+        Call Me._Columns.AddRange(columns)
+
         Call Me.TableLayoutPanel.SuspendLayout()
+        Call Me.AdjustRowStyles()
+
         For Each viewColumn In columns
             Dim label = Me._LabelManager.PopControl
             Call Me.InitLabel(label, viewColumn)
@@ -659,6 +698,16 @@ Partial Public Class BasicView
     End Function
 
     Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IDataView.UpdateColumns
+        For i = 0 To columnNames.Length - 1
+            Dim columnName = columnNames(i)
+            Dim column = columns(i)
+            For j = 0 To Me._Columns.Count - 1
+                If Me._Columns(j).Name = columnName Then
+                    Me._Columns(j) = column
+                    Exit For
+                End If
+            Next
+        Next
         Call Me.TableLayoutPanel.SuspendLayout()
         For i = 0 To columnNames.Length - 1
             Dim oriColumnName = columnNames(i)
@@ -681,6 +730,14 @@ Partial Public Class BasicView
     End Function
 
     Public Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
+        Me._Columns.RemoveAll(Function(column)
+                                  Return columnNames.Contains(column.Name)
+                              End Function)
+
+        Call Me.TableLayoutPanel.SuspendLayout()
+        Call Me.AdjustRowStyles()
+
+        '收集需要删除的Control
         Dim removeControls As New List(Of Control)
         For Each ctl As Control In Me.TableLayoutPanel.Controls
             Dim name = ctl.Name
@@ -689,8 +746,8 @@ Partial Public Class BasicView
                 removeControls.Add(ctl)
             End If
         Next
+        '开始删除Controls
         If removeControls.Count > 0 Then
-            Call Me.TableLayoutPanel.SuspendLayout()
             For Each ctl In removeControls
                 '将控件从视图上删除
                 Me.TableLayoutPanel.Controls.Remove(ctl)
@@ -743,6 +800,9 @@ Partial Public Class BasicView
         For i = 0 To rows.Length - 1
             Me._RecordedRows(rows(i)) = dataOfEachRow(i)
         Next
+        If rows.Contains(Me._TargetRow) Then
+            Call Me.PushRow(Me._TargetRow)
+        End If
     End Sub
 
     Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IDataView.UpdateCells
@@ -753,18 +813,18 @@ Partial Public Class BasicView
             Dim recordedRowData = Me._RecordedRows(row)
             recordedRowData(columnName) = data
         Next
-    End Sub
 
-    Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
-        Return Me._RecordedRows.Count
-    End Function
+        If rows.Contains(Me._TargetRow) Then
+            Call Me.PushRow(Me._TargetRow)
+        End If
+    End Sub
 
     Public Function GetSelectionRanges() As Range() Implements IDataView.GetSelectionRanges
         Throw New NotImplementedException()
     End Function
 
     Public Sub SetSelectionRanges(ranges() As Range) Implements IDataView.SetSelectionRanges
-        If ranges Is Nothing Then
+        If ranges.Length = 0 Then
             Me._TargetRow = -1
         Else
             Me._TargetRow = ranges(0).Row
@@ -772,6 +832,17 @@ Partial Public Class BasicView
         Call Me.PushRow(Me._TargetRow)
     End Sub
 
+    Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
+        Return Me._RecordedRows.Count
+    End Function
+
+    Public Function GetColumns() As ViewColumn() Implements IDataView.GetColumns
+        Return Me._Columns.ToArray
+    End Function
+
+    Public Function GetColumnCount() As Integer Implements IDataView.GetColumnCount
+        Return Me._Columns.Count
+    End Function
 
 
     Private MustInherit Class ControlManager(Of T As Control)
