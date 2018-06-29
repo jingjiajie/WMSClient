@@ -158,7 +158,7 @@ namespace WMS.UI.FormTransferOrder
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.synchronizer.Save();
             this.TransferDone();
         }
@@ -188,7 +188,7 @@ namespace WMS.UI.FormTransferOrder
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "transfer_some";
+                string operatioName = "transfer_some/" + (int)GlobalData.Person["id"];
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

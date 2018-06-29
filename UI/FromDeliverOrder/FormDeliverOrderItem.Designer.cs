@@ -48,6 +48,7 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
@@ -63,7 +64,6 @@
             this.buttonAllLoad = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -242,6 +242,15 @@
             this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripButtonDeliveyPakage
+            // 
+            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
+            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 24);
+            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
+            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
             // 
             // toolStripSeparator1
             // 
@@ -446,15 +455,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(956, 470);
             this.tableLayoutPanel1.TabIndex = 7;
-            // 
-            // toolStripButtonDeliveyPakage
-            // 
-            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
-            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
-            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 24);
-            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
-            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
             // 
             // FormDeliverOrderItem
             // 

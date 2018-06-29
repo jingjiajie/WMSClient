@@ -41,7 +41,8 @@ namespace WMS.UI
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now}
+                { "createTime",DateTime.Now},
+                { "type",0}
             });
         }
 
@@ -81,7 +82,12 @@ namespace WMS.UI
                 MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            new FormPutAwayNoteItem(putAwayNote).Show();
+            var a1=new FormPutAwayNoteItem(putAwayNote);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
 
         private string StateForwardMapper(int state)
@@ -136,7 +142,7 @@ namespace WMS.UI
         {
             try
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 0 + "\"}";
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 0 + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

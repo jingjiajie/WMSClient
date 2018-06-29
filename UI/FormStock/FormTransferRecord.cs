@@ -93,6 +93,19 @@ namespace WMS.UI.FormStock
             }
         }
 
+        private string TransferAmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "transferUnitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
         private void configuration1_Load(object sender, EventArgs e)
         {
 

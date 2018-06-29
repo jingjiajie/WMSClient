@@ -110,6 +110,7 @@ namespace WMS.UI.FormTransferOrder
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.searchView1.AddStaticCondition("type",1);
             this.searchView1.Search();
             this.updateBasicAndReoGridView();
         }
@@ -150,13 +151,14 @@ namespace WMS.UI.FormTransferOrder
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
+            int a = (int)GlobalData.Warehouse["id"];
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
                 { "createTime",DateTime.Now},
-                { "state",0}
+                { "type",1}
             });
         }
 
@@ -164,7 +166,7 @@ namespace WMS.UI.FormTransferOrder
         {
             try
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transerType\":\"" + 1 + "\"}";
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 1 + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
