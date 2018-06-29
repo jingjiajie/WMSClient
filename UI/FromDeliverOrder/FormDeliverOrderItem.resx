@@ -123,7 +123,7 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"deliveryOrderId",displayName:"出库单ID",type:"int",visible:false,defaultValue:"#deliveryOrderIdDefaultValue"},
-        {name:"deliveryOrderNo",displayName:"出库单号"},
+        {name:"deliveryOrderNo",displayName:"出库单号",editable:false},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,editable:false},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false,editable:false},

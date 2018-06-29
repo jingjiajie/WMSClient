@@ -151,13 +151,14 @@ namespace WMS.UI.FormTransferOrder
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
+            int a = (int)GlobalData.Warehouse["id"];
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
                 { "createTime",DateTime.Now},
-                { "state",0}
+                { "type",1}
             });
         }
 
