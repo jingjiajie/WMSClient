@@ -289,7 +289,8 @@ namespace WMS.UI.FormBasicInfos
                 this.FillDefaultValue(row, "amount", foundSupplies[0]["defaultDeliveryAmount"]);
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
                 this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
-                if (this.stockType == 1) {
+                //上架
+                if (this.stockType == 0) {
                     this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
                     this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
                     this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
@@ -297,7 +298,8 @@ namespace WMS.UI.FormBasicInfos
                     this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultQualifiedStorageLocationNo"]);
                     this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultQualifiedStorageLocationName"]);
                 }
-                if (this.stockType == 0) {
+                //备货
+                if (this.stockType == 1) {
                     this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultPrepareTargetStorageLocationId"]);
                     this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
                     this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
