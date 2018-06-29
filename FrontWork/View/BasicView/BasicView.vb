@@ -23,6 +23,8 @@ Partial Public Class BasicView
     Private Property _LabelManager As New LabelManager
     Private Property _ViewModel As New ViewModel
 
+    Private Property _RecordedRows As New List(Of IDictionary(Of String, Object))
+
     ''' <summary>
     ''' Model对象，用来存取数据
     ''' </summary>
@@ -476,13 +478,13 @@ Partial Public Class BasicView
     'End Function
 
     ''' <summary>
-    ''' 从Model导入数据
+    ''' 从缓存中将整行数据更新到视图上
     ''' </summary>
-    ''' <returns>是否导入成功</returns>
-    Protected Function ImportData(rowData As IDictionary(Of String, Object)) As Boolean
+    Protected Sub PushRow(row As Integer)
         Me.Panel.Enabled = True
         '清空面板
         Call Me.ClearPanelData()
+        Dim rowData = Me._RecordedRows(row)
         For Each kv As KeyValuePair(Of String, Object) In rowData
             Dim key = kv.Key
             Dim value = kv.Value
@@ -519,8 +521,7 @@ Partial Public Class BasicView
             'curField.EditEnded?.Invoke(Me, text, Me.GetModelSelectedRow)
             Me.switcherLocalEvents = True
         Next
-        Return True
-    End Function
+    End Sub
 
     ''' <summary>
     ''' 导出字段数据到Model
@@ -712,27 +713,50 @@ Partial Public Class BasicView
     End Function
 
     Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IDataView.AddRows
+        Me._RecordedRows.AddRange(data)
         Return Nothing
     End Function
 
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
-        Return
+        '原始行每次插入之后，行号会变，所以从后向前插入避免问题
+        Dim indexDataPairs(rows.Length - 1) As IndexDataPair
+        For i = 0 To rows.Length - 1
+            indexDataPairs(i) = New IndexDataPair() With {
+                .Index = rows(i),
+                .Data = data(i)
+            }
+        Next
+        Dim indexDataPairsDESC = (From p In indexDataPairs Order By p.Index Descending Select p).ToArray
+        For Each indexDataPair In indexDataPairsDESC
+            Call Me._RecordedRows.Insert(indexDataPair.Index, indexDataPair.Data)
+        Next
     End Sub
 
     Public Sub RemoveRows(rows() As Integer) Implements IDataView.RemoveRows
-        Return
+        Dim rowsDESC = (From r In rows.Distinct Order By r Descending Select r).ToArray
+        For Each row In rowsDESC
+            Call Me._RecordedRows.RemoveAt(row)
+        Next
     End Sub
 
     Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IDataView.UpdateRows
-        Call Me.importdata
+        For i = 0 To rows.Length - 1
+            Me._RecordedRows(rows(i)) = dataOfEachRow(i)
+        Next
     End Sub
 
     Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IDataView.UpdateCells
-        Call Me.importField
+        For i = 0 To rows.Length - 1
+            Dim row = rows(i)
+            Dim columnName = columnNames(i)
+            Dim data = dataOfEachCell(i)
+            Dim recordedRowData = Me._RecordedRows(row)
+            recordedRowData(columnName) = data
+        Next
     End Sub
 
     Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
-        Throw New NotImplementedException()
+        Return Me._RecordedRows.Count
     End Function
 
     Public Function GetSelectionRanges() As Range() Implements IDataView.GetSelectionRanges
@@ -745,7 +769,7 @@ Partial Public Class BasicView
         Else
             Me._TargetRow = ranges(0).Row
         End If
-        Call Me.importdata
+        Call Me.PushRow(Me._TargetRow)
     End Sub
 
 
@@ -796,4 +820,9 @@ Partial Public Class BasicView
         End Function
 
     End Class
+
+    Private Structure IndexDataPair
+        Property Index As Integer
+        Property Data As Object
+    End Structure
 End Class

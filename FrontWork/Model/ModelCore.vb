@@ -152,6 +152,7 @@ Public Class ModelCore
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
     Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.InsertRows
+        'TODO 把行号升序排列之后数据并没有跟着升序排列，导致bug
         If dataOfEachRow Is Nothing Then
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
         End If
