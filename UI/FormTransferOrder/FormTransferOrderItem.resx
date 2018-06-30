@@ -146,7 +146,7 @@
         
         {name:"sourceUnit",displayName:"源单位",type:"string",placeHolder:"必填信息"},
         {name:"sourceUnitAmount",displayName:"源单位数量",type:"double",placeHolder:"必填信息"},
-{name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0},
+        {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#stateForwardMapper"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称",type:"string",editable:true},
