@@ -118,6 +118,10 @@ Public Class ViewOperationsWrapper
         Me.View = view
     End Sub
 
+    Public Sub New()
+
+    End Sub
+
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
         View.InsertRows(rows, data)
     End Sub

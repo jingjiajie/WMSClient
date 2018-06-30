@@ -156,7 +156,7 @@ Public Class ModelCore
         If dataOfEachRow Is Nothing Then
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
         End If
-        Dim indexRowPairs As New List(Of RowInfo)
+        Dim indexRowPairs As New List(Of ModelRowInfo)
         Dim oriRowCount = Me.Data.Rows.Count
         '原始行每次插入之后，行号会变，所以做调整
         Dim realRowsASC = (From r In rows Order By r Ascending Select r).ToArray
@@ -183,7 +183,7 @@ Public Class ModelCore
                 newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
-            Dim newIndexRowPair As New RowInfo(realRow, Me.GetRowID(Me.Data.Rows(realRow)), If(curData, New Dictionary(Of String, Object)), Me.GetRowSynchronizationStates({realRow})(0))
+            Dim newIndexRowPair As New ModelRowInfo(realRow, Me.GetRowID(Me.Data.Rows(realRow)), If(curData, New Dictionary(Of String, Object)), Me.GetRowSynchronizationStates({realRow})(0))
             indexRowPairs.Add(newIndexRowPair)
         Next
 
@@ -214,7 +214,7 @@ Public Class ModelCore
     ''' <param name="rows">删除行行号</param>
     Public Sub RemoveRows(rows As Integer()) Implements IModelCore.RemoveRows
         If rows.Length = 0 Then Return
-        Dim indexRowList = New List(Of RowInfo)
+        Dim indexRowList = New List(Of ModelRowInfo)
         Try
             '每次删除行后行号会变，所以要做调整
             Dim rowsASC = (From r In rows
@@ -226,7 +226,7 @@ Public Class ModelCore
             Next
             '触发事件时的行按传入的行号，和行ID。
             For Each curRowNum In rowsASC
-                Dim newIndexRowPair = New RowInfo(curRowNum,
+                Dim newIndexRowPair = New ModelRowInfo(curRowNum,
                                                   Me.GetRowID(Me.Data.Rows(curRowNum)),
                                                   Me.DataRowToDictionary(Me.Data.Rows(curRowNum)),
                                                   Me.GetRowSynchronizationState(Me.Data.Rows(curRowNum)))
@@ -294,9 +294,9 @@ Public Class ModelCore
                 i += 1
             Next
 
-            Dim updatedRows(rows.Length - 1) As RowInfo
+            Dim updatedRows(rows.Length - 1) As ModelRowInfo
             For i = 0 To rows.Length - 1
-                updatedRows(i) = New RowInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.GetRowSynchronizationState(Me.Data.Rows(rows(i))))
+                updatedRows(i) = New ModelRowInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.GetRowSynchronizationState(Me.Data.Rows(rows(i))))
             Next
 
             Dim eventArgs = New ModelRowUpdatedEventArgs() With {
@@ -322,7 +322,7 @@ Public Class ModelCore
     ''' <param name="columnNames">列名</param>
     ''' <param name="dataOfEachCell">相应的数据</param>
     Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModelCore.UpdateCells
-        Dim posCellPairs As New List(Of CellInfo)
+        Dim posCellPairs As New List(Of ModelCellInfo)
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
@@ -339,7 +339,7 @@ Public Class ModelCore
                 Me.Data.Rows(rows(i))(dataColumn) = DBNull.Value
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
             End Try
-            posCellPairs.Add(New CellInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
+            posCellPairs.Add(New ModelCellInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
             Select Case curState
                 Case SynchronizationState.ADDED
@@ -454,7 +454,7 @@ Public Class ModelCore
         If rows.Length <> syncStates.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
-        Dim updatedRows = New List(Of RowInfo)
+        Dim updatedRows = New List(Of ModelRowInfo)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim syncState = syncStates(i)
@@ -462,7 +462,7 @@ Public Class ModelCore
                 Throw New FrontWorkException($"Row {row} exceeded the max row of model")
             End If
             Me.SetRowSynchronizationState(Me.Data.Rows(row), syncState)
-            Dim newIndexRowSynchronizationStatePair = New RowInfo(row, Me.GetRowIDs({row})(0), Me.GetRows({row})(0), syncState)
+            Dim newIndexRowSynchronizationStatePair = New ModelRowInfo(row, Me.GetRowIDs({row})(0), Me.GetRows({row})(0), syncState)
             updatedRows.Add(newIndexRowSynchronizationStatePair)
         Next
         Dim eventArgs = New ModelRowSynchronizationStateChangedEventArgs(updatedRows.ToArray)

@@ -8,5 +8,5 @@ Public Class ModelRowUpdatedEventArgs
     ''' 更新的行的信息和数据
     ''' </summary>
     ''' <returns></returns>
-    Public Property UpdatedRows As RowInfo()
+    Public Property UpdatedRows As ModelRowInfo()
 End Class

@@ -1,9 +1,10 @@
 ﻿Public Class BeforeViewRowRemoveEventArgs
     Inherits EventArgs
 
-    Public Property Rows As RowInfo()
+    Public Property Rows As ViewRowInfo()
+    Public Property Cancel As Boolean = False
 
-    Public Sub New(rows As RowInfo())
+    Public Sub New(rows As ViewRowInfo())
         Me.Rows = rows
     End Sub
 End Class

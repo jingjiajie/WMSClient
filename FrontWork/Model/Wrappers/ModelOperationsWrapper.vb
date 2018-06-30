@@ -705,7 +705,7 @@ Public Class ModelOperationsWrapper
 
     Public Sub RefreshView(rows As Integer())
         Dim args = New ModelRowUpdatedEventArgs() With {
-            .UpdatedRows = (From row In rows Select New RowInfo(row, Me.GetRowID(row), Me(row), Me.GetRowSynchronizationState(row))).ToArray
+            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me.GetRowID(row), Me(row), Me.GetRowSynchronizationState(row))).ToArray
         }
         Call MyBase.RaiseRowUpdatedEvent(Me, args)
     End Sub

@@ -190,7 +190,7 @@ Public Class ReoGridView
     End Sub
 
     Private Sub ModelRowSynchronizationStateChangedEvent(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
-        Dim rows = (From r In e.SynchronizationStateUpdatedRows Select r.Index).ToArray
+        Dim rows = (From r In e.SynchronizationStateUpdatedRows Select r.Row).ToArray
         Call Me.RefreshRowSynchronizationStates(rows)
     End Sub
 
@@ -223,12 +223,12 @@ Public Class ReoGridView
             Call Me.ImportData()
             Return
         End If
-        Dim rows As Integer() = (From item In e.UpdatedRows Select item.Index).ToArray
+        Dim rows As Integer() = (From item In e.UpdatedRows Select item.Row).ToArray
         Me.ImportData(rows)
     End Sub
 
     Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-        Dim oriRows As Integer() = (From item In e.AddedRows Select item.Index).ToArray
+        Dim oriRows As Integer() = (From item In e.AddedRows Select item.Row).ToArray
         If Me.CurSyncMode = SyncMode.NOT_SYNC Then
             Call Me.ImportData()
             Return
@@ -271,8 +271,8 @@ Public Class ReoGridView
 
         '因为每次删除行会导致行号改变，所以倒序删除
         Dim rowDESC = (From indexRow In e.RemovedRows
-                       Order By indexRow.Index Descending
-                       Select indexRow.Index).ToArray
+                       Order By indexRow.Row Descending
+                       Select indexRow.Row).ToArray
 
         For Each curRow In rowDESC
             If Me.Panel.Rows > curRow Then

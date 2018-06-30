@@ -108,6 +108,8 @@
     <Compile Include="View\BasicView\BasicViewTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="View\DataStructures\ViewCellInfo.vb" />
+    <Compile Include="View\DataStructures\ViewRowInfo.vb" />
     <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />
     <Compile Include="View\EventArgs\BeforeViewCellUpdateEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowAddEventArgs.vb" />
@@ -148,11 +150,11 @@
     <Compile Include="Model\EventArgs\ModelRowRemovedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowUpdatedEventArgs.vb" />
     <Compile Include="Model\Interfaces\IModelCore.vb" />
-    <Compile Include="Common\DataStructures\RowInfo.vb" />
+    <Compile Include="Model\DataStructures\ModelRowInfo.vb" />
     <Compile Include="Model\Model.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Common\DataStructures\CellInfo.vb" />
+    <Compile Include="Model\DataStructures\ModelCellInfo.vb" />
     <Compile Include="Common\DataStructures\Range.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

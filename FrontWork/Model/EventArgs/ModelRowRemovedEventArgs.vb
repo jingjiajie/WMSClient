@@ -8,5 +8,5 @@ Public Class ModelRowRemovedEventArgs
     ''' 删除行的信息和数据
     ''' </summary>
     ''' <returns></returns>
-    Public Property RemovedRows As RowInfo()
+    Public Property RemovedRows As ModelRowInfo()
 End Class

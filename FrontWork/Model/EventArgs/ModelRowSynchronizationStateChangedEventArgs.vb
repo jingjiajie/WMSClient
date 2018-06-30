@@ -8,9 +8,9 @@ Public Class ModelRowSynchronizationStateChangedEventArgs
     ''' 同步状态改变的行的信息
     ''' </summary>
     ''' <returns></returns>
-    Public Property SynchronizationStateUpdatedRows As RowInfo()
+    Public Property SynchronizationStateUpdatedRows As ModelRowInfo()
 
-    Public Sub New(synchronizationStateUpdatedRows As RowInfo())
+    Public Sub New(synchronizationStateUpdatedRows As ModelRowInfo())
         Me.SynchronizationStateUpdatedRows = synchronizationStateUpdatedRows
     End Sub
 End Class

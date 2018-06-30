@@ -1,12 +1,12 @@
 ﻿''' <summary>
 ''' 一行数据的索引和数据
 ''' </summary>
-Public Class RowInfo
+Public Class ModelRowInfo
     ''' <summary>
     ''' 行号
     ''' </summary>
     ''' <returns></returns>
-    Public Property Index as Integer
+    Public Property Row As Integer
 
     ''' <summary>
     ''' 行ID
@@ -26,8 +26,8 @@ Public Class RowInfo
     ''' <returns></returns>
     Public Property RowData As Dictionary(Of String, Object)
 
-    Public Sub New(index as Integer, rowID As Guid, dataRow As Dictionary(Of String, Object), syncState As SynchronizationState)
-        Me.Index = index
+    Public Sub New(row As Integer, rowID As Guid, dataRow As Dictionary(Of String, Object), syncState As SynchronizationState)
+        Me.Row = row
         Me.RowData = dataRow
         Me.RowID = rowID
         Me.SynchronizationState = syncState

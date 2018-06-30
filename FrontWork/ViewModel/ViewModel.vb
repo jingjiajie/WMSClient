@@ -3,8 +3,8 @@ Imports System.Linq
 Imports FrontWork
 
 Public Class ViewModel
-    Private _ModelOperationsWrapper As ModelOperationsWrapper
-    Private _ViewOperationsWrapper As ViewOperationsWrapper
+    Private ModelOperationsWrapper As New ModelOperationsWrapper
+    Private ViewOperationsWrapper As New ViewOperationsWrapper
     Private _Configuration As Configuration
     Private _Mode As String = "default"
 
@@ -41,6 +41,23 @@ Public Class ViewModel
         End Set
     End Property
 
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(view As IDataView)
+        Me.View = view
+    End Sub
+
+    Public Sub New(model As IModelCore)
+        Me.Model = model
+    End Sub
+
+    Public Sub New(model As IModelCore, view As IDataView)
+        Me.Model = model
+        Me.View = view
+    End Sub
+
     Private Sub ConfigurationChangedEvent(sender As Object, e As ConfigurationChangedEventArgs)
         Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
         Dim allFields = Me.Configuration.GetFieldConfigurations(Me.Mode)
@@ -53,16 +70,16 @@ Public Class ViewModel
     ''' ModelOperationsWrapper对象，用来存取数据
     ''' </summary>
     ''' <returns>ModelOperationsWrapper对象</returns>
-    Public Property ModelOperationsWrapper As ModelOperationsWrapper
+    Public Property Model As IModelCore
         Get
-            Return Me._ModelOperationsWrapper
+            Return Me.ModelOperationsWrapper.ModelCore
         End Get
-        Set(value As ModelOperationsWrapper)
-            If Me._ModelOperationsWrapper IsNot Nothing Then
+        Set(value As IModelCore)
+            If Me.ModelOperationsWrapper.ModelCore IsNot Nothing Then
                 Call Me.UnbindModel()
             End If
-            Me._ModelOperationsWrapper = value
-            If Me._ModelOperationsWrapper IsNot Nothing Then
+            Me.ModelOperationsWrapper.ModelCore = value
+            If Me.ModelOperationsWrapper.ModelCore IsNot Nothing Then
                 Call Me.BindModel()
             End If
         End Set
@@ -72,16 +89,16 @@ Public Class ViewModel
     ''' ViewOperationsWrapper对象，用来代理View
     ''' </summary>
     ''' <returns>ViewOperationsWrapper对象</returns>
-    Public Property ViewOperationsWrapper As ViewOperationsWrapper
+    Public Property View As IDataView
         Get
-            Return Me._ViewOperationsWrapper
+            Return Me.ViewOperationsWrapper.View
         End Get
-        Set(value As ViewOperationsWrapper)
-            If Me._ViewOperationsWrapper IsNot Nothing Then
+        Set(value As IDataView)
+            If Me.ViewOperationsWrapper.View IsNot Nothing Then
                 Call Me.UnbindView()
             End If
-            Me._ViewOperationsWrapper = value
-            If Me._ViewOperationsWrapper IsNot Nothing Then
+            Me.ViewOperationsWrapper.View = value
+            If Me.ViewOperationsWrapper IsNot Nothing Then
                 Call Me.BindView()
             End If
         End Set
@@ -180,7 +197,7 @@ Public Class ViewModel
     End Sub
 
     Private Sub ViewRowRemovedEvent(sender As Object, e As ViewRowRemovedEventArgs)
-        Dim rows = (From r In e.Rows Select r.Index).ToArray
+        Dim rows = (From r In e.Rows Select r.Row).ToArray
 
         Try
             RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
@@ -192,7 +209,7 @@ Public Class ViewModel
     End Sub
 
     Private Sub ViewRowAddedEvent(sender As Object, e As ViewRowAddedEventArgs)
-        Dim rows = (From r In e.Rows Select r.Index).ToArray
+        Dim rows = (From r In e.Rows Select r.Row).ToArray
         Dim data = (From r In e.Rows Select r.RowData).ToArray
 
         For i = 0 To rows.Length - 1
@@ -209,10 +226,19 @@ Public Class ViewModel
     End Sub
 
     Private Sub ViewRowUpdatedEvent(sender As Object, e As ViewRowUpdatedEventArgs)
-        Dim rows = (From r In e.Rows Select r.Index).ToArray
+        Dim rows = (From r In e.Rows Select r.Row).ToArray
         Dim data = (From r In e.Rows Select r.RowData).ToArray
-
+        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim uneditableFieldNames = (From f In fields
+                                    Where f.Editable = False
+                                    Select f.Name).ToArray
         For i = 0 To rows.Length - 1
+            Dim keys = data(i).Keys.ToArray
+            For Each key In keys
+                If uneditableFieldNames.Contains(key) Then
+                    data(i).Remove(key)
+                End If
+            Next
             data(i) = Me.GetBackwardMappedRowData(data(i), rows(i))
         Next
 
@@ -226,9 +252,16 @@ Public Class ViewModel
     End Sub
 
     Private Sub ViewCellUpdatedEvent(sender As Object, e As ViewCellUpdatedEventArgs)
-        Dim rows = (From c In e.Cells Select c.Row).ToArray
-        Dim columnNames = (From c In e.Cells Select c.ColumnName).ToArray
-        Dim data = (From c In e.Cells Select c.CellData).ToArray
+        '删除所有不能编辑的单元格
+        Dim cellInfos As List(Of ViewCellInfo) = e.Cells.ToList()
+        cellInfos.RemoveAll(
+            Function(cellInfo)
+                Return Not Me.Configuration.GetFieldConfiguration(Me.Mode, cellInfo.ColumnName).Editable
+            End Function)
+
+        Dim rows = (From c In cellInfos Select c.Row).ToArray
+        Dim columnNames = (From c In cellInfos Select c.ColumnName).ToArray
+        Dim data = (From c In cellInfos Select c.CellData).ToArray
 
         For i = 0 To rows.Length - 1
             data(i) = Me.GetBackwardMappedCellData(data(i), columnNames(i), rows(i))
@@ -253,25 +286,25 @@ Public Class ViewModel
 
     Private Sub ModelSelectionRangeChangedEvent(sender As Object, e As ModelSelectionRangeChangedEventArgs)
         RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        Me._ViewOperationsWrapper.SetSelectionRanges(e.NewSelectionRange)
+        Me.ViewOperationsWrapper.SetSelectionRanges(e.NewSelectionRange)
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
     End Sub
 
     Private Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-        Dim indexes = (From r In e.AddedRows Select r.Index).ToArray
+        Dim indexes = (From r In e.AddedRows Select r.Row).ToArray
         Dim data = (From r In e.AddedRows Select r.RowData).ToArray
         For i = 0 To data.Length - 1
             data(i) = Me.GetForwardMappedRowData(data(i), indexes(i))
         Next
         RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
-        Call Me._ViewOperationsWrapper.InsertRows(indexes, data)
+        Call Me.ViewOperationsWrapper.InsertRows(indexes, data)
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
     End Sub
 
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
-        Dim indexes = (From r In e.RemovedRows Select r.Index).ToArray
+        Dim indexes = (From r In e.RemovedRows Select r.Row).ToArray
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        Call Me._ViewOperationsWrapper.RemoveRows(indexes)
+        Call Me.ViewOperationsWrapper.RemoveRows(indexes)
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
     End Sub
 
@@ -299,7 +332,7 @@ Public Class ViewModel
 
     Private Sub ModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
         'TODO 待优化
-        Dim data = Me._ModelOperationsWrapper.GetRows(Util.Range(0, Me.ModelOperationsWrapper.GetRowCount))
+        Dim data = Me.ModelOperationsWrapper.GetRows(Util.Range(0, Me.ModelOperationsWrapper.GetRowCount))
         Dim dataCount = data.Length
         For i = 0 To dataCount - 1
             data(i) = Me.GetForwardMappedRowData(data(i), i)
@@ -307,16 +340,16 @@ Public Class ViewModel
         RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        Call Me._ViewOperationsWrapper.RemoveRows(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
-        Call Me._ViewOperationsWrapper.AddRows(data)
-        Call Me._ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+        Call Me.ViewOperationsWrapper.RemoveRows(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+        Call Me.ViewOperationsWrapper.AddRows(data)
+        Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
     End Sub
 
     Private Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
-        Dim rows = (From r In e.UpdatedRows Select r.Index).ToArray
+        Dim rows = (From r In e.UpdatedRows Select r.Row).ToArray
         Dim data = (From r In e.UpdatedRows Select r.RowData).ToArray
 
         '遍历传入数据
@@ -355,8 +388,8 @@ Public Class ViewModel
 
 
     Private Function GetBackwardMappedRowData(rowData As IDictionary(Of String, Object), rowNum As Integer) As IDictionary(Of String, Object)
-        For Each kv In rowData
-            Dim key = kv.Key
+        Dim keys = rowData.Keys.ToArray
+        For Each key In keys
             rowData(key) = Me.GetBackwardMappedCellData(rowData(key), key, rowNum)
         Next
         Return rowData
@@ -368,9 +401,12 @@ Public Class ViewModel
         If curField Is Nothing Then
             Throw New FrontWorkException($"Field ""{fieldName}"" not found in Configuration!")
         End If
+        Dim result = Nothing
         If curField.BackwardMapper IsNot Nothing Then
-            cellData = curField.BackwardMapper.Invoke(cellData, Me, rowNum)
+            result = curField.BackwardMapper.Invoke(cellData, Me, rowNum)
+        Else
+            result = cellData
         End If
-        Return cellData
+        Return result
     End Function
 End Class
