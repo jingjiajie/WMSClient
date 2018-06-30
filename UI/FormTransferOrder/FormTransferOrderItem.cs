@@ -387,9 +387,12 @@ namespace WMS.UI.FormTransferOrder
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "scheduledAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                if (foundSupplies[0]["defaultDeliveryAmount"] != null)
+                {
+                    this.FillDefaultValue(row, "scheduledAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                }
                 //默认填写出库单实际数量一步到位XD
-                this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                //this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
 
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
                 this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);               
