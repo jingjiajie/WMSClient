@@ -65,6 +65,7 @@ Partial Class BasicView
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Controls.Add(Me.TableLayoutPanel)
+        Me.Font = New System.Drawing.Font("黑体", 10.0!)
         Me.Margin = New System.Windows.Forms.Padding(0)
         Me.Name = "BasicView"
         Me.Size = New System.Drawing.Size(456, 266)

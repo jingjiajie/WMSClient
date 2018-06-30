@@ -79,14 +79,11 @@ Partial Public Class BasicView
 
     End Sub
 
-    Private switcherModelDataUpdatedEvent As Boolean = True
-    Private switcherLocalEvents As Boolean = True '本View内部事件开关，包括文本框文字变化等。不包括外部，例如Model数据变化事件开关
-    Private dicFieldUpdated As New Dictionary(Of String, Boolean)
     Private dicFieldEdited As New Dictionary(Of String, Boolean)
-    Public Event BeforeRowUpdated As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IDataView.BeforeRowUpdated
-    Public Event BeforeRowAdded As EventHandler(Of BeforeViewRowAddEventArgs) Implements IDataView.BeforeRowAdded
-    Public Event BeforeRowRemoved As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IDataView.BeforeRowRemoved
-    Public Event BeforeCellUpdated As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IDataView.BeforeCellUpdated
+    Public Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IDataView.BeforeRowUpdate
+    Public Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IDataView.BeforeRowAdd
+    Public Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IDataView.BeforeRowRemove
+    Public Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IDataView.BeforeCellUpdate
     Public Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements IDataView.BeforeSelectionRangeChange
     Public Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs) Implements IDataView.RowUpdated
     Public Event RowAdded As EventHandler(Of ViewRowAddedEventArgs) Implements IDataView.RowAdded
@@ -107,13 +104,7 @@ Partial Public Class BasicView
 
     Public Sub New()
         Call InitializeComponent()
-        Me.Font = New Font("黑体", 10)
         Me.Panel = Me.TableLayoutPanel
-
-        Me.BorderStyle = BorderStyle.None
-        Me.Panel.Controls.Clear()
-
-        Call Me.AdjustColumnCount()
     End Sub
 
     Private Sub UnbindComboBox(comboBox As ComboBox)
@@ -141,17 +132,19 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub ClearPanelData()
-        Me.switcherLocalEvents = False
         For Each control As Control In Me.Panel.Controls
             Select Case control.GetType
                 Case GetType(BasicViewTextBox)
+                    Call Me.UnbindTextBox(control)
                     control.Text = String.Empty
+                    Call Me.BindTextBox(control)
                 Case GetType(ComboBox)
+                    Call Me.UnbindComboBox(control)
                     Dim comboBox As ComboBox = CType(control, ComboBox)
                     comboBox.SelectedIndex = -1
+                    Call Me.BindComboBox(control)
             End Select
         Next
-        Me.switcherLocalEvents = True
     End Sub
 
     Private Sub AdjustColumnWidths()
@@ -179,7 +172,6 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs)
-        If Me.switcherLocalEvents = False Then Return
         Dim comboBox = CType(sender, ComboBox)
         Dim fieldName = comboBox.Name
         Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
@@ -193,7 +185,6 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub ComboBox_Leave(sender As Object, e As EventArgs)
-        If Me.switcherLocalEvents = False Then Return
         Dim fieldName = CType(sender, Control).Name
         '如果没被编辑则不保存数据+触发编辑结束事件
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
@@ -203,7 +194,6 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub TextBox_Leave(sender As Object, e As EventArgs)
-        If Me.switcherLocalEvents = False Then Return
         Dim fieldName = CType(sender, TextBox).Name
         '如果没被编辑则不保存数据+触发编辑结束事件
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
@@ -226,17 +216,12 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub TableLayoutPanel_Leave(sender, e)
-        Logger.Debug("TableLayoutView Panel Leave: " & Str(Me.GetHashCode))
-        Me.switcherLocalEvents = False
     End Sub
 
     Private Sub TableLayoutPanel_Enter(sender, e)
-        Logger.Debug("TableLayoutView Panel Enter: " & Str(Me.GetHashCode))
-        Me.switcherLocalEvents = True
     End Sub
 
     Private Sub TextBox_TextChangedEvent(sender As Object, e As EventArgs)
-        If Me.switcherLocalEvents = False Then Return
         Dim textBox As TextBox = sender
         Dim fieldName = CType(sender, Control).Name
         Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
@@ -263,36 +248,7 @@ Partial Public Class BasicView
             Dim value = kv.Value
             Dim Text = If(value?.ToString, "")
 
-            '然后获取Control
-            Dim curControl = (From control As Control In Me.Panel.Controls
-                              Where control.Name = key AndAlso control.GetType <> GetType(Label)
-                              Select control).FirstOrDefault()
-            If curControl Is Nothing Then
-                Continue For
-            End If
-            '根据Control是文本框还是ComboBox，有不一样的行为
-            Me.switcherLocalEvents = False '关闭本地事件开关， 防止连锁事件
-            Select Case curControl.GetType()
-                Case GetType(BasicViewTextBox)
-                    Dim textBox = CType(curControl, TextBox)
-                    textBox.Text = Text
-                Case GetType(ComboBox)
-                    Dim comboBox = CType(curControl, ComboBox)
-                    Dim found = False
-                    For i As Integer = 0 To comboBox.Items.Count - 1
-                        If comboBox.Items(i).ToString = Text Then
-                            found = True
-                            RemoveHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBox_SelectedIndexChanged
-                            comboBox.SelectedIndex = i
-                            AddHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBox_SelectedIndexChanged
-                        End If
-                    Next
-                    If found = False Then
-                        Logger.PutMessage("Value """ + Text + """" + " not found in comboBox """ + key + """")
-                    End If
-            End Select
-            'curField.EditEnded?.Invoke(Me, text, Me.GetModelSelectedRow)
-            Me.switcherLocalEvents = True
+            Call Me.SetFieldValue(key, Text)
         Next
     End Sub
 
@@ -303,11 +259,50 @@ Partial Public Class BasicView
     Protected Sub ExportField(fieldName As String)
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
-        Dim fieldValue = Me.GetFieldValue(fieldName)
-        Me._RecordedRows(Me._TargetRow)(fieldName) = fieldValue
-        Dim args As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me._TargetRow, fieldName, fieldValue)})
-        RaiseEvent CellUpdated(Me, args)
+        Dim newFieldValue = Me.GetFieldValue(fieldName)
+        Dim srcFieldValue = Me._RecordedRows(Me._TargetRow)(fieldName)
+        Dim beforeCellUpdateEventArgs As New BeforeViewCellUpdateEventArgs({New ViewCellInfo(Me._TargetRow, fieldName, newFieldValue)})
+        RaiseEvent BeforeCellUpdate(Me, beforeCellUpdateEventArgs)
+        If beforeCellUpdateEventArgs.Cancel Then
+            Call Me.SetFieldValue(fieldName, srcFieldValue)
+        Else
+            Me._RecordedRows(Me._TargetRow)(fieldName) = newFieldValue '更新缓存值
+            Dim cellUpdatedEventArgs As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me._TargetRow, fieldName, newFieldValue)})
+            RaiseEvent CellUpdated(Me, cellUpdatedEventArgs)
+        End If
         Me.dicFieldEdited.Remove(fieldName)
+    End Sub
+
+    Private Sub SetFieldValue(fieldName As String, value As String)
+        '然后获取Control
+        Dim curControl = (From control As Control In Me.Panel.Controls
+                          Where control.Name = fieldName AndAlso control.GetType <> GetType(Label)
+                          Select control).FirstOrDefault()
+        If curControl Is Nothing Then
+            Return
+        End If
+        '根据Control是文本框还是ComboBox，有不一样的行为
+        Select Case curControl.GetType()
+            Case GetType(BasicViewTextBox)
+                Dim textBox = CType(curControl, TextBox)
+                Call Me.UnbindTextBox(textBox)
+                textBox.Text = value
+                Call Me.BindTextBox(textBox)
+            Case GetType(ComboBox)
+                Dim comboBox = CType(curControl, ComboBox)
+                Call Me.UnbindComboBox(comboBox)
+                Dim found = False
+                For i As Integer = 0 To comboBox.Items.Count - 1
+                    If comboBox.Items(i).ToString = value Then
+                        found = True
+                        comboBox.SelectedIndex = i
+                    End If
+                Next
+                If found = False Then
+                    Logger.PutMessage("Value """ + value + """" + " not found in comboBox """ + fieldName + """")
+                End If
+                Call Me.BindComboBox(comboBox)
+        End Select
     End Sub
 
     ''' <summary>
@@ -430,11 +425,19 @@ Partial Public Class BasicView
     End Sub
 
     Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IDataView.AddColumns
+        Static inited = False
         Call Me._Columns.AddRange(columns)
 
         Call Me.TableLayoutPanel.SuspendLayout()
-        Call Me.AdjustRowCountAndStyles()
+        '如果第一次增加列，则将BasicView的默认页面清空
+        If Not inited Then
+            inited = True
+            Me.BorderStyle = BorderStyle.None
+            Me.Panel.Controls.Clear()
+            Call Me.AdjustColumnCount()
+        End If
 
+        Call Me.AdjustRowCountAndStyles()
         For Each viewColumn In columns
             Dim label = Me._LabelManager.PopControl
             Call Me.InitLabel(label, viewColumn)

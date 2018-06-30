@@ -65,10 +65,10 @@
     ''' <param name="ranges">选区</param>
     Sub SetSelectionRanges(ranges As Range())
 
-    Event BeforeRowUpdated As EventHandler(Of BeforeViewRowUpdateEventArgs)
-    Event BeforeRowAdded As EventHandler(Of BeforeViewRowAddEventArgs)
-    Event BeforeRowRemoved As EventHandler(Of BeforeViewRowRemoveEventArgs)
-    Event BeforeCellUpdated As EventHandler(Of BeforeViewCellUpdateEventArgs)
+    Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs)
+    Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs)
+    Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs)
+    Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs)
     Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs)
 
     Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs)

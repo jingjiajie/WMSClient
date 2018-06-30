@@ -4,45 +4,45 @@ Public Class ViewOperationsWrapper
     Implements IDataView
     Public Property View As IDataView
 
-    Public Custom Event BeforeRowUpdated As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IDataView.BeforeRowUpdated
+    Public Custom Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IDataView.BeforeRowUpdate
         AddHandler(value As EventHandler(Of BeforeViewRowUpdateEventArgs))
-            AddHandler View.BeforeRowUpdated, value
+            AddHandler View.BeforeRowUpdate, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of BeforeViewRowUpdateEventArgs))
-            RemoveHandler View.BeforeRowUpdated, value
+            RemoveHandler View.BeforeRowUpdate, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As BeforeViewRowUpdateEventArgs)
         End RaiseEvent
     End Event
 
-    Public Custom Event BeforeRowAdded As EventHandler(Of BeforeViewRowAddEventArgs) Implements IDataView.BeforeRowAdded
+    Public Custom Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IDataView.BeforeRowAdd
         AddHandler(value As EventHandler(Of BeforeViewRowAddEventArgs))
-            AddHandler View.BeforeRowAdded, value
+            AddHandler View.BeforeRowAdd, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of BeforeViewRowAddEventArgs))
-            RemoveHandler View.BeforeRowAdded, value
+            RemoveHandler View.BeforeRowAdd, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As BeforeViewRowAddEventArgs)
         End RaiseEvent
     End Event
 
-    Public Custom Event BeforeRowRemoved As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IDataView.BeforeRowRemoved
+    Public Custom Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IDataView.BeforeRowRemove
         AddHandler(value As EventHandler(Of BeforeViewRowRemoveEventArgs))
-            AddHandler View.BeforeRowRemoved, value
+            AddHandler View.BeforeRowRemove, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of BeforeViewRowRemoveEventArgs))
-            RemoveHandler View.BeforeRowRemoved, value
+            RemoveHandler View.BeforeRowRemove, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As BeforeViewRowRemoveEventArgs)
         End RaiseEvent
     End Event
 
-    Public Custom Event BeforeCellUpdated As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IDataView.BeforeCellUpdated
+    Public Custom Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IDataView.BeforeCellUpdate
         AddHandler(value As EventHandler(Of BeforeViewCellUpdateEventArgs))
-            AddHandler View.BeforeCellUpdated, value
+            AddHandler View.BeforeCellUpdate, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of BeforeViewCellUpdateEventArgs))
-            RemoveHandler View.BeforeCellUpdated, value
+            RemoveHandler View.BeforeCellUpdate, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As BeforeViewCellUpdateEventArgs)
         End RaiseEvent
