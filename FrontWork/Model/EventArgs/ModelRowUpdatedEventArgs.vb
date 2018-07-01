@@ -2,7 +2,7 @@
 ''' Model整行更新事件参数
 ''' </summary>
 Public Class ModelRowUpdatedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     ''' <summary>
     ''' 更新的行的信息和数据

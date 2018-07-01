@@ -266,10 +266,6 @@ Public Class JsonRESTSynchronizer
         If Me.RemoveAPI Is Nothing Then
             Throw New FrontWorkException("Remove API not setted!")
         End If
-        '删除行的所有ID
-        Dim rowIDsASC = (From indexRow In e.RemoveRows
-                         Order By indexRow.RowID Ascending
-                         Select indexRow.RowID).ToArray
         '如果是新增的行，不要将删除操作同步到服务器。
         Dim rowDataList = (From rowInfo In e.RemoveRows
                            Where rowInfo.SynchronizationState <> SynchronizationState.ADDED _

@@ -2,7 +2,7 @@
 ''' Model行同步状态改变时间参数
 ''' </summary>
 Public Class ModelRowSynchronizationStateChangedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     ''' <summary>
     ''' 同步状态改变的行的信息

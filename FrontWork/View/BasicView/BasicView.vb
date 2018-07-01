@@ -11,17 +11,17 @@ Imports System.Threading
 ''' </summary>
 Partial Public Class BasicView
     Inherits UserControl
-    Implements IDataView
+    Implements IAssociableDataView
 
 
     Private _itemsPerRow As Integer = 3
 
     Private Property _TargetRow As Integer = -1
-    Private Property FormAssociation As New FormAssociation
+    Private Property FormAssociation As New AdsorbableAssociationForm
     Private Property _TextBoxManager As New TextBoxManager
     Private Property _ComboBoxManager As New ComboBoxManager
     Private Property _LabelManager As New LabelManager
-    Private Property _ViewModel As New ViewModel(Me)
+    Private Property _ViewModel As New AssociableDataViewModel(Me)
 
     Private Property _RecordedRows As New List(Of IDictionary(Of String, Object))
     Private Property _Columns As New List(Of ViewColumn)
@@ -31,11 +31,11 @@ Partial Public Class BasicView
     ''' </summary>
     ''' <returns>Model对象</returns>
     <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As IModelCore
+    Public Property Model As IModel
         Get
             Return Me._ViewModel.Model
         End Get
-        Set(value As IModelCore)
+        Set(value As IModel)
             Me._ViewModel.Model = value
         End Set
     End Property
@@ -80,16 +80,32 @@ Partial Public Class BasicView
     End Sub
 
     Private dicFieldEdited As New Dictionary(Of String, Boolean)
-    Public Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IDataView.BeforeRowUpdate
-    Public Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IDataView.BeforeRowAdd
-    Public Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IDataView.BeforeRowRemove
-    Public Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IDataView.BeforeCellUpdate
-    Public Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements IDataView.BeforeSelectionRangeChange
-    Public Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs) Implements IDataView.RowUpdated
-    Public Event RowAdded As EventHandler(Of ViewRowAddedEventArgs) Implements IDataView.RowAdded
-    Public Event RowRemoved As EventHandler(Of ViewRowRemovedEventArgs) Implements IDataView.RowRemoved
-    Public Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs) Implements IDataView.CellUpdated
-    Public Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs) Implements IDataView.SelectionRangeChanged
+    Public Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IAssociableDataView.BeforeRowUpdate
+    Public Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IAssociableDataView.BeforeRowAdd
+    Public Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IAssociableDataView.BeforeRowRemove
+    Public Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IAssociableDataView.BeforeCellUpdate
+    Public Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements IAssociableDataView.BeforeSelectionRangeChange
+    Public Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs) Implements IAssociableDataView.RowUpdated
+    Public Event RowAdded As EventHandler(Of ViewRowAddedEventArgs) Implements IAssociableDataView.RowAdded
+    Public Event RowRemoved As EventHandler(Of ViewRowRemovedEventArgs) Implements IAssociableDataView.RowRemoved
+    Public Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs) Implements IAssociableDataView.CellUpdated
+    Public Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs) Implements IAssociableDataView.SelectionRangeChanged
+    Public Event EditStarted As EventHandler(Of ViewEditStartedEventArgs) Implements IAssociableDataView.EditStarted
+    Public Event ContentChanged As EventHandler(Of ViewContentChangedEventArgs) Implements IAssociableDataView.ContentChanged
+    Public Event EditEnded As EventHandler(Of ViewEditEndedEventArgs) Implements IAssociableDataView.EditEnded
+
+    Public Custom Event AssociationItemSelected As EventHandler(Of ViewAssociationItemSelectedEventArgs) Implements IAssociableDataView.AssociationItemSelected
+        AddHandler(value As EventHandler(Of ViewAssociationItemSelectedEventArgs))
+            AddHandler Me.FormAssociation.AssociationItemSelected, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ViewAssociationItemSelectedEventArgs))
+            RemoveHandler Me.FormAssociation.AssociationItemSelected, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ViewAssociationItemSelectedEventArgs)
+
+        End RaiseEvent
+    End Event
+
     Private Property Panel As TableLayoutPanel
 
     <Description("当前配置模式"), Category("FrontWork")>
@@ -108,12 +124,14 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub UnbindComboBox(comboBox As ComboBox)
+        RemoveHandler comboBox.Enter, AddressOf Me.Combobox_Enter
         RemoveHandler comboBox.Leave, AddressOf Me.ComboBox_Leave
         RemoveHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBox_SelectedIndexChanged
     End Sub
 
     Private Sub BindComboBox(comboBox As ComboBox)
         If Me.DesignMode Then Return '如果是设计器调试，就不用绑定事件了
+        AddHandler comboBox.Enter, AddressOf Me.Combobox_Enter
         AddHandler comboBox.Leave, AddressOf Me.ComboBox_Leave
         AddHandler comboBox.SelectedIndexChanged, AddressOf Me.ComboBox_SelectedIndexChanged
     End Sub
@@ -121,13 +139,13 @@ Partial Public Class BasicView
     Private Sub BindTextBox(textBox As BasicViewTextBox)
         If Me.DesignMode Then Return  '如果是设计器调试，就不用绑定事件了
         AddHandler textBox.Leave, AddressOf Me.TextBox_Leave
-        AddHandler textBox.Enter, AddressOf Me.TextBox_EnterAssociation
+        AddHandler textBox.Enter, AddressOf Me.TextBox_Enter
         AddHandler textBox.TextChanged, AddressOf Me.TextBox_TextChangedEvent
     End Sub
 
     Private Sub UnbindTextBox(textBox As BasicViewTextBox)
         RemoveHandler textBox.Leave, AddressOf Me.TextBox_Leave
-        RemoveHandler textBox.Enter, AddressOf Me.TextBox_EnterAssociation
+        RemoveHandler textBox.Enter, AddressOf Me.TextBox_Enter
         RemoveHandler textBox.TextChanged, AddressOf Me.TextBox_TextChangedEvent
     End Sub
 
@@ -174,45 +192,50 @@ Partial Public Class BasicView
     Private Sub ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs)
         Dim comboBox = CType(sender, ComboBox)
         Dim fieldName = comboBox.Name
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
 
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then
             Me.dicFieldEdited.Add(fieldName, True)
         End If
         Call Me.ExportField(fieldName)
+        Dim args = New ViewContentChangedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+    End Sub
 
-        'curField.ContentChanged?.Invoke(Me, comboBox.SelectedItem?.ToString, Me.Model.SelectionRange.Row)
+    Private Sub Combobox_Enter(sender As Object, e As EventArgs)
+        Dim comboBox As ComboBox = sender
+        Dim fieldName = comboBox.Name
+        Dim args As New ViewEditStartedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        RaiseEvent EditStarted(Me, args)
     End Sub
 
     Private Sub ComboBox_Leave(sender As Object, e As EventArgs)
         Dim fieldName = CType(sender, Control).Name
-        '如果没被编辑则不保存数据+触发编辑结束事件
+        '如果没被编辑则不进行处理
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
         Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
         '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
+        Dim args = New ViewEditEndedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        RaiseEvent EditEnded(Me, args)
     End Sub
 
     Private Sub TextBox_Leave(sender As Object, e As EventArgs)
         Dim fieldName = CType(sender, TextBox).Name
-        '如果没被编辑则不保存数据+触发编辑结束事件
+        '如果没被编辑则不进行处理
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
         Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
         '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
+        Dim args = New ViewEditEndedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        RaiseEvent EditEnded(Me, args)
     End Sub
 
-    Private Sub TextBox_EnterAssociation(sender As Object, e As EventArgs)
+    Private Sub TextBox_Enter(sender As Object, e As EventArgs)
         Dim textBox As TextBox = sender
         Dim fieldName = textBox.Name
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
-        If curField.Association IsNot Nothing Then
-            Me.FormAssociation.TextBox = textBox
-            FormAssociation.SetAssociationFunc(Function(str As String)
-                                                   Dim ret = curField.Association.Invoke(Me, str)
-                                                   Return Util.ToArray(Of AssociationItem)(ret)
-                                               End Function)
-        End If
+        '绑定联想编辑框
+        Me.FormAssociation.AdsorbTextBox = textBox
+        Dim args As New ViewEditStartedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        RaiseEvent EditStarted(Me, args)
     End Sub
 
     Private Sub TableLayoutPanel_Leave(sender, e)
@@ -224,12 +247,11 @@ Partial Public Class BasicView
     Private Sub TextBox_TextChangedEvent(sender As Object, e As EventArgs)
         Dim textBox As TextBox = sender
         Dim fieldName = CType(sender, Control).Name
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then
             Me.dicFieldEdited.Add(fieldName, True)
         End If
-
-        'curField.ContentChanged?.Invoke(Me, textBox.Text, Me.Model.SelectionRange.Row)
+        Dim args = New ViewContentChangedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        RaiseEvent ContentChanged(Me, args)
     End Sub
 
     ''' <summary>
@@ -260,7 +282,10 @@ Partial Public Class BasicView
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
         Dim newFieldValue = Me.GetFieldValue(fieldName)
-        Dim srcFieldValue = Me._RecordedRows(Me._TargetRow)(fieldName)
+        Dim srcFieldValue = Nothing
+        If Me._RecordedRows(Me._TargetRow).ContainsKey(fieldName) Then
+            srcFieldValue = Me._RecordedRows(Me._TargetRow)(fieldName)
+        End If
         Dim beforeCellUpdateEventArgs As New BeforeViewCellUpdateEventArgs({New ViewCellInfo(Me._TargetRow, fieldName, newFieldValue)})
         RaiseEvent BeforeCellUpdate(Me, beforeCellUpdateEventArgs)
         If beforeCellUpdateEventArgs.Cancel Then
@@ -361,6 +386,7 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub InitTextBox(textBox As BasicViewTextBox, viewColumn As ViewColumn)
+        Call Me.UnbindTextBox(textBox)
         '创建编辑框
         With textBox
             .Name = viewColumn.Name
@@ -373,6 +399,7 @@ Partial Public Class BasicView
     End Sub
 
     Private Sub InitComboBox(comboBox As ComboBox, viewColumn As ViewColumn)
+        Call Me.UnbindComboBox(comboBox)
         With comboBox
             .Name = viewColumn.Name
             .Font = Me.Font
@@ -424,7 +451,7 @@ Partial Public Class BasicView
         Next
     End Sub
 
-    Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IDataView.AddColumns
+    Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IAssociableDataView.AddColumns
         Static inited = False
         Call Me._Columns.AddRange(columns)
 
@@ -459,7 +486,7 @@ Partial Public Class BasicView
         Return True
     End Function
 
-    Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IDataView.UpdateColumns
+    Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IAssociableDataView.UpdateColumns
         For i = 0 To columnNames.Length - 1
             Dim columnName = columnNames(i)
             Dim column = columns(i)
@@ -491,7 +518,7 @@ Partial Public Class BasicView
         Return True
     End Function
 
-    Public Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
+    Public Function RemoveColumns(columnNames() As String) As Object Implements IAssociableDataView.RemoveColumns
         Me._Columns.RemoveAll(Function(column)
                                   Return columnNames.Contains(column.Name)
                               End Function)
@@ -522,7 +549,7 @@ Partial Public Class BasicView
                         Call Me._TextBoxManager.PushControl(ctl)
                     Case GetType(ComboBox)
                         Call Me.UnbindComboBox(ctl)
-                        Call Me._TextBoxManager.PushControl(ctl)
+                        Call Me._ComboBoxManager.PushControl(ctl)
                 End Select
             Next
             Call Me.AdjustColumnWidths()
@@ -531,13 +558,14 @@ Partial Public Class BasicView
         Return True
     End Function
 
-    Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IDataView.AddRows
+    Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IAssociableDataView.AddRows
         Me._RecordedRows.AddRange(data)
         Return Nothing
     End Function
 
-    Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
-        '原始行每次插入之后，行号会变，所以从后向前插入避免问题
+    Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IAssociableDataView.InsertRows
+        Dim oriRowCount = Me._RecordedRows.Count
+        '原始行每次插入之后，行号会变，所以做调整
         Dim indexDataPairs(rows.Length - 1) As IndexDataPair
         For i = 0 To rows.Length - 1
             indexDataPairs(i) = New IndexDataPair() With {
@@ -545,20 +573,24 @@ Partial Public Class BasicView
                 .Data = data(i)
             }
         Next
-        Dim indexDataPairsDESC = (From p In indexDataPairs Order By p.Index Descending Select p).ToArray
-        For Each indexDataPair In indexDataPairsDESC
+        Dim adjustedIndexDataPairs = (From i In indexDataPairs Order By i.Index Ascending Select i).ToArray
+        For i = 0 To adjustedIndexDataPairs.Length - 1
+            adjustedIndexDataPairs(i).Index = adjustedIndexDataPairs(i).Index + System.Math.Min(oriRowCount, i)
+        Next
+
+        For Each indexDataPair In adjustedIndexDataPairs
             Call Me._RecordedRows.Insert(indexDataPair.Index, indexDataPair.Data)
         Next
     End Sub
 
-    Public Sub RemoveRows(rows() As Integer) Implements IDataView.RemoveRows
+    Public Sub RemoveRows(rows() As Integer) Implements IAssociableDataView.RemoveRows
         Dim rowsDESC = (From r In rows.Distinct Order By r Descending Select r).ToArray
         For Each row In rowsDESC
             Call Me._RecordedRows.RemoveAt(row)
         Next
     End Sub
 
-    Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IDataView.UpdateRows
+    Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IAssociableDataView.UpdateRows
         For i = 0 To rows.Length - 1
             Me._RecordedRows(rows(i)) = dataOfEachRow(i)
         Next
@@ -567,7 +599,7 @@ Partial Public Class BasicView
         End If
     End Sub
 
-    Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IDataView.UpdateCells
+    Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IAssociableDataView.UpdateCells
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim columnName = columnNames(i)
@@ -581,11 +613,11 @@ Partial Public Class BasicView
         End If
     End Sub
 
-    Public Function GetSelectionRanges() As Range() Implements IDataView.GetSelectionRanges
+    Public Function GetSelectionRanges() As Range() Implements IAssociableDataView.GetSelectionRanges
         Throw New NotImplementedException()
     End Function
 
-    Public Sub SetSelectionRanges(ranges() As Range) Implements IDataView.SetSelectionRanges
+    Public Sub SetSelectionRanges(ranges() As Range) Implements IAssociableDataView.SetSelectionRanges
         If ranges.Length = 0 Then
             Me._TargetRow = -1
         Else
@@ -594,18 +626,29 @@ Partial Public Class BasicView
         Call Me.PushRow(Me._TargetRow)
     End Sub
 
-    Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
+    Public Function GetRowCount() As Integer Implements IAssociableDataView.GetRowCount
         Return Me._RecordedRows.Count
     End Function
 
-    Public Function GetColumns() As ViewColumn() Implements IDataView.GetColumns
+    Public Function GetColumns() As ViewColumn() Implements IAssociableDataView.GetColumns
         Return Me._Columns.ToArray
     End Function
 
-    Public Function GetColumnCount() As Integer Implements IDataView.GetColumnCount
+    Public Function GetColumnCount() As Integer Implements IAssociableDataView.GetColumnCount
         Return Me._Columns.Count
     End Function
 
+    Public Sub ShowAssociationForm() Implements IAssociableDataView.ShowAssociationForm
+        Call Me.FormAssociation.Show()
+    End Sub
+
+    Public Sub UpdateAssociationItems(associationItems() As AssociationItem) Implements IAssociableDataView.UpdateAssociationItems
+        Me.FormAssociation.UpdateAssociationItems(associationItems)
+    End Sub
+
+    Public Sub HideAssociationForm() Implements IAssociableDataView.HideAssociationForm
+        Call Me.FormAssociation.Hide()
+    End Sub
 
     Private MustInherit Class ControlManager(Of T As Control)
         Inherits CollectionBase

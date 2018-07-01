@@ -8,7 +8,7 @@ Imports FrontWork
 ''' </summary>
 Partial Public Class Model
     Inherits UserControl
-    Implements IModelCore
+    Implements IModel
 
     Public WithEvents TableLayoutPanel1 As TableLayoutPanel
     Public WithEvents PanelIcon As Panel
@@ -51,7 +51,7 @@ Partial Public Class Model
         End Get
     End Property
 
-    Public Function GetRowCount() As Integer Implements IModelCore.GetRowCount
+    Public Function GetRowCount() As Integer Implements IModel.GetRowCount
         Return Me.ModelOperationsWrapper.GetRowCount
     End Function
 
@@ -62,15 +62,15 @@ Partial Public Class Model
         End Get
     End Property
 
-    Public Function GetColumnCount() As Integer Implements IModelCore.GetColumnCount
+    Public Function GetColumnCount() As Integer Implements IModel.GetColumnCount
         Return Me.ModelOperationsWrapper.GetColumnCount
     End Function
 
-    Public Function GetSelectionRanges() As Range() Implements IModelCore.GetSelectionRanges
+    Public Function GetSelectionRanges() As Range() Implements IModel.GetSelectionRanges
         Return Me.ModelOperationsWrapper.GetSelectionRanges
     End Function
 
-    Public Sub SetSelectionRanges(ranges As Range()) Implements IModelCore.SetSelectionRanges
+    Public Sub SetSelectionRanges(ranges As Range()) Implements IModel.SetSelectionRanges
         Call Me.ModelOperationsWrapper.SetSelectionRanges(ranges)
     End Sub
 
@@ -205,7 +205,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>相应行数据</returns>
-    Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModelCore.GetRows
+    Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Return Me.ModelOperationsWrapper.GetRows(rows)
     End Function
 
@@ -232,7 +232,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="dataOfEachRow">增加行的数据</param>
     ''' <returns>增加的行号</returns>
-    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Integer() Implements IModelCore.AddRows
+    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Integer() Implements IModel.AddRows
         Return Me.ModelOperationsWrapper.AddRows(dataOfEachRow)
     End Function
 
@@ -250,7 +250,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
-    Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.InsertRows
+    Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         Call Me.ModelOperationsWrapper.InsertRows(rows, dataOfEachRow)
     End Sub
 
@@ -291,7 +291,7 @@ Partial Public Class Model
     ''' 删除行
     ''' </summary>
     ''' <param name="rows">删除行行号</param>
-    Public Sub RemoveRows(rows As Integer()) Implements IModelCore.RemoveRows
+    Public Sub RemoveRows(rows As Integer()) Implements IModel.RemoveRows
         Call Me.ModelOperationsWrapper.RemoveRows(rows)
     End Sub
 
@@ -331,7 +331,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.UpdateRows
+    Public Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
         Call Me.ModelOperationsWrapper.UpdateRows(rows, dataOfEachRow)
     End Sub
 
@@ -371,7 +371,7 @@ Partial Public Class Model
     ''' <param name="rows">行号</param>
     ''' <param name="columnNames">列名</param>
     ''' <param name="dataOfEachCell">相应的数据</param>
-    Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModelCore.UpdateCells
+    Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
         Call Me.ModelOperationsWrapper.UpdateCells(rows, columnNames, dataOfEachCell)
     End Sub
 
@@ -381,7 +381,7 @@ Partial Public Class Model
     ''' <param name="dataTable">数据表</param>
     ''' <param name="ranges">选区</param>
     ''' <param name="syncStates">各行同步状态</param>
-    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), syncStates As SynchronizationState()) Implements IModelCore.Refresh
+    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), syncStates As SynchronizationState()) Implements IModel.Refresh
         Call Me.ModelOperationsWrapper.Refresh(dataTable, ranges, syncStates)
     End Sub
 
@@ -394,7 +394,7 @@ Partial Public Class Model
         Return Me.ModelOperationsWrapper.GetRowID(rowNum)
     End Function
 
-    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModelCore.UpdateRowIDs
+    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModel.UpdateRowIDs
         Call Me.ModelOperationsWrapper.UpdateRowIDs(oriRowIDs, newIDs)
     End Sub
 
@@ -403,11 +403,11 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="rowNums">行号</param>
     ''' <returns>行ID</returns>
-    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModelCore.GetRowIDs
+    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModel.GetRowIDs
         Return Me.ModelOperationsWrapper.GetRowIDs(rowNums)
     End Function
 
-    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModelCore.GetRowIndexes
+    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModel.GetRowIndexes
         Return Me.ModelOperationsWrapper.GetRowIndexes(rowIDs)
     End Function
 
@@ -429,7 +429,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="syncStates">同步状态</param>
-    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModelCore.UpdateRowSynchronizationStates
+    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
         Call Me.ModelOperationsWrapper.UpdateRowSynchronizationStates(rows, syncStates)
     End Sub
 
@@ -456,7 +456,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModelCore.GetRowSynchronizationStates
+    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
         Return Me.ModelOperationsWrapper.GetRowSynchronizationStates(rows)
     End Function
 
@@ -490,7 +490,7 @@ Partial Public Class Model
     ''' <summary>
     ''' Model刷新事件
     ''' </summary>
-    Public Custom Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModelCore.Refreshed
+    Public Custom Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModel.Refreshed
         AddHandler(value As EventHandler(Of ModelRefreshedEventArgs))
             AddHandler Me.ModelOperationsWrapper.Refreshed, value
         End AddHandler
@@ -504,7 +504,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 增加行事件
     ''' </summary>
-    Public Custom Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModelCore.RowAdded
+    Public Custom Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModel.RowAdded
         AddHandler(value As EventHandler(Of ModelRowAddedEventArgs))
             AddHandler Me.ModelOperationsWrapper.RowAdded, value
         End AddHandler
@@ -519,7 +519,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 更新行数据事件
     ''' </summary>
-    Public Custom Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModelCore.RowUpdated
+    Public Custom Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModel.RowUpdated
         AddHandler(value As EventHandler(Of ModelRowUpdatedEventArgs))
             AddHandler Me.ModelOperationsWrapper.RowUpdated, value
         End AddHandler
@@ -534,7 +534,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 删除行事件
     ''' </summary>
-    Public Custom Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModelCore.BeforeRowRemove
+    Public Custom Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModel.BeforeRowRemove
         AddHandler(value As EventHandler(Of ModelBeforeRowRemoveEventArgs))
             AddHandler Me.ModelOperationsWrapper.BeforeRowRemove, value
         End AddHandler
@@ -548,7 +548,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 删除行事件
     ''' </summary>
-    Public Custom Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModelCore.RowRemoved
+    Public Custom Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModel.RowRemoved
         AddHandler(value As EventHandler(Of ModelRowRemovedEventArgs))
             AddHandler Me.ModelOperationsWrapper.RowRemoved, value
         End AddHandler
@@ -563,7 +563,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 单元格数据更新事件
     ''' </summary>
-    Public Custom Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModelCore.CellUpdated
+    Public Custom Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModel.CellUpdated
         AddHandler(value As EventHandler(Of ModelCellUpdatedEventArgs))
             AddHandler Me.ModelOperationsWrapper.CellUpdated, value
         End AddHandler
@@ -578,7 +578,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 选区改变事件
     ''' </summary>
-    Public Custom Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModelCore.SelectionRangeChanged
+    Public Custom Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModel.SelectionRangeChanged
         AddHandler(value As EventHandler(Of ModelSelectionRangeChangedEventArgs))
             AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, value
         End AddHandler
@@ -593,7 +593,7 @@ Partial Public Class Model
     ''' <summary>
     ''' 行同步状态改变事件
     ''' </summary>
-    Public Custom Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModelCore.RowSynchronizationStateChanged
+    Public Custom Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
         AddHandler(value As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs))
             AddHandler Me.ModelOperationsWrapper.RowSynchronizationStateChanged, value
         End AddHandler
@@ -709,27 +709,27 @@ Partial Public Class Model
         Call Me.ModelOperationsWrapper.RemoveUneditedNewRows()
     End Sub
 
-    Public Sub AddColumns(columns() As ModelColumn) Implements IModelCore.AddColumns
+    Public Sub AddColumns(columns() As ModelColumn) Implements IModel.AddColumns
         Call Me.ModelOperationsWrapper.AddColumns(columns)
     End Sub
 
-    Public Sub RemoveColumns(columnNames() As String) Implements IModelCore.RemoveColumns
+    Public Sub RemoveColumns(columnNames() As String) Implements IModel.RemoveColumns
         Call Me.ModelOperationsWrapper.RemoveColumns(columnNames)
     End Sub
 
-    Public Function GetColumns() As ModelColumn() Implements IModelCore.GetColumns
+    Public Function GetColumns() As ModelColumn() Implements IModel.GetColumns
         Return Me.ModelOperationsWrapper.GetColumns
     End Function
 
-    Public Function GetColumns(columnNames() As String) As ModelColumn() Implements IModelCore.GetColumns
+    Public Function GetColumns(columnNames() As String) As ModelColumn() Implements IModel.GetColumns
         Return Me.ModelOperationsWrapper.GetColumns(columnNames)
     End Function
 
-    Public Function GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModelCore.GetCells
+    Public Function GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModel.GetCells
         Return Me.ModelOperationsWrapper.GetCells(rows, columnNames)
     End Function
 
-    Public Function ToDataTable() As DataTable Implements IModelCore.ToDataTable
+    Public Function ToDataTable() As DataTable Implements IModel.ToDataTable
         Return Me.ModelOperationsWrapper.ToDataTable
     End Function
 

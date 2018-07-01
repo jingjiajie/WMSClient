@@ -53,27 +53,4 @@
     ''' <returns></returns>
     Function GetColumnCount() As Integer
 
-    ''' <summary>
-    ''' View的选区
-    ''' </summary>
-    ''' <returns></returns>
-    Function GetSelectionRanges() As Range()
-
-    ''' <summary>
-    ''' 设置View的选区
-    ''' </summary>
-    ''' <param name="ranges">选区</param>
-    Sub SetSelectionRanges(ranges As Range())
-
-    Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs)
-    Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs)
-    Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs)
-    Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs)
-    Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs)
-
-    Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs)
-    Event RowAdded As EventHandler(Of ViewRowAddedEventArgs)
-    Event RowRemoved As EventHandler(Of ViewRowRemovedEventArgs)
-    Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs)
-    Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs)
 End Interface

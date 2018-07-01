@@ -83,6 +83,7 @@
     <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Common\EventArgs\FrontWorkEventArgs.vb" />
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Common\Exceptions\InvalidDataException.vb" />
     <Compile Include="Common\Util\JsonSerializer.vb" />
@@ -105,6 +106,7 @@
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
+    <Compile Include="ViewModel\AssociableDataViewModel.vb" />
     <Compile Include="View\BasicView\BasicViewTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -116,11 +118,23 @@
     <Compile Include="View\EventArgs\BeforeViewRowRemoveEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowUpdateEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewSelectionRangeChangeEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewAssociationItemSelectedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewCellUpdatedEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewContentChangedEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewEditEndedEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewEditEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewEditStartedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowAddedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowRemovedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowUpdatedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewSelectionRangeChangedEventArgs.vb" />
+    <Compile Include="View\AdsorbableAssociationForm.Designer.vb">
+      <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\AdsorbableAssociationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Interfaces\IAssociableDataView.vb" />
     <Compile Include="View\Interfaces\IDataView.vb" />
     <Compile Include="Logger\Logger.vb" />
     <Compile Include="Configuration\ModeConfiguration.vb" />
@@ -149,7 +163,7 @@
     <Compile Include="Model\EventArgs\ModelRowAddedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowRemovedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowUpdatedEventArgs.vb" />
-    <Compile Include="Model\Interfaces\IModelCore.vb" />
+    <Compile Include="Model\Interfaces\IModel.vb" />
     <Compile Include="Model\DataStructures\ModelRowInfo.vb" />
     <Compile Include="Model\Model.vb">
       <SubType>UserControl</SubType>
@@ -186,7 +200,9 @@
     <Compile Include="View\FormAssociation.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="View\Interfaces\ISelectableDataView.vb" />
     <Compile Include="View\Interfaces\IView.vb" />
+    <Compile Include="View\Interfaces\IEditableDataView.vb" />
     <Compile Include="View\ReoGridView.Designer.vb">
       <DependentUpon>ReoGridView.vb</DependentUpon>
     </Compile>
@@ -216,8 +232,12 @@
     <Compile Include="View\TabView.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ViewModel\ViewModel.vb" />
-    <Compile Include="View\ViewOperationsWrapper.vb" />
+    <Compile Include="ViewModel\EditableDataViewModel.vb" />
+    <Compile Include="View\Wrappers\AssociableDataViewOperationsWrapper.vb" />
+    <Compile Include="View\Wrappers\DataViewOperationsWrapper.vb" />
+    <Compile Include="View\Wrappers\DataViewOperationsWrapperBase.vb" />
+    <Compile Include="View\Wrappers\EditableDataViewOperationsWrapper.vb" />
+    <Compile Include="View\Wrappers\SelectableDataViewOperationsWrapper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Adapters\SearchViewJsonRESTAdapter.resx">
@@ -246,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\BasicView\BasicView.resx">
       <DependentUpon>BasicView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\AdsorbableAssociationForm.resx">
+      <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormAssociation.resx">
       <DependentUpon>FormAssociation.vb</DependentUpon>

@@ -4,7 +4,7 @@ Imports FrontWork
 
 Public Class ModelBox
     Inherits Model
-    Implements IModelCore
+    Implements IModel
     Private _currentModelName As String
     Private _configuration As Configuration
     Private _mode As String = "default"
@@ -28,9 +28,9 @@ Public Class ModelBox
                 Dim newModel As New Model
                 newModel.Name = value
                 Me._Models.SetModel(newModel)
-                Me.ModelOperationsWrapper.ModelCore = newModel
+                Me.ModelOperationsWrapper.Model = newModel
             Else
-                Me.ModelOperationsWrapper.ModelCore = Me._Models(value)
+                Me.ModelOperationsWrapper.Model = Me._Models(value)
             End If
             Me._currentModelName = value
             RaiseEvent SelectedModelChanged(Me, New SelectedModelChangedEventArgs)

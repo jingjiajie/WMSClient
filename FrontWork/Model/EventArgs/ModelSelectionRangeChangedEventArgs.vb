@@ -2,7 +2,7 @@
 ''' Model选区改变事件参数
 ''' </summary>
 Public Class ModelSelectionRangeChangedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     ''' <summary>
     ''' 新的选区

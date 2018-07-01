@@ -2,7 +2,7 @@
 ''' Model新增行事件
 ''' </summary>
 Public Class ModelRowAddedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     ''' <summary>
     ''' 新增行的信息和数据

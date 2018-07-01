@@ -1,5 +1,5 @@
 ﻿Public Class ViewCellUpdatedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     Public Property Cells As ViewCellInfo()
 

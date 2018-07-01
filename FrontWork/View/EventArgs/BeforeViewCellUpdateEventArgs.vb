@@ -1,5 +1,5 @@
 ﻿Public Class BeforeViewCellUpdateEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     Public Property Cells As ViewCellInfo()
     Public Property Cancel As Boolean = False

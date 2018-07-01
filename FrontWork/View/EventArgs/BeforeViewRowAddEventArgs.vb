@@ -1,5 +1,5 @@
 ﻿Public Class BeforeViewRowAddEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     Public Property Rows As ViewRowInfo()
     Public Property Cancel As Boolean = False

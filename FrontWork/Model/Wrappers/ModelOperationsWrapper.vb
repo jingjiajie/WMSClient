@@ -4,22 +4,22 @@ Imports System.Reflection
 
 Public Class ModelOperationsWrapper
     Inherits ModelWrapperBase
-    Implements IModelCore
+    Implements IModel
 
     Private _configuration As Configuration
     Private _mode As String = "default"
 
-    Public Overrides Property ModelCore As IModelCore
+    Public Overrides Property Model As IModel
         Get
-            Return MyBase.ModelCore
+            Return MyBase.Model
         End Get
-        Set(value As IModelCore)
-            If MyBase.ModelCore IsNot Nothing Then
-                Call Me.UnbindModelCore(MyBase.ModelCore)
+        Set(value As IModel)
+            If MyBase.Model IsNot Nothing Then
+                Call Me.UnbindModelCore(MyBase.Model)
             End If
-            MyBase.ModelCore = value
-            If MyBase.ModelCore IsNot Nothing Then
-                Call Me.BindModelCore(MyBase.ModelCore)
+            MyBase.Model = value
+            If MyBase.Model IsNot Nothing Then
+                Call Me.BindModelCore(MyBase.Model)
             End If
         End Set
     End Property
@@ -45,31 +45,31 @@ Public Class ModelOperationsWrapper
 
     End Sub
 
-    Public Sub New(modelCore As IModelCore)
-        Me.ModelCore = modelCore
+    Public Sub New(model As IModel)
+        Me.Model = model
     End Sub
 
 
-    Private Sub BindModelCore(modelCore As IModelCore)
-        AddHandler Me.ModelCore.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
-        AddHandler Me.ModelCore.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
-        AddHandler Me.ModelCore.RowAdded, AddressOf Me.RaiseRowAddedEvent
-        AddHandler Me.ModelCore.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
-        AddHandler Me.ModelCore.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
-        AddHandler Me.ModelCore.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
-        AddHandler Me.ModelCore.Refreshed, AddressOf Me.RaiseRefreshedEvent
-        AddHandler Me.ModelCore.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
+    Private Sub BindModelCore(modelCore As IModel)
+        AddHandler Me.Model.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
+        AddHandler Me.Model.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
+        AddHandler Me.Model.RowAdded, AddressOf Me.RaiseRowAddedEvent
+        AddHandler Me.Model.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
+        AddHandler Me.Model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
+        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
+        AddHandler Me.Model.Refreshed, AddressOf Me.RaiseRefreshedEvent
+        AddHandler Me.Model.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
     End Sub
 
-    Private Sub UnbindModelCore(modelCore As IModelCore)
-        RemoveHandler Me.ModelCore.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
-        RemoveHandler Me.ModelCore.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
-        RemoveHandler Me.ModelCore.RowAdded, AddressOf Me.RaiseRowAddedEvent
-        RemoveHandler Me.ModelCore.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
-        RemoveHandler Me.ModelCore.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
-        RemoveHandler Me.ModelCore.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
-        RemoveHandler Me.ModelCore.Refreshed, AddressOf Me.RaiseRefreshedEvent
-        RemoveHandler Me.ModelCore.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
+    Private Sub UnbindModelCore(modelCore As IModel)
+        RemoveHandler Me.Model.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
+        RemoveHandler Me.Model.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
+        RemoveHandler Me.Model.RowAdded, AddressOf Me.RaiseRowAddedEvent
+        RemoveHandler Me.Model.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
+        RemoveHandler Me.Model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
+        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
+        RemoveHandler Me.Model.Refreshed, AddressOf Me.RaiseRefreshedEvent
+        RemoveHandler Me.Model.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
     End Sub
 
     Public Property Name As String
@@ -129,7 +129,7 @@ Public Class ModelOperationsWrapper
             End If
         Next
         If addColumns.Count > 0 Then
-            Call Me.ModelCore.AddColumns(addColumns.ToArray)
+            Call Me.Model.AddColumns(addColumns.ToArray)
         End If
     End Sub
 
@@ -214,7 +214,7 @@ Public Class ModelOperationsWrapper
 
 
     Public Function GetCell(row As Integer, columnName As String) As Object
-        Return Me.ModelCore.GetCells({row}, {columnName})(0)
+        Return Me.Model.GetCells({row}, {columnName})(0)
     End Function
 
 
@@ -383,7 +383,7 @@ Public Class ModelOperationsWrapper
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.UpdateRows
+    Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
         Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
         '删除不可编辑的字段的值
         Dim uneditableFields As New List(Of String)
@@ -401,7 +401,7 @@ Public Class ModelOperationsWrapper
                 Next
             Next
         End If
-        Call Me.ModelCore.UpdateRows(rows, dataOfEachRow)
+        Call Me.Model.UpdateRows(rows, dataOfEachRow)
     End Sub
 
 
@@ -559,7 +559,7 @@ Public Class ModelOperationsWrapper
             Me.AllSelectionRanges = {}
             Return
         End If
-        Dim dataTable = Me.ModelCore.ToDataTable
+        Dim dataTable = Me.Model.ToDataTable
         Dim targetRows As New List(Of Integer)
         For i = 0 To dataTable.Rows.Count - 1
             Dim curRowValue = dataTable.Rows(i)(columnName)

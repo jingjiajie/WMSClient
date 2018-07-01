@@ -1,7 +1,7 @@
 ﻿''' <summary>
 ''' Model模型的总接口
 ''' </summary>
-Public Interface IModelCore
+Public Interface IModel
     ''' <summary>
     ''' Model增加列
     ''' </summary>

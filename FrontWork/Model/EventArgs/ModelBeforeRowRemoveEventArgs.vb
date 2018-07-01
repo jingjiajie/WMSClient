@@ -2,7 +2,7 @@
 ''' Model即将删除行事件参数
 ''' </summary>
 Public Class ModelBeforeRowRemoveEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     ''' <summary>
     ''' 删除行的信息和数据

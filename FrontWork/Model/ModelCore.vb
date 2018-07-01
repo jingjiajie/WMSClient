@@ -7,7 +7,7 @@ Imports FrontWork
 ''' 模型类
 ''' </summary>
 Public Class ModelCore
-    Implements IModelCore
+    Implements IModel
 
     Private _modelColumns As New List(Of ModelColumn)
     Private _allSelectionRange As Range() = New Range() {}
@@ -26,19 +26,19 @@ Public Class ModelCore
 
     End Sub
 
-    Public Function GetRowCount() As Integer Implements IModelCore.GetRowCount
+    Public Function GetRowCount() As Integer Implements IModel.GetRowCount
         Return Me.Data.Rows.Count
     End Function
 
-    Public Function GetColumnCount() As Integer Implements IModelCore.GetColumnCount
+    Public Function GetColumnCount() As Integer Implements IModel.GetColumnCount
         Return Me.Data.Columns.Count
     End Function
 
-    Public Function GetSelectionRanges() As Range() Implements IModelCore.GetSelectionRanges
+    Public Function GetSelectionRanges() As Range() Implements IModel.GetSelectionRanges
         Return Me._allSelectionRange
     End Function
 
-    Public Sub SetSelectionRanges(ranges As Range()) Implements IModelCore.SetSelectionRanges
+    Public Sub SetSelectionRanges(ranges As Range()) Implements IModel.SetSelectionRanges
         If ranges Is Nothing Then
             ranges = {}
         End If
@@ -48,7 +48,7 @@ Public Class ModelCore
                                     })
     End Sub
 
-    Public Sub AddColumns(columns As ModelColumn()) Implements IModelCore.AddColumns
+    Public Sub AddColumns(columns As ModelColumn()) Implements IModel.AddColumns
         For Each column In columns
             If Not Me.Data.Columns.Contains(column.Name) Then
                 Dim newColumn As New DataColumn
@@ -61,7 +61,7 @@ Public Class ModelCore
         Me._modelColumns.AddRange(columns)
     End Sub
 
-    Public Sub RemoveColumns(columnNames As String()) Implements IModelCore.RemoveColumns
+    Public Sub RemoveColumns(columnNames As String()) Implements IModel.RemoveColumns
         For Each columnName In columnNames
             Me.Data.Columns.Remove(columnName)
             For i = 0 To Me._modelColumns.Count - 1
@@ -73,11 +73,11 @@ Public Class ModelCore
         Next
     End Sub
 
-    Public Function GetColumns() As ModelColumn() Implements IModelCore.GetColumns
+    Public Function GetColumns() As ModelColumn() Implements IModel.GetColumns
         Return Me._modelColumns.ToArray
     End Function
 
-    Public Function GetColumns(columnNames As String()) As ModelColumn() Implements IModelCore.GetColumns
+    Public Function GetColumns(columnNames As String()) As ModelColumn() Implements IModel.GetColumns
         Dim result(columnNames.Length - 1) As ModelColumn
         For i = 0 To columnNames.Length - 1
             Dim columnName = columnNames(i)
@@ -96,7 +96,7 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>相应行数据</returns>
-    Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModelCore.GetRows
+    Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModel.GetRows
         Dim result As New List(Of IDictionary(Of String, Object))
         Try
             For Each row In rows
@@ -109,7 +109,7 @@ Public Class ModelCore
         Return result.ToArray
     End Function
 
-    Public Function GetCells(rows As Integer(), columnNames As String()) As Object() Implements IModelCore.GetCells
+    Public Function GetCells(rows As Integer(), columnNames As String()) As Object() Implements IModel.GetCells
         If rows.Length <> columnNames.Length Then
             Throw New FrontWorkException($"Count of rows({rows.Length}) must be equal to columnNames({columnNames.Length})")
         End If
@@ -138,7 +138,7 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="dataOfEachRow">增加行的数据</param>
     ''' <returns>增加的行号</returns>
-    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Integer() Implements IModelCore.AddRows
+    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Integer() Implements IModel.AddRows
         Dim addRowCount = dataOfEachRow.Length
         Dim oriRowCount = Me.Data.Rows.Count
         Dim insertRows = Util.Range(Me.GetRowCount, Me.GetRowCount + addRowCount)
@@ -151,22 +151,24 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
-    Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.InsertRows
-        'TODO 把行号升序排列之后数据并没有跟着升序排列，导致bug
+    Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
         If dataOfEachRow Is Nothing Then
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
         End If
-        Dim indexRowPairs As New List(Of ModelRowInfo)
+        '带有插入请求的原始行号的RowInfo
+        Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), SynchronizationState.ADDED)).ToArray
+        Dim adjustedRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), Nothing)).ToArray
+
         Dim oriRowCount = Me.Data.Rows.Count
         '原始行每次插入之后，行号会变，所以做调整
-        Dim realRowsASC = (From r In rows Order By r Ascending Select r).ToArray
-        For i = 0 To realRowsASC.Length - 1
-            realRowsASC(i) = realRowsASC(i) + System.Math.Min(oriRowCount, i)
+        adjustedRowInfos = (From r In adjustedRowInfos Order By r.Row Ascending Select r).ToArray '行号调整后的RowInfo
+        For i = 0 To adjustedRowInfos.Length - 1
+            adjustedRowInfos(i).Row = adjustedRowInfos(i).Row + System.Math.Min(oriRowCount, i)
         Next
         '开始添加数据
-        For i = 0 To realRowsASC.Length - 1
-            Dim realRow = realRowsASC(i)
-            Dim curData = If(dataOfEachRow(i), New Dictionary(Of String, Object))
+        For i = 0 To adjustedRowInfos.Length - 1
+            Dim realRow = adjustedRowInfos(i).Row
+            Dim curData = If(adjustedRowInfos(i).RowData, New Dictionary(Of String, Object))
             Dim newRow = Me.Data.NewRow
             '置入默认值
             For Each curColumn In Me._modelColumns
@@ -183,17 +185,20 @@ Public Class ModelCore
                 newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
-            Dim newIndexRowPair As New ModelRowInfo(realRow, Me.GetRowID(Me.Data.Rows(realRow)), If(curData, New Dictionary(Of String, Object)), Me.GetRowSynchronizationStates({realRow})(0))
-            indexRowPairs.Add(newIndexRowPair)
         Next
-
+        '不触发事件将同步状态全部设置为ADDED
+        Me.UpdateRowSynchronizationStates(adjustedRowInfos.Select(Function(rowInfo)
+                                                                      Return rowInfo.Row
+                                                                  End Function).ToArray,
+                                          Util.Times(SynchronizationState.ADDED, adjustedRowInfos.Length))
         RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
-                             .AddedRows = indexRowPairs.ToArray
+                             .AddedRows = oriRowInfos
                             })
 
         Dim columnCount = Me.Data.Columns.Count
         Dim selectionRanges As New List(Of Range)
-        For Each curRow In realRowsASC
+        For Each curRowInfo In adjustedRowInfos
+            Dim curRow = curRowInfo.Row
             If selectionRanges.Count = 0 OrElse selectionRanges.Last.Row + 1 <> curRow Then
                 selectionRanges.Add(New Range(curRow, 0, 1, columnCount))
                 Continue For
@@ -204,15 +209,13 @@ Public Class ModelCore
             End If
         Next
         Me.SetSelectionRanges(selectionRanges.ToArray)
-
-        Me.UpdateRowSynchronizationStates(realRowsASC, Util.Times(SynchronizationState.ADDED, realRowsASC.Length))
     End Sub
 
     ''' <summary>
     ''' 删除行
     ''' </summary>
     ''' <param name="rows">删除行行号</param>
-    Public Sub RemoveRows(rows As Integer()) Implements IModelCore.RemoveRows
+    Public Sub RemoveRows(rows As Integer()) Implements IModel.RemoveRows
         If rows.Length = 0 Then Return
         Dim indexRowList = New List(Of ModelRowInfo)
         Try
@@ -261,7 +264,7 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.UpdateRows
+    Public Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         Try
             Dim i = 0
@@ -321,7 +324,7 @@ Public Class ModelCore
     ''' <param name="rows">行号</param>
     ''' <param name="columnNames">列名</param>
     ''' <param name="dataOfEachCell">相应的数据</param>
-    Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModelCore.UpdateCells
+    Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
         Dim posCellPairs As New List(Of ModelCellInfo)
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
         For i = 0 To rows.Length - 1
@@ -367,7 +370,7 @@ Public Class ModelCore
     ''' <param name="dataTable">数据表</param>
     ''' <param name="ranges">选区</param>
     ''' <param name="syncStates">各行同步状态</param>
-    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), syncStates As SynchronizationState()) Implements IModelCore.Refresh
+    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), syncStates As SynchronizationState()) Implements IModel.Refresh
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         '刷新数据
@@ -414,7 +417,7 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="rowNums">行号</param>
     ''' <returns>行ID</returns>
-    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModelCore.GetRowIDs
+    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModel.GetRowIDs
         Dim dataRows(rowNums.Length - 1) As DataRow
         Dim rowIDs(rowNums.Length - 1) As Guid
         For i = 0 To rowNums.Length - 1
@@ -428,7 +431,7 @@ Public Class ModelCore
         Return rowIDs
     End Function
 
-    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModelCore.GetRowIndexes
+    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModel.GetRowIndexes
         Dim results As New List(Of Integer)
         For Each rowID In rowIDs
             Dim dataRow = (From rg In Me._dicRowGuid Where rg.Value = rowID Select rg.Key).FirstOrDefault
@@ -445,12 +448,7 @@ Public Class ModelCore
         Return (From rowGuid In Me._dicRowGuid Where rowGuid.Value = rowID Select rowGuid.Key).FirstOrDefault
     End Function
 
-    ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rows">行号</param>
-    ''' <param name="syncStates">同步状态</param>
-    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModelCore.UpdateRowSynchronizationStates
+    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState(), raisesEvent As Boolean)
         If rows.Length <> syncStates.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
@@ -465,8 +463,19 @@ Public Class ModelCore
             Dim newIndexRowSynchronizationStatePair = New ModelRowInfo(row, Me.GetRowIDs({row})(0), Me.GetRows({row})(0), syncState)
             updatedRows.Add(newIndexRowSynchronizationStatePair)
         Next
-        Dim eventArgs = New ModelRowSynchronizationStateChangedEventArgs(updatedRows.ToArray)
-        RaiseEvent RowSynchronizationStateChanged(Me, eventArgs)
+        If raisesEvent Then
+            Dim eventArgs = New ModelRowSynchronizationStateChangedEventArgs(updatedRows.ToArray)
+            RaiseEvent RowSynchronizationStateChanged(Me, eventArgs)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 更新行同步状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="syncStates">同步状态</param>
+    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
+        Call Me.UpdateRowSynchronizationStates(rows, syncStates, True)
     End Sub
 
 
@@ -490,7 +499,7 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModelCore.GetRowSynchronizationStates
+    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
         Dim states(rows.Length - 1) As SynchronizationState
         For i = 0 To rows.Length - 1
             Dim rowNum = rows(i)
@@ -506,42 +515,42 @@ Public Class ModelCore
     ''' <summary>
     ''' Model刷新事件
     ''' </summary>
-    Public Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModelCore.Refreshed
+    Public Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModel.Refreshed
 
     ''' <summary>
     ''' 增加行事件
     ''' </summary>
-    Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModelCore.RowAdded
+    Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModel.RowAdded
 
     ''' <summary>
     ''' 更新行数据事件
     ''' </summary>
-    Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModelCore.RowUpdated
+    Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModel.RowUpdated
 
     ''' <summary>
     ''' 删除行事件
     ''' </summary>
-    Public Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModelCore.BeforeRowRemove
+    Public Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModel.BeforeRowRemove
 
     ''' <summary>
     ''' 删除行事件
     ''' </summary>
-    Public Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModelCore.RowRemoved
+    Public Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModel.RowRemoved
 
     ''' <summary>
     ''' 单元格数据更新事件
     ''' </summary>
-    Public Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModelCore.CellUpdated
+    Public Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModel.CellUpdated
 
     ''' <summary>
     ''' 选区改变事件
     ''' </summary>
-    Public Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModelCore.SelectionRangeChanged
+    Public Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModel.SelectionRangeChanged
 
     ''' <summary>
     ''' 行同步状态改变事件
     ''' </summary>
-    Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModelCore.RowSynchronizationStateChanged
+    Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
 
     Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
         Dim result As New T
@@ -579,14 +588,14 @@ Public Class ModelCore
         Return result
     End Function
 
-    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModelCore.UpdateRowIDs
+    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModel.UpdateRowIDs
         For i = 0 To oriRowIDs.Length
             Dim row = Me.GetDataRow(oriRowIDs(i))
             Me._dicRowGuid(row) = newIDs(i)
         Next
     End Sub
 
-    Public Function ToDataTable() As DataTable Implements IModelCore.ToDataTable
+    Public Function ToDataTable() As DataTable Implements IModel.ToDataTable
         Return Me.Data
     End Function
 

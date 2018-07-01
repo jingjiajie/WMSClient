@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
 Public Class ViewSelectionRangeChangedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     Public Sub New(newSelectionRanges() As Range)
         Me.NewSelectionRanges = newSelectionRanges

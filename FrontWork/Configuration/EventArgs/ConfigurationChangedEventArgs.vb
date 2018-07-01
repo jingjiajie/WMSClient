@@ -2,6 +2,6 @@
 ''' 配置改变事件
 ''' </summary>
 Public Class ConfigurationChangedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
 End Class

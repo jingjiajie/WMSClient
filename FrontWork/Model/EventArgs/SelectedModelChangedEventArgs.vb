@@ -1,6 +1,6 @@
 ﻿Public Class SelectedModelChangedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
-    Public Property SelectedModel As IModelCore
+    Public Property SelectedModel As IModel
 
 End Class

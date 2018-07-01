@@ -1,5 +1,5 @@
 ﻿Public Class ViewRowAddedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
     Public Property Rows As ViewRowInfo()
 
