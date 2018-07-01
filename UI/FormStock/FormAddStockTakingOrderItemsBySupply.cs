@@ -152,11 +152,10 @@ namespace WMS.UI.FormStock
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  && (string.IsNullOrWhiteSpace(materialProductLine) ? true : materialProductLine == (m["productLine"]?.ToString() ?? ""))
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -165,9 +164,11 @@ namespace WMS.UI.FormStock
             this.model1[row, "materialId"] = foundMaterials[0]["id"];
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
+            this.model1[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
@@ -222,5 +223,93 @@ namespace WMS.UI.FormStock
             this.model1[row, fieldName] = value;
         }
         //=============天经地义的交互逻辑到这里结束===============
+
+
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+
+            string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
+
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
+        }
     }
 }

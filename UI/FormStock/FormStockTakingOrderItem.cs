@@ -20,8 +20,8 @@ namespace WMS.UI.FormStockTaking
             this.stockTakingOrder = srockTakingOrder;
             InitializeComponent();         
             this.searchView1.AddStaticCondition("stockTakingOrderId", this.stockTakingOrder["id"]);
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
+            //this.model1.RowRemoved += this.model_RowRemoved;
+            //this.model1.Refreshed += this.model_Refreshed;
         }
 
         private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
@@ -36,12 +36,12 @@ namespace WMS.UI.FormStockTaking
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
 
@@ -77,10 +77,15 @@ namespace WMS.UI.FormStockTaking
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            if (this.model1.SelectionRange.Rows == 0) {
-                MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                return;
+            try
+            {
+                if (this.model1.SelectionRange.Rows == 0)
+                {
+                    MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            catch { return; }
             int startRow = this.model1.SelectionRange.Row;
             int selectRows = this.model1.SelectionRange.Rows;
             int[] rows= Enumerable.Range(startRow, selectRows).ToArray();           
