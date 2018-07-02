@@ -343,7 +343,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private void StateEditEnded(int row)           
+        private void StateContentChanged(int row,string state   )        
         {           
             if ((int)this.model1[row,"supplyId"]==0) return;          
             var foundSupplies = (from s in GlobalData.AllSupplies
@@ -351,13 +351,13 @@ namespace WMS.UI.FormStock
                                   select s).ToArray();
             if (foundSupplies.Length == 1)
             {               
-                if ((int)this.model1[row, "state"] ==2)
+                if (state =="合格")
                 {
                     this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
                     this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
                     this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
                 }
-                else if ((int)this.model1[row, "state"] == 1)
+                else if (state =="不合格")
                 {
                     this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
                     this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
