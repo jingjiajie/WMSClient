@@ -248,6 +248,16 @@ namespace WMS.UI.FormStock
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
+                if ((int)this.model1[row, "state"] == 2) {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"]==null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
+                }
+                else if ((int)this.model1[row, "state"] == 1) {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"]==null ? 0: (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
+                }
             }
             else
             {
@@ -317,7 +327,6 @@ namespace WMS.UI.FormStock
         {
             switch (enable)
             {
-                case "待检测": return 0;
                 case "不合格": return 1;
                 case "合格": return 2;
                 default: return -1;
@@ -327,11 +336,33 @@ namespace WMS.UI.FormStock
         private string StateForwardMapper(int enable)
         {
             switch (enable)
-            {
-                case 0: return "待检测";
+            {              
                 case 1: return "不合格";
                 case 2: return "合格";
                 default: return "未知状态";
+            }
+        }
+
+        private void StateEditEnded(int row)           
+        {           
+            if ((int)this.model1[row,"supplyId"]==0) return;
+            var foundSupplies = (from s in GlobalData.AllSuppliers
+                                  where (s["id"] == this.model1[row, "supplyId"])
+                                  select s).ToArray();
+            if (foundSupplies.Length == 1)
+            {               
+                if ((int)this.model1[row, "state"] ==2)
+                {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = (int)foundSupplies[0]["defaultDeliveryStorageLocationID"];
+                }
+                else if ((int)this.model1[row, "state"] == 1)
+                {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = (int)foundSupplies[0]["defaultUnqualifiedStorageLocationID"];
+                }
             }
         }
     }
