@@ -336,10 +336,6 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
-        Dim rows = (From cellInfo In e.UpdatedCells Select cellInfo.Row).ToArray
-        Dim columnNames = (From cellInfo In e.UpdatedCells Select cellInfo.ColumnName).ToArray
-        Dim data = (From cellInfo In e.UpdatedCells Select cellInfo.CellData).ToArray
-
         If Me.Configuration Is Nothing Then
             Throw New FrontWorkException("Configuration is not setted")
         End If
@@ -347,34 +343,60 @@ Public Class EditableDataViewModel
             Throw New FrontWorkException("View is not set")
         End If
 
-        For i = 0 To rows.Length - 1
-            Dim colName = columnNames(i)
-            Dim row = rows(i)
-            data(i) = Me.GetForwardMappedCellData(data(i), colName, row)
+        Dim modelCellInfos = e.UpdatedCells.ToList
+        modelCellInfos.RemoveAll(Function(cellInfo)
+                                     Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, cellInfo.ColumnName)
+                                     Return Not curField.Visible
+                                 End Function)
+
+        For i = 0 To modelCellInfos.Count - 1
+            Dim curCellInfo = modelCellInfos(i)
+            Dim colName = curCellInfo.ColumnName
+            Dim row = curCellInfo.Row
+            curCellInfo.CellData = Me.GetForwardMappedCellData(curCellInfo.CellData, colName, row)
         Next
         RemoveHandler Me.ViewOperationsWrapper.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
-        Call Me.ViewOperationsWrapper.UpdateCells(rows, columnNames, data)
+        Call Me.ViewOperationsWrapper.UpdateCells(modelCellInfos.Select(Function(cellInfo) cellInfo.Row).ToArray,
+                                                  modelCellInfos.Select(Function(cellInfo) cellInfo.ColumnName).ToArray,
+                                                  modelCellInfos.Select(Function(cellInfo) cellInfo.CellData).ToArray)
         AddHandler Me.ViewOperationsWrapper.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
     End Sub
 
     Protected Overridable Sub ModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
-        'TODO 待优化
         Dim data = Me.ModelOperationsWrapper.GetRows(Util.Range(0, Me.ModelOperationsWrapper.GetRowCount))
-        Dim dataCount = data.Length
-        For i = 0 To dataCount - 1
+        Dim newRowCount = data.Length
+        Dim oriViewRowCount = Me.ViewOperationsWrapper.GetRowCount
+        For i = 0 To newRowCount - 1
             data(i) = Me.GetForwardMappedRowData(data(i), i)
         Next
+
         RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
+        RemoveHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf ViewRowUpdatedEvent
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        Call Me.ViewOperationsWrapper.RemoveRows(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
-        If data.Length > 0 Then
-            Call Me.ViewOperationsWrapper.AddRows(data)
+
+        If newRowCount < oriViewRowCount Then '原来视图行数大于新的行数，删除部分行
+            Call Me.ViewOperationsWrapper.RemoveRows(Util.Range(newRowCount, oriViewRowCount))
+        ElseIf newRowCount > oriViewRowCount Then '原来视图行数小于新的行数，则增加部分行
+            Dim addData(newRowCount - oriViewRowCount - 1) As IDictionary(Of String, Object)
+            For i = 0 To addData.Length - 1
+                addData(i) = data(oriViewRowCount + i)
+            Next
+            Call Me.ViewOperationsWrapper.AddRows(addData)
         End If
-        If Me.ModelOperationsWrapper.AllSelectionRanges.Length > 0 Then
-            Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+        If data.Length > 0 Then
+            Dim updateData(System.Math.Min(newRowCount, oriViewRowCount) - 1) As IDictionary(Of String, Object)
+            For i = 0 To updateData.Length - 1
+                updateData(i) = data(i)
+            Next
+            Call Me.ViewOperationsWrapper.UpdateRows(Util.Range(0, updateData.Length), updateData)
+
+            If Me.ModelOperationsWrapper.AllSelectionRanges.Length > 0 Then
+                Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+            End If
         End If
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
+        AddHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf ViewRowUpdatedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
     End Sub

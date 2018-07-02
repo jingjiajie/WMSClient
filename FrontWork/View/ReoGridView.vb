@@ -209,7 +209,9 @@ Public Class ReoGridView
     ''' </summary>
     Protected Sub SetSelectionRanges(ranges As Range()) Implements IAssociableDataView.SetSelectionRanges
         If ranges.Length <= 0 Then
+            RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
             Me.Panel.SelectionRange = RangePosition.Empty
+            AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
             Return
         End If
         Dim range = ranges(0)
@@ -802,7 +804,7 @@ Public Class ReoGridView
 
     Public Function AddColumns(viewColumns() As ViewColumn) As Boolean Implements IDataView.AddColumns
         Dim oriColumnCount = If(Me.NoColumn, 0, Me.Panel.ColumnCount)
-        Me.Panel.ColumnCount = viewColumns.Count
+        Me.Panel.ColumnCount = oriColumnCount + viewColumns.Length
         For i = 0 To viewColumns.Length - 1
             Dim column = oriColumnCount + i
             Dim columnHeader = Me.Panel.ColumnHeaders.Item(column)
@@ -820,11 +822,15 @@ Public Class ReoGridView
     End Function
 
     Public Function UpdateColumns(oriColumnNames() As String, newViewColumns() As ViewColumn) As Object Implements IDataView.UpdateColumns
-        For i = 0 To Me.Panel.ColumnCount - 1
-            If Me.Panel.ColumnHeaders(i).Tag.Name.Equals(oriColumnNames(i)) Then
-                Me.Panel.ColumnHeaders(i).Tag = New ColumnTag With {.ViewColumn = newViewColumns(i)}
-                Me.Panel.ColumnHeaders(i).Text = newViewColumns(i).DisplayName
-            End If
+        For i = 0 To oriColumnNames.Length - 1
+            Dim oriColumnName = oriColumnNames(i)
+            Dim newViewColumn = newViewColumns(i)
+            For j = 0 To Me.Panel.ColumnCount - 1
+                If Me.Panel.ColumnHeaders(j).Tag.Name.Equals(oriColumnName) Then
+                    Me.Panel.ColumnHeaders(j).Tag = New ColumnTag With {.ViewColumn = newViewColumn}
+                    Me.Panel.ColumnHeaders(j).Text = newViewColumn.DisplayName
+                End If
+            Next
         Next
         Return True
     End Function
@@ -864,7 +870,8 @@ Public Class ReoGridView
         For i = 0 To rows.Length - 1
             viewRowInfos(i) = New ViewRowInfo(rows(i), data(i))
         Next
-        Dim adjustedRowInfos = Util.AdjustRows(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.Panel.RowCount)
+        Dim oriViewRows = Me.Panel.RowCount
+        Dim adjustedRowInfos = Util.AdjustRows(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)
         Dim adjustedRows As New List(Of Integer)
         Dim adjustedRowData As New List(Of IDictionary(Of String, Object))
         For Each adjustedRowInfo In adjustedRowInfos
@@ -874,8 +881,13 @@ Public Class ReoGridView
             adjustedRowData.Add(rowData)
             '去掉选区变化事件，防止插入行时触发选区变化事件，造成无用刷新和警告
             RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
-            Call Me.Panel.InsertRows(row, 1)
-            Me.Panel.RowHeaders(row).Tag = New RowTag
+            If row >= Me.Panel.RowCount Then
+                Call Me.Panel.AppendRows(1)
+                Me.Panel.RowHeaders(Me.Panel.RowCount - 1).Tag = New RowTag
+            Else
+                Call Me.Panel.InsertRows(row, 1)
+                Me.Panel.RowHeaders(row).Tag = New RowTag
+            End If
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
         Next
         Call Me.UpdateRows(adjustedRows.ToArray, adjustedRowData.ToArray)
