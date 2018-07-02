@@ -113,5 +113,14 @@ Public Class Util
         str = Web.HttpUtility.UrlEncode(str)
         Return str
     End Function
+
+    Public Shared Function AdjustRows(Of T)(objs As T(), funcGetRow As Func(Of T, Integer), funcSetRow As Action(Of T, Integer), originalRowCount As Integer) As T()
+        '原始行每次插入之后，行号会变，所以做调整
+        Dim adjustedObjs = (From obj In objs Order By funcGetRow(obj) Ascending Select obj).ToArray '行号调整后的对象数组
+        For i = 0 To adjustedObjs.Length - 1
+            funcSetRow(adjustedObjs(i), funcGetRow(adjustedObjs(i)) + System.Math.Min(originalRowCount, i))
+        Next
+        Return adjustedObjs
+    End Function
 End Class
 

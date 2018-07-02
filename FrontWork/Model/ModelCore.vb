@@ -157,14 +157,7 @@ Public Class ModelCore
         End If
         '带有插入请求的原始行号的RowInfo
         Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), SynchronizationState.ADDED)).ToArray
-        Dim adjustedRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), Nothing)).ToArray
-
-        Dim oriRowCount = Me.Data.Rows.Count
-        '原始行每次插入之后，行号会变，所以做调整
-        adjustedRowInfos = (From r In adjustedRowInfos Order By r.Row Ascending Select r).ToArray '行号调整后的RowInfo
-        For i = 0 To adjustedRowInfos.Length - 1
-            adjustedRowInfos(i).Row = adjustedRowInfos(i).Row + System.Math.Min(oriRowCount, i)
-        Next
+        Dim adjustedRowInfos = Util.AdjustRows(oriRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
         '开始添加数据
         For i = 0 To adjustedRowInfos.Length - 1
             Dim realRow = adjustedRowInfos(i).Row

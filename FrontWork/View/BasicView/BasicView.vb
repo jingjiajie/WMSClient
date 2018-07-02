@@ -16,15 +16,15 @@ Partial Public Class BasicView
 
     Private _itemsPerRow As Integer = 3
 
-    Private Property _TargetRow As Integer = -1
+    Private Property TargetRow As Integer = -1
     Private Property FormAssociation As New AdsorbableAssociationForm
     Private Property _TextBoxManager As New TextBoxManager
     Private Property _ComboBoxManager As New ComboBoxManager
     Private Property _LabelManager As New LabelManager
-    Private Property _ViewModel As New AssociableDataViewModel(Me)
+    Private Property ViewModel As New AssociableDataViewModel(Me)
 
-    Private Property _RecordedRows As New List(Of IDictionary(Of String, Object))
-    Private Property _Columns As New List(Of ViewColumn)
+    Private Property RecordedRows As New List(Of IDictionary(Of String, Object))
+    Private Property ViewColumns As New List(Of ViewColumn)
 
     ''' <summary>
     ''' Model对象，用来存取数据
@@ -33,10 +33,10 @@ Partial Public Class BasicView
     <Description("Model对象"), Category("FrontWork")>
     Public Property Model As IModel
         Get
-            Return Me._ViewModel.Model
+            Return Me.ViewModel.Model
         End Get
         Set(value As IModel)
-            Me._ViewModel.Model = value
+            Me.ViewModel.Model = value
         End Set
     End Property
 
@@ -47,10 +47,10 @@ Partial Public Class BasicView
     <Description("配置中心对象"), Category("FrontWork")>
     Public Property Configuration As Configuration
         Get
-            Return Me._ViewModel.Configuration
+            Return Me.ViewModel.Configuration
         End Get
         Set(value As Configuration)
-            Me._ViewModel.Configuration = value
+            Me.ViewModel.Configuration = value
         End Set
     End Property
 
@@ -111,10 +111,10 @@ Partial Public Class BasicView
     <Description("当前配置模式"), Category("FrontWork")>
     Public Property Mode As String
         Get
-            Return Me._ViewModel.Mode
+            Return Me.ViewModel.Mode
         End Get
         Set(value As String)
-            Me._ViewModel.Mode = value
+            Me.ViewModel.Mode = value
         End Set
     End Property
 
@@ -197,13 +197,13 @@ Partial Public Class BasicView
             Me.dicFieldEdited.Add(fieldName, True)
         End If
         Call Me.ExportField(fieldName)
-        Dim args = New ViewContentChangedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        Dim args = New ViewContentChangedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
     End Sub
 
     Private Sub Combobox_Enter(sender As Object, e As EventArgs)
         Dim comboBox As ComboBox = sender
         Dim fieldName = comboBox.Name
-        Dim args As New ViewEditStartedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        Dim args As New ViewEditStartedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
         RaiseEvent EditStarted(Me, args)
     End Sub
 
@@ -214,7 +214,7 @@ Partial Public Class BasicView
         Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
         '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
-        Dim args = New ViewEditEndedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        Dim args = New ViewEditEndedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
         RaiseEvent EditEnded(Me, args)
     End Sub
 
@@ -225,7 +225,7 @@ Partial Public Class BasicView
         Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
         '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
-        Dim args = New ViewEditEndedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        Dim args = New ViewEditEndedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
         RaiseEvent EditEnded(Me, args)
     End Sub
 
@@ -234,7 +234,7 @@ Partial Public Class BasicView
         Dim fieldName = textBox.Name
         '绑定联想编辑框
         Me.FormAssociation.AdsorbTextBox = textBox
-        Dim args As New ViewEditStartedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        Dim args As New ViewEditStartedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
         RaiseEvent EditStarted(Me, args)
     End Sub
 
@@ -250,7 +250,7 @@ Partial Public Class BasicView
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then
             Me.dicFieldEdited.Add(fieldName, True)
         End If
-        Dim args = New ViewContentChangedEventArgs(Me._TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        Dim args = New ViewContentChangedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
         RaiseEvent ContentChanged(Me, args)
     End Sub
 
@@ -264,7 +264,7 @@ Partial Public Class BasicView
             Return
         End If
         Me.Panel.Enabled = True
-        Dim rowData = Me._RecordedRows(row)
+        Dim rowData = Me.RecordedRows(row)
         For Each kv As KeyValuePair(Of String, Object) In rowData
             Dim key = kv.Key
             Dim value = kv.Value
@@ -283,16 +283,16 @@ Partial Public Class BasicView
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
         Dim newFieldValue = Me.GetFieldValue(fieldName)
         Dim srcFieldValue = Nothing
-        If Me._RecordedRows(Me._TargetRow).ContainsKey(fieldName) Then
-            srcFieldValue = Me._RecordedRows(Me._TargetRow)(fieldName)
+        If Me.RecordedRows(Me.TargetRow).ContainsKey(fieldName) Then
+            srcFieldValue = Me.RecordedRows(Me.TargetRow)(fieldName)
         End If
-        Dim beforeCellUpdateEventArgs As New BeforeViewCellUpdateEventArgs({New ViewCellInfo(Me._TargetRow, fieldName, newFieldValue)})
+        Dim beforeCellUpdateEventArgs As New BeforeViewCellUpdateEventArgs({New ViewCellInfo(Me.TargetRow, fieldName, newFieldValue)})
         RaiseEvent BeforeCellUpdate(Me, beforeCellUpdateEventArgs)
         If beforeCellUpdateEventArgs.Cancel Then
             Call Me.SetFieldValue(fieldName, srcFieldValue)
         Else
-            Me._RecordedRows(Me._TargetRow)(fieldName) = newFieldValue '更新缓存值
-            Dim cellUpdatedEventArgs As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me._TargetRow, fieldName, newFieldValue)})
+            Me.RecordedRows(Me.TargetRow)(fieldName) = newFieldValue '更新缓存值
+            Dim cellUpdatedEventArgs As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me.TargetRow, fieldName, newFieldValue)})
             RaiseEvent CellUpdated(Me, cellUpdatedEventArgs)
         End If
         Me.dicFieldEdited.Remove(fieldName)
@@ -417,7 +417,7 @@ Partial Public Class BasicView
 
     Private Sub AdjustRowCountAndStyles()
         '重新计算行数。如果行数发生变化，则调整行高
-        Dim rowCount = System.Math.Floor(Me._Columns.Count / Me.ItemsPerRow) + If(Me._Columns.Count Mod Me.ItemsPerRow = 0, 0, 1) '计算行数
+        Dim rowCount = System.Math.Floor(Me.ViewColumns.Count / Me.ItemsPerRow) + If(Me.ViewColumns.Count Mod Me.ItemsPerRow = 0, 0, 1) '计算行数
         Me.Panel.RowCount = rowCount
         Me.Panel.RowStyles.Clear()
         For i = 0 To rowCount - 1
@@ -453,7 +453,7 @@ Partial Public Class BasicView
 
     Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IAssociableDataView.AddColumns
         Static inited = False
-        Call Me._Columns.AddRange(columns)
+        Call Me.ViewColumns.AddRange(columns)
 
         Call Me.TableLayoutPanel.SuspendLayout()
         '如果第一次增加列，则将BasicView的默认页面清空
@@ -490,9 +490,9 @@ Partial Public Class BasicView
         For i = 0 To columnNames.Length - 1
             Dim columnName = columnNames(i)
             Dim column = columns(i)
-            For j = 0 To Me._Columns.Count - 1
-                If Me._Columns(j).Name = columnName Then
-                    Me._Columns(j) = column
+            For j = 0 To Me.ViewColumns.Count - 1
+                If Me.ViewColumns(j).Name = columnName Then
+                    Me.ViewColumns(j) = column
                     Exit For
                 End If
             Next
@@ -519,9 +519,9 @@ Partial Public Class BasicView
     End Function
 
     Public Function RemoveColumns(columnNames() As String) As Object Implements IAssociableDataView.RemoveColumns
-        Me._Columns.RemoveAll(Function(column)
-                                  Return columnNames.Contains(column.Name)
-                              End Function)
+        Me.ViewColumns.RemoveAll(Function(column)
+                                     Return columnNames.Contains(column.Name)
+                                 End Function)
 
         Call Me.TableLayoutPanel.SuspendLayout()
         Call Me.AdjustRowCountAndStyles()
@@ -559,12 +559,12 @@ Partial Public Class BasicView
     End Function
 
     Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IAssociableDataView.AddRows
-        Me._RecordedRows.AddRange(data)
+        Me.RecordedRows.AddRange(data)
         Return Nothing
     End Function
 
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IAssociableDataView.InsertRows
-        Dim oriRowCount = Me._RecordedRows.Count
+        Dim oriRowCount = Me.RecordedRows.Count
         '原始行每次插入之后，行号会变，所以做调整
         Dim indexDataPairs(rows.Length - 1) As IndexDataPair
         For i = 0 To rows.Length - 1
@@ -579,23 +579,23 @@ Partial Public Class BasicView
         Next
 
         For Each indexDataPair In adjustedIndexDataPairs
-            Call Me._RecordedRows.Insert(indexDataPair.Index, indexDataPair.Data)
+            Call Me.RecordedRows.Insert(indexDataPair.Index, indexDataPair.Data)
         Next
     End Sub
 
     Public Sub RemoveRows(rows() As Integer) Implements IAssociableDataView.RemoveRows
         Dim rowsDESC = (From r In rows.Distinct Order By r Descending Select r).ToArray
         For Each row In rowsDESC
-            Call Me._RecordedRows.RemoveAt(row)
+            Call Me.RecordedRows.RemoveAt(row)
         Next
     End Sub
 
     Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IAssociableDataView.UpdateRows
         For i = 0 To rows.Length - 1
-            Me._RecordedRows(rows(i)) = dataOfEachRow(i)
+            Me.RecordedRows(rows(i)) = dataOfEachRow(i)
         Next
-        If rows.Contains(Me._TargetRow) Then
-            Call Me.PushRow(Me._TargetRow)
+        If rows.Contains(Me.TargetRow) Then
+            Call Me.PushRow(Me.TargetRow)
         End If
     End Sub
 
@@ -604,12 +604,12 @@ Partial Public Class BasicView
             Dim row = rows(i)
             Dim columnName = columnNames(i)
             Dim data = dataOfEachCell(i)
-            Dim recordedRowData = Me._RecordedRows(row)
+            Dim recordedRowData = Me.RecordedRows(row)
             recordedRowData(columnName) = data
         Next
 
-        If rows.Contains(Me._TargetRow) Then
-            Call Me.PushRow(Me._TargetRow)
+        If rows.Contains(Me.TargetRow) Then
+            Call Me.PushRow(Me.TargetRow)
         End If
     End Sub
 
@@ -619,23 +619,23 @@ Partial Public Class BasicView
 
     Public Sub SetSelectionRanges(ranges() As Range) Implements IAssociableDataView.SetSelectionRanges
         If ranges.Length = 0 Then
-            Me._TargetRow = -1
+            Me.TargetRow = -1
         Else
-            Me._TargetRow = ranges(0).Row
+            Me.TargetRow = ranges(0).Row
         End If
-        Call Me.PushRow(Me._TargetRow)
+        Call Me.PushRow(Me.TargetRow)
     End Sub
 
     Public Function GetRowCount() As Integer Implements IAssociableDataView.GetRowCount
-        Return Me._RecordedRows.Count
+        Return Me.RecordedRows.Count
     End Function
 
     Public Function GetColumns() As ViewColumn() Implements IAssociableDataView.GetColumns
-        Return Me._Columns.ToArray
+        Return Me.ViewColumns.ToArray
     End Function
 
     Public Function GetColumnCount() As Integer Implements IAssociableDataView.GetColumnCount
-        Return Me._Columns.Count
+        Return Me.ViewColumns.Count
     End Function
 
     Public Sub ShowAssociationForm() Implements IAssociableDataView.ShowAssociationForm
