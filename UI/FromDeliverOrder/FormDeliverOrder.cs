@@ -182,6 +182,7 @@ namespace WMS.UI.FromDeliverOrder
             this.model1[this.model1.SelectionRange.Row, "state"] = 3;
             if (this.synchronizer.Save())
             {
+               // MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
             }
 

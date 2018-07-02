@@ -67,13 +67,17 @@ namespace WMS.UI
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.synchronizer.Save();
+            //如果存在更新并且未保存的行，则先尝试保存
+            if (this.model1.HasUnsynchronizedUpdatedRow())
+            {
+                if (!this.synchronizer.Save()) return;
+            }
             try
             {
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.putAwayNote["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/transfer_finish";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body, "PUT");
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
 
             }
@@ -91,7 +95,11 @@ namespace WMS.UI
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.synchronizer.Save();
+            //如果存在更新并且未保存的行，则先尝试保存
+            if (this.model1.HasUnsynchronizedUpdatedRow())
+            {
+                if (!this.synchronizer.Save()) return;
+            }
             this.TransferDone();
         }
 
@@ -175,7 +183,7 @@ namespace WMS.UI
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "transfer_some";
+                string operatioName = "transfer_some/" + (int)GlobalData.Person["id"];
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
