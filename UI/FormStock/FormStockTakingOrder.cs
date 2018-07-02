@@ -49,17 +49,7 @@ namespace WMS.UI.FormStockTaking
         private void updateBasicAndReoGridView()
         {
 
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
-
+          
         }
 
         //private List<int> rowChange = new List<int>();
@@ -110,7 +100,7 @@ namespace WMS.UI.FormStockTaking
                 a1.SetAddFinishedCallback(() =>
                 {
                     this.searchView1.Search();
-                    this.updateBasicAndReoGridView();
+                    //this.updateBasicAndReoGridView();
                 });
                 a1.Show();
             }

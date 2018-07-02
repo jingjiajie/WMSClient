@@ -143,8 +143,8 @@
         {name:"realAmount",displayName:"实际数量",type:"double",forwardMapper:"#RealAmountForwardMapper"},
         {name:"unit",displayName:"单位",type:"string",editable:false},
         {name:"unitAmount",displayName:"单位数量",type:"double",editable:false},
-        {name:"personId",displayName:" 盘点人ID",type:"int",visible:false},
-        {name:"personName",displayName:" 盘点人名称",type:"string",editable:false},
+        {name:"personId",displayName:"盘点人ID",type:"int",visible:false},
+        {name:"personName",displayName:"盘点人名称",type:"string",editable:false},
         {name:"comment",displayName:"备注",type:"string"},  
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:true,defaultValue:0},  
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,defaultValue:0}              
