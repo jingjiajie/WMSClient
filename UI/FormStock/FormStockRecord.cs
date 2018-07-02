@@ -123,9 +123,15 @@ namespace WMS.UI.FormStock
 
         private string AmountForwardMapper(double amount,int row)
         {
-            var rowDate = this.model1.GetRow(row );
-            double unitAmount = (double)rowDate["unitAmount"];
-            return Utilities.DoubleToString( amount/unitAmount);
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
         }
 
         private double AmountBackwardMapper(double amount, int row)
@@ -137,9 +143,15 @@ namespace WMS.UI.FormStock
 
         private string AvailableAmountForwardMapper(double amount, int row)
         {
-            var rowDate = this.model1.GetRow(row);
-            double unitAmount = (double)rowDate["unitAmount"];
-            return Utilities.DoubleToString(amount / unitAmount);
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
         }
 
         private double AvailableAmountBackwardMapper(double amount, int row)
