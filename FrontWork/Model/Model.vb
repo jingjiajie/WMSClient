@@ -14,8 +14,18 @@ Partial Public Class Model
     Public WithEvents PanelIcon As Panel
     Public WithEvents LabelText As Label
 
-    Protected Property ModelOperationsWrapper As ModelOperationsWrapper
-    Protected Property ModelConfigurationWrapper As ModelConfigurationWrapper
+    Private Property ModelOperationsWrapper As ModelOperationsWrapper
+    Private Property ModelConfigurationWrapper As ModelConfigurationWrapper
+
+    Protected Property ModelCore As IModelCore
+        Get
+            Return Me.ModelOperationsWrapper.ModelCore
+        End Get
+        Set(value As IModelCore)
+            Me.ModelOperationsWrapper.ModelCore = value
+            Me.ModelConfigurationWrapper.ModelCore = value
+        End Set
+    End Property
 
     Public Shadows Property Name As String
         Get
