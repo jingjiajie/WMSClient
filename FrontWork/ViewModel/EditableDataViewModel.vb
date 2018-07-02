@@ -317,8 +317,11 @@ Public Class EditableDataViewModel
         Dim indexes = (From r In e.AddedRows Select r.Row).ToArray
         Dim data = (From r In e.AddedRows Select r.RowData).ToArray
         For i = 0 To data.Length - 1
-            'TODO 填充默认值！！！！
-            data(i) = Me.GetForwardMappedRowData(data(i), indexes(i))
+            If data(i) Is Nothing Then
+                data(i) = New Dictionary(Of String, Object)
+            Else
+                data(i) = Me.GetForwardMappedRowData(data(i), indexes(i))
+            End If
         Next
         RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         Call Me.ViewOperationsWrapper.InsertRows(indexes, data)
@@ -365,8 +368,12 @@ Public Class EditableDataViewModel
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
         Call Me.ViewOperationsWrapper.RemoveRows(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
-        Call Me.ViewOperationsWrapper.AddRows(data)
-        Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+        If data.Length > 0 Then
+            Call Me.ViewOperationsWrapper.AddRows(data)
+        End If
+        If Me.ModelOperationsWrapper.AllSelectionRanges.Length > 0 Then
+            Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+        End If
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent

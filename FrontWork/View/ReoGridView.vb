@@ -15,20 +15,6 @@ Public Class ReoGridView
     Implements IAssociableDataView
 
     ''' <summary>
-    ''' 同步模式
-    ''' </summary>
-    Protected Enum SyncMode
-        ''' <summary>
-        ''' 与Model保持同步
-        ''' </summary>
-        SYNC
-        ''' <summary>
-        ''' 与Model脱离同步
-        ''' </summary>
-        NOT_SYNC
-    End Enum
-
-    ''' <summary>
     ''' 单元格状态，绘制单元格颜色用
     ''' </summary>
     Protected Enum CellState
@@ -42,11 +28,25 @@ Public Class ReoGridView
         Public Property Edited As Boolean
     End Class
 
+    Protected Class ColumnTag
+        Public Property ViewColumn As ViewColumn
+        Public ReadOnly Property Name As String
+            Get
+                Return Me.ViewColumn.Name
+            End Get
+        End Property
+
+    End Class
+
+    Protected Class RowTag
+        Public Property Inited As Boolean
+        Public Property Temporary As Boolean = False
+    End Class
+
     Private COLOR_UNSYNCHRONIZED As Color = Color.AliceBlue
     Private COLOR_SYNCHRONIZED As Color = Color.Transparent
 
     Private Property ViewModel As New AssociableDataViewModel(Me)
-    Private Property ViewColumns As New List(Of ViewColumn)
 
     Private canChangeSelectionRange As Boolean = True
     Private copied As Boolean = False '是否复制粘贴。如果为真，则下次选区改变事件时处理粘贴后的选区
@@ -55,9 +55,6 @@ Public Class ReoGridView
     Private textBox As TextBox = Nothing
     Private formAssociation As AdsorbableAssociationForm
     Private Workbook As ReoGridControl = Nothing
-
-    Private RowInited As New List(Of Integer) '已经初始化过的行，保证每行只初始化一次
-    Private _curSyncMode = SyncMode.NOT_SYNC
 
     Public Event AssociationItemSelected As EventHandler(Of ViewAssociationItemSelectedEventArgs) Implements IAssociableDataView.AssociationItemSelected
     Public Event EditStarted As EventHandler(Of ViewEditStartedEventArgs) Implements IEditableDataView.EditStarted
@@ -73,29 +70,48 @@ Public Class ReoGridView
     Public Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs) Implements IEditableDataView.CellUpdated
     Private Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements ISelectableDataView.BeforeSelectionRangeChange
     Public Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs) Implements ISelectableDataView.SelectionRangeChanged
+
     Public Property Panel As Worksheet
-    Private Property JsEngine As New Jint.Engine
 
-    ''' <summary>
-    ''' 同步模式，是否和Model数据是同步的
-    ''' （如果Model没有数据，本视图上显示“暂无数据”，就处于不同步状态）
-    ''' </summary>
-    ''' <returns>同步模式</returns>
-    Protected Property CurSyncMode As SyncMode
+    Private Property NoColumn As Boolean = True
+    Private Property NoRow As Boolean = True
+    Private ReadOnly Property InSync As Boolean
         Get
-            Return Me._curSyncMode
+            If Not NoColumn AndAlso Not NoRow Then Return True
+            Return False
         End Get
-        Set(value As SyncMode)
-            If Me._curSyncMode = value Then Return
-            Console.WriteLine("CurSyncMode Changing:" & CStr(value))
-            Me._curSyncMode = value
-            If value = SyncMode.SYNC Then
-                Me.ReoGridControl.Enabled = True
-            Else
-
-            End If
-        End Set
     End Property
+
+    Protected ReadOnly Property ViewColumns As ViewColumn()
+        Get
+            If Me.NoColumn Then Return {}
+            Dim _viewColumns(Me.Panel.ColumnCount - 1) As ViewColumn
+            For i = 0 To Me.Panel.ColumnCount - 1
+                _viewColumns(i) = CType(Me.Panel.ColumnHeaders(i).Tag, ColumnTag).ViewColumn
+            Next
+            Return _viewColumns
+        End Get
+    End Property
+
+    '''' <summary>
+    '''' 同步模式，是否和Model数据是同步的
+    '''' （如果Model没有数据，本视图上显示“暂无数据”，就处于不同步状态）
+    '''' </summary>
+    '''' <returns>同步模式</returns>
+    'Protected Property CurSyncMode As SyncMode
+    '    Get
+    '        Return Me._curSyncMode
+    '    End Get
+    '    Set(value As SyncMode)
+    '        If Me._curSyncMode = value Then Return
+    '        Me._curSyncMode = value
+    '        If value = SyncMode.SYNC Then
+    '            Call Me.HideDefaultPage()
+    '        Else
+    '            Call Me.ShowDefaultPage()
+    '        End If
+    '    End Set
+    'End Property
 
     ''' <summary>
     ''' 绑定的Model对象，用来存取数据
@@ -192,14 +208,9 @@ Public Class ReoGridView
     ''' 从Model同步选区
     ''' </summary>
     Protected Sub SetSelectionRanges(ranges As Range()) Implements IAssociableDataView.SetSelectionRanges
-        Logger.SetMode(LogMode.REFRESH_VIEW)
-        If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
         If ranges.Length <= 0 Then
             Me.Panel.SelectionRange = RangePosition.Empty
             Return
-        End If
-        If ranges.Length > 1 Then
-            Logger.PutMessage("Multiple range selected, ReoGridView will only show range of the first one", LogLevel.WARNING)
         End If
         Dim range = ranges(0)
         RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
@@ -236,7 +247,6 @@ Public Class ReoGridView
     ''' 显示默认页面
     ''' </summary>
     Protected Sub ShowDefaultPage()
-        Me.CurSyncMode = SyncMode.NOT_SYNC
         Call Me.Panel.DeleteRangeData(RangePosition.EntireRange)
         Me.ReoGridControl.Enabled = False
         '设定表格初始有10行，非同步模式
@@ -246,98 +256,13 @@ Public Class ReoGridView
         Call Me.PaintRows()
     End Sub
 
-    '''' <summary>
-    '''' 初始化视图（允许重复调用）
-    '''' </summary>
-    'Protected Sub InitEditPanel()
-    '    Logger.SetMode(LogMode.INIT_VIEW)
-    '    Call Me.Panel.Reset()
-    '    If Me.Configuration Is Nothing Then
-    '        Logger.PutMessage("Configuration not set!")
-    '        Return
-    '    End If
-    '    Dim fieldConfiguration As FieldConfiguration() = Me.Configuration.GetFieldConfigurations(Me.Mode)
-    '    If fieldConfiguration Is Nothing Then
-    '        Logger.PutMessage("Configuration of not found!")
-    '        Return
-    '    End If
-
-    '    '创建联想窗口
-    '    If Not Me.DesignMode AndAlso Me.textBox Is Nothing Then
-    '        Me.Panel.StartEdit()
-    '        Me.Panel.EndEdit(EndEditReason.NormalFinish)
-    '        For Each control As Control In Me.ReoGridControl.Controls
-    '            If TypeOf (control) Is TextBox AndAlso control.Name = "" Then
-    '                Me.textBox = control
-    '                Exit For
-    '            End If
-    '        Next
-    '        Me.formAssociation = New AdsorbableAssociationForm(Me.textBox)
-    '        If Me.textBox Is Nothing Then
-    '            Throw New FrontWorkException("ReoGridView TextBox not found")
-    '        End If
-    '        'RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-    '        'AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-    '        RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
-    '        AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
-    '    End If
-
-    '    '禁止自动判断单元格格式
-    '    Me.Panel.SetSettings(WorksheetSettings.Edit_AutoFormatCell, False)
-    '    '清空列Name和列号的对应关系
-    '    Call Me.dicNameColumn.Clear()
-    '    '清空状态
-    '    Call Me.dicCellEdited.Clear()
-    '    Call Me.dicCellState.Clear()
-
-    '    Dim curColumn = 0
-    '    '遍历FieldConfiguration()
-    '    For i = 0 To fieldConfiguration.Length - 1
-    '        Dim curField = fieldConfiguration(i)
-    '        '如果字段不可视，直接跳过
-    '        If curField.Visible = False Then Continue For
-    '        '否则开始初始化表头
-    '        Me.dicNameColumn.Add(curField.Name, curColumn)
-    '        Me.Panel.ColumnHeaders.Item(curColumn).Text = curField.DisplayName
-    '        If Not Me.DesignMode Then
-    '            '给字段注册事件
-    '            '内容改变事件
-    '            If curField.ContentChanged IsNot Nothing Then
-    '                If curField.Values Is Nothing Then '如果是文本框，同时绑定到文本改变事件和单元格内容变化事件
-    '                    Me.dicTextChangedEvent.Add(curColumn, curField.ContentChanged)
-    '                    Me.dicCellDataChangedEvent.Add(curColumn, curField.ContentChanged)
-    '                Else '否则是ComboBox，仅绑定到CellDataChanged事件
-    '                    Me.dicCellDataChangedEvent.Add(curColumn, curField.ContentChanged)
-    '                End If
-    '            End If
-    '            '编辑完成事件
-    '            If curField.EditEnded IsNot Nothing Then
-    '                Me.dicBeforeSelectionRangeChangeEvent.Add(curColumn, curField.EditEnded)
-    '            End If
-    '        End If
-    '        curColumn += 1
-    '    Next
-    '    '设定表头列数
-    '    Me.Panel.Columns = curColumn
-
-    '    '给worksheet添加事件
-    '    '换行初始化行，绑定JS变量
-    '    If Not Me.DesignMode Then
-    '        RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf BeforeSelectionRangeChange
-    '        AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf BeforeSelectionRangeChange
-    '        '编辑事件
-    '        RemoveHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
-    '        AddHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
-    '        RemoveHandler Me.textBox.TextChanged, AddressOf Me.textBoxTextChanged
-    '        AddHandler Me.textBox.TextChanged, AddressOf Me.textBoxTextChanged
-    '        RemoveHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
-    '        AddHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
-
-    '        Call Me.InitRow(Me.Panel.SelectionRange.Row)
-    '        Call Me.BindRowToJsEngine(Me.Panel.SelectionRange.Row)
-    '        Call Me.BindAssociation(0) '最开始默认0,0的时候，不会触发选取更改。所以手动绑定一下单元格联想
-    '    End If
-    'End Sub
+    ''' <summary>
+    ''' 显示默认页面
+    ''' </summary>
+    Protected Sub HideDefaultPage()
+        Call Me.Panel.DeleteRangeData(RangePosition.EntireRange)
+        Me.ReoGridControl.Enabled = True
+    End Sub
 
     Private Sub textBoxLeave(sender As Object, e As EventArgs)
         Me.Workbook.Focus()
@@ -370,40 +295,29 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="row">行号</param>
     Private Sub InitRow(row As Integer)
-        Logger.SetMode(LogMode.INIT_VIEW)
-        If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
-        Dim fieldConfiguration As FieldConfiguration() = Me.Configuration.GetFieldConfigurations(Me.Mode)
-        If fieldConfiguration Is Nothing Then
-            Logger.PutMessage("Configuration of mode not found!")
-            Return
-        End If
-
         Dim worksheet = Me.Panel
         RemoveHandler worksheet.CellDataChanged, AddressOf Me.CellDataChanged
-        '遍历FieldConfiguration()
-        For i = 0 To fieldConfiguration.Length - 1
-            Dim curField = fieldConfiguration(i)
-            If Not curField.Visible Then Continue For
-            Dim col = Me.FindColumnByName(curField.Name)
-            '如果字段不可视，直接跳过
-            If curField.Visible = False Then Continue For
+        '遍历列
+        For col = 0 To Me.Panel.ColumnCount - 1
+            Dim curViewColumn As ViewColumn = CType(Me.Panel.ColumnHeaders(col).Tag, ColumnTag).ViewColumn
             '否则开始初始化当前格
             Dim curCell = worksheet.CreateAndGetCell(row, col)
             '如果设定了Values，则执行Values获取值
-            If curField.Values IsNot Nothing Then
-                Dim comboBox = New DropdownListCell(CType(curField.Values.Invoke(Me), IEnumerable(Of Object)))
+            If curViewColumn.Values IsNot Nothing Then
+                Dim comboBox = New DropdownListCell(CType(curViewColumn.Values.Invoke(Me), IEnumerable(Of Object)))
+                Dim curCol = col
                 AddHandler comboBox.DropdownOpened, Sub()
-                                                        worksheet.SelectionRange = New RangePosition(row, col, 1, 1)
+                                                        worksheet.SelectionRange = New RangePosition(curCell.Position)
                                                     End Sub
                 worksheet(row, col) = comboBox
             End If
 
-            If curField.Editable = False Then
+            If curViewColumn.Editable = False Then
                 curCell.IsReadOnly = True
             End If
         Next
         AddHandler worksheet.CellDataChanged, AddressOf Me.CellDataChanged
-        RowInited.Add(row)
+        Me.Panel.RowHeaders(row).Tag.Inited = True
     End Sub
 
     Private Sub CellMouseDown(sender As Object, e As EventArgs)
@@ -443,7 +357,7 @@ Public Class ReoGridView
 
     '选择行改变时初始化新的行，只初始化选区首行
     Private Sub ReoGrid_BeforeSelectionRangeChange(sender As Object, e As BeforeSelectionChangeEventArgs)
-        If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
+        If Me.NoColumn OrElse Me.NoRow Then Return
         If Me.canChangeSelectionRange = False Then
             e.IsCancelled = True
             Return
@@ -481,10 +395,10 @@ Public Class ReoGridView
                 Dim copyRange = New RangePosition(newRow, newCol, newRows, newCols)
                 '同步复制选区的数据
                 Call Me.ExportRows(copyRange)
-                '重新绘制复制选区的颜色。复制时会覆盖掉原来的颜色
-                Call Me.PaintRows(Util.Range(copyRange.Row, copyRange.Row + copyRange.Rows))
                 Me.copied = False
             Else '否则说明复制只复制了一个单元格，没有触发选取变化，而是下一次选取变化触发。此时更新复制的单元格
+                Call Me.SetCellEdited(Me.copyStartCell, True)
+                Call Me.ExportCells(New RangePosition(Me.copyStartCell))
                 Me.copied = False
             End If
         End If
@@ -494,7 +408,7 @@ Public Class ReoGridView
 
         '初始化新的选中行。如果选区首行没变，就不重新初始化行了
         If Not newRow = Me.Panel.SelectionRange.Row Then
-            If Not RowInited.Contains(newRow) Then
+            If Not Me.Panel.RowHeaders(newRow).Tag.Inited Then
                 Me.InitRow(newRow)
             End If
         End If
@@ -535,7 +449,7 @@ Public Class ReoGridView
         Dim row = Me.Panel.SelectionRange.Row
         Dim col = Me.Panel.SelectionRange.Col
         Dim colName = Me.Panel.ColumnHeaders(col).Tag
-        If Not Me.RowInited.Contains(row) Then '如果本行未被初始化，不要触发事件
+        If Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
             Return
         End If
 
@@ -547,18 +461,18 @@ Public Class ReoGridView
     End Sub
 
     Private Sub CellDataChanged(sender As Object, e As CellEventArgs)
-        If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
+        If Not Me.InSync Then Return
         Dim worksheet = Me.Panel
         Dim row = e.Cell.Row
         Dim col = e.Cell.Column
         Dim fieldName = Me.FindNameByColumn(col)
         Dim viewColumn = (From v In Me.ViewColumns Where v.Name = fieldName Select v).First
 
-        If Not Me.RowInited.Contains(row) Then '如果本行未被初始化，不要触发事件
+        If Not Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
             Return
         End If
         '===========系统事件写这里
-        If Me.CurSyncMode = SyncMode.SYNC Then
+        If Me.InSync Then
             Call Me.SetCellEdited(e.Cell.Position, True)
         End If
         '如果当前格是下拉框，验证数据是否在下拉框可选项范围中，如果不在，则标红
@@ -583,176 +497,16 @@ Public Class ReoGridView
     ''' <param name="col">列</param>
     Private Sub ValidateComboBoxData(row As Integer, col As Integer)
         Dim fieldName = Me.FindNameByColumn(col)
-        Dim fieldConfig = (From config In Me.Configuration.GetFieldConfigurations(Me.Mode) Where config.Name = fieldName Select config).First
+        Dim viewColumn As ViewColumn = Me.Panel.GetCell(row, col)?.Tag?.ViewColumn
+        If viewColumn Is Nothing Then Return
         '验证数据
-        Dim values As Object() = Util.ToArray(Of String)(fieldConfig.Values.Invoke(Me))
+        Dim values As Object() = Util.ToArray(Of String)(viewColumn.Values.Invoke(Me, row))
         If Not values.Contains(Me.Panel(row, col)) Then
             Call Me.AddCellState(row, col, CellState.INVALID_DATA)
         Else
             Call Me.RemoveCellState(row, col, CellState.INVALID_DATA)
         End If
     End Sub
-
-
-    Private Sub BindRowToJsEngine(row As Integer)
-        Dim jsEngine = Me.JsEngine
-        Dim worksheet = Me.Panel
-        Dim viewObj = jsEngine.Execute("view = {}").GetValue("view").AsObject
-        Dim fieldConfiguration = Me.Configuration.GetFieldConfigurations(Me.Mode)
-        jsEngine.SetValue("DropdownListCellItemsToArray", New Func(Of DropdownListCell.DropdownItemsCollection, Object())(AddressOf Me.DropdownListCellItemsToArray))
-        Dim col = -1
-        For i = 0 To fieldConfiguration.Length - 1
-            Try
-                Dim curField = fieldConfiguration(i)
-                If Not curField.Visible Then Continue For
-                col += 1
-                If curField.Values IsNot Nothing Then '如果设置了Values，则是下拉框
-                    viewObj.Put(curField.Name, JsValue.FromObject(jsEngine, worksheet.CreateAndGetCell(row, col)), True)
-                    Dim tmp = String.Format(
-                        <string>
-                             {0} = undefined;
-                             Object.defineProperty(
-                                this,
-                                "{0}",
-                                {{get: function(){{
-                                    return view.{0}.Data
-                                }},
-                                set: function(val){{
-                                    if(val == undefined) return;
-                                    var itemArray = DropdownListCellItemsToArray(view.{0}.Body.Items)
-                                    for(var i=0;i &lt; itemArray.length;i++){{
-                                        if(itemArray[i] == val){{
-                                            view.{0}.Data = val;
-                                            return;
-                                        }}
-                                    }}
-                                }} }}
-                            )
-                         </string>.Value, curField.Name)
-                    jsEngine.Execute(tmp)
-                Else '否则是普通的文本格
-                    viewObj.Put(curField.Name, JsValue.FromObject(jsEngine, worksheet.CreateAndGetCell(row, col)), True)
-                    Dim tmp = String.Format(
-                        <string>
-                             {0} = undefined
-                             Object.defineProperty(
-                                this,
-                                "{0}",
-                                {{get: function(){{
-                                    return view.{0}.Data
-                                }},
-                                set: function(val){{
-                                    if(val == undefined) return;
-                                    view.{0}.Data = val
-                                }} }}
-                            )
-                         </string>.Value, curField.Name)
-                    jsEngine.Execute(tmp)
-                End If
-            Catch ex As Exception
-                Logger.SetMode(LogMode.INIT_VIEW)
-                Logger.PutMessage(ex.Message)
-            End Try
-        Next
-    End Sub
-
-    '''' <summary>
-    '''' 从Model导入数据
-    '''' </summary>
-    '''' <param name="rows">要导入的行</param>
-    '''' <returns>是否导入成功</returns>
-    'Protected Function ImportData(Optional rows As Integer() = Nothing) As Boolean
-    '    Logger.Debug("==ReoGrid ImportData: " + Str(Me.GetHashCode))
-    '    Logger.SetMode(LogMode.REFRESH_VIEW)
-    '    If Me.Model.RowCount = 0 Then
-    '        Me.CurSyncMode = SyncMode.NOT_SYNC
-    '        Call Me.ShowDefaultPage()
-    '        Return True
-    '    ElseIf Me.CurSyncMode = SyncMode.NOT_SYNC Then
-    '        Me.Panel.Rows = 1
-    '        Me.CurSyncMode = SyncMode.SYNC
-    '    End If
-
-    '    If Me.Configuration Is Nothing Then
-    '        Logger.PutMessage("Configuration is not setted")
-    '        Return False
-    '    End If
-    '    If Me.Panel Is Nothing Then
-    '        Logger.PutMessage("Panel is not setted")
-    '        Return False
-    '    End If
-    '    '获取当前的Configuration
-    '    Dim fieldConfiguration = Me.Configuration.GetFieldConfigurations(Me.Mode)
-    '    If fieldConfiguration Is Nothing Then
-    '        Logger.PutMessage("Configuration not found!")
-    '        Return False
-    '    End If
-    '    Dim dataTable = Me.Model.ToDataTable
-    '    '清空ReoGrid相应行
-    '    If rows Is Nothing Then
-    '        Me.Panel.DeleteRangeData(RangePosition.EntireRange)
-    '        Me.Panel.Rows = dataTable.Rows.Count
-    '        Me.RowInited.Clear()
-    '    Else
-    '        Me.ClearRows(rows)
-    '    End If
-    '    '遍历传入数据
-    '    For Each curDataRowNum In If(rows Is Nothing, Me.Range(dataTable.Rows.Count), rows)
-    '        Dim curDataRow = dataTable.Rows(curDataRowNum)
-    '        Dim curReoGridRowNum = curDataRowNum
-    '        Me.InitRow(curReoGridRowNum)
-    '        '遍历列（Configuration)
-    '        For Each curField In fieldConfiguration
-    '            Dim curDataColumn As DataColumn = (From c As DataColumn In dataTable.Columns
-    '                                               Where c.ColumnName.Equals(curField.Name, StringComparison.OrdinalIgnoreCase)
-    '                                               Select c).FirstOrDefault
-    '            '在对象中找不到Configuration描述的字段，直接报错，并接着下一个字段
-    '            If curDataColumn Is Nothing Then
-    '                Logger.PutMessage("Field """ + curField.Name + """ not found in model")
-    '                Continue For
-    '            End If
-    '            '否则开始Push值
-    '            '先计算值，过一遍Mapper
-    '            Dim value = curDataRow(curDataColumn)
-    '            Dim text As String
-    '            If Not curField.ForwardMapper Is Nothing Then
-    '                text = curField.ForwardMapper.Invoke(value, curDataRowNum, Me)
-    '            Else
-    '                text = If(value?.ToString, "")
-    '            End If
-
-    '            If String.IsNullOrEmpty(text) Then Continue For '如果推的内容是空白，就不显示在格里了，节约创建单元格的内存空间
-    '            Logger.SetMode(LogMode.REFRESH_VIEW)
-    '            '然后获取单元格
-    '            If Me.dicNameColumn.ContainsKey(curField.Name) = False Then
-    '                'Logger.PutMessage("Field """ & curField.Name & """ not found in view")
-    '                Continue For
-    '            End If
-    '            Dim curReoGridColumnNum = Me.dicNameColumn(curField.Name)
-    '            Dim curReoGridCell = Panel.CreateAndGetCell(curReoGridRowNum, curReoGridColumnNum)
-    '            '根据Configuration中的Field类型，处理View中的单元格
-    '            If curField.Values Is Nothing Then '没有Values，是文本框
-    '                RemoveHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
-    '                curReoGridCell.Data = text
-    '                AddHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
-    '            Else '有Values，是ComboBox框
-    '                Dim values = Util.ToArray(Of String)(curField.Values.Invoke(Me))
-    '                If values.Contains(text) = False Then
-    '                    Logger.PutMessage("Value """ + text + """" + " not found in comboBox """ + curField.Name + """")
-    '                End If
-    '                RemoveHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
-    '                curReoGridCell.Data = text
-    '                AddHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
-    '                Call Me.ValidateComboBoxData(curReoGridCell.Row, curReoGridCell.Column)
-    '            End If
-    '        Next
-    '        Call Me.PaintRows({curReoGridRowNum})
-    '    Next
-    '    For col = 0 To Me.Panel.Columns - 1
-    '        Me.AutoFitColumnWidth(col)
-    '    Next
-    '    Return True
-    'End Function
 
     ''' <summary>
     ''' 创建从0到n的数组，包含0不包含length
@@ -799,7 +553,7 @@ Public Class ReoGridView
     Protected Sub ExportRows(rangePosition As RangePosition)
         Logger.Debug("==ReoGrid ExportData")
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
-        If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
+        If Not Me.InSync Then Return
 
         Dim rowsUpdated As List(Of Integer) = Me.Range(rangePosition.Row, System.Math.Min(Me.Panel.RowCount, rangePosition.EndRow + 1)).ToList
         Dim updateData = New List(Of Dictionary(Of String, Object))
@@ -833,7 +587,7 @@ Public Class ReoGridView
     Protected Sub ExportCells(rangePosition As RangePosition)
         Logger.Debug("==ReoGrid ExportCell: " + Str(Me.GetHashCode))
         Logger.SetMode(LogMode.SYNC_FROM_VIEW)
-        If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
+        If Not Me.InSync Then Return
 
         If rangePosition.Cols <> 1 Then
             Throw New FrontWorkException("ExportCells() can only be used when single column selected")
@@ -842,11 +596,6 @@ Public Class ReoGridView
         Dim rowsUpdated As List(Of Integer) = Me.Range(rangePosition.Row, System.Math.Min(modelRowCount, rangePosition.EndRow + 1)).ToList
         Dim colUpdated As Integer = rangePosition.Col
         Dim fieldName = Me.FindNameByColumn(colUpdated)
-        Dim fieldConfiguration = (From fm In Me.Configuration.GetFieldConfigurations(Me.Mode) Where fm.Name = fieldName Select fm).FirstOrDefault
-        If fieldConfiguration Is Nothing Then
-            Logger.PutMessage("FieldConfiguration not found of column index: " & Str(colUpdated))
-            Return
-        End If
         Dim updateCellData = New List(Of Object)
 
         '删除掉没有真正修改内容的行
@@ -972,21 +721,43 @@ Public Class ReoGridView
         Next
     End Sub
 
-    '''' <summary>
-    '''' 获取视图中的单元格
-    '''' </summary>
-    '''' <param name="row">行号</param>
-    '''' <param name="fieldName">字段名</param>
-    '''' <returns>单元格对象</returns>
-    'Public Function GetViewComponent(row as Integer, fieldName As String) As IViewComponent Implements IDataView.GetViewComponent
-    '    If Me.Panel.RowCount <= row Then
-    '        Throw New FrontWorkException($"Row {row} exceeded the last row of ReoGridView")
-    '    End If
-    '    Return Me.Panel.CreateAndGetCell(row, Me.dicNameColumn(Name))
-    'End Function
-
     Private Sub ReoGridView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        '禁止自动判断单元格格式
+        Me.Panel.SetSettings(WorksheetSettings.Edit_AutoFormatCell, False)
 
+        '创建联想窗口
+        If Not Me.DesignMode AndAlso Me.textBox Is Nothing Then
+            Me.Panel.StartEdit()
+            Me.Panel.EndEdit(EndEditReason.NormalFinish)
+            For Each control As Control In Me.ReoGridControl.Controls
+                If TypeOf (control) Is TextBox AndAlso control.Name = "" Then
+                    Me.textBox = control
+                    Exit For
+                End If
+            Next
+            Me.formAssociation = New AdsorbableAssociationForm(Me.textBox)
+            If Me.textBox Is Nothing Then
+                Throw New FrontWorkException("ReoGridView TextBox not found")
+            End If
+            'RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
+            'AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
+            RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
+            AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
+        End If
+
+        '给worksheet添加事件
+        '换行初始化行，绑定JS变量
+        If Not Me.DesignMode Then
+            RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
+            AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
+            '编辑事件
+            RemoveHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
+            AddHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
+            RemoveHandler Me.textBox.TextChanged, AddressOf Me.textBoxTextChanged
+            AddHandler Me.textBox.TextChanged, AddressOf Me.textBoxTextChanged
+            RemoveHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
+            AddHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
+        End If
     End Sub
 
     Private Sub WorkbookPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
@@ -1030,41 +801,40 @@ Public Class ReoGridView
     End Function
 
     Public Function AddColumns(viewColumns() As ViewColumn) As Boolean Implements IDataView.AddColumns
-        Call Me.ViewColumns.AddRange(viewColumns)
-        Dim oriColumnCount = Me.Panel.ColumnCount
-        Me.Panel.ColumnCount = Me.ViewColumns.Count
+        Dim oriColumnCount = If(Me.NoColumn, 0, Me.Panel.ColumnCount)
+        Me.Panel.ColumnCount = viewColumns.Count
         For i = 0 To viewColumns.Length - 1
             Dim column = oriColumnCount + i
             Dim columnHeader = Me.Panel.ColumnHeaders.Item(column)
             Dim viewColumn = viewColumns(i)
             columnHeader.Text = viewColumn.DisplayName
-            columnHeader.Tag = viewColumn.Name
+            columnHeader.Tag = New ColumnTag() With {
+                .ViewColumn = viewColumn
+            }
         Next
+        If Me.NoColumn Then
+            Me.NoColumn = False
+            If Me.InSync Then HideDefaultPage()
+        End If
         Return True
     End Function
 
     Public Function UpdateColumns(oriColumnNames() As String, newViewColumns() As ViewColumn) As Object Implements IDataView.UpdateColumns
-        For i = 0 To oriColumnNames.Length - 1
-            Dim oriColumnName = oriColumnNames(i)
-            For j = 0 To Me.ViewColumns.Count - 1
-                If Me.ViewColumns(j).Name = oriColumnName Then
-                    Me.ViewColumns(j) = newViewColumns(i)
-                    Exit For
-                End If
-            Next
-        Next
         For i = 0 To Me.Panel.ColumnCount - 1
-            If Me.Panel.ColumnHeaders(i).Tag.Equals(oriColumnNames(i)) Then
-                Me.Panel.ColumnHeaders(i).Text = newViewColumns(i).Name
+            If Me.Panel.ColumnHeaders(i).Tag.Name.Equals(oriColumnNames(i)) Then
+                Me.Panel.ColumnHeaders(i).Tag = New ColumnTag With {.ViewColumn = newViewColumns(i)}
+                Me.Panel.ColumnHeaders(i).Text = newViewColumns(i).DisplayName
             End If
         Next
         Return True
     End Function
 
     Public Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
-        Me.ViewColumns.RemoveAll(Function(viewColumn)
-                                     Return columnNames.Contains(viewColumn.Name)
-                                 End Function)
+        If columnNames.Length >= Me.Panel.ColumnCount Then
+            Me.NoColumn = True
+            Call Me.ShowDefaultPage()
+            Return True
+        End If
         Me.Panel.ColumnCount -= columnNames.Length
         Return True
     End Function
@@ -1074,15 +844,22 @@ Public Class ReoGridView
     End Function
 
     Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IDataView.AddRows
-        Dim startRow = Me.Panel.RowCount
+        Dim startRow = If(NoRow, 0, Me.Panel.RowCount)
         Dim rows = data.Length
         Dim rowNums = Util.Range(startRow, startRow + rows)
-        Call Me.Panel.AppendRows(data.Length)
-        Call Me.UpdateRows(rowNums, data)
+        Call Me.InsertRows(rowNums, data)
         Return rowNums
     End Function
 
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
+        Dim addedTemporaryRow = False
+        If Me.NoRow Then '如果当前是默认页面，则先隐藏默认页面，并保留一个临时行。待插入完毕后删除临时行
+            addedTemporaryRow = True
+            Call Me.HideDefaultPage()
+            Me.Panel.RowCount = 1
+            Me.Panel.RowHeaders(0).Tag = New RowTag With {.Temporary = True}
+            Me.NoRow = False
+        End If
         Dim viewRowInfos(rows.Length - 1) As ViewRowInfo
         For i = 0 To rows.Length - 1
             viewRowInfos(i) = New ViewRowInfo(rows(i), data(i))
@@ -1098,12 +875,27 @@ Public Class ReoGridView
             '去掉选区变化事件，防止插入行时触发选区变化事件，造成无用刷新和警告
             RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
             Call Me.Panel.InsertRows(row, 1)
+            Me.Panel.RowHeaders(row).Tag = New RowTag
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
         Next
         Call Me.UpdateRows(adjustedRows.ToArray, adjustedRowData.ToArray)
+        If addedTemporaryRow Then
+            '删除之前加入的临时行
+            For i = 0 To Me.Panel.RowCount - 1
+                If Me.Panel.RowHeaders(i).Tag.Temporary Then
+                    Call Me.Panel.DeleteRows(i, 1)
+                    Exit For
+                End If
+            Next
+        End If
     End Sub
 
     Public Sub RemoveRows(rows() As Integer) Implements IDataView.RemoveRows
+        If rows.Length >= Me.Panel.RowCount Then
+            Me.NoRow = True
+            Call Me.ShowDefaultPage()
+            Return
+        End If
         Dim rowsDESC = (From r In rows Order By r Descending Select r).ToArray
         For Each row In rowsDESC
             '去掉选区变化事件，防止删除行时触发选区变化事件，造成无用刷新和警告
@@ -1123,15 +915,16 @@ Public Class ReoGridView
         For i = 0 To rows.Length - 1
             Dim curRowNum = rows(i)
             Me.InitRow(curRowNum)
-            '遍历列（Configuration)
+            '遍历列
             For Each viewColumn In Me.ViewColumns
-                '否则开始Push值
-                '先计算值，过一遍Mapper
+                If Not dataOfEachRow(i).ContainsKey(viewColumn.Name) Then Return
                 Dim value = dataOfEachRow(i)(viewColumn.Name)
                 cellInfos.Add(New ViewCellInfo(curRowNum, viewColumn.Name, value))
             Next
         Next
-        Call Me.UpdateCells(cellInfos.Select(Function(c) c.Row), cellInfos.Select(Function(c) c.ColumnName), cellInfos.Select(Function(c) c.CellData))
+        Call Me.UpdateCells(cellInfos.Select(Function(c) c.Row).ToArray,
+                            cellInfos.Select(Function(c) c.ColumnName).ToArray,
+                            cellInfos.Select(Function(c) c.CellData).ToArray)
     End Sub
 
     Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IDataView.UpdateCells
@@ -1141,6 +934,7 @@ Public Class ReoGridView
             Dim value = dataOfEachCell(i)
             '获取单元格
             Dim column = Me.FindColumnByName(colName)
+            If column = -1 Then Continue For
             Dim cell = Panel.GetCell(row, column)
             If cell Is Nothing Then
                 If String.IsNullOrEmpty(Text) Then
@@ -1180,7 +974,7 @@ Public Class ReoGridView
     ''' <returns>列号，找不到返回-1</returns>
     Private Function FindColumnByName(name As String) As Integer
         For i = 0 To Me.Panel.ColumnCount - 1
-            If Me.Panel.ColumnHeaders(i).Text.Equals(name) Then
+            If Me.Panel.ColumnHeaders(i).Tag.Name?.Equals(name) Then
                 Return i
             End If
         Next
@@ -1196,12 +990,13 @@ Public Class ReoGridView
         If column >= Me.Panel.ColumnCount Then
             Throw New FrontWorkException($"Column {column} exceeded max column of {Me.Name}:{Me.Panel.ColumnCount - 1}")
         End If
-        Return Me.Panel.ColumnHeaders(column).Tag
+        Return Me.Panel.ColumnHeaders(column).Tag.Name
     End Function
 
     Private Function GetCellState(pos As CellPosition) As Integer
         Dim cell = Me.Panel.GetCell(pos)
         If cell Is Nothing Then Return 0
+        If cell.Tag Is Nothing Then Return 0
         Return CType(cell.Tag, CellTag).State
     End Function
 
@@ -1227,6 +1022,7 @@ Public Class ReoGridView
     Private Function GetCellEdited(pos As CellPosition) As Boolean
         Dim cell = Me.Panel.GetCell(pos)
         If cell Is Nothing Then Return False
+        If cell.Tag Is Nothing Then Return False
         Return CType(cell.Tag, CellTag).Edited
     End Function
 
