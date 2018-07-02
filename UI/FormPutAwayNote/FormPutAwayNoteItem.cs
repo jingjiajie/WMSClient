@@ -67,7 +67,11 @@ namespace WMS.UI
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.synchronizer.Save();
+            //如果存在更新并且未保存的行，则先尝试保存
+            if (this.model1.HasUnsynchronizedUpdatedRow())
+            {
+                if (!this.synchronizer.Save()) return;
+            }
             try
             {
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.putAwayNote["id"] + "\"}";
@@ -91,7 +95,11 @@ namespace WMS.UI
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.synchronizer.Save();
+            //如果存在更新并且未保存的行，则先尝试保存
+            if (this.model1.HasUnsynchronizedUpdatedRow())
+            {
+                if (!this.synchronizer.Save()) return;
+            }
             this.TransferDone();
         }
 

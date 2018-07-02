@@ -734,6 +734,10 @@ Partial Public Class Model
         Call Me.ModelOperationsWrapper.RemoveUneditedNewRows()
     End Sub
 
+    Public Function HasUnsynchronizedUpdatedRow() As Boolean
+        Return Me.ModelOperationsWrapper.HasUnsynchronizedUpdatedRow
+    End Function
+
     Public Sub AddColumns(columns() As ModelColumn) Implements IModelCore.AddColumns
         Call Me.ModelOperationsWrapper.AddColumns(columns)
     End Sub
