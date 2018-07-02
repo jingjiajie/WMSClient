@@ -175,7 +175,7 @@ namespace WMS.UI
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "transfer_some";
+                string operatioName = "transfer_some/" + (int)GlobalData.Person["id"];
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
