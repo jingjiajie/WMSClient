@@ -668,6 +668,17 @@ Public Class ModelOperationsWrapper
         Call Me.RemoveRows(rows.ToArray)
     End Sub
 
+    Public Function HasUnsynchronizedUpdatedRow() As Boolean
+        For i = 0 To Me.RowCount - 1
+            If {SynchronizationState.UPDATED,
+                SynchronizationState.ADDED_UPDATED
+               }.Contains(Me.GetRowSynchronizationState(i)) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
 
     Public Sub RefreshView(rows As Integer())
         Dim args = New ModelRowUpdatedEventArgs() With {
