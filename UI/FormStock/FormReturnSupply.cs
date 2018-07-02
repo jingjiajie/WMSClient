@@ -345,9 +345,9 @@ namespace WMS.UI.FormStock
 
         private void StateEditEnded(int row)           
         {           
-            if ((int)this.model1[row,"supplyId"]==0) return;
-            var foundSupplies = (from s in GlobalData.AllSuppliers
-                                  where (s["id"] == this.model1[row, "supplyId"])
+            if ((int)this.model1[row,"supplyId"]==0) return;          
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                  where (int)s["id"] == (int)this.model1[row, "supplyId"]
                                   select s).ToArray();
             if (foundSupplies.Length == 1)
             {               
@@ -355,13 +355,13 @@ namespace WMS.UI.FormStock
                 {
                     this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
                     this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
-                    this.model1[row, "storageLocationId"] = (int)foundSupplies[0]["defaultDeliveryStorageLocationID"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
                 }
                 else if ((int)this.model1[row, "state"] == 1)
                 {
                     this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
                     this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
-                    this.model1[row, "storageLocationId"] = (int)foundSupplies[0]["defaultUnqualifiedStorageLocationID"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
                 }
             }
         }
