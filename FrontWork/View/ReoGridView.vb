@@ -145,6 +145,7 @@ Public Class ReoGridView
         Me.Panel = Me.ReoGridControl.CurrentWorksheet
         Me.Workbook = Me.ReoGridControl
         AddHandler Me.Workbook.PreviewKeyDown, AddressOf Me.WorkbookPreviewKeyDown
+
     End Sub
 
     'Private Sub ModelRowSynchronizationStateChangedEvent(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
