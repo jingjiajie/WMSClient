@@ -194,15 +194,6 @@ Partial Public Class Model
     ''' <summary>
     ''' 获取行
     ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>相应行数据</returns>
-    Public Function GetRows(rowIDs As Guid()) As IDictionary(Of String, Object)()
-        Return Me.ModelConfigurationWrapper.GetRows(rowIDs)
-    End Function
-
-    ''' <summary>
-    ''' 获取行
-    ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>相应行数据</returns>
     Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModel.GetRows
@@ -257,14 +248,6 @@ Partial Public Class Model
     ''' <summary>
     ''' 删除行
     ''' </summary>
-    ''' <param name="rowID">删除行ID</param>
-    Public Sub RemoveRow(rowID As Guid)
-        Me.ModelConfigurationWrapper.RemoveRow(rowID)
-    End Sub
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
     ''' <param name="row">删除行行号</param>
     Public Sub RemoveRow(row As Integer)
         Call Me.ModelConfigurationWrapper.RemoveRow(row)
@@ -282,14 +265,6 @@ Partial Public Class Model
     ''' <summary>
     ''' 删除行
     ''' </summary>
-    ''' <param name="rowIDs">删除行ID</param>
-    Public Sub RemoveRows(rowIDs As Guid())
-        Call Me.ModelConfigurationWrapper.RemoveRows(rowIDs)
-    End Sub
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
     ''' <param name="rows">删除行行号</param>
     Public Sub RemoveRows(rows As Integer()) Implements IModel.RemoveRows
         Call Me.ModelConfigurationWrapper.RemoveRows(rows)
@@ -299,14 +274,6 @@ Partial Public Class Model
         Call Me.ModelConfigurationWrapper.RemoveSelectedRows()
     End Sub
 
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="rowID">更新行ID</param>
-    ''' <param name="data">数据</param>
-    Public Sub UpdateRow(rowID As Guid, data As IDictionary(Of String, Object))
-        Call Me.ModelConfigurationWrapper.UpdateRow(rowID, data)
-    End Sub
 
     ''' <summary>
     ''' 更新行
@@ -315,15 +282,6 @@ Partial Public Class Model
     ''' <param name="data">数据</param>
     Public Sub UpdateRow(row As Integer, data As IDictionary(Of String, Object))
         Call Me.ModelConfigurationWrapper.UpdateRow(row, data)
-    End Sub
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="rowIDs">更新的行ID</param>
-    ''' <param name="dataOfEachRow">相应的数据</param>
-    Public Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)())
-        Call Me.UpdateRows(rowIDs, dataOfEachRow)
     End Sub
 
     ''' <summary>
@@ -338,31 +296,11 @@ Partial Public Class Model
     ''' <summary>
     ''' 更新单元格
     ''' </summary>
-    ''' <param name="row">行ID</param>
-    ''' <param name="columnName">列名</param>
-    ''' <param name="data">更新的数据</param>
-    Public Sub UpdateCell(row As Guid, columnName As String, data As Object)
-        Call Me.ModelConfigurationWrapper.UpdateCell(row, columnName, data)
-    End Sub
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
     ''' <param name="row">行号</param>
     ''' <param name="columnName">列名</param>
     ''' <param name="data">更新的数据</param>
     Public Sub UpdateCell(row As Integer, columnName As String, data As Object)
         Call Me.ModelConfigurationWrapper.UpdateCell(row, columnName, data)
-    End Sub
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="rowIDs">行号</param>
-    ''' <param name="columnNames">列名</param>
-    ''' <param name="dataOfEachCell">对应的数据</param>
-    Public Sub UpdateCells(rowIDs As Guid(), columnNames As String(), dataOfEachCell As Object())
-        Call Me.ModelConfigurationWrapper.UpdateCells(rowIDs, columnNames, dataOfEachCell)
     End Sub
 
     ''' <summary>
@@ -386,45 +324,6 @@ Partial Public Class Model
     End Sub
 
     ''' <summary>
-    ''' 获取行ID
-    ''' </summary>
-    ''' <param name="rowNum">行号</param>
-    ''' <returns>行ID</returns>
-    Public Function GetRowID(rowNum As Integer) As Guid
-        Return Me.ModelConfigurationWrapper.GetRowID(rowNum)
-    End Function
-
-    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModel.UpdateRowIDs
-        Call Me.ModelConfigurationWrapper.UpdateRowIDs(oriRowIDs, newIDs)
-    End Sub
-
-    ''' <summary>
-    ''' 获取行ID
-    ''' </summary>
-    ''' <param name="rowNums">行号</param>
-    ''' <returns>行ID</returns>
-    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModel.GetRowIDs
-        Return Me.ModelConfigurationWrapper.GetRowIDs(rowNums)
-    End Function
-
-    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModel.GetRowIndexes
-        Return Me.ModelConfigurationWrapper.GetRowIndexes(rowIDs)
-    End Function
-
-    Public Function GetRowIndex(rowID As Guid) As Integer
-        Return Me.GetRowIndexes({rowID})(0)
-    End Function
-
-    ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <param name="syncStates">同步状态</param>
-    Public Sub UpdateRowSynchronizationStates(rowIDs As Guid(), syncStates As SynchronizationState())
-        Call Me.ModelConfigurationWrapper.UpdateRowSynchronizationStates(rowIDs, syncStates)
-    End Sub
-
-    ''' <summary>
     ''' 更新行同步状态
     ''' </summary>
     ''' <param name="rows">行号</param>
@@ -443,15 +342,6 @@ Partial Public Class Model
     End Sub
 
     ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rowID">行ID</param>
-    ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(rowID As Guid, syncState As SynchronizationState)
-        Call Me.ModelConfigurationWrapper.UpdateRowSynchronizationState(rowID, syncState)
-    End Sub
-
-    ''' <summary>
     ''' 获取行同步状态
     ''' </summary>
     ''' <param name="rows">行号</param>
@@ -463,28 +353,10 @@ Partial Public Class Model
     ''' <summary>
     ''' 获取行同步状态
     ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rowIDs As Guid()) As SynchronizationState()
-        Return Me.ModelConfigurationWrapper.GetRowSynchronizationStates(rowIDs)
-    End Function
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
     ''' <param name="row">行号</param>
     ''' <returns>同步状态</returns>
     Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState
         Return Me.ModelConfigurationWrapper.GetRowSynchronizationState(row)
-    End Function
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
-    ''' <param name="rowID">行ID</param>
-    ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rowID As Guid) As SynchronizationState
-        Return Me.ModelConfigurationWrapper.GetRowSynchronizationStates(rowID)
     End Function
 
     ''' <summary>

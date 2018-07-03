@@ -11,10 +11,7 @@ Public Class ModelCore
 
     Private _modelColumns As New List(Of ModelColumn)
     Private _allSelectionRange As Range() = New Range() {}
-    Private _configuration As Configuration
-    Private _dicRowGuid As New Dictionary(Of DataRow, Guid)
-    Private _mode As String = "default"
-    Private _dicRowSyncState As New Dictionary(Of DataRow, SynchronizationState)
+    Private Property RowStates As New List(Of ModelRowState)
 
     ''' <summary>
     ''' 数据表
@@ -178,6 +175,8 @@ Public Class ModelCore
                 newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
+            '增加行状态的记录
+            Me.RowStates.Insert(realRow, New ModelRowState)
         Next
         RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
                              .AddedRows = oriRowInfos
@@ -224,7 +223,6 @@ Public Class ModelCore
             '触发事件时的行按传入的行号，和行ID。
             For Each curRowNum In rowsASC
                 Dim newIndexRowPair = New ModelRowInfo(curRowNum,
-                                                  Me.GetRowID(Me.Data.Rows(curRowNum)),
                                                   Me.DataRowToDictionary(Me.Data.Rows(curRowNum)),
                                                   Me.GetRowSynchronizationState(Me.Data.Rows(curRowNum)))
                 indexRowList.Add(newIndexRowPair)
@@ -235,10 +233,9 @@ Public Class ModelCore
             RaiseEvent BeforeRowRemove(Me, beforeRowRemoveEventArgs)
             If beforeRowRemoveEventArgs.Cancel Then Return
             For Each curRowNum In realRows
-                If Me._dicRowGuid.ContainsKey(Me.Data.Rows(curRowNum)) Then
-                    Me._dicRowGuid.Remove(Me.Data.Rows(curRowNum))
-                End If
                 Me.Data.Rows.RemoveAt(curRowNum)
+                '删除行状态记录
+                Me.RowStates.RemoveAt(curRowNum)
             Next
         Catch ex As Exception
             Throw New FrontWorkException("RemoveRows failed: " & ex.Message)
@@ -293,7 +290,7 @@ Public Class ModelCore
 
             Dim updatedRows(rows.Length - 1) As ModelRowInfo
             For i = 0 To rows.Length - 1
-                updatedRows(i) = New ModelRowInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.GetRowSynchronizationState(Me.Data.Rows(rows(i))))
+                updatedRows(i) = New ModelRowInfo(rows(i), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.GetRowSynchronizationState(Me.Data.Rows(rows(i))))
             Next
 
             Dim eventArgs = New ModelRowUpdatedEventArgs() With {
@@ -336,7 +333,7 @@ Public Class ModelCore
                 Me.Data.Rows(rows(i))(dataColumn) = DBNull.Value
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
             End Try
-            posCellPairs.Add(New ModelCellInfo(rows(i), Me.GetRowID(Me.Data.Rows(rows(i))), columnName, dataOfEachCell(i)))
+            posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
             Select Case curState
                 Case SynchronizationState.ADDED
@@ -363,24 +360,14 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="dataTable">数据表</param>
     ''' <param name="ranges">选区</param>
-    ''' <param name="syncStates">各行同步状态</param>
-    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), syncStates As SynchronizationState()) Implements IModel.Refresh
+    ''' <param name="states">各行同步状态</param>
+    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), states As ModelRowState()) Implements IModel.Refresh
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         '刷新数据
         Me._Data = dataTable
         '刷新同步状态字典
-        Call Me._dicRowSyncState.Clear()
-        If syncStates IsNot Nothing Then
-            For i = 0 To syncStates.Length - 1
-                If dataTable.Rows.Count <= i Then
-                    Throw New FrontWorkException("Length of syncStates exceeded the max row of dataTable")
-                End If
-                Dim row = dataTable.Rows(i)
-                Dim syncState = syncStates(i)
-                Me._dicRowSyncState.Add(row, syncState)
-            Next
-        End If
+        Me.RowStates = states.ToList
         '触发刷新事件
         RaiseEvent Refreshed(Me, New ModelRefreshedEventArgs)
     End Sub
@@ -399,49 +386,6 @@ Public Class ModelCore
         Return result
     End Function
 
-    Private Function GetRowID(row As DataRow) As Guid
-        If Not Me._dicRowGuid.ContainsKey(row) Then
-            Me._dicRowGuid.Add(row, Guid.NewGuid)
-        End If
-        Return Me._dicRowGuid(row)
-    End Function
-
-    ''' <summary>
-    ''' 获取行ID
-    ''' </summary>
-    ''' <param name="rowNums">行号</param>
-    ''' <returns>行ID</returns>
-    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModel.GetRowIDs
-        Dim dataRows(rowNums.Length - 1) As DataRow
-        Dim rowIDs(rowNums.Length - 1) As Guid
-        For i = 0 To rowNums.Length - 1
-            Dim rowNum = rowNums(i)
-            If Me.Data.Rows.Count <= rowNum Then
-                Throw New FrontWorkException($"Row {rowNum} exceeded the max row of model")
-            End If
-            Dim dataRow = Me.Data.Rows(rowNum)
-            rowIDs(i) = Me.GetRowID(dataRow)
-        Next
-        Return rowIDs
-    End Function
-
-    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModel.GetRowIndexes
-        Dim results As New List(Of Integer)
-        For Each rowID In rowIDs
-            Dim dataRow = (From rg In Me._dicRowGuid Where rg.Value = rowID Select rg.Key).FirstOrDefault
-            If dataRow Is Nothing Then
-                results.Add(-1)
-            Else
-                results.Add(Me.Data.Rows.IndexOf(dataRow))
-            End If
-        Next
-        Return results.ToArray
-    End Function
-
-    Protected Function GetDataRow(rowID As Guid) As DataRow
-        Return (From rowGuid In Me._dicRowGuid Where rowGuid.Value = rowID Select rowGuid.Key).FirstOrDefault
-    End Function
-
     Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState(), raisesEvent As Boolean)
         If rows.Length <> syncStates.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
@@ -454,7 +398,7 @@ Public Class ModelCore
                 Throw New FrontWorkException($"Row {row} exceeded the max row of model")
             End If
             Me.SetRowSynchronizationState(Me.Data.Rows(row), syncState)
-            Dim newIndexRowSynchronizationStatePair = New ModelRowInfo(row, Me.GetRowIDs({row})(0), Me.GetRows({row})(0), syncState)
+            Dim newIndexRowSynchronizationStatePair = New ModelRowInfo(row, Me.GetRows({row})(0), syncState)
             updatedRows.Add(newIndexRowSynchronizationStatePair)
         Next
         If raisesEvent Then
@@ -474,18 +418,13 @@ Public Class ModelCore
 
 
     Private Sub SetRowSynchronizationState(row As DataRow, state As SynchronizationState)
-        If Me._dicRowSyncState.ContainsKey(row) Then
-            Me._dicRowSyncState(row) = state
-        Else
-            Me._dicRowSyncState.Add(row, state)
-        End If
+        Dim rowNum = Me.Data.Rows.IndexOf(row)
+        Me.RowStates(rowNum).SynchronizationState = state
     End Sub
 
     Private Function GetRowSynchronizationState(row As DataRow) As SynchronizationState
-        If Not Me._dicRowSyncState.ContainsKey(row) Then
-            Me._dicRowSyncState.Add(row, SynchronizationState.SYNCHRONIZED)
-        End If
-        Return Me._dicRowSyncState(row)
+        Dim rowNum = Me.Data.Rows.IndexOf(row)
+        Return Me.RowStates(rowNum).SynchronizationState
     End Function
 
     ''' <summary>
@@ -581,13 +520,6 @@ Public Class ModelCore
         Next
         Return result
     End Function
-
-    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModel.UpdateRowIDs
-        For i = 0 To oriRowIDs.Length
-            Dim row = Me.GetDataRow(oriRowIDs(i))
-            Me._dicRowGuid(row) = newIDs(i)
-        Next
-    End Sub
 
     Public Function ToDataTable() As DataTable Implements IModel.ToDataTable
         Return Me.Data

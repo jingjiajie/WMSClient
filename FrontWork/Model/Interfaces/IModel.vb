@@ -76,27 +76,6 @@ Public Interface IModel
     Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
 
     ''' <summary>
-    ''' 根据行号获取行ID
-    ''' </summary>
-    ''' <param name="rowNums">行号</param>
-    ''' <returns>行ID</returns>
-    Function GetRowIDs(rowNums As Integer()) As Guid()
-
-    ''' <summary>
-    ''' 获取行号
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>行号</returns>
-    Function GetRowIndexes(rowIDs As Guid()) As Integer()
-
-    ''' <summary>
-    ''' 更新行ID
-    ''' </summary>
-    ''' <param name="oriRowIDs">原行ID</param>
-    ''' <param name="newIDs">新ID</param>
-    Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid())
-
-    ''' <summary>
     ''' 获取行数据
     ''' </summary>
     ''' <param name="rows">行号</param>

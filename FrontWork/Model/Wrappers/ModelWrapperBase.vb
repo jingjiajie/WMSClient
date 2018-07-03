@@ -134,24 +134,6 @@
         Call Me.Model.Refresh(dataTable, ranges, syncStates)
     End Sub
 
-
-    Public Sub UpdateRowIDs(oriRowIDs As Guid(), newIDs As Guid()) Implements IModel.UpdateRowIDs
-        Call Me.Model.UpdateRowIDs(oriRowIDs, newIDs)
-    End Sub
-
-    ''' <summary>
-    ''' 获取行ID
-    ''' </summary>
-    ''' <param name="rowNums">行号</param>
-    ''' <returns>行ID</returns>
-    Public Function GetRowIDs(rowNums As Integer()) As Guid() Implements IModel.GetRowIDs
-        Return Me.Model.GetRowIDs(rowNums)
-    End Function
-
-    Public Function GetRowIndexes(rowIDs As Guid()) As Integer() Implements IModel.GetRowIndexes
-        Return Me.Model.GetRowIndexes(rowIDs)
-    End Function
-
     ''' <summary>
     ''' 更新行同步状态
     ''' </summary>

@@ -104,6 +104,7 @@
     <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
+    <Compile Include="Model\DataStructures\ModelRowState.vb" />
     <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
@@ -113,6 +114,7 @@
     </Compile>
     <Compile Include="View\DataStructures\ViewCellInfo.vb" />
     <Compile Include="View\DataStructures\ViewRowInfo.vb" />
+    <Compile Include="View\DataStructures\ViewRowState.vb" />
     <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />
     <Compile Include="View\EventArgs\BeforeViewCellUpdateEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewRowAddEventArgs.vb" />
@@ -142,7 +144,7 @@
     <Compile Include="Configuration\FieldConfiguration.vb" />
     <Compile Include="Configuration\FieldMethod.vb" />
     <Compile Include="Model\DataStructures\ModelSchema\ModelColumn.vb" />
-    <Compile Include="Model\DataStructures\SynchronizaionState.vb" />
+    <Compile Include="Common\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelCollectionChangedEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelRowSynchronizationStateChangedEventArgs.vb" />

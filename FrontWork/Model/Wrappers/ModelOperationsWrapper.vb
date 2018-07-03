@@ -178,25 +178,6 @@ Public Class ModelOperationsWrapper
     ''' <summary>
     ''' 获取行
     ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>相应行数据</returns>
-    Public Overloads Function GetRows(rowIDs As Guid()) As IDictionary(Of String, Object)()
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Return MyBase.GetRows(rowNums)
-    End Function
-
-
-    ''' <summary>
-    ''' 获取行
-    ''' </summary>
     ''' <param name="row">行号</param>
     ''' <returns>相应行数据</returns>
     Public Function GetRow(row As Integer) As IDictionary(Of String, Object)
@@ -222,15 +203,6 @@ Public Class ModelOperationsWrapper
         Call Me.InsertRows({row}, {data})
     End Sub
 
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="rowID">删除行ID</param>
-    Public Sub RemoveRow(rowID As Guid)
-        Me.RemoveRows({rowID})
-    End Sub
-
     ''' <summary>
     ''' 删除行
     ''' </summary>
@@ -248,42 +220,15 @@ Public Class ModelOperationsWrapper
         MyBase.RemoveRows(Util.Range(startRow, startRow + rowCount))
     End Sub
 
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="rowIDs">删除行ID</param>
-    Public Overloads Sub RemoveRows(rowIDs As Guid())
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Me.RemoveRows(rowNums)
-    End Sub
-
-
     Public Sub RemoveSelectedRows()
         If Me.AllSelectionRanges Is Nothing Then Return
-        Dim removeRowIDs As New List(Of Guid)
+        Dim removeRows As New List(Of Integer)
         For Each range In Me.AllSelectionRanges
             For i = 0 To range.Rows - 1
-                removeRowIDs.Add(Me.GetRowID(range.Row + i))
+                removeRows.Add(range.Row + i)
             Next
         Next
-        Call Me.RemoveRows(removeRowIDs.Distinct.ToArray)
-    End Sub
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="rowID">更新行ID</param>
-    ''' <param name="data">数据</param>
-    Public Sub UpdateRow(rowID As Guid, data As IDictionary(Of String, Object))
-        Me.UpdateRows({rowID}, {data})
+        Call Me.RemoveRows(removeRows.Distinct.ToArray)
     End Sub
 
     ''' <summary>
@@ -296,24 +241,6 @@ Public Class ModelOperationsWrapper
             New Integer() {row},
             New Dictionary(Of String, Object)() {data}
         )
-    End Sub
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="rowIDs">更新的行ID</param>
-    ''' <param name="dataOfEachRow">相应的数据</param>
-    Public Shadows Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)())
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Call Me.UpdateRows(rowNums, dataOfEachRow)
     End Sub
 
     ''' <summary>
@@ -343,17 +270,6 @@ Public Class ModelOperationsWrapper
         Call Me.Model.UpdateRows(rows, dataOfEachRow)
     End Sub
 
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="row">行ID</param>
-    ''' <param name="columnName">列名</param>
-    ''' <param name="data">更新的数据</param>
-    Public Sub UpdateCell(row As Guid, columnName As String, data As Object)
-        Me.UpdateCells({row}, {columnName}, {data})
-    End Sub
-
     ''' <summary>
     ''' 更新单元格
     ''' </summary>
@@ -363,26 +279,6 @@ Public Class ModelOperationsWrapper
     Public Sub UpdateCell(row As Integer, columnName As String, data As Object)
         MyBase.UpdateCells({row}, New String() {columnName}, New Object() {data})
     End Sub
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="rowIDs">行号</param>
-    ''' <param name="columnNames">列名</param>
-    ''' <param name="dataOfEachCell">对应的数据</param>
-    Public Overloads Sub UpdateCells(rowIDs As Guid(), columnNames As String(), dataOfEachCell As Object())
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Me.UpdateCells(rowNums, columnNames, dataOfEachCell)
-    End Sub
-
 
     ''' <summary>
     ''' DataRow转字典
@@ -399,42 +295,6 @@ Public Class ModelOperationsWrapper
     End Function
 
     ''' <summary>
-    ''' 获取行ID
-    ''' </summary>
-    ''' <param name="rowNum">行号</param>
-    ''' <returns>行ID</returns>
-    Public Function GetRowID(rowNum As Integer) As Guid
-        Return Me.GetRowIDs({rowNum})(0)
-    End Function
-
-
-    Public Function GetRowIndex(rowID As Guid) As Integer
-        Return Me.GetRowIndexes({rowID})(0)
-    End Function
-
-    ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <param name="syncStates">同步状态</param>
-    Public Overloads Sub UpdateRowSynchronizationStates(rowIDs As Guid(), syncStates As SynchronizationState())
-        If rowIDs.Length <> syncStates.Length Then
-            Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
-        End If
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum < 0 Then
-                Throw New FrontWorkException($"Row ID:{rowID} not found!")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Call Me.UpdateRowSynchronizationStates(rowNums, syncStates)
-    End Sub
-
-
-    ''' <summary>
     ''' 更新行同步状态
     ''' </summary>
     ''' <param name="row">行号</param>
@@ -444,33 +304,6 @@ Public Class ModelOperationsWrapper
     End Sub
 
     ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rowID">行ID</param>
-    ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(rowID As Guid, syncState As SynchronizationState)
-        Call Me.UpdateRowSynchronizationStates({rowID}, {syncState})
-    End Sub
-
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>同步状态</returns>
-    Public Overloads Function GetRowSynchronizationStates(rowIDs As Guid()) As SynchronizationState()
-        Dim rows(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim row = Me.GetRowIndex(rowIDs(i))
-            If row < 0 Then
-                Throw New FrontWorkException($"Row ID:{rowIDs(i)} not found!")
-            End If
-            rows(i) = row
-        Next
-        Return MyBase.GetRowSynchronizationStates(rows)
-    End Function
-
-    ''' <summary>
     ''' 获取行同步状态
     ''' </summary>
     ''' <param name="row">行号</param>
@@ -478,16 +311,6 @@ Public Class ModelOperationsWrapper
     Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState
         Return MyBase.GetRowSynchronizationStates({row})(0)
     End Function
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
-    ''' <param name="rowID">行ID</param>
-    ''' <returns>同步状态</returns>
-    Public Overloads Function GetRowSynchronizationStates(rowID As Guid) As SynchronizationState
-        Return Me.GetRowSynchronizationStates({rowID})(0)
-    End Function
-
 
     Public Function ContainsColumn(columnName As String) As Boolean
         Return Me.GetColumns({columnName})(0) IsNot Nothing
@@ -671,7 +494,7 @@ Public Class ModelOperationsWrapper
 
     Public Sub RefreshView(rows As Integer())
         Dim args = New ModelRowUpdatedEventArgs() With {
-            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me.GetRowID(row), Me(row), Me.GetRowSynchronizationState(row))).ToArray
+            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me(row), Me.GetRowSynchronizationState(row))).ToArray
         }
         Call MyBase.RaiseRowUpdatedEvent(Me, args)
     End Sub
