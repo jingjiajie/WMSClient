@@ -125,7 +125,9 @@
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},              
+        {name:"id",displayName:"ID",type:"int",visible:false},  
+  {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},            
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"storageLocationId",displayName:"库位ID",type:"int",visible:false},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false},
@@ -133,8 +135,7 @@
         {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
-        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+      
         {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"amount",displayName:"数量",type:"double",placeHolder:"必填项",forwardMapper:"#AmountForwardMapper",backwardMapper:"#AmountBackwardMapper",defaultValue:0},
         {name:"availableAmount",displayName:"可用数量",type:"double",placeHolder:"必填项",forwardMapper:"#AvailableAmountForwardMapper",backwardMapper:"#AvailableAmountBackwardMapper",defaultValue:0},

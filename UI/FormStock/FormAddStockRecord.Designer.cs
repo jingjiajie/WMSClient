@@ -299,7 +299,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormAddStockRecord";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " 导入供货";
+            this.Text = "校正库存";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReturnSupply_FormClosed);
             this.Load += new System.EventHandler(this.FormAddStockRecord_Load);
             this.statusStrip1.ResumeLayout(false);
