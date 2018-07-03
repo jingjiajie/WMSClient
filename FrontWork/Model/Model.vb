@@ -325,18 +325,18 @@ Partial Public Class Model
     ''' 更新行同步状态
     ''' </summary>
     ''' <param name="row">行号</param>
-    ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(row As Integer, syncState As SynchronizationState)
-        Call Me.ModelConfigurationWrapper.UpdateRowSynchronizationState(row, syncState)
+    ''' <param name="state">同步状态</param>
+    Public Sub UpdateRowState(row As Integer, state As ModelRowState)
+        Call Me.ModelConfigurationWrapper.UpdateRowState(row, state)
     End Sub
 
     ''' <summary>
-    ''' 获取行同步状态
+    ''' 获取行状态
     ''' </summary>
     ''' <param name="rows">行号</param>
-    ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
-        Return Me.ModelConfigurationWrapper.GetRowSynchronizationStates(rows)
+    ''' <returns>状态</returns>
+    Public Function GetRowStates(rows As Integer()) As ModelRowState() Implements IModel.GetRowStates
+        Return Me.ModelConfigurationWrapper.GetRowStates(rows)
     End Function
 
     ''' <summary>
@@ -344,8 +344,17 @@ Partial Public Class Model
     ''' </summary>
     ''' <param name="row">行号</param>
     ''' <returns>同步状态</returns>
+    Public Function GetRowState(row As Integer) As ModelRowState
+        Return Me.ModelConfigurationWrapper.GetRowState(row)
+    End Function
+
+    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
+        Dim rowStates = Me.GetRowStates(rows)
+        Return (From s In rowStates Select s.SynchronizationState).ToArray
+    End Function
+
     Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState
-        Return Me.ModelConfigurationWrapper.GetRowSynchronizationState(row)
+        Return Me.GetRowSynchronizationStates({row})(0)
     End Function
 
     ''' <summary>
@@ -631,6 +640,6 @@ Partial Public Class Model
     End Sub
 
     Public Sub RaiseRowSynchronizationStateChangedEvent(sender As Object, args As ModelRowStateChangedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseRowSynchronizationStateChangedEvent(sender, args)
+        Call Me.ModelConfigurationWrapper.RaiseRowStateChangedEvent(sender, args)
     End Sub
 End Class

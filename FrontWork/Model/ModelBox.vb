@@ -71,7 +71,7 @@ Public Class ModelBox
             Next
             Dim newModel = New Model
             newModel.Name = groupName
-            newModel.Refresh(newDataTable, {New Range(0, 0, 1, 1)}, Nothing)
+            newModel.Refresh(New ModelRefreshArgs(newDataTable, {New Range(0, 0, 1, 1)}, Nothing))
             Me.Models.SetModel(newModel)
         Next
         If groups.Length > 0 Then

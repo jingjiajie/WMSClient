@@ -14,9 +14,12 @@ Public Class ViewRowInfo
     ''' <returns></returns>
     Public Property RowData As IDictionary(Of String, Object)
 
-    Public Sub New(row As Integer, dataRow As IDictionary(Of String, Object))
+    Public Property RowState As ViewRowState
+
+    Public Sub New(row As Integer, rowData As IDictionary(Of String, Object), rowState As ViewRowState)
         Me.Row = row
-        Me.RowData = dataRow
+        Me.RowData = rowData
+        Me.RowState = rowState
     End Sub
 
     Public Sub New()

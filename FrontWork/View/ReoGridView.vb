@@ -40,7 +40,15 @@ Public Class ReoGridView
     Protected Class RowTag
         Public Property Inited As Boolean
         Public Property Temporary As Boolean = False
-        Public Property SyncState = SynchronizationState.SYNCHRONIZED
+        Public Property RowState As New ViewRowState
+        Public Property RowSyncState As SynchronizationState
+            Get
+                Return RowState.SynchronizationState
+            End Get
+            Set(value As SynchronizationState)
+                RowState.SynchronizationState = value
+            End Set
+        End Property
     End Class
 
     Private COLOR_UNSYNCHRONIZED As Color = Color.AliceBlue
@@ -69,6 +77,8 @@ Public Class ReoGridView
     Public Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs) Implements IEditableDataView.CellUpdated
     Private Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements ISelectableDataView.BeforeSelectionRangeChange
     Public Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs) Implements ISelectableDataView.SelectionRangeChanged
+    Public Event BeforeRowStateChange As EventHandler(Of ViewBeforeRowStateChangeEventArgs) Implements IDataView.BeforeRowStateChange
+    Public Event RowStateChanged As EventHandler(Of ViewRowStateChangedEventArgs) Implements IDataView.RowStateChanged
 
     Public Custom Event AssociationItemSelected As EventHandler(Of ViewAssociationItemSelectedEventArgs) Implements IAssociableDataView.AssociationItemSelected
         AddHandler(value As EventHandler(Of ViewAssociationItemSelectedEventArgs))
@@ -208,7 +218,7 @@ Public Class ReoGridView
         End If
         For Each row In rows
             '先绘制整行颜色
-            If CType(Me.Panel.RowHeaders(row).Tag, RowTag).SyncState <> SynchronizationState.SYNCHRONIZED Then
+            If CType(Me.Panel.RowHeaders(row).Tag, RowTag).RowSyncState <> SynchronizationState.SYNCHRONIZED Then
                 Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
                 Me.Panel.SetRangeStyles(row, 0, 1, Me.Panel.ColumnCount, New WorksheetRangeStyle() With {
                         .Flag = PlainStyleFlag.BackColor,
@@ -600,7 +610,7 @@ Public Class ReoGridView
         If rowsUpdated.Count > 0 Then
             Dim rowInfos(rowsUpdated.Count - 1) As ViewRowInfo
             For i = 0 To rowInfos.Length - 1
-                rowInfos(i) = New ViewRowInfo(rowsUpdated(i), updateData(i))
+                rowInfos(i) = New ViewRowInfo(rowsUpdated(i), updateData(i), CType(Me.Panel.RowHeaders(rowsUpdated(i)).Tag, RowTag).RowState)
             Next
             RaiseEvent RowUpdated(Me, New ViewRowUpdatedEventArgs(rowInfos))
         End If
@@ -914,7 +924,7 @@ Public Class ReoGridView
         End If
         Dim viewRowInfos(rows.Length - 1) As ViewRowInfo
         For i = 0 To rows.Length - 1
-            viewRowInfos(i) = New ViewRowInfo(rows(i), data(i))
+            viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState)
         Next
         Dim oriViewRows = Me.Panel.RowCount
         Dim adjustedRowInfos = Util.AdjustRows(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)
@@ -1126,10 +1136,18 @@ Public Class ReoGridView
         Next
     End Sub
 
-    Public Sub UpdateRowSynchronizationState(rows As Integer(), synchronizationStates As SynchronizationState()) Implements IDataView.UpdateRowSynchronizationStates
+    Public Sub UpdateRowState(rows As Integer(), states As ViewRowState()) Implements IDataView.UpdateRowStates
         For i = 0 To rows.Length - 1
-            CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).SyncState = synchronizationStates(i)
+            CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState = states(i)
         Next
         Call Me.PaintRows(rows)
     End Sub
+
+    Public Function GetRowStates(rows() As Integer) As ViewRowState() Implements IDataView.GetRowStates
+        Dim states(rows.Length - 1) As ViewRowState
+        For i = 0 To rows.Length - 1
+            states(i) = CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState
+        Next
+        Return states
+    End Function
 End Class

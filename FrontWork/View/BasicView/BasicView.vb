@@ -93,6 +93,8 @@ Partial Public Class BasicView
     Public Event EditStarted As EventHandler(Of ViewEditStartedEventArgs) Implements IAssociableDataView.EditStarted
     Public Event ContentChanged As EventHandler(Of ViewContentChangedEventArgs) Implements IAssociableDataView.ContentChanged
     Public Event EditEnded As EventHandler(Of ViewEditEndedEventArgs) Implements IAssociableDataView.EditEnded
+    Public Event BeforeRowStateChange As EventHandler(Of ViewBeforeRowStateChangeEventArgs) Implements IDataView.BeforeRowStateChange
+    Public Event RowStateChanged As EventHandler(Of ViewRowStateChangedEventArgs) Implements IDataView.RowStateChanged
 
     Public Custom Event AssociationItemSelected As EventHandler(Of ViewAssociationItemSelectedEventArgs) Implements IAssociableDataView.AssociationItemSelected
         AddHandler(value As EventHandler(Of ViewAssociationItemSelectedEventArgs))
@@ -650,9 +652,13 @@ Partial Public Class BasicView
         Call Me.FormAssociation.Hide()
     End Sub
 
-    Public Sub UpdateRowSynchronizationStates(rows() As Integer, synchronizationStates() As SynchronizationState) Implements IDataView.UpdateRowSynchronizationStates
+    Public Sub UpdateRowStates(rows() As Integer, states() As ViewRowState) Implements IDataView.UpdateRowStates
         Return
     End Sub
+
+    Public Function GetRowStates(rows() As Integer) As ViewRowState() Implements IDataView.GetRowStates
+        Return Nothing
+    End Function
 
     Private MustInherit Class ControlManager(Of T As Control)
         Inherits CollectionBase

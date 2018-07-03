@@ -153,7 +153,7 @@ Public Class ModelCore
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
         End If
         '带有插入请求的原始行号的RowInfo
-        Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState)).ToArray
+        Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(SynchronizationState.ADDED))).ToArray
         Dim adjustedRowInfos = Util.AdjustRows(oriRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
         '开始添加数据
         For i = 0 To adjustedRowInfos.Length - 1
@@ -176,17 +176,19 @@ Public Class ModelCore
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
             '增加行状态的记录
-            Me.RowStates.Insert(realRow, New ModelRowState)
+            Me.RowStates.Insert(realRow, New ModelRowState(SynchronizationState.ADDED))
         Next
         RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
                              .AddedRows = oriRowInfos
                             })
 
-        '将同步状态全部设置为ADDED
-        Me.UpdateRowStates(adjustedRowInfos.Select(Function(rowInfo)
-                                                       Return rowInfo.Row
-                                                   End Function).ToArray,
-                           Util.Times(New ModelRowState, adjustedRowInfos.Length))
+        RaiseEvent RowStateChanged(Me, New ModelRowStateChangedEventArgs(adjustedRowInfos))
+
+        ''将同步状态全部设置为ADDED
+        'Me.UpdateRowStates(adjustedRowInfos.Select(Function(rowInfo)
+        '                                               Return rowInfo.Row
+        '                                           End Function).ToArray,
+        '                   Util.Times(New ModelRowState(SynchronizationState.ADDED), adjustedRowInfos.Length))
 
         Dim columnCount = Me.Data.Columns.Count
         Dim selectionRanges As New List(Of Range)
@@ -400,7 +402,7 @@ Public Class ModelCore
         Next
         If raisesEvent Then
             Dim eventArgs = New ModelRowStateChangedEventArgs(updatedRows.ToArray)
-            RaiseEvent RowSynchronizationStateChanged(Me, eventArgs)
+            RaiseEvent RowStateChanged(Me, eventArgs)
         End If
     End Sub
 
@@ -487,7 +489,7 @@ Public Class ModelCore
     ''' <summary>
     ''' 行同步状态改变事件
     ''' </summary>
-    Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
+    Public Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModel.RowStateChanged
 
     Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
         Dim result As New T

@@ -90,13 +90,6 @@
     <Compile Include="Configuration\Configuration.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Configuration\Configurator\Configurator.Designer.vb">
-      <DependentUpon>Configurator.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Configuration\Configurator\Configurator.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Configuration\Configurator\ConfiguratorEditor.vb" />
     <Compile Include="Configuration\EventArgs\ConfigurationChangedEventArgs.vb" />
     <Compile Include="Configuration\Exceptions\MethodNotFoundException.vb" />
     <Compile Include="Configuration\FieldType.vb" />
@@ -123,6 +116,7 @@
     <Compile Include="View\EventArgs\BeforeViewRowUpdateEventArgs.vb" />
     <Compile Include="View\EventArgs\BeforeViewSelectionRangeChangeEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewAssociationItemSelectedEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewBeforeRowStateChangeEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewCellUpdatedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewContentChangedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewEditEndedEventArgs.vb" />
@@ -130,6 +124,7 @@
     <Compile Include="View\EventArgs\ViewEditStartedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowAddedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowRemovedEventArgs.vb" />
+    <Compile Include="View\EventArgs\ViewRowStateChangedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewRowUpdatedEventArgs.vb" />
     <Compile Include="View\EventArgs\ViewSelectionRangeChangedEventArgs.vb" />
     <Compile Include="View\AdsorbableAssociationForm.Designer.vb">
@@ -249,9 +244,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\Configuration.resx">
       <DependentUpon>Configuration.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Configuration\Configurator\Configurator.resx">
-      <DependentUpon>Configurator.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model\Model.resx">
       <DependentUpon>Model.vb</DependentUpon>

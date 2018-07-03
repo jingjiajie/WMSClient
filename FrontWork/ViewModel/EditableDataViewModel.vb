@@ -162,7 +162,7 @@ Public Class EditableDataViewModel
         AddHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
         AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        AddHandler Me.ModelOperationsWrapper.RowSynchronizationStateChanged, AddressOf Me.ModelRowSynchronizationStateChanged
+        AddHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
         AddHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
 
         Call Me.ModelRefreshedEvent(Me, Nothing)
@@ -177,7 +177,7 @@ Public Class EditableDataViewModel
         RemoveHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
         RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
         RemoveHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowSynchronizationStateChanged, AddressOf Me.ModelRowSynchronizationStateChanged
+        RemoveHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
         RemoveHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
     End Sub
 
@@ -337,10 +337,10 @@ Public Class EditableDataViewModel
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
     End Sub
 
-    Private Sub ModelRowSynchronizationStateChanged(sender As Object, e As ModelRowStateChangedEventArgs)
+    Private Sub ModelRowStateChanged(sender As Object, e As ModelRowStateChangedEventArgs)
         Dim rows = (From r In e.StateUpdatedRows Select r.Row).ToArray
-        Dim states = (From r In e.StateUpdatedRows Select r.State).ToArray
-        Call Me.ViewOperationsWrapper.UpdateRowSynchronizationStates(rows, states)
+        Dim states = (From r In e.StateUpdatedRows Select New ViewRowState(r.State)).ToArray
+        Call Me.ViewOperationsWrapper.UpdateRowStates(rows, states)
     End Sub
 
     Protected Overridable Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
@@ -382,6 +382,7 @@ Public Class EditableDataViewModel
         RemoveHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf ViewRowUpdatedEvent
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        RemoveHandler Me.ViewOperationsWrapper.RowStateChanged, AddressOf Me.ViewRowStateChangedEvent
 
         If newRowCount < oriViewRowCount Then '原来视图行数大于新的行数，删除部分行
             Call Me.ViewOperationsWrapper.RemoveRows(Util.Range(newRowCount, oriViewRowCount))
@@ -403,10 +404,30 @@ Public Class EditableDataViewModel
                 Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
             End If
         End If
+        '刷新行状态
+        Dim rowNums = Util.Range(0, newRowCount)
+        Dim modelRowStates = Me.ModelOperationsWrapper.GetRowStates(rowNums)
+        Dim viewRowStates = (From s In modelRowStates Select New ViewRowState(s)).ToArray
+        Call Me.ViewOperationsWrapper.UpdateRowStates(rowNums, viewRowStates)
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
         AddHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf ViewRowUpdatedEvent
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        AddHandler Me.ViewOperationsWrapper.RowStateChanged, AddressOf Me.ViewRowStateChangedEvent
+    End Sub
+
+    Private Sub ViewRowStateChangedEvent(sender As Object, e As ViewRowStateChangedEventArgs)
+        RemoveHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        Dim viewRowInfos = e.StateChangedRows
+        Dim modelRowStates(viewRowInfos.Length - 1) As ModelRowState
+        Dim rows(viewRowInfos.Length - 1) As Integer
+        For i = 0 To modelRowStates.Length - 1
+            Dim viewRowInfo = viewRowInfos(i)
+            modelRowStates(i) = New ModelRowState(viewRowInfo.RowState)
+            rows(i) = viewRowInfo.Row
+        Next
+        Call Me.Model.UpdateRowStates(rows, modelRowStates)
+        AddHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
     End Sub
 
     Protected Overridable Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)

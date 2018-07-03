@@ -1,6 +1,9 @@
 ﻿Public Interface IDataView
     Inherits IView
 
+    Event BeforeRowStateChange As EventHandler(Of ViewBeforeRowStateChangeEventArgs)
+    Event RowStateChanged As EventHandler(Of ViewRowStateChangedEventArgs)
+
     Function AddColumns(viewColumns As ViewColumn()) As Boolean
     Function UpdateColumns(oriColumnNames As String(), newViewColumns As ViewColumn())
     Function RemoveColumns(columnNames As String())
@@ -45,8 +48,14 @@
     ''' 设置行同步状态
     ''' </summary>
     ''' <param name="rows">行号</param>
-    ''' <param name="synchronizationStates">同步状态</param>
-    Sub UpdateRowSynchronizationStates(rows As Integer(), synchronizationStates As SynchronizationState())
+    ''' <param name="states">行状态</param>
+    Sub UpdateRowStates(rows As Integer(), states As ViewRowState())
+
+    ''' <summary>
+    ''' 获取行状态
+    ''' </summary>
+    ''' <param name="rows">状态</param>
+    Function GetRowStates(rows As Integer()) As ViewRowState()
 
     ''' <summary>
     ''' View所存储数据的行数

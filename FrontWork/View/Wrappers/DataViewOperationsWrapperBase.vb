@@ -13,6 +13,28 @@ Public Class DataViewOperationsWrapperBase
 
     End Sub
 
+    Public Custom Event BeforeRowStateChange As EventHandler(Of ViewBeforeRowStateChangeEventArgs) Implements IDataView.BeforeRowStateChange
+        AddHandler(value As EventHandler(Of ViewBeforeRowStateChangeEventArgs))
+            AddHandler View.BeforeRowStateChange, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ViewBeforeRowStateChangeEventArgs))
+            RemoveHandler View.BeforeRowStateChange, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ViewBeforeRowStateChangeEventArgs)
+        End RaiseEvent
+    End Event
+
+    Public Custom Event RowStateChanged As EventHandler(Of ViewRowStateChangedEventArgs) Implements IDataView.RowStateChanged
+        AddHandler(value As EventHandler(Of ViewRowStateChangedEventArgs))
+            AddHandler View.RowStateChanged, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ViewRowStateChangedEventArgs))
+            RemoveHandler View.RowStateChanged, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ViewRowStateChangedEventArgs)
+        End RaiseEvent
+    End Event
+
     Public Overridable Function AddColumns(viewColumns() As ViewColumn) As Boolean Implements IDataView.AddColumns
         Return View.AddColumns(viewColumns)
     End Function
@@ -57,7 +79,11 @@ Public Class DataViewOperationsWrapperBase
         Return View.GetColumnCount()
     End Function
 
-    Public Sub UpdateRowSynchronizationStates(rows() As Integer, synchronizationStates() As SynchronizationState) Implements IDataView.UpdateRowSynchronizationStates
-        Call Me.View.UpdateRowSynchronizationStates(rows, synchronizationStates)
+    Public Sub UpdateRowStates(rows() As Integer, states() As ViewRowState) Implements IDataView.UpdateRowStates
+        Call Me.View.UpdateRowStates(rows, states)
     End Sub
+
+    Public Function GetRowStates(rows() As Integer) As ViewRowState() Implements IDataView.GetRowStates
+        Return View.GetRowStates(rows)
+    End Function
 End Class

@@ -55,7 +55,7 @@ Public Class ModelOperationsWrapper
         AddHandler Me.Model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
         AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
         AddHandler Me.Model.Refreshed, AddressOf Me.RaiseRefreshedEvent
-        AddHandler Me.Model.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
+        AddHandler Me.Model.RowStateChanged, AddressOf Me.RaiseRowStateChangedEvent
     End Sub
 
     Private Sub UnbindModelCore(modelCore As IModel)
@@ -66,7 +66,7 @@ Public Class ModelOperationsWrapper
         RemoveHandler Me.Model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
         RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
         RemoveHandler Me.Model.Refreshed, AddressOf Me.RaiseRefreshedEvent
-        RemoveHandler Me.Model.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
+        RemoveHandler Me.Model.RowStateChanged, AddressOf Me.RaiseRowStateChangedEvent
     End Sub
 
     Public Property Name As String
@@ -295,21 +295,21 @@ Public Class ModelOperationsWrapper
     End Function
 
     ''' <summary>
-    ''' 更新行同步状态
+    ''' 更新行状态
     ''' </summary>
     ''' <param name="row">行号</param>
-    ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(row As Integer, syncState As SynchronizationState)
-        Call MyBase.UpdateRowSynchronizationStates({row}, {syncState})
+    ''' <param name="state">同步状态</param>
+    Public Sub UpdateRowState(row As Integer, state As ModelRowState)
+        Call MyBase.UpdateRowStates({row}, {state})
     End Sub
 
     ''' <summary>
-    ''' 获取行同步状态
+    ''' 获取行状态
     ''' </summary>
     ''' <param name="row">行号</param>
-    ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState
-        Return MyBase.GetRowSynchronizationStates({row})(0)
+    ''' <returns>状态</returns>
+    Public Function GetRowState(row As Integer) As ModelRowState
+        Return MyBase.GetRowStates({row})(0)
     End Function
 
     Public Function ContainsColumn(columnName As String) As Boolean
@@ -484,7 +484,7 @@ Public Class ModelOperationsWrapper
     Public Sub RemoveUneditedNewRows()
         Dim rows As New List(Of Integer)
         For i = 0 To Me.GetRowCount - 1
-            If Me.GetRowSynchronizationState(i) = SynchronizationState.ADDED Then
+            If Me.GetRowState(i).SynchronizationState = SynchronizationState.ADDED Then
                 Call rows.Add(i)
             End If
         Next
@@ -494,7 +494,7 @@ Public Class ModelOperationsWrapper
 
     Public Sub RefreshView(rows As Integer())
         Dim args = New ModelRowUpdatedEventArgs() With {
-            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me(row), Me.GetRowSynchronizationState(row))).ToArray
+            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me(row), Me.GetRowState(row))).ToArray
         }
         Call MyBase.RaiseRowUpdatedEvent(Me, args)
     End Sub
