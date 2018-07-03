@@ -1,16 +1,16 @@
 ﻿''' <summary>
-''' Model行同步状态改变时间参数
+''' Model行状态改变时间参数
 ''' </summary>
-Public Class ModelRowSynchronizationStateChangedEventArgs
+Public Class ModelRowStateChangedEventArgs
     Inherits FrontWorkEventArgs
 
     ''' <summary>
-    ''' 同步状态改变的行的信息
+    ''' 状态改变的行的信息
     ''' </summary>
     ''' <returns></returns>
-    Public Property SynchronizationStateUpdatedRows As ModelRowInfo()
+    Public Property StateUpdatedRows As ModelRowInfo()
 
-    Public Sub New(synchronizationStateUpdatedRows As ModelRowInfo())
-        Me.SynchronizationStateUpdatedRows = synchronizationStateUpdatedRows
+    Public Sub New(stateUpdatedRows As ModelRowInfo())
+        Me.StateUpdatedRows = stateUpdatedRows
     End Sub
 End Class

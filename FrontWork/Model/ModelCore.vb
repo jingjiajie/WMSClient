@@ -153,7 +153,7 @@ Public Class ModelCore
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
         End If
         '带有插入请求的原始行号的RowInfo
-        Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), SynchronizationState.ADDED)).ToArray
+        Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState)).ToArray
         Dim adjustedRowInfos = Util.AdjustRows(oriRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
         '开始添加数据
         For i = 0 To adjustedRowInfos.Length - 1
@@ -182,11 +182,11 @@ Public Class ModelCore
                              .AddedRows = oriRowInfos
                             })
 
-        '不触发事件将同步状态全部设置为ADDED
-        Me.UpdateRowSynchronizationStates(adjustedRowInfos.Select(Function(rowInfo)
-                                                                      Return rowInfo.Row
-                                                                  End Function).ToArray,
-                                          Util.Times(SynchronizationState.ADDED, adjustedRowInfos.Length))
+        '将同步状态全部设置为ADDED
+        Me.UpdateRowStates(adjustedRowInfos.Select(Function(rowInfo)
+                                                       Return rowInfo.Row
+                                                   End Function).ToArray,
+                           Util.Times(New ModelRowState, adjustedRowInfos.Length))
 
         Dim columnCount = Me.Data.Columns.Count
         Dim selectionRanges As New List(Of Range)
@@ -224,7 +224,7 @@ Public Class ModelCore
             For Each curRowNum In rowsASC
                 Dim newIndexRowPair = New ModelRowInfo(curRowNum,
                                                   Me.DataRowToDictionary(Me.Data.Rows(curRowNum)),
-                                                  Me.GetRowSynchronizationState(Me.Data.Rows(curRowNum)))
+                                                  Me.RowStates(curRowNum))
                 indexRowList.Add(newIndexRowPair)
             Next
             Dim beforeRowRemoveEventArgs As New ModelBeforeRowRemoveEventArgs With {
@@ -279,10 +279,10 @@ Public Class ModelCore
                     End If
                 Next
                 '将被更新的行的同步状态修改为已更新或已添加
-                Dim curState = Me.GetRowSynchronizationStates({row})(0)
-                If curState = SynchronizationState.ADDED Then
+                Dim curState = Me.GetRowStates({row})(0)
+                If curState.SynchronizationState = SynchronizationState.ADDED Then
                     rowSyncStatePairs.Add(New RowSynchronizationStatePair(row, SynchronizationState.ADDED_UPDATED))
-                ElseIf curState = SynchronizationState.SYNCHRONIZED Then
+                ElseIf curState.SynchronizationState = SynchronizationState.SYNCHRONIZED Then
                     rowSyncStatePairs.Add(New RowSynchronizationStatePair(row, SynchronizationState.UPDATED))
                 End If
                 i += 1
@@ -290,7 +290,7 @@ Public Class ModelCore
 
             Dim updatedRows(rows.Length - 1) As ModelRowInfo
             For i = 0 To rows.Length - 1
-                updatedRows(i) = New ModelRowInfo(rows(i), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.GetRowSynchronizationState(Me.Data.Rows(rows(i))))
+                updatedRows(i) = New ModelRowInfo(rows(i), Me.DataRowToDictionary(Me.Data.Rows(rows(i))), Me.RowStates(rows(i)))
             Next
 
             Dim eventArgs = New ModelRowUpdatedEventArgs() With {
@@ -301,9 +301,9 @@ Public Class ModelCore
             Call Me.UpdateRowSynchronizationStates(rowSyncStatePairs.Select(Function(pair)
                                                                                 Return CInt(pair.Row)
                                                                             End Function).ToArray,
-                                                   rowSyncStatePairs.Select(Function(pair)
-                                                                                Return pair.SynchronizationState
-                                                                            End Function).ToArray)
+                                    rowSyncStatePairs.Select(Function(pair)
+                                                                 Return pair.SynchronizationState
+                                                             End Function).ToArray)
         Catch ex As Exception
             Throw New FrontWorkException("UpdateRows failed: " & ex.Message)
         End Try
@@ -355,17 +355,14 @@ Public Class ModelCore
                                      End Function).ToArray)
     End Sub
 
-    ''' <summary>
-    ''' 刷新Model
-    ''' </summary>
-    ''' <param name="dataTable">数据表</param>
-    ''' <param name="ranges">选区</param>
-    ''' <param name="states">各行同步状态</param>
-    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), states As ModelRowState()) Implements IModel.Refresh
+    Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
+        Dim DataTable As DataTable = args.DataTable
+        Dim ranges As Range() = args.SelectionRanges
+        Dim states As ModelRowState() = args.RowStates
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         '刷新数据
-        Me._Data = dataTable
+        Me._Data = DataTable
         '刷新同步状态字典
         Me.RowStates = states.ToList
         '触发刷新事件
@@ -386,23 +383,23 @@ Public Class ModelCore
         Return result
     End Function
 
-    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState(), raisesEvent As Boolean)
-        If rows.Length <> syncStates.Length Then
+    Public Sub UpdateRowStates(rows As Integer(), states As ModelRowState(), raisesEvent As Boolean)
+        If rows.Length <> states.Length Then
             Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
         End If
         Dim updatedRows = New List(Of ModelRowInfo)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
-            Dim syncState = syncStates(i)
+            Dim state = states(i)
             If row >= Me.Data.Rows.Count Then
                 Throw New FrontWorkException($"Row {row} exceeded the max row of model")
             End If
-            Me.SetRowSynchronizationState(Me.Data.Rows(row), syncState)
-            Dim newIndexRowSynchronizationStatePair = New ModelRowInfo(row, Me.GetRows({row})(0), syncState)
-            updatedRows.Add(newIndexRowSynchronizationStatePair)
+            Me.RowStates(row) = states(i)
+            Dim newIndexStatePair = New ModelRowInfo(row, Me.GetRows({row})(0), state)
+            updatedRows.Add(newIndexStatePair)
         Next
         If raisesEvent Then
-            Dim eventArgs = New ModelRowSynchronizationStateChangedEventArgs(updatedRows.ToArray)
+            Dim eventArgs = New ModelRowStateChangedEventArgs(updatedRows.ToArray)
             RaiseEvent RowSynchronizationStateChanged(Me, eventArgs)
         End If
     End Sub
@@ -411,11 +408,19 @@ Public Class ModelCore
     ''' 更新行同步状态
     ''' </summary>
     ''' <param name="rows">行号</param>
-    ''' <param name="syncStates">同步状态</param>
-    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
-        Call Me.UpdateRowSynchronizationStates(rows, syncStates, True)
+    ''' <param name="states">状态</param>
+    Public Sub UpdateRowStates(rows As Integer(), states As ModelRowState()) Implements IModel.UpdateRowStates
+        Call Me.UpdateRowStates(rows, states, True)
     End Sub
 
+    Private Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState())
+        Dim states(rows.Length - 1) As ModelRowState
+        For i = 0 To rows.Length - 1
+            states(i) = Me.RowStates(rows(i))
+            states(i).SynchronizationState = syncStates(i)
+        Next
+        Call Me.UpdateRowStates(rows, states)
+    End Sub
 
     Private Sub SetRowSynchronizationState(row As DataRow, state As SynchronizationState)
         Dim rowNum = Me.Data.Rows.IndexOf(row)
@@ -432,15 +437,14 @@ Public Class ModelCore
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
-        Dim states(rows.Length - 1) As SynchronizationState
+    Public Function GetRowStates(rows As Integer()) As ModelRowState() Implements IModel.GetRowStates
+        Dim states(rows.Length - 1) As ModelRowState
         For i = 0 To rows.Length - 1
             Dim rowNum = rows(i)
             If Me.Data.Rows.Count <= rowNum Then
                 Throw New FrontWorkException($"Row {rowNum} exceeded max row of model!")
             End If
-            Dim dataRow = Me.Data.Rows(rowNum)
-            states(i) = Me.GetRowSynchronizationState(dataRow)
+            states(i) = Me.RowStates(rowNum)
         Next
         Return states
     End Function
@@ -483,7 +487,7 @@ Public Class ModelCore
     ''' <summary>
     ''' 行同步状态改变事件
     ''' </summary>
-    Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
+    Public Event RowSynchronizationStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
 
     Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
         Dim result As New T

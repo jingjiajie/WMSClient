@@ -104,6 +104,7 @@
     <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
+    <Compile Include="Model\DataStructures\ModelRefreshArgs.vb" />
     <Compile Include="Model\DataStructures\ModelRowState.vb" />
     <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />

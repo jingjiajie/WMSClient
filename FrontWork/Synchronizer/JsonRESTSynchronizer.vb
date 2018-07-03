@@ -268,8 +268,8 @@ Public Class JsonRESTSynchronizer
         End If
         '如果是新增的行，不要将删除操作同步到服务器。
         Dim rowDataList = (From rowInfo In e.RemoveRows
-                           Where rowInfo.SynchronizationState <> SynchronizationState.ADDED _
-                           AndAlso rowInfo.SynchronizationState <> SynchronizationState.ADDED_UPDATED
+                           Where rowInfo.State.SynchronizationState <> SynchronizationState.ADDED _
+                           AndAlso rowInfo.State.SynchronizationState <> SynchronizationState.ADDED_UPDATED
                            Select rowInfo.RowData).ToArray
         If rowDataList.Count > 0 Then
             Try
@@ -354,7 +354,11 @@ Public Class JsonRESTSynchronizer
                 If selectionRanges.Count = 0 AndAlso dataTable.Rows.Count > 0 Then
                     selectionRanges.Add(New Range(0, 0, 1, 1))
                 End If
-                Call Me.Model.Refresh(dataTable, selectionRanges.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, dataTable.Rows.Count))
+                Call Me.Model.Refresh(New ModelRefreshArgs(dataTable,
+                                                           selectionRanges.ToArray,
+                                                           Util.Times(New ModelRowState With
+                                                                        {.SynchronizationState = SynchronizationState.SYNCHRONIZED},
+                                                                      dataTable.Rows.Count)))
 
                 Call Me.FindAPI.Callback?.Invoke(response, Nothing)
             End Using
@@ -404,7 +408,7 @@ Public Class JsonRESTSynchronizer
                 Call Me.AddAPI.SetRequestParameter("$data", addedData.ToArray)
                 Call Me.AddAPI.Invoke()
                 '将相应行的同步状态更新为已同步
-                Me.Model.UpdateRowSynchronizationStates(addedRows.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, addedRows.Count))
+                Me.Model.UpdateRowStates(addedRows.ToArray, Util.Times(New ModelRowState With {.SynchronizationState = SynchronizationState.SYNCHRONIZED}, addedRows.Count))
             Catch ex As WebException
                 Dim message = ex.Message
                 If ex.Response IsNot Nothing Then
@@ -420,7 +424,7 @@ Public Class JsonRESTSynchronizer
                 Call Me.UpdateAPI.SetRequestParameter("$data", updatedData.ToArray)
                 Call Me.UpdateAPI.Invoke()
                 '将相应行的同步状态更新为已同步
-                Me.Model.UpdateRowSynchronizationStates(updatdRows.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, updatdRows.Count))
+                Me.Model.UpdateRowStates(updatdRows.ToArray, Util.Times(New ModelRowState With {.SynchronizationState = SynchronizationState.SYNCHRONIZED}, updatdRows.Count))
             Catch ex As WebException
                 Dim message = ex.Message
                 If ex.Response IsNot Nothing Then

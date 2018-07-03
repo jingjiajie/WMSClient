@@ -12,7 +12,7 @@ Public Class ModelRowInfo
     ''' 同步状态
     ''' </summary>
     ''' <returns></returns>
-    Public Property SynchronizationState As SynchronizationState
+    Public Property State As ModelRowState
 
     ''' <summary>
     ''' 行数据
@@ -20,16 +20,10 @@ Public Class ModelRowInfo
     ''' <returns></returns>
     Public Property RowData As Dictionary(Of String, Object)
 
-    Public Sub New(row As Integer, dataRow As Dictionary(Of String, Object), syncState As SynchronizationState)
+    Public Sub New(row As Integer, dataRow As Dictionary(Of String, Object), state As ModelRowState)
         Me.Row = row
         Me.RowData = dataRow
-        Me.SynchronizationState = syncState
-    End Sub
-
-    Public Sub New(row As Integer, rowID As Guid, dataRow As Dictionary(Of String, Object), syncState As SynchronizationState)
-        Me.Row = row
-        Me.RowData = dataRow
-        Me.SynchronizationState = syncState
+        Me.State = state
     End Sub
 
     Public Sub New()

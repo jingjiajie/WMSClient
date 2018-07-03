@@ -65,15 +65,15 @@ Public Interface IModel
     ''' 更新若干行的同步状态
     ''' </summary>
     ''' <param name="rows">行号</param>
-    ''' <param name="syncStates">同步状态</param>
-    Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState())
+    ''' <param name="states">状态</param>
+    Sub UpdateRowStates(rows As Integer(), states As ModelRowState())
 
     ''' <summary>
     ''' 获取若干行的同步状态
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <returns>对应的同步状态</returns>
-    Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
+    Function GetRowStates(rows As Integer()) As ModelRowState()
 
     ''' <summary>
     ''' 获取行数据
@@ -91,12 +91,10 @@ Public Interface IModel
     Function GetCells(rows As Integer(), columnNames As String()) As Object()
 
     ''' <summary>
-    ''' 刷新视图
+    ''' 刷新Model
     ''' </summary>
-    ''' <param name="dataTable">数据表</param>
-    ''' <param name="selectionRange">选区</param>
-    ''' <param name="syncStates">各行同步状态</param>
-    Sub Refresh(dataTable As DataTable, selectionRange As Range(), syncStates As SynchronizationState())
+    ''' <param name="args">刷新参数</param>
+    Sub Refresh(args As ModelRefreshArgs)
 
     ''' <summary>
     ''' Model所存储数据的行数
@@ -165,7 +163,7 @@ Public Interface IModel
     Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs)
 
     ''' <summary>
-    ''' 行同步状态改变事件
+    ''' 行状态改变事件
     ''' </summary>
-    Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs)
+    Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs)
 End Interface

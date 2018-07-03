@@ -337,9 +337,9 @@ Public Class EditableDataViewModel
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
     End Sub
 
-    Private Sub ModelRowSynchronizationStateChanged(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
-        Dim rows = (From r In e.SynchronizationStateUpdatedRows Select r.Row).ToArray
-        Dim states = (From r In e.SynchronizationStateUpdatedRows Select r.SynchronizationState).ToArray
+    Private Sub ModelRowSynchronizationStateChanged(sender As Object, e As ModelRowStateChangedEventArgs)
+        Dim rows = (From r In e.StateUpdatedRows Select r.Row).ToArray
+        Dim states = (From r In e.StateUpdatedRows Select r.State).ToArray
         Call Me.ViewOperationsWrapper.UpdateRowSynchronizationStates(rows, states)
     End Sub
 

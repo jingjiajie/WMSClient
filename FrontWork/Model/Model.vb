@@ -313,23 +313,12 @@ Partial Public Class Model
         Call Me.ModelConfigurationWrapper.UpdateCells(rows, columnNames, dataOfEachCell)
     End Sub
 
-    ''' <summary>
-    ''' 刷新Model
-    ''' </summary>
-    ''' <param name="dataTable">数据表</param>
-    ''' <param name="ranges">选区</param>
-    ''' <param name="syncStates">各行同步状态</param>
-    Public Overloads Sub Refresh(dataTable As DataTable, ranges As Range(), syncStates As SynchronizationState()) Implements IModel.Refresh
-        Call Me.ModelConfigurationWrapper.Refresh(dataTable, ranges, syncStates)
+    Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
+        Call Me.ModelConfigurationWrapper.Refresh(args)
     End Sub
 
-    ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rows">行号</param>
-    ''' <param name="syncStates">同步状态</param>
-    Public Sub UpdateRowSynchronizationStates(rows As Integer(), syncStates As SynchronizationState()) Implements IModel.UpdateRowSynchronizationStates
-        Call Me.ModelConfigurationWrapper.UpdateRowSynchronizationStates(rows, syncStates)
+    Public Sub UpdateRowStates(rows As Integer(), states As ModelRowState()) Implements IModel.UpdateRowStates
+        Call Me.ModelConfigurationWrapper.UpdateRowStates(rows, states)
     End Sub
 
     ''' <summary>
@@ -465,14 +454,14 @@ Partial Public Class Model
     ''' <summary>
     ''' 行同步状态改变事件
     ''' </summary>
-    Public Custom Event RowSynchronizationStateChanged As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs) Implements IModel.RowSynchronizationStateChanged
-        AddHandler(value As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.RowSynchronizationStateChanged, value
+    Public Custom Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModel.RowStateChanged
+        AddHandler(value As EventHandler(Of ModelRowStateChangedEventArgs))
+            AddHandler Me.ModelConfigurationWrapper.RowStateChanged, value
         End AddHandler
-        RemoveHandler(value As EventHandler(Of ModelRowSynchronizationStateChangedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.RowSynchronizationStateChanged, value
+        RemoveHandler(value As EventHandler(Of ModelRowStateChangedEventArgs))
+            RemoveHandler Me.ModelConfigurationWrapper.RowStateChanged, value
         End RemoveHandler
-        RaiseEvent(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
+        RaiseEvent(sender As Object, e As ModelRowStateChangedEventArgs)
 
         End RaiseEvent
     End Event
@@ -641,7 +630,7 @@ Partial Public Class Model
         Call Me.ModelConfigurationWrapper.RaiseSelectionRangeChangedEvent(sender, args)
     End Sub
 
-    Public Sub RaiseRowSynchronizationStateChangedEvent(sender As Object, args As ModelRowSynchronizationStateChangedEventArgs)
+    Public Sub RaiseRowSynchronizationStateChangedEvent(sender As Object, args As ModelRowStateChangedEventArgs)
         Call Me.ModelConfigurationWrapper.RaiseRowSynchronizationStateChangedEvent(sender, args)
     End Sub
 End Class
