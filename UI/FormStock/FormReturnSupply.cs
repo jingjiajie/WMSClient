@@ -164,7 +164,7 @@ namespace WMS.UI.FormStock
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
-            this.model1[row, "materialName"] = "";
+            //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -172,7 +172,7 @@ namespace WMS.UI.FormStock
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
-            this.model1[row, "materialNo"] = "";
+            //this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
