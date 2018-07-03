@@ -650,6 +650,10 @@ Partial Public Class BasicView
         Call Me.FormAssociation.Hide()
     End Sub
 
+    Public Sub UpdateRowSynchronizationStates(rows() As Integer, synchronizationStates() As SynchronizationState) Implements IDataView.UpdateRowSynchronizationStates
+        Return
+    End Sub
+
     Private MustInherit Class ControlManager(Of T As Control)
         Inherits CollectionBase
 

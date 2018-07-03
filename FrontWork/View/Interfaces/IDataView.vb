@@ -42,6 +42,13 @@
     Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object())
 
     ''' <summary>
+    ''' 设置行同步状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="synchronizationStates">同步状态</param>
+    Sub UpdateRowSynchronizationStates(rows As Integer(), synchronizationStates As SynchronizationState())
+
+    ''' <summary>
     ''' View所存储数据的行数
     ''' </summary>
     ''' <returns></returns>

@@ -36,7 +36,7 @@ Partial Public Class AdsorbableAssociationForm
 
     Public Sub New(adsorbTextbox As TextBox)
         Call Me.New
-        Me._textBox = adsorbTextbox
+        Me.AdsorbTextBox = adsorbTextbox
     End Sub
 
     Public Sub New()
@@ -61,6 +61,7 @@ Partial Public Class AdsorbableAssociationForm
 
     Private Sub BindTextBox(textBox As TextBox)
         AddHandler textBox.PreviewKeyDown, AddressOf textBox_PreviewKeyDown
+        AddHandler textBox.LocationChanged, AddressOf textBox_LocationChanged
         Me._parentForm = Me.FindTopParentForm(textBox)
         AddHandler Me._parentForm.LocationChanged, AddressOf parentForm_LocationChanged
         AddHandler Me._parentForm.Deactivate, AddressOf parentForm_Deactivate
@@ -68,18 +69,20 @@ Partial Public Class AdsorbableAssociationForm
 
     Private Sub UnBindTextBox(textBox As TextBox)
         RemoveHandler textBox.PreviewKeyDown, AddressOf textBox_PreviewKeyDown
+        RemoveHandler textBox.LocationChanged, AddressOf textBox_LocationChanged
         RemoveHandler Me._parentForm.LocationChanged, AddressOf parentForm_LocationChanged
         RemoveHandler Me._parentForm.Deactivate, AddressOf parentForm_Deactivate
     End Sub
 
     Private Sub textBox_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = Keys.Up Then
-            Me.MoveSelection(MoveDirection.UP)
-        ElseIf e.KeyCode = Keys.Down Then
-            Me.MoveSelection(MoveDirection.DOWN)
-        ElseIf e.KeyCode = Keys.Enter Then
-            Me.SelectItem()
-        End If
+        Select Case e.KeyCode
+            Case Keys.Up
+                Me.MoveSelection(MoveDirection.UP)
+            Case Keys.Down
+                Me.MoveSelection(MoveDirection.DOWN)
+            Case Keys.Enter, Keys.Tab
+                Me.SelectItem()
+        End Select
     End Sub
 
     Private Function FindTopParentForm(ByVal c As Control) As Form
@@ -92,6 +95,11 @@ Partial Public Class AdsorbableAssociationForm
             Return FindTopParentForm(c.Parent)
         End If
     End Function
+
+    Private Sub textBox_LocationChanged(sender As Object, e As EventArgs)
+        If Me.Visible <> True Then Return
+        Me.AdjustPosition()
+    End Sub
 
     Private Sub parentForm_LocationChanged(ByVal sender As Object, ByVal e As EventArgs)
         If Me.Visible <> True Then Return

@@ -179,14 +179,15 @@ Public Class ModelCore
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
         Next
+        RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
+                             .AddedRows = oriRowInfos
+                            })
+
         '不触发事件将同步状态全部设置为ADDED
         Me.UpdateRowSynchronizationStates(adjustedRowInfos.Select(Function(rowInfo)
                                                                       Return rowInfo.Row
                                                                   End Function).ToArray,
                                           Util.Times(SynchronizationState.ADDED, adjustedRowInfos.Length))
-        RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
-                             .AddedRows = oriRowInfos
-                            })
 
         Dim columnCount = Me.Data.Columns.Count
         Dim selectionRanges As New List(Of Range)

@@ -56,4 +56,8 @@ Public Class DataViewOperationsWrapperBase
     Public Overridable Function GetColumnCount() As Integer Implements IDataView.GetColumnCount
         Return View.GetColumnCount()
     End Function
+
+    Public Sub UpdateRowSynchronizationStates(rows() As Integer, synchronizationStates() As SynchronizationState) Implements IDataView.UpdateRowSynchronizationStates
+        Call Me.View.UpdateRowSynchronizationStates(rows, synchronizationStates)
+    End Sub
 End Class

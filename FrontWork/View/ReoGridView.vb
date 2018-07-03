@@ -19,8 +19,7 @@ Public Class ReoGridView
     ''' </summary>
     Protected Enum CellState
         [Default] = 0
-        UNSYNCHRONIZED = 1
-        INVALID_DATA = 2
+        INVALID_DATA = 1
     End Enum
 
     Protected Class CellTag
@@ -41,22 +40,22 @@ Public Class ReoGridView
     Protected Class RowTag
         Public Property Inited As Boolean
         Public Property Temporary As Boolean = False
+        Public Property SyncState = SynchronizationState.SYNCHRONIZED
     End Class
 
     Private COLOR_UNSYNCHRONIZED As Color = Color.AliceBlue
     Private COLOR_SYNCHRONIZED As Color = Color.Transparent
 
-    Private Property ViewModel As New AssociableDataViewModel(Me)
+    Private Property ViewModel As AssociableDataViewModel
 
-    Private canChangeSelectionRange As Boolean = True
+    Private canChangeSelectionRangeNextTime As Boolean = True
     Private copied As Boolean = False '是否复制粘贴。如果为真，则下次选区改变事件时处理粘贴后的选区
-    Private copyStartCell As CellPosition '复制起始单元格。用来判断复制是否选区没变导致不会触发选区改变事件
+    Private copyStartCellPos As CellPosition '复制起始单元格。用来判断复制是否选区没变导致不会触发选区改变事件
 
     Private textBox As TextBox = Nothing
     Private formAssociation As AdsorbableAssociationForm
     Private Workbook As ReoGridControl = Nothing
 
-    Public Event AssociationItemSelected As EventHandler(Of ViewAssociationItemSelectedEventArgs) Implements IAssociableDataView.AssociationItemSelected
     Public Event EditStarted As EventHandler(Of ViewEditStartedEventArgs) Implements IEditableDataView.EditStarted
     Public Event ContentChanged As EventHandler(Of ViewContentChangedEventArgs) Implements IEditableDataView.ContentChanged
     Public Event EditEnded As EventHandler(Of ViewEditEndedEventArgs) Implements IEditableDataView.EditEnded
@@ -70,6 +69,18 @@ Public Class ReoGridView
     Public Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs) Implements IEditableDataView.CellUpdated
     Private Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements ISelectableDataView.BeforeSelectionRangeChange
     Public Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs) Implements ISelectableDataView.SelectionRangeChanged
+
+    Public Custom Event AssociationItemSelected As EventHandler(Of ViewAssociationItemSelectedEventArgs) Implements IAssociableDataView.AssociationItemSelected
+        AddHandler(value As EventHandler(Of ViewAssociationItemSelectedEventArgs))
+            AddHandler Me.formAssociation.AssociationItemSelected, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ViewAssociationItemSelectedEventArgs))
+            RemoveHandler Me.formAssociation.AssociationItemSelected, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ViewAssociationItemSelectedEventArgs)
+
+        End RaiseEvent
+    End Event
 
     Public Property Panel As Worksheet
 
@@ -157,11 +168,30 @@ Public Class ReoGridView
 
     Public Sub New()
         Call InitializeComponent()
-
         Me.Panel = Me.ReoGridControl.CurrentWorksheet
         Me.Workbook = Me.ReoGridControl
         AddHandler Me.Workbook.PreviewKeyDown, AddressOf Me.WorkbookPreviewKeyDown
 
+        '创建联想窗口
+        Me.Panel.StartEdit()
+        Me.Panel.EndEdit(EndEditReason.NormalFinish)
+        For Each control As Control In Me.ReoGridControl.Controls
+            If TypeOf (control) Is TextBox AndAlso control.Name = "" Then
+                Me.textBox = control
+                Exit For
+            End If
+        Next
+        If Me.textBox Is Nothing Then
+            Throw New FrontWorkException("ReoGridView TextBox not found")
+        End If
+        Me.formAssociation = New AdsorbableAssociationForm
+        RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
+        AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
+        RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
+        AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
+
+        '绑定ViewModel
+        Me.ViewModel = New AssociableDataViewModel(Me)
     End Sub
 
     'Private Sub ModelRowSynchronizationStateChangedEvent(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
@@ -177,6 +207,23 @@ Public Class ReoGridView
             rows = Util.Range(0, Me.Panel.Rows)
         End If
         For Each row In rows
+            '先绘制整行颜色
+            If CType(Me.Panel.RowHeaders(row).Tag, RowTag).SyncState <> SynchronizationState.SYNCHRONIZED Then
+                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
+                Me.Panel.SetRangeStyles(row, 0, 1, Me.Panel.ColumnCount, New WorksheetRangeStyle() With {
+                        .Flag = PlainStyleFlag.BackColor,
+                        .BackColor = Me.COLOR_UNSYNCHRONIZED
+                    })
+                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
+            Else
+                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
+                Me.Panel.SetRangeStyles(row, 0, 1, Me.Panel.ColumnCount, New WorksheetRangeStyle() With {
+                        .Flag = PlainStyleFlag.BackColor,
+                        .BackColor = Color.Transparent
+                    })
+                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.Empty)
+            End If
+            '再绘制单元格颜色
             For Each col In Util.Range(0, Me.Panel.Columns)
                 Dim curCellState = Me.GetCellState(row, col)
                 If (curCellState And CellState.INVALID_DATA) > 0 Then
@@ -185,20 +232,6 @@ Public Class ReoGridView
                         .BackColor = Color.IndianRed
                     })
                     Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                ElseIf (curCellState And CellState.UNSYNCHRONIZED) Then
-                    Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                    Me.Panel.SetRangeStyles(row, col, 1, 1, New WorksheetRangeStyle() With {
-                        .Flag = PlainStyleFlag.BackColor,
-                        .BackColor = Me.COLOR_UNSYNCHRONIZED
-                    })
-                    Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                Else
-                    Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                    Me.Panel.SetRangeStyles(row, col, 1, 1, New WorksheetRangeStyle() With {
-                        .Flag = PlainStyleFlag.BackColor,
-                        .BackColor = Color.Transparent
-                    })
-                    Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.Empty)
                 End If
             Next
         Next
@@ -253,17 +286,12 @@ Public Class ReoGridView
         Me.ReoGridControl.Enabled = False
         '设定表格初始有10行，非同步模式
         Me.Panel.Rows = 10
+        For i = 0 To Me.Panel.RowCount - 1
+            Me.Panel.RowHeaders(i).Tag = New RowTag
+        Next
         '设定提示文本
         Me.Panel.Item(0, 0) = "暂无数据"
         Call Me.PaintRows()
-    End Sub
-
-    ''' <summary>
-    ''' 显示默认页面
-    ''' </summary>
-    Protected Sub HideDefaultPage()
-        Call Me.Panel.DeleteRangeData(RangePosition.EntireRange)
-        Me.ReoGridControl.Enabled = True
     End Sub
 
     Private Sub textBoxLeave(sender As Object, e As EventArgs)
@@ -271,6 +299,7 @@ Public Class ReoGridView
     End Sub
 
     Private Sub AutoFitColumnWidth(col As Integer)
+        Me.Panel.ColumnHeaders(col).Width = 0
         Call Me.Panel.AutoFitColumnWidth(col)
         Dim columnHeader = Me.Panel.ColumnHeaders.Item(col)
         Dim columnHeaderText = columnHeader.Text
@@ -278,18 +307,9 @@ Public Class ReoGridView
         If columnHeaderText Is Nothing Then
             width = 20
         Else
-            width = 20 + columnHeaderText.Sum(
-            Function(c)
-                If Char.IsLetterOrDigit(c) OrElse
-                    Char.IsWhiteSpace(c) OrElse
-                    Char.IsSymbol(c) Then
-                    Return 8
-                Else
-                    Return 16
-                End If
-            End Function)
+            width = 20 + columnHeaderText.Length * 10
         End If
-        Me.Panel.ColumnHeaders(col).Width = System.Math.Max(width, Me.Panel.ColumnHeaders.Item(col).Width + 10)
+        Me.Panel.ColumnHeaders(col).Width = System.Math.Max(width, Me.Panel.ColumnHeaders(col).Width + 10)
     End Sub
 
     ''' <summary>
@@ -297,24 +317,24 @@ Public Class ReoGridView
     ''' </summary>
     ''' <param name="row">行号</param>
     Private Sub InitRow(row As Integer)
+        If Me.Panel.RowHeaders(row).Tag?.Inited Then Return
         Dim worksheet = Me.Panel
         RemoveHandler worksheet.CellDataChanged, AddressOf Me.CellDataChanged
         '遍历列
         For col = 0 To Me.Panel.ColumnCount - 1
             Dim curViewColumn As ViewColumn = CType(Me.Panel.ColumnHeaders(col).Tag, ColumnTag).ViewColumn
-            '否则开始初始化当前格
-            Dim curCell = worksheet.CreateAndGetCell(row, col)
             '如果设定了Values，则执行Values获取值
             If curViewColumn.Values IsNot Nothing Then
                 Dim comboBox = New DropdownListCell(CType(curViewColumn.Values.Invoke(Me), IEnumerable(Of Object)))
                 Dim curCol = col
                 AddHandler comboBox.DropdownOpened, Sub()
-                                                        worksheet.SelectionRange = New RangePosition(curCell.Position)
+                                                        worksheet.SelectionRange = New RangePosition(row, curCol, 1, 1)
                                                     End Sub
                 worksheet(row, col) = comboBox
             End If
 
-            If curViewColumn.Editable = False Then
+            If Not curViewColumn.Editable Then
+                Dim curCell = worksheet.CreateAndGetCell(row, col)
                 curCell.IsReadOnly = True
             End If
         Next
@@ -323,8 +343,7 @@ Public Class ReoGridView
     End Sub
 
     Private Sub CellMouseDown(sender As Object, e As EventArgs)
-        Me.canChangeSelectionRange = True
-        'Me.formAssociation.StayVisible = False
+        Me.canChangeSelectionRangeNextTime = True
     End Sub
 
     'Private Sub TextboxPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
@@ -360,8 +379,9 @@ Public Class ReoGridView
     '选择行改变时初始化新的行，只初始化选区首行
     Private Sub ReoGrid_BeforeSelectionRangeChange(sender As Object, e As BeforeSelectionChangeEventArgs)
         If Me.NoColumn OrElse Me.NoRow Then Return
-        If Me.canChangeSelectionRange = False Then
+        If Me.canChangeSelectionRangeNextTime = False Then
             e.IsCancelled = True
+            Me.canChangeSelectionRangeNextTime = True
             Return
         End If
         Dim worksheet = Me.Panel
@@ -374,33 +394,35 @@ Public Class ReoGridView
         Dim newCol = System.Math.Min(e.StartCol, e.EndCol)
         Dim newRows = System.Math.Max(e.StartRow, e.EndRow) - newRow + 1 '选择整列的话行数会超出最大行数，可能是ReoGrid的bug
         Dim newCols = System.Math.Max(e.StartCol, e.EndCol) - newCol + 1
+        Dim copyRange As RangePosition = Nothing '如果之前复制，则会为此赋值
 
         '首先更新数据
         '判断是单元格更新还是整行更新
         Dim selectionRange = Me.Panel.SelectionRange
         If selectionRange.IsSingleCell Then
-            Call Me.ExportCells(selectionRange)
+            Call Me.ExportCells(selectionRange, False)
         Else
-            Call Me.ExportRows(selectionRange)
+            Call Me.ExportRows(selectionRange, False)
         End If
         Call Me.PaintRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows))
 
         If Me.copied Then
             '如果新选区起始单元格和复制起始单元格相同，说明是复制引起的选取变化
-            If New CellPosition(newRow, newCol).Equals(Me.copyStartCell) Then
+            If New CellPosition(newRow, newCol).Equals(Me.copyStartCellPos) Then
                 '对于复制的选区，全部作为已修改状态
                 For curRow = newRow To newRow + newRows - 1
                     For curCol = newCol To newCol + newCols - 1
                         Me.SetCellEdited(New CellPosition(curRow, curCol), True)
                     Next
                 Next
-                Dim copyRange = New RangePosition(newRow, newCol, newRows, newCols)
+                copyRange = New RangePosition(newRow, newCol, newRows, newCols)
                 '同步复制选区的数据
-                Call Me.ExportRows(copyRange)
+                Call Me.ExportRows(copyRange, False)
                 Me.copied = False
             Else '否则说明复制只复制了一个单元格，没有触发选取变化，而是下一次选取变化触发。此时更新复制的单元格
-                Call Me.SetCellEdited(Me.copyStartCell, True)
-                Call Me.ExportCells(New RangePosition(Me.copyStartCell))
+                Call Me.SetCellEdited(Me.copyStartCellPos, True)
+                Call Me.ExportCells(New RangePosition(Me.copyStartCellPos), False)
+                copyRange = New RangePosition(Me.copyStartCellPos)
                 Me.copied = False
             End If
         End If
@@ -408,16 +430,27 @@ Public Class ReoGridView
         '同步Model的选区
         RaiseEvent SelectionRangeChanged(Me, New ViewSelectionRangeChangedEventArgs({New Range(newRow, newCol, newRows, newCols)}))
 
-        '初始化新的选中行。如果选区首行没变，就不重新初始化行了
-        If Not newRow = Me.Panel.SelectionRange.Row Then
-            If Not Me.Panel.RowHeaders(newRow).Tag.Inited Then
-                Me.InitRow(newRow)
-            End If
-        End If
+        ''初始化新的选中行。如果选区首行没变，就不重新初始化行了
+        'If Not newRow = Me.Panel.SelectionRange.Row Then
+        '    If Not Me.Panel.RowHeaders(newRow).Tag.Inited Then
+        '        Me.InitRow(newRow)
+        '    End If
+        'End If
 
         '触发编辑完成事件
-        For curRow = row To row + rows - 1
-            For curCol = col To col + cols - 1
+        Call Me.RaiseRangeEditEnded(New RangePosition(row, col, rows, cols))
+        If Me.copied Then
+            Call Me.RaiseRangeEditEnded(copyRange)
+        End If
+
+        '清除编辑完成
+        SetCellEdited(copyRange, False)
+        SetCellEdited(New RangePosition(row, col, rows, cols), False)
+    End Sub
+
+    Private Sub RaiseRangeEditEnded(range As RangePosition)
+        For curRow = range.Row To range.Row + range.Rows - 1
+            For curCol = range.Col To range.Col + range.Cols - 1
                 '如果该列没被编辑，则继续下一列
                 If Not GetCellEdited(New CellPosition(curRow, curCol)) Then Continue For
                 Dim data = If(Me.Panel(curRow, curCol), "")
@@ -443,40 +476,35 @@ Public Class ReoGridView
     '    End If
     'End Sub
 
-    Private Sub textBoxTextChanged(sender As Object, e As EventArgs)
-        Static switcher = True '事件开关，False为关，True为开
-        If switcher = False Then Return '开关关掉则直接返回
-        Logger.Debug("ReoGrid View textChanged: " & Str(Me.GetHashCode))
-        Dim worksheet = Me.Panel
+    Private Sub CellEditingTextChanging(sender As Object, e As EventArgs)
         Dim row = Me.Panel.SelectionRange.Row
         Dim col = Me.Panel.SelectionRange.Col
-        Dim colName = Me.Panel.ColumnHeaders(col).Tag
-        If Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
+        If Not Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
             Return
         End If
-
-        '否则执行设置的事件
-        switcher = False
-        worksheet.EditingCell.Data = Me.textBox.Text
-        switcher = True
+        Dim colName = CType(Me.Panel.ColumnHeaders(col).Tag, ColumnTag).Name
+        Me.SetCellEdited(New CellPosition(row, col), True)
         RaiseEvent ContentChanged(Me, New ViewContentChangedEventArgs(row, colName, Me.textBox.Text))
     End Sub
 
+    'TextBox文字改变的时候不会触发。TextBox编辑完成(EndEdit)时会触发。ComboBox选项改变的时候会触发
     Private Sub CellDataChanged(sender As Object, e As CellEventArgs)
         If Not Me.InSync Then Return
         Dim worksheet = Me.Panel
         Dim row = e.Cell.Row
         Dim col = e.Cell.Column
+        '如果本行未被初始化，不要触发事件
+        If Not Me.Panel.RowHeaders(row).Tag.Inited Then
+            Return
+        End If
+        '如果已经设置为已编辑，说明在此事件之前已经触发过内容改变。故不要重复触发
+        If Me.GetCellEdited(e.Cell.Position) Then Return
+        '否则设置此单元格被编辑
+        Call Me.SetCellEdited(e.Cell.Position, True)
+
         Dim fieldName = Me.FindNameByColumn(col)
         Dim viewColumn = (From v In Me.ViewColumns Where v.Name = fieldName Select v).First
 
-        If Not Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
-            Return
-        End If
-        '===========系统事件写这里
-        If Me.InSync Then
-            Call Me.SetCellEdited(e.Cell.Position, True)
-        End If
         '如果当前格是下拉框，验证数据是否在下拉框可选项范围中，如果不在，则标红
         '同时，下拉框数据改变，直接同步到Model
         If viewColumn.Values IsNot Nothing Then
@@ -489,7 +517,6 @@ Public Class ReoGridView
 
         '触发内容改变事件
         RaiseEvent ContentChanged(Me, New ViewContentChangedEventArgs(row, fieldName, Me.GetCellData(row, col)))
-
     End Sub
 
     ''' <summary>
@@ -499,7 +526,7 @@ Public Class ReoGridView
     ''' <param name="col">列</param>
     Private Sub ValidateComboBoxData(row As Integer, col As Integer)
         Dim fieldName = Me.FindNameByColumn(col)
-        Dim viewColumn As ViewColumn = Me.Panel.GetCell(row, col)?.Tag?.ViewColumn
+        Dim viewColumn As ViewColumn = Me.Panel.ColumnHeaders(col).Tag?.ViewColumn
         If viewColumn Is Nothing Then Return
         '验证数据
         Dim values As Object() = Util.ToArray(Of String)(viewColumn.Values.Invoke(Me, row))
@@ -552,9 +579,7 @@ Public Class ReoGridView
     ''' <summary>
     ''' 导出选中行的数据
     ''' </summary>
-    Protected Sub ExportRows(rangePosition As RangePosition)
-        Logger.Debug("==ReoGrid ExportData")
-        Logger.SetMode(LogMode.SYNC_FROM_VIEW)
+    Protected Sub ExportRows(rangePosition As RangePosition, Optional clearCellEdited As Boolean = True)
         If Not Me.InSync Then Return
 
         Dim rowsUpdated As List(Of Integer) = Me.Range(rangePosition.Row, System.Math.Min(Me.Panel.RowCount, rangePosition.EndRow + 1)).ToList
@@ -579,16 +604,17 @@ Public Class ReoGridView
             Next
             RaiseEvent RowUpdated(Me, New ViewRowUpdatedEventArgs(rowInfos))
         End If
-        '设置所有在本次同步的选区之内的单元格编辑状态为未编辑
-        Call Me.SetCellEdited(rangePosition, False)
+
+        If clearCellEdited Then
+            '设置所有在本次同步的选区之内的单元格编辑状态为未编辑
+            Call Me.SetCellEdited(rangePosition, False)
+        End If
     End Sub
 
     ''' <summary>
     ''' 导出选中的单元格的数据到Model
     ''' </summary>
-    Protected Sub ExportCells(rangePosition As RangePosition)
-        Logger.Debug("==ReoGrid ExportCell: " + Str(Me.GetHashCode))
-        Logger.SetMode(LogMode.SYNC_FROM_VIEW)
+    Protected Sub ExportCells(rangePosition As RangePosition, Optional clearCellEdited As Boolean = True)
         If Not Me.InSync Then Return
 
         If rangePosition.Cols <> 1 Then
@@ -617,8 +643,10 @@ Public Class ReoGridView
             RaiseEvent CellUpdated(Me, New ViewCellUpdatedEventArgs(cellInfos))
         End If
 
-        '设置所有在本次同步的选区之内的单元格编辑状态为未编辑
-        Call Me.SetCellEdited(rangePosition, False)
+        If clearCellEdited Then
+            '设置所有在本次同步的选区之内的单元格编辑状态为未编辑
+            Call Me.SetCellEdited(rangePosition, False)
+        End If
     End Sub
 
     ''' <summary>
@@ -726,40 +754,42 @@ Public Class ReoGridView
     Private Sub ReoGridView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '禁止自动判断单元格格式
         Me.Panel.SetSettings(WorksheetSettings.Edit_AutoFormatCell, False)
+        Call Me.ShowDefaultPage()
 
-        '创建联想窗口
-        If Not Me.DesignMode AndAlso Me.textBox Is Nothing Then
-            Me.Panel.StartEdit()
-            Me.Panel.EndEdit(EndEditReason.NormalFinish)
-            For Each control As Control In Me.ReoGridControl.Controls
-                If TypeOf (control) Is TextBox AndAlso control.Name = "" Then
-                    Me.textBox = control
-                    Exit For
-                End If
-            Next
-            Me.formAssociation = New AdsorbableAssociationForm(Me.textBox)
-            If Me.textBox Is Nothing Then
-                Throw New FrontWorkException("ReoGridView TextBox not found")
-            End If
-            'RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-            'AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-            RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
-            AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
-        End If
+        '绑定联想窗口编辑框
+        Me.formAssociation.AdsorbTextBox = Me.textBox
 
         '给worksheet添加事件
-        '换行初始化行，绑定JS变量
         If Not Me.DesignMode Then
             RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
             '编辑事件
             RemoveHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
             AddHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
-            RemoveHandler Me.textBox.TextChanged, AddressOf Me.textBoxTextChanged
-            AddHandler Me.textBox.TextChanged, AddressOf Me.textBoxTextChanged
+            RemoveHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChanging
+            AddHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChanging
             RemoveHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
             AddHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
         End If
+    End Sub
+
+    Private Sub TextboxPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+        Select Case e.KeyCode
+            Case Keys.Up, Keys.Down
+                If Me.formAssociation.Visible Then
+                    Me.canChangeSelectionRangeNextTime = False
+                    '10毫秒后重新启动编辑
+                    Dim threadRestartEdit As New Thread(
+                        Sub()
+                            Thread.Sleep(10)
+                            Me.Workbook.Invoke(
+                                Sub()
+                                    Me.Panel.StartEdit()
+                                End Sub)
+                        End Sub)
+                    threadRestartEdit.Start()
+                End If
+        End Select
     End Sub
 
     Private Sub WorkbookPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
@@ -768,8 +798,8 @@ Public Class ReoGridView
             Dim row = Me.Panel.SelectionRange.Row
             Dim col = Me.Panel.SelectionRange.Col
             Me.Panel.SelectionRange = New RangePosition(row, col, 1, 1)
-            Me.copyStartCell = New CellPosition(row, col)
-            Call Me.SetCellEdited(Me.copyStartCell, True)
+            Me.copyStartCellPos = New CellPosition(row, col)
+            Call Me.SetCellEdited(Me.copyStartCellPos, True)
             Me.copied = True
         ElseIf e.KeyCode = Keys.Delete Then '处理Del删除单元格不会触发事件的问题
             Dim row = Me.Panel.SelectionRange.Row
@@ -816,7 +846,9 @@ Public Class ReoGridView
         Next
         If Me.NoColumn Then
             Me.NoColumn = False
-            If Me.InSync Then HideDefaultPage()
+            If Me.InSync Then
+                Me.ReoGridControl.Enabled = True
+            End If
         End If
         Return True
     End Function
@@ -850,18 +882,32 @@ Public Class ReoGridView
     End Function
 
     Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IDataView.AddRows
-        Dim startRow = If(NoRow, 0, Me.Panel.RowCount)
+        'Call Me.Panel.SuspendUIUpdates()
+        Dim startRow = If(NoRow, 0, Me.Panel.RowCount - 1)
         Dim rows = data.Length
         Dim rowNums = Util.Range(startRow, startRow + rows)
-        Call Me.InsertRows(rowNums, data)
+        If Me.NoRow Then '如果当前是默认页面，则隐藏默认页面
+            Me.ReoGridControl.Enabled = True
+            Me.Panel.RowCount = data.Length
+            Me.NoRow = False
+        Else
+            Me.Panel.AppendRows(data.Length)
+        End If
+        For Each row In rowNums
+            Me.Panel.RowHeaders(row).Tag = New RowTag
+            Call Me.InitRow(row)
+        Next
+        Call Me.UpdateRows(rowNums, data, False)
+        ' Call Me.Panel.ResumeUIUpdates()
         Return rowNums
     End Function
 
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
+        'Call Me.Panel.SuspendUIUpdates()
         Dim addedTemporaryRow = False
         If Me.NoRow Then '如果当前是默认页面，则先隐藏默认页面，并保留一个临时行。待插入完毕后删除临时行
             addedTemporaryRow = True
-            Call Me.HideDefaultPage()
+            Me.ReoGridControl.Enabled = True
             Me.Panel.RowCount = 1
             Me.Panel.RowHeaders(0).Tag = New RowTag With {.Temporary = True}
             Me.NoRow = False
@@ -883,14 +929,17 @@ Public Class ReoGridView
             RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
             If row >= Me.Panel.RowCount Then
                 Call Me.Panel.AppendRows(1)
-                Me.Panel.RowHeaders(Me.Panel.RowCount - 1).Tag = New RowTag
+                Dim rowNum = Me.Panel.RowCount - 1
+                Me.Panel.RowHeaders(rowNum).Tag = New RowTag
+                Call Me.InitRow(rowNum)
             Else
                 Call Me.Panel.InsertRows(row, 1)
                 Me.Panel.RowHeaders(row).Tag = New RowTag
+                Call Me.InitRow(row)
             End If
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
         Next
-        Call Me.UpdateRows(adjustedRows.ToArray, adjustedRowData.ToArray)
+        Call Me.UpdateRows(adjustedRows.ToArray, adjustedRowData.ToArray, False)
         If addedTemporaryRow Then
             '删除之前加入的临时行
             For i = 0 To Me.Panel.RowCount - 1
@@ -900,12 +949,16 @@ Public Class ReoGridView
                 End If
             Next
         End If
+        'Call Me.Panel.ResumeUIUpdates()
     End Sub
 
     Public Sub RemoveRows(rows() As Integer) Implements IDataView.RemoveRows
+        'Call Me.Panel.SuspendUIUpdates()
+
         If rows.Length >= Me.Panel.RowCount Then
             Me.NoRow = True
             Call Me.ShowDefaultPage()
+            'Call Me.Panel.ResumeUIUpdates()
             Return
         End If
         Dim rowsDESC = (From r In rows Order By r Descending Select r).ToArray
@@ -917,29 +970,42 @@ Public Class ReoGridView
         Next
         Dim minRemovedRow = rowsDESC(0)
         Call Me.PaintRows(Util.Range(minRemovedRow, Me.Panel.RowCount))
+        'Call Me.Panel.ResumeUIUpdates()
     End Sub
 
     Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IDataView.UpdateRows
+        Call Me.UpdateRows(rows, dataOfEachRow, True)
+    End Sub
+
+    Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object), suspendUIUpdates As Boolean)
+        'If suspendUIUpdates Then Call Me.Panel.SuspendUIUpdates()
         Dim cellInfos As New List(Of ViewCellInfo)
         '清空ReoGrid相应行
         Me.ClearRows(rows)
         '遍历传入数据
         For i = 0 To rows.Length - 1
             Dim curRowNum = rows(i)
-            Me.InitRow(curRowNum)
             '遍历列
             For Each viewColumn In Me.ViewColumns
-                If Not dataOfEachRow(i).ContainsKey(viewColumn.Name) Then Return
+                If Not dataOfEachRow(i).ContainsKey(viewColumn.Name) Then Continue For
                 Dim value = dataOfEachRow(i)(viewColumn.Name)
                 cellInfos.Add(New ViewCellInfo(curRowNum, viewColumn.Name, value))
             Next
         Next
         Call Me.UpdateCells(cellInfos.Select(Function(c) c.Row).ToArray,
                             cellInfos.Select(Function(c) c.ColumnName).ToArray,
-                            cellInfos.Select(Function(c) c.CellData).ToArray)
+                            cellInfos.Select(Function(c) c.CellData).ToArray,
+                            False)
+
+        'If suspendUIUpdates Then Call Me.Panel.ResumeUIUpdates()
     End Sub
 
     Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IDataView.UpdateCells
+        Call Me.UpdateCells(rows, columnNames, dataOfEachCell, True)
+    End Sub
+
+    Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object, suspendUIUpdates As Boolean)
+        'If suspendUIUpdates Then Call Me.Panel.SuspendUIUpdates()
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim colName = columnNames(i)
@@ -949,7 +1015,7 @@ Public Class ReoGridView
             If column = -1 Then Continue For
             Dim cell = Panel.GetCell(row, column)
             If cell Is Nothing Then
-                If String.IsNullOrEmpty(Text) Then
+                If String.IsNullOrEmpty(value) Then
                     Continue For
                 Else
                     cell = Panel.CreateAndGetCell(row, column)
@@ -969,14 +1035,15 @@ Public Class ReoGridView
             Me.AutoFitColumnWidth(Me.FindColumnByName(colName))
         Next
         Call Me.PaintRows(rows)
+        'If suspendUIUpdates Then Call Me.Panel.ResumeUIUpdates()
     End Sub
 
     Public Function GetRowCount() As Integer Implements IDataView.GetRowCount
-        Return Me.Panel.RowCount
+        Return If(Me.NoRow, 0, Me.Panel.RowCount)
     End Function
 
     Public Function GetColumnCount() As Integer Implements IDataView.GetColumnCount
-        Return Me.ViewColumns.Count
+        Return If(Me.NoColumn, 0, Me.ViewColumns.Count)
     End Function
 
     ''' <summary>
@@ -985,6 +1052,7 @@ Public Class ReoGridView
     ''' <param name="name">列名</param>
     ''' <returns>列号，找不到返回-1</returns>
     Private Function FindColumnByName(name As String) As Integer
+        If Me.NoColumn Then Return -1
         For i = 0 To Me.Panel.ColumnCount - 1
             If Me.Panel.ColumnHeaders(i).Tag.Name?.Equals(name) Then
                 Return i
@@ -999,6 +1067,7 @@ Public Class ReoGridView
     ''' <param name="column">列号</param>
     ''' <returns>列名</returns>
     Private Function FindNameByColumn(column As Integer) As String
+        If Me.NoColumn Then Return Nothing
         If column >= Me.Panel.ColumnCount Then
             Throw New FrontWorkException($"Column {column} exceeded max column of {Me.Name}:{Me.Panel.ColumnCount - 1}")
         End If
@@ -1055,5 +1124,12 @@ Public Class ReoGridView
                 Call Me.SetCellEdited(New CellPosition(row, col), edited)
             Next
         Next
+    End Sub
+
+    Public Sub UpdateRowSynchronizationState(rows As Integer(), synchronizationStates As SynchronizationState()) Implements IDataView.UpdateRowSynchronizationStates
+        For i = 0 To rows.Length - 1
+            CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).SyncState = synchronizationStates(i)
+        Next
+        Call Me.PaintRows(rows)
     End Sub
 End Class

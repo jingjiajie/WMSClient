@@ -162,6 +162,7 @@ Public Class EditableDataViewModel
         AddHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
         AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        AddHandler Me.ModelOperationsWrapper.RowSynchronizationStateChanged, AddressOf Me.ModelRowSynchronizationStateChanged
         AddHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
 
         Call Me.ModelRefreshedEvent(Me, Nothing)
@@ -176,6 +177,7 @@ Public Class EditableDataViewModel
         RemoveHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
         RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
         RemoveHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        RemoveHandler Me.ModelOperationsWrapper.RowSynchronizationStateChanged, AddressOf Me.ModelRowSynchronizationStateChanged
         RemoveHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
     End Sub
 
@@ -333,6 +335,12 @@ Public Class EditableDataViewModel
         RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
         Call Me.ViewOperationsWrapper.RemoveRows(indexes)
         AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+    End Sub
+
+    Private Sub ModelRowSynchronizationStateChanged(sender As Object, e As ModelRowSynchronizationStateChangedEventArgs)
+        Dim rows = (From r In e.SynchronizationStateUpdatedRows Select r.Row).ToArray
+        Dim states = (From r In e.SynchronizationStateUpdatedRows Select r.SynchronizationState).ToArray
+        Call Me.ViewOperationsWrapper.UpdateRowSynchronizationStates(rows, states)
     End Sub
 
     Protected Overridable Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
