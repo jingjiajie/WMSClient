@@ -383,6 +383,7 @@ namespace WMS.UI
                     this.model[row, "unqualifiedStorageLocationNo"] = foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
                     this.model[row, "unqualifiedStorageLocationName"] = foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
                 }
+                this.model.RefreshView(row);
             }
         }
 
