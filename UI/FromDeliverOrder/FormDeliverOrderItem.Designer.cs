@@ -113,6 +113,7 @@
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 10;
+            this.configuration1.Load += new System.EventHandler(this.configuration1_Load);
             // 
             // tableLayoutPanel2
             // 
@@ -154,13 +155,13 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 19);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 19);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(92, 19);
+            this.labelStatus.Size = new System.Drawing.Size(114, 19);
             this.labelStatus.Text = "出库单条目信息";
             // 
             // panelPager
@@ -215,7 +216,7 @@
             this.toolStripButtonAdd.Image = global::WMS.UI.Properties.Resources.add;
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 24);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 24);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -224,7 +225,7 @@
             this.toolStripButtonDelete.Image = global::WMS.UI.Properties.Resources.delete;
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 24);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 24);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -233,7 +234,7 @@
             this.toolStripButtonAlter.Image = global::WMS.UI.Properties.Resources.cancle;
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 24);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(93, 24);
             this.toolStripButtonAlter.Text = "保存修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -248,7 +249,7 @@
             this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
             this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
-            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 24);
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(123, 24);
             this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
             this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
             // 
@@ -458,7 +459,7 @@
             // 
             // FormDeliverOrderItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(956, 470);
             this.Controls.Add(this.tableLayoutPanel2);
