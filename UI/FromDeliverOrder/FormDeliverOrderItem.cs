@@ -73,7 +73,8 @@ namespace WMS.UI.FromDeliverOrder
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
                 { "realAmount",0},
-                { "deliveryOrderNo", this.deliveryOrder["no"]}
+                { "deliveryOrderNo", this.deliveryOrder["no"]},
+                { "deliveryOrderId", this.deliveryOrder["id"]}
             });
         }
 
