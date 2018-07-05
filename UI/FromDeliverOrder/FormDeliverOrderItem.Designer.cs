@@ -48,6 +48,7 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
@@ -195,6 +196,7 @@
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
+            this.toolStripButtonDeliveyPakage,
             this.toolStripSeparator1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 27);
             this.toolStripTop.Name = "toolStripTop";
@@ -240,6 +242,15 @@
             this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripButtonDeliveyPakage
+            // 
+            this.toolStripButtonDeliveyPakage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDeliveyPakage.Image")));
+            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(104, 24);
+            this.toolStripButtonDeliveyPakage.Text = "套餐一键添加";
+            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
             // 
             // toolStripSeparator1
             // 
@@ -507,5 +518,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button buttonAllLoad;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDeliveyPakage;
     }
 }

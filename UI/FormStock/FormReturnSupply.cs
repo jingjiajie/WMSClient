@@ -13,8 +13,6 @@ namespace WMS.UI.FormStock
     public partial class FormReturnSupply : Form
     {
         private Action addFinishedCallback = null;
-        private double amountTemp;
-        private double availableAmountTemp;
         public FormReturnSupply()
         {         
             MethodListenerContainer.Register(this);
@@ -166,7 +164,7 @@ namespace WMS.UI.FormStock
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
-            this.model1[row, "materialName"] = "";
+            //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -174,7 +172,7 @@ namespace WMS.UI.FormStock
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
-            this.model1[row, "materialNo"] = "";
+            //this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -192,11 +190,10 @@ namespace WMS.UI.FormStock
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  && (string.IsNullOrWhiteSpace(materialProductLine) ? true : materialProductLine == (m["productLine"]?.ToString() ?? ""))
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -205,9 +202,11 @@ namespace WMS.UI.FormStock
             this.model1[row, "materialId"] = foundMaterials[0]["id"];
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
+            this.model1[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
@@ -249,6 +248,16 @@ namespace WMS.UI.FormStock
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
+                if ((int)this.model1[row, "state"] == 2) {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"]==null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
+                }
+                else if ((int)this.model1[row, "state"] == 1) {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"]==null ? 0: (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
+                }
             }
             else
             {
@@ -264,8 +273,8 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAdd_Click_1(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            //this.basicView1.Enabled = true;
+            //this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
@@ -285,12 +294,12 @@ namespace WMS.UI.FormStock
             this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
         private void updateBasicAndReoGridView()
         {
-
+            /*
             if (this.model1.RowCount == 0)
             {
                 this.basicView1.Enabled = false;
@@ -300,7 +309,7 @@ namespace WMS.UI.FormStock
             {
                 this.basicView1.Enabled = true;
                 this.reoGridView1.Enabled = true;
-            }
+            }*/
         }
 
         public void SetAddFinishedCallback(Action callback)
@@ -312,6 +321,49 @@ namespace WMS.UI.FormStock
         {
             if (this.addFinishedCallback != null)
             { this.addFinishedCallback(); }
+        }
+
+        private int StateBackwardMapper(string enable)
+        {
+            switch (enable)
+            {
+                case "不合格": return 1;
+                case "合格": return 2;
+                default: return -1;
+            }
+        }
+
+        private string StateForwardMapper(int enable)
+        {
+            switch (enable)
+            {              
+                case 1: return "不合格";
+                case 2: return "合格";
+                default: return "未知状态";
+            }
+        }
+
+        private void StateContentChanged(int row,string state   )        
+        {           
+            if ((int)this.model1[row,"supplyId"]==0) return;          
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                  where (int)s["id"] == (int)this.model1[row, "supplyId"]
+                                  select s).ToArray();
+            if (foundSupplies.Length == 1)
+            {               
+                if (state =="合格")
+                {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
+                }
+                else if (state =="不合格")
+                {
+                    this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
+                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
+                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
+                }
+            }
         }
     }
 }

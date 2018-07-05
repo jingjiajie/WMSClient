@@ -6,7 +6,7 @@ Imports Jint.Native
 ''' <summary>
 ''' 字段配置信息
 ''' </summary>
-Public Class FieldConfiguration
+Public Class Field
     Implements ICloneable
     Private _name As String = Nothing
     Private _type As FieldType = FieldType.FromString("string")
@@ -118,16 +118,16 @@ Public Class FieldConfiguration
     ''' <param name="methodListenerNames">方法监听器名称</param>
     ''' <param name="jsValue">要转换的JsValue</param>
     ''' <returns></returns>
-    Public Shared Function FromJsValue(methodListenerNames As String(), jsValue As JsValue, refFieldConfigurations As FieldConfiguration()) As FieldConfiguration()
-        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
+    Public Shared Function FromJsValue(methodListenerNames As String(), jsValue As JsValue, refFieldConfigurations As Field()) As Field()
+        If jsValue Is Nothing Then Throw New FrontWorkException("JsValue can not be null!")
         '如果是数组，则遍历解析
         If jsValue.IsArray Then
             '先把引用的所有字段都拷贝过来，再根据新的配置进行更新
-            Dim fieldConfigurations As List(Of FieldConfiguration) = refFieldConfigurations.ToList
+            Dim fieldConfigurations As List(Of Field) = refFieldConfigurations.ToList
             Dim jsArray = jsValue.AsArray
             For i As Integer = 0 To jsValue.AsArray.GetLength - 1
                 If Not jsArray.Get(i).AsObject().HasOwnProperty("name") Then
-                    throw new FrontWorkException("Field configuration must contains ""name"" property!")
+                    Throw New FrontWorkException("Field configuration must contains ""name"" property!")
                 End If
                 '新配置的名称
                 Dim name = jsArray.Get(i).AsObject.GetOwnProperty("name").Value.ToString
@@ -149,7 +149,7 @@ Public Class FieldConfiguration
             Next
             Return fieldConfigurations.ToArray
         Else '不是数组，报错
-            throw new FrontWorkException("Only js array is accepted to generate FieldConfiguration!")
+            Throw New FrontWorkException("Only js array is accepted to generate FieldConfiguration!")
         End If
     End Function
 
@@ -159,25 +159,25 @@ Public Class FieldConfiguration
     ''' <param name="methodListenerNames">方法监听器名称</param>
     ''' <param name="jsValue">JsValue</param>
     ''' <returns></returns>
-    Private Shared Function MakeFieldConfigurationFromJsValue(jsValue As JsValue, methodListenerNames As String(), refFieldConfiguration As FieldConfiguration) As FieldConfiguration
-        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
+    Private Shared Function MakeFieldConfigurationFromJsValue(jsValue As JsValue, methodListenerNames As String(), refFieldConfiguration As Field) As Field
+        If jsValue Is Nothing Then Throw New FrontWorkException("JsValue can not be null!")
         If Not jsValue.IsObject Then
-            throw new FrontWorkException("Not a valid JsObject!")
+            Throw New FrontWorkException("Not a valid JsObject!")
             Return Nothing
         End If
 
         Dim jsObject = jsValue.AsObject
 
         '新建FieldConfiguration
-        Dim newFieldConfiguration As FieldConfiguration
+        Dim newFieldConfiguration As Field
         If refFieldConfiguration IsNot Nothing Then
             newFieldConfiguration = refFieldConfiguration.Clone
         Else
-            newFieldConfiguration = New FieldConfiguration
+            newFieldConfiguration = New Field
         End If
         Dim jsEngine = ModeConfiguration.JsEngine
 
-        Dim typeFieldConfiguration = GetType(FieldConfiguration)
+        Dim typeFieldConfiguration = GetType(Field)
         '遍历字典，赋值给FieldConfiguration
         For Each item In jsObject.GetOwnProperties
             Dim key = item.Key

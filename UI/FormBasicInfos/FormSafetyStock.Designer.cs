@@ -82,7 +82,7 @@
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(872, 25);
@@ -93,7 +93,7 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(30, 78);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSafetyStock",
         "AssociationMethodListener"};
@@ -101,7 +101,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(135, 144);
             this.configuration1.TabIndex = 12;
             // 
             // toolStripSeparator1
@@ -209,8 +209,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 22);
-            this.labelStatus.Text = "零件信息";
+            this.labelStatus.Size = new System.Drawing.Size(80, 22);
+            this.labelStatus.Text = "安全库存信息";
             // 
             // toolStripTop
             // 
@@ -263,7 +263,7 @@
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(214, 78);
-            this.model1.Margin = new System.Windows.Forms.Padding(2);
+            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -293,7 +293,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(180, 180);
+            this.synchronizer.Size = new System.Drawing.Size(135, 144);
             this.synchronizer.TabIndex = 11;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -307,7 +307,7 @@
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(590, 110);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;

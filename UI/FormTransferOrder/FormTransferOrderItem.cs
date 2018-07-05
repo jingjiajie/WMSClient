@@ -141,7 +141,7 @@ namespace WMS.UI.FormTransferOrder
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.transferOrder["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/transfer_finish";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body, "PUT");
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
 
             }
@@ -158,19 +158,19 @@ namespace WMS.UI.FormTransferOrder
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.synchronizer.Save();
             this.TransferDone();
         }
 
         private string StateForwardMapper(int state)
         {
-            //0待入库 1送检中 2.全部入库 3.部分入库
+            
             switch (state)
             {
-                case 0: return "待移库";
-                case 1: return "部分移库";
-                case 2: return "移库完成";
+                case 0: return "待备货";
+                case 1: return "部分备货";
+                case 2: return "备货完成";
                 default: return "未知状态";
             }
         }
@@ -188,7 +188,7 @@ namespace WMS.UI.FormTransferOrder
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "transfer_some";
+                string operatioName = "transfer_some/" + (int)GlobalData.Person["id"];
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -329,7 +329,6 @@ namespace WMS.UI.FormTransferOrder
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
@@ -387,9 +386,12 @@ namespace WMS.UI.FormTransferOrder
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "scheduledAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                if (foundSupplies[0]["defaultDeliveryAmount"] != null)
+                {
+                    this.FillDefaultValue(row, "scheduledAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                }
                 //默认填写出库单实际数量一步到位XD
-                this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                //this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
 
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
                 this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);               

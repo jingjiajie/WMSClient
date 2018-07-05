@@ -213,7 +213,7 @@ Partial Public Class BasicView
         Dim fieldName = CType(sender, Control).Name
         '如果没被编辑则不进行处理
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
+        Dim curField = Me.Configuration.GetField(Me.Mode, fieldName)
         '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
         Dim args = New ViewEditEndedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
@@ -224,7 +224,7 @@ Partial Public Class BasicView
         Dim fieldName = CType(sender, TextBox).Name
         '如果没被编辑则不进行处理
         If Not Me.dicFieldEdited.ContainsKey(fieldName) Then Return
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
+        Dim curField = Me.Configuration.GetField(Me.Mode, fieldName)
         '否则保存数据+触发编辑结束事件
         Call Me.ExportField(fieldName)
         Dim args = New ViewEditEndedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
@@ -392,7 +392,7 @@ Partial Public Class BasicView
         '创建编辑框
         With textBox
             .Name = viewColumn.Name
-            .PlaceHolder = viewColumn.PlaceHolder?.Invoke
+            .PlaceHolder = viewColumn.PlaceHolder
             .ReadOnly = Not viewColumn.Editable
             .Font = Me.Font
             .Dock = DockStyle.Fill
@@ -410,7 +410,7 @@ Partial Public Class BasicView
             .Dock = DockStyle.Fill
         End With
         Call comboBox.Items.Clear()
-        Dim values As Object() = Util.ToArray(Of Object)(viewColumn.Values.Invoke(Me))
+        Dim values As Object() = Util.ToArray(Of Object)(viewColumn.Values)
         If values IsNot Nothing Then
             comboBox.Items.AddRange(values)
         End If

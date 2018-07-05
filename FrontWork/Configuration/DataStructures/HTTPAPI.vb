@@ -5,7 +5,7 @@ Imports Jint.Native
 ''' <summary>
 ''' HTTPAPI配置信息
 ''' </summary>
-Public Class HTTPAPIConfiguration
+Public Class HTTPAPI
     Implements ICloneable
     ''' <summary>
     ''' API类型，如pull,add,update,remove等
@@ -50,16 +50,16 @@ Public Class HTTPAPIConfiguration
     ''' <param name="methodListenerNames">方法监听器名称</param>
     ''' <param name="jsValue">JsValue对象</param>
     ''' <returns></returns>
-    Public Shared Function FromJSValue(methodListenerNames As String(), jsValue As JsValue, refConfigurations As HTTPAPIConfiguration()) As HTTPAPIConfiguration()
-        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
+    Public Shared Function FromJSValue(methodListenerNames As String(), jsValue As JsValue, refConfigurations As HTTPAPI()) As HTTPAPI()
+        If jsValue Is Nothing Then Throw New FrontWorkException("JsValue can not be null!")
         '如果是数组，则遍历解析
         If jsValue.IsArray Then
             '先把引用的所有字段都拷贝过来，再根据新的配置进行更新
-            Dim newHTTPAPIConfigurations As List(Of HTTPAPIConfiguration) = refConfigurations.ToList
+            Dim newHTTPAPIConfigurations As List(Of HTTPAPI) = refConfigurations.ToList
             Dim jsArray = jsValue.AsArray
             For i As Integer = 0 To jsValue.AsArray.GetLength - 1
                 If Not jsArray.Get(i).AsObject().HasOwnProperty("type") Then
-                    throw new FrontWorkException("HTTPAPIConfiguration must contains ""type"" property!")
+                    Throw New FrontWorkException("HTTPAPIConfiguration must contains ""type"" property!")
                 End If
                 '新配置的type
                 Dim type = jsArray.Get(i).AsObject.GetOwnProperty("type").Value.ToString
@@ -81,7 +81,7 @@ Public Class HTTPAPIConfiguration
             Next
             Return newHTTPAPIConfigurations.ToArray
         Else '不是数组，报错
-            throw new FrontWorkException("Only js array is accepted to generate HTTPAPIConfiguration!")
+            Throw New FrontWorkException("Only js array is accepted to generate HTTPAPIConfiguration!")
             Return Nothing
         End If
     End Function
@@ -92,24 +92,24 @@ Public Class HTTPAPIConfiguration
     ''' <param name="methodListenerNames">方法监听器名称</param>
     ''' <param name="jsValue">JsValue对象</param>
     ''' <returns></returns>
-    Private Shared Function MakeHTTPApiConfiguration(methodListenerNames As String(), jsValue As JsValue, refConfiguration As HTTPAPIConfiguration) As HTTPAPIConfiguration
-        If jsValue Is Nothing Then throw new FrontWorkException("JsValue can not be null!")
+    Private Shared Function MakeHTTPApiConfiguration(methodListenerNames As String(), jsValue As JsValue, refConfiguration As HTTPAPI) As HTTPAPI
+        If jsValue Is Nothing Then Throw New FrontWorkException("JsValue can not be null!")
         If Not jsValue.IsObject Then
-            throw new FrontWorkException("Not a valid JsObject!")
+            Throw New FrontWorkException("Not a valid JsObject!")
             Return Nothing
         End If
         Dim jsEngine = ModeConfiguration.JsEngine
         Dim jsObject = jsValue.AsObject
 
         '新建HTTPAPIConfiguration
-        Dim newHTTPAPIConfiguration As New HTTPAPIConfiguration
+        Dim newHTTPAPIConfiguration As New HTTPAPI
         If refConfiguration IsNot Nothing Then
             newHTTPAPIConfiguration = refConfiguration.Clone
         Else
-            newHTTPAPIConfiguration = New HTTPAPIConfiguration
+            newHTTPAPIConfiguration = New HTTPAPI
         End If
 
-        Dim typeHTTPAPIConfiguration = GetType(HTTPAPIConfiguration)
+        Dim typeHTTPAPIConfiguration = GetType(HTTPAPI)
         '遍历字典，赋值给HTTPAPIConfiguration
         For Each item In jsObject.GetOwnProperties
             Dim key = item.Key

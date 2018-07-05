@@ -572,12 +572,28 @@ Partial Public Class Model
         Return Me.ModelConfigurationWrapper.GetSelectedRows
     End Function
 
+    Public Function GetSelectedRow() As IDictionary(Of String, Object)
+        Return Me.ModelConfigurationWrapper.GetSelectedRow
+    End Function
+
+    Public Function GetSelectedRow(Of T As New)() As IDictionary(Of String, Object)
+        Return Me.ModelConfigurationWrapper.GetSelectedRow(Of T)
+    End Function
+
+    Public Function GetSelectedRow(Of T)(columnName As String) As T
+        Return Me.ModelConfigurationWrapper.GetSelectedRow(Of T)(columnName)
+    End Function
+
     ''' <summary>
     ''' 删除新增但未编辑的行
     ''' </summary>
     Public Sub RemoveUneditedNewRows()
         Call Me.ModelConfigurationWrapper.RemoveUneditedNewRows()
     End Sub
+
+    Public Function HasUnsynchronizedUpdatedRow() As Boolean
+        Return Me.ModelConfigurationWrapper.HasUnsynchronizedUpdatedRow
+    End Function
 
     Public Sub AddColumns(columns() As ModelColumn) Implements IModel.AddColumns
         Call Me.ModelConfigurationWrapper.AddColumns(columns)

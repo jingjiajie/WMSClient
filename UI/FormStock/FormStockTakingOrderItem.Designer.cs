@@ -53,7 +53,6 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.buttonStartAdd = new System.Windows.Forms.ToolStripButton();
@@ -117,6 +116,7 @@
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
             this.basicView1.Size = new System.Drawing.Size(1184, 110);
             this.basicView1.TabIndex = 13;
+            this.basicView1.Load += new System.EventHandler(this.basicView1_Load);
             // 
             // configuration1
             // 
@@ -159,7 +159,7 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(649, 62);
+            this.synchronizer.Location = new System.Drawing.Point(501, 10);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -189,12 +189,12 @@
             orderParamNamesType1.Order = "order";
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(861, 29);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(787, 10);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(78, 90);
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(148, 191);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
@@ -284,7 +284,6 @@
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
-            this.toolStripSeparator1,
             this.toolStripButton1,
             this.toolStripButton2,
             this.buttonStartAdd,
@@ -318,12 +317,6 @@
             this.toolStripSeparator3.AutoSize = false;
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.AutoSize = false;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
             // toolStripButton1
             // 
@@ -398,7 +391,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private FrontWork.BasicView basicView1;
         private FrontWork.Configuration configuration1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;

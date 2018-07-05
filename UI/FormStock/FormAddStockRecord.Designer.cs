@@ -135,7 +135,7 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(537, -54);
+            this.synchronizer.Location = new System.Drawing.Point(526, 14);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -264,6 +264,7 @@
             this.toolStripTop.Size = new System.Drawing.Size(974, 28);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // toolStripButtonAdd
             // 
@@ -298,7 +299,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormAddStockRecord";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " 导入供货";
+            this.Text = "校正库存";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormReturnSupply_FormClosed);
             this.Load += new System.EventHandler(this.FormAddStockRecord_Load);
             this.statusStrip1.ResumeLayout(false);

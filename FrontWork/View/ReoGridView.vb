@@ -335,7 +335,7 @@ Public Class ReoGridView
             Dim curViewColumn As ViewColumn = CType(Me.Panel.ColumnHeaders(col).Tag, ColumnTag).ViewColumn
             '如果设定了Values，则执行Values获取值
             If curViewColumn.Values IsNot Nothing Then
-                Dim comboBox = New DropdownListCell(CType(curViewColumn.Values.Invoke(Me), IEnumerable(Of Object)))
+                Dim comboBox = New DropdownListCell(CType(curViewColumn.Values, IEnumerable(Of Object)))
                 Dim curCol = col
                 AddHandler comboBox.DropdownOpened, Sub()
                                                         worksheet.SelectionRange = New RangePosition(row, curCol, 1, 1)
@@ -539,7 +539,7 @@ Public Class ReoGridView
         Dim viewColumn As ViewColumn = Me.Panel.ColumnHeaders(col).Tag?.ViewColumn
         If viewColumn Is Nothing Then Return
         '验证数据
-        Dim values As Object() = Util.ToArray(Of String)(viewColumn.Values.Invoke(Me, row))
+        Dim values As Object() = Util.ToArray(Of String)(viewColumn.Values)
         If Not values.Contains(Me.Panel(row, col)) Then
             Call Me.AddCellState(row, col, CellState.INVALID_DATA)
         Else
@@ -927,7 +927,7 @@ Public Class ReoGridView
             viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState)
         Next
         Dim oriViewRows = Me.Panel.RowCount
-        Dim adjustedRowInfos = Util.AdjustRows(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)
+        Dim adjustedRowInfos = Util.AdjustInsertIndexes(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)
         Dim adjustedRows As New List(Of Integer)
         Dim adjustedRowData As New List(Of IDictionary(Of String, Object))
         For Each adjustedRowInfo In adjustedRowInfos

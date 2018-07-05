@@ -123,7 +123,7 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"deliveryOrderId",displayName:"出库单ID",type:"int",visible:false,defaultValue:"#deliveryOrderIdDefaultValue"},
-        {name:"deliveryOrderNo",displayName:"出库单号"},
+        {name:"deliveryOrderNo",displayName:"出库单号",editable:false},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,editable:false},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false,editable:false},
@@ -135,12 +135,12 @@
         {name:"sourceStorageLocationId",displayName:"出货库位ID",type:"int",visible:false},
         {name:"sourceStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded",placeHolder:"不能为空"},
         {name:"sourceStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded",placeHolder:"不能为空"},
-        {name:"scheduledAmount",displayName:"计划装车数量",type:"double"},
-        {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
-        {name:"realAmount",displayName:"实际装车数量",type:"double"},
-        {name:"unit",displayName:"单位"},
-        {name:"unitAmount",displayName:"单位数量",type:"double"},
+        {name:"scheduledAmount",displayName:"计划装车数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"realAmount",displayName:"实际装车数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"unit",displayName:"单位",placeHolder:"必填信息"},
+        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息",editEnded:"#unitAmountEditEnded"},
         {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
+        {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},        
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称"}
@@ -176,6 +176,15 @@
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>402, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonDeliveyPakage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>638, 17</value>
   </metadata>

@@ -7,7 +7,7 @@ Public Class ModelBox
     Implements IModel
     Private _currentModelName As String
     Private _configuration As Configuration
-    Private _mode As String = "default"
+    Private _mode As String
 
     Public Event SelectedModelChanged As EventHandler(Of SelectedModelChangedEventArgs)
     Public Event ModelCollectionChanged As EventHandler(Of ModelCollectionChangedEventArgs)
@@ -27,6 +27,7 @@ Public Class ModelBox
             If Not Me._Models.Contains(value) Then
                 Dim newModel As New Model
                 newModel.Name = value
+                newModel.Configuration = Me.Configuration
                 Me._Models.SetModel(newModel)
                 Me.ModelConfigurationWrapper.Model = newModel
             Else

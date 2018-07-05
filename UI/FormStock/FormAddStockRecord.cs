@@ -17,35 +17,16 @@ namespace WMS.UI.FormStock
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-            
+           
+
         }
-  
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
-            /*Dictionary<string, object>[] a = new Dictionary<string, object>[]{
-               new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} },
-                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} },
-                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} },
-                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} },
-                new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} }};
-            this.model1.InsertRows(new int[] {0,1,2,3,4},a );*/
             this.model1.InsertRow(0, new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} }); 
-
+                { "supplyId",0} ,
+                { "inventoryDate", DateTime.Now} });
         }
 
         private void FormAddStockRecord_Load(object sender, EventArgs e)
@@ -53,23 +34,8 @@ namespace WMS.UI.FormStock
             this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            this.updateBasicAndReoGridView();
         }
 
-        private void updateBasicAndReoGridView()
-        {
-
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
-        }
 
         private void StorageLocationNameEditEnded(int row, string storageAreaName)
         {
@@ -214,7 +180,7 @@ namespace WMS.UI.FormStock
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
-            this.model1[row, "materialName"] = "";
+            //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -222,7 +188,7 @@ namespace WMS.UI.FormStock
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
-            this.model1[row, "materialNo"] = "";
+            //this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -240,11 +206,10 @@ namespace WMS.UI.FormStock
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  && (string.IsNullOrWhiteSpace(materialProductLine) ? true : materialProductLine == (m["productLine"]?.ToString() ?? ""))
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
@@ -253,9 +218,11 @@ namespace WMS.UI.FormStock
             this.model1[row, "materialId"] = foundMaterials[0]["id"];
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
+            this.model1[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
@@ -305,6 +272,95 @@ namespace WMS.UI.FormStock
             }
         }
 
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+
+            string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
+
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
+        }
+
+
+
         private void FillDefaultValue(int row, string fieldName, object value)
         {
             this.model1[row, fieldName] = value;
@@ -323,8 +379,6 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
             if (this.synchronizer.Save()) { this.Close(); }
         }
 
@@ -332,6 +386,33 @@ namespace WMS.UI.FormStock
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+        }
+
+        private int StateBackwardMapper(string enable)
+        {
+            switch (enable)
+            {
+                case "待检测": return 0;
+                case "不合格": return 1;
+                case "合格": return 2;
+                default: return -1;
+            }
+        }
+
+        private string StateForwardMapper(int enable)
+        {
+            switch (enable)
+            {
+                case 0: return "待检测";
+                case 1: return "不合格";
+                case 2: return "合格";
+                default: return "未知状态";
+            }
+        }
+
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

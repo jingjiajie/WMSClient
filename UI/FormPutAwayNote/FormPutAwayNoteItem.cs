@@ -16,6 +16,7 @@ namespace WMS.UI
     public partial class FormPutAwayNoteItem : Form
     {
         private IDictionary<string, object> putAwayNote = null;
+        private Action addFinishedCallback = null;
         public FormPutAwayNoteItem(IDictionary<string, object> putAwayNote)
         {
             MethodListenerContainer.Register(this);
@@ -65,23 +66,40 @@ namespace WMS.UI
         //待工整单完成
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并整单完成吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            //如果存在更新并且未保存的行，则先尝试保存
+            if (this.model1.HasUnsynchronizedUpdatedRow())
+            {
+                if (!this.synchronizer.Save()) return;
+            }
             try
             {
                 string body = "{\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" +this.putAwayNote["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/transfer_finish";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body, "PUT");
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
 
             }
-            catch
+            catch (WebException ex)
             {
-                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("整单完成上架") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            //如果存在更新并且未保存的行，则先尝试保存
+            if (this.model1.HasUnsynchronizedUpdatedRow())
+            {
+                if (!this.synchronizer.Save()) return;
+            }
             this.TransferDone();
         }
 
@@ -165,7 +183,7 @@ namespace WMS.UI
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "transfer_some";
+                string operatioName = "transfer_some/" + (int)GlobalData.Person["id"];
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/" + operatioName, strIDs, "PUT");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -292,7 +310,7 @@ namespace WMS.UI
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
-            this.model1[row, "materialName"] = "";
+            //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -300,7 +318,7 @@ namespace WMS.UI
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
-            this.model1[row, "materialNo"] = "";
+            //this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -318,7 +336,7 @@ namespace WMS.UI
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
+            //if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
@@ -376,16 +394,19 @@ namespace WMS.UI
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "scheduledAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+
                 //默认填写出库单实际数量一步到位XD
-                this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
+                //this.FillDefaultValue(row, "realAmount", foundSupplies[0]["defaultDeliveryAmount"]);
 
                 this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
                 this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
-                this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultPrepareTargetStorageLocationId"]);
-                //在备货完成的库位里发货
-                this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
-                this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
+
+                this.FillDefaultValue(row, "targetStorageLocationId", foundSupplies[0]["defaultDeliveryStorageLocationId"]);
+                this.FillDefaultValue(row, "targetStorageLocationNo", foundSupplies[0]["defaultDeliveryStorageLocationNo"]);
+                this.FillDefaultValue(row, "targetStorageLocationName", foundSupplies[0]["defaultDeliveryStorageLocationName"]);
+                this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultQualifiedStorageLocationId"]);
+                this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultQualifiedStorageLocationNo"]);
+                this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultQualifiedStorageLocationName"]);
 
             }
         }
@@ -407,5 +428,102 @@ namespace WMS.UI
         }
 
         //=============天经地义的交互逻辑到这里结束===============
+
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+
+            string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
+
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
+        }
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
+
+        private void FormPutAwayClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
+        }
     }
 }

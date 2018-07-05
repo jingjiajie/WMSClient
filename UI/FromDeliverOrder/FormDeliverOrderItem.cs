@@ -84,6 +84,42 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
+        private string AmountForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountBackwardMapper(string strAmount, int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
+        }
+
         private void FormDeliverOrderItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
@@ -418,6 +454,16 @@ namespace WMS.UI.FromDeliverOrder
             {
                 this.addFinishedCallback();
             }
+        }
+
+        private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormSelectPakage((int)this.deliveryOrder["id"]);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
     }
 }

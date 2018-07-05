@@ -275,7 +275,7 @@ namespace WMS.UI
         private void MaterialNoEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
-            this.model[row, "materialName"] = "";
+            //this.model[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -283,7 +283,7 @@ namespace WMS.UI
         private void MaterialNameEditEnded(int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
-            this.model[row, "materialNo"] = "";
+           // this.model[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
@@ -371,6 +371,19 @@ namespace WMS.UI
                     this.model[row, "storageLocationNo"] = foundSupplies[0]["defaultInspectionStorageLocationNo"];
                     this.model[row, "storageLocationName"] = foundSupplies[0]["defaultEntryStorageLocationName"];
                 }
+                if (((int?)this.model[row, "qualifiedStorageLocationId"] ?? 0) == 0)
+                {
+                    this.model[row, "qualifiedStorageLocationId"] = foundSupplies[0]["defaultQualifiedStorageLocationId"];
+                    this.model[row, "qualifiedStorageLocationNo"] = foundSupplies[0]["defaultQualifiedStorageLocationNo"];
+                    this.model[row, "qualifiedStorageLocationName"] = foundSupplies[0]["defaultQualifiedStorageLocationName"];
+                }
+                if (((int?)this.model[row, "unqualifiedStorageLocationId"] ?? 0) == 0)
+                {
+                    this.model[row, "unqualifiedStorageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
+                    this.model[row, "unqualifiedStorageLocationNo"] = foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
+                    this.model[row, "unqualifiedStorageLocationName"] = foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
+                }
+                this.model.RefreshView(row);
             }
         }
 
@@ -383,36 +396,6 @@ namespace WMS.UI
         }
 
         //=============天经地义的交互逻辑到这里结束===============
-
-        //物料名称输入联想
-        private object[] MaterialNameAssociation(string str)
-        {
-            return (from s in GlobalData.AllSupplies
-                    where s["materialName"] != null &&
-                    s["materialName"].ToString().StartsWith(str) &&
-                    (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
-                    select s["materialName"]).Distinct().ToArray();
-        }
-
-        //物料代号输入联想
-        private object[] MaterialNoAssociation(string str)
-        {
-            return (from s in GlobalData.AllSupplies
-                    where s["materialNo"] != null &&
-                    s["materialNo"].ToString().StartsWith(str) &&
-                    (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
-                    select s["materialNo"]).Distinct().ToArray();
-        }
-
-        //物料系列输入联想
-        private object[] MaterialProductLineAssociation(string str)
-        {
-            return (from s in GlobalData.AllSupplies
-                    where s["materialProductLine"] != null &&
-                    s["materialProductLine"].ToString().StartsWith(str) &&
-                    (int)s["supplierId"] == (int)this.warehouseEntry["supplierId"]
-                    select s["materialProductLine"]).Distinct().ToArray();
-        }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
@@ -438,6 +421,91 @@ namespace WMS.UI
                 this.basicView1.Mode = "put_in";
                 this.reoGridView1.Mode = "put_in";
             }
+        }
+
+        //物料名称输入联想
+        private object[] MaterialNameAssociation(string str)
+        {
+
+            string materialNo = this.model[this.model.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
+            int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+        }
+
+        //物料代号输入联想
+        private object[] MaterialNoAssociation(string str)
+        {
+            string materialName = this.model[this.model.SelectionRange.Row, "materialName"]?.ToString() ?? "";
+
+            int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialNo"] != null &&
+                         s["materialNo"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
+
+                         select s["materialNo"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+        }
+
+        //物料系列输入联想
+        private object[] MaterialProductLineAssociation(string str)
+        {
+            int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialProductLine"] != null &&
+                         s["materialProductLine"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         select s["materialProductLine"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+
         }
     }
 }

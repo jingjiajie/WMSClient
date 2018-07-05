@@ -83,22 +83,39 @@
     <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Common\DataStructures\ClonableList.vb" />
     <Compile Include="Common\EventArgs\FrontWorkEventArgs.vb" />
+    <Compile Include="Adapters\PivotTableAdapter.Designer.vb">
+      <DependentUpon>PivotTableAdapter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adapters\PivotTableAdapter.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Common\Exceptions\InvalidDataException.vb" />
     <Compile Include="Common\Util\JsonSerializer.vb" />
+    <Compile Include="Configuration\DataStructures\IndexFieldPair.vb" />
+    <Compile Include="Configuration\EventArgs\BeforeConfigurationFieldAddEventArgs.vb" />
+    <Compile Include="Configuration\EventArgs\BeforeConfigurationFieldRemoveEventArgs.vb" />
+    <Compile Include="Configuration\EventArgs\BeforeConfigurationFieldUpdateEventArgs.vb" />
     <Compile Include="Configuration\Configuration.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Configuration\EventArgs\ConfigurationChangedEventArgs.vb" />
+    <Compile Include="Configuration\EventArgs\ConfigurationFieldAddedEventArgs.vb" />
+    <Compile Include="Configuration\EventArgs\ConfigurationFieldRemovedEventArgs.vb" />
+    <Compile Include="Configuration\EventArgs\ConfigurationFieldUpdatedEventArgs.vb" />
+    <Compile Include="Configuration\EventArgs\ConfigurationRefreshedEventArgs.vb" />
     <Compile Include="Configuration\Exceptions\MethodNotFoundException.vb" />
-    <Compile Include="Configuration\FieldType.vb" />
-    <Compile Include="Configuration\HTTPAPIConfiguration.vb" />
+    <Compile Include="Configuration\DataStructures\FieldType.vb" />
+    <Compile Include="Configuration\DataStructures\HTTPAPI.vb" />
+    <Compile Include="Configuration\Interfaces\IConfigurable.vb" />
+    <Compile Include="Configuration\DataStructures\InvocationContext.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
     <Compile Include="Model\DataStructures\ModelRefreshArgs.vb" />
     <Compile Include="Model\DataStructures\ModelRowState.vb" />
+    <Compile Include="Model\Interfaces\IConfigurableModel.vb" />
     <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
@@ -136,9 +153,9 @@
     <Compile Include="View\Interfaces\IAssociableDataView.vb" />
     <Compile Include="View\Interfaces\IDataView.vb" />
     <Compile Include="Logger\Logger.vb" />
-    <Compile Include="Configuration\ModeConfiguration.vb" />
-    <Compile Include="Configuration\FieldConfiguration.vb" />
-    <Compile Include="Configuration\FieldMethod.vb" />
+    <Compile Include="Configuration\DataStructures\ModeConfiguration.vb" />
+    <Compile Include="Configuration\DataStructures\Field.vb" />
+    <Compile Include="Configuration\DataStructures\FieldMethod.vb" />
     <Compile Include="Model\DataStructures\ModelSchema\ModelColumn.vb" />
     <Compile Include="Common\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
@@ -192,12 +209,6 @@
     </Compile>
     <Compile Include="View\BasicView\BasicView.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="View\FormAssociation.Designer.vb">
-      <DependentUpon>FormAssociation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="View\FormAssociation.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Interfaces\ISelectableDataView.vb" />
     <Compile Include="View\Interfaces\IView.vb" />
@@ -265,9 +276,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\AdsorbableAssociationForm.resx">
       <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\FormAssociation.resx">
-      <DependentUpon>FormAssociation.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\PagerView.resx">
       <DependentUpon>PagerView.vb</DependentUpon>

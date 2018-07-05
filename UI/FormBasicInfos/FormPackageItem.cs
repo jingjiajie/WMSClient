@@ -72,7 +72,10 @@ namespace WMS.UI.FormBasicInfos
         //保存按钮点击事件
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            this.synchronizer.Save();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void FormPackageItem_Load(object sender, EventArgs e)
@@ -85,6 +88,7 @@ namespace WMS.UI.FormBasicInfos
 
         private void defaultDeliveryStorageLocationNameEditEnded(int row, string defaultDeliveryStorageLocationName)
         {
+            this.model[row, "defaultDeliveryStorageLocationId"] = 0;
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
                 {
@@ -146,7 +150,7 @@ namespace WMS.UI.FormBasicInfos
             string materialName = this.model[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
+            //if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)

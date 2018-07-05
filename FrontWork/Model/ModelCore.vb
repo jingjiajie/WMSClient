@@ -154,7 +154,7 @@ Public Class ModelCore
         End If
         '带有插入请求的原始行号的RowInfo
         Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(SynchronizationState.ADDED))).ToArray
-        Dim adjustedRowInfos = Util.AdjustRows(oriRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
+        Dim adjustedRowInfos = Util.AdjustInsertIndexes(oriRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
         '开始添加数据
         For i = 0 To adjustedRowInfos.Length - 1
             Dim realRow = adjustedRowInfos(i).Row

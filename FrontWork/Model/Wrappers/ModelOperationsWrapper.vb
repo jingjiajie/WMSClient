@@ -248,25 +248,8 @@ Public Class ModelOperationsWrapper
     ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
+
     Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
-        'TODO 删除不可编辑字段值
-        'Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
-        ''删除不可编辑的字段的值
-        'Dim uneditableFields As New List(Of String)
-        'For Each field In fields
-        '    If field.Editable = False Then
-        '        uneditableFields.Add(field.Name)
-        '    End If
-        'Next
-        'If uneditableFields.Count > 0 Then
-        '    For Each curData In dataOfEachRow
-        '        For Each uneditableFieldName In uneditableFields
-        '            If curData.ContainsKey(uneditableFieldName) Then
-        '                curData.Remove(uneditableFieldName)
-        '            End If
-        '        Next
-        '    Next
-        'End If
         Call Me.Model.UpdateRows(rows, dataOfEachRow)
     End Sub
 
@@ -490,6 +473,17 @@ Public Class ModelOperationsWrapper
         Next
         Call Me.RemoveRows(rows.ToArray)
     End Sub
+
+    Public Function HasUnsynchronizedUpdatedRow() As Boolean
+        For i = 0 To Me.RowCount - 1
+            If {SynchronizationState.UPDATED,
+                SynchronizationState.ADDED_UPDATED
+               }.Contains(Me.GetRowState(i).SynchronizationState) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
 
 
     Public Sub RefreshView(rows As Integer())

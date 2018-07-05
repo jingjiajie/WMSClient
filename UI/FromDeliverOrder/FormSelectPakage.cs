@@ -16,9 +16,11 @@ namespace WMS.UI.FromDeliverOrder
     public partial class FormSelectPakage : Form
     {
         private int packageId = -1;
+        private int deliveryId = -1;
         private Action addFinishedCallback = null;
-        public FormSelectPakage()
+        public FormSelectPakage(int deliveryId=-1)
         {
+            this.deliveryId = deliveryId;
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
@@ -40,27 +42,7 @@ namespace WMS.UI.FromDeliverOrder
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            if (this.packageId != -1)
-            {
-                try
-                {
-                    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"packageId\":\"" + this.packageId + "\"}";
-                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/delivery_by_package";
-                    RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
-                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-
-                }
-                catch (WebException ex)
-                {
-                    string message = ex.Message;
-                    if (ex.Response != null)
-                    {
-                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
-                    }
-                    MessageBox.Show(("按套餐添加出库单") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
+           
         }
 
         private void PackageNameEditEnded(int row, string pakageName)
@@ -92,11 +74,38 @@ namespace WMS.UI.FromDeliverOrder
 
         private void FormSelectPakage_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
             });
+        }
+
+        private void buttonADD_Click(object sender, EventArgs e)
+        {
+            this.buttonADD.Focus();
+            if (this.packageId != -1)
+            {
+                try
+                {
+                    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"packageId\":\"" + this.packageId + "\",\"deliveryOrderId\":\"" + this.deliveryId+ "\"}"; 
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/delivery_by_package";
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+
+                }
+                catch (WebException ex)
+                {
+                    string message = ex.Message;
+                    if (ex.Response != null)
+                    {
+                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    }
+                    MessageBox.Show(("按套餐添加出库单") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
     }
 }

@@ -14,16 +14,14 @@ namespace WMS.UI.FormStockTaking
     {
         private IDictionary<string, object> stockTakingOrder = null;
         private Action addFinishedCallback = null;
-        private double amountTemp;
-        private double availableAmountTemp;
         public FormStockTakingOrderItem(IDictionary<string, object> srockTakingOrder)
         {
             MethodListenerContainer.Register(this);            
             this.stockTakingOrder = srockTakingOrder;
             InitializeComponent();         
             this.searchView1.AddStaticCondition("stockTakingOrderId", this.stockTakingOrder["id"]);
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
+            //this.model1.RowRemoved += this.model_RowRemoved;
+            //this.model1.Refreshed += this.model_Refreshed;
         }
 
         private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
@@ -38,12 +36,12 @@ namespace WMS.UI.FormStockTaking
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
 
@@ -78,11 +76,16 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            if (this.model1.SelectionRange.Rows == 0) {
-                MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                return;
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            try
+            {
+                if (this.model1.SelectionRange.Rows == 0)
+                {
+                    MessageBox.Show("请选择要删除的行", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            catch { return; }
             int startRow = this.model1.SelectionRange.Row;
             int selectRows = this.model1.SelectionRange.Rows;
             int[] rows= Enumerable.Range(startRow, selectRows).ToArray();           
@@ -309,12 +312,12 @@ namespace WMS.UI.FormStockTaking
         //=============天经地义的交互逻辑到这里结束===============
 
         private void toolStripButton1_Click(object sender, EventArgs e)
-        {
+        {        
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
             try
-            {
-                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\"}";
+            {             
+                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\",\"checkTime\":\""+this.stockTakingOrder["createTime"]+ "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -330,6 +333,15 @@ namespace WMS.UI.FormStockTaking
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+
+            WMS.UI.FormStock.FormAddStockTakingOrderItemsBySupply form = new FormStock.FormAddStockTakingOrderItemsBySupply(this.stockTakingOrder);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+                this.updateBasicAndReoGridView();
+            });
+            form.Show();
+            /*
             this.model1.CurrentModelName = "addSingle";
             this.model1.Mode = "addSingle";
             this.synchronizer.Mode = "addSingle";
@@ -346,7 +358,7 @@ namespace WMS.UI.FormStockTaking
             this.buttonStartAdd.Visible = true;
             this.model1.InsertRows(new int[] { 0,1,2,3,4 }, null);
             this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            this.reoGridView1.Enabled = true;*/
         }
 
         private void SupplierNoEditEnded1(int row)
@@ -499,6 +511,11 @@ namespace WMS.UI.FormStockTaking
             {
                 this.addFinishedCallback();
             }
+        }
+
+        private void basicView1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

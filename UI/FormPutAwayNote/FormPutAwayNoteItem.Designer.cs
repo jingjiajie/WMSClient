@@ -444,6 +444,7 @@
             this.Name = "FormPutAwayNoteItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "上架单条目";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormPutAwayClosed);
             this.Load += new System.EventHandler(this.FormTransferOrderItem_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

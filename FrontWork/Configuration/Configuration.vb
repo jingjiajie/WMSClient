@@ -11,10 +11,13 @@ Imports Jint.Native
 Public Class Configuration
     Inherits UserControl
 
-    ''' <summary>
-    ''' 配置改变事件
-    ''' </summary>
-    Public Event ConfigurationChanged As EventHandler(Of ConfigurationChangedEventArgs)
+    Public Event BeforeFieldAdd As EventHandler(Of BeforeConfigurationFieldAddEventArgs)
+    Public Event BeforeFieldUpdate As EventHandler(Of BeforeConfigurationFieldUpdateEventArgs)
+    Public Event BeforeFieldRemove As EventHandler(Of BeforeConfigurationFieldRemoveEventArgs)
+    Public Event FieldAdded As EventHandler(Of ConfigurationFieldAddedEventArgs)
+    Public Event FieldUpdated As EventHandler(Of ConfigurationFieldUpdatedEventArgs)
+    Public Event FieldRemoved As EventHandler(Of ConfigurationFieldRemovedEventArgs)
+    Public Event Refreshed As EventHandler(Of ConfigurationRefreshedEventArgs)
 
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents PictureBox1 As PictureBox
@@ -53,25 +56,9 @@ Public Class Configuration
                     Call Me.SetMethodListener(modeMethodListeners.MethodListenerNames, modeMethodListeners.Mode)
                 Next
             End If
-            RaiseEvent ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
+            RaiseEvent Refreshed(Me, New ConfigurationRefreshedEventArgs)
         End Set
     End Property
-
-    '''' <summary>
-    '''' 图形化配置中心
-    '''' </summary>
-    '''' <returns></returns>
-    '<Description("图形化配置"), Category("FrontWork")>
-    '<Editor(GetType(ConfiguratorEditor), GetType(UITypeEditor))>
-    'Public Property ConfiguratorGUI As String
-    '    Get
-    '        Return Me.ConfigurationString
-    '    End Get
-    '    Set(value As String)
-    '        Me.ConfigurationString = value
-    '    End Set
-    'End Property
-
 
     <Description("方法监听器"), Category("FrontWork")>
     <Editor(GetType(Design.ArrayEditor), GetType(UITypeEditor))>
@@ -124,12 +111,12 @@ Public Class Configuration
     ''' 获取当前模式的字段配置
     ''' </summary>
     ''' <returns>字段的配置信息</returns>
-    Public Function GetFieldConfigurations(mode As String) As FieldConfiguration()
-        Dim foundModeConfiguration = (From m In modeConfigurations Where m.Mode = mode Select m).FirstOrDefault
+    Public Function GetFields(mode As String) As Field()
+        Dim foundModeConfiguration = (From m In ModeConfigurations Where m.Mode = mode Select m).FirstOrDefault
         If foundModeConfiguration Is Nothing Then
             Throw New FrontWorkException($"Mode ""{mode}"" not found!")
         Else
-            Return foundModeConfiguration.Fields
+            Return foundModeConfiguration.Fields.ToArray
         End If
     End Function
 
@@ -137,23 +124,28 @@ Public Class Configuration
     ''' 获取当前模式的字段配置
     ''' </summary>
     ''' <returns>字段的配置信息</returns>
-    Public Function GetFieldConfiguration(mode As String, fieldName As String) As FieldConfiguration
-        Dim fields = Me.GetFieldConfigurations(mode)
+    Public Function GetField(mode As String, fieldName As String) As Field
+        Dim fields = Me.GetFields(mode)
         Dim field = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
         If field Is Nothing Then Throw New FrontWorkException($"Field ""{fieldName}"" not found in mode ""{mode}""!")
         Return field
     End Function
 
+    Public Function AddField(mode As String, field As Field)
+
+    End Function
+
+
     ''' <summary>
     ''' 获取当前模式的HTTPAPIs的配置信息
     ''' </summary>
     ''' <returns>HTTPAPIs配置信息</returns>
-    Public Function GetHTTPAPIConfigurations(mode As String) As HTTPAPIConfiguration()
-        Dim foundModeConfiguration = (From m In modeConfigurations Where m.Mode = mode Select m).FirstOrDefault
+    Public Function GetHTTPAPIConfigurations(mode As String) As HTTPAPI()
+        Dim foundModeConfiguration = (From m In ModeConfigurations Where m.Mode = mode Select m).FirstOrDefault
         If foundModeConfiguration Is Nothing Then
             Return {}
         Else
-            Return foundModeConfiguration.HTTPAPIs
+            Return foundModeConfiguration.HTTPAPIs.ToArray
         End If
     End Function
 

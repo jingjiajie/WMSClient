@@ -1,7 +1,7 @@
 ﻿''' <summary>
 ''' 配置改变事件
 ''' </summary>
-Public Class ConfigurationChangedEventArgs
+Public Class ConfigurationRefreshedEventArgs
     Inherits FrontWorkEventArgs
 
 End Class

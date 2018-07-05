@@ -3,32 +3,63 @@ Imports System.Linq
 Imports FrontWork
 
 Public Class EditableDataViewModel
+    Implements IConfigurable
     Protected ModelOperationsWrapper As New ModelOperationsWrapper
     Protected ViewOperationsWrapper As New EditableDataViewOperationsWrapper
     Protected _Configuration As Configuration
     Protected _Mode As String = "default"
 
-    Public Overridable Property Configuration As Configuration
+    Public Overridable Property Configuration As Configuration Implements IConfigurable.Configuration
         Get
             Return Me._Configuration
         End Get
         Set(value As Configuration)
-            Dim oldFields As FieldConfiguration() = {}
+            Dim oldFields As Field() = {}
             If Me._Configuration IsNot Nothing Then
-                oldFields = Me._Configuration.GetFieldConfigurations(Me.Mode)
-                RemoveHandler Me._Configuration.ConfigurationChanged, AddressOf Me.ConfigurationChangedEvent
+                oldFields = Me._Configuration.GetFields(Me.Mode)
+                RemoveHandler Me._Configuration.Refreshed, AddressOf Me.ConfigurationRefreshedEvent
+                RemoveHandler Me._Configuration.FieldAdded, AddressOf Me.ConfigurationFieldAddedEvent
+                RemoveHandler Me._Configuration.FieldUpdated, AddressOf Me.ConfigurationFieldUpdatedEvent
+                RemoveHandler Me._Configuration.FieldRemoved, AddressOf Me.ConfigurationFieldRemovedEvent
             End If
             Me._Configuration = value
-            Dim newFields As FieldConfiguration() = {}
+            Dim newFields As Field() = {}
             If Me._Configuration IsNot Nothing Then
-                newFields = Me._Configuration.GetFieldConfigurations(Me.Mode)
-                AddHandler Me._Configuration.ConfigurationChanged, AddressOf Me.ConfigurationChangedEvent
-                Call Me.ConfigurationChangedEvent(Me, Nothing)
+                newFields = Me._Configuration.GetFields(Me.Mode)
+                AddHandler Me._Configuration.Refreshed, AddressOf Me.ConfigurationRefreshedEvent
+                AddHandler Me._Configuration.FieldAdded, AddressOf Me.ConfigurationFieldAddedEvent
+                AddHandler Me._Configuration.FieldUpdated, AddressOf Me.ConfigurationFieldUpdatedEvent
+                AddHandler Me._Configuration.FieldRemoved, AddressOf Me.ConfigurationFieldRemovedEvent
+                Call Me.ConfigurationRefreshedEvent(Me, Nothing)
             End If
         End Set
     End Property
 
-    Public Overridable Property Mode As String
+    Private Sub ConfigurationFieldRemovedEvent(sender As Object, e As ConfigurationFieldRemovedEventArgs)
+        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim allFields = Me.Configuration.GetFields(Me.Mode)
+        Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
+        Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
+        Call Me.RefreshViewSchema(oldColumns, newColumns)
+    End Sub
+
+    Private Sub ConfigurationFieldUpdatedEvent(sender As Object, e As ConfigurationFieldUpdatedEventArgs)
+        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim allFields = Me.Configuration.GetFields(Me.Mode)
+        Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
+        Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
+        Call Me.RefreshViewSchema(oldColumns, newColumns)
+    End Sub
+
+    Private Sub ConfigurationFieldAddedEvent(sender As Object, e As ConfigurationFieldAddedEventArgs)
+        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim allFields = Me.Configuration.GetFields(Me.Mode)
+        Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
+        Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
+        Call Me.RefreshViewSchema(oldColumns, newColumns)
+    End Sub
+
+    Public Overridable Property Mode As String Implements IConfigurable.Mode
         Get
             Return Me._Mode
         End Get
@@ -37,7 +68,7 @@ Public Class EditableDataViewModel
                 Return
             End If
             Me._Mode = value
-            Call Me.ConfigurationChangedEvent(Me, Nothing)
+            Call Me.ConfigurationRefreshedEvent(Me, Nothing)
         End Set
     End Property
 
@@ -58,9 +89,9 @@ Public Class EditableDataViewModel
         Me.View = view
     End Sub
 
-    Protected Overridable Sub ConfigurationChangedEvent(sender As Object, e As ConfigurationChangedEventArgs)
+    Protected Overridable Sub ConfigurationRefreshedEvent(sender As Object, e As ConfigurationRefreshedEventArgs)
         Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
-        Dim allFields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim allFields = Me.Configuration.GetFields(Me.Mode)
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
@@ -138,16 +169,13 @@ Public Class EditableDataViewModel
         End If
     End Sub
 
-    Protected Overridable Function FieldConfigurationsToViewColumn(fields As FieldConfiguration()) As ViewColumn()
+    Protected Overridable Function FieldConfigurationsToViewColumn(fields As Field()) As ViewColumn()
+        Dim context As New InvocationContext
+        context.ContextItems.Add(New InvocationContextItem(Me, Nothing))
         Dim result(fields.Length - 1) As ViewColumn
         For i = 0 To fields.Length - 1
             Dim curField = fields(i)
-            Dim newViewColumn = New ViewColumn
-            newViewColumn.DisplayName = curField.DisplayName
-            newViewColumn.Name = curField.Name
-            newViewColumn.Editable = curField.Editable
-            newViewColumn.Type = curField.Type.FieldType
-            newViewColumn.Values = curField.Values
+            Dim newViewColumn = New ViewColumn(context, curField.PlaceHolder, curField.Values, curField.Name, curField.DisplayName, curField.Type.FieldType, curField.Editable)
             result(i) = newViewColumn
         Next
         Return result
@@ -182,18 +210,26 @@ Public Class EditableDataViewModel
     End Sub
 
     Private Sub ViewEditEndedEvent(sender As Object, e As ViewEditEndedEventArgs)
+        Dim context As New InvocationContext(
+            New InvocationContextItem(Me, Nothing),
+            New InvocationContextItem(e.Row, Nothing),
+            New InvocationContextItem(e.CellData, Nothing))
         Dim fieldName = e.ColumnName
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
+        Dim curField = Me.Configuration.GetField(Me.Mode, fieldName)
         If curField.EditEnded IsNot Nothing Then
-            curField.EditEnded.Invoke(Me, e.Row, e.CellData)
+            curField.EditEnded.Invoke(context)
         End If
     End Sub
 
     Private Sub ViewContentChangedEvent(sender As Object, e As ViewContentChangedEventArgs)
+        Dim context As New InvocationContext(
+            New InvocationContextItem(Me, Nothing),
+            New InvocationContextItem(e.Row, Nothing),
+            New InvocationContextItem(e.CellData, Nothing))
         Dim fieldName = e.ColumnName
-        Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, fieldName)
+        Dim curField = Me.Configuration.GetField(Me.Mode, fieldName)
         If curField.ContentChanged IsNot Nothing Then
-            curField.ContentChanged.Invoke(Me, e.Row, e.CellData)
+            curField.ContentChanged.Invoke(context)
         End If
     End Sub
 
@@ -207,7 +243,7 @@ Public Class EditableDataViewModel
         AddHandler Me.View.ContentChanged, AddressOf Me.ViewContentChangedEvent
         AddHandler Me.View.EditEnded, AddressOf Me.ViewEditEndedEvent
         If Me.Configuration IsNot Nothing Then
-            Call Me.ConfigurationChangedEvent(Me, Nothing)
+            Call Me.ConfigurationRefreshedEvent(Me, Nothing)
             Call Me.ModelRefreshedEvent(Me, Nothing)
         End If
     End Sub
@@ -250,7 +286,7 @@ Public Class EditableDataViewModel
     Protected Overridable Sub ViewRowUpdatedEvent(sender As Object, e As ViewRowUpdatedEventArgs)
         Dim rows = (From r In e.Rows Select r.Row).ToArray
         Dim data = (From r In e.Rows Select r.RowData).ToArray
-        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim fields = Me.Configuration.GetFields(Me.Mode)
         Dim uneditableFieldNames = (From f In fields
                                     Where f.Editable = False
                                     Select f.Name).ToArray
@@ -278,7 +314,7 @@ Public Class EditableDataViewModel
         Dim cellInfos As List(Of ViewCellInfo) = e.Cells.ToList()
         cellInfos.RemoveAll(
             Function(cellInfo)
-                Return Not Me.Configuration.GetFieldConfiguration(Me.Mode, cellInfo.ColumnName).Editable
+                Return Not Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName).Editable
             End Function)
 
         Dim rows = (From c In cellInfos Select c.Row).ToArray
@@ -353,7 +389,7 @@ Public Class EditableDataViewModel
 
         Dim modelCellInfos = e.UpdatedCells.ToList
         modelCellInfos.RemoveAll(Function(cellInfo)
-                                     Dim curField = Me.Configuration.GetFieldConfiguration(Me.Mode, cellInfo.ColumnName)
+                                     Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
                                      Return Not curField.Visible
                                  End Function)
 
@@ -454,14 +490,18 @@ Public Class EditableDataViewModel
     End Function
 
     Protected Overridable Function GetForwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
-        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim context As New InvocationContext(
+            New InvocationContextItem(Me, Nothing),
+            New InvocationContextItem(rowNum, Nothing),
+            New InvocationContextItem(cellData, Nothing))
+        Dim fields = Me.Configuration.GetFields(Me.Mode)
         Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
         If curField Is Nothing Then
             Throw New FrontWorkException($"Field ""{fieldName}"" not found in Configuration!")
         End If
         Dim result = Nothing
         If curField.ForwardMapper IsNot Nothing Then
-            result = curField.ForwardMapper.Invoke(cellData, Me, rowNum)
+            result = curField.ForwardMapper.Invoke(context)
         Else
             result = cellData
         End If
@@ -478,14 +518,18 @@ Public Class EditableDataViewModel
     End Function
 
     Protected Overridable Function GetBackwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
-        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim context As New InvocationContext(
+            New InvocationContextItem(Me, Nothing),
+            New InvocationContextItem(rowNum, Nothing),
+            New InvocationContextItem(cellData, Nothing))
+        Dim fields = Me.Configuration.GetFields(Me.Mode)
         Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
         If curField Is Nothing Then
             Throw New FrontWorkException($"Field ""{fieldName}"" not found in Configuration!")
         End If
         Dim result = Nothing
         If curField.BackwardMapper IsNot Nothing Then
-            result = curField.BackwardMapper.Invoke(cellData, Me, rowNum)
+            result = curField.BackwardMapper.Invoke(context)
         Else
             result = cellData
         End If

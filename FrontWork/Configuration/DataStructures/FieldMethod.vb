@@ -86,28 +86,14 @@ Public Class FieldMethod
     ''' <summary>
     ''' 执行函数
     ''' </summary>
-    ''' <param name="params">参数列表，执行函数前自动赋值到Parameters</param>
+    ''' <param name="context">参数上下文</param>
     ''' <returns>返回值，执行函数后，返回ReturnValue</returns>
-    Public Function Invoke(ParamArray params As Object()) As Object
-        If params IsNot Nothing Then
-            Me.Parameters = params
+    Public Function Invoke(context As InvocationContext) As Object
+        If context IsNot Nothing Then
+            Dim contextItems = context.ContextItems.ToArray
+            Me.Parameters = (From item In contextItems Select item.InvocationSource).ToArray
         End If
         Me.AutoMatchParams = True
-        Me.ReturnValue = Nothing
-        Call Me.TargetFunc()
-        Return ReturnValue
-    End Function
-
-    ''' <summary>
-    ''' 执行函数（禁用自动匹配参数）
-    ''' </summary>
-    ''' <param name="params">参数列表，执行函数前自动赋值到Parameters</param>
-    ''' <returns>返回值，执行函数后，返回ReturnValue</returns>
-    Public Function InvokeNoAutoMatchParams(ParamArray params As Object()) As Object
-        If params IsNot Nothing Then
-            Me.Parameters = params
-        End If
-        Me.AutoMatchParams = False
         Me.ReturnValue = Nothing
         Call Me.TargetFunc()
         Return ReturnValue
