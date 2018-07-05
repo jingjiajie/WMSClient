@@ -152,17 +152,17 @@ namespace WMS.UI.FromDeliverOrder
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                if (rowData[i]["driverName"] == null)
-                {
-                    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (rowData[i]["driverName"] == null)
+                //{
+                //    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 
-                if (rowData[i]["liscensePlateNumber"] == null)
-                {
-                    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (rowData[i]["liscensePlateNumber"] == null)
+                //{
+                //    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 if ((int)rowData[i]["state"] == 4)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -354,6 +354,11 @@ namespace WMS.UI.FromDeliverOrder
                 this.searchView1.Search();
             });
             a1.Show();
+        }
+
+        private void ReturnNoteNoEditEnded(int row)
+        {
+            this.model1[row, "returnNoteTime"] = DateTime.Now;
         }
     }
 }

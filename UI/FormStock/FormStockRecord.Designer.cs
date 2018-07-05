@@ -147,7 +147,7 @@
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 21);
-            this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Text = "校正";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // synchronizer

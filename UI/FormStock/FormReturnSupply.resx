@@ -136,15 +136,16 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},              
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-        {name:"storageLocationId",displayName:"库位ID",type:"int",visible:false},
-        {name:"supplyId",displayName:"供货ID",type:"int",visible:true},
+        {name:"storageLocationId",displayName:"库位ID",type:"int",visible:false},  
+        {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:false},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false},
         {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
-        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+     
         {name:"amount",displayName:"数量",type:"double",placeHolder:"必填项",forwardMapper:"#AmountForwardMapper",backwardMapper:"#AmountBackwardMapper",defaultValue:0},
         {name:"availableAmount",displayName:"可用数量",type:"double",placeHolder:"必填项",forwardMapper:"#AvailableAmountForwardMapper",backwardMapper:"#AvailableAmountBackwardMapper",defaultValue:0},
         {name:"unit",displayName:"单位",type:"string",placeHolder:"必填项"},
@@ -158,7 +159,7 @@
         {name:"expiryDate",displayName:"失效日期",type:"datetime"},
         {name:"time",displayName:"记录时间",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation",editable:false},
         {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-        {name:"state",displayName:"检测状态",type:"int",defaultValue:2,values:["不合格","合格"],forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",contentChanged:"#stateEditEnded"}      
+        {name:"state",displayName:"检测状态",type:"int",defaultValue:2,values:["不合格","合格"],forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",contentChanged:"#stateContentChanged"}      
     ],
 httpAPIs:[
 		{type:"add",
