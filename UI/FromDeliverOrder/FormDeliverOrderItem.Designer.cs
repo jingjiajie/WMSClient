@@ -113,6 +113,7 @@
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 10;
+            this.configuration1.Load += new System.EventHandler(this.configuration1_Load);
             // 
             // tableLayoutPanel2
             // 

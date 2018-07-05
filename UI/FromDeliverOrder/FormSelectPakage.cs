@@ -25,26 +25,6 @@ namespace WMS.UI.FromDeliverOrder
             InitializeComponent();
         }
 
-        private void basicView1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void configuration1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void basicView1_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripButtonAdd_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private void PackageNameEditEnded(int row, string pakageName)
         {
             var foundPackages = (from s in GlobalData.AllPackage

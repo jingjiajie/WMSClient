@@ -23,6 +23,13 @@ namespace WMS.UI.FromDeliverOrder
             this.deliveryOrder = deliveryOrder;
             InitializeComponent();
             this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
+            int OrderState=(int)this.deliveryOrder["state"];
+            if (OrderState == 3 || OrderState == 4) {
+                this.toolStripButtonAdd.Visible = false;
+                this.toolStripButtonAlter.Visible = false;
+                this.toolStripButtonDelete.Visible = false;
+                this.toolStripButtonDeliveyPakage.Visible = false;
+            }
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
         }
@@ -65,7 +72,9 @@ namespace WMS.UI.FromDeliverOrder
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
-                { "deliveryOrderNo", this.deliveryOrder["no"]}
+                { "realAmount",0},
+                { "deliveryOrderNo", this.deliveryOrder["no"]},
+                { "deliveryOrderId", this.deliveryOrder["id"]}
             });
         }
 
@@ -464,6 +473,11 @@ namespace WMS.UI.FromDeliverOrder
                 this.searchView1.Search();
             });
             a1.Show();
+        }
+
+        private void configuration1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
