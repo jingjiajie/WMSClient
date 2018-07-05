@@ -46,4 +46,8 @@ Public Class ViewColumn
     Public Shared Operator <>(viewColumn1 As ViewColumn, viewColumn2 As ViewColumn) As Boolean
         Return Not viewColumn1 = viewColumn2
     End Operator
+
+    Public Overrides Function ToString() As String
+        Return Me.DisplayName
+    End Function
 End Class

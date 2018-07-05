@@ -143,15 +143,15 @@ Public Class EditableDataViewModel
     ''' </summary>
     Protected Overridable Sub RefreshViewSchema(oldColumns As ViewColumn(), newColumns As ViewColumn())
         If oldColumns.Length = 0 AndAlso newColumns.Length = 0 Then Return
-        Dim updateColumns As New List(Of KeyValuePair(Of String, ViewColumn))
+        Dim updateColumns As New List(Of KeyValuePair(Of Integer, ViewColumn))
         Dim addColumns As New List(Of ViewColumn)
-        Dim removeColumns As New List(Of String)
+        Dim removeColumns As New List(Of Integer)
         For i = 0 To Math.Max(oldColumns.Length, newColumns.Length) - 1
             If oldColumns.Length > i AndAlso newColumns.Length > i Then
                 If oldColumns(i) = newColumns(i) Then Continue For
-                updateColumns.Add(New KeyValuePair(Of String, ViewColumn)(oldColumns(i).Name, newColumns(i)))
+                updateColumns.Add(New KeyValuePair(Of Integer, ViewColumn)(i, newColumns(i)))
             ElseIf oldColumns.Length > i AndAlso newColumns.Length <= i Then
-                removeColumns.Add(oldColumns(i).Name)
+                removeColumns.Add(i)
             ElseIf oldColumns.Length <= i AndAlso newColumns.Length > i Then
                 addColumns.Add(newColumns(i))
             Else
@@ -495,12 +495,11 @@ Public Class EditableDataViewModel
             New InvocationContextItem(rowNum, Nothing),
             New InvocationContextItem(cellData, Nothing))
         Dim fields = Me.Configuration.GetFields(Me.Mode)
-        Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
-        If curField Is Nothing Then
-            Throw New FrontWorkException($"Field ""{fieldName}"" not found in Configuration!")
-        End If
+        Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
         Dim result = Nothing
-        If curField.ForwardMapper IsNot Nothing Then
+        If curField Is Nothing Then
+            result = cellData
+        ElseIf curField.ForwardMapper IsNot Nothing Then
             result = curField.ForwardMapper.Invoke(context)
         Else
             result = cellData

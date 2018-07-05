@@ -5,8 +5,8 @@
     Event RowStateChanged As EventHandler(Of ViewRowStateChangedEventArgs)
 
     Function AddColumns(viewColumns As ViewColumn()) As Boolean
-    Function UpdateColumns(oriColumnNames As String(), newViewColumns As ViewColumn())
-    Function RemoveColumns(columnNames As String())
+    Function UpdateColumns(indexes As Integer(), newViewColumns As ViewColumn())
+    Function RemoveColumns(indexes As Integer())
     Function GetColumns() As ViewColumn()
 
     ''' <summary>

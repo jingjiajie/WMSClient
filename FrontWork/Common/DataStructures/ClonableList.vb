@@ -3,7 +3,7 @@
     Implements ICloneable
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim newList As New List(Of T)(Me.Count)
+        Dim newList As New ClonableList(Of T)(Me.Count)
         For i = 0 To Me.Count - 1
             newList.Add(Util.DeepClone(Me(i)))
         Next
@@ -18,7 +18,7 @@
         Me.AddRange(srcList)
     End Sub
 
-    'Public Sub New(srcArray As T())
-    '    Me.AddRange(srcArray)
-    'End Sub
+    Public Sub New(capacity As Integer)
+        Call MyBase.New(capacity)
+    End Sub
 End Class

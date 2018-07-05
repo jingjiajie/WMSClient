@@ -13,6 +13,13 @@ Partial Public Class BasicView
     Inherits UserControl
     Implements IAssociableDataView
 
+    Private Class ControlTag
+        Public Property Index As Integer
+
+        Public Sub New(index As Integer)
+            Me.Index = index
+        End Sub
+    End Class
 
     Private _itemsPerRow As Integer = 3
 
@@ -377,30 +384,33 @@ Partial Public Class BasicView
     End Sub
 
     '初始化一个标签
-    Private Sub InitLabel(label As Label, viewColumn As ViewColumn)
+    Private Sub InitLabel(label As Label, viewColumn As ViewColumn, index As Integer)
         With label
             .Text = viewColumn.DisplayName
             .Name = viewColumn.Name
             .Font = Me.Font
             .Dock = DockStyle.Fill
             .Margin = New Padding(0)
+            .Tag = New ControlTag(index)
         End With
     End Sub
 
-    Private Sub InitTextBox(textBox As BasicViewTextBox, viewColumn As ViewColumn)
+    Private Sub InitTextBox(textBox As BasicViewTextBox, viewColumn As ViewColumn, index As Integer)
         Call Me.UnbindTextBox(textBox)
         '创建编辑框
         With textBox
+            .Text = Nothing
             .Name = viewColumn.Name
             .PlaceHolder = viewColumn.PlaceHolder
             .ReadOnly = Not viewColumn.Editable
             .Font = Me.Font
             .Dock = DockStyle.Fill
+            .Tag = New ControlTag(index)
         End With
         Call Me.BindTextBox(textBox)
     End Sub
 
-    Private Sub InitComboBox(comboBox As ComboBox, viewColumn As ViewColumn)
+    Private Sub InitComboBox(comboBox As ComboBox, viewColumn As ViewColumn, index As Integer)
         Call Me.UnbindComboBox(comboBox)
         With comboBox
             .Name = viewColumn.Name
@@ -408,6 +418,7 @@ Partial Public Class BasicView
             .Enabled = viewColumn.Editable
             .DropDownStyle = ComboBoxStyle.DropDownList
             .Dock = DockStyle.Fill
+            .Tag = New ControlTag(index)
         End With
         Call comboBox.Items.Clear()
         Dim values As Object() = Util.ToArray(Of Object)(viewColumn.Values)
@@ -455,8 +466,7 @@ Partial Public Class BasicView
 
     Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IAssociableDataView.AddColumns
         Static inited = False
-        Call Me.ViewColumns.AddRange(columns)
-
+        '更新视图
         Call Me.TableLayoutPanel.SuspendLayout()
         '如果第一次增加列，则将BasicView的默认页面清空
         If Not inited Then
@@ -467,74 +477,73 @@ Partial Public Class BasicView
         End If
 
         Call Me.AdjustRowCountAndStyles()
-        For Each viewColumn In columns
+        For i = 0 To columns.Length - 1
+            Dim viewColumn = columns(i)
+            Dim index = Me.ViewColumns.Count + i
             Dim label = Me._LabelManager.PopControl
-            Call Me.InitLabel(label, viewColumn)
+            Call Me.InitLabel(label, viewColumn, index)
             Me.Panel.Controls.Add(label)
             '如果没有设定Values字段，认为可以用编辑框体现
-            If viewColumn.Values Is Nothing Then
+            If ViewColumn.Values Is Nothing Then
                 Dim textBox = Me._TextBoxManager.PopControl()
-                Call Me.InitTextBox(textBox, viewColumn)
+                Call Me.InitTextBox(textBox, viewColumn, index)
                 '将编辑框添加到Panel里
                 Me.Panel.Controls.Add(textBox)
             Else
                 Dim comboBox = Me._ComboBoxManager.PopControl
-                Call Me.InitComboBox(comboBox, viewColumn)
+                Call Me.InitComboBox(comboBox, viewColumn, index)
                 Me.Panel.Controls.Add(comboBox)
             End If
         Next
         Call Me.AdjustColumnWidths()
         Call Me.TableLayoutPanel.ResumeLayout()
+        '更新记录的ViewColumns
+        Call Me.ViewColumns.AddRange(columns)
         Return True
     End Function
 
-    Public Function UpdateColumns(columnNames() As String, columns() As ViewColumn) As Object Implements IAssociableDataView.UpdateColumns
-        For i = 0 To columnNames.Length - 1
-            Dim columnName = columnNames(i)
-            Dim column = columns(i)
-            For j = 0 To Me.ViewColumns.Count - 1
-                If Me.ViewColumns(j).Name = columnName Then
-                    Me.ViewColumns(j) = column
-                    Exit For
-                End If
-            Next
-        Next
+    Public Function UpdateColumns(indexes() As Integer, columns() As ViewColumn) As Object Implements IAssociableDataView.UpdateColumns
+        '更新视图
         Call Me.TableLayoutPanel.SuspendLayout()
-        For i = 0 To columnNames.Length - 1
-            Dim oriColumnName = columnNames(i)
+        For i = 0 To indexes.Length - 1
+            Dim index = indexes(i)
             Dim newColumn = columns(i)
             For Each ctl As Control In Me.TableLayoutPanel.Controls
-                If ctl.Name <> oriColumnName Then Continue For
+                If ctl.Tag.Index <> index Then Continue For
                 Select Case ctl.GetType
                     Case GetType(Label)
-                        Call Me.InitLabel(ctl, newColumn)
+                        Call Me.InitLabel(ctl, newColumn, index)
                     Case GetType(BasicViewTextBox)
-                        Call Me.InitTextBox(ctl, newColumn)
+                        Call Me.InitTextBox(ctl, newColumn, index)
                     Case GetType(ComboBox)
-                        Call Me.InitComboBox(ctl, newColumn)
+                        Call Me.InitComboBox(ctl, newColumn, index)
                 End Select
             Next
         Next
         Call Me.AdjustColumnWidths()
         Call Me.TableLayoutPanel.ResumeLayout()
+        '更新记录的ViewColumns
+        For i = 0 To indexes.Length - 1
+            Dim index = indexes(i)
+            Dim column = columns(i)
+            Me.ViewColumns(index) = column
+        Next
         Return True
     End Function
 
-    Public Function RemoveColumns(columnNames() As String) As Object Implements IAssociableDataView.RemoveColumns
-        Me.ViewColumns.RemoveAll(Function(column)
-                                     Return columnNames.Contains(column.Name)
-                                 End Function)
-
+    Public Function RemoveColumns(indexes() As Integer) As Object Implements IAssociableDataView.RemoveColumns
         Call Me.TableLayoutPanel.SuspendLayout()
         Call Me.AdjustRowCountAndStyles()
 
         '收集需要删除的Control
         Dim removeControls As New List(Of Control)
         For Each ctl As Control In Me.TableLayoutPanel.Controls
-            Dim name = ctl.Name
-
-            If columnNames.Contains(name) Then
+            '如果是被删除的index，则记录要删除的Control
+            If indexes.Contains(ctl.Tag.Index) Then
                 removeControls.Add(ctl)
+            Else '否则，有几个在之前的Control被删除，则index就减几
+                Dim tag = CType(ctl.Tag, ControlTag)
+                tag.Index -= (From i In indexes Where i < tag.Index Select i).Count
             End If
         Next
         '开始删除Controls
@@ -557,6 +566,11 @@ Partial Public Class BasicView
             Call Me.AdjustColumnWidths()
             Call Me.TableLayoutPanel.ResumeLayout()
         End If
+
+        Dim indexesDesc = (From i In indexes Order By i Descending Select i).ToArray
+        For Each index In indexesDesc
+            Me.ViewColumns.RemoveAt(index)
+        Next
         Return True
     End Function
 

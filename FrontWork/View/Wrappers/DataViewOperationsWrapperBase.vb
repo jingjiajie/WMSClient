@@ -39,12 +39,12 @@ Public Class DataViewOperationsWrapperBase
         Return View.AddColumns(viewColumns)
     End Function
 
-    Public Overridable Function UpdateColumns(oriColumnNames() As String, newViewColumns() As ViewColumn) As Object Implements IDataView.UpdateColumns
-        Return View.UpdateColumns(oriColumnNames, newViewColumns)
+    Public Overridable Function UpdateColumns(indexes() As Integer, newViewColumns() As ViewColumn) As Object Implements IDataView.UpdateColumns
+        Return View.UpdateColumns(indexes, newViewColumns)
     End Function
 
-    Public Overridable Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
-        Return View.RemoveColumns(columnNames)
+    Public Overridable Function RemoveColumns(indexes() As Integer) As Object Implements IDataView.RemoveColumns
+        Return View.RemoveColumns(indexes)
     End Function
 
     Public Overridable Function GetColumns() As ViewColumn() Implements IDataView.GetColumns

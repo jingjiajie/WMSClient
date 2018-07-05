@@ -21,4 +21,7 @@ Public Class ModelColumn
         End Get
     End Property
 
+    Public Overrides Function ToString() As String
+        Return Me.Name
+    End Function
 End Class

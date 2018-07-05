@@ -216,4 +216,8 @@ Public Class Field
             End If
         Next
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return Me.DisplayName
+    End Function
 End Class

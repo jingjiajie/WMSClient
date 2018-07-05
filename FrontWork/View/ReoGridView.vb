@@ -182,23 +182,25 @@ Public Class ReoGridView
         Me.Workbook = Me.ReoGridControl
         AddHandler Me.Workbook.PreviewKeyDown, AddressOf Me.WorkbookPreviewKeyDown
 
-        '创建联想窗口
-        Me.Panel.StartEdit()
-        Me.Panel.EndEdit(EndEditReason.NormalFinish)
-        For Each control As Control In Me.ReoGridControl.Controls
-            If TypeOf (control) Is TextBox AndAlso control.Name = "" Then
-                Me.textBox = control
-                Exit For
+        If Not Me.DesignMode Then
+            '创建联想窗口
+            Me.Panel.StartEdit()
+            Me.Panel.EndEdit(EndEditReason.NormalFinish)
+            For Each control As Control In Me.ReoGridControl.Controls
+                If TypeOf (control) Is TextBox AndAlso control.Name = "" Then
+                    Me.textBox = control
+                    Exit For
+                End If
+            Next
+            If Me.textBox Is Nothing Then
+                Throw New FrontWorkException("ReoGridView TextBox not found")
             End If
-        Next
-        If Me.textBox Is Nothing Then
-            Throw New FrontWorkException("ReoGridView TextBox not found")
+            Me.formAssociation = New AdsorbableAssociationForm
+            RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
+            AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
+            RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
+            AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
         End If
-        Me.formAssociation = New AdsorbableAssociationForm
-        RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-        AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-        RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
-        AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
 
         '绑定ViewModel
         Me.ViewModel = New AssociableDataViewModel(Me)
@@ -766,11 +768,11 @@ Public Class ReoGridView
         Me.Panel.SetSettings(WorksheetSettings.Edit_AutoFormatCell, False)
         Call Me.ShowDefaultPage()
 
-        '绑定联想窗口编辑框
-        Me.formAssociation.AdsorbTextBox = Me.textBox
-
-        '给worksheet添加事件
         If Not Me.DesignMode Then
+            '绑定联想窗口编辑框
+            Me.formAssociation.AdsorbTextBox = Me.textBox
+
+            '给worksheet添加事件
             RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
             '编辑事件
@@ -863,27 +865,23 @@ Public Class ReoGridView
         Return True
     End Function
 
-    Public Function UpdateColumns(oriColumnNames() As String, newViewColumns() As ViewColumn) As Object Implements IDataView.UpdateColumns
-        For i = 0 To oriColumnNames.Length - 1
-            Dim oriColumnName = oriColumnNames(i)
+    Public Function UpdateColumns(indexes() As Integer, newViewColumns() As ViewColumn) As Object Implements IDataView.UpdateColumns
+        For i = 0 To indexes.Length - 1
+            Dim index = indexes(i)
             Dim newViewColumn = newViewColumns(i)
-            For j = 0 To Me.Panel.ColumnCount - 1
-                If Me.Panel.ColumnHeaders(j).Tag.Name.Equals(oriColumnName) Then
-                    Me.Panel.ColumnHeaders(j).Tag = New ColumnTag With {.ViewColumn = newViewColumn}
-                    Me.Panel.ColumnHeaders(j).Text = newViewColumn.DisplayName
-                End If
-            Next
+            Me.Panel.ColumnHeaders(index).Tag = New ColumnTag With {.ViewColumn = newViewColumn}
+            Me.Panel.ColumnHeaders(index).Text = newViewColumn.DisplayName
         Next
         Return True
     End Function
 
-    Public Function RemoveColumns(columnNames() As String) As Object Implements IDataView.RemoveColumns
-        If columnNames.Length >= Me.Panel.ColumnCount Then
+    Public Function RemoveColumns(indexes() As Integer) As Object Implements IDataView.RemoveColumns
+        If indexes.Length >= Me.Panel.ColumnCount Then
             Me.NoColumn = True
             Call Me.ShowDefaultPage()
             Return True
         End If
-        Me.Panel.ColumnCount -= columnNames.Length
+        Me.Panel.ColumnCount -= indexes.Length
         Return True
     End Function
 
