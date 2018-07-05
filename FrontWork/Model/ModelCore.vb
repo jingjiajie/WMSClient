@@ -358,15 +358,19 @@ Public Class ModelCore
     End Sub
 
     Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
-        Dim DataTable As DataTable = args.DataTable
+        Dim dataTable As DataTable = args.DataTable
         Dim ranges As Range() = args.SelectionRanges
-        Dim states As ModelRowState() = args.RowStates
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         '刷新数据
-        Me._Data = DataTable
+        Me._Data = dataTable
         '刷新同步状态字典
-        Me.RowStates = states.ToList
+        Dim stateArray(dataTable.Rows.Count - 1) As ModelRowState
+        For i = 0 To stateArray.Length - 1
+            stateArray(i) = New ModelRowState(SynchronizationState.SYNCHRONIZED)
+        Next
+        Me.RowStates.Clear()
+        Me.RowStates.AddRange(stateArray)
         '触发刷新事件
         RaiseEvent Refreshed(Me, New ModelRefreshedEventArgs)
     End Sub

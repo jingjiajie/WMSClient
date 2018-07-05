@@ -358,11 +358,7 @@ Public Class JsonRESTSynchronizer
                 If selectionRanges.Count = 0 AndAlso dataTable.Rows.Count > 0 Then
                     selectionRanges.Add(New Range(0, 0, 1, 1))
                 End If
-                Call Me.Model.Refresh(New ModelRefreshArgs(dataTable,
-                                                           selectionRanges.ToArray,
-                                                           Util.Times(New ModelRowState With
-                                                                        {.SynchronizationState = SynchronizationState.SYNCHRONIZED},
-                                                                      dataTable.Rows.Count)))
+                Call Me.Model.Refresh(New ModelRefreshArgs(dataTable, selectionRanges.ToArray))
 
                 Call Me.FindAPI.Callback?.Invoke(response, Nothing)
             End Using

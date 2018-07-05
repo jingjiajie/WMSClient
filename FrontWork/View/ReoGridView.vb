@@ -310,7 +310,8 @@ Public Class ReoGridView
         Me.Workbook.Focus()
     End Sub
 
-    Private Sub AutoFitColumnWidth(col As Integer)
+    Private Sub AutoFitColumnWidth(col As Integer, Optional suspendUIUpdates As Boolean = True)
+        If suspendUIUpdates Then Call Me.Panel.SuspendUIUpdates()
         Me.Panel.ColumnHeaders(col).Width = 0
         Call Me.Panel.AutoFitColumnWidth(col)
         Dim columnHeader = Me.Panel.ColumnHeaders.Item(col)
@@ -322,6 +323,7 @@ Public Class ReoGridView
             width = 20 + columnHeaderText.Length * 10
         End If
         Me.Panel.ColumnHeaders(col).Width = System.Math.Max(width, Me.Panel.ColumnHeaders(col).Width + 10)
+        If suspendUIUpdates Then Call Me.Panel.ResumeUIUpdates()
     End Sub
 
     ''' <summary>
