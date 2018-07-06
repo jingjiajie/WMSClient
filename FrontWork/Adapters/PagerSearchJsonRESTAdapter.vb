@@ -26,15 +26,22 @@ Public Class PagerSearchJsonRESTAdapter
     End Property
 
     Protected Sub PagerViewPageChanged(sender As Object, e As PageChangedEventArgs)
-        Call Me.SearchView.ButtonSearch.PerformClick()
+        Call Me.Search(Me.SearchView.GetSearchEventArgs, False)
     End Sub
 
     Protected Overrides Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
-        Logger.SetMode(LogMode.DEFAULT_MODE)
-        If Me.Synchronizer.GetCountAPI Is Nothing Then
-            throw new FrontWorkException("get-count API not set!")
-        End If
+        Return Me.Search(args, True)
+    End Function
 
+    Public Function Search(searchArgs As OnSearchEventArgs, resetPage As Boolean) As Boolean
+        If Me.Synchronizer.GetCountAPI Is Nothing Then
+            Throw New FrontWorkException("get-count API not set!")
+        End If
+        If resetPage Then
+            RemoveHandler Me.PagerView.OnCurrentPageChanged, AddressOf Me.PagerViewPageChanged
+            Me.PagerView.CurrentPage = 1
+            AddHandler Me.PagerView.OnCurrentPageChanged, AddressOf Me.PagerViewPageChanged
+        End If
         '=====开始搜索内容
         If Me.PagerView Is Nothing Then
             Logger.PutMessage("PagerSearchJsonRESTAdapter: PagerView not set!", LogLevel.WARNING)
@@ -45,9 +52,9 @@ Public Class PagerSearchJsonRESTAdapter
 
         '=====刷新分页总数
         '获取搜索结果
-        If Not MyBase.SearchViewOnSearch(sender, args) Then Return False
+        If Not MyBase.SearchViewOnSearch(Nothing, searchArgs) Then Return False
 
-        Call Me.SetConditionAndOrdersToAPI(Me.Synchronizer.GetCountAPI, args)
+        Call Me.SetConditionAndOrdersToAPI(Me.Synchronizer.GetCountAPI, searchArgs)
         '获取搜索结果总数量
         Dim responseStr As String = Nothing
         Try

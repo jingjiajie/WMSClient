@@ -93,7 +93,7 @@ Public Class SearchView
     ''' 根据用户的搜索条件设置，生成OnSearchEventArgs
     ''' </summary>
     ''' <returns>返回生成的OnSearchEventArgs</returns>
-    Protected Function GetSearchEventArgs() As OnSearchEventArgs
+    Public Function GetSearchEventArgs() As OnSearchEventArgs
         If Me.Configuration Is Nothing Then
             Throw New FrontWorkException($"Configuration not set in {Me.Name}")
         End If
