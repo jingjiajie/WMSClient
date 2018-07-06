@@ -47,6 +47,9 @@ namespace WMS.UI
                 { "personName",GlobalData.Person["name"]},
                 { "transferOrderNo", this.putAwayNote["no"]},
                 { "operateTime", DateTime.Now},
+                { "supplierId",this.putAwayNote["supplierId"]},
+                { "supplierName",this.putAwayNote["supplierName"]},
+                { "supplierNo",this.putAwayNote["supplierNo"]}
             });
         }
 

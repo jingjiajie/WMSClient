@@ -125,8 +125,8 @@
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"transferOrderId",displayName:"移库单ID",type:"string",visible:false,defaultValue:"#putAwayNoteIDDefaultValue"},
         {name:"transferOrderNo",displayName:"上架单号",type:"string",editable:false},
-        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-        {name:"supplierName",displayName:"供应商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供应商名称",type:"string",editable:false,association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
@@ -189,7 +189,7 @@
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
         ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
         NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>
@@ -197,7 +197,7 @@
   <data name="toolStripButtonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAOeSURBVFhH7VZJaBRBFB1NNG6IEtyNiGLEg4kQEFxQcxJP
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOeSURBVFhH7VZJaBRBFB1NNG6IEtyNiGLEg4kQEFxQcxJP
         4iki4l3cSELEPTEacxAR9KDo1bsXJSc3EL2ZKKggiQsenOl09/RMT3XPpJfn++UEXBJ1kmHw4IOiqJnu
         /179/+pXJ/6j0nBPnYI6ehTFZWWRI3nu/HmoM2fgnzhRWRGa/MIFqJ4eKM7elSvI9/WVJsI/fBheW1vJ
         ylV7O3IXL0IVR+7cOSgKCD9+LD0LXkcH1NmzUK2tf/Wyx3pL2kcFyCwCvKtXEZvmxMrgsYaqsxMeAxV/
@@ -219,7 +219,7 @@
   <data name="toolStripButtonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
         CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
         NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
         ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
