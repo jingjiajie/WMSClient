@@ -79,8 +79,8 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(170, 10);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Location = new System.Drawing.Point(316, 24);
+            this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -91,8 +91,8 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(82, 9);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.configuration1.Location = new System.Drawing.Point(259, 24);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSelectPakage",
         "AssociationMethodListener"};
@@ -100,9 +100,8 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(135, 144);
+            this.configuration1.Size = new System.Drawing.Size(53, 54);
             this.configuration1.TabIndex = 17;
-            this.configuration1.Load += new System.EventHandler(this.configuration1_Load);
             // 
             // basicView1
             // 
@@ -118,7 +117,6 @@
             this.basicView1.Name = "basicView1";
             this.basicView1.Size = new System.Drawing.Size(410, 80);
             this.basicView1.TabIndex = 20;
-            this.basicView1.Load += new System.EventHandler(this.basicView1_Load_1);
             // 
             // tableLayoutPanel3
             // 
@@ -158,7 +156,7 @@
             this.buttonADD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonADD.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonADD.Location = new System.Drawing.Point(0, 0);
-            this.buttonADD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonADD.Margin = new System.Windows.Forms.Padding(4);
             this.buttonADD.Name = "buttonADD";
             this.buttonADD.Size = new System.Drawing.Size(150, 40);
             this.buttonADD.TabIndex = 11;

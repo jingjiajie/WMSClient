@@ -23,12 +23,25 @@ namespace WMS.UI.FromDeliverOrder
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
             this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
+            this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
-        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            if ((int)rowData[0]["state"] == 3)
+            {
+                this.model1.Mode = "default1";
+                this.basicView1.Mode = "default1";
+                this.reoGridView1.Mode = "default1";
+                this.synchronizer.Mode = "default1";
+            }
+            else {
+                this.model1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.synchronizer.Mode = "default";
+            }
         }
 
         private void updateBasicAndReoGridView()
@@ -152,17 +165,17 @@ namespace WMS.UI.FromDeliverOrder
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                if (rowData[i]["driverName"] == null)
-                {
-                    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (rowData[i]["driverName"] == null)
+                //{
+                //    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 
-                if (rowData[i]["liscensePlateNumber"] == null)
-                {
-                    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (rowData[i]["liscensePlateNumber"] == null)
+                //{
+                //    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 if ((int)rowData[i]["state"] == 4)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -305,11 +318,6 @@ namespace WMS.UI.FromDeliverOrder
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                if (rowData[i]["returnNoteNo"] == null)
-                {
-                    MessageBox.Show("请输入相应回单号以继续核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
                 if ((int)rowData[i]["state"] == 4)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -318,6 +326,11 @@ namespace WMS.UI.FromDeliverOrder
                 if ((int)rowData[i]["state"] != 3)
                 {
                     MessageBox.Show("选中出库单未发运无法进行核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (rowData[i]["returnNoteNo"] == null)
+                {
+                    MessageBox.Show("请输入相应回单号以继续核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -354,6 +367,11 @@ namespace WMS.UI.FromDeliverOrder
                 this.searchView1.Search();
             });
             a1.Show();
+        }
+
+        private void ReturnNoteNoEditEnded(int row)
+        {
+            this.model1[row, "returnNoteTime"] = DateTime.Now;
         }
     }
 }
