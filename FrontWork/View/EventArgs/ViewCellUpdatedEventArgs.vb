@@ -1,9 +1,9 @@
 ﻿Public Class ViewCellUpdatedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
-    Public Property Cells As CellInfo()
+    Public Property Cells As ViewCellInfo()
 
-    Public Sub New(cells As CellInfo())
+    Public Sub New(cells As ViewCellInfo())
         Me.Cells = cells
     End Sub
 End Class

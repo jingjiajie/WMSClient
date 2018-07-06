@@ -1,9 +1,12 @@
 ﻿Public Interface IDataView
     Inherits IView
 
-    Function AddColumns(columns As ViewColumn()) As Boolean
-    Function InsertColumns(columns As ViewColumn())
-    Function RemoveColumns(columnNames As String())
+    Event BeforeRowStateChange As EventHandler(Of ViewBeforeRowStateChangeEventArgs)
+    Event RowStateChanged As EventHandler(Of ViewRowStateChangedEventArgs)
+
+    Function AddColumns(viewColumns As ViewColumn()) As Boolean
+    Function UpdateColumns(indexes As Integer(), newViewColumns As ViewColumn())
+    Function RemoveColumns(indexes As Integer())
     Function GetColumns() As ViewColumn()
 
     ''' <summary>
@@ -42,6 +45,19 @@
     Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object())
 
     ''' <summary>
+    ''' 设置行同步状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="states">行状态</param>
+    Sub UpdateRowStates(rows As Integer(), states As ViewRowState())
+
+    ''' <summary>
+    ''' 获取行状态
+    ''' </summary>
+    ''' <param name="rows">状态</param>
+    Function GetRowStates(rows As Integer()) As ViewRowState()
+
+    ''' <summary>
     ''' View所存储数据的行数
     ''' </summary>
     ''' <returns></returns>
@@ -53,27 +69,4 @@
     ''' <returns></returns>
     Function GetColumnCount() As Integer
 
-    ''' <summary>
-    ''' View的选区
-    ''' </summary>
-    ''' <returns></returns>
-    Function GetSelectionRanges() As Range()
-
-    ''' <summary>
-    ''' 设置View的选区
-    ''' </summary>
-    ''' <param name="ranges">选区</param>
-    Sub SetSelectionRanges(ranges As Range())
-
-    Event BeforeRowUpdated As EventHandler(Of BeforeViewRowUpdateEventArgs)
-    Event BeforeRowAdded As EventHandler(Of BeforeViewRowAddEventArgs)
-    Event BeforeRowRemoved As EventHandler(Of BeforeViewRowRemoveEventArgs)
-    Event BeforeCellUpdated As EventHandler(Of BeforeViewCellUpdateEventArgs)
-    Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs)
-
-    Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs)
-    Event RowAdded As EventHandler(Of ViewRowAddedEventArgs)
-    Event RowRemoved As EventHandler(Of ViewRowRemovedEventArgs)
-    Event CellUpdated As EventHandler(Of ViewCellUpdatedEventArgs)
-    Event SelectionRangeChanged As EventHandler(Of ViewSelectionRangeChangedEventArgs)
 End Interface

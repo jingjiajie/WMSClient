@@ -4,7 +4,7 @@ Imports FrontWork
 
 Public Class ModelBox
     Inherits Model
-    Implements IModelCore
+    Implements IModel
     Private _currentModelName As String
     Private _configuration As Configuration
     Private _mode As String
@@ -29,9 +29,9 @@ Public Class ModelBox
                 newModel.Name = value
                 newModel.Configuration = Me.Configuration
                 Me._Models.SetModel(newModel)
-                Me.ModelCore = newModel
+                Me.ModelConfigurationWrapper.Model = newModel
             Else
-                Me.ModelCore = Me._Models(value)
+                Me.ModelConfigurationWrapper.Model = Me._Models(value)
             End If
             Me._currentModelName = value
             RaiseEvent SelectedModelChanged(Me, New SelectedModelChangedEventArgs)
@@ -72,7 +72,7 @@ Public Class ModelBox
             Next
             Dim newModel = New Model
             newModel.Name = groupName
-            newModel.Refresh(newDataTable, {New Range(0, 0, 1, 1)}, Nothing)
+            newModel.Refresh(New ModelRefreshArgs(newDataTable, {New Range(0, 0, 1, 1)}))
             Me.Models.SetModel(newModel)
         Next
         If groups.Length > 0 Then

@@ -114,13 +114,13 @@ Public Class JsonRESTSynchronizer
         End Get
         Set(value As Configuration)
             If Me._configuration IsNot Nothing Then
-                RemoveHandler Me._configuration.ConfigurationChanged, AddressOf Me.ConfigurationChanged
+                RemoveHandler Me._configuration.Refreshed, AddressOf Me.ConfigurationRefreshedEvent
             End If
             Me._configuration = value
             If Me._configuration IsNot Nothing Then
-                AddHandler Me._configuration.ConfigurationChanged, AddressOf Me.ConfigurationChanged
+                AddHandler Me._configuration.Refreshed, AddressOf Me.ConfigurationRefreshedEvent
             End If
-            Call Me.ConfigurationChanged(Me, New EventArgs)
+            Call Me.ConfigurationRefreshedEvent(Me, New EventArgs)
         End Set
     End Property
 
@@ -135,7 +135,7 @@ Public Class JsonRESTSynchronizer
         End Get
         Set(value As String)
             Me._mode = value
-            Call Me.ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
+            Call Me.ConfigurationRefreshedEvent(Me, Nothing)
         End Set
     End Property
 
@@ -206,6 +206,7 @@ Public Class JsonRESTSynchronizer
     End Sub
 
     Private Sub InitSynchronizer()
+        Dim context As New InvocationContext()
         If Me._configuration Is Nothing Then Return
         Dim httpAPIConfigs = Me._configuration.GetHTTPAPIConfigurations(Me.Mode)
         Dim requestParams = (From mp In Me.RequestParams
@@ -218,7 +219,7 @@ Public Class JsonRESTSynchronizer
             If apiConfig.Type.Equals("pushFinishedCallback", StringComparison.OrdinalIgnoreCase) Then
                 Me.PushFinishedCallback =
                     Sub()
-                        Call apiConfig.Callback?.Invoke(Me)
+                        Call apiConfig.Callback?.Invoke(context)
                     End Sub
                 Continue For
             End If
@@ -242,7 +243,8 @@ Public Class JsonRESTSynchronizer
             newAPIInfo.ResponseBodyTemplate = apiConfig.ResponseBody
             newAPIInfo.Callback =
                 Function(res, ex) As Boolean
-                    Return apiConfig.Callback?.Invoke(res, ex, Me)
+                    Dim callBackContext As New InvocationContext
+                    Return apiConfig.Callback?.Invoke(callBackContext)
                 End Function
             If apiConfig.Type.Equals("find", StringComparison.OrdinalIgnoreCase) Then
                 Me.FindAPI = newAPIInfo
@@ -258,7 +260,7 @@ Public Class JsonRESTSynchronizer
         Next
     End Sub
 
-    Private Sub ConfigurationChanged(sender As Object, e As EventArgs)
+    Private Sub ConfigurationRefreshedEvent(sender As Object, e As EventArgs)
         Call Me.InitSynchronizer()
     End Sub
 
@@ -266,14 +268,10 @@ Public Class JsonRESTSynchronizer
         If Me.RemoveAPI Is Nothing Then
             Throw New FrontWorkException("Remove API not setted!")
         End If
-        '删除行的所有ID
-        Dim rowIDsASC = (From indexRow In e.RemoveRows
-                         Order By indexRow.RowID Ascending
-                         Select indexRow.RowID).ToArray
         '如果是新增的行，不要将删除操作同步到服务器。
         Dim rowDataList = (From rowInfo In e.RemoveRows
-                           Where rowInfo.SynchronizationState <> SynchronizationState.ADDED _
-                           AndAlso rowInfo.SynchronizationState <> SynchronizationState.ADDED_UPDATED
+                           Where rowInfo.State.SynchronizationState <> SynchronizationState.ADDED _
+                           AndAlso rowInfo.State.SynchronizationState <> SynchronizationState.ADDED_UPDATED
                            Select rowInfo.RowData).ToArray
         If rowDataList.Count > 0 Then
             Try
@@ -358,7 +356,7 @@ Public Class JsonRESTSynchronizer
                 If selectionRanges.Count = 0 AndAlso dataTable.Rows.Count > 0 Then
                     selectionRanges.Add(New Range(0, 0, 1, 1))
                 End If
-                Call Me.Model.Refresh(dataTable, selectionRanges.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, dataTable.Rows.Count))
+                Call Me.Model.Refresh(New ModelRefreshArgs(dataTable, selectionRanges.ToArray))
 
                 Call Me.FindAPI.Callback?.Invoke(response, Nothing)
             End Using
@@ -370,9 +368,9 @@ Public Class JsonRESTSynchronizer
             End If
             MessageBox.Show("查询失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
-        Catch ex As Exception
-            MessageBox.Show("查询失败：" & ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return False
+            'Catch ex As Exception
+            '    MessageBox.Show("查询失败：" & ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            '    Return False
         End Try
         Return True
     End Function
@@ -408,7 +406,7 @@ Public Class JsonRESTSynchronizer
                 Call Me.AddAPI.SetRequestParameter("$data", addedData.ToArray)
                 Call Me.AddAPI.Invoke()
                 '将相应行的同步状态更新为已同步
-                Me.Model.UpdateRowSynchronizationStates(addedRows.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, addedRows.Count))
+                Me.Model.UpdateRowStates(addedRows.ToArray, Util.Times(New ModelRowState With {.SynchronizationState = SynchronizationState.SYNCHRONIZED}, addedRows.Count))
             Catch ex As WebException
                 Dim message = ex.Message
                 If ex.Response IsNot Nothing Then
@@ -424,7 +422,7 @@ Public Class JsonRESTSynchronizer
                 Call Me.UpdateAPI.SetRequestParameter("$data", updatedData.ToArray)
                 Call Me.UpdateAPI.Invoke()
                 '将相应行的同步状态更新为已同步
-                Me.Model.UpdateRowSynchronizationStates(updatdRows.ToArray, Util.Times(SynchronizationState.SYNCHRONIZED, updatdRows.Count))
+                Me.Model.UpdateRowStates(updatdRows.ToArray, Util.Times(New ModelRowState With {.SynchronizationState = SynchronizationState.SYNCHRONIZED}, updatdRows.Count))
             Catch ex As WebException
                 Dim message = ex.Message
                 If ex.Response IsNot Nothing Then

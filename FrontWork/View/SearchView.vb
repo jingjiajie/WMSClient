@@ -26,7 +26,7 @@ Public Class SearchView
         End Get
         Set(value As String)
             Me._mode = value
-            Call Me.ConfigurationChanged(Me, New ConfigurationChangedEventArgs)
+            Call Me.ConfigurationRefreshed(Me, New ConfigurationRefreshedEventArgs)
         End Set
     End Property
 
@@ -41,12 +41,12 @@ Public Class SearchView
         End Get
         Set(value As Configuration)
             If Me._configuration IsNot Nothing Then
-                RemoveHandler Me._configuration.ConfigurationChanged, AddressOf Me.ConfigurationChanged
+                RemoveHandler Me._configuration.Refreshed, AddressOf Me.ConfigurationRefreshed
             End If
             Me._configuration = value
             Call Me.InitEditPanel()
             If Me._configuration IsNot Nothing Then
-                AddHandler Me._configuration.ConfigurationChanged, AddressOf Me.ConfigurationChanged
+                AddHandler Me._configuration.Refreshed, AddressOf Me.ConfigurationRefreshed
             End If
         End Set
     End Property
@@ -61,7 +61,7 @@ Public Class SearchView
         Call Me.ComboBoxOrderKey.Items.Add("无")
 
         If Me.Configuration Is Nothing Then Return
-        Dim fieldConfiguration = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim fieldConfiguration = Me.Configuration.GetFields(Me.Mode)
         If fieldConfiguration Is Nothing Then Return
         Dim fieldNames = (From field In fieldConfiguration
                           Where field.Visible
@@ -85,7 +85,7 @@ Public Class SearchView
         Call Me.Search()
     End Sub
 
-    Private Sub ConfigurationChanged(sender As Object, e As ConfigurationChangedEventArgs)
+    Private Sub ConfigurationRefreshed(sender As Object, e As ConfigurationRefreshedEventArgs)
         Call Me.InitEditPanel()
     End Sub
 
@@ -101,7 +101,7 @@ Public Class SearchView
 
         If Me.ComboBoxSearchKey.SelectedIndex <> 0 Then
             Dim searchDisplayName = Me.ComboBoxSearchKey.SelectedItem?.ToString
-            Dim fieldConfiguration = (From f In Me.Configuration.GetFieldConfigurations(Me.Mode)
+            Dim fieldConfiguration = (From f In Me.Configuration.GetFields(Me.Mode)
                                       Where f.DisplayName = searchDisplayName
                                       Select f).FirstOrDefault
             Dim valueCount = 1 '最终上传的Value个数
@@ -110,7 +110,10 @@ Public Class SearchView
             Dim searchValues(texts.Length - 1) As Object '转型后最终用于搜索的值
             If fieldConfiguration.BackwardMapper IsNot Nothing Then
                 For i = 0 To texts.Length - 1
-                    mappedValues(i) = fieldConfiguration.BackwardMapper.Invoke(Me, texts(i), -1)
+                    Dim context As New InvocationContext(New InvocationContextItem(Me, GetType(ViewAttribute)),
+                                                 New InvocationContextItem(texts(i), GetType(DataAttribute)),
+                                                 New InvocationContextItem(-1, GetType(RowAttribute)))
+                    mappedValues(i) = fieldConfiguration.BackwardMapper.Invoke(context)
                 Next
             Else
                 For i = 0 To texts.Length - 1
@@ -126,7 +129,7 @@ Public Class SearchView
                 End Try
             Next
             Dim relation As Relation
-            Dim searchName = (From m In Me.Configuration.GetFieldConfigurations(Me.Mode)
+            Dim searchName = (From m In Me.Configuration.GetFields(Me.Mode)
                               Where m.DisplayName = searchDisplayName
                               Select m.Name).First
             Select Case Me.ComboBoxSearchRelation.SelectedItem.ToString
@@ -153,7 +156,7 @@ Public Class SearchView
 
         If Me.ComboBoxOrderKey.SelectedIndex <> 0 Then
             Dim orderDisplayName = Me.ComboBoxOrderKey.SelectedItem?.ToString
-            Dim orderName = (From m In Me.Configuration.GetFieldConfigurations(Mode)
+            Dim orderName = (From m In Me.Configuration.GetFields(Mode)
                              Where m.DisplayName = orderDisplayName
                              Select m.Name).First
             Dim order As Order
@@ -187,7 +190,7 @@ Public Class SearchView
             Me.TextBoxSearchCondition.Enabled = True
             Me.TextBoxSearchCondition1.Enabled = True
             Dim selectedDisplayName = Me.ComboBoxSearchKey.SelectedItem.ToString
-            Dim field = (From f In Me.Configuration.GetFieldConfigurations(Me.Mode) Where f.DisplayName = selectedDisplayName Select f).First
+            Dim field = (From f In Me.Configuration.GetFields(Me.Mode) Where f.DisplayName = selectedDisplayName Select f).First
             Call Me.RefreshSearchByType(field.Type.FieldType)
         End If
     End Sub
@@ -300,7 +303,7 @@ Public Class SearchView
         End If
         Dim displayName = Nothing
         Dim strRelation = Me.RelationToString(relation)
-        Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
+        Dim fields = Me.Configuration.GetFields(Me.Mode)
 
         '如果能找到Name对应的字段，则直接取出
         For Each field In fields

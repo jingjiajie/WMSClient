@@ -91,7 +91,7 @@ Public Class TabView
     Private Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
         RemoveHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
         For Each indexDataRow In e.RemovedRows
-            Me.TabControl.TabPages.RemoveAt(indexDataRow.Index)
+            Me.TabControl.TabPages.RemoveAt(indexDataRow.Row)
         Next
         AddHandler Me.TabControl.SelectedIndexChanged, AddressOf Me.TabControl_SelectedIndexChanged
     End Sub

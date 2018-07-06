@@ -1,4 +1,4 @@
 ﻿Public Class ModelCollectionChangedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
 End Class

@@ -4,19 +4,19 @@ Imports System.Reflection
 
 Public Class ModelOperationsWrapper
     Inherits ModelWrapperBase
-    Implements IModelCore
+    Implements IModel
 
-    Public Overrides Property ModelCore As IModelCore
+    Public Overrides Property Model As IModel
         Get
-            Return MyBase.ModelCore
+            Return MyBase.Model
         End Get
-        Set(value As IModelCore)
-            If MyBase.ModelCore IsNot Nothing Then
-                Call Me.UnbindModelCore(MyBase.ModelCore)
+        Set(value As IModel)
+            If MyBase.Model IsNot Nothing Then
+                Call Me.UnbindModelCore(MyBase.Model)
             End If
-            MyBase.ModelCore = value
-            If MyBase.ModelCore IsNot Nothing Then
-                Call Me.BindModelCore(MyBase.ModelCore)
+            MyBase.Model = value
+            If MyBase.Model IsNot Nothing Then
+                Call Me.BindModelCore(MyBase.Model)
             End If
         End Set
     End Property
@@ -42,31 +42,31 @@ Public Class ModelOperationsWrapper
 
     End Sub
 
-    Public Sub New(modelCore As IModelCore)
-        Me.ModelCore = modelCore
+    Public Sub New(modelCore As IModel)
+        Me.Model = modelCore
     End Sub
 
 
-    Private Sub BindModelCore(modelCore As IModelCore)
-        AddHandler Me.ModelCore.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
-        AddHandler Me.ModelCore.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
-        AddHandler Me.ModelCore.RowAdded, AddressOf Me.RaiseRowAddedEvent
-        AddHandler Me.ModelCore.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
-        AddHandler Me.ModelCore.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
-        AddHandler Me.ModelCore.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
-        AddHandler Me.ModelCore.Refreshed, AddressOf Me.RaiseRefreshedEvent
-        AddHandler Me.ModelCore.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
+    Private Sub BindModelCore(modelCore As IModel)
+        AddHandler Me.Model.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
+        AddHandler Me.Model.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
+        AddHandler Me.Model.RowAdded, AddressOf Me.RaiseRowAddedEvent
+        AddHandler Me.Model.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
+        AddHandler Me.Model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
+        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
+        AddHandler Me.Model.Refreshed, AddressOf Me.RaiseRefreshedEvent
+        AddHandler Me.Model.RowStateChanged, AddressOf Me.RaiseRowStateChangedEvent
     End Sub
 
-    Private Sub UnbindModelCore(modelCore As IModelCore)
-        RemoveHandler Me.ModelCore.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
-        RemoveHandler Me.ModelCore.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
-        RemoveHandler Me.ModelCore.RowAdded, AddressOf Me.RaiseRowAddedEvent
-        RemoveHandler Me.ModelCore.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
-        RemoveHandler Me.ModelCore.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
-        RemoveHandler Me.ModelCore.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
-        RemoveHandler Me.ModelCore.Refreshed, AddressOf Me.RaiseRefreshedEvent
-        RemoveHandler Me.ModelCore.RowSynchronizationStateChanged, AddressOf Me.RaiseRowSynchronizationStateChangedEvent
+    Private Sub UnbindModelCore(modelCore As IModel)
+        RemoveHandler Me.Model.CellUpdated, AddressOf Me.RaiseCellUpdatedEvent
+        RemoveHandler Me.Model.RowUpdated, AddressOf Me.RaiseRowUpdatedEvent
+        RemoveHandler Me.Model.RowAdded, AddressOf Me.RaiseRowAddedEvent
+        RemoveHandler Me.Model.BeforeRowRemove, AddressOf Me.RaiseBeforeRowRemoveEvent
+        RemoveHandler Me.Model.RowRemoved, AddressOf Me.RaiseRowRemovedEvent
+        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.RaiseSelectionRangeChangedEvent
+        RemoveHandler Me.Model.Refreshed, AddressOf Me.RaiseRefreshedEvent
+        RemoveHandler Me.Model.RowStateChanged, AddressOf Me.RaiseRowStateChangedEvent
     End Sub
 
     Public Property Name As String
@@ -152,7 +152,7 @@ Public Class ModelOperationsWrapper
 
 
     Public Function GetCell(row As Integer, columnName As String) As Object
-        Return Me.ModelCore.GetCells({row}, {columnName})(0)
+        Return Me.Model.GetCells({row}, {columnName})(0)
     End Function
 
 
@@ -174,25 +174,6 @@ Public Class ModelOperationsWrapper
     Public Function GetRow(Of T As New)(row As Integer) As T
         Return Me.GetRows(Of T)({row})(0)
     End Function
-
-    ''' <summary>
-    ''' 获取行
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>相应行数据</returns>
-    Public Overloads Function GetRows(rowIDs As Guid()) As IDictionary(Of String, Object)()
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Return MyBase.GetRows(rowNums)
-    End Function
-
 
     ''' <summary>
     ''' 获取行
@@ -222,15 +203,6 @@ Public Class ModelOperationsWrapper
         Call Me.InsertRows({row}, {data})
     End Sub
 
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="rowID">删除行ID</param>
-    Public Sub RemoveRow(rowID As Guid)
-        Me.RemoveRows({rowID})
-    End Sub
-
     ''' <summary>
     ''' 删除行
     ''' </summary>
@@ -248,42 +220,15 @@ Public Class ModelOperationsWrapper
         MyBase.RemoveRows(Util.Range(startRow, startRow + rowCount))
     End Sub
 
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="rowIDs">删除行ID</param>
-    Public Overloads Sub RemoveRows(rowIDs As Guid())
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Me.RemoveRows(rowNums)
-    End Sub
-
-
     Public Sub RemoveSelectedRows()
         If Me.AllSelectionRanges Is Nothing Then Return
-        Dim removeRowIDs As New List(Of Guid)
+        Dim removeRows As New List(Of Integer)
         For Each range In Me.AllSelectionRanges
             For i = 0 To range.Rows - 1
-                removeRowIDs.Add(Me.GetRowID(range.Row + i))
+                removeRows.Add(range.Row + i)
             Next
         Next
-        Call Me.RemoveRows(removeRowIDs.Distinct.ToArray)
-    End Sub
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="rowID">更新行ID</param>
-    ''' <param name="data">数据</param>
-    Public Sub UpdateRow(rowID As Guid, data As IDictionary(Of String, Object))
-        Me.UpdateRows({rowID}, {data})
+        Call Me.RemoveRows(removeRows.Distinct.ToArray)
     End Sub
 
     ''' <summary>
@@ -301,57 +246,11 @@ Public Class ModelOperationsWrapper
     ''' <summary>
     ''' 更新行
     ''' </summary>
-    ''' <param name="rowIDs">更新的行ID</param>
-    ''' <param name="dataOfEachRow">相应的数据</param>
-    Public Shadows Sub UpdateRows(rowIDs As Guid(), dataOfEachRow As IDictionary(Of String, Object)())
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Call Me.UpdateRows(rowNums, dataOfEachRow)
-    End Sub
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
     ''' <param name="rows">行号</param>
     ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.UpdateRows
-        'TODO 删除不可编辑字段值
-        'Dim fields = Me.Configuration.GetFieldConfigurations(Me.Mode)
-        ''删除不可编辑的字段的值
-        'Dim uneditableFields As New List(Of String)
-        'For Each field In fields
-        '    If field.Editable = False Then
-        '        uneditableFields.Add(field.Name)
-        '    End If
-        'Next
-        'If uneditableFields.Count > 0 Then
-        '    For Each curData In dataOfEachRow
-        '        For Each uneditableFieldName In uneditableFields
-        '            If curData.ContainsKey(uneditableFieldName) Then
-        '                curData.Remove(uneditableFieldName)
-        '            End If
-        '        Next
-        '    Next
-        'End If
-        Call Me.ModelCore.UpdateRows(rows, dataOfEachRow)
-    End Sub
 
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="row">行ID</param>
-    ''' <param name="columnName">列名</param>
-    ''' <param name="data">更新的数据</param>
-    Public Sub UpdateCell(row As Guid, columnName As String, data As Object)
-        Me.UpdateCells({row}, {columnName}, {data})
+    Public Shadows Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
+        Call Me.Model.UpdateRows(rows, dataOfEachRow)
     End Sub
 
     ''' <summary>
@@ -363,26 +262,6 @@ Public Class ModelOperationsWrapper
     Public Sub UpdateCell(row As Integer, columnName As String, data As Object)
         MyBase.UpdateCells({row}, New String() {columnName}, New Object() {data})
     End Sub
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="rowIDs">行号</param>
-    ''' <param name="columnNames">列名</param>
-    ''' <param name="dataOfEachCell">对应的数据</param>
-    Public Overloads Sub UpdateCells(rowIDs As Guid(), columnNames As String(), dataOfEachCell As Object())
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum = -1 Then
-                Throw New FrontWorkException($"Invalid RowID: {rowID}")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Me.UpdateCells(rowNums, columnNames, dataOfEachCell)
-    End Sub
-
 
     ''' <summary>
     ''' DataRow转字典
@@ -399,95 +278,22 @@ Public Class ModelOperationsWrapper
     End Function
 
     ''' <summary>
-    ''' 获取行ID
-    ''' </summary>
-    ''' <param name="rowNum">行号</param>
-    ''' <returns>行ID</returns>
-    Public Function GetRowID(rowNum As Integer) As Guid
-        Return Me.GetRowIDs({rowNum})(0)
-    End Function
-
-
-    Public Function GetRowIndex(rowID As Guid) As Integer
-        Return Me.GetRowIndexes({rowID})(0)
-    End Function
-
-    ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <param name="syncStates">同步状态</param>
-    Public Overloads Sub UpdateRowSynchronizationStates(rowIDs As Guid(), syncStates As SynchronizationState())
-        If rowIDs.Length <> syncStates.Length Then
-            Throw New FrontWorkException("Length of rows must be same of the length of syncStates")
-        End If
-        Dim rowNums(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim rowID = rowIDs(i)
-            Dim rowNum = Me.GetRowIndex(rowID)
-            If rowNum < 0 Then
-                Throw New FrontWorkException($"Row ID:{rowID} not found!")
-            End If
-            rowNums(i) = rowNum
-        Next
-        Call Me.UpdateRowSynchronizationStates(rowNums, syncStates)
-    End Sub
-
-
-    ''' <summary>
-    ''' 更新行同步状态
+    ''' 更新行状态
     ''' </summary>
     ''' <param name="row">行号</param>
-    ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(row As Integer, syncState As SynchronizationState)
-        Call MyBase.UpdateRowSynchronizationStates({row}, {syncState})
+    ''' <param name="state">同步状态</param>
+    Public Sub UpdateRowState(row As Integer, state As ModelRowState)
+        Call MyBase.UpdateRowStates({row}, {state})
     End Sub
 
     ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="rowID">行ID</param>
-    ''' <param name="syncState">同步状态</param>
-    Public Sub UpdateRowSynchronizationState(rowID As Guid, syncState As SynchronizationState)
-        Call Me.UpdateRowSynchronizationStates({rowID}, {syncState})
-    End Sub
-
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
-    ''' <param name="rowIDs">行ID</param>
-    ''' <returns>同步状态</returns>
-    Public Overloads Function GetRowSynchronizationStates(rowIDs As Guid()) As SynchronizationState()
-        Dim rows(rowIDs.Length - 1) As Integer
-        For i = 0 To rowIDs.Length - 1
-            Dim row = Me.GetRowIndex(rowIDs(i))
-            If row < 0 Then
-                Throw New FrontWorkException($"Row ID:{rowIDs(i)} not found!")
-            End If
-            rows(i) = row
-        Next
-        Return MyBase.GetRowSynchronizationStates(rows)
-    End Function
-
-    ''' <summary>
-    ''' 获取行同步状态
+    ''' 获取行状态
     ''' </summary>
     ''' <param name="row">行号</param>
-    ''' <returns>同步状态</returns>
-    Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState
-        Return MyBase.GetRowSynchronizationStates({row})(0)
+    ''' <returns>状态</returns>
+    Public Function GetRowState(row As Integer) As ModelRowState
+        Return MyBase.GetRowStates({row})(0)
     End Function
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
-    ''' <param name="rowID">行ID</param>
-    ''' <returns>同步状态</returns>
-    Public Overloads Function GetRowSynchronizationStates(rowID As Guid) As SynchronizationState
-        Return Me.GetRowSynchronizationStates({rowID})(0)
-    End Function
-
 
     Public Function ContainsColumn(columnName As String) As Boolean
         Return Me.GetColumns({columnName})(0) IsNot Nothing
@@ -498,7 +304,7 @@ Public Class ModelOperationsWrapper
             Me.AllSelectionRanges = {}
             Return
         End If
-        Dim dataTable = Me.ModelCore.ToDataTable
+        Dim dataTable = Me.Model.ToDataTable
         Dim targetRows As New List(Of Integer)
         For i = 0 To dataTable.Rows.Count - 1
             Dim curRowValue = dataTable.Rows(i)(columnName)
@@ -661,7 +467,7 @@ Public Class ModelOperationsWrapper
     Public Sub RemoveUneditedNewRows()
         Dim rows As New List(Of Integer)
         For i = 0 To Me.GetRowCount - 1
-            If Me.GetRowSynchronizationState(i) = SynchronizationState.ADDED Then
+            If Me.GetRowState(i).SynchronizationState = SynchronizationState.ADDED Then
                 Call rows.Add(i)
             End If
         Next
@@ -672,7 +478,7 @@ Public Class ModelOperationsWrapper
         For i = 0 To Me.RowCount - 1
             If {SynchronizationState.UPDATED,
                 SynchronizationState.ADDED_UPDATED
-               }.Contains(Me.GetRowSynchronizationState(i)) Then
+               }.Contains(Me.GetRowState(i).SynchronizationState) Then
                 Return True
             End If
         Next
@@ -682,7 +488,7 @@ Public Class ModelOperationsWrapper
 
     Public Sub RefreshView(rows As Integer())
         Dim args = New ModelRowUpdatedEventArgs() With {
-            .UpdatedRows = (From row In rows Select New RowInfo(row, Me.GetRowID(row), Me(row), Me.GetRowSynchronizationState(row))).ToArray
+            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me(row), Me.GetRowState(row))).ToArray
         }
         Call MyBase.RaiseRowUpdatedEvent(Me, args)
     End Sub

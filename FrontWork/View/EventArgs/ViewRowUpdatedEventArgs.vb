@@ -1,9 +1,9 @@
 ﻿Public Class ViewRowUpdatedEventArgs
-    Inherits EventArgs
+    Inherits FrontWorkEventArgs
 
-    Public Property Rows As RowInfo()
+    Public Property Rows As ViewRowInfo()
 
-    Public Sub New(rows As RowInfo())
+    Public Sub New(rows As ViewRowInfo())
         Me.Rows = rows
     End Sub
 End Class
