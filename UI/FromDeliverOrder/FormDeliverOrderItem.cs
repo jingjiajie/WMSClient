@@ -57,6 +57,7 @@ namespace WMS.UI.FromDeliverOrder
         {
             return (int)this.deliveryOrder["id"];
         }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;

@@ -76,7 +76,7 @@ namespace WMS.UI.FormTransferOrder
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
-                { "transferOrderNo", this.transferOrder["no"]},
+                { "transferOrderNo", this.transferOrder["no"]},             
                 { "operateTime", DateTime.Now},
             });
         }
