@@ -166,7 +166,7 @@ Public Class ModelCore
                 Dim fieldName = curColumn.Name
                 If Not curData.ContainsKey(fieldName) Then curData.Add(fieldName, Nothing)
                 If curData(fieldName) Is Nothing Then
-                    curData(fieldName) = curColumn.DefaultValue.Invoke
+                    curData(fieldName) = curColumn.DefaultValue
                 End If
             Next
             '将值写入datatable

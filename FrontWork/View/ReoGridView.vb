@@ -198,8 +198,6 @@ Public Class ReoGridView
             Me.formAssociation = New AdsorbableAssociationForm
             RemoveHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
             AddHandler Me.textBox.PreviewKeyDown, AddressOf Me.TextboxPreviewKeyDown
-            RemoveHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
-            AddHandler Me.Panel.CellMouseDown, AddressOf Me.CellMouseDown
         End If
 
         '绑定ViewModel
@@ -356,10 +354,6 @@ Public Class ReoGridView
         Me.Panel.RowHeaders(row).Tag.Inited = True
     End Sub
 
-    Private Sub CellMouseDown(sender As Object, e As EventArgs)
-        Me.canChangeSelectionRangeNextTime = True
-    End Sub
-
     'Private Sub TextboxPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
     '    If Me.formAssociation.AdsorbTextBox Is Nothing Then
     '        Me.formAssociation.AdsorbTextBox = Me.textBox
@@ -490,7 +484,7 @@ Public Class ReoGridView
     '    End If
     'End Sub
 
-    Private Sub CellEditingTextChanging(sender As Object, e As EventArgs)
+    Private Sub CellEditingTextChangingEvent(sender As Object, e As EventArgs)
         Dim row = Me.Panel.SelectionRange.Row
         Dim col = Me.Panel.SelectionRange.Col
         If Not Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
@@ -780,8 +774,8 @@ Public Class ReoGridView
             '编辑事件
             RemoveHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
             AddHandler Me.Panel.CellDataChanged, AddressOf Me.CellDataChanged
-            RemoveHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChanging
-            AddHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChanging
+            RemoveHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChangingEvent
+            AddHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChangingEvent
             RemoveHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
             AddHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
         End If
@@ -791,14 +785,20 @@ Public Class ReoGridView
         Select Case e.KeyCode
             Case Keys.Up, Keys.Down
                 If Me.formAssociation.Visible Then
-                    Me.canChangeSelectionRangeNextTime = False
+                    '如果上下键即将触发选取改变，则将选区改变事件禁止一次
+                    If Not ((e.KeyCode = Keys.Up AndAlso Me.Panel.SelectionRange.Row = 0) OrElse
+                        e.KeyCode = Keys.Down AndAlso Me.Panel.SelectionRange.Row = Me.Panel.RowCount - 1) Then
+                        Me.canChangeSelectionRangeNextTime = False
+                    End If
                     '10毫秒后重新启动编辑
                     Dim threadRestartEdit As New Thread(
                         Sub()
                             Thread.Sleep(10)
                             Me.Workbook.Invoke(
                                 Sub()
+                                    RemoveHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChangingEvent
                                     Me.Panel.StartEdit()
+                                    AddHandler Me.Panel.CellEditTextChanging, AddressOf Me.CellEditingTextChangingEvent
                                 End Sub)
                         End Sub)
                     threadRestartEdit.Start()
@@ -893,7 +893,7 @@ Public Class ReoGridView
 
     Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IDataView.AddRows
         'Call Me.Panel.SuspendUIUpdates()
-        Dim startRow = If(NoRow, 0, Me.Panel.RowCount - 1)
+        Dim startRow = If(NoRow, 0, Me.Panel.RowCount)
         Dim rows = data.Length
         Dim rowNums = Util.Range(startRow, startRow + rows)
         If Me.NoRow Then '如果当前是默认页面，则隐藏默认页面
@@ -978,7 +978,7 @@ Public Class ReoGridView
             Me.Panel.DeleteRows(row, 1)
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
         Next
-        Dim minRemovedRow = rowsDESC(0)
+        Dim minRemovedRow = rowsDESC(rowsDESC.Length - 1)
         Call Me.PaintRows(Util.Range(minRemovedRow, Me.Panel.RowCount))
         'Call Me.Panel.ResumeUIUpdates()
     End Sub

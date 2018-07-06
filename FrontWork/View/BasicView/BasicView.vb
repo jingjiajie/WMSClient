@@ -130,6 +130,7 @@ Partial Public Class BasicView
     Public Sub New()
         Call InitializeComponent()
         Me.Panel = Me.TableLayoutPanel
+        Me.Panel.Enabled = False
     End Sub
 
     Private Sub UnbindComboBox(comboBox As ComboBox)
