@@ -126,6 +126,10 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"no",displayName:"移库单号",type:"string",editable:false,placeHolder:"留空自动生成"},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,editable:false},
+        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
+        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"必填信息"},
+       
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库",type:"string",visible:false,editable:false},
         {name:"description",displayName:"描述",type:"string"},

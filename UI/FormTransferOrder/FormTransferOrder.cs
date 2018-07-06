@@ -189,5 +189,41 @@ namespace WMS.UI.FormTransferOrder
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
+
+        private void SupplierNoEditEnded(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
+            this.model1[row, "supplierName"] = "";
+            this.FindSupplierID(row);
+        }
+
+        private void SupplierNameEditEnded(int row)
+        {
+            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
+            this.model1[row, "supplierNo"] = "";
+            this.FindSupplierID(row);
+        }
+        private void FindSupplierID(int row)
+        {
+            this.model1[row, "supplierId"] = 0;//先清除供货商ID
+            string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
+            string supplierName = this.model1[row, "supplierName"]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(supplierNo) && string.IsNullOrWhiteSpace(supplierName)) return;
+
+            var foundSuppliers = (from s in GlobalData.AllSuppliers
+                                  where (string.IsNullOrWhiteSpace(supplierNo) ? true : (s["no"]?.ToString() ?? "") == supplierNo)
+                                  && (string.IsNullOrWhiteSpace(supplierName) ? true : (s["name"]?.ToString() ?? "") == supplierName)
+                                  select s).ToArray();
+            if (foundSuppliers.Length != 1) goto FAILED;
+            int supplierID = (int)foundSuppliers[0]["id"];
+            this.model1[row, "supplierId"] = foundSuppliers[0]["id"];
+            this.model1[row, "supplierNo"] = foundSuppliers[0]["no"];
+            this.model1[row, "supplierName"] = foundSuppliers[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
     }
 }
