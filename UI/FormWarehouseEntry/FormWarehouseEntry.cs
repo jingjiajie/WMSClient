@@ -152,7 +152,7 @@ namespace WMS.UI
             new FormWarehouseEntryItem(warehouseEntry).Show();
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state,[Row]int row)
         {
             //0待入库 1送检中 2.全部入库 3.部分入库
             switch (state)

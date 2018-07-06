@@ -289,8 +289,8 @@ Public Class FieldMethod
             If targetMethodParams.Length > 0 Then
                 Dim expectedParamInfos(targetMethodParams.Length - 1) As ExpectedParamInfo
                 For j = 0 To targetMethodParams.Length - 1
-                    expectedParamInfos(j).ValueType = targetMethodParams(i).ParameterType
-                    Dim customInvocationParamAttributes = targetMethodParams(i).GetCustomAttributes(GetType(IInvocationParameterAttribute), True)
+                    expectedParamInfos(j).ValueType = targetMethodParams(j).ParameterType
+                    Dim customInvocationParamAttributes = targetMethodParams(j).GetCustomAttributes(GetType(IInvocationParameterAttribute), True)
                     If customInvocationParamAttributes.Length = 0 Then
                         Continue For
                     Else
