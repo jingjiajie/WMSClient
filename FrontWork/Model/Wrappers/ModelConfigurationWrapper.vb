@@ -68,7 +68,7 @@ Public Class ModelConfigurationWrapper
     End Sub
 
     Private Sub RefreshCoreSchema(config As Configuration)
-        Dim context = New InvocationContext(New InvocationContextItem(Me, Nothing))
+        Dim context = New InvocationContext(New InvocationContextItem(Me.Model, GetType(ModelAttribute)))
         Dim fields = config.GetFields(Me.Mode)
         Dim addColumns As New List(Of ModelColumn)
         For Each field In fields

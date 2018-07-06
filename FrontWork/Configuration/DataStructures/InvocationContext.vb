@@ -34,11 +34,11 @@ Public Class ContextItemCollection
 End Class
 
 Public Class InvocationContextItem
-    Public Property InvocationSource As Object
-    Public Property Attribute As Object
+    Public Property Value As Object
+    Public Property AttributeType As Type
 
-    Public Sub New(invocationSource As Object, attribute As Object)
-        Me.InvocationSource = invocationSource
-        Me.Attribute = attribute
+    Public Sub New(value As Object, attributeType As Type)
+        Me.Value = value
+        Me.AttributeType = attributeType
     End Sub
 End Class

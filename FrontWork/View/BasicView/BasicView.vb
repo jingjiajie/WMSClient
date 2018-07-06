@@ -466,8 +466,6 @@ Partial Public Class BasicView
 
     Public Function AddColumns(columns() As ViewColumn) As Boolean Implements IAssociableDataView.AddColumns
         Static inited = False
-        '更新视图
-        Call Me.TableLayoutPanel.SuspendLayout()
         '如果第一次增加列，则将BasicView的默认页面清空
         If Not inited Then
             inited = True
@@ -475,11 +473,15 @@ Partial Public Class BasicView
             Me.Panel.Controls.Clear()
             Call Me.AdjustColumnCount()
         End If
-
+        Dim startIndex = Me.ViewColumns.Count
+        '更新记录的ViewColumns
+        Call Me.ViewColumns.AddRange(columns)
+        '更新视图
+        Call Me.TableLayoutPanel.SuspendLayout()
         Call Me.AdjustRowCountAndStyles()
         For i = 0 To columns.Length - 1
             Dim viewColumn = columns(i)
-            Dim index = Me.ViewColumns.Count + i
+            Dim index = startIndex + i
             Dim label = Me._LabelManager.PopControl
             Call Me.InitLabel(label, viewColumn, index)
             Me.Panel.Controls.Add(label)
@@ -497,12 +499,17 @@ Partial Public Class BasicView
         Next
         Call Me.AdjustColumnWidths()
         Call Me.TableLayoutPanel.ResumeLayout()
-        '更新记录的ViewColumns
-        Call Me.ViewColumns.AddRange(columns)
         Return True
     End Function
 
     Public Function UpdateColumns(indexes() As Integer, columns() As ViewColumn) As Object Implements IAssociableDataView.UpdateColumns
+        '更新记录的ViewColumns
+        For i = 0 To indexes.Length - 1
+            Dim index = indexes(i)
+            Dim column = columns(i)
+            Me.ViewColumns(index) = column
+        Next
+
         '更新视图
         Call Me.TableLayoutPanel.SuspendLayout()
         For i = 0 To indexes.Length - 1
@@ -522,19 +529,18 @@ Partial Public Class BasicView
         Next
         Call Me.AdjustColumnWidths()
         Call Me.TableLayoutPanel.ResumeLayout()
-        '更新记录的ViewColumns
-        For i = 0 To indexes.Length - 1
-            Dim index = indexes(i)
-            Dim column = columns(i)
-            Me.ViewColumns(index) = column
-        Next
         Return True
     End Function
 
     Public Function RemoveColumns(indexes() As Integer) As Object Implements IAssociableDataView.RemoveColumns
         Call Me.TableLayoutPanel.SuspendLayout()
+        '先删除记录的ViewColumns
+        Dim indexesDesc = (From i In indexes Order By i Descending Select i).ToArray
+        For Each index In indexesDesc
+            Me.ViewColumns.RemoveAt(index)
+        Next
+        '调整行高
         Call Me.AdjustRowCountAndStyles()
-
         '收集需要删除的Control
         Dim removeControls As New List(Of Control)
         For Each ctl As Control In Me.TableLayoutPanel.Controls
@@ -566,11 +572,6 @@ Partial Public Class BasicView
             Call Me.AdjustColumnWidths()
             Call Me.TableLayoutPanel.ResumeLayout()
         End If
-
-        Dim indexesDesc = (From i In indexes Order By i Descending Select i).ToArray
-        For Each index In indexesDesc
-            Me.ViewColumns.RemoveAt(index)
-        Next
         Return True
     End Function
 

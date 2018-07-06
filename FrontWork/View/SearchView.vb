@@ -110,9 +110,9 @@ Public Class SearchView
             Dim searchValues(texts.Length - 1) As Object '转型后最终用于搜索的值
             If fieldConfiguration.BackwardMapper IsNot Nothing Then
                 For i = 0 To texts.Length - 1
-                    Dim context As New InvocationContext(New InvocationContextItem(Me, Nothing),
-                                                 New InvocationContextItem(texts(i), Nothing),
-                                                 New InvocationContextItem(-1, Nothing))
+                    Dim context As New InvocationContext(New InvocationContextItem(Me, GetType(ViewAttribute)),
+                                                 New InvocationContextItem(texts(i), GetType(DataAttribute)),
+                                                 New InvocationContextItem(-1, GetType(RowAttribute)))
                     mappedValues(i) = fieldConfiguration.BackwardMapper.Invoke(context)
                 Next
             Else

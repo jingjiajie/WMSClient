@@ -206,7 +206,7 @@ Public Class JsonRESTSynchronizer
     End Sub
 
     Private Sub InitSynchronizer()
-        Dim context As New InvocationContext(New InvocationContextItem(Me, Nothing))
+        Dim context As New InvocationContext()
         If Me._configuration Is Nothing Then Return
         Dim httpAPIConfigs = Me._configuration.GetHTTPAPIConfigurations(Me.Mode)
         Dim requestParams = (From mp In Me.RequestParams
@@ -243,9 +243,7 @@ Public Class JsonRESTSynchronizer
             newAPIInfo.ResponseBodyTemplate = apiConfig.ResponseBody
             newAPIInfo.Callback =
                 Function(res, ex) As Boolean
-                    Dim callBackContext As New InvocationContext(New InvocationContextItem(Me, Nothing),
-                                                 New InvocationContextItem(ex, Nothing),
-                                                 New InvocationContextItem(res, Nothing))
+                    Dim callBackContext As New InvocationContext
                     Return apiConfig.Callback?.Invoke(callBackContext)
                 End Function
             If apiConfig.Type.Equals("find", StringComparison.OrdinalIgnoreCase) Then

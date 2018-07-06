@@ -83,6 +83,8 @@
     <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Common\Attributes\FrontWorkAttribute.vb" />
+    <Compile Include="Common\Attributes\IFrontWorkAttribute.vb" />
     <Compile Include="Common\DataStructures\ClonableList.vb" />
     <Compile Include="Common\EventArgs\FrontWorkEventArgs.vb" />
     <Compile Include="Adapters\PivotTableAdapter.Designer.vb">
@@ -94,6 +96,12 @@
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Common\Exceptions\InvalidDataException.vb" />
     <Compile Include="Common\Util\JsonSerializer.vb" />
+    <Compile Include="Configuration\Attributes\DataAttribute.vb" />
+    <Compile Include="Configuration\Attributes\FieldAttribute.vb" />
+    <Compile Include="Configuration\Attributes\IInvocationParameterAttribute.vb" />
+    <Compile Include="Configuration\Attributes\ModelAttribute.vb" />
+    <Compile Include="Configuration\Attributes\RowAttribute.vb" />
+    <Compile Include="Configuration\Attributes\ViewAttribute.vb" />
     <Compile Include="Configuration\DataStructures\IndexFieldPair.vb" />
     <Compile Include="Configuration\EventArgs\BeforeConfigurationFieldAddEventArgs.vb" />
     <Compile Include="Configuration\EventArgs\BeforeConfigurationFieldRemoveEventArgs.vb" />
@@ -105,6 +113,7 @@
     <Compile Include="Configuration\EventArgs\ConfigurationFieldRemovedEventArgs.vb" />
     <Compile Include="Configuration\EventArgs\ConfigurationFieldUpdatedEventArgs.vb" />
     <Compile Include="Configuration\EventArgs\ConfigurationRefreshedEventArgs.vb" />
+    <Compile Include="Configuration\Exceptions\AttributedValueNotFoundException.vb" />
     <Compile Include="Configuration\Exceptions\MethodNotFoundException.vb" />
     <Compile Include="Configuration\DataStructures\FieldType.vb" />
     <Compile Include="Configuration\DataStructures\HTTPAPI.vb" />

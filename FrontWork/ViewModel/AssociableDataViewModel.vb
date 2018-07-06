@@ -69,9 +69,9 @@ Public Class AssociableDataViewModel
         If curField.Association Is Nothing Then GoTo NO_ASSOCIATION_ITEM '如果字段没有联想，则直接返回
         Dim data = e.CellData
         If data.ToString?.Length > 0 Then
-            Dim context As New InvocationContext(New InvocationContextItem(Me, Nothing),
-                                                 New InvocationContextItem(e.Row, Nothing),
-                                                 New InvocationContextItem(data, Nothing))
+            Dim context As New InvocationContext(New InvocationContextItem(Me.View, GetType(ViewAttribute)),
+                                                 New InvocationContextItem(e.Row, GetType(RowAttribute)),
+                                                 New InvocationContextItem(data, GetType(DataAttribute)))
             Dim associationFunctionReturnValue = curField.Association.Invoke(context)
             If associationFunctionReturnValue Is Nothing Then GoTo NO_ASSOCIATION_ITEM '如果联想内容为空，则隐藏联想并返回
             Dim associationItems = Util.ToArray(Of AssociationItem)(associationFunctionReturnValue)
