@@ -77,6 +77,24 @@ Public Class Configuration
         End Set
     End Property
 
+    Private Sub BindModeConfiguration(modeConfiguration As ModeConfiguration)
+        AddHandler modeConfiguration.BeforeFieldAdd, AddressOf RaiseBeforeFieldAddEvent
+        AddHandler modeConfiguration.BeforeFieldUpdate, AddressOf RaiseBeforeFieldUpdateEvent
+        AddHandler modeConfiguration.BeforeFieldRemove, AddressOf RaiseBeforeFieldRemoveEvent
+        AddHandler modeConfiguration.FieldAdded, AddressOf RaiseFieldAddedEvent
+        AddHandler modeConfiguration.FieldUpdated, AddressOf RaiseFieldUpdatedEvent
+        AddHandler modeConfiguration.FieldRemoved, AddressOf RaiseFieldRemovedEvent
+    End Sub
+
+    Private Sub UnbindModeConfiguration(modeConfiguration As ModeConfiguration)
+        RemoveHandler modeConfiguration.BeforeFieldAdd, AddressOf RaiseBeforeFieldAddEvent
+        RemoveHandler modeConfiguration.BeforeFieldUpdate, AddressOf RaiseBeforeFieldUpdateEvent
+        RemoveHandler modeConfiguration.BeforeFieldRemove, AddressOf RaiseBeforeFieldRemoveEvent
+        RemoveHandler modeConfiguration.FieldAdded, AddressOf RaiseFieldAddedEvent
+        RemoveHandler modeConfiguration.FieldUpdated, AddressOf RaiseFieldUpdatedEvent
+        RemoveHandler modeConfiguration.FieldRemoved, AddressOf RaiseFieldRemovedEvent
+    End Sub
+
     ''' <summary>
     ''' 当前的配置信息是否包含某种模式
     ''' </summary>
@@ -120,6 +138,14 @@ Public Class Configuration
         End If
     End Function
 
+    Private Function GetModeCofiguration(mode As String) As ModeConfiguration
+        Dim foundConfiguration = (From c In Me.ModeConfigurations Where c.Mode = mode).FirstOrDefault
+        If foundConfiguration Is Nothing Then
+            Throw New ModeNotFoundException($"Mode {mode} not found!")
+        End If
+        Return foundConfiguration
+    End Function
+
     ''' <summary>
     ''' 获取当前模式的字段配置
     ''' </summary>
@@ -131,10 +157,37 @@ Public Class Configuration
         Return field
     End Function
 
-    Public Function AddField(mode As String, field As Field)
-
+    Public Function AddFields(mode As String, fields As Field())
+        Return Me.GetModeCofiguration(mode).AddFields(fields)
     End Function
 
+    Public Function AddField(mode As String, field As Field)
+        Return Me.GetModeCofiguration(mode).AddFields({field})
+    End Function
+
+    Public Function InsertFields(mode As String, indexes As Integer(), fields As Field())
+        Return Me.GetModeCofiguration(mode).InsertFields(indexes, fields)
+    End Function
+
+    Public Function InsertField(mode As String, index As Integer, field As Field)
+        Return Me.InsertFields(mode, {index}, {field})
+    End Function
+
+    Public Function UpdateFields(mode As String, indexes As Integer(), fields As Field())
+        Return Me.GetModeCofiguration(mode).UpdateFields(indexes, fields)
+    End Function
+
+    Public Function UpdateField(mode As String, index As Integer, field As Field)
+        Return Me.UpdateFields(mode, {index}, {field})
+    End Function
+
+    Public Function RemoveFields(mode As String, indexes As Integer())
+        Return Me.GetModeCofiguration(mode).RemoveFields(indexes)
+    End Function
+
+    Public Function RemoveField(mode As String, index As Integer)
+        Return Me.RemoveFields(mode, {index})
+    End Function
 
     ''' <summary>
     ''' 获取当前模式的HTTPAPIs的配置信息
@@ -163,10 +216,21 @@ Public Class Configuration
                 MessageBox.Show($"配置中心的配置字符串错误，请检查" & vbCrLf & ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Return
             End If
-            throw new FrontWorkException("ConfigurationString error: " + ex.Message)
+            Throw New FrontWorkException("ConfigurationString error: " + ex.Message)
         End Try
+        '为旧的ModeConfigurations解绑事件
+        Dim oldModeCondigurations = Me.ModeConfigurations
+        If oldModeCondigurations?.Count > 0 Then
+            For Each oldModeConfiguration In oldModeCondigurations
+                Call Me.UnbindModeConfiguration(oldModeConfiguration)
+            Next
+        End If
         Dim newModeConfigurations = ModeConfiguration.FromJsValue(Me.MethodListeners, jsValue)
         If newModeConfigurations Is Nothing Then Return
+        '为新的ModeConfigurations绑定事件
+        For Each newModeConfiguration In newModeConfigurations
+            Call Me.BindModeConfiguration(newModeConfiguration)
+        Next
         Me.ModeConfigurations.Clear()
         Me.ModeConfigurations.AddRange(newModeConfigurations)
     End Sub
@@ -240,6 +304,34 @@ Public Class Configuration
     Private Sub Configuration_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Not Me.DesignMode Then Me.Visible = False
         Call InitializeComponent()
+    End Sub
+
+    Public Sub RaiseBeforeFieldAddEvent(sender As Object, eventArgs As BeforeConfigurationFieldAddEventArgs)
+        RaiseEvent BeforeFieldAdd(sender, eventArgs)
+    End Sub
+
+    Public Sub RaiseBeforeFieldUpdateEvent(sender As Object, eventArgs As BeforeConfigurationFieldUpdateEventArgs)
+        RaiseEvent BeforeFieldUpdate(sender, eventArgs)
+    End Sub
+
+    Public Sub RaiseBeforeFieldRemoveEvent(sender As Object, eventArgs As BeforeConfigurationFieldRemoveEventArgs)
+        RaiseEvent BeforeFieldRemove(sender, eventArgs)
+    End Sub
+
+    Public Sub RaiseFieldAddedEvent(sender As Object, eventArgs As ConfigurationFieldAddedEventArgs)
+        RaiseEvent FieldAdded(sender, eventArgs)
+    End Sub
+
+    Public Sub RaiseFieldUpdatedEvent(sender As Object, eventArgs As ConfigurationFieldUpdatedEventArgs)
+        RaiseEvent FieldUpdated(sender, eventArgs)
+    End Sub
+
+    Public Sub RaiseFieldRemovedEvent(sender As Object, eventArgs As ConfigurationFieldRemovedEventArgs)
+        RaiseEvent FieldRemoved(sender, eventArgs)
+    End Sub
+
+    Public Sub RaiseRefreshedEvent(sender As Object, eventArgs As ConfigurationRefreshedEventArgs)
+        RaiseEvent Refreshed(sender, eventArgs)
     End Sub
 End Class
 

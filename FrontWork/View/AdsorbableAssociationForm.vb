@@ -172,7 +172,7 @@ Partial Public Class AdsorbableAssociationForm
     End Property
 
     Private Sub listBox_DoubleClick(ByVal sender As Object, ByVal e As EventArgs) Handles listBox.DoubleClick
-        'Me.SelectItem()
+        Me.SelectItem()
     End Sub
 
     Private Sub listBox_Click(ByVal sender As Object, ByVal e As EventArgs) Handles listBox.Click
