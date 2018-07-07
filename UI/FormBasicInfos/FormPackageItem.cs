@@ -163,9 +163,11 @@ namespace WMS.UI.FormBasicInfos
             this.model[row, "materialId"] = foundMaterials[0]["id"];
             this.model[row, "materialNo"] = foundMaterials[0]["no"];
             this.model[row, "materialName"] = foundMaterials[0]["name"];
+            this.model[row, "materialProductLine"] = foundMaterials[0]["productLine"];
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
