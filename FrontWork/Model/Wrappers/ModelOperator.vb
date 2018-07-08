@@ -2,7 +2,7 @@
 Imports System.Linq
 Imports System.Reflection
 
-Public Class ModelOperationsWrapper
+Public Class ModelOperator
     Inherits ModelWrapperBase
     Implements IModel
 

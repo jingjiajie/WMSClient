@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
 Public Class ModelConfigurationWrapper
-    Inherits ModelOperationsWrapper
+    Inherits ModelOperator
     Implements IConfigurableModel
 
     Private _configuration As Configuration
@@ -55,7 +55,9 @@ Public Class ModelConfigurationWrapper
         End Get
         Set(value As String)
             Me._mode = value
-            Call Me.ConfigurationRefreshedEvent(Me, Nothing)
+            If Me.Configuration IsNot Nothing Then
+                Call Me.ConfigurationRefreshedEvent(Me, Nothing)
+            End If
         End Set
     End Property
 

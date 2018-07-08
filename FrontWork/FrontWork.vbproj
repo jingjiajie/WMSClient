@@ -83,14 +83,20 @@
     <Compile Include="Adapters\PagerSearchJsonRESTAdapter.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Adapters\PivotTableAdapter\DataStructures.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Adapters\PivotTableAdapter\PositionMapManager.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\Attributes\FrontWorkAttribute.vb" />
     <Compile Include="Common\Attributes\IFrontWorkAttribute.vb" />
     <Compile Include="Common\DataStructures\ClonableList.vb" />
     <Compile Include="Common\EventArgs\FrontWorkEventArgs.vb" />
-    <Compile Include="Adapters\PivotTableAdapter.Designer.vb">
+    <Compile Include="Adapters\PivotTableAdapter\PivotTableAdapter.Designer.vb">
       <DependentUpon>PivotTableAdapter.vb</DependentUpon>
     </Compile>
-    <Compile Include="Adapters\PivotTableAdapter.vb">
+    <Compile Include="Adapters\PivotTableAdapter\PivotTableAdapter.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
@@ -126,8 +132,9 @@
     <Compile Include="Model\DataStructures\ModelRefreshArgs.vb" />
     <Compile Include="Model\DataStructures\ModelRowState.vb" />
     <Compile Include="Model\Interfaces\IConfigurableModel.vb" />
+    <Compile Include="Model\Wrappers\ConfigurableModelOperator.vb" />
     <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
-    <Compile Include="Model\Wrappers\ModelOperationsWrapper.vb" />
+    <Compile Include="Model\Wrappers\ModelOperator.vb" />
     <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
     <Compile Include="ViewModel\AssociableDataViewModel.vb" />
     <Compile Include="View\BasicView\BasicViewTextBox.vb">

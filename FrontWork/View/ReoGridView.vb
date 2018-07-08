@@ -485,6 +485,11 @@ Public Class ReoGridView
     'End Sub
 
     Private Sub CellEditingTextChangingEvent(sender As Object, e As EventArgs)
+        Static bindedAssociationTextBox As Boolean = False
+        If Not bindedAssociationTextBox Then
+            bindedAssociationTextBox = True
+            Call Me.BindAssociationTextBox()
+        End If
         Dim row = Me.Panel.SelectionRange.Row
         Dim col = Me.Panel.SelectionRange.Col
         If Not Me.Panel.RowHeaders(row).Tag.Inited Then '如果本行未被初始化，不要触发事件
@@ -765,9 +770,6 @@ Public Class ReoGridView
         Call Me.ShowDefaultPage()
 
         If Not Me.DesignMode Then
-            '绑定联想窗口编辑框
-            Me.formAssociation.AdsorbTextBox = Me.textBox
-
             '给worksheet添加事件
             RemoveHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf ReoGrid_BeforeSelectionRangeChange
@@ -779,6 +781,11 @@ Public Class ReoGridView
             RemoveHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
             AddHandler Me.textBox.Leave, AddressOf Me.textBoxLeave
         End If
+    End Sub
+
+    Private Sub BindAssociationTextBox()
+        '绑定联想窗口编辑框
+        Me.formAssociation.AdsorbTextBox = Me.textBox
     End Sub
 
     Private Sub TextboxPreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
@@ -924,7 +931,7 @@ Public Class ReoGridView
         End If
         Dim viewRowInfos(rows.Length - 1) As ViewRowInfo
         For i = 0 To rows.Length - 1
-            viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState)
+            viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), Nothing)
         Next
         Dim oriViewRows = Me.Panel.RowCount
         Dim adjustedRowInfos = Util.AdjustInsertIndexes(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)

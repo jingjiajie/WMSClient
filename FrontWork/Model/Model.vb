@@ -8,7 +8,7 @@ Imports FrontWork
 ''' </summary>
 Partial Public Class Model
     Inherits UserControl
-    Implements IModel
+    Implements IConfigurableModel
 
     Public WithEvents TableLayoutPanel1 As TableLayoutPanel
     Public WithEvents PanelIcon As Panel
@@ -31,7 +31,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <returns></returns>
     <Description("配置中心对象"), Category("FrontWork")>
-    Public Property Configuration As Configuration
+    Public Property Configuration As Configuration Implements IConfigurableModel.Configuration
         Get
             Return Me.ModelConfigurationWrapper.Configuration
         End Get
@@ -160,7 +160,7 @@ Partial Public Class Model
     ''' </summary>
     ''' <returns></returns>
     <Description("当前配置模式"), Category("FrontWork")>
-    Public Property Mode As String
+    Public Property Mode As String Implements IConfigurableModel.Mode
         Get
             Return Me.ModelConfigurationWrapper.Mode
         End Get
