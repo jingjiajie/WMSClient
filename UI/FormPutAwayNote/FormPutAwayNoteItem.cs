@@ -294,21 +294,21 @@ namespace WMS.UI
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
-        private void SupplierNoEditEnded(int row)
-        {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
-            this.model1[row, "supplierName"] = "";
-            this.FindSupplierID(row);
-            this.TryGetSupplyID(row);
-        }
+        //private void SupplierNoEditEnded(int row)
+        //{
+        //    if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
+        //    this.model1[row, "supplierName"] = "";
+        //    this.FindSupplierID(row);
+        //    this.TryGetSupplyID(row);
+        //}
 
-        private void SupplierNameEditEnded(int row)
-        {
-            if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
-            this.model1[row, "supplierNo"] = "";
-            this.FindSupplierID(row);
-            this.TryGetSupplyID(row);
-        }
+        //private void SupplierNameEditEnded(int row)
+        //{
+        //    if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
+        //    this.model1[row, "supplierNo"] = "";
+        //    this.FindSupplierID(row);
+        //    this.TryGetSupplyID(row);
+        //}
 
         private void MaterialNoEditEnded(int row)
         {
@@ -356,6 +356,7 @@ namespace WMS.UI
             return;
 
             FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }

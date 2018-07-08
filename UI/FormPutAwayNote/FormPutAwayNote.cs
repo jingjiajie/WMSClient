@@ -203,5 +203,30 @@ namespace WMS.UI
             MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
+
+        private void RefreshMode()
+        {
+            int?[] selectedIDs = this.model1.GetSelectedRows<int?>("id");
+            if (selectedIDs.Length == 0 || selectedIDs[0].HasValue == false)
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+            else
+            {
+                this.basicView1.Mode = "supplier-not-editable";
+                this.reoGridView1.Mode = "supplier-not-editable";
+            }
+        }
+
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.RefreshMode();
+        }
     }
 }

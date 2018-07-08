@@ -20,9 +20,8 @@ namespace WMS.UI.FormTransferOrder
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
         }
+
 
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
@@ -78,10 +77,14 @@ namespace WMS.UI.FormTransferOrder
                 });
                 a1.Show();
             }
-            catch
+            catch (WebException ex)
             {
-                MessageBox.Show("无任何信息！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("查看失败！" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -224,6 +227,31 @@ namespace WMS.UI.FormTransferOrder
             FAILED:
             MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
+        }
+
+        private void RefreshMode()
+        {
+            int?[] selectedIDs = this.model1.GetSelectedRows<int?>("id");
+            if (selectedIDs.Length == 0 || selectedIDs[0].HasValue == false)
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+            else
+            {
+                this.basicView1.Mode = "supplier-not-editable";
+                this.reoGridView1.Mode = "supplier-not-editable";
+            }
+        }
+
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.RefreshMode();
         }
     }
 }
