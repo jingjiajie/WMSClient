@@ -3,7 +3,7 @@ Imports System.Text
 Imports FrontWork
 
 Public Class PivotTableAdapter
-    Private Property PositionMappingList As New List(Of PositionMap)
+    Private Property MapManager As New PositionMapManager
 
     Public Property SourceModel As IConfigurableModel
         Get
@@ -15,7 +15,7 @@ Public Class PivotTableAdapter
             End If
             Me.SourceModelOperator.Model = value
             If Me.SourceModel IsNot Nothing Then
-                Call Me.ClearPositionMap()
+                Call Me.MapManager.ClearPositionMap()
                 Call Me.BindSourceModel(Me.SourceModel)
             End If
         End Set
@@ -31,7 +31,7 @@ Public Class PivotTableAdapter
             End If
             Me.TargetModelOperator.Model = value
             If Me.TargetModel IsNot Nothing Then
-                Call Me.ClearPositionMap()
+                Call Me.MapManager.ClearPositionMap()
                 Call Me.BindTargetModel(Me.TargetModel)
             End If
         End Set
@@ -120,7 +120,10 @@ Public Class PivotTableAdapter
         '将定行列加入目标Model，如果目标Model中不存在相应的列
         For Each colAsRow In colsAsRow
             If Not oriTargetColumnNames.Contains(colAsRow) Then
-                addTargetFields.Add(Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, colAsRow))
+                Dim sourceFieldAsRow = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, colAsRow)
+                Dim newFieldAsRow As Field = sourceFieldAsRow.Clone
+                newFieldAsRow.Editable = False '目标表的定行列禁止编辑
+                addTargetFields.Add(newFieldAsRow)
             End If
         Next
         Dim allSourceRowData = Me.SourceModelOperator.GetRows(rows)
@@ -180,7 +183,7 @@ Public Class PivotTableAdapter
                 Dim targetValue = sourceRowData(Me.ColumnNamesAsValue(j))
                 updateData.Add(New PositionDataPair(targetRow, targetColName, targetValue))
                 '将对应关系添加到位置映射里
-                Call Me.SetPositionMap(New Position(sourceRow, Me.ColumnNamesAsValue(j)), New Position(targetRow, targetColName))
+                Call Me.MapManager.SetPositionMap(New Position(sourceRow, Me.ColumnNamesAsValue(j)), New Position(targetRow, targetColName))
                 '把要添加和更新的行先同步到allTargetRowData，以免在下次循环时读取不到变化
                 allTargetRowData(targetRow)(targetColName) = targetValue
             Next
@@ -200,7 +203,10 @@ Public Class PivotTableAdapter
         Dim updateSourceData As New List(Of PositionDataPair)
         For i = 0 To allCellData.Length - 1
             Dim cellData = allCellData(i)
-            Dim mappedSourcePos = Me.GetSourcePosition(New Position(targetRows(i), targetColumnNames(i)))
+            Dim mappedSourcePos = Me.MapManager.GetSourcePosition(New Position(targetRows(i), targetColumnNames(i)))
+            If mappedSourcePos Is Nothing Then
+                Throw New FrontWorkException($"Unmapped target model cell: Row {targetRows(i)},Col ""{targetColumnNames(i)}""")
+            End If
             updateSourceData.Add(New PositionDataPair(mappedSourcePos, cellData))
         Next
         RemoveHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
@@ -240,88 +246,4 @@ Public Class PivotTableAdapter
         Next
         Return -1
     End Function
-
-    Private Sub SetPositionMap(sourceModelPosition As Position, targetModelPosition As Position)
-        Me.PositionMappingList.RemoveAll(Function(map) map.SourcePosition = sourceModelPosition OrElse map.TargetPosition = targetModelPosition)
-        Me.PositionMappingList.Add(New PositionMap(sourceModelPosition, targetModelPosition))
-    End Sub
-
-    Private Sub ClearPositionMap()
-        Me.PositionMappingList.Clear()
-    End Sub
-
-    Private Function GetTargetPosition(sourceModelPosition As Position) As Position
-        Dim foundMap = Me.PositionMappingList.Find(Function(map) map.SourcePosition = sourceModelPosition)
-        If foundMap Is Nothing Then Return Nothing
-        Return foundMap.TargetPosition
-    End Function
-
-    Private Function GetSourcePosition(targetModelPosition As Position) As Position
-        Dim foundMap = Me.PositionMappingList.Find(Function(map) map.TargetPosition = targetModelPosition)
-        If foundMap Is Nothing Then Return Nothing
-        Return foundMap.SourcePosition
-    End Function
-
-    Private Class Position
-        Public Property Row As Integer
-        Public Property ColumnName As String
-
-        Public Sub New(row As Integer, columnName As String)
-            Me.Row = row
-            Me.ColumnName = columnName
-        End Sub
-
-        Public Shared Operator =(pos1 As Position, pos2 As Position) As Boolean
-            If pos1.Row <> pos2.Row Then Return False
-            If pos1.ColumnName <> pos2.ColumnName Then Return False
-            Return True
-        End Operator
-
-        Public Shared Operator <>(pos1 As Position, pos2 As Position) As Boolean
-            Return Not pos1 = pos2
-        End Operator
-    End Class
-
-    Private Class PositionDataPair
-        Public Sub New(row As Integer, columnName As String, data As Object)
-            Me.Position = New Position(row, columnName)
-            Me.Data = data
-        End Sub
-
-        Public Sub New(pos As Position, data As Object)
-            Me.Position = pos
-            Me.Data = data
-        End Sub
-
-        Public Property Row As Integer
-            Get
-                Return Me.Position.Row
-            End Get
-            Set(value As Integer)
-                Me.Position.Row = value
-            End Set
-        End Property
-
-        Public Property ColumnName As String
-            Get
-                Return Me.Position.ColumnName
-            End Get
-            Set(value As String)
-                Me.Position.ColumnName = value
-            End Set
-        End Property
-
-        Public Property Data As Object
-        Public Property Position As Position
-    End Class
-
-    Private Class PositionMap
-        Public Sub New(sourcePosition As Position, targetPosition As Position)
-            Me.SourcePosition = sourcePosition
-            Me.TargetPosition = targetPosition
-        End Sub
-
-        Public Property SourcePosition As Position
-        Public Property TargetPosition As Position
-    End Class
 End Class
