@@ -331,6 +331,8 @@ Public Class ModelCore
             End If
             Try
                 Me.Data.Rows(rows(i))(dataColumn) = If(dataOfEachCell(i), DBNull.Value)
+            Catch ex As IndexOutOfRangeException
+                Throw New FrontWorkException($"UpdateCells failed: index {i} exceeded max row index: {Me.GetRowCount}")
             Catch ex As ArgumentException
                 Me.Data.Rows(rows(i))(dataColumn) = DBNull.Value
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")

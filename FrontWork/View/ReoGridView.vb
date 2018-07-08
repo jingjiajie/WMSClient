@@ -924,7 +924,7 @@ Public Class ReoGridView
         End If
         Dim viewRowInfos(rows.Length - 1) As ViewRowInfo
         For i = 0 To rows.Length - 1
-            viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState)
+            viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), Nothing)
         Next
         Dim oriViewRows = Me.Panel.RowCount
         Dim adjustedRowInfos = Util.AdjustInsertIndexes(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)

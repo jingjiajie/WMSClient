@@ -4,7 +4,7 @@ Imports FrontWork
 
 Public Class EditableDataViewModel
     Implements IConfigurable
-    Protected ModelOperationsWrapper As New ModelOperationsWrapper
+    Protected ModelOperationsWrapper As New ModelOperator
     Protected ViewOperationsWrapper As New EditableDataViewOperationsWrapper
     Protected _Configuration As Configuration
     Protected _Mode As String = "default"
