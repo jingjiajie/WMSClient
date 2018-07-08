@@ -48,8 +48,8 @@ namespace WMS.UI
                 { "transferOrderNo", this.putAwayNote["no"]},
                 { "operateTime", DateTime.Now},
                 { "supplierId",this.putAwayNote["supplierId"]},
-                { "supplierName",this.putAwayNote["supplierName"]},
-                { "supplierNo",this.putAwayNote["supplierNo"]}
+                { "supplierNo",this.putAwayNote["supplierNo"]},
+                { "supplierName",this.putAwayNote["supplierName"]}
             });
         }
 
@@ -418,17 +418,6 @@ namespace WMS.UI
         private void FillDefaultValue(int row, string fieldName, object value)
         {
             this.model1[row, fieldName] = value;
-        }
-
-        private void toolStripButtonAdd_Click_1(object sender, EventArgs e)
-        {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                { "personId",GlobalData.Person["id"]},
-                { "personName",GlobalData.Person["name"]},
-                { "transferOrderNo", this.putAwayNote["no"]},
-                { "operateTime", DateTime.Now},
-            });
         }
 
         //=============天经地义的交互逻辑到这里结束===============

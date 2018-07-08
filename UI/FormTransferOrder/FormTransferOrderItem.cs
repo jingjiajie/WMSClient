@@ -77,10 +77,10 @@ namespace WMS.UI.FormTransferOrder
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
                 { "transferOrderNo", this.transferOrder["no"]},
-                { "operateTime", DateTime.Now}
-                //{ "supplierId",this.transferOrder["supplierId"]},
-                //{ "supplierNo",this.transferOrder["supplierNo"]},
-                //{ "supplierName",this.transferOrder["supplierName"]}
+                { "operateTime", DateTime.Now},
+                { "supplierId",this.transferOrder["supplierId"]},
+                { "supplierNo",this.transferOrder["supplierNo"]},
+                { "supplierName",this.transferOrder["supplierName"]}
             });
         }
 

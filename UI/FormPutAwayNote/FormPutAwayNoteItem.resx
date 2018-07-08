@@ -127,8 +127,8 @@
         {name:"transferOrderNo",displayName:"上架单号",type:"string",editable:false},
         {name:"supplierNo",displayName:"供应商代号",type:"string",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
         {name:"supplierName",displayName:"供应商名称",type:"string",editable:false,association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"materialNo",displayName:"物料代号",type:"string",editable:false},
-        {name:"materialName",displayName:"物料名称",type:"string",editable:false},
+        {name:"materialNo",displayName:"物料代号",type:"string"},
+        {name:"materialName",displayName:"物料名称",type:"string"},
         {name:"materialProductLine",displayName:"系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,defaultValue:0},
 
