@@ -129,25 +129,17 @@
         {name:"taxName",displayName:"税务名称",type:"string"},
         {name:"taxNo",displayName:"代码",type:"string"},
     ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/package/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/package/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
+httpAPIs:[      
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/package/",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/choose_tax",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/package/",
-            method:"POST",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/choose_tax",
+            method:"put",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/package/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/supplier1/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }

@@ -106,5 +106,11 @@ namespace WMS.UI.FromSalary
             }
         }
 
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            FromSalary.FormSelectTax a = new FormSelectTax(11);
+            a.Show();
+
+        }
     }
 }

@@ -52,6 +52,7 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -214,7 +215,8 @@
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonAdd,
             this.toolStripButtonDelete,
-            this.toolStripButtonAlter});
+            this.toolStripButtonAlter,
+            this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(765, 22);
@@ -300,6 +302,16 @@
             this.statusStrip1.TabIndex = 22;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 19);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // FormPersonSalary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -345,5 +357,6 @@
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
