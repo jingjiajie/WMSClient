@@ -177,9 +177,44 @@ namespace WMS.UI.FormTransferOrder
             {
                 string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 1 + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
-                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
+                var remindData=RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                if (remindData.Count==0)
+                {
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.searchView1.Search();
+                }
+                else
+                {
+                    StringBuilder remindBody = new StringBuilder();
+                    foreach (IDictionary<string, object> transferOrderItem in remindData)
+                    {
+                        if ((int)transferOrderItem["state"] == 0)
+                        {
+                            remindBody = remindBody.Append("物料“").Append(transferOrderItem["materialName"])
+                                    .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["sourceUnitAmount"])
+                                    .Append("”检测状态：“合格”），在源库位：“").Append(transferOrderItem["sourceStorageLocationName"])
+                                    .Append("”上不存在库存信息！请核准库存！\r\n");
+                        }
+                        if ((int)transferOrderItem["state"] == 1)
+                        {
+                            remindBody = remindBody.Append("物料“").Append(transferOrderItem["materialName"])
+                                    .Append("”（单位：“").Append(transferOrderItem["unit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
+                                    .Append("”检测状态：“合格”），在目标库位：“").Append(transferOrderItem["targetStorageLocationName"])
+                                    .Append("”上库存充足！无需备货操作！\r\n");
+                        }
+                        if ((int)transferOrderItem["state"] == 2)
+                        {
+                            remindBody = remindBody.Append("物料“").Append(transferOrderItem["materialName"])
+                                    .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
+                                    .Append("”检测状态：“合格”），在源库位：“").Append(transferOrderItem["sourceStorageLocationName"])
+                                    .Append("”上库存可用数量不足！需要库存数量：“").Append(transferOrderItem["scheduledAmount"]).Append("”，现有库存：“")
+                                    .Append(transferOrderItem["realAmount"]).Append("”\r\n");
+                        }
+                    }
+                    new FormRemind(remindBody.ToString()).Show();
+                    
+                }
+                
 
             }
             catch(WebException ex)

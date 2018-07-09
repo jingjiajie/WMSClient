@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class Form1
+    partial class FormRemind
     {
         /// <summary>
         /// Required designer variable.
@@ -67,14 +67,15 @@
             this.textBox1.Size = new System.Drawing.Size(588, 259);
             this.textBox1.TabIndex = 0;
             // 
-            // Form1
+            // FormRemind
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 293);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "FormRemind";
+            this.Text = "提醒窗口";
+            this.Load += new System.EventHandler(this.FormRemind_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

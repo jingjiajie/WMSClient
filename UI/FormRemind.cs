@@ -9,11 +9,18 @@ using System.Windows.Forms;
 
 namespace WMS.UI
 {
-    public partial class Form1 : Form
+    public partial class FormRemind : Form
     {
-        public Form1()
+        string remindMessage = null;
+        public FormRemind(string remindMessage)
         {
+            this.remindMessage = remindMessage;
             InitializeComponent();
+        }
+
+        private void FormRemind_Load(object sender, EventArgs e)
+        {
+            this.textBox1.Text = remindMessage;
         }
     }
 }
