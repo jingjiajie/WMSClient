@@ -60,6 +60,12 @@ namespace WMS.UI
                     MakeTreeNode("库存盘点"),
                     MakeTreeNode("移位记录")
                     }),
+                 MakeTreeNode("薪金管理",new TreeNode[]{
+                    MakeTreeNode("薪金类别"),
+                    MakeTreeNode("薪金期间"),
+                    MakeTreeNode("薪金项目"),                 
+                    MakeTreeNode("人员薪金")
+                    })
             };
 
             this.treeViewLeft.Nodes.Clear();
@@ -255,6 +261,18 @@ namespace WMS.UI
                 case "备货作业单管理":
                     this.LoadSubWindow(new FormTransferOrder.FormTransferOrder());
                     break;
+                case "薪金类别":
+                    this.LoadSubWindow(new FromSalary.FormSalaryType());
+                    break;
+                case "薪金项目":
+                    this.LoadSubWindow(new FromSalary.FormSalaryItem());
+                    break;
+                case "薪金期间":
+                    this.LoadSubWindow(new FromSalary.FormSalaryPeriod());
+                    break;
+                 case "人员薪金":
+                    this.LoadSubWindow(new FromSalary.FormPersonSalary());
+                    break;
             }
             this.panelRight.ResumeLayout();
             this.panelRight.Show();
@@ -352,6 +370,14 @@ namespace WMS.UI
 
             GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
+            GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
+
+            GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
+
+            GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.ToString()}");
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

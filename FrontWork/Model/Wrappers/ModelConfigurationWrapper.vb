@@ -1,4 +1,5 @@
-﻿Imports FrontWork
+﻿Imports System.Linq
+Imports FrontWork
 
 Public Class ModelConfigurationWrapper
     Inherits ModelOperator
@@ -34,11 +35,14 @@ Public Class ModelConfigurationWrapper
     End Property
 
     Private Sub ConfigurationFieldRemovedEvent(sender As Object, e As ConfigurationFieldRemovedEventArgs)
-        Call Me.RefreshCoreSchema(Me.Configuration)
+        Call Me.Model.RemoveColumns(e.RemovedFields.Select(Function(f) f.Index).ToArray)
     End Sub
 
     Private Sub ConfigurationFieldUpdatedEvent(sender As Object, e As ConfigurationFieldUpdatedEventArgs)
-        Call Me.RefreshCoreSchema(Me.Configuration)
+        Dim context = New InvocationContext(New InvocationContextItem(Me.Model, GetType(ModelAttribute)))
+        Call Me.Model.UpdateColumn(e.UpdatedFields.Select(Function(f) f.Index).ToArray,
+                                   e.UpdatedFields.Select(Function(f) New ModelColumn(context, f.Field)).ToArray)
+
     End Sub
 
     Private Sub ConfigurationFieldAddedEvent(sender As Object, e As ConfigurationFieldAddedEventArgs)
@@ -75,7 +79,7 @@ Public Class ModelConfigurationWrapper
         Dim addColumns As New List(Of ModelColumn)
         For Each field In fields
             If Not Me.ContainsColumn(field.Name) Then
-                Dim newColumn As New ModelColumn(context, field.DefaultValue, field.Name, field.Type.FieldType, True)
+                Dim newColumn As New ModelColumn(context, field)
                 addColumns.Add(newColumn)
             End If
         Next

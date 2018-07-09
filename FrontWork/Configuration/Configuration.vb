@@ -189,6 +189,10 @@ Public Class Configuration
         Return Me.RemoveFields(mode, {index})
     End Function
 
+    Public Function ClearFields(mode As String) As Boolean
+        Return Me.GetModeCofiguration(mode).ClearFields
+    End Function
+
     ''' <summary>
     ''' 获取当前模式的HTTPAPIs的配置信息
     ''' </summary>

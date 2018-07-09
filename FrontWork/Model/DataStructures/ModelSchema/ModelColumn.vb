@@ -11,6 +11,10 @@ Public Class ModelColumn
         Me.Nullable = nullable
     End Sub
 
+    Public Sub New(context As InvocationContext, field As Field)
+        Call Me.New(context, field.DefaultValue, field.Name, field.Type.FieldType, True)
+    End Sub
+
     Public Property Context As InvocationContext
     Public Property Name As String
     Public Property Type As Type = GetType(String)
