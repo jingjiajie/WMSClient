@@ -21,35 +21,42 @@ namespace WMS.UI.FormBasicInfos
             this.stockType = stockType;
             MethodListenerContainer.Register(this);
             InitializeComponent();
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
+
         }
-
-        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        private string AmountForwardMapper(double amount, int row)
         {
-            this.updateBasicAndReoGridView();
-        }
-
-        private void updateBasicAndReoGridView()
-        {
-
-            if (this.model1.RowCount == 0)
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.basicView1.Enabled = false;
-                this.reoGridView2.Enabled = false;
+                return amount.ToString();
             }
             else
             {
-                this.basicView1.Enabled = true;
-                this.reoGridView2.Enabled = true;
+                return Utilities.DoubleToString(amount / unitAmount.Value);
             }
-
         }
 
-        //private List<int> rowChange = new List<int>();
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        private double AmountBackwardMapper(string strAmount, int row)
         {
-            this.updateBasicAndReoGridView();
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private void UnitAmountEditEnded(int row)
+        {
+            this.model1.RefreshView(row);
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -90,7 +97,6 @@ namespace WMS.UI.FormBasicInfos
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
-            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -109,7 +115,6 @@ namespace WMS.UI.FormBasicInfos
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.AddStaticCondition("type", this.stockType);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
         }
         //关于目标库位
         private void TargetStorageLocationNoEditEnded(int row, string targetStorageLocationNo)

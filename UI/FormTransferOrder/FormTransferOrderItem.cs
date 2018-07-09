@@ -23,35 +23,35 @@ namespace WMS.UI.FormTransferOrder
             this.transferOrder = transferOrder;
             InitializeComponent();
             this.searchView1.AddStaticCondition("transferOrderId", this.transferOrder["id"]);
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
+            //this.model1.RowRemoved += this.model_RowRemoved;
+            //this.model1.Refreshed += this.model_Refreshed;
         }
 
-        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
-        }
+        //private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        //{
+        //    this.updateBasicAndReoGridView();
+        //}
 
-        private void updateBasicAndReoGridView()
-        {
+        //private void updateBasicAndReoGridView()
+        //{
 
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
+        //    if (this.model1.RowCount == 0)
+        //    {
+        //        this.basicView1.Enabled = false;
+        //        this.reoGridView1.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        this.basicView1.Enabled = true;
+        //        this.reoGridView1.Enabled = true;
+        //    }
 
-        }
+        //}
 
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
-        }
+        //private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        //{
+        //    this.updateBasicAndReoGridView();
+        //}
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {
@@ -70,13 +70,13 @@ namespace WMS.UI.FormTransferOrder
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            //this.basicView1.Enabled = true;
+            //this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
-                { "transferOrderNo", this.transferOrder["no"]},             
+                { "transferOrderNo", this.transferOrder["no"]},
                 { "operateTime", DateTime.Now},
                 { "supplierId",this.transferOrder["supplierId"]},
                 { "supplierNo",this.transferOrder["supplierNo"]},
@@ -216,7 +216,7 @@ namespace WMS.UI.FormTransferOrder
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
         }
 
         private void SourceStorageLocationNoEditEnded(int row, string sourceStorageLocationNo)

@@ -227,7 +227,7 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"移库单号",type:"string",editable:false,placeHolder:"留空自动生成"},
+        {name:"no",displayName:"移库单号",type:"string",placeHolder:"留空自动生成"},
         {name:"type",displayName:"类型",type:"int",defaultValue:0,visible:false},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库",type:"string",editable:false,visible:false},
@@ -270,8 +270,8 @@
     {mode:"supplier-not-editable",
      ref:"default",
      fields:[
-            {name:"supplierNo",editable:false},
-            {name:"supplierName",editable:false}
+            {name:"supplierNo",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
+            {name:"supplierName",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"}
         ]
     }
 ]</value>

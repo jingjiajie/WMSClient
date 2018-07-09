@@ -125,7 +125,7 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"移库单号",type:"string",editable:false,placeHolder:"留空自动生成"},
+        {name:"no",displayName:"移库单号",type:"string",placeHolder:"留空自动生成"},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,editable:false},
         {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
         {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"必填信息"},
@@ -168,8 +168,8 @@
     {mode:"supplier-not-editable",
      ref:"default",
      fields:[
-            {name:"supplierNo",editable:false},
-            {name:"supplierName",editable:false}
+            {name:"supplierNo",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
+            {name:"supplierName",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"}
         ]
     }
 ]</value>
