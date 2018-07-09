@@ -82,5 +82,12 @@ namespace WMS.UI.FormAcccount
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
+
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {          
+            });
+        }
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSelectTax));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.basicView1 = new FrontWork.BasicView();
             this.configuration1 = new FrontWork.Configuration();
             this.model1 = new FrontWork.Model();
@@ -40,10 +40,12 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
-            this.synchronizer = new FrontWork.JsonRESTSynchronizer();
+            this.searchView1 = new FrontWork.SearchView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonADD = new System.Windows.Forms.Button();
+            this.synchronizer = new FrontWork.JsonRESTSynchronizer();
+            this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
+            this.pagerView1 = new FrontWork.PagerView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -72,12 +74,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(2, 2);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSelectPakage",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 129);
             this.configuration1.TabIndex = 17;
@@ -128,11 +130,13 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.searchView1, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.model1, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.panel2, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.configuration1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.synchronizer, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.pagerSearchJsonRESTAdapter1, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.pagerView1, 1, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 80);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -144,37 +148,17 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(780, 306);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
-            // pagerSearchJsonRESTAdapter1
+            // searchView1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(467, 2);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
-            this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
-            this.pagerSearchJsonRESTAdapter1.PagerView = null;
-            this.pagerSearchJsonRESTAdapter1.SearchView = null;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(90, 81);
-            this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
-            this.pagerSearchJsonRESTAdapter1.TabIndex = 21;
-            this.pagerSearchJsonRESTAdapter1.Visible = false;
-            // 
-            // synchronizer
-            // 
-            this.synchronizer.Configuration = this.configuration1;
-            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(465, 173);
-            this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
-            this.synchronizer.Mode = "default";
-            this.synchronizer.Model = this.model1;
-            this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(180, 133);
-            this.synchronizer.TabIndex = 22;
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.searchView1.Configuration = this.configuration1;
+            this.searchView1.Location = new System.Drawing.Point(317, 2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
+            this.searchView1.Mode = "default";
+            this.searchView1.Name = "searchView1";
+            this.searchView1.Size = new System.Drawing.Size(146, 32);
+            this.searchView1.TabIndex = 21;
+            this.searchView1.Visible = false;
             // 
             // panel2
             // 
@@ -203,6 +187,49 @@
             this.buttonADD.UseVisualStyleBackColor = true;
             this.buttonADD.Click += new System.EventHandler(this.buttonADD_Click);
             // 
+            // synchronizer
+            // 
+            this.synchronizer.Configuration = this.configuration1;
+            this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
+            this.synchronizer.Location = new System.Drawing.Point(465, 173);
+            this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
+            this.synchronizer.Mode = "default";
+            this.synchronizer.Model = this.model1;
+            this.synchronizer.Name = "synchronizer";
+            this.synchronizer.Size = new System.Drawing.Size(180, 133);
+            this.synchronizer.TabIndex = 22;
+            // 
+            // pagerSearchJsonRESTAdapter1
+            // 
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(467, 2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
+            this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
+            this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
+            this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(90, 81);
+            this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
+            this.pagerSearchJsonRESTAdapter1.TabIndex = 21;
+            this.pagerSearchJsonRESTAdapter1.Visible = false;
+            // 
+            // pagerView1
+            // 
+            this.pagerView1.BackColor = System.Drawing.SystemColors.Control;
+            this.pagerView1.Location = new System.Drawing.Point(315, 173);
+            this.pagerView1.Margin = new System.Windows.Forms.Padding(0);
+            this.pagerView1.Mode = "default";
+            this.pagerView1.Name = "pagerView1";
+            this.pagerView1.PageSize = 50;
+            this.pagerView1.Size = new System.Drawing.Size(117, 10);
+            this.pagerView1.TabIndex = 23;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
@@ -225,7 +252,6 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSelectTax";
             this.Text = "FormSelectTax";
-            this.Load += new System.EventHandler(this.FormSelectTax_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -248,5 +274,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
+        private FrontWork.SearchView searchView1;
+        private FrontWork.PagerView pagerView1;
     }
 }
