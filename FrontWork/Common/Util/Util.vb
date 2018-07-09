@@ -96,6 +96,14 @@ Public Class Util
         Return newObj
     End Function
 
+    Public Shared Function DeepClone(Of T As New)(srcArray As T()) As T()
+        Dim newArray(srcArray.Length - 1) As T
+        For i = 0 To srcArray.Length - 1
+            newArray(i) = DeepClone(srcArray(i))
+        Next
+        Return newArray
+    End Function
+
     Public Shared Function FindFirstVisibleParent(c As Control) As Control
         If c.Parent IsNot Nothing Then
             If c.Parent.Visible Then
@@ -114,17 +122,31 @@ Public Class Util
         Return str
     End Function
 
-    Public Shared Function AdjustInsertIndexes(Of T)(objs As T(), funcGetRow As Func(Of T, Integer), funcSetRow As Action(Of T, Integer), originalRowCount As Integer) As T()
+    Public Shared Sub AdjustInsertIndexes(Of T)(objs As T(), funcGetRow As Func(Of T, Integer), funcSetRow As Action(Of T, Integer), originalRowCount As Integer)
         '原始行每次插入之后，行号会变，所以做调整
-        Dim adjustedObjs = (From obj In objs Order By funcGetRow(obj) Ascending Select obj).ToArray '行号调整后的对象数组
+        objs = (From obj In objs Order By funcGetRow(obj) Ascending Select obj).ToArray '行号调整后的对象数组
         Dim insertedCount = 0
-        For i = 0 To adjustedObjs.Length - 1
-            funcSetRow(adjustedObjs(i), funcGetRow(adjustedObjs(i)) + insertedCount)
-            If funcGetRow(adjustedObjs(i)) < originalRowCount Then
+        For i = 0 To objs.Length - 1
+            Dim oriRow = funcGetRow(objs(i))
+            funcSetRow(objs(i), funcGetRow(objs(i)) + insertedCount)
+            If oriRow < originalRowCount Then
                 insertedCount += 1
             End If
         Next
-        Return adjustedObjs
+    End Sub
+
+    Public Shared Function AdjustInsertIndexes(srcIndexes As Integer(), originalRowCount As Integer)
+        '原始行每次插入之后，行号会变，所以做调整
+        Dim indexesASC = (From i In srcIndexes Order By i Ascending Select i).ToArray '行号调整后
+        Dim adjustedIndexes(indexesASC.Length - 1) As Integer
+        Dim insertedCount = 0
+        For i = 0 To indexesASC.Length - 1
+            adjustedIndexes(i) = indexesASC(i) + insertedCount
+            If indexesASC(i) < originalRowCount Then
+                insertedCount += 1
+            End If
+        Next
+        Return adjustedIndexes
     End Function
 
     Public Shared Function EqualOrBothNothing(obj1 As Object, obj2 As Object) As Boolean

@@ -189,7 +189,8 @@ Public Class ModeConfiguration
         RaiseEvent BeforeFieldAdd(Me, beforeEventArgs)
         If beforeEventArgs.Cancel Then Return False
         '真正添加字段
-        Dim adjustedIndexFields = Util.AdjustInsertIndexes(indexFieldPairs, Function(p) p.Index, Sub(p, i) p.Index = i, Me.Fields.Count)
+        Dim adjustedIndexFields = Util.DeepClone(indexFieldPairs)
+        Util.AdjustInsertIndexes(adjustedIndexFields, Function(p) p.Index, Sub(p, i) p.Index = i, Me.Fields.Count)
         For i = 0 To adjustedIndexFields.Length - 1
             Me.Fields.Insert(adjustedIndexFields(i).Index, adjustedIndexFields(i).Field)
         Next
@@ -231,5 +232,10 @@ Public Class ModeConfiguration
         Next
         RaiseEvent FieldRemoved(Me, New ConfigurationFieldRemovedEventArgs(indexFieldPairs, Me.Mode))
         Return True
+    End Function
+
+    Public Function ClearFields() As Boolean
+        Dim fieldIndexes = Util.Range(0, Me.Fields.Count)
+        Return Me.RemoveFields(fieldIndexes)
     End Function
 End Class
