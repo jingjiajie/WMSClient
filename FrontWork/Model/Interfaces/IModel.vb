@@ -9,10 +9,17 @@ Public Interface IModel
     Sub AddColumns(columns As ModelColumn())
 
     ''' <summary>
+    ''' Model更新列
+    ''' </summary>
+    ''' <param name="indexes">要更新列的位置</param>
+    ''' <param name="columns">新的列信息</param>
+    Sub UpdateColumn(indexes As Integer(), columns As ModelColumn())
+
+    ''' <summary>
     ''' Model删除列
     ''' </summary>
-    ''' <param name="columnNames">要删除的各列名</param>
-    Sub RemoveColumns(columnNames As String())
+    ''' <param name="indexes">要删除的列的位置</param>
+    Sub RemoveColumns(indexes As Integer())
 
     ''' <summary>
     ''' 获取Model的所有列

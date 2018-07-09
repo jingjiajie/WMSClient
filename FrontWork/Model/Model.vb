@@ -599,8 +599,8 @@ Partial Public Class Model
         Call Me.ModelConfigurationWrapper.AddColumns(columns)
     End Sub
 
-    Public Sub RemoveColumns(columnNames() As String) Implements IModel.RemoveColumns
-        Call Me.ModelConfigurationWrapper.RemoveColumns(columnNames)
+    Public Sub RemoveColumns(indexes As Integer()) Implements IModel.RemoveColumns
+        Call Me.ModelConfigurationWrapper.RemoveColumns(indexes)
     End Sub
 
     Public Function GetColumns() As ModelColumn() Implements IModel.GetColumns
@@ -657,5 +657,9 @@ Partial Public Class Model
 
     Public Sub RaiseRowSynchronizationStateChangedEvent(sender As Object, args As ModelRowStateChangedEventArgs)
         Call Me.ModelConfigurationWrapper.RaiseRowStateChangedEvent(sender, args)
+    End Sub
+
+    Public Sub UpdateColumn(indexes() As Integer, columns() As ModelColumn) Implements IModel.UpdateColumn
+        DirectCast(ModelConfigurationWrapper, IConfigurableModel).UpdateColumn(indexes, columns)
     End Sub
 End Class

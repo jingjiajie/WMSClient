@@ -468,22 +468,6 @@ Public Class ReoGridView
         Next
     End Sub
 
-    'Private Sub BindAssociation(col As Integer)
-    '    If Me.Panel.SelectionRange.IsSingleCell AndAlso Me.dicNameColumn.Count > 0 Then
-    '        Dim newColName = (From mc In Me.dicNameColumn Where mc.Value = col Select mc.Key).First
-    '        Dim modeConfiguration = Me.Configuration.GetFieldConfigurations(Me.Mode)
-    '        Dim curField = (From m In modeConfiguration Where m.Name = newColName Select m).First
-    '        If curField.Association Is Nothing Then
-    '            formAssociation.SetAssociationFunc(Nothing)
-    '        Else
-    '            formAssociation.SetAssociationFunc(Function(str As String)
-    '                                                   Dim ret = curField.Association.Invoke(Me, str)
-    '                                                   Return Util.ToArray(Of AssociationItem)(ret)
-    '                                               End Function)
-    '        End If
-    '    End If
-    'End Sub
-
     Private Sub CellEditingTextChangingEvent(sender As Object, e As EventArgs)
         Static bindedAssociationTextBox As Boolean = False
         If Not bindedAssociationTextBox Then
@@ -921,6 +905,10 @@ Public Class ReoGridView
 
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IDataView.InsertRows
         'Call Me.Panel.SuspendUIUpdates()
+        If rows.Length <> data.Length Then
+            Throw New FrontWorkException($"InsertRows failed: Length of rows({rows.Length}) must be equal to Length of data({data.Length})")
+        End If
+        If rows.Length = 0 Then Return
         Dim addedTemporaryRow = False
         If Me.NoRow Then '如果当前是默认页面，则先隐藏默认页面，并保留一个临时行。待插入完毕后删除临时行
             addedTemporaryRow = True
@@ -934,7 +922,8 @@ Public Class ReoGridView
             viewRowInfos(i) = New ViewRowInfo(rows(i), data(i), Nothing)
         Next
         Dim oriViewRows = Me.Panel.RowCount
-        Dim adjustedRowInfos = Util.AdjustInsertIndexes(viewRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)
+        Dim adjustedRowInfos = viewRowInfos
+        Util.AdjustInsertIndexes(adjustedRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, oriViewRows)
         Dim adjustedRows As New List(Of Integer)
         Dim adjustedRowData As New List(Of IDictionary(Of String, Object))
         For Each adjustedRowInfo In adjustedRowInfos

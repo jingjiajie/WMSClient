@@ -58,15 +58,29 @@ Public Class ModelCore
         Me._modelColumns.AddRange(columns)
     End Sub
 
-    Public Sub RemoveColumns(columnNames As String()) Implements IModel.RemoveColumns
-        For Each columnName In columnNames
-            Me.Data.Columns.Remove(columnName)
-            For i = 0 To Me._modelColumns.Count - 1
-                If Me._modelColumns(i).Name.Equals(columnName) Then
-                    Me._modelColumns.RemoveAt(i)
-                    Exit For
-                End If
-            Next
+    Public Sub RemoveColumns(indexes As Integer()) Implements IModel.RemoveColumns
+        Dim indexesDESC = indexes.OrderByDescending(Function(i) i).ToArray
+        For Each index In indexesDESC
+            Call Me.Data.Columns.RemoveAt(index)
+            Call Me._modelColumns.RemoveAt(index)
+        Next
+    End Sub
+
+    Public Sub UpdateColumns(indexes As Integer(), columns As ModelColumn()) Implements IModel.UpdateColumn
+        If indexes.Length <> columns.Length Then
+            Throw New FrontWorkException($"UpdateColumns failed: Length of indexes({indexes.Length}) must be equal to Length of modelColumns({columns.Length})")
+        End If
+        For i = 0 To indexes.Length - 1
+            Dim index = indexes(i)
+            Dim column = columns(i)
+            '更新记录的ModelColumns
+            Me._modelColumns(index) = column
+            '更新数据表
+            Dim dataColumn = Me.Data.Columns(index)
+            dataColumn.DefaultValue = column.DefaultValue
+            dataColumn.Namespace = column.Name
+            dataColumn.AllowDBNull = column.Nullable
+            dataColumn.DataType = column.Type
         Next
     End Sub
 
@@ -154,7 +168,11 @@ Public Class ModelCore
         End If
         '带有插入请求的原始行号的RowInfo
         Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(SynchronizationState.ADDED))).ToArray
-        Dim adjustedRowInfos = Util.AdjustInsertIndexes(oriRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
+        Dim adjustedRowInfos(oriRowInfos.Length - 1) As ModelRowInfo
+        For i = 0 To adjustedRowInfos.Length - 1
+            adjustedRowInfos(i) = oriRowInfos(i).clone
+        Next
+        Util.AdjustInsertIndexes(adjustedRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
         '开始添加数据
         For i = 0 To adjustedRowInfos.Length - 1
             Dim realRow = adjustedRowInfos(i).Row
@@ -360,12 +378,21 @@ Public Class ModelCore
     End Sub
 
     Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
-        Dim dataTable As DataTable = args.DataTable
+        Dim dataTable As DataTable = If(args.DataTable, New DataTable)
         Dim ranges As Range() = args.SelectionRanges
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         '刷新数据
-        Me._Data = dataTable
+        Call Me.Data.Rows.Clear()
+        For Each dataRow As DataRow In dataTable.Rows
+            Dim newRow = Me.Data.NewRow
+            Me.Data.Rows.Add(newRow)
+            For Each dataCol As DataColumn In dataTable.Columns
+                If Me.Data.Columns.Contains(dataCol.ColumnName) Then
+                    newRow(dataCol.ColumnName) = dataRow(dataCol)
+                End If
+            Next
+        Next
         '刷新同步状态字典
         Dim stateArray(dataTable.Rows.Count - 1) As ModelRowState
         For i = 0 To stateArray.Length - 1

@@ -130,8 +130,8 @@ Public Class ModelWrapperBase
         Call Me.Model.AddColumns(columns)
     End Sub
 
-    Public Sub RemoveColumns(columnNames() As String) Implements IModel.RemoveColumns
-        Call Me.Model.RemoveColumns(columnNames)
+    Public Sub RemoveColumns(indexes() As Integer) Implements IModel.RemoveColumns
+        Call Me.Model.RemoveColumns(indexes)
     End Sub
 
     Public Function GetColumns() As ModelColumn() Implements IModel.GetColumns
@@ -192,5 +192,9 @@ Public Class ModelWrapperBase
 
     Public Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
         Model.Refresh(args)
+    End Sub
+
+    Public Sub UpdateColumn(indexes() As Integer, columns() As ModelColumn) Implements IModel.UpdateColumn
+        Model.UpdateColumn(indexes, columns)
     End Sub
 End Class

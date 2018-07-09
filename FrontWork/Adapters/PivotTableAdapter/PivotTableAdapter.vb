@@ -1,10 +1,17 @@
-﻿Imports System.Linq
+﻿Imports System.ComponentModel
+Imports System.Drawing.Design
+Imports System.Linq
 Imports System.Text
 Imports FrontWork
 
 Public Class PivotTableAdapter
-    Private Property MapManager As New PositionMapManager
+    Private Property _CellMapManager As New CellMapManager
+    Private Property _ColumnMapManager As New ColumnMapManager
 
+    '<Category("FrontWork"), Description("使用说明"), Editor(GetType(PivotTableManualUITypeEditor), GetType(UITypeEditor))>
+    'Public Property Manual As String = "使用说明"
+
+    <Category("FrontWork")>
     Public Property SourceModel As IConfigurableModel
         Get
             Return Me.SourceModelOperator.Model
@@ -15,12 +22,13 @@ Public Class PivotTableAdapter
             End If
             Me.SourceModelOperator.Model = value
             If Me.SourceModel IsNot Nothing Then
-                Call Me.MapManager.ClearPositionMap()
+                Call Me._CellMapManager.ClearPositionMaps()
                 Call Me.BindSourceModel(Me.SourceModel)
             End If
         End Set
     End Property
 
+    <Category("FrontWork")>
     Public Property TargetModel As IConfigurableModel
         Get
             Return Me.TargetModelOperator.Model
@@ -31,17 +39,22 @@ Public Class PivotTableAdapter
             End If
             Me.TargetModelOperator.Model = value
             If Me.TargetModel IsNot Nothing Then
-                Call Me.MapManager.ClearPositionMap()
+                Call Me._CellMapManager.ClearPositionMaps()
                 Call Me.BindTargetModel(Me.TargetModel)
             End If
         End Set
     End Property
 
+    <Category("FrontWork")>
     Public Property SourceMode As String = "default"
+    <Category("FrontWork")>
     Public Property TargetMode As String = "default"
 
+    <Category("FrontWork")>
     Public Property ColumnNamesAsRow As String()
+    <Category("FrontWork")>
     Public Property ColumnNamesAsColumn As String()
+    <Category("FrontWork")>
     Public Property ColumnNamesAsValue As String()
 
     Private Property SourceModelOperator As New ConfigurableModelOperator
@@ -52,6 +65,7 @@ Public Class PivotTableAdapter
         AddHandler model.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
         AddHandler model.RowUpdated, AddressOf Me.SourceModelRowUpdatedEvent
         AddHandler model.RowRemoved, AddressOf Me.SourceModelRowRemovedEvent
+        AddHandler model.Refreshed, AddressOf Me.SourceModelRefreshedEvent
     End Sub
 
     Private Sub UnbindSourceModel(model As IConfigurableModel)
@@ -59,6 +73,7 @@ Public Class PivotTableAdapter
         RemoveHandler model.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
         RemoveHandler model.RowUpdated, AddressOf Me.SourceModelRowUpdatedEvent
         RemoveHandler model.RowRemoved, AddressOf Me.SourceModelRowRemovedEvent
+        RemoveHandler model.Refreshed, AddressOf Me.SourceModelRefreshedEvent
     End Sub
 
     Private Sub BindTargetModel(model As IConfigurableModel)
@@ -76,35 +91,46 @@ Public Class PivotTableAdapter
     End Sub
 
     Private Sub TargetModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
-        Call Me.UnpivotCell(e.UpdatedCells.Select(Function(c) c.Row).ToArray,
+        Call Me.UnpivotCells(e.UpdatedCells.Select(Function(c) c.Row).ToArray,
                             e.UpdatedCells.Select(Function(c) c.ColumnName).ToArray)
     End Sub
 
     Private Sub TargetModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
-        Throw New NotImplementedException()
+        Throw New FrontWorkException("PivotTableAdapter: Cannot remove rows from target model!")
     End Sub
 
     Private Sub TargetModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
-        Throw New NotImplementedException()
+        Throw New FrontWorkException("PivotTableAdapter: Cannot add rows from target model!")
     End Sub
 
     Private Sub TargetModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
-        Throw New NotImplementedException()
+        Throw New FrontWorkException("PivotTableAdapter: Cannot update rows from target model!")
+    End Sub
+
+    Private Sub SourceModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
+        Me.TargetModel.Refresh(New ModelRefreshArgs(Nothing, Nothing))
+        Me.TargetModelOperator.Configuration.ClearFields(Me.TargetMode)
+        Call Me.PivotColumns(Util.Range(0, Me.SourceModel.GetRowCount))
+        Call Me.PivotRows(Util.Range(0, Me.SourceModel.GetRowCount))
     End Sub
 
     Private Sub SourceModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
         Dim rowNums = (From r In e.AddedRows Select r.Row).ToArray
-        Call Me.PivotColumns(rowNums)
-        Call Me.PivotRows(rowNums)
+        Dim adjustedRowNums = Util.AdjustInsertIndexes(rowNums, Me.SourceModelOperator.GetRowCount - rowNums.Length)
+        Call Me._CellMapManager.AdjustSourceRowsAfterRowsInserted(rowNums)
+        Call Me.PivotColumns(adjustedRowNums)
+        Call Me.PivotRows(adjustedRowNums)
     End Sub
 
     Private Sub SourceModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
         Dim rowNums = (From c In e.UpdatedCells Select c.Row).ToArray
-        Call Me.PivotRows(rowNums)
+        Dim cellNames = (From c In e.UpdatedCells Select c.ColumnName).ToArray
+        Call Me.PivotCells(rowNums, cellNames)
     End Sub
 
     Private Sub SourceModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
-        Throw New NotImplementedException()
+        Dim removedRowNums = e.RemovedRows.Select(Function(r) r.Row)
+        Call Me._CellMapManager.AdjustSourceRowsAfterRowsRemoved(removedRowNums)
     End Sub
 
     Private Sub SourceModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
@@ -131,7 +157,7 @@ Public Class PivotTableAdapter
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim sourceRowData = allSourceRowData(i)
-            Dim colsAsColValues(Me.ColumnNamesAsColumn.Length - 1) As String
+            Dim colsAsColValues(Me.ColumnNamesAsColumn.Length - 1) As Object
             For j = 0 To Me.ColumnNamesAsColumn.Length - 1
                 colsAsColValues(j) = sourceRowData(Me.ColumnNamesAsColumn(j))
             Next
@@ -147,6 +173,8 @@ Public Class PivotTableAdapter
                 newField.Name = targetColumnName
                 newField.DisplayName = targetColumnName
                 addTargetFields.Add(newField)
+                '记录列映射
+                Me._ColumnMapManager.SetColumnMap(colsAsColValues, Me.ColumnNamesAsValue(j), targetColumnName)
             Next
         Next
         Me.TargetModelOperator.Configuration.AddFields(Me.TargetMode, addTargetFields.ToArray)
@@ -154,7 +182,7 @@ Public Class PivotTableAdapter
 
     Private Sub PivotRows(sourceRows As Integer())
         Dim addRows As New List(Of IDictionary(Of String, Object))
-        Dim updateData As New List(Of PositionDataPair)
+        Dim updateData As New List(Of CellPositionDataPair)
         Dim allSourceRowData = Me.SourceModelOperator.GetRows(sourceRows)
         Dim allTargetRowData = Me.TargetModelOperator.GetRows(Util.Range(0, TargetModelOperator.GetRowCount)).ToList
         For i = 0 To sourceRows.Length - 1
@@ -181,60 +209,119 @@ Public Class PivotTableAdapter
             For j = 0 To Me.ColumnNamesAsValue.Length - 1
                 Dim targetColName = targetColNames(j)
                 Dim targetValue = sourceRowData(Me.ColumnNamesAsValue(j))
-                updateData.Add(New PositionDataPair(targetRow, targetColName, targetValue))
+                updateData.Add(New CellPositionDataPair(targetRow, targetColName, targetValue))
                 '将对应关系添加到位置映射里
-                Call Me.MapManager.SetPositionMap(New Position(sourceRow, Me.ColumnNamesAsValue(j)), New Position(targetRow, targetColName))
+                Call Me._CellMapManager.SetPositionMap(New CellPosition(sourceRow, Me.ColumnNamesAsValue(j)), New CellPosition(targetRow, targetColName))
                 '把要添加和更新的行先同步到allTargetRowData，以免在下次循环时读取不到变化
                 allTargetRowData(targetRow)(targetColName) = targetValue
             Next
         Next
         RemoveHandler Me.TargetModel.RowAdded, AddressOf Me.TargetModelRowAddedEvent
         RemoveHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent
-        Me.TargetModelOperator.AddRows(addRows.ToArray)
-        Me.TargetModelOperator.UpdateCells(updateData.Select(Function(p) p.Row).ToArray,
+        If addRows.Count > 0 Then
+            Me.TargetModelOperator.AddRows(addRows.ToArray)
+        End If
+        If updateData.Count > 0 Then
+            Me.TargetModelOperator.UpdateCells(updateData.Select(Function(p) p.Row).ToArray,
                                            updateData.Select(Function(p) p.ColumnName).ToArray,
                                            updateData.Select(Function(p) p.Data).ToArray)
+        End If
         AddHandler Me.TargetModel.RowAdded, AddressOf Me.TargetModelRowAddedEvent
         AddHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent
     End Sub
 
-    Private Sub UnpivotCell(targetRows As Integer(), targetColumnNames As String())
+    Private Sub UnpivotCells(targetRows As Integer(), targetColumnNames As String())
         Dim allCellData = Me.TargetModelOperator.GetCells(targetRows, targetColumnNames)
-        Dim updateSourceData As New List(Of PositionDataPair)
+        Dim allRowData = Me.TargetModelOperator.GetRows(targetRows)
+        Dim addSourceRows As New List(Of IDictionary(Of String, Object))
+        Dim updateSourceData As New List(Of CellPositionDataPair)
         For i = 0 To allCellData.Length - 1
+            Dim targetRow = targetRows(i)
+            Dim targetColumnName = targetColumnNames(i)
             Dim cellData = allCellData(i)
-            Dim mappedSourcePos = Me.MapManager.GetSourcePosition(New Position(targetRows(i), targetColumnNames(i)))
-            If mappedSourcePos Is Nothing Then
-                Throw New FrontWorkException($"Unmapped target model cell: Row {targetRows(i)},Col ""{targetColumnNames(i)}""")
+
+            Dim mappedSourcePos = Me._CellMapManager.GetSourcePosition(New CellPosition(targetRows(i), targetColumnNames(i)))
+            '
+            If mappedSourcePos IsNot Nothing Then
+                '如果有映射单元格，则更新源Model对应单元格
+                updateSourceData.Add(New CellPositionDataPair(mappedSourcePos, cellData))
+            Else
+                Dim colMap = Me._ColumnMapManager.GetColumnMap(targetColumnName)
+                'Me.GetSourceRow(targetRowData, Me.SourceModel.GetRows(Util.Range(0, Me.SourceModel.GetRowCount)), Me.ColumnNamesAsRow, Me.ColumnNamesAsColumn)
+                Dim newSourceRowNum = Me.SourceModel.GetRowCount + addSourceRows.Count
+                Dim targetRowData = allRowData(i)
+                Dim newSourceRow = New Dictionary(Of String, Object)
+
+                For Each colAsRow In Me.ColumnNamesAsRow
+                    newSourceRow.Add(colAsRow, targetRowData(colAsRow))
+                Next
+                For j = 0 To Me.ColumnNamesAsColumn.Length - 1
+                    Dim colName = Me.ColumnNamesAsColumn(j)
+                    newSourceRow.Add(colName, colMap.SourceColumnsAsColumnValues(j))
+                Next
+                newSourceRow.Add(colMap.SourceColumnAsValueName, cellData)
+                addSourceRows.Add(newSourceRow)
+                Dim newSourceRowColumnsAsColumnValues = colMap.SourceColumnsAsColumnValues.ToArray
+                '将新加的一整行都进行单元格映射
+                Dim pivotColumnNames = Me.GetPivotColumnNames(newSourceRowColumnsAsColumnValues, Me.ColumnNamesAsValue)
+                For j = 0 To pivotColumnNames.Length - 1
+                    Me._CellMapManager.SetPositionMap(New CellPosition(newSourceRowNum, Me.ColumnNamesAsValue(j)),
+                                                      New CellPosition(targetRow, pivotColumnNames(j)))
+                Next
             End If
-            updateSourceData.Add(New PositionDataPair(mappedSourcePos, cellData))
         Next
-        RemoveHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
+        If addSourceRows.Count > 0 Then
+            RemoveHandler Me.SourceModel.RowAdded, AddressOf Me.SourceModelRowAddedEvent
+            Call Me.SourceModelOperator.AddRows(addSourceRows.ToArray)
+            AddHandler Me.SourceModel.RowAdded, AddressOf Me.SourceModelRowAddedEvent
+        End If
+
+        If updateSourceData.Count > 0 Then
+            RemoveHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
         Call Me.SourceModelOperator.UpdateCells(updateSourceData.Select(Function(p) p.Row).ToArray,
                                                 updateSourceData.Select(Function(p) p.ColumnName).ToArray,
                                                 updateSourceData.Select(Function(p) p.Data).ToArray)
-        AddHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
+            AddHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
+        End If
     End Sub
 
-    Private Function GetPivotColumnNames(colsAsCol As String(), colsAsValue As String()) As String()
+    Private Sub PivotCells(sourceRows As Integer(), sourceColumnNames As String())
+        Dim allCellData = Me.SourceModelOperator.GetCells(sourceRows, sourceColumnNames)
+        Dim updateTargetData As New List(Of CellPositionDataPair)
+        For i = 0 To allCellData.Length - 1
+            Dim cellData = allCellData(i)
+            Dim mappedTargetPos = Me._CellMapManager.GetTargetPosition(New CellPosition(sourceRows(i), sourceColumnNames(i)))
+            If mappedTargetPos Is Nothing Then
+                Throw New FrontWorkException($"Unmapped source model cell: Row {sourceRows(i)},Col ""{sourceColumnNames(i)}""")
+            End If
+            updateTargetData.Add(New CellPositionDataPair(mappedTargetPos, cellData))
+        Next
+        RemoveHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent
+        Call Me.TargetModelOperator.UpdateCells(updateTargetData.Select(Function(p) p.Row).ToArray,
+                                                updateTargetData.Select(Function(p) p.ColumnName).ToArray,
+                                                updateTargetData.Select(Function(p) p.Data).ToArray)
+        AddHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent
+    End Sub
+
+    Private Function GetPivotColumnNames(colsAsColValue As Object(), colsAsValue As String()) As String()
         Dim sbMainColName As New StringBuilder
-        For Each colAsCol In colsAsCol
-            sbMainColName.Append(colAsCol)
+        For Each colAsColValue In colsAsColValue
+            sbMainColName.Append(colAsColValue)
         Next
         Dim mainColName = sbMainColName.ToString
         Dim colNames(colsAsValue.Length - 1) As String
         For i = 0 To colsAsValue.Length - 1
-            colNames(i) = mainColName + colsAsValue(i)
+            colNames(i) = mainColName & colsAsValue(i)
         Next
         Return colNames
     End Function
 
-    Private Function GetTargetRow(rowData As IDictionary(Of String, Object), targetRowData As IDictionary(Of String, Object)(), colsAsRow As String()) As Integer
-        For row = 0 To targetRowData.Length - 1
+    Private Function GetTargetRow(sourceRowData As IDictionary(Of String, Object), allTargetRowData As IDictionary(Of String, Object)(), colsAsRow As String()) As Integer
+        For row = 0 To allTargetRowData.Length - 1
             Dim mismatched = False
             For Each col In colsAsRow
-                Dim targetValue = targetRowData(row)(col)
-                Dim srcValue = rowData(col)
+                Dim targetValue = allTargetRowData(row)(col)
+                Dim srcValue = sourceRowData(col)
                 If Not targetValue.Equals(srcValue) Then
                     mismatched = True
                     Exit For
@@ -246,4 +333,40 @@ Public Class PivotTableAdapter
         Next
         Return -1
     End Function
+
+    Private Function GetSourceRow(targetRowData As IDictionary(Of String, Object), allSourceRowData As IDictionary(Of String, Object)(), colsAsRow As String(), colsAsColumn As String()) As Integer
+        For sourceRow = 0 To allSourceRowData.Length - 1
+            Dim sourceRowData = allSourceRowData(sourceRow)
+            Dim mismatched As Boolean = False
+            For Each colAsRow In colsAsRow
+                If Not sourceRowData(colAsRow).Equals(targetRowData(colAsRow)) Then
+                    mismatched = True
+                    Exit For
+                End If
+            Next
+            If mismatched Then Continue For
+            For Each colAsColumn In colsAsColumn
+                If Not sourceRowData(colAsColumn).Equals(targetRowData(colAsColumn)) Then
+                    mismatched = True
+                    Exit For
+                End If
+            Next
+            If Not mismatched Then Return sourceRow
+        Next
+        Return -1
+    End Function
+
+    Private Class PivotTableManualUITypeEditor
+        Inherits UITypeEditor
+
+        Public Overrides Function GetEditStyle(context As ITypeDescriptorContext) As UITypeEditorEditStyle
+            Return UITypeEditorEditStyle.Modal
+        End Function
+
+        Public Overrides Function EditValue(context As ITypeDescriptorContext, provider As IServiceProvider, value As Object) As Object
+            Dim formManual As New ManualBrowserForm("https://github.com/jingjiajie/FrontWork/wiki/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83---%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E7%BB%84%E4%BB%B6(Configuration)", "PivotTableAdapter使用说明")
+            Call formManual.Show()
+            Return value
+        End Function
+    End Class
 End Class
