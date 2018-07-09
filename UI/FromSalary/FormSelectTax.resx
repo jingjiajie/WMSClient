@@ -129,8 +129,16 @@
         {name:"taxName",displayName:"税务名称",type:"string"},
         {name:"taxNo",displayName:"代码",type:"string"},
     ],
-httpAPIs:[      
-		{type:"update",
+httpAPIs:[
+       {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+        {type:"update",
             url:"{$url}/warehouse/{$accountBook}/pay_note_tax/choose_tax",
             method:"PUT",
             requestBody:"$data"},
