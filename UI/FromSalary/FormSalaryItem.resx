@@ -129,7 +129,7 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"salaryTypeId",displayName:"salaryTypeId",type:"int",visible:false},              
+        {name:"salaryTypeId",displayName:"salaryTypeID",type:"int",visible:false},              
         {name:"name",displayName:"名称",type:"string"},      
         {name:"defaultAmount",displayName:"默认金额",type:"double"}, 
         {name:"salaryType",displayName:"类别名称",type:"string"},  
@@ -162,7 +162,7 @@
 ]</value>
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 98</value>
+    <value>186, 79</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

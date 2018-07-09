@@ -60,6 +60,11 @@ namespace WMS.UI
                     MakeTreeNode("库存盘点"),
                     MakeTreeNode("移位记录")
                     }),
+                 MakeTreeNode("薪金管理",new TreeNode[]{
+                    MakeTreeNode("薪金类别"),
+                    MakeTreeNode("薪金项目"),
+                    MakeTreeNode("薪金期间")
+                    })
             };
 
             this.treeViewLeft.Nodes.Clear();
@@ -254,6 +259,15 @@ namespace WMS.UI
                     break;
                 case "备货作业单管理":
                     this.LoadSubWindow(new FormTransferOrder.FormTransferOrder());
+                    break;
+                case "薪金类别":
+                    this.LoadSubWindow(new FromSalary.FormSalaryType());
+                    break;
+                case "薪金项目":
+                    this.LoadSubWindow(new FromSalary.FormSalaryItem());
+                    break;
+                case "薪金期间":
+                    this.LoadSubWindow(new FromSalary.FormSalaryPeriod());
                     break;
             }
             this.panelRight.ResumeLayout();
