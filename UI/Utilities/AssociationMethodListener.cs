@@ -103,8 +103,7 @@ namespace WMS.UI
         {
             return (from s in GlobalData.AllPersons
                     where s["name"] != null 
-                    && s["name"].ToString().StartsWith(str)
-                    && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    && s["name"].ToString().StartsWith(str)                 
                     select s["name"]).Distinct().ToArray();
         }
 
@@ -115,6 +114,36 @@ namespace WMS.UI
                     where s["name"] != null
                     && s["name"].ToString().StartsWith(str)
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    select s["name"]).Distinct().ToArray();
+        }
+
+        //薪资类型名称输入联想       
+        private object[] SalaryTypeNameAssociation(string str)
+            {
+              return (from s in GlobalData.AllSalaryType
+                     where s["name"] != null
+                        && s["name"].ToString().StartsWith(str)
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["name"]).Distinct().ToArray();
+            }
+
+        //薪资项目名称输入联想
+        private object[] SalaryItemNameAssociation(string str)
+        {
+            return (from s in GlobalData.AllSalaryItem
+                    where s["name"] != null
+                       && s["name"].ToString().StartsWith(str)
+                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    select s["name"]).Distinct().ToArray();
+        }
+
+        //薪资期间名称输入联想
+        private object[] SalaryPeriodAssociation(string str)
+        {
+            return (from s in GlobalData.AllSalaryPeriod
+                    where s["name"] != null
+                       && s["name"].ToString().StartsWith(str)
+                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["name"]).Distinct().ToArray();
         }
     }

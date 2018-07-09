@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI.FromSalary
 {
-    partial class FormSalaryType
+    partial class FormPersonSalary
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSalaryType));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPersonSalary));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
@@ -74,12 +74,12 @@
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(814, 348);
-            this.tableLayoutPanel1.TabIndex = 17;
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(765, 379);
+            this.tableLayoutPanel1.TabIndex = 23;
             // 
             // panelSearchWidget
             // 
@@ -88,7 +88,7 @@
             this.panelSearchWidget.Location = new System.Drawing.Point(0, 0);
             this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
             this.panelSearchWidget.Name = "panelSearchWidget";
-            this.panelSearchWidget.Size = new System.Drawing.Size(814, 25);
+            this.panelSearchWidget.Size = new System.Drawing.Size(765, 25);
             this.panelSearchWidget.TabIndex = 12;
             // 
             // searchView1
@@ -100,7 +100,7 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(2);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(814, 25);
+            this.searchView1.Size = new System.Drawing.Size(765, 25);
             this.searchView1.TabIndex = 0;
             // 
             // configuration1
@@ -110,7 +110,7 @@
             this.configuration1.Location = new System.Drawing.Point(65, 35);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormSalaryType",
+        "FormPersonSalary",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -128,10 +128,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 82);
+            this.panelPager.Location = new System.Drawing.Point(0, 107);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(814, 217);
+            this.panelPager.Size = new System.Drawing.Size(765, 223);
             this.panelPager.TabIndex = 8;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -157,12 +157,12 @@
             // pagerView1
             // 
             this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(2, 301);
+            this.pagerView1.Location = new System.Drawing.Point(2, 332);
             this.pagerView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(810, 26);
+            this.pagerView1.Size = new System.Drawing.Size(761, 26);
             this.pagerView1.TabIndex = 14;
             // 
             // synchronizer
@@ -201,7 +201,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(814, 217);
+            this.reoGridView1.Size = new System.Drawing.Size(765, 223);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop
@@ -217,7 +217,7 @@
             this.toolStripButtonAlter});
             this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(814, 22);
+            this.toolStripTop.Size = new System.Drawing.Size(765, 22);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -261,7 +261,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
-            this.basicView1.Size = new System.Drawing.Size(814, 35);
+            this.basicView1.Size = new System.Drawing.Size(765, 60);
             this.basicView1.TabIndex = 13;
             // 
             // toolStrip1
@@ -269,17 +269,17 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(539, 436);
+            this.toolStrip1.Location = new System.Drawing.Point(625, 479);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
-            this.toolStrip1.TabIndex = 15;
+            this.toolStrip1.TabIndex = 21;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(56, 17);
-            this.labelStatus.Text = "薪金类型";
+            this.labelStatus.Text = "人员薪资";
             // 
             // toolStripStatusLabel1
             // 
@@ -293,24 +293,24 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 348);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 379);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(814, 22);
-            this.statusStrip1.TabIndex = 16;
+            this.statusStrip1.Size = new System.Drawing.Size(765, 22);
+            this.statusStrip1.TabIndex = 22;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // FormSalaryType
+            // FormPersonSalary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 370);
+            this.ClientSize = new System.Drawing.Size(765, 401);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "FormSalaryType";
-            this.Text = "FormSalaryType";
-            this.Load += new System.EventHandler(this.FormSalaryType_Load);
+            this.Name = "FormPersonSalary";
+            this.Text = "FormPersonSalary";
+            this.Load += new System.EventHandler(this.FormPersonSalary_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panelSearchWidget.ResumeLayout(false);
@@ -326,6 +326,10 @@
 
         #endregion
 
+        private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStrip toolStripTop;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelSearchWidget;
         private FrontWork.SearchView searchView1;
@@ -336,10 +340,6 @@
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.Model model1;
         private FrontWork.ReoGridView reoGridView1;
-        private System.Windows.Forms.ToolStrip toolStripTop;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private FrontWork.BasicView basicView1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;

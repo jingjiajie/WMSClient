@@ -66,10 +66,28 @@ namespace WMS.UI.FromSalary
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();/*
+                this.searchView1.Search();
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");*/
+                GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
+                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
+            }
+        }
+
+        private void SalaryTypeNameEditEnded(int row, string salaryTypeName)
+        {
+            IDictionary<string, object> foundSalaryType =
+                GlobalData.AllSalaryType.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == salaryTypeName;
+                });
+            if (foundSalaryType == null)
+            {
+                MessageBox.Show($"薪金类型名称\"{salaryTypeName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "salaryTypeId"] = foundSalaryType["id"];              
             }
         }
     }

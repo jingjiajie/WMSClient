@@ -224,7 +224,7 @@ namespace WMS.UI
             this.comboBoxWarehouse.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
             this.comboBoxWarehouse.Location = new System.Drawing.Point(126, 2);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
             this.comboBoxWarehouse.Size = new System.Drawing.Size(146, 27);
             this.comboBoxWarehouse.TabIndex = 0;
@@ -250,7 +250,7 @@ namespace WMS.UI
             this.panelFill.Controls.Add(this.tableLayoutPanel1);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFill.Location = new System.Drawing.Point(0, 112);
-            this.panelFill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelFill.Margin = new System.Windows.Forms.Padding(2);
             this.panelFill.Name = "panelFill";
             this.panelFill.Size = new System.Drawing.Size(842, 404);
             this.panelFill.TabIndex = 1;
@@ -293,7 +293,7 @@ namespace WMS.UI
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -376,7 +376,7 @@ namespace WMS.UI
             this.tableLayoutPanel4.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(2, 357);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));

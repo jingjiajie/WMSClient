@@ -248,6 +248,7 @@ namespace WMS.UI
         {
 
             Condition condWarehouse = new Condition().AddCondition("warehouseId",GlobalData.Warehouse["id"]);
+            Condition cond = new Condition();
             GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
 
@@ -268,6 +269,18 @@ namespace WMS.UI
 
             GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
+
+            GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
+
+            GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
+
+             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.ToString()}");
+    
+            GlobalData.AllPerson = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/person/{cond}");
         }
     }
 }

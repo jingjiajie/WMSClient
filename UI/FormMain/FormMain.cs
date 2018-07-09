@@ -62,8 +62,9 @@ namespace WMS.UI
                     }),
                  MakeTreeNode("薪金管理",new TreeNode[]{
                     MakeTreeNode("薪金类别"),
-                    MakeTreeNode("薪金项目"),
-                    MakeTreeNode("薪金期间")
+                    MakeTreeNode("薪金期间"),
+                    MakeTreeNode("薪金项目"),                 
+                    MakeTreeNode("人员薪金")
                     })
             };
 
@@ -269,6 +270,9 @@ namespace WMS.UI
                 case "薪金期间":
                     this.LoadSubWindow(new FromSalary.FormSalaryPeriod());
                     break;
+                 case "人员薪金":
+                    this.LoadSubWindow(new FromSalary.FormPersonSalary());
+                    break;
             }
             this.panelRight.ResumeLayout();
             this.panelRight.Show();
@@ -366,6 +370,14 @@ namespace WMS.UI
 
             GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
+            GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
+
+            GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
+
+            GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.ToString()}");
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
