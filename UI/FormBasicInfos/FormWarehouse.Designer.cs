@@ -87,7 +87,7 @@
             // 
             // basicView1
             // 
-            this.basicView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.basicView1.Configuration = this.configuration1;
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);

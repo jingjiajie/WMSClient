@@ -146,5 +146,25 @@ namespace WMS.UI
                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["name"]).Distinct().ToArray();
         }
+
+        //科目名称输入联想
+        private object[] AccountTitleNameAssociation(string str)
+        {
+            return (from s in GlobalData.AllAccountTitle
+                    where s["name"] != null
+                       && s["name"].ToString().StartsWith(str)
+                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    select s["name"]).Distinct().ToArray();
+        }
+
+        //科目编码输入联想
+        private object[] AccountTitleNoAssociation(string str)
+        {
+            return (from s in GlobalData.AllAccountTitle
+                    where s["no"] != null
+                       && s["no"].ToString().StartsWith(str)
+                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    select s["no"]).Distinct().ToArray();
+        }
     }
 }
