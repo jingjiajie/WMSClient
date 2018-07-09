@@ -615,10 +615,6 @@ Partial Public Class Model
         Return Me.ModelConfigurationWrapper.GetCells(rows, columnNames)
     End Function
 
-    Public Function ToDataTable() As DataTable Implements IModel.ToDataTable
-        Return Me.ModelConfigurationWrapper.ToDataTable
-    End Function
-
     Public Sub RefreshView(rows As Integer())
         Call Me.ModelConfigurationWrapper.RefreshView(rows)
     End Sub

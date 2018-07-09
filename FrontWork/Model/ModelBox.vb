@@ -54,25 +54,21 @@ Public Class ModelBox
     End Sub
 
     Public Sub GroupBy(fieldName As String)
-        Dim datatable = Me.ToDataTable
-        If Not datatable.Columns.Contains(fieldName) Then
-            Throw New FrontWorkException($"""{fieldName}"" not exist in {Me.Name}")
-        End If
-        Dim groups = (From row In datatable.AsEnumerable
+        Dim dataRows = Me.GetRows(Util.Range(0, Me.GetRowCount))
+        'If Not Me.GetColumns.Contains(fieldName) Then
+        '    Throw New FrontWorkException($"""{fieldName}"" not exist in {Me.Name}")
+        'End If
+        Dim groups = (From row In dataRows
                       Group By key = CStr(If(row(fieldName), "")) Into g = Group
                       Select New With {.Key = key, .Values = g}).ToArray
         Call Me.Models.Clear() '清空所有Model
         For Each group In groups
             Dim groupName = group.Key
-            Dim rows = group.Values
+            Dim groupRows = group.Values.ToArray
             '创建新的Model
-            Dim newDataTable = datatable.Clone
-            For Each row In rows
-                newDataTable.Rows.Add(row.ItemArray)
-            Next
             Dim newModel = New Model
             newModel.Name = groupName
-            newModel.Refresh(New ModelRefreshArgs(newDataTable, {New Range(0, 0, 1, 1)}))
+            newModel.Refresh(New ModelRefreshArgs(groupRows, {New Range(0, 0, 1, 1)}))
             Me.Models.SetModel(newModel)
         Next
         If groups.Length > 0 Then

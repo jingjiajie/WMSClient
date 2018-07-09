@@ -304,10 +304,10 @@ Public Class ModelOperator
             Me.AllSelectionRanges = {}
             Return
         End If
-        Dim dataTable = Me.Model.ToDataTable
+        Dim dataRows = Me.Model.GetRows(Util.Range(0, Me.Model.GetRowCount))
         Dim targetRows As New List(Of Integer)
-        For i = 0 To dataTable.Rows.Count - 1
-            Dim curRowValue = dataTable.Rows(i)(columnName)
+        For i = 0 To dataRows.Count - 1
+            Dim curRowValue = dataRows(i)(columnName)
             If values.Contains(curRowValue) Then
                 targetRows.Add(i)
             End If
@@ -331,7 +331,7 @@ Public Class ModelOperator
         '生成选区
         Dim ranges As New List(Of Range)
         For Each rowGroup In rowGroups
-            Dim newRange = New Range(rowGroup(0), 0, rowGroup.Count, dataTable.Columns.Count)
+            Dim newRange = New Range(rowGroup(0), 0, rowGroup.Count, Me.Model.GetColumnCount)
             ranges.Add(newRange)
         Next
         Me.AllSelectionRanges = ranges.ToArray

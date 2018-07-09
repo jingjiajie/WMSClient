@@ -317,35 +317,17 @@ Public Class JsonRESTSynchronizer
                         resultList.Add(value)
                     Next
                 End If
-                '直接操作源数据，不触发事件
-                Dim dataTable = Me.Model.ToDataTable
-                Call dataTable.Rows.Clear()
-                For Each resultRow In resultList
-                    Dim newRow = dataTable.NewRow
-                    For Each item In resultRow
-                        Dim key = Me.GetMappedModelFieldName(item.Key)
-                        Dim value = item.Value
-                        If Not dataTable.Columns.Contains(key) Then
-                            Logger.PutMessage("Column """ & key & """ not found in model", LogLevel.WARNING)
-                            Continue For
-                        Else
-                            newRow(key) = If(value, DBNull.Value)
-                        End If
-                    Next
-                    dataTable.Rows.Add(newRow)
-                Next
                 '修改完成后整体触发刷新事件
                 Dim selectionRanges As New List(Of Range)
                 For Each oriRange In Me.Model.AllSelectionRanges
                     '截取选区，如果原选区超过了数据表的范围，则进行截取
-                    If oriRange.Row >= dataTable.Rows.Count Then Continue For
-                    If oriRange.Column >= dataTable.Columns.Count Then Continue For
+                    If oriRange.Row >= resultList.Count Then Continue For
                     Dim newRow = oriRange.Row
                     Dim newCol = oriRange.Column
                     Dim newRows = oriRange.Rows
                     Dim newCols = oriRange.Columns
-                    If oriRange.Row + oriRange.Rows > dataTable.Rows.Count Then
-                        newRows = dataTable.Rows.Count - newRow
+                    If oriRange.Row + oriRange.Rows > resultList.Count Then
+                        newRows = resultList.Count - newRow
                     End If
                     'If oriRange.Column + oriRange.Columns > dataTable.Columns.Count Then
                     '    newCols = dataTable.Columns.Count - newCol
@@ -353,10 +335,10 @@ Public Class JsonRESTSynchronizer
                     selectionRanges.Add(New Range(newRow, newCol, newRows, newCols))
                 Next
                 '如果实在没有选区了，就自动选第一行第一列
-                If selectionRanges.Count = 0 AndAlso dataTable.Rows.Count > 0 Then
+                If selectionRanges.Count = 0 AndAlso resultList.Count > 0 Then
                     selectionRanges.Add(New Range(0, 0, 1, 1))
                 End If
-                Call Me.Model.Refresh(New ModelRefreshArgs(dataTable, selectionRanges.ToArray))
+                Call Me.Model.Refresh(New ModelRefreshArgs(resultList.ToArray, selectionRanges.ToArray))
 
                 Call Me.FindAPI.Callback?.Invoke(response, Nothing)
             End Using
@@ -390,7 +372,7 @@ Public Class JsonRESTSynchronizer
         For row = 0 To Me.Model.RowCount - 1
             Dim syncState = Me.Model.GetRowSynchronizationState(row)
             If syncState = SynchronizationState.SYNCHRONIZED Then Continue For
-            Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.ToDataTable.Rows(row))
+            Dim rowData = Me.ModelRowToAPIDictionary(Me.Model.GetRow(row))
             Select Case syncState
                 Case SynchronizationState.ADDED_UPDATED
                     addedData.Add(rowData)
@@ -438,11 +420,10 @@ Public Class JsonRESTSynchronizer
         Return True
     End Function
 
-    Private Function ModelRowToAPIDictionary(dataRow As DataRow) As Dictionary(Of String, Object)
+    Private Function ModelRowToAPIDictionary(dataRow As IDictionary(Of String, Object)) As IDictionary(Of String, Object)
         Dim result As New Dictionary(Of String, Object)
-        Dim columns = dataRow.Table.Columns
-        For Each column As DataColumn In columns
-            result.Add(Me.GetMappedAPIFieldName(column.ColumnName), dataRow(column))
+        For Each colAndValue In dataRow
+            result.Add(Me.GetMappedAPIFieldName(colAndValue.Key), colAndValue.Value)
         Next
         Return result
     End Function

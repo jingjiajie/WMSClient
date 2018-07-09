@@ -1,11 +1,11 @@
 ﻿Imports FrontWork
 
 Public Class ModelRefreshArgs
-    Public Property DataTable As DataTable
+    Public Property DataRows As IDictionary(Of String, Object)()
     Public Property SelectionRanges As Range()
 
-    Public Sub New(dataTable As DataTable, selectionRanges() As Range)
-        Me.DataTable = dataTable
+    Public Sub New(dataRows As IDictionary(Of String, Object)(), selectionRanges() As Range)
+        Me.DataRows = dataRows
         Me.SelectionRanges = selectionRanges
     End Sub
 End Class
