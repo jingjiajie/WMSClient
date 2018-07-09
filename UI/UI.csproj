@@ -283,6 +283,12 @@
     <Compile Include="FromSalary\FormSalaryType.Designer.cs">
       <DependentUpon>FormSalaryType.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromSalary\FormSelectTax.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FromSalary\FormSelectTax.Designer.cs">
+      <DependentUpon>FormSelectTax.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\AssociationMethodListener.cs" />
     <Compile Include="Utilities\CommonDataStructures.cs" />
     <Compile Include="Utilities\Condition.cs" />
@@ -432,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FromSalary\FormSalaryType.resx">
       <DependentUpon>FormSalaryType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FromSalary\FormSelectTax.resx">
+      <DependentUpon>FormSelectTax.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormLoading.resx">
       <DependentUpon>FormLoading.cs</DependentUpon>
