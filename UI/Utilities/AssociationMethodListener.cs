@@ -165,6 +165,6 @@ namespace WMS.UI
                        && s["no"].ToString().StartsWith(str)
                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["no"]).Distinct().ToArray();
-        }
+        }   
     }
 }
