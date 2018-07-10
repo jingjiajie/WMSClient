@@ -1,16 +1,4 @@
-﻿Public Class InvocationContext
-    Public Property ContextItems As New ContextItemCollection
-
-    Public Sub New()
-
-    End Sub
-
-    Public Sub New(ParamArray items As InvocationContextItem())
-        Call Me.ContextItems.Add(items)
-    End Sub
-End Class
-
-Public Class ContextItemCollection
+﻿Public Class InvocationContextItemCollection
     Inherits CollectionBase
 
     Public Sub Add(item As InvocationContextItem)
@@ -31,14 +19,4 @@ Public Class ContextItemCollection
         Next
         Return result
     End Function
-End Class
-
-Public Class InvocationContextItem
-    Public Property Value As Object
-    Public Property AttributeType As Type
-
-    Public Sub New(value As Object, attributeType As Type)
-        Me.Value = value
-        Me.AttributeType = attributeType
-    End Sub
 End Class
