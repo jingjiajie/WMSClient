@@ -161,9 +161,13 @@ namespace WMS.UI.FormTransferOrder
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.synchronizer.Save();
-            this.TransferDone();
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
+            //if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            //this.synchronizer.Save();
+            //this.TransferDone();
         }
 
         private string StateForwardMapper(int state)

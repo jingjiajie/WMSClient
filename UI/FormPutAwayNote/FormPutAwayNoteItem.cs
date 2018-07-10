@@ -97,13 +97,17 @@ namespace WMS.UI
         //部分完成
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            //如果存在更新并且未保存的行，则先尝试保存
-            if (this.model1.HasUnsynchronizedUpdatedRow())
+            if (this.synchronizer.Save())
             {
-                if (!this.synchronizer.Save()) return;
+                this.searchView1.Search();
             }
-            this.TransferDone();
+            //if (MessageBox.Show("确认保存当前修改并完成选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            ////如果存在更新并且未保存的行，则先尝试保存
+            //if (this.model1.HasUnsynchronizedUpdatedRow())
+            //{
+            //    if (!this.synchronizer.Save()) return;
+            //}
+            //this.TransferDone();
         }
 
         private string ScheduledAmountForwardMapper(double amount, int row)
