@@ -152,7 +152,7 @@
             this.configuration2.Location = new System.Drawing.Point(28, 65);
             this.configuration2.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormTaxItem",
+        "FormAccountPeriod",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
