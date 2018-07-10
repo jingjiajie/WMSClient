@@ -73,6 +73,12 @@
     <Compile Include="FormAcccount\FormTax.Designer.cs">
       <DependentUpon>FormTax.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAcccount\FormTaxItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAcccount\FormTaxItem.Designer.cs">
+      <DependentUpon>FormTaxItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRemind.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAcccount\FormTax.resx">
       <DependentUpon>FormTax.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAcccount\FormTaxItem.resx">
+      <DependentUpon>FormTaxItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRemind.resx">
       <DependentUpon>FormRemind.cs</DependentUpon>
