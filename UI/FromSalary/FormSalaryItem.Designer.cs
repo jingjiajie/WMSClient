@@ -133,12 +133,12 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(283, 46);
+            this.model1.Location = new System.Drawing.Point(283, 65);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(135, 144);
+            this.model1.Size = new System.Drawing.Size(100, 125);
             this.model1.TabIndex = 2;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -188,7 +188,7 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(440, 35);
+            this.synchronizer.Location = new System.Drawing.Point(445, 55);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -309,7 +309,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSalaryItem";
-            this.Text = "FormSalaryItem";
+            this.Text = "薪资项目";
             this.Load += new System.EventHandler(this.FormSalaryItem_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

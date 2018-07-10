@@ -303,7 +303,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormSalaryPeriod";
-            this.Text = "FormSalaryPeriod";
+            this.Text = "薪资期间";
             this.Load += new System.EventHandler(this.FormSalaryPeriod_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

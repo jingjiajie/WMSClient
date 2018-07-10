@@ -124,7 +124,7 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
         {name:"payNoteId",displayName:"薪金发放单ID",type:"int",visible:false},
-        {name:"no",displayName:"薪金发放单单号",type:"string",editable:false},
+        {name:"payNoteno",displayName:"薪金发放单单号",type:"string",editable:false},
         {name:"taxId",displayName:"taxID",type:"int",visible:false},
         {name:"taxName",displayName:"税务名称",type:"string"},
         {name:"taxNo",displayName:"代码",type:"string"},
