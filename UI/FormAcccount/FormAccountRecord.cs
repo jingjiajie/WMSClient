@@ -1,4 +1,5 @@
 ﻿using System;
+using FrontWork;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace WMS.UI.FormAcccount
     {
         public FormAccountRecord()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -83,6 +85,11 @@ namespace WMS.UI.FormAcccount
             {
                 this.searchView1.Search();
             }
+        }
+
+        private void pagerSearchJsonRESTAdapter1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using FrontWork;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,7 @@ namespace WMS.UI.FormAcccount
     {
         public FormAccountTitle()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -58,7 +60,6 @@ namespace WMS.UI.FormAcccount
 
         private void FormAccountTitle_Load(object sender, EventArgs e)
         {
-            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);

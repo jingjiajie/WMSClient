@@ -64,7 +64,14 @@ namespace WMS.UI
                     MakeTreeNode("薪金类别"),
                     MakeTreeNode("薪金期间"),
                     MakeTreeNode("薪金项目"),                 
-                    MakeTreeNode("人员薪金")
+                    MakeTreeNode("人员薪金"),
+                    MakeTreeNode("薪资发放单")
+                    }),
+                 MakeTreeNode("总账管理",new TreeNode[]{
+                    MakeTreeNode("科目管理"),
+                    MakeTreeNode("税务管理"),
+                    MakeTreeNode("账目记录"),
+                    MakeTreeNode("会计期间")
                     })
             };
 
@@ -272,6 +279,21 @@ namespace WMS.UI
                     break;
                  case "人员薪金":
                     this.LoadSubWindow(new FromSalary.FormPersonSalary());
+                    break;
+                case "薪资发放单":
+                    this.LoadSubWindow(new FromSalary.FormPayNote());
+                    break;
+                case "科目管理":
+                    this.LoadSubWindow(new FormAcccount.FormAccountTitle());
+                    break;
+                case "税务管理":
+                    this.LoadSubWindow(new FormAcccount.FormTax());
+                    break;
+                case "账目记录":
+                    this.LoadSubWindow(new FormAcccount.FormAccountRecord());
+                    break;
+                case "会计期间":
+                    this.LoadSubWindow(new FormAcccount.FormAccountPeriod());
                     break;
             }
             this.panelRight.ResumeLayout();
