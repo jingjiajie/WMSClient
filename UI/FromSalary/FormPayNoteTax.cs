@@ -6,16 +6,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrontWork;
 
 namespace WMS.UI.FromSalary
 {
     public partial class FormPayNoteTax : Form
     {
         private int payNoteId;
-        public FormPayNoteTax(int payNoteId)
+        private string payNoteNo;
+        public FormPayNoteTax(int payNoteId,string payNoteNo)
         {
+            MethodListenerContainer.Register("FormPayNoteTax", this);
             InitializeComponent();
             this.payNoteId = payNoteId;
+            this.payNoteNo = payNoteNo;
         }
 
         private void FormPayNoteTax_Load(object sender, EventArgs e)
@@ -32,7 +36,8 @@ namespace WMS.UI.FromSalary
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "payNoteId",payNoteId},                           
+                { "payNoteId",payNoteId},
+                { "payNoteNo",payNoteNo}
             });
         }
 
@@ -51,7 +56,7 @@ namespace WMS.UI.FromSalary
         }
 
 
-        private void TaxNameEditEnded(int row, string taxName)
+        private void TaxNameEditEnded([Row]int row,[Data] string taxName)
         {
             IDictionary<string, object> foundTax =
                 GlobalData.AllTax.Find((s) =>
@@ -70,7 +75,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void TaxNoEditEnded(int row, string taxNo)
+        private void TaxNoEditEnded([Row]int row,[Data] string taxNo)
         {
             IDictionary<string, object> foundTax =
                 GlobalData.AllTax.Find((s) =>

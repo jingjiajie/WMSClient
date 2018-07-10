@@ -194,7 +194,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];       
-            FormPayNoteTax form = new FormPayNoteTax((int)rowData["id"]);
+            FormPayNoteTax form = new FormPayNoteTax((int)rowData["id"],(string)rowData["no"]);
             form.Show();
         }
     }

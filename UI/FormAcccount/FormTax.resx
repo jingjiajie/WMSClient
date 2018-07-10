@@ -186,8 +186,8 @@
     {mode:"default",
      fields:[
        {name:"id",displayName:"ID",type:"int",visible:false},
-       {name:"name",displayName:"科目名称",type:"string"},
-       {name:"no",displayName:"科目编码",type:"string"},
+       {name:"name",displayName:"税务名称",type:"string"},
+       {name:"no",displayName:"税务编码",type:"string"},
     ],
 httpAPIs:[
         {type:"get-count",
