@@ -277,6 +277,12 @@
     <Compile Include="FromDeliverOrder\FormSelectPakage.Designer.cs">
       <DependentUpon>FormSelectPakage.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromSalary\FormPayNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FromSalary\FormPayNote.Designer.cs">
+      <DependentUpon>FormPayNote.cs</DependentUpon>
+    </Compile>
     <Compile Include="FromSalary\FormPersonSalary.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -453,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FromDeliverOrder\FormSelectPakage.resx">
       <DependentUpon>FormSelectPakage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FromSalary\FormPayNote.resx">
+      <DependentUpon>FormPayNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FromSalary\FormPersonSalary.resx">
       <DependentUpon>FormPersonSalary.cs</DependentUpon>

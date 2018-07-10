@@ -309,7 +309,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormSalaryType";
-            this.Text = "FormSalaryType";
+            this.Text = "薪资类型";
             this.Load += new System.EventHandler(this.FormSalaryType_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
