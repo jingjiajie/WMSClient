@@ -122,36 +122,45 @@
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"salaryItemId",displayName:"salaryItemID",type:"int",visible:false}, 
-        {name:"salaryPeriodId",displayName:"salaryPeriodID",type:"int",visible:false},                    
-        {name:"personId",displayName:"人员id",type:"string",visible:false},      
-        {name:"amount",displayName:"金额",type:"double"},         
-        {name:"personName",displayName:"人员名称",type:"string",association:"#personAssociation",editEnded:"#personNameEditEnded"},      
-        {name:"salaryItemName",displayName:"项目名称",type:"string",association:"#salaryItemNameAssociation",editEnded:"#salaryItemNameEditEnded"}, 
-        {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"}, 
-        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
+{name:"id",displayName:"ID",type:"int",visible:false},
+{name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+{name:"salaryPeriodId",displayName:"期间ID",type:"int",visible:false},
+{name:"no",displayName:"单号",type:"string"},
+{name:"accountTitleExpenseId",displayName:"薪资费用科目ID",type:"int",visible:false},
+{name:"accountTitlePayableId",displayName:"应付款科目ID",type:"int",visible:false},
+{name:"accountTitlePropertyId",displayName:"资产科目ID",type:"int",visible:false},
+{name:"description",displayName:"描述",type:"string"},
+{name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
+{name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
+{name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
+{name:"accountTitleExpenseName",displayName:"薪资费用科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleExpenseNameEditEnded"},
+{name:"accountTitleExpenseNo",displayName:"薪资费用科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleExpenseNoEditEnded"},
+{name:"accountTitlePayableName",displayName:"应付款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePayableNameEditEnded"},
+{name:"accountTitlePayableNo",displayName:"应付款科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePayableNoEditEnded"},
+{name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded"},
+{name:"accountTitlePropertyNo",displayName:"资产科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded"},
+{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
+{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"}
      ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
@@ -215,21 +224,6 @@
         WIej7e3kgO8QoYeI9v0XZ87g/LFM+L/Pxw3NZcxHJcTjYSYTmv0NMyub3I6L7yRJPRFQKAbFFATZgQed
         +e6NFHQfToXU+joHbjU0xHkgckn7/0fbjt4Ig1hMD7u08VAKOmTPwnr2leSpz87O5jee3gVaPklTtduL
         iktK0NPd8/iBiSC9crslenDuwIHdOvA7jR9uIAdEjT8AAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="toolStripButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIISURBVDhPpZP7S1NxGMbPPxKaXVUkMEq8IpKUCoY/hGgI
-        ymqkDYYXcCjDZOANURSjCNGFQUTsl4GXVMxKk62YU4fXQpaIlygHQxBRH8/zwvyaIAYe+HLgnPN8nue9
-        HA3nvDTq63oW/jm13XOwvPTB3DYFY5MH+bXfcN8ygfTSMSSXfESicQDxBqdYHwH29g9w2tnZ3UcguIvN
-        rR3417exuBJE5N1n/wfwLgXEOc38Bc6xNRHb+/y4nm49G0Bnit2zf9H6bkliE/jKuYxrd6oVgDWfjB+K
-        TWeKMyrGEVfowITvD9re/9ABVQrAhh0HHK+ZselMMaN/mvwtDb+aVqkA7HYIwIj3ysfluPTorJnP6Ezx
-        oHsD1s5ZXEktUwCOioB5f1CEPR9+wTG6iuiserTo8dkwng7HT/R+XUPF8xlcTjErAOdMcW6NW8STiwG8
-        7vej8oUPN/PsEv3t8Ao0TZP3T1u8uJRkUgAuSYHtO97oLxmXd5t9Ho8aPTK+GzntqNfrLm2fFoihwYOI
-        xGIF4KjoGBLzY1OrF9k6OOFxnwDC4wxIMX1G0pMhgVyMNyoA13PAtS7OrJk1PrC69LUdQWxuF6IybHrX
-        LRI7JrtZdoDAo1XmbjMyD+tjSXxGcXRmnYg5ttD9QuxDhN0uUgDOmbvNTpPOJaGAo2K36cyaGZvOFIfd
-        KlSA8/zRh9ABIDUG+1JpAAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

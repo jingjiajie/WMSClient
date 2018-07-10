@@ -166,10 +166,10 @@ namespace WMS.UI
         /// <param name="warehouseEntryID">入库单ID</param>
         private void ModelInspectionNoteSelect(string warehouseEntryNo)
         {
-            DataTable dataTable = this.modelInspectionNotes.ToDataTable();
-            for (int row = 0; row < dataTable.Rows.Count; row++)
+            var dataRows = this.modelInspectionNotes.GetRows(Util.Range(0, this.modelInspectionNotes.GetRowCount()));
+            for (int row = 0; row < dataRows.Length; row++)
             {
-                string curNo = (string)dataTable.Rows[row]["warehouseEntryNo"];
+                string curNo = (string)dataRows[row]["warehouseEntryNo"];
                 if (curNo == warehouseEntryNo)
                 {
                     this.modelInspectionNotes.SelectionRange = new Range(row, 0, 1, this.modelInspectionNotes.ColumnCount);

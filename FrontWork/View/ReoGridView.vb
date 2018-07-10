@@ -401,6 +401,9 @@ Public Class ReoGridView
         Dim newRow = System.Math.Min(e.StartRow, e.EndRow)
         Dim newCol = System.Math.Min(e.StartCol, e.EndCol)
         Dim newRows = System.Math.Max(e.StartRow, e.EndRow) - newRow + 1 '选择整列的话行数会超出最大行数，可能是ReoGrid的bug
+        If newRows > Me.Panel.RowCount Then
+            newRows = Me.Panel.RowCount
+        End If
         Dim newCols = System.Math.Max(e.StartCol, e.EndCol) - newCol + 1
         Dim copyRange As RangePosition = Nothing '如果之前复制，则会为此赋值
 

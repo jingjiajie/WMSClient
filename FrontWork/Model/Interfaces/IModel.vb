@@ -127,12 +127,6 @@ Public Interface IModel
     ''' <param name="ranges">选区</param>
     Sub SetSelectionRanges(ranges As Range())
 
-    ''' <summary>
-    ''' 转换为DataTable
-    ''' </summary>
-    ''' <returns></returns>
-    Function ToDataTable() As DataTable
-
     '事件
     ''' <summary>
     ''' Model被刷新事件

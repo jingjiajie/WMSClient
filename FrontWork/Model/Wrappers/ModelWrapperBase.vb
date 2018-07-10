@@ -146,10 +146,6 @@ Public Class ModelWrapperBase
         Return Me.Model.GetCells(rows, columnNames)
     End Function
 
-    Public Function ToDataTable() As DataTable Implements IModel.ToDataTable
-        Return Me.Model.ToDataTable
-    End Function
-
     Public Sub RaiseRefreshedEvent(sender As Object, args As ModelRefreshedEventArgs)
         RaiseEvent Refreshed(sender, args)
     End Sub

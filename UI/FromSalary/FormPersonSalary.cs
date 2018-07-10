@@ -91,7 +91,7 @@ namespace WMS.UI.FromSalary
         private void PersonNameEditEnded(int row, string personName)
         {
             IDictionary<string, object> foundPerson =
-                GlobalData.AllPerson.Find((s) =>
+                GlobalData.AllPersons.Find((s) =>
                 {
                     if (s["name"] == null) return false;
                     return s["name"].ToString() == personName;

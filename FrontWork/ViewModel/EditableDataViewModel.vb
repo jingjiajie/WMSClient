@@ -429,8 +429,9 @@ Public Class EditableDataViewModel
             Next
             Call Me.ViewOperationsWrapper.AddRows(addData)
         End If
-        If data.Length > 0 Then
-            Dim updateData(System.Math.Min(newRowCount, oriViewRowCount) - 1) As IDictionary(Of String, Object)
+        Dim commonRowCount = System.Math.Min(newRowCount, oriViewRowCount)
+        If commonRowCount > 0 Then
+            Dim updateData(commonRowCount - 1) As IDictionary(Of String, Object)
             For i = 0 To updateData.Length - 1
                 updateData(i) = data(i)
             Next

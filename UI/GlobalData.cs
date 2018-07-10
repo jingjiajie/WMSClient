@@ -20,8 +20,7 @@ namespace WMS.UI
         public static List<IDictionary<string, object>> AllPackage;
         public static List<IDictionary<string, object>> AllSalaryType;
         public static List<IDictionary<string, object>> AllSalaryPeriod;
-        public static List<IDictionary<string, object>> AllSalaryItem;
-        public static List<IDictionary<string, object>> AllPerson;
+        public static List<IDictionary<string, object>> AllSalaryItem;        
         public static List<IDictionary<string, object>> AllAccountTitle;
 
         private static int projectID = -1;

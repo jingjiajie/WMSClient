@@ -378,23 +378,25 @@ Public Class ModelCore
     End Sub
 
     Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
-        Dim dataTable As DataTable = If(args.DataTable, New DataTable)
+        Dim dataRows = args.DataRows
         Dim ranges As Range() = args.SelectionRanges
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
-        '刷新数据
         Call Me.Data.Rows.Clear()
-        For Each dataRow As DataRow In dataTable.Rows
+        '刷新数据
+        For Each dataRow In dataRows
             Dim newRow = Me.Data.NewRow
             Me.Data.Rows.Add(newRow)
-            For Each dataCol As DataColumn In dataTable.Columns
-                If Me.Data.Columns.Contains(dataCol.ColumnName) Then
-                    newRow(dataCol.ColumnName) = dataRow(dataCol)
+            For Each colAndValue In dataRow
+                Dim colName = colAndValue.Key
+                Dim colValue = colAndValue.Value
+                If Me.Data.Columns.Contains(colName) Then
+                    newRow(colName) = If(colValue, DBNull.Value)
                 End If
             Next
         Next
-        '刷新同步状态字典
-        Dim stateArray(dataTable.Rows.Count - 1) As ModelRowState
+        '刷新同步状态字典 
+        Dim stateArray(dataRows.Length - 1) As ModelRowState
         For i = 0 To stateArray.Length - 1
             stateArray(i) = New ModelRowState(SynchronizationState.SYNCHRONIZED)
         Next
@@ -560,7 +562,7 @@ Public Class ModelCore
         Return result
     End Function
 
-    Public Function ToDataTable() As DataTable Implements IModel.ToDataTable
+    Public Function ToDataTable() As DataTable
         Return Me.Data
     End Function
 
