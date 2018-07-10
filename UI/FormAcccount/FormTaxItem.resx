@@ -225,12 +225,6 @@ httpAPIs:[
   <metadata name="toolStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>276, 94</value>
   </metadata>
-  <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 94</value>
-  </metadata>
-  <metadata name="toolStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>276, 94</value>
-  </metadata>
   <data name="buttonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -293,10 +287,10 @@ httpAPIs:[
     {mode:"default",
      fields:[
        {name:"id",displayName:"ID",type:"int",visible:false},
-       {name:"taxId",displayName:"税务ID",type:"string",visible:false},
+       {name:"taxId",displayName:"税务ID",type:"int",visible:false},
        {name:"startAmount",displayName:"起始金额",type:"double"},
        {name:"endAmount",displayName:"截止金额",type:"double"},
-       {name:"type",displayName:"类型",type:"double",values:["定额收税","比例税率"],defaultValue:1,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
+       {name:"type",displayName:"类型",type:"int",values:["定额收税","比例税率"],defaultValue:1,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
        {name:"taxAmount",displayName:"定额金额",type:"double"},
        {name:"taxRate",displayName:"金额比例",type:"double"},
     ],
