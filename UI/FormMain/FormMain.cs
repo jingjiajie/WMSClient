@@ -64,7 +64,8 @@ namespace WMS.UI
                     MakeTreeNode("薪金类别"),
                     MakeTreeNode("薪金期间"),
                     MakeTreeNode("薪金项目"),                 
-                    MakeTreeNode("人员薪金")
+                    MakeTreeNode("人员薪金"),
+                    MakeTreeNode("薪资发放单")
                     })
             };
 
@@ -272,6 +273,9 @@ namespace WMS.UI
                     break;
                  case "人员薪金":
                     this.LoadSubWindow(new FromSalary.FormPersonSalary());
+                    break;
+                case "薪资发放单":
+                    this.LoadSubWindow(new FromSalary.FormPayNote());
                     break;
             }
             this.panelRight.ResumeLayout();

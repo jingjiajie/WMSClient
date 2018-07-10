@@ -53,7 +53,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AaccountTitleExpenseNameEditEnded(int row, string accountTitleName)
+        private void AccountTitleExpenseNameEditEnded(int row, string accountTitleName)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -67,11 +67,12 @@ namespace WMS.UI.FromSalary
             }
             else
             {
+                this.model1[row, "accountTitleExpenseNo"] = foundAccountTitle["no"];
                 this.model1[row, "accountTitleExpenseId"] = foundAccountTitle["id"];
             }
         }
 
-        private void AaccountTitleExpenseNoEditEnded(int row, string accountTitleNo)
+        private void AccountTitleExpenseNoEditEnded(int row, string accountTitleNo)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -85,11 +86,12 @@ namespace WMS.UI.FromSalary
             }
             else
             {
+                this.model1[row, "accountTitleExpenseName"] = foundAccountTitle["name"];
                 this.model1[row, "accountTitleExpenseId"] = foundAccountTitle["id"];
             }
         }
 
-        private void AaccountTitlePayableNameEditEnded(int row, string accountTitleName)
+        private void AccountTitlePayableNameEditEnded(int row, string accountTitleName)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -103,11 +105,12 @@ namespace WMS.UI.FromSalary
             }
             else
             {
-                this.model1[row, "accountTitleExpenseId"] = foundAccountTitle["id"];
+                this.model1[row, "accountTitlePayableNo"] = foundAccountTitle["no"];
+                this.model1[row, "accountTitlePayableId"] = foundAccountTitle["id"];
             }
         }
 
-        private void AaccountTitlePayableNoEditEnded(int row, string accountTitleNo)
+        private void AccountTitlePayableNoEditEnded(int row, string accountTitleNo)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -121,11 +124,12 @@ namespace WMS.UI.FromSalary
             }
             else
             {
-                this.model1[row, "accountTitleExpenseId"] = foundAccountTitle["id"];
+                this.model1[row, "accountTitlePayableName"] = foundAccountTitle["name"];
+                this.model1[row, "accountTitlePayableId"] = foundAccountTitle["id"];
             }
         }
 
-        private void AaccountTitlePropertyNameEditEnded(int row, string accountTitleName)
+        private void AccountTitlePropertyNameEditEnded(int row, string accountTitleName)            
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -139,11 +143,12 @@ namespace WMS.UI.FromSalary
             }
             else
             {
-                this.model1[row, "accountTitleExpenseId"] = foundAccountTitle["id"];
+                this.model1[row, "accountTitlePropertyNo"] = foundAccountTitle["no"];
+                this.model1[row, "accountTitlePropertyId"] = foundAccountTitle["id"];
             }
         }
 
-        private void AaccountTitlePropertyNoEditEnded(int row, string accountTitleNo)
+        private void AccountTitlePropertyNoEditEnded(int row, string accountTitleNo)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -157,7 +162,27 @@ namespace WMS.UI.FromSalary
             }
             else
             {
-                this.model1[row, "accountTitleExpenseId"] = foundAccountTitle["id"];
+                this.model1[row, "accountTitlePropertyName"] = foundAccountTitle["name"];
+                this.model1[row, "accountTitlePropertyId"] = foundAccountTitle["id"];
+            }
+        }
+
+        private void SalaryPeriodNameEditEnded(int row, string periodName)
+        {
+            IDictionary<string, object> foundSalaryPeriod =
+                GlobalData.AllSalaryPeriod.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == periodName;
+                });
+            if (foundSalaryPeriod == null)
+            {
+                MessageBox.Show($"期间\"{periodName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "salaryPeriodName"] = foundSalaryPeriod["name"];
+                this.model1[row, "salaryPeriodId"] = foundSalaryPeriod["id"];
             }
         }
     }

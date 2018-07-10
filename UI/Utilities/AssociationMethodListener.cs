@@ -138,7 +138,7 @@ namespace WMS.UI
         }
 
         //薪资期间名称输入联想
-        private object[] SalaryPeriodAssociation(string str)
+        private object[] SalaryPeriodNameAssociation(string str)
         {
             return (from s in GlobalData.AllSalaryPeriod
                     where s["name"] != null
@@ -153,7 +153,7 @@ namespace WMS.UI
             return (from s in GlobalData.AllAccountTitle
                     where s["name"] != null
                        && s["name"].ToString().StartsWith(str)
-                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                      
                     select s["name"]).Distinct().ToArray();
         }
 
@@ -163,7 +163,6 @@ namespace WMS.UI
             return (from s in GlobalData.AllAccountTitle
                     where s["no"] != null
                        && s["no"].ToString().StartsWith(str)
-                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["no"]).Distinct().ToArray();
         }   
     }
