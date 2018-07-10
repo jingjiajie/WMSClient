@@ -117,48 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>610, 98</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>731, 98</value>
+  </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"salaryItemId",displayName:"salaryItemID",type:"int",visible:false}, 
-        {name:"salaryPeriodId",displayName:"salaryPeriodID",type:"int",visible:false},                    
-        {name:"personId",displayName:"人员id",type:"string",visible:false},      
-        {name:"amount",displayName:"金额",type:"double"},         
-        {name:"personName",displayName:"人员名称",type:"string",association:"#personAssociation",editEnded:"#personNameEditEnded"},      
-        {name:"salaryItemName",displayName:"项目名称",type:"string",association:"#salaryItemNameAssociation",editEnded:"#salaryItemNameEditEnded"}, 
-        {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"}, 
-        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
+        {name:"id",displayName:"ID",type:"int",visible:false},     
+        {name:"payNoteId",displayName:"payNoteId",type:"int",visible:false},     
+        {name:"taxId",displayName:"taxId",type:"int",visible:false},     
+        {name:"taxName",displayName:"税务名称",type:"string",association:"#taxNameAssociation",editEnded:"#taxNameEditEnded"},          
+        {name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded"},          
+        {name:"payNoteNo",displayName:"单号",type:"string"}        
      ],
     httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/person_salary/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_tax/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
 ]</value>
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 98</value>
+    <value>17, 137</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -217,10 +219,4 @@
         iktK0NPd8/iBiSC9crslenDuwIHdOvA7jR9uIAdEjT8AAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>253, 98</value>
-  </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>363, 98</value>
-  </metadata>
 </root>
