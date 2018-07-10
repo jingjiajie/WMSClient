@@ -170,8 +170,7 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Function FieldConfigurationsToViewColumn(fields As Field()) As ViewColumn()
-        Dim context As New InvocationContext
-        context.ContextItems.Add(New InvocationContextItem(Me, Nothing))
+        Dim context = New ModelViewInvocationContext(Me.Model, Me.View)
         Dim result(fields.Length - 1) As ViewColumn
         For i = 0 To fields.Length - 1
             Dim curField = fields(i)
@@ -210,10 +209,7 @@ Public Class EditableDataViewModel
     End Sub
 
     Private Sub ViewEditEndedEvent(sender As Object, e As ViewEditEndedEventArgs)
-        Dim context As New InvocationContext(
-            New InvocationContextItem(Me.View, GetType(ViewAttribute)),
-            New InvocationContextItem(e.Row, GetType(RowAttribute)),
-            New InvocationContextItem(e.CellData, GetType(DataAttribute)))
+        Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, e.Row, e.ColumnName, e.CellData)
         Dim fieldName = e.ColumnName
         Dim curField = Me.Configuration.GetField(Me.Mode, fieldName)
         If curField.EditEnded IsNot Nothing Then
@@ -222,10 +218,7 @@ Public Class EditableDataViewModel
     End Sub
 
     Private Sub ViewContentChangedEvent(sender As Object, e As ViewContentChangedEventArgs)
-        Dim context As New InvocationContext(
-            New InvocationContextItem(Me.View, GetType(ViewAttribute)),
-            New InvocationContextItem(e.Row, GetType(RowAttribute)),
-            New InvocationContextItem(e.CellData, GetType(DataAttribute)))
+        Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, e.Row, e.ColumnName, e.CellData)
         Dim fieldName = e.ColumnName
         Dim curField = Me.Configuration.GetField(Me.Mode, fieldName)
         If curField.ContentChanged IsNot Nothing Then
@@ -491,10 +484,7 @@ Public Class EditableDataViewModel
     End Function
 
     Protected Overridable Function GetForwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
-        Dim context As New InvocationContext(
-            New InvocationContextItem(Me.View, GetType(ViewAttribute)),
-            New InvocationContextItem(cellData, GetType(DataAttribute)),
-            New InvocationContextItem(rowNum, GetType(RowAttribute)))
+        Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, rowNum, fieldName, cellData)
         Dim fields = Me.Configuration.GetFields(Me.Mode)
         Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
         Dim result = Nothing
@@ -518,10 +508,7 @@ Public Class EditableDataViewModel
     End Function
 
     Protected Overridable Function GetBackwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
-        Dim context As New InvocationContext(
-            New InvocationContextItem(Me.View, GetType(ViewAttribute)),
-            New InvocationContextItem(rowNum, GetType(RowAttribute)),
-            New InvocationContextItem(cellData, GetType(DataAttribute)))
+        Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, rowNum, fieldName, cellData)
         Dim fields = Me.Configuration.GetFields(Me.Mode)
         Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
         If curField Is Nothing Then

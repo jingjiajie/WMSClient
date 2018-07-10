@@ -1,4 +1,4 @@
-﻿Public Class AttributedValueNotFoundException
+﻿Public Class ParameterMatchingException
     Inherits FrontWorkException
 
     Public Sub New(message As String)
