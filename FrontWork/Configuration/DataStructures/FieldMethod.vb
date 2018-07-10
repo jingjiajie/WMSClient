@@ -150,99 +150,6 @@ Public Class FieldMethod
         Return newFieldMethod
     End Function
 
-    Private Structure CandidateParamInheritDepth
-        Public Property CandidateParam As Object
-        Public Property InheritDepth As Integer
-    End Structure
-
-    Private Structure ExpectedParamInfo
-        Public Sub New(valueType As Type, attributeType As Type)
-            Me.New()
-            Me.AttributeType = attributeType
-            Me.ValueType = valueType
-        End Sub
-
-        Public Property AttributeType As Type
-        Public Property ValueType As Type
-
-    End Structure
-
-    Private Shared Function MatchParams(context As InvocationContext, expectedParamInfos As ExpectedParamInfo()) As Object()
-        '匹配参数列表结果
-        Dim paramList As New List(Of Object)
-        '遍历期待参数列表，若找到传入参数中合适的参数类型，则将传入参数加入到paramList，若找不到，加入Nothing
-        For Each expectedParamInfo In expectedParamInfos
-            '首先如果目标函数的参数标了注解，则按注解寻找。找不到抛出异常
-            If expectedParamInfo.AttributeType IsNot Nothing Then
-                Dim found = False
-                For Each contextItem As InvocationContextItem In context.ContextItems
-                    If contextItem.AttributeType = expectedParamInfo.AttributeType Then
-                        paramList.Add(contextItem.Value)
-                        found = True
-                        Exit For
-                    End If
-                Next
-                If Not found Then
-                    Throw New AttributedValueNotFoundException($"Attributed parameter [{expectedParamInfo.AttributeType.Name}] not found!")
-                Else
-                    Continue For
-                End If
-            Else '如果没有标注注解，则寻找类型最匹配的参数
-                Dim expectedParamType = expectedParamInfo.ValueType
-                '候选参数列表
-                Dim candidateParams As New List(Of CandidateParamInheritDepth)
-                For Each contextItem As InvocationContextItem In context.ContextItems
-                    Dim param = contextItem.Value
-                    If param Is Nothing Then Continue For
-
-                    If param.GetType.Equals(expectedParamType) OrElse
-                    param.GetType.IsSubclassOf(expectedParamType) OrElse
-                    param.GetType.GetInterface(expectedParamType.Name) IsNot Nothing Then
-                        candidateParams.Add(New CandidateParamInheritDepth With {
-                        .CandidateParam = param,
-                        .InheritDepth = GetInheritDepth(expectedParamType, param.GetType)
-                    })
-                        Exit For
-                    End If
-                Next
-                '如果没找到匹配参数，则置入Nothing
-                If candidateParams.Count = 0 Then
-                    paramList.Add(DefaultForType(expectedParamType))
-                Else '否则寻找最匹配参数
-                    Dim minInheriteDepth = (From c In candidateParams Select c.InheritDepth).Min
-                    Dim bestMatchParam = (From c In candidateParams Where c.InheritDepth = minInheriteDepth Select c.CandidateParam).First
-                    paramList.Add(bestMatchParam)
-                End If
-            End If
-        Next
-        Return paramList.ToArray
-    End Function
-
-    Private Shared Function GetInheritDepth(baseType As Type, subType As Type) As Integer
-        Dim depth = 0
-        '如果是同一类型，返回0
-        If subType.Equals(baseType) Then Return 0
-        '如果是实现接口，返回1
-        If subType.GetInterface(baseType.Name) IsNot Nothing Then Return 1
-        If Not subType.IsSubclassOf(baseType) Then
-            Throw New FrontWorkException($"SubType: {subType.Name} is not a sub type of BaseType: {baseType.Name}")
-        End If
-        Dim curType = subType
-        While Not curType.Equals(baseType)
-            depth += 1
-            curType = curType.BaseType
-        End While
-        Return depth
-    End Function
-
-    Private Shared Function DefaultForType(targetType As Type) As Object
-        If targetType.IsValueType Then
-            Return Activator.CreateInstance(targetType)
-        Else
-            Return Nothing
-        End If
-    End Function
-
     Private Sub TargetFunc()
         If Me.ReturnsStaticValue Then
             Me.ReturnValue = Me.StaticReturnValue
@@ -284,31 +191,8 @@ Public Class FieldMethod
                     Continue For
                 End If
             End If
-            Dim [paramArray] As Object()
-            Dim targetMethodParams = method.GetParameters
-            If targetMethodParams.Length > 0 Then
-                Dim expectedParamInfos(targetMethodParams.Length - 1) As ExpectedParamInfo
-                For j = 0 To targetMethodParams.Length - 1
-                    expectedParamInfos(j).ValueType = targetMethodParams(j).ParameterType
-                    Dim customInvocationParamAttributes = targetMethodParams(j).GetCustomAttributes(GetType(IInvocationParameterAttribute), True)
-                    If customInvocationParamAttributes.Length = 0 Then
-                        Continue For
-                    Else
-                        expectedParamInfos(j).AttributeType = customInvocationParamAttributes(0).GetType
-                    End If
-                Next
-                [paramArray] = MatchParams(Me.InvocationContext, expectedParamInfos)
-            Else
-                [paramArray] = {}
-            End If
-
-            Try
-                Me.ReturnValue = method.Invoke(methodListener, [paramArray].ToArray)
-                Return
-            Catch ex As Exception
-                Throw New FrontWorkException($"Invoke method ""{Me.TargetMethodName}"" in methodListener {methodListenerName} failed: " + ex.Message)
-                Return
-            End Try
+            Me.ReturnValue = Me.InvocationContext.Invoke(methodListener, method)
+            Return
         Next
     End Sub
 End Class

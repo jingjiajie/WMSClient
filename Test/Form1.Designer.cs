@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,7 +42,6 @@
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.pivotTableAdapter1 = new FrontWork.PivotTableAdapter(this.components);
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -122,10 +122,14 @@
             // 
             this.sourceConfiguration.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.sourceConfiguration.ConfigurationString = "[\r\n    {mode:\"default\",\r\n     fields:[\r\n        {name:\"姓名\"},\r\n        {name:\"科目1\"" +
-    "},\r\n        {name:\"科目2\"},\r\n        {name:\"成绩1\"},\r\n        {name:\"成绩2\"}\r\n     ]\r\n" +
-    "    }\r\n]";
+    "},\r\n        {name:\"科目2\"},\r\n        {name:\"成绩1\",editEnded:\"#testEditEnded\"},\r\n   " +
+    "     {name:\"成绩2\"}\r\n     ]\r\n    }\r\n]";
             this.sourceConfiguration.Location = new System.Drawing.Point(216, 237);
-            this.sourceConfiguration.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "Form1"};
+            modeMethodListenerNamesPair2.Mode = "default";
+            this.sourceConfiguration.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair2};
             this.sourceConfiguration.Name = "sourceConfiguration";
             this.sourceConfiguration.Size = new System.Drawing.Size(180, 180);
             this.sourceConfiguration.TabIndex = 3;
@@ -179,22 +183,11 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(202, 402);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(151, 42);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "TestRefresh";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1246, 532);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.targetConfiguration);
@@ -229,7 +222,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
     }
 }
 

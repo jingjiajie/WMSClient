@@ -39,7 +39,7 @@ Public Class ModelConfigurationWrapper
     End Sub
 
     Private Sub ConfigurationFieldUpdatedEvent(sender As Object, e As ConfigurationFieldUpdatedEventArgs)
-        Dim context = New InvocationContext(New InvocationContextItem(Me.Model, GetType(ModelAttribute)))
+        Dim context = New ModelInvocationContext(Me.Model)
         Call Me.Model.UpdateColumn(e.UpdatedFields.Select(Function(f) f.Index).ToArray,
                                    e.UpdatedFields.Select(Function(f) New ModelColumn(context, f.Field)).ToArray)
 
@@ -74,7 +74,7 @@ Public Class ModelConfigurationWrapper
     End Sub
 
     Private Sub RefreshCoreSchema(config As Configuration)
-        Dim context = New InvocationContext(New InvocationContextItem(Me.Model, GetType(ModelAttribute)))
+        Dim context = New ModelInvocationContext(Me.Model)
         Dim fields = config.GetFields(Me.Mode)
         Dim addColumns As New List(Of ModelColumn)
         For Each field In fields

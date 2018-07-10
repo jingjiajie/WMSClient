@@ -14,6 +14,7 @@ namespace Test
     {
         public Form1()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -29,6 +30,12 @@ namespace Test
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void TestEditEnded([Model]Model model,[Row]int row,[Data] int data)
+        {
+            Console.WriteLine();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -64,9 +71,10 @@ namespace Test
                 new DataColumn("成绩1"),
                 new DataColumn("成绩2"),
             });
-            dataTable.Rows.Add("小明", "语文", "期中", 100, 60);
-            ModelRefreshArgs args = new ModelRefreshArgs(dataTable, null);
-            this.sourceModel.Refresh(args);
+            //dataTable.Rows.Add("小明", "语文", "期中", 100, 60);
+            ////ModelRefreshArgs args = new ModelRefreshArgs(dataTable, null);
+            //this.sourceModel.Refresh(args);
+            this.sourceModel.AddRow(null);
         }
     }
 }
