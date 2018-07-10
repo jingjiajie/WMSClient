@@ -67,6 +67,7 @@ Public Class ModelBox
             Dim groupRows = group.Values.ToArray
             '创建新的Model
             Dim newModel = New Model
+            newModel.Configuration = Me.Configuration
             newModel.Name = groupName
             newModel.Refresh(New ModelRefreshArgs(groupRows, {New Range(0, 0, 1, 1)}))
             Me.Models.SetModel(newModel)

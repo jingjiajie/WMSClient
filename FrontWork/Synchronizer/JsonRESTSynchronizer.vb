@@ -317,6 +317,18 @@ Public Class JsonRESTSynchronizer
                         resultList.Add(value)
                     Next
                 End If
+                Dim mappedList As New List(Of IDictionary(Of String, Object))
+                For Each item In resultList
+                    Dim curRow = item
+                    Dim newRow As New Dictionary(Of String, Object)
+                    For Each kv In curRow
+                        Dim mappedModelKey = Me.GetMappedModelFieldName(kv.Key)
+                        If Not newRow.ContainsKey(mappedModelKey) Then
+                            newRow.Add(mappedModelKey, kv.Value)
+                        End If
+                    Next
+                    mappedList.Add(newRow)
+                Next
                 '修改完成后整体触发刷新事件
                 Dim selectionRanges As New List(Of Range)
                 For Each oriRange In Me.Model.AllSelectionRanges
@@ -338,7 +350,7 @@ Public Class JsonRESTSynchronizer
                 If selectionRanges.Count = 0 AndAlso resultList.Count > 0 Then
                     selectionRanges.Add(New Range(0, 0, 1, 1))
                 End If
-                Call Me.Model.Refresh(New ModelRefreshArgs(resultList.ToArray, selectionRanges.ToArray))
+                Call Me.Model.Refresh(New ModelRefreshArgs(mappedList.ToArray, selectionRanges.ToArray))
 
                 Call Me.FindAPI.Callback?.Invoke(response, Nothing)
             End Using
