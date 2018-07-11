@@ -256,10 +256,10 @@
             this.toolStrip3.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSeparator2,
-            this.buttonAdd,
             this.buttonRemove,
             this.buttonAlter,
-            this.toolStripSeparator4});
+            this.toolStripSeparator4,
+            this.buttonAdd});
             this.toolStrip3.Location = new System.Drawing.Point(0, 25);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Size = new System.Drawing.Size(694, 25);
