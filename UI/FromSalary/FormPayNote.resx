@@ -140,7 +140,8 @@
 {name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded"},
 {name:"accountTitlePropertyNo",displayName:"资产科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded"},
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"}
+{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"},
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false}
      ],
     httpAPIs:[
         {type:"get-count",

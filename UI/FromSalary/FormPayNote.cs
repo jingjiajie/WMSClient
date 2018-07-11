@@ -197,5 +197,27 @@ namespace WMS.UI.FromSalary
             FormPayNoteTax form = new FormPayNoteTax((int)rowData["id"],(string)rowData["no"]);
             form.Show();
         }
+
+        private string StateForwardMapper([Data]int state)
+        {
+            switch (state)
+            {
+                case 0: return "待确认";
+                case 1: return "已确认";
+                case 2: return "已付款";
+                default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string enable)
+        {
+            switch (enable)
+            {
+                case "待确认": return 0;
+                case "已确认": return 1;
+                case "已确认": return 2;
+                default: return -1;
+            }
+        }
     }
 }

@@ -44,6 +44,7 @@
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
@@ -54,7 +55,6 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -227,6 +227,15 @@
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.find;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(116, 19);
+            this.toolStripButton1.Text = "查看薪资单条目";
+            this.toolStripButton1.ToolTipText = "查看零件条目";
+            // 
             // buttonItems
             // 
             this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
@@ -320,15 +329,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(822, 22);
             this.statusStrip1.TabIndex = 22;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.find;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(116, 19);
-            this.toolStripButton1.Text = "查看薪资单条目";
-            this.toolStripButton1.ToolTipText = "查看零件条目";
             // 
             // FormPayNote
             // 
