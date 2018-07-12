@@ -9,7 +9,7 @@ namespace WMS.UI
     class AssociationMethodListener : MethodListenerBase
     {
         //物料名称输入联想
-        private object[] MaterialNameAssociation(string str)
+        private object[] MaterialNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllMaterials
                     where s["name"] != null
@@ -19,7 +19,7 @@ namespace WMS.UI
         }
 
         //物料代号输入联想
-        private object[] MaterialNoAssociation(string str)
+        private object[] MaterialNoAssociation([Data]string str)
         {
             return (from s in GlobalData.AllMaterials
                     where s["no"] != null
@@ -29,7 +29,7 @@ namespace WMS.UI
         }
 
         //物料系列输入联想
-        private object[] MaterialProductLineAssociation(string str)
+        private object[] MaterialProductLineAssociation([Data]string str)
         {
             return (from s in GlobalData.AllMaterials
                     where s["productLine"] != null
@@ -39,7 +39,7 @@ namespace WMS.UI
         }
 
         //供应商名称输入联想
-        private object[] SupplierNameAssociation(string str)
+        private object[] SupplierNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllSuppliers
                     where s["name"] != null 
@@ -49,7 +49,7 @@ namespace WMS.UI
         }
 
         //供应商代号输入联想
-        private object[] SupplierNoAssociation(string str)
+        private object[] SupplierNoAssociation([Data]string str)
         {
             return (from s in GlobalData.AllSuppliers
                     where s["no"] != null 
@@ -59,7 +59,7 @@ namespace WMS.UI
         }
 
         //库位名称输入联想
-        private object[] StorageLocationNameAssociation(string str)
+        private object[] StorageLocationNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllStorageLocations
                     where s["name"] != null
@@ -69,7 +69,7 @@ namespace WMS.UI
         }
 
         //库位编码输入联想
-        private object[] StorageLocationNoAssociation(string str)
+        private object[] StorageLocationNoAssociation([Data]string str)
         {
             return (from s in GlobalData.AllStorageLocations
                     where s["no"] != null 
@@ -79,7 +79,7 @@ namespace WMS.UI
         }
 
         //库区编码输入联想
-        private object[] StorageAreaNoAssociation(string str)
+        private object[] StorageAreaNoAssociation([Data]string str)
         {
             return (from s in GlobalData.AllStorageAreas
                     where s["no"] != null
@@ -89,7 +89,7 @@ namespace WMS.UI
         }
 
         //库区名称输入联想
-        private object[] StorageAreaNameAssociation(string str)
+        private object[] StorageAreaNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllStorageAreas
                     where s["name"] != null 
@@ -99,7 +99,7 @@ namespace WMS.UI
         }
 
         //人员名称输入联想
-        private object[] PersonAssociation(string str)
+        private object[] PersonAssociation([Data]string str)
         {
             return (from s in GlobalData.AllPersons
                     where s["name"] != null 
@@ -108,7 +108,7 @@ namespace WMS.UI
         }
 
         //套餐名称输入联想
-        private object[] PackageAssociation(string str)
+        private object[] PackageAssociation([Data]string str)
         {
             return (from s in GlobalData.AllPackage
                     where s["name"] != null
@@ -118,7 +118,7 @@ namespace WMS.UI
         }
 
         //薪资类型名称输入联想       
-        private object[] SalaryTypeNameAssociation(string str)
+        private object[] SalaryTypeNameAssociation([Data]string str)
             {
               return (from s in GlobalData.AllSalaryType
                      where s["name"] != null
@@ -128,7 +128,7 @@ namespace WMS.UI
             }
 
         //薪资项目名称输入联想
-        private object[] SalaryItemNameAssociation(string str)
+        private object[] SalaryItemNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllSalaryItem
                     where s["name"] != null
@@ -138,7 +138,7 @@ namespace WMS.UI
         }
 
         //薪资期间名称输入联想
-        private object[] SalaryPeriodNameAssociation(string str)
+        private object[] SalaryPeriodNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllSalaryPeriod
                     where s["name"] != null
@@ -148,7 +148,7 @@ namespace WMS.UI
         }
 
         //科目名称输入联想
-        private object[] AccountTitleNameAssociation(string str)
+        private object[] AccountTitleNameAssociation([Data]string str)
         {
             return (from s in GlobalData.AllAccountTitle
                     where s["name"] != null
@@ -158,7 +158,7 @@ namespace WMS.UI
         }
 
         //科目编码输入联想
-        private object[] AccountTitleNoAssociation(string str)
+        private object[] AccountTitleNoAssociation([Data]string str)
         {
             return (from s in GlobalData.AllAccountTitle
                     where s["no"] != null

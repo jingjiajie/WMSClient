@@ -47,7 +47,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private void StorageAreaNameEditEnded(int row, string storageAreaName)
+        private void StorageAreaNameEditEnded([Row]int row,[Data] string storageAreaName)
         {          
             IDictionary<string, object> foundStorageArea =
                 GlobalData.AllStorageAreas.Find((s) =>
@@ -66,7 +66,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private void StorageAreaNoEditEnded(int row, string storageAreaName)
+        private void StorageAreaNoEditEnded([Row]int row,[Data] string storageAreaName)
         {
             IDictionary<string, object> foundStorageArea =
                 GlobalData.AllStorageAreas.Find((s) =>
@@ -132,7 +132,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private string EnableForwardMapper(int state)
+        private string EnableForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -142,7 +142,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private int EnableBackwardMapper(string enable)
+        private int EnableBackwardMapper([Data]string enable)
         {
             switch (enable)
             {

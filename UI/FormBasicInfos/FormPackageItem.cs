@@ -58,7 +58,7 @@ namespace WMS.UI.FormBasicInfos
             this.searchView1.Search();
         }
 
-        private void defaultDeliveryStorageLocationNameEditEnded(int row, string defaultDeliveryStorageLocationName)
+        private void defaultDeliveryStorageLocationNameEditEnded([Row]int row,[Data] string defaultDeliveryStorageLocationName)
         {
             this.model[row, "defaultDeliveryStorageLocationId"] = 0;
             IDictionary<string, object> foundStorageLocation =
@@ -79,7 +79,7 @@ namespace WMS.UI.FormBasicInfos
 
         //写了一个小时发感觉不太对然后发现有这个东西
         //丧心病狂的交互逻辑
-        private void SupplierNoEditEnded(int row)
+        private void SupplierNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "supplierNo"]?.ToString())) return;
             this.model[row, "supplierName"] = "";
@@ -87,7 +87,7 @@ namespace WMS.UI.FormBasicInfos
             this.TryGetSupplyID(row);
         }
 
-        private void SupplierNameEditEnded(int row)
+        private void SupplierNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "supplierName"]?.ToString())) return;
             this.model[row, "supplierNo"] = "";
@@ -95,27 +95,27 @@ namespace WMS.UI.FormBasicInfos
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNoEditEnded(int row)
+        private void MaterialNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNameEditEnded(int row)
+        private void MaterialNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialProductLineEditEnded(int row)
+        private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void FindMaterialID(int row)
+        private void FindMaterialID([Row]int row)
         {
             this.model[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model[row, "materialNo"]?.ToString() ?? "";
@@ -144,7 +144,7 @@ namespace WMS.UI.FormBasicInfos
             return;
         }
 
-        private void FindSupplierID(int row)
+        private void FindSupplierID([Row]int row)
         {
             this.model[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model[row, "supplierNo"]?.ToString() ?? "";
@@ -167,7 +167,7 @@ namespace WMS.UI.FormBasicInfos
             return;
         }
 
-        private void TryGetSupplyID(int row)
+        private void TryGetSupplyID([Row]int row)
         {
             this.model[row, "supplyId"] = 0; //先清除供货ID
             int supplierId = (int?)this.model[row, "supplierId"] ?? 0;
@@ -195,7 +195,7 @@ namespace WMS.UI.FormBasicInfos
         }
 
         //物料名称输入联想
-        private object[] MaterialNameAssociation(string str)
+        private object[] MaterialNameAssociation([Data]string str)
         {
             
             string materialNo = this.model[this.model.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
@@ -226,7 +226,7 @@ namespace WMS.UI.FormBasicInfos
         }
 
         //物料代号输入联想
-        private object[] MaterialNoAssociation(string str)
+        private object[] MaterialNoAssociation([Data]string str)
         {
             string materialName = this.model[this.model.SelectionRange.Row, "materialName"]?.ToString() ?? "";
 
@@ -256,7 +256,7 @@ namespace WMS.UI.FormBasicInfos
         }
 
         //物料系列输入联想
-        private object[] MaterialProductLineAssociation(string str)
+        private object[] MaterialProductLineAssociation([Data]string str)
         {
             int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
