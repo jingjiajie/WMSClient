@@ -280,7 +280,15 @@ namespace WMS.UI
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.ToString()}");
 
             GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{{}}");         
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{{}}");
+
+            GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");
+
+           GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended",0).ToString()}");
+
+            GlobalData.AccountPeriod = GlobalData.AllAccountPeriod[0];
         }
     }
 }

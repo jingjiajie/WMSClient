@@ -66,7 +66,7 @@ namespace WMS.UI.FormBasicInfos
             }          
         }
 
-        private string EnableForwardMapper(int state)
+        private string EnableForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -76,7 +76,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private int EnableBackwardMapper(string enable)
+        private int EnableBackwardMapper([Data]string enable)
         {
             switch (enable)
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using FrontWork;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,37 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WMS.UI.FormAcccount
+namespace WMS.UI.FromSalary
 {
-    public partial class FormAccountPeriod : Form
+    public partial class FormPayNoteItem : Form
     {
-        public FormAccountPeriod()
+        private int payNoteId;
+        private int periodId;
+        public FormPayNoteItem(int payNoteId,int periodId)
         {
-            MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.payNoteId = payNoteId;
+            this.periodId = periodId;
         }
 
-        private string endedForwardMapper([Data]int ended)
+        private void FormPayNoteItem_Load(object sender, EventArgs e)
         {
-            switch (ended)
-            {
-                case 0: return "否";
-                case 1: return "是";
-                default: return "未知状态";
-            }
-        }
-
-        private int endedBackwardMapper([Data]string ended)
-        {
-            switch (ended)
-            {
-                case "否": return 0;
-                case "是": return 1;
-                default: return -1;
-            }
-        }
-        private void FormAccountPeriod_Load(object sender, EventArgs e)
-        {
+            this.searchView1.AddStaticCondition("payNoteId", payNoteId);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -48,8 +32,8 @@ namespace WMS.UI.FormAcccount
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                { "warehouseId",GlobalData.Warehouse["id"]}
+            {                             
+                { "payNoteId",payNoteId}
             });
         }
 
@@ -64,10 +48,6 @@ namespace WMS.UI.FormAcccount
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
-
-                //   Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                //   GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-                //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
             }
         }
     }

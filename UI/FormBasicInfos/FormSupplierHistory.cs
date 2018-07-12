@@ -37,5 +37,25 @@ namespace WMS.UI.FormBasicInfos
         {
 
         }
+
+        private string EnableForwardMapper([Data]int state)
+        {
+            switch (state)
+            {
+                case 0: return "禁用";
+                case 1: return "启用";
+                default: return "未知状态";
+            }
+        }
+
+        private int EnableBackwardMapper([Data]string enable)
+        {
+            switch (enable)
+            {
+                case "禁用": return 0;
+                case "启用": return 1;
+                default: return -1;
+            }
+        }
     }
 }

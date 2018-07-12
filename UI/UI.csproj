@@ -295,6 +295,18 @@
     <Compile Include="FromSalary\FormPayNote.Designer.cs">
       <DependentUpon>FormPayNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromSalary\FormPayNoteItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FromSalary\FormPayNoteItem.Designer.cs">
+      <DependentUpon>FormPayNoteItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FromSalary\FormPayNoteTax.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FromSalary\FormPayNoteTax.Designer.cs">
+      <DependentUpon>FormPayNoteTax.cs</DependentUpon>
+    </Compile>
     <Compile Include="FromSalary\FormPersonSalary.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -480,6 +492,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FromSalary\FormPayNote.resx">
       <DependentUpon>FormPayNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FromSalary\FormPayNoteItem.resx">
+      <DependentUpon>FormPayNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FromSalary\FormPayNoteTax.resx">
+      <DependentUpon>FormPayNoteTax.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FromSalary\FormPersonSalary.resx">
       <DependentUpon>FormPersonSalary.cs</DependentUpon>

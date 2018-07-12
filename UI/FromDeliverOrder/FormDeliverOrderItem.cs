@@ -94,7 +94,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private string AmountForwardMapper(double amount, int row)
+        private string AmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -107,7 +107,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private double AmountBackwardMapper(string strAmount, int row)
+        private double AmountBackwardMapper([Data]string strAmount, [Row]int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
@@ -125,7 +125,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private void UnitAmountEditEnded(int row)
+        private void UnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
         }
@@ -142,7 +142,7 @@ namespace WMS.UI.FromDeliverOrder
             this.updateBasicAndReoGridView();
         }
 
-        private void SourceStorageLocationNoEditEnded(int row, string sourceStorageLocationNo)
+        private void SourceStorageLocationNoEditEnded([Row]int row,[Data] string sourceStorageLocationNo)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationNo)) return;
@@ -159,7 +159,7 @@ namespace WMS.UI.FromDeliverOrder
             return;
         }
 
-        private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
+        private void SourceStorageLocationNameEditEnded([Row]int row, [Data]string sourceStorageLocationName)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
@@ -178,7 +178,7 @@ namespace WMS.UI.FromDeliverOrder
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
-        private void SupplierNoEditEnded(int row)
+        private void SupplierNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
@@ -186,7 +186,7 @@ namespace WMS.UI.FromDeliverOrder
             this.TryGetSupplyID(row);
         }
 
-        private void SupplierNameEditEnded(int row)
+        private void SupplierNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
@@ -194,27 +194,27 @@ namespace WMS.UI.FromDeliverOrder
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNoEditEnded(int row)
+        private void MaterialNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNameEditEnded(int row)
+        private void MaterialNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialProductLineEditEnded(int row)
+        private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void FindMaterialID(int row)
+        private void FindMaterialID([Row]int row)
         {
             this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
@@ -243,7 +243,7 @@ namespace WMS.UI.FromDeliverOrder
             return;
         }
 
-        private void FindSupplierID(int row)
+        private void FindSupplierID([Row]int row)
         {
             this.model1[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
@@ -266,7 +266,7 @@ namespace WMS.UI.FromDeliverOrder
             return;
         }
 
-        private void TryGetSupplyID(int row)
+        private void TryGetSupplyID([Row]int row)
         {
             this.model1[row, "supplyId"] = 0; //先清除供货ID
             int supplierId = (int?)this.model1[row, "supplierId"] ?? 0;
@@ -299,7 +299,7 @@ namespace WMS.UI.FromDeliverOrder
         //=============天经地义的交互逻辑到这里结束===============
 
         //物料名称输入联想
-        private object[] MaterialNameAssociation(string str)
+        private object[] MaterialNameAssociation([Data]string str)
         {
 
             string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
@@ -328,7 +328,7 @@ namespace WMS.UI.FromDeliverOrder
         }
 
         //物料代号输入联想
-        private object[] MaterialNoAssociation(string str)
+        private object[] MaterialNoAssociation([Data]string str)
         {
             string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
 
@@ -358,7 +358,7 @@ namespace WMS.UI.FromDeliverOrder
         }
 
         //物料系列输入联想
-        private object[] MaterialProductLineAssociation(string str)
+        private object[] MaterialProductLineAssociation([Data]string str)
         {
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
@@ -409,7 +409,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state)
         {
             //0待入库 1送检中 2.全部入库 3.部分入库
             switch (state)
@@ -423,33 +423,37 @@ namespace WMS.UI.FromDeliverOrder
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认保存当前修改并完成选中条目装车吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.synchronizer.Save();
-            //获取选中行ID，过滤掉新建的行（ID为0的）
-            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
-            if (selectedIDs.Length == 0)
+            if (this.synchronizer.Save())
             {
-                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string strIDs = serializer.Serialize(selectedIDs);
-            try
-            {
-                string operatioName = "loading_some";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order_item/" + operatioName, strIDs, "POST");
                 this.searchView1.Search();
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (WebException ex)
-            {
-                string message = ex.Message;
-                if (ex.Response != null)
-                {
-                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
-                }
-                MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            //if (MessageBox.Show("确认保存当前修改并完成选中条目装车吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            //this.synchronizer.Save();
+            ////获取选中行ID，过滤掉新建的行（ID为0的）
+            //int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            //if (selectedIDs.Length == 0)
+            //{
+            //    MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //string strIDs = serializer.Serialize(selectedIDs);
+            //try
+            //{
+            //    string operatioName = "loading_some";
+            //    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order_item/" + operatioName, strIDs, "POST");
+            //    this.searchView1.Search();
+            //    MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            //catch (WebException ex)
+            //{
+            //    string message = ex.Message;
+            //    if (ex.Response != null)
+            //    {
+            //        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+            //    }
+            //    MessageBox.Show(("批量完成移库单条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
         }
 
         public void SetAddFinishedCallback(Action callback)

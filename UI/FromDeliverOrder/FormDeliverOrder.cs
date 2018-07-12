@@ -97,7 +97,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state)
         {
             //0待入库 1送检中 2.全部入库 3.部分入库
             switch (state)
@@ -369,7 +369,7 @@ namespace WMS.UI.FromDeliverOrder
             a1.Show();
         }
 
-        private void ReturnNoteNoEditEnded(int row)
+        private void ReturnNoteNoEditEnded([Row]int row)
         {
             this.model1[row, "returnNoteTime"] = DateTime.Now;
         }

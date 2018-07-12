@@ -18,7 +18,7 @@ namespace WMS.UI.FormAcccount
             InitializeComponent();
         }
 
-        private string EnableForwardMapper(int state)
+        private string EnableForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -28,7 +28,7 @@ namespace WMS.UI.FormAcccount
             }
         }
 
-        private int EnableBackwardMapper(string enable)
+        private int EnableBackwardMapper([Data]string enable)
         {
             switch (enable)
             {
@@ -38,7 +38,7 @@ namespace WMS.UI.FormAcccount
             }
         }
 
-        private string DirectionForwardMapper(int state)
+        private string DirectionForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -48,7 +48,7 @@ namespace WMS.UI.FormAcccount
             }
         }
 
-        private int DirectionBackwardMapper(string enable)
+        private int DirectionBackwardMapper([Data]string enable)
         {
             switch (enable)
             {

@@ -53,7 +53,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AccountTitleExpenseNameEditEnded(int row, string accountTitleName)
+        private void AccountTitleExpenseNameEditEnded([Row]int row, [Data]string accountTitleName)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -72,7 +72,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AccountTitleExpenseNoEditEnded(int row, string accountTitleNo)
+        private void AccountTitleExpenseNoEditEnded([Row]int row, [Data]string accountTitleNo)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -91,7 +91,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AccountTitlePayableNameEditEnded(int row, string accountTitleName)
+        private void AccountTitlePayableNameEditEnded([Row]int row, [Data]string accountTitleName)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -110,7 +110,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AccountTitlePayableNoEditEnded(int row, string accountTitleNo)
+        private void AccountTitlePayableNoEditEnded([Row]int row,[Data] string accountTitleNo)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -129,7 +129,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AccountTitlePropertyNameEditEnded(int row, string accountTitleName)            
+        private void AccountTitlePropertyNameEditEnded([Row]int row,[Data] string accountTitleName)            
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -148,7 +148,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void AccountTitlePropertyNoEditEnded(int row, string accountTitleNo)
+        private void AccountTitlePropertyNoEditEnded([Row]int row,[Data] string accountTitleNo)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -167,7 +167,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void SalaryPeriodNameEditEnded(int row, string periodName)
+        private void SalaryPeriodNameEditEnded([Row]int row,[Data] string periodName)
         {
             IDictionary<string, object> foundSalaryPeriod =
                 GlobalData.AllSalaryPeriod.Find((s) =>
@@ -184,6 +184,90 @@ namespace WMS.UI.FromSalary
                 this.model1[row, "salaryPeriodName"] = foundSalaryPeriod["name"];
                 this.model1[row, "salaryPeriodId"] = foundSalaryPeriod["id"];
             }
+        }
+
+        private void buttonItems_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];       
+            FormPayNoteTax form = new FormPayNoteTax((int)rowData["id"],(string)rowData["no"]);
+            form.Show();
+        }
+
+        private string StateForwardMapper([Data]int state)
+        {
+            switch (state)
+            {
+                case 0: return "待确认";
+                case 1: return "已确认应付";
+                case 2: return "已付款实付";
+                default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string enable)
+        {
+            switch (enable)
+            {
+                case "待确认": return 0;
+                case "已确认应付": return 1;
+                case "已确认实付": return 2;
+                default: return -1;
+            }
+        }
+
+        private void TaxNameEditEnded([Row]int row, [Data] string taxName)
+        {
+            IDictionary<string, object> foundTax =
+                GlobalData.AllTax.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == taxName;
+                });
+            if (foundTax == null)
+            {
+                MessageBox.Show($"税务\"{taxName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "taxNo"] = foundTax["no"];
+                this.model1[row, "taxId"] = foundTax["id"];
+            }
+        }
+
+        private void TaxNoEditEnded([Row]int row, [Data] string taxNo)
+        {
+            IDictionary<string, object> foundTax =
+                GlobalData.AllTax.Find((s) =>
+                {
+                    if (s["no"] == null) return false;
+                    return s["no"].ToString() == taxNo;
+                });
+            if (foundTax == null)
+            {
+                MessageBox.Show($"税务\"{taxNo}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "taxName"] = foundTax["name"];
+                this.model1[row, "taxId"] = foundTax["id"];
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"]);
+            form.Show();
         }
     }
 }

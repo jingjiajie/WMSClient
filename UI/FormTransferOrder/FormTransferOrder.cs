@@ -102,7 +102,7 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -185,6 +185,7 @@ namespace WMS.UI.FormTransferOrder
                 }
                 else
                 {
+                    this.searchView1.Search();
                     StringBuilder remindBody = new StringBuilder();
                     foreach (IDictionary<string, object> transferOrderItem in remindData)
                     {
@@ -200,7 +201,7 @@ namespace WMS.UI.FormTransferOrder
                             remindBody = remindBody.Append("物料“").Append(transferOrderItem["materialName"])
                                     .Append("”（单位：“").Append(transferOrderItem["unit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
                                     .Append("”检测状态：“合格”），在目标库位：“").Append(transferOrderItem["targetStorageLocationName"])
-                                    .Append("”上库存充足！无需备货操作！\r\n");
+                                    .Append("”上库存充足！无需备货操作！\r\n\r\n");
                         }
                         if ((int)transferOrderItem["state"] == 2)
                         {
@@ -208,7 +209,7 @@ namespace WMS.UI.FormTransferOrder
                                     .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
                                     .Append("”检测状态：“合格”），在源库位：“").Append(transferOrderItem["sourceStorageLocationName"])
                                     .Append("”上库存可用数量不足！需要库存数量：“").Append(transferOrderItem["scheduledAmount"]).Append("”，现有库存：“")
-                                    .Append(transferOrderItem["realAmount"]).Append("”\r\n");
+                                    .Append(transferOrderItem["realAmount"]).Append("”\r\n\r\n");
                         }
                     }
                     new FormRemind(remindBody.ToString()).Show();
@@ -234,14 +235,14 @@ namespace WMS.UI.FormTransferOrder
             this.model1.RemoveSelectedRows();
         }
 
-        private void SupplierNoEditEnded(int row)
+        private void SupplierNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
             this.FindSupplierID(row);
         }
 
-        private void SupplierNameEditEnded(int row)
+        private void SupplierNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";

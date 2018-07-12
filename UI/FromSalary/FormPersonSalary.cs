@@ -105,12 +105,6 @@ namespace WMS.UI.FromSalary
                 this.model1[row, "personId"] = foundPerson["id"];
             }
         }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            FromSalary.FormSelectTax a = new FormSelectTax(1);
-            a.Show();
-
-        }
+     
     }
 }

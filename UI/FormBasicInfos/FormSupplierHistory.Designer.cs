@@ -121,9 +121,9 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.basicView1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panelSearchWidget, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelPager, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.basicView1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.pagerView1, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -153,7 +153,7 @@
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(1141, 27);

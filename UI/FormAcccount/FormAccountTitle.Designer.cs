@@ -169,8 +169,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(80, 22);
-            this.labelStatus.Text = "发货套餐信息";
+            this.labelStatus.Size = new System.Drawing.Size(56, 22);
+            this.labelStatus.Text = "科目信息";
             // 
             // toolStripStatusLabel1
             // 
