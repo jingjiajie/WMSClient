@@ -203,8 +203,8 @@ namespace WMS.UI.FromSalary
             switch (state)
             {
                 case 0: return "待确认";
-                case 1: return "已确认";
-                case 2: return "已付款";
+                case 1: return "已确认应付";
+                case 2: return "已付款实付";
                 default: return "未知状态";
             }
         }
@@ -214,9 +214,47 @@ namespace WMS.UI.FromSalary
             switch (enable)
             {
                 case "待确认": return 0;
-                case "已确认": return 1;
-                case "已确认": return 2;
+                case "已确认应付": return 1;
+                case "已确认实付": return 2;
                 default: return -1;
+            }
+        }
+
+        private void TaxNameEditEnded([Row]int row, [Data] string taxName)
+        {
+            IDictionary<string, object> foundTax =
+                GlobalData.AllTax.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == taxName;
+                });
+            if (foundTax == null)
+            {
+                MessageBox.Show($"税务\"{taxName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "taxNo"] = foundTax["no"];
+                this.model1[row, "taxId"] = foundTax["id"];
+            }
+        }
+
+        private void TaxNoEditEnded([Row]int row, [Data] string taxNo)
+        {
+            IDictionary<string, object> foundTax =
+                GlobalData.AllTax.Find((s) =>
+                {
+                    if (s["no"] == null) return false;
+                    return s["no"].ToString() == taxNo;
+                });
+            if (foundTax == null)
+            {
+                MessageBox.Show($"税务\"{taxNo}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "taxName"] = foundTax["name"];
+                this.model1[row, "taxId"] = foundTax["id"];
             }
         }
     }

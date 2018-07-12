@@ -244,6 +244,7 @@
             this.buttonItems.Size = new System.Drawing.Size(104, 19);
             this.buttonItems.Text = "查看税务条目";
             this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Visible = false;
             this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
             // toolStripSeparator1
