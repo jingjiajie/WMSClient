@@ -18,7 +18,7 @@ namespace WMS.UI.FormAcccount
             InitializeComponent();
         }
 
-        private string endedForwardMapper(int ended)
+        private string endedForwardMapper([Data]int ended)
         {
             switch (ended)
             {
@@ -28,7 +28,7 @@ namespace WMS.UI.FormAcccount
             }
         }
 
-        private int endedBackwardMapper(string ended)
+        private int endedBackwardMapper([Data]string ended)
         {
             switch (ended)
             {
@@ -45,7 +45,7 @@ namespace WMS.UI.FormAcccount
             this.searchView1.Search();
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
@@ -53,21 +53,21 @@ namespace WMS.UI.FormAcccount
             });
         }
 
-        private void buttonRemove_Click(object sender, EventArgs e)
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
         }
 
-        private void buttonAlter_Click(object sender, EventArgs e)
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
 
-             //   Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-             //   GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-             //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
+                //   Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                //   GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+                //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
             }
         }
     }

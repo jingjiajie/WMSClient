@@ -117,116 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="configuration2.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-       {name:"id",displayName:"ID",type:"int",visible:false},
-       {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-       {name:"lastAccountPeriodId",displayName:"上期ID",type:"int",visible:false},
-       {name:"name",displayName:"期间名称",type:"string"},
-       {name:"startTime",displayName:"起始日期",type:"datetime",editable:false},
-       {name:"endTime",displayName:"结束日期",type:"datetime",editable:false},
-       {name:"ended",displayName:"是否截止",type:"int",values:["否","是"],defaultValue:0,forwardMapper:"#endedForwardMapper",backwardMapper:"#endedBackwardMapper"},
-
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/account_period/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/account_period/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/account_period/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/account_period/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/account_period/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
-  </data>
   <metadata name="printDocument2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>386, 94</value>
   </metadata>
-  <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>535, 94</value>
-  </metadata>
-  <metadata name="toolStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>645, 94</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="buttonRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOeSURBVFhH7VZJaBRBFB1NNG6IEtyNiGLEg4kQEFxQcxJP
-        4iki4l3cSELEPTEacxAR9KDo1bsXJSc3EL2ZKKggiQsenOl09/RMT3XPpJfn++UEXBJ1kmHw4IOiqJnu
-        /179/+pXJ/6j0nBPnYI6ehTFZWWRI3nu/HmoM2fgnzhRWRGa/MIFqJ4eKM7elSvI9/WVJsI/fBheW1vJ
-        ylV7O3IXL0IVR+7cOSgKCD9+LD0LXkcH1NmzUK2tf/Wyx3pL2kcFyCwCvKtXEZvmxMrgsYaqsxMeAxV/
-        GhPeoUO63jrtowK6u5Hju4WbNwHfn5gAgSd1vHQJ6uTJMYNo8tOnvxFTgM6AkIsBb99G9OYNkM1OXIDA
-        k6AigrP3nav9Y8e00dTly3rkenu/CejqQp7k4evXiEdGELx4MTkBAo+7UmIqZkIdOQJFo+aOH9c7dekV
-        l7M2HQXlr19HODgIxDHC/v7Jk48ivX49jCVLYNbWwlqwANaiRTAXL8bwwoUY5uxs3AiPoiK6PgYQDAyU
-        j1zgzJ6N1LRpSE6ZglQigWEOk8OaOhXO5s3wr11D+OoVUCiUn1yQnjEDJkUYM2ciNX06DA6zqgpOfT0K
-        THusFKLJOH48pEk0THIhtUhoylpE1NQgybXd1IT8jRsIX74sP7ktOxVykkn6Je32vHmwpfZz5yJJIcnq
-        athr1sDds6e8AkwhZfAvJJWaZ7Ztg8/mEj5+jMKdO3C4TlGc/C8ireXLkdm+vTwiDAbVgbnD9Natui0H
-        9+4BhgGEIUYePIC7dy+s1au1CG1MPmutWIHMrl0TF2ExkCGplmPW0AB3/34E9+8Dros4lUL0+fMPwTM7
-        dsBctkyLEI/IbHGd3b27dBHaWGI0plIdOICQxNHQEGLHQfju3bgBncZGmOwP4hHtFx7L9Nq1ulkVH/k9
-        LKZazrPNxpJtadH1jdhGow8fED59+ldBJPXiEy1AjMvj6mzaBJ+3avGRsWHzJYc7dvftQ/7WLQSPHiHk
-        BRJ9+lRSCh3uWDqiPi3F42nMn49sc/P4cTIkzu7cCZ+3WPDkCaJksiTSn2GvW4eUdEsxpYjg5qy6OhTu
-        3v01rrthg/7qKTx8iOD9+0kRfw+TWUjOmoWkGFIE0JDB8+dli/9HOCtXIjVnji6BNC2HWQnLcR2XAnPp
-        UhjskvaqVfAOHkRsWZUVIFlwtmyBxy/k4Nkz3stBZQUIFMlHeKIids7w7dvKC/iPfwyJxFcYDOb7zu/p
-        WAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="buttonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
-        CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
-        NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
-        ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
-        bjSOw+fzwmjQwWo18167w4EpnxstLc0oKysTtr8lHCjdHbjf7xeqvHA6nbDZbALICJ1Ox+ByeT/aO37A
-        xIQO0WgAwaAPkmSGfEDOxGw2C+rr6hg0Ly+PF5EJBYOIxaf/mUgoGBKqfNhWb7FYoNfrWf2gchCdnR2C
-        jBaJRJyVjmnVUCgUYvWLdxxobPoGlZWV3G9Sf/78WRhNBlhtJnjc9r8nEAptgZN6t9vF6s0mE3SCwOjo
-        KLq6uxl8MTGHcCQAtXoESqUcY2MaJqQQ7lDPKXQ5OTk49fEpfp9cikZDGBkZ3JlAOBwWG4Pw+/xwuVy/
-        957Uq1Uq9Pb2QavVYnkpjpnpIAMTgUDQy+DXrrWhtFTGfafEE7h+XCO+Y4XDIYmQetDX3/9XAqFIBBGx
-        SD313uPx/Kn3BKoU1qsECQJ68GCJbb91SyX2SZiacgkiQ6iq+hAnKio47Scq3heEbgi3xkQLTfwOhZgc
-        aCx8/jGJcFiAC+Xb6rd6T+qlpPU67js5sLIyj/X1hxgfV8Fg0GJ+bpoXpf/MmU9xvPw49/1Y2Ul8VX+J
-        95F6aldsJgy10QXT9YrH4POJe6A1m/gFM/MriMTm8dPPdzEViMDpnoLN7obeJEFnMGBpOYbNzVVWQ7ZO
-        Tro4VDSGFDKyvaioBCWlFfjskw/gvPoyYsosLLibsPpog0dTstvQUv3SFgGLWo6tpYBV0w+TqhcTQzd5
-        qXq+x0BnK6/utmb8aNTi0fqacCDOYZqdjXL6TSY9WluvcOhovSt7D1UfnYay7kV4m5+G/etULNhrMbe0
-        CqsnCt9o7c4B3Kmqj76AG0210JttsEsWkZUgh47mX69Xc+ho5GjmyXpSONmcCufl59gFahm5GoyICTj3
-        6u4JUHVcaWACNOt02FAeyE5KfUmJjMFJfXNDNdtOBCxfPsXqyX7//Coi6pq9gVOZ5E38EcqF9Y5DjKaF
-        x4lOPbKebjqynlp1PzGJtYXbuO9vw+bGQ8wt3MPi4t29q6eiNnSefo0THPZboZ+wQKUe4zGrqTmHLy5e
-        wsjQCCSHSLlFEJS8HGAa78TqJgex/s1n9k7gj0Ufopbc7Olj4MbGRh7JmFDqDcywS5R4qyQOH5dXuLAG
-        R+vb+wO+XXQR0Xn/+YULuHwyA/7v8nBHcx1zUQnxeJjJhGZ+xfTyBrfj6jv7pJ5KoRgQUxBkB5KPuL59
-        IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
-        iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="buttonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
-</value>
-  </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>755, 94</value>
   </metadata>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>865, 94</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -289,28 +189,33 @@ httpAPIs:[
     {mode:"default",
      fields:[
        {name:"id",displayName:"ID",type:"int",visible:false},
-       {name:"name",displayName:"科目名称",type:"string"},
-       {name:"no",displayName:"科目编码",type:"string"},
+       {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+       {name:"lastAccountPeriodId",displayName:"上期ID",type:"int",visible:false},
+       {name:"name",displayName:"期间名称",type:"string"},
+       {name:"startTime",displayName:"起始日期",type:"datetime",editable:false},
+       {name:"endTime",displayName:"结束日期",type:"datetime",editable:false},
+       {name:"ended",displayName:"是否截止",type:"int",values:["否","是"],defaultValue:0,forwardMapper:"#endedForwardMapper",backwardMapper:"#endedBackwardMapper"},
+
     ],
 httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/tax/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/account_period/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/tax/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/account_period/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/tax/",
+            url:"{$url}/warehouse/{$accountBook}/account_period/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/tax/",
+            url:"{$url}/warehouse/{$accountBook}/account_period/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/tax/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/account_period/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
@@ -318,5 +223,8 @@ httpAPIs:[
   </data>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>991, 94</value>
+  </metadata>
+  <metadata name="miniToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 42</value>
   </metadata>
 </root>
