@@ -120,7 +120,7 @@ namespace WMS.UI.FormStockTaking
             }
         }
 
-        private void StorageLocationNameEditEnded(int row, string storageAreaName)
+        private void StorageLocationNameEditEnded([Row]int row, [Data]string storageAreaName)
         {
             IDictionary<string, object> foundStorageLocations =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -139,7 +139,7 @@ namespace WMS.UI.FormStockTaking
             }
         }
 
-        private void StorageLocationNoEditEnded(int row, string storageLocationName)
+        private void StorageLocationNoEditEnded([Row]int row,[Data] string storageLocationName)
         {
             IDictionary<string, object> foundStorageLcations =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -160,7 +160,7 @@ namespace WMS.UI.FormStockTaking
 
 
 
-        private string AmountForwardMapper(double amount, int row)
+        private string AmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -176,7 +176,7 @@ namespace WMS.UI.FormStockTaking
 
 
 
-        private string RealAmountForwardMapper(double amount, int row)
+        private string RealAmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -195,7 +195,7 @@ namespace WMS.UI.FormStockTaking
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
-        private void SupplierNoEditEnded(int row)
+        private void SupplierNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
@@ -203,7 +203,7 @@ namespace WMS.UI.FormStockTaking
             this.TryGetSupplyID(row);
         }
 
-        private void SupplierNameEditEnded(int row)
+        private void SupplierNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
@@ -211,7 +211,7 @@ namespace WMS.UI.FormStockTaking
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNoEditEnded(int row)
+        private void MaterialNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.model1[row, "materialName"] = "";
@@ -219,7 +219,7 @@ namespace WMS.UI.FormStockTaking
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNameEditEnded(int row)
+        private void MaterialNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.model1[row, "materialNo"] = "";
@@ -227,13 +227,13 @@ namespace WMS.UI.FormStockTaking
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialProductLineEditEnded(int row)
+        private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void FindMaterialID(int row)
+        private void FindMaterialID([Row]int row)
         {
             this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
@@ -260,7 +260,7 @@ namespace WMS.UI.FormStockTaking
             return;
         }
 
-        private void FindSupplierID(int row)
+        private void FindSupplierID([Row]int row)
         {
             this.model1[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
@@ -283,7 +283,7 @@ namespace WMS.UI.FormStockTaking
             return;
         }
 
-        private void TryGetSupplyID(int row)
+        private void TryGetSupplyID([Row]int row)
         {
             this.model1[row, "supplyId"] = 0; //先清除供货ID
             int supplierId = (int?)this.model1[row, "supplierId"] ?? 0;
@@ -361,7 +361,7 @@ namespace WMS.UI.FormStockTaking
             this.reoGridView1.Enabled = true;*/
         }
 
-        private void SupplierNoEditEnded1(int row)
+        private void SupplierNoEditEnded1([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
@@ -370,7 +370,7 @@ namespace WMS.UI.FormStockTaking
             //this.TryAddItem(row);
         }
 
-        private void SupplierNameEditEnded1(int row)
+        private void SupplierNameEditEnded1([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
@@ -379,7 +379,7 @@ namespace WMS.UI.FormStockTaking
             //this.TryAddItem(row);
         }
 
-        private void MaterialNoEditEnded1(int row)
+        private void MaterialNoEditEnded1([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.model1[row, "materialName"] = "";
@@ -388,7 +388,7 @@ namespace WMS.UI.FormStockTaking
            // this.TryAddItem(row);
         }
 
-        private void MaterialNameEditEnded1(int row)
+        private void MaterialNameEditEnded1([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.model1[row, "materialNo"] = "";
@@ -397,7 +397,7 @@ namespace WMS.UI.FormStockTaking
             //this.TryAddItem(row);
         }
 
-        private void MaterialProductLineEditEnded1(int row)
+        private void MaterialProductLineEditEnded1([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
