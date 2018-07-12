@@ -285,8 +285,10 @@ namespace WMS.UI
             GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");
 
-           //GlobalData.AccountPeriod = RestClient.Get< IDictionary<string, object>>(
-             //  $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.ToString()}");
+           GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended",0).ToString()}");
+
+            GlobalData.AccountPeriod = GlobalData.AllAccountPeriod[0];
         }
     }
 }
