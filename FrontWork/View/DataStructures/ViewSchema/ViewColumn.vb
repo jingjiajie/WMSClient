@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
 Public Class ViewColumn
-    Public Sub New(context As InvocationContext, placeHolder As FieldProperty, values As FieldProperty, name As String, displayName As String, type As Type, editable As Boolean)
+    Public Sub New(context As InvocationContext, placeHolder As FieldProperty(Of String), values As FieldProperty(Of Object()), name As String, displayName As String, type As Type, editable As Boolean)
         Me.Context = context
         _placeHolder = placeHolder
         _values = values
@@ -12,8 +12,8 @@ Public Class ViewColumn
     End Sub
 
     Private Property Context As InvocationContext
-    Private Property _placeHolder As FieldProperty
-    Private Property _values As FieldProperty
+    Private Property _placeHolder As FieldProperty(Of String)
+    Private Property _values As FieldProperty(Of Object())
 
     Public Property Name As String
     Public Property DisplayName As String
@@ -25,7 +25,7 @@ Public Class ViewColumn
         End Get
     End Property
 
-    Public ReadOnly Property Values As Object
+    Public ReadOnly Property Values As Object()
         Get
             Return Me._values?.Invoke(Me.Context)
         End Get

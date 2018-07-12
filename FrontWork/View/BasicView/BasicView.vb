@@ -422,7 +422,7 @@ Partial Public Class BasicView
             .Tag = New ControlTag(index)
         End With
         Call comboBox.Items.Clear()
-        Dim values As Object() = Util.ToArray(Of Object)(viewColumn.Values)
+        Dim values As Object() = viewColumn.Values
         If values IsNot Nothing Then
             comboBox.Items.AddRange(values)
         End If

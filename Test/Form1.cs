@@ -16,6 +16,8 @@ namespace Test
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            string[] a = { "1","2"};
+            object[] c = a;
         }
 
         private void button1_Click(object sender, EventArgs e)

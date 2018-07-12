@@ -24,26 +24,9 @@ Public Class Util
         Dim objType = obj.GetType
 
         If Not objType.IsArray Then '源类型不是数组,则把obj作为新数组的唯一一项
-            Return New TElem() {System.Convert.ChangeType(obj, GetType(TElem))}
+            Return New TElem() {Util.ChangeType(obj, GetType(TElem))}
         Else '源类型是数组，则直接遍历转型
-            Dim objPropertyLength = objType.GetProperty("Length")
-            Dim objMethodGetValue = objType.GetMethod("GetValue", New Type() {GetType(Integer)})
-            Dim objLength = CType(objPropertyLength.GetValue(obj, Nothing), Integer)
-            Dim result(objLength - 1) As TElem
-            For i As Integer = 0 To objLength - 1
-                Dim srcValue = objMethodGetValue.Invoke(obj, New Object() {i})
-                If srcValue Is Nothing Then
-                    result(i) = Nothing
-                Else
-                    Dim constructor = GetType(TElem).GetConstructor({srcValue.GetType})
-                    If constructor IsNot Nothing Then
-                        result(i) = constructor.Invoke({srcValue})
-                    Else
-                        result(i) = System.Convert.ChangeType(srcValue, GetType(TElem))
-                    End If
-                End If
-            Next
-            Return result
+            Return Util.ChangeType(obj, GetType(TElem).MakeArrayType)
         End If
     End Function
 
@@ -156,7 +139,17 @@ Public Class Util
     End Function
 
     Public Shared Function ChangeType(srcValue As Object, targetType As Type) As Object
+        If srcValue Is Nothing Then Return Nothing
         Dim srcType = srcValue.GetType
+        '如果源值和目标值都是数组，则分别对每一项进行转换
+        If srcType.IsArray AndAlso targetType.IsArray Then
+            Dim srcArray = CType(srcValue, Object())
+            Dim targetArray = Array.CreateInstance(targetType.GetElementType, srcArray.Length)
+            For i = 0 To srcArray.Length - 1
+                targetArray(i) = ChangeType(srcArray(i), targetType.GetElementType)
+            Next
+            Return targetArray
+        End If
         '如果是父子类关系，则直接返回
         If srcType = targetType OrElse
             srcType.IsSubclassOf(targetType) OrElse

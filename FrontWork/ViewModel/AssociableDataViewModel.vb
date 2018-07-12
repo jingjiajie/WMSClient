@@ -70,10 +70,8 @@ Public Class AssociableDataViewModel
         Dim data = e.CellData
         If data.ToString?.Length > 0 Then
             Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, e.Row, e.ColumnName, data)
-            Dim associationFunctionReturnValue = curField.Association.Invoke(context)
-            If associationFunctionReturnValue Is Nothing Then GoTo NO_ASSOCIATION_ITEM '如果联想内容为空，则隐藏联想并返回
-            Dim associationItems = Util.ToArray(Of AssociationItem)(associationFunctionReturnValue)
-            If associationItems.Length = 0 Then GoTo NO_ASSOCIATION_ITEM '如果联想内容为空，则隐藏联想并返回
+            Dim associationItems = curField.Association.Invoke(context)
+            If associationItems Is Nothing OrElse associationItems.Length = 0 Then GoTo NO_ASSOCIATION_ITEM '如果联想内容为空，则隐藏联想并返回
             '执行到这里一定是有联想内容的。所以显示联想窗口并刷新联想内容
             If Not Me.AssociationVisible Then
                 Call Me.View.ShowAssociationForm()

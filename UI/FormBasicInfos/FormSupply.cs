@@ -407,7 +407,7 @@ namespace WMS.UI.FormBasicInfos
             this.model1.RefreshView(row);
         }
 
-        private string InspectionAmountForwardMapper(double amount ,[Row] int row)
+        private string InspectionAmountForwardMapper([Data]double amount ,[Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "defaultInspectionUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -443,7 +443,7 @@ namespace WMS.UI.FormBasicInfos
             this.model1.RefreshView(row);
         }
 
-        private string DeliveryAmountForwardMapper(double amount, [Row] int row)
+        private string DeliveryAmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "defaultDeliveryUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)

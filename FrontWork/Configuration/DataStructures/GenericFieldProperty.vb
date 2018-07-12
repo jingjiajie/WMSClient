@@ -20,7 +20,11 @@ Public Class FieldProperty(Of T)
     End Function
 
     Public Overridable Shadows Function Invoke(context As InvocationContext) As T
-        Return Util.ChangeType(MyBase.Invoke(context), GetType(T))
+        Dim ret = MyBase.Invoke(context)
+        If (GetType(T) = GetType(AssociationItem())) Then
+            Console.WriteLine()
+        End If
+        Return Util.ChangeType(ret, GetType(T))
     End Function
 
     Public Overrides Function Clone() As Object

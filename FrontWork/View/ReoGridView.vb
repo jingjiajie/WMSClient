@@ -529,7 +529,7 @@ Public Class ReoGridView
         Dim viewColumn As ViewColumn = Me.Panel.ColumnHeaders(col).Tag?.ViewColumn
         If viewColumn Is Nothing Then Return
         '验证数据
-        Dim values As Object() = Util.ToArray(Of String)(viewColumn.Values)
+        Dim values As Object() = viewColumn.Values
         If Not values.Contains(Me.Panel(row, col)) Then
             Call Me.AddCellState(row, col, CellState.INVALID_DATA)
         Else
