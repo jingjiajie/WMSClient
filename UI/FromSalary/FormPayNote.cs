@@ -266,7 +266,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"]);
+            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"]);
             form.Show();
         }
     }

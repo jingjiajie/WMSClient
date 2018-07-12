@@ -102,7 +102,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private void StorageLocationNoEditEnded(int row, string storageLocationName)
+        private void StorageLocationNoEditEnded([Row]int row, [Data] string storageLocationName)
         {
             IDictionary<string, object> foundStorageLcations =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -121,7 +121,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private string AmountForwardMapper(double amount,int row)
+        private string AmountForwardMapper([Data]double amount,[Row]int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -134,14 +134,14 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AmountBackwardMapper(double amount, int row)
+        private double AmountBackwardMapper([Data]double amount,[Row] int row)
         {
             var rowDate = this.model1.GetRow(row);
             double unitAmount = (double)rowDate["unitAmount"];
             return amount * unitAmount;
         }
 
-        private string AvailableAmountForwardMapper(double amount, int row)
+        private string AvailableAmountForwardMapper([Data]double amount,[Row]int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -154,7 +154,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AvailableAmountBackwardMapper(double amount, int row)
+        private double AvailableAmountBackwardMapper([Data]double amount, [Row]int row)
         {
             var rowDate = this.model1.GetRow(row);
             double unitAmount = (double)rowDate["unitAmount"];
@@ -163,7 +163,7 @@ namespace WMS.UI.FormStock
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
-        private void SupplierNoEditEnded(int row)
+        private void SupplierNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
@@ -171,7 +171,7 @@ namespace WMS.UI.FormStock
             this.TryGetSupplyID(row);
         }
 
-        private void SupplierNameEditEnded(int row)
+        private void SupplierNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
@@ -179,7 +179,7 @@ namespace WMS.UI.FormStock
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNoEditEnded(int row)
+        private void MaterialNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.model1[row, "materialName"] = "";
@@ -187,7 +187,7 @@ namespace WMS.UI.FormStock
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNameEditEnded(int row)
+        private void MaterialNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.model1[row, "materialNo"] = "";
@@ -195,7 +195,7 @@ namespace WMS.UI.FormStock
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialProductLineEditEnded(int row)
+        private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
@@ -287,7 +287,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private int StateBackwardMapper(string enable)
+        private int StateBackwardMapper([Data]string enable)
         {
             switch (enable)
             {
@@ -298,7 +298,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private string StateForwardMapper(int enable)
+        private string StateForwardMapper([Data]int enable)
         {
             switch (enable)
             {

@@ -110,7 +110,7 @@ namespace WMS.UI
             //this.TransferDone();
         }
 
-        private string ScheduledAmountForwardMapper(double amount, [Row]int row)
+        private string ScheduledAmountForwardMapper([Data]double amount, [Row]int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -142,7 +142,7 @@ namespace WMS.UI
         }
 
 
-        private string RealAmountForwardMapper(double amount, [Row]int row)
+        private string RealAmountForwardMapper([Data]double amount, [Row]int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -217,7 +217,7 @@ namespace WMS.UI
             this.searchView1.Search();
         }
 
-        private void SourceStorageLocationNoEditEnded([Row]int row, [Data]string sourceStorageLocationNo)
+        private void SourceStorageLocationNoEditEnded([Row]int row,[Data] string sourceStorageLocationNo)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationNo)) return;
@@ -234,7 +234,7 @@ namespace WMS.UI
             return;
         }
 
-        private void SourceStorageLocationNameEditEnded([Row]int row, [Data]string sourceStorageLocationName)
+        private void SourceStorageLocationNameEditEnded([Row]int row,[Data] string sourceStorageLocationName)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
@@ -285,7 +285,7 @@ namespace WMS.UI
             return;
         }
 
-        private string StateForwardMapper([Data]int state)
+        private string StateForwardMapper(int state)
         {
             switch (state)
             {
@@ -336,7 +336,7 @@ namespace WMS.UI
             this.TryGetSupplyID(row);
         }
 
-        private void FindMaterialID(int row)
+        private void FindMaterialID([Row]int row)
         {
             this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
@@ -365,7 +365,7 @@ namespace WMS.UI
             return;
         }
 
-        private void FindSupplierID(int row)
+        private void FindSupplierID([Row]int row)
         {
             this.model1[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
@@ -388,7 +388,7 @@ namespace WMS.UI
             return;
         }
 
-        private void TryGetSupplyID(int row)
+        private void TryGetSupplyID([Row]int row)
         {
             this.model1[row, "supplyId"] = 0; //先清除供货ID
             int supplierId = (int?)this.model1[row, "supplierId"] ?? 0;

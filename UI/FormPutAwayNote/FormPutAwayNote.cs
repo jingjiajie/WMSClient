@@ -217,7 +217,7 @@ namespace WMS.UI
             this.model1[row, "supplierNo"] = "";
             this.FindSupplierID(row);
         }
-        private void FindSupplierID(int row)
+        private void FindSupplierID([Row]int row)
         {
             this.model1[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";

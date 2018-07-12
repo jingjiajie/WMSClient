@@ -94,7 +94,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private string AmountForwardMapper(double amount, [Row]int row)
+        private string AmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -142,7 +142,7 @@ namespace WMS.UI.FromDeliverOrder
             this.updateBasicAndReoGridView();
         }
 
-        private void SourceStorageLocationNoEditEnded([Row]int row, [Data]string sourceStorageLocationNo)
+        private void SourceStorageLocationNoEditEnded([Row]int row,[Data] string sourceStorageLocationNo)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationNo)) return;
@@ -214,7 +214,7 @@ namespace WMS.UI.FromDeliverOrder
             this.TryGetSupplyID(row);
         }
 
-        private void FindMaterialID(int row)
+        private void FindMaterialID([Row]int row)
         {
             this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
@@ -243,7 +243,7 @@ namespace WMS.UI.FromDeliverOrder
             return;
         }
 
-        private void FindSupplierID(int row)
+        private void FindSupplierID([Row]int row)
         {
             this.model1[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model1[row, "supplierNo"]?.ToString() ?? "";
@@ -266,7 +266,7 @@ namespace WMS.UI.FromDeliverOrder
             return;
         }
 
-        private void TryGetSupplyID(int row)
+        private void TryGetSupplyID([Row]int row)
         {
             this.model1[row, "supplyId"] = 0; //先清除供货ID
             int supplierId = (int?)this.model1[row, "supplierId"] ?? 0;
