@@ -64,7 +64,7 @@ Public Class SearchView
         Dim fieldConfiguration = Me.Configuration.GetFields(Me.Mode)
         If fieldConfiguration Is Nothing Then Return
         Dim fieldNames = (From field In fieldConfiguration
-                          Where field.Visible
+                          Where field.Visible.GetValue
                           Select field.DisplayName).ToArray
         Call Me.ComboBoxSearchKey.Items.AddRange(fieldNames)
         Call Me.ComboBoxOrderKey.Items.AddRange(fieldNames)
@@ -120,7 +120,7 @@ Public Class SearchView
             End If
             For i = 0 To texts.Length - 1
                 Try
-                    searchValues(i) = Convert.ChangeType(mappedValues(i), fieldConfiguration.Type.FieldType)
+                    searchValues(i) = Convert.ChangeType(mappedValues(i), fieldConfiguration.Type.GetValue)
                 Catch
                     MessageBox.Show($"""{texts(i)}""不是合法的数据，请检查输入！")
                     Return Nothing
@@ -189,7 +189,7 @@ Public Class SearchView
             Me.TextBoxSearchCondition1.Enabled = True
             Dim selectedDisplayName = Me.ComboBoxSearchKey.SelectedItem.ToString
             Dim field = (From f In Me.Configuration.GetFields(Me.Mode) Where f.DisplayName = selectedDisplayName Select f).First
-            Call Me.RefreshSearchByType(field.Type.FieldType)
+            Call Me.RefreshSearchByType(field.Type.GetValue)
         End If
     End Sub
 
@@ -305,14 +305,14 @@ Public Class SearchView
 
         '如果能找到Name对应的字段，则直接取出
         For Each field In fields
-            If field.Name.Equals(key, StringComparison.OrdinalIgnoreCase) Then
+            If field.Name.GetValue?.ToString.Equals(key, StringComparison.OrdinalIgnoreCase) Then
                 displayName = field.DisplayName
             End If
         Next
         '若找不到，则按DisplayName查找，再找不到就抛错
         If displayName Is Nothing Then
             For Each field In fields
-                If field.DisplayName.Equals(key, StringComparison.OrdinalIgnoreCase) Then
+                If field.DisplayName.GetValue?.ToString.Equals(key, StringComparison.OrdinalIgnoreCase) Then
                     displayName = field.DisplayName
                 End If
             Next

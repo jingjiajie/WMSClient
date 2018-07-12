@@ -120,6 +120,7 @@
     <Compile Include="Configuration\Attributes\RowAttribute.vb" />
     <Compile Include="Configuration\Attributes\SynchronizerAttribute.vb" />
     <Compile Include="Configuration\Attributes\ViewAttribute.vb" />
+    <Compile Include="Configuration\DataStructures\GenericFieldProperty.vb" />
     <Compile Include="Configuration\DataStructures\IndexFieldPair.vb" />
     <Compile Include="Configuration\DataStructures\InvocationContext\InvocationExpectedParamInfo.vb" />
     <Compile Include="Configuration\DataStructures\InvocationContext\InvocationContextItemCollection.vb" />
@@ -142,7 +143,7 @@
     <Compile Include="Configuration\EventArgs\ConfigurationRefreshedEventArgs.vb" />
     <Compile Include="Configuration\Exceptions\IncompatibleTypeException.vb" />
     <Compile Include="Configuration\Exceptions\MethodNotFoundException.vb" />
-    <Compile Include="Configuration\DataStructures\FieldType.vb" />
+    <Compile Include="Configuration\DataStructures\FieldTypeProperty.vb" />
     <Compile Include="Configuration\DataStructures\HTTPAPI.vb" />
     <Compile Include="Configuration\Exceptions\ModeNotFoundException.vb" />
     <Compile Include="Configuration\Exceptions\ParameterMatchingException.vb" />
@@ -189,12 +190,18 @@
     <Compile Include="View\AdsorbableAssociationForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="View\GridView.Designer.vb">
+      <DependentUpon>GridView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="View\GridView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="View\Interfaces\IAssociableDataView.vb" />
     <Compile Include="View\Interfaces\IDataView.vb" />
     <Compile Include="Logger\Logger.vb" />
     <Compile Include="Configuration\DataStructures\ModeConfiguration.vb" />
     <Compile Include="Configuration\DataStructures\Field.vb" />
-    <Compile Include="Configuration\DataStructures\FieldMethod.vb" />
+    <Compile Include="Configuration\DataStructures\FieldProperty.vb" />
     <Compile Include="Model\DataStructures\ModelSchema\ModelColumn.vb" />
     <Compile Include="Common\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
@@ -318,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\AdsorbableAssociationForm.resx">
       <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\GridView.resx">
+      <DependentUpon>GridView.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\PagerView.resx">
       <DependentUpon>PagerView.vb</DependentUpon>

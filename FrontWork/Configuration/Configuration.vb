@@ -152,7 +152,7 @@ Public Class Configuration
     ''' <returns>字段的配置信息</returns>
     Public Function GetField(mode As String, fieldName As String) As Field
         Dim fields = Me.GetFields(mode)
-        Dim field = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
+        Dim field = (From f In fields Where f.Name.GetValue?.ToString.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
         If field Is Nothing Then Throw New FrontWorkException($"Field ""{fieldName}"" not found in mode ""{mode}""!")
         Return field
     End Function

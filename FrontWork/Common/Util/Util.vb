@@ -85,7 +85,7 @@ Public Class Util
             Dim srcValue = field.GetValue(src)
             If field.FieldType = GetType(String) OrElse field.FieldType.IsValueType Then
                 field.SetValue(newObj, srcValue)
-            ElseIf field.FieldType.GetInterface("ICloneable") = Nothing Then
+            ElseIf field.FieldType.GetInterface("ICloneable") Is Nothing Then
                 Throw New FrontWorkException($"Field {field.Name} must implement ICloneable")
             ElseIf srcValue Is Nothing Then
                 field.SetValue(newObj, srcValue)
@@ -153,6 +153,28 @@ Public Class Util
         If obj1 Is Nothing AndAlso obj2 Is Nothing Then Return True
         If obj1 Is Nothing OrElse obj2 Is Nothing Then Return False
         Return obj1.Equals(obj2)
+    End Function
+
+    Public Shared Function ChangeType(srcValue As Object, targetType As Type) As Object
+        Dim srcType = srcValue.GetType
+        '如果是父子类关系，则直接返回
+        If srcType = targetType OrElse
+            srcType.IsSubclassOf(targetType) OrElse
+            srcType.GetInterface(targetType.Name) IsNot Nothing Then
+            Return srcValue
+        End If
+        '否则如果目标类有对应的转换构造函数，则调用相应的转换构造函数
+        Dim constructor = targetType.GetConstructor({srcType})
+        If constructor IsNot Nothing Then
+            Dim value = constructor.Invoke({srcValue})
+            Return value
+        End If
+        '最后尝试标准库ChangeType，再不行就报错
+        Try
+            Return Convert.ChangeType(srcValue, targetType)
+        Catch ex As Exception
+            Throw New IncompatibleTypeException(srcValue, targetType)
+        End Try
     End Function
 End Class
 

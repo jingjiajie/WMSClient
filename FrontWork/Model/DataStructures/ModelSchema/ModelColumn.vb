@@ -1,9 +1,9 @@
 ﻿Imports FrontWork
 
 Public Class ModelColumn
-    Private _defaultValue As FieldMethod
+    Private _defaultValue As FieldProperty
 
-    Public Sub New(context As InvocationContext, defaultValue As FieldMethod, name As String, type As Type, nullable As Boolean)
+    Public Sub New(context As InvocationContext, defaultValue As FieldProperty, name As String, type As Type, nullable As Boolean)
         _defaultValue = defaultValue
         Me.Context = context
         Me.Name = name
@@ -12,7 +12,7 @@ Public Class ModelColumn
     End Sub
 
     Public Sub New(context As InvocationContext, field As Field)
-        Call Me.New(context, field.DefaultValue, field.Name, field.Type.FieldType, True)
+        Call Me.New(context, field.DefaultValue, field.Name.GetValue, field.Type.GetValue, True)
     End Sub
 
     Public Property Context As InvocationContext

@@ -42,7 +42,7 @@ Public Class HTTPAPI
     ''' 函数类型(HTTPWebResponse,WebException):Boolean 失败后是否继续执行下一个API
     ''' </summary>
     ''' <returns></returns>
-    Public Property Callback As FieldMethod
+    Public Property Callback As FieldProperty
 
     ''' <summary>
     ''' 从Jint.JsValue转换
@@ -119,12 +119,8 @@ Public Class HTTPAPI
             If prop Is Nothing Then
                 throw new FrontWorkException("can not resolve property:""" + key + """ in json configure")
                 Continue For
-            ElseIf prop.PropertyType <> GetType(FieldMethod) Then '如果不是函数，则直接赋值
+            ElseIf prop.PropertyType <> GetType(FieldProperty) Then '如果不是函数，则直接赋值
                 prop.SetValue(newHTTPAPIConfiguration, value, Nothing)
-            Else '如果是函数，特殊处理
-                Dim jsProp = item.Value.Value
-                Dim newFieldMethod = FieldMethod.FromJsValue(jsProp, methodListenerNames)
-                prop.SetValue(newHTTPAPIConfiguration, newFieldMethod, Nothing)
             End If
         Next
         Return newHTTPAPIConfiguration
@@ -138,8 +134,8 @@ Public Class HTTPAPI
         Dim myType = Me.GetType
         Dim myFields = myType.GetFields(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance)
         For Each myField In myFields
-            If myField.FieldType.Equals(GetType(FieldMethod)) Then
-                Dim fieldValue = CType(myField.GetValue(Me), FieldMethod)
+            If myField.FieldType.Equals(GetType(FieldProperty)) Then
+                Dim fieldValue = CType(myField.GetValue(Me), FieldProperty)
                 fieldValue?.SetMethodListenerNames(methodListenerNames)
             End If
         Next

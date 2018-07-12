@@ -1,7 +1,7 @@
 ﻿Imports System.Linq
 Imports System.Reflection
 
-Public MustInherit Class InvocationContext
+Public Class InvocationContext
     Public Property ContextItems As New InvocationContextItemCollection
 
     Public Function Invoke(targetObject As Object, method As MethodInfo) As Object
@@ -45,7 +45,7 @@ Public MustInherit Class InvocationContext
                     If contextItem.AttributeType = expectedParamInfo.AttributeType Then
                         Dim value = Nothing
                         Try
-                            value = Me.ChangeType(contextItem.Value, expectedType)
+                            value = Util.ChangeType(contextItem.Value, expectedType)
                         Catch ex As IncompatibleTypeException
                             Dim appendMessage = vbCrLf & $"When matching ""{contextItem.Value}"" to parameter" & vbCrLf &
                             $"{method.DeclaringType.Name}.{method.Name}( " &
@@ -110,28 +110,6 @@ Public MustInherit Class InvocationContext
             curType = curType.BaseType
         End While
         Return depth
-    End Function
-
-    Private Function ChangeType(srcValue As Object, targetType As Type) As Object
-        Dim srcType = srcValue.GetType
-        '如果是父子类关系，则直接返回
-        If srcType = targetType OrElse
-            srcType.IsSubclassOf(targetType) OrElse
-            srcType.GetInterface(targetType.Name) IsNot Nothing Then
-            Return srcValue
-        End If
-        '否则如果目标类有对应的转换构造函数，则调用相应的转换构造函数
-        Dim constructor = targetType.GetConstructor({srcType})
-        If constructor IsNot Nothing Then
-            Dim value = constructor.Invoke({srcValue})
-            Return value
-        End If
-        '最后尝试标准库ChangeType，再不行就报错
-        Try
-            Return Convert.ChangeType(srcValue, targetType)
-        Catch ex As Exception
-            Throw New IncompatibleTypeException(srcValue, targetType)
-        End Try
     End Function
 
     Private Function DefaultForType(targetType As Type) As Object

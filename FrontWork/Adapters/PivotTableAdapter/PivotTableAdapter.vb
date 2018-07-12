@@ -141,14 +141,14 @@ Public Class PivotTableAdapter
         Dim colsAsCol = Me.ColumnNamesAsColumn
         Dim colsAsValue = Me.ColumnNamesAsValue
         Dim colsAsRow = Me.ColumnNamesAsRow
-        Dim oriTargetColumnNames = (From f In TargetModel.Configuration.GetFields(Me.TargetMode) Select f.Name)
+        Dim oriTargetColumnNames = (From f In TargetModel.Configuration.GetFields(Me.TargetMode) Select f.Name.GetValue)
         Dim addTargetFields As New List(Of Field) '要添加到TargetModel的字段
         '将定行列加入目标Model，如果目标Model中不存在相应的列
         For Each colAsRow In colsAsRow
             If Not oriTargetColumnNames.Contains(colAsRow) Then
                 Dim sourceFieldAsRow = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, colAsRow)
                 Dim newFieldAsRow As Field = sourceFieldAsRow.Clone
-                newFieldAsRow.Editable = False '目标表的定行列禁止编辑
+                newFieldAsRow.Editable = New FieldProperty(False) '目标表的定行列禁止编辑
                 addTargetFields.Add(newFieldAsRow)
             End If
         Next
@@ -166,12 +166,12 @@ Public Class PivotTableAdapter
                 Dim targetColumnName = targetColumnNames(j)
                 '如果目标表中或者本次添加的列中已经包含同名列，则不要重复添加
                 If oriTargetColumnNames.Contains(targetColumnName) OrElse
-                    addTargetFields.FindIndex(Function(f) f.Name = targetColumnName) > 0 Then Continue For
+                    addTargetFields.FindIndex(Function(f) f.Name.GetValue = targetColumnName) > 0 Then Continue For
                 '否则生成新字段，添加到目标表
                 Dim sourceValueField = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(j))
                 Dim newField As Field = sourceValueField.Clone
-                newField.Name = targetColumnName
-                newField.DisplayName = targetColumnName
+                newField.Name = New FieldProperty(targetColumnName)
+                newField.DisplayName = New FieldProperty(targetColumnName)
                 addTargetFields.Add(newField)
                 '记录列映射
                 Me._ColumnMapManager.SetColumnMap(colsAsColValues, Me.ColumnNamesAsValue(j), targetColumnName)

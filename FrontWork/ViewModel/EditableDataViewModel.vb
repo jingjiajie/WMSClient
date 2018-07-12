@@ -174,7 +174,7 @@ Public Class EditableDataViewModel
         Dim result(fields.Length - 1) As ViewColumn
         For i = 0 To fields.Length - 1
             Dim curField = fields(i)
-            Dim newViewColumn = New ViewColumn(context, curField.PlaceHolder, curField.Values, curField.Name, curField.DisplayName, curField.Type.FieldType, curField.Editable)
+            Dim newViewColumn = New ViewColumn(context, curField.PlaceHolder, curField.Values, curField.Name, curField.DisplayName, curField.Type.GetValue, curField.Editable)
             result(i) = newViewColumn
         Next
         Return result
@@ -281,8 +281,8 @@ Public Class EditableDataViewModel
         Dim data = (From r In e.Rows Select r.RowData).ToArray
         Dim fields = Me.Configuration.GetFields(Me.Mode)
         Dim uneditableFieldNames = (From f In fields
-                                    Where f.Editable = False
-                                    Select f.Name).ToArray
+                                    Where f.Editable.GetValue = False
+                                    Select f.Name.GetValue).ToArray
         For i = 0 To rows.Length - 1
             Dim keys = data(i).Keys.ToArray
             For Each key In keys
@@ -307,7 +307,7 @@ Public Class EditableDataViewModel
         Dim cellInfos As List(Of ViewCellInfo) = e.Cells.ToList()
         cellInfos.RemoveAll(
             Function(cellInfo)
-                Return Not Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName).Editable
+                Return Not Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName).Editable.GetValue
             End Function)
 
         Dim rows = (From c In cellInfos Select c.Row).ToArray
@@ -383,7 +383,7 @@ Public Class EditableDataViewModel
         Dim modelCellInfos = e.UpdatedCells.ToList
         modelCellInfos.RemoveAll(Function(cellInfo)
                                      Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
-                                     Return Not curField.Visible
+                                     Return Not curField.Visible.GetValue
                                  End Function)
 
         For i = 0 To modelCellInfos.Count - 1
@@ -486,7 +486,7 @@ Public Class EditableDataViewModel
     Protected Overridable Function GetForwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
         Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, rowNum, fieldName, cellData)
         Dim fields = Me.Configuration.GetFields(Me.Mode)
-        Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
+        Dim curField = (From f In fields Where f.Name.GetValue?.ToString.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).FirstOrDefault
         Dim result = Nothing
         If curField Is Nothing Then
             result = cellData
@@ -510,7 +510,7 @@ Public Class EditableDataViewModel
     Protected Overridable Function GetBackwardMappedCellData(cellData As Object, fieldName As String, rowNum As Integer) As Object
         Dim context As New ModelViewEditInvocationContext(Me.Model, Me.View, rowNum, fieldName, cellData)
         Dim fields = Me.Configuration.GetFields(Me.Mode)
-        Dim curField = (From f In fields Where f.Name.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
+        Dim curField = (From f In fields Where f.Name.GetValue?.ToString.Equals(fieldName, StringComparison.OrdinalIgnoreCase) Select f).First
         If curField Is Nothing Then
             Throw New FrontWorkException($"Field ""{fieldName}"" not found in Configuration!")
         End If
