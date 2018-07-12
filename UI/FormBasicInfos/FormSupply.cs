@@ -122,23 +122,23 @@ namespace WMS.UI.FormBasicInfos
         //    }
         //}
 
-        private void MaterialNoEditEnded(int row)
+        private void MaterialNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.FindMaterialID(row);
         }
 
-        private void MaterialNameEditEnded(int row)
+        private void MaterialNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.FindMaterialID(row);
         }
 
-        private void MaterialProductLineEditEnded(int row)
+        private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
         }
-        private void FindMaterialID(int row)
+        private void FindMaterialID([Row]int row)
         {
             this.model1[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model1[row, "materialNo"]?.ToString() ?? "";
@@ -167,7 +167,7 @@ namespace WMS.UI.FormBasicInfos
             return;
         }
         //供应商名称编辑完成，根据名称自动搜索ID和No
-        private void SupplierNameEditEnded(int row, string supplierName)
+        private void SupplierNameEditEnded([Row]int row,[Data] string supplierName)
         {
             IDictionary<string, object> foundSupplier =
                 GlobalData.AllSuppliers.Find((s) =>
@@ -185,7 +185,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private void DefaultEntryStorageLocationNameEditEnded(int row, string defaultEntryStorageLocationName)
+        private void DefaultEntryStorageLocationNameEditEnded([Row]int row, [Data]string defaultEntryStorageLocationName)
         {
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -202,7 +202,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "defaultEntryStorageLocationId"] = foundStorageLocation["id"];
             }
         }
-        private void defaultInspectionStorageLocationNameEditEnded(int row, string defaultInspectionStorageLocationName)
+        private void defaultInspectionStorageLocationNameEditEnded([Row]int row, [Data]string defaultInspectionStorageLocationName)
         {
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -219,7 +219,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "defaultInspectionStorageLocationId"] = foundStorageLocation["id"];
             }
         }
-        private void defaultQualifiedStorageLocationNameEditEnded(int row, string defaultQualifiedStorageLocationName)
+        private void defaultQualifiedStorageLocationNameEditEnded([Row]int row,[Data] string defaultQualifiedStorageLocationName)
         {
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -236,7 +236,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "defaultQualifiedStorageLocationId"] = foundStorageLocation["id"];
             }
         }
-        private void defaultUnqualifiedStorageLocationNameEditEnded(int row, string defaultUnqualifiedStorageLocationName)
+        private void defaultUnqualifiedStorageLocationNameEditEnded([Row]int row,[Data] string defaultUnqualifiedStorageLocationName)
         {
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -253,7 +253,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "defaultUnqualifiedStorageLocationId"] = foundStorageLocation["id"];
             }
         }
-        private void defaultDeliveryStorageLocationNameEditEnded(int row, string defaultDeliveryStorageLocationName)
+        private void defaultDeliveryStorageLocationNameEditEnded([Row]int row,[Data] string defaultDeliveryStorageLocationName)
         {
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -270,7 +270,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "defaultDeliveryStorageLocationId"] = foundStorageLocation["id"];
             }
         }
-        private void defaultPrepareTargetStorageLocationNameEditEnded(int row, string defaultPrepareTargetStorageLocationName)
+        private void defaultPrepareTargetStorageLocationNameEditEnded([Row]int row,[Data] string defaultPrepareTargetStorageLocationName)
         {
             IDictionary<string, object> foundStorageLocation =
                 GlobalData.AllStorageLocations.Find((s) =>
@@ -289,7 +289,7 @@ namespace WMS.UI.FormBasicInfos
         }
 
         //物料名称输入联想
-        private object[] MaterialNameAssociation(string str)
+        private object[] MaterialNameAssociation([Data]string str)
         {
             string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";           
             var a = (from s in GlobalData.AllMaterials
@@ -303,7 +303,7 @@ namespace WMS.UI.FormBasicInfos
         }
 
         //物料代号输入联想
-        private object[] MaterialNoAssociation(string str)
+        private object[] MaterialNoAssociation([Data]string str)
         {
             string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
             var a = (from s in GlobalData.AllMaterials
@@ -316,7 +316,7 @@ namespace WMS.UI.FormBasicInfos
         }
 
         //物料系列输入联想
-        private object[] MaterialProductLineAssociation(string str)
+        private object[] MaterialProductLineAssociation([Data]string str)
         { 
                 var a = (from s in GlobalData.AllMaterials
                          where s["productLine"] != null &&
@@ -371,7 +371,7 @@ namespace WMS.UI.FormBasicInfos
 
         }
 
-        private string EntryAmountForwardMapper(double amount, int row)
+        private string EntryAmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "defaultEntryUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -384,7 +384,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private double EntryAmountBackwardMapper(string strAmount, int row)
+        private double EntryAmountBackwardMapper([Data]string strAmount, [Row] int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
@@ -402,12 +402,12 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private void EntryUnitAmountEditEnded(int row)
+        private void EntryUnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
         }
 
-        private string InspectionAmountForwardMapper(double amount, int row)
+        private string InspectionAmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "defaultInspectionUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -420,7 +420,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private double InspectionAmountBackwardMapper(string strAmount, int row)
+        private double InspectionAmountBackwardMapper([Data]string strAmount, [Row]int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
@@ -438,7 +438,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private void InspectionUnitAmountEditEnded(int row)
+        private void InspectionUnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
         }
@@ -456,7 +456,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private double DeliveryAmountBackwardMapper(string strAmount, int row)
+        private double DeliveryAmountBackwardMapper([Data]string strAmount, [Row]int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
@@ -474,7 +474,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private void DeliveryUnitAmountEditEnded(int row)
+        private void DeliveryUnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
         }

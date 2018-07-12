@@ -83,7 +83,7 @@ namespace WMS.UI.FormStock
             form.Show();
         }
 
-        private void StorageLocationNameEditEnded(int row, string storageAreaName)
+        private void StorageLocationNameEditEnded([Row]int row, [Data]string storageAreaName)
         {
             IDictionary<string, object> foundStorageLocations =
                 GlobalData.AllStorageLocations.Find((s) =>
