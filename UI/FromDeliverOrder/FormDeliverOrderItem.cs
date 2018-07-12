@@ -94,7 +94,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private string AmountForwardMapper(double amount, int row)
+        private string AmountForwardMapper(double amount, [Row]int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -107,7 +107,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private double AmountBackwardMapper(string strAmount, int row)
+        private double AmountBackwardMapper([Data]string strAmount, [Row]int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
@@ -125,7 +125,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private void UnitAmountEditEnded(int row)
+        private void UnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
         }
@@ -142,7 +142,7 @@ namespace WMS.UI.FromDeliverOrder
             this.updateBasicAndReoGridView();
         }
 
-        private void SourceStorageLocationNoEditEnded(int row, string sourceStorageLocationNo)
+        private void SourceStorageLocationNoEditEnded([Row]int row, [Data]string sourceStorageLocationNo)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationNo)) return;
@@ -159,7 +159,7 @@ namespace WMS.UI.FromDeliverOrder
             return;
         }
 
-        private void SourceStorageLocationNameEditEnded(int row, string sourceStorageLocationName)
+        private void SourceStorageLocationNameEditEnded([Row]int row, [Data]string sourceStorageLocationName)
         {
             this.model1[row, "sourceStorageLocationId"] = 0;//先清除库位ID
             if (string.IsNullOrWhiteSpace(sourceStorageLocationName)) return;
@@ -178,7 +178,7 @@ namespace WMS.UI.FromDeliverOrder
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
-        private void SupplierNoEditEnded(int row)
+        private void SupplierNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierNo"]?.ToString())) return;
             this.model1[row, "supplierName"] = "";
@@ -186,7 +186,7 @@ namespace WMS.UI.FromDeliverOrder
             this.TryGetSupplyID(row);
         }
 
-        private void SupplierNameEditEnded(int row)
+        private void SupplierNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "supplierName"]?.ToString())) return;
             this.model1[row, "supplierNo"] = "";
@@ -194,21 +194,21 @@ namespace WMS.UI.FromDeliverOrder
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNoEditEnded(int row)
+        private void MaterialNoEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNameEditEnded(int row)
+        private void MaterialNameEditEnded([Row]int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialName"]?.ToString())) return;
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialProductLineEditEnded(int row)
+        private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
@@ -299,7 +299,7 @@ namespace WMS.UI.FromDeliverOrder
         //=============天经地义的交互逻辑到这里结束===============
 
         //物料名称输入联想
-        private object[] MaterialNameAssociation(string str)
+        private object[] MaterialNameAssociation([Data]string str)
         {
 
             string materialNo = this.model1[this.model1.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
@@ -328,7 +328,7 @@ namespace WMS.UI.FromDeliverOrder
         }
 
         //物料代号输入联想
-        private object[] MaterialNoAssociation(string str)
+        private object[] MaterialNoAssociation([Data]string str)
         {
             string materialName = this.model1[this.model1.SelectionRange.Row, "materialName"]?.ToString() ?? "";
 
@@ -358,7 +358,7 @@ namespace WMS.UI.FromDeliverOrder
         }
 
         //物料系列输入联想
-        private object[] MaterialProductLineAssociation(string str)
+        private object[] MaterialProductLineAssociation([Data]string str)
         {
             int[] selectedIDs = this.model1.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
@@ -409,7 +409,7 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state)
         {
             //0待入库 1送检中 2.全部入库 3.部分入库
             switch (state)
