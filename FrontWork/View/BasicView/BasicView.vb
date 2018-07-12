@@ -208,6 +208,7 @@ Partial Public Class BasicView
         End If
         Call Me.ExportField(fieldName)
         Dim args = New ViewContentChangedEventArgs(Me.TargetRow, fieldName, Me.GetFieldValue(fieldName))
+        RaiseEvent ContentChanged(Me, args)
     End Sub
 
     Private Sub Combobox_Enter(sender As Object, e As EventArgs)
