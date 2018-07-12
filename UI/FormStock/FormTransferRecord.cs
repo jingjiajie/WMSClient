@@ -90,7 +90,7 @@ namespace WMS.UI.FormStock
         }
 
 
-        private string SourceStorageLocationOriginalAmountMapper([Data]double amount, [Row]int row)
+        private string SourceStorageLocationOriginalAmountMapper(double amount,int row)
         {
             double? unitAmount = (double?)this.model1[row, "sourceStorageLocationUnitAmount"];
             double? sourceStorageLocationNewAmount = (double?)this.model1[row, "sourceStorageLocationNewAmount"];
@@ -133,7 +133,7 @@ namespace WMS.UI.FormStock
         }
 
 
-        private string TargetStorageLocationOriginalAmountMapper([Data]double amount, [Row]int row)
+        private string TargetStorageLocationOriginalAmountMapper([Data]double amount,[Row] int row)
         {
  
             double? unitAmount = (double?)this.model1[row, "targetStorageLocationAmount"];
@@ -189,7 +189,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private string TransferAmountForwardMapper([Data]double amount, [Row]int row)
+        private string TransferAmountForwardMapper([Data]double amount,[Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "transferUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)

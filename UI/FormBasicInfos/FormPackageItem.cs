@@ -115,7 +115,7 @@ namespace WMS.UI.FormBasicInfos
             this.TryGetSupplyID(row);
         }
 
-        private void FindMaterialID([Row]int row)
+        private void FindMaterialID(int row)
         {
             this.model[row, "materialId"] = 0; //先清除物料ID
             string materialNo = this.model[row, "materialNo"]?.ToString() ?? "";
@@ -144,7 +144,7 @@ namespace WMS.UI.FormBasicInfos
             return;
         }
 
-        private void FindSupplierID([Row]int row)
+        private void FindSupplierID(int row)
         {
             this.model[row, "supplierId"] = 0;//先清除供货商ID
             string supplierNo = this.model[row, "supplierNo"]?.ToString() ?? "";
@@ -167,7 +167,7 @@ namespace WMS.UI.FormBasicInfos
             return;
         }
 
-        private void TryGetSupplyID([Row]int row)
+        private void TryGetSupplyID(int row)
         {
             this.model[row, "supplyId"] = 0; //先清除供货ID
             int supplierId = (int?)this.model[row, "supplierId"] ?? 0;
