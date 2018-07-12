@@ -75,6 +75,7 @@ Partial Public Class AdsorbableAssociationForm
     End Sub
 
     Private Sub textBox_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+        If Not Me.Visible Then Return
         Select Case e.KeyCode
             Case Keys.Up
                 Me.MoveSelection(MoveDirection.UP)

@@ -65,7 +65,7 @@ Public Class SearchView
         If fieldConfiguration Is Nothing Then Return
         Dim fieldNames = (From field In fieldConfiguration
                           Where field.Visible.GetValue
-                          Select field.DisplayName).ToArray
+                          Select field.DisplayName.GetValue).ToArray
         Call Me.ComboBoxSearchKey.Items.AddRange(fieldNames)
         Call Me.ComboBoxOrderKey.Items.AddRange(fieldNames)
         If Me.ComboBoxSearchKey.Items.Count > 0 Then Me.ComboBoxSearchKey.SelectedIndex = 0
@@ -188,7 +188,7 @@ Public Class SearchView
             Me.TextBoxSearchCondition.Enabled = True
             Me.TextBoxSearchCondition1.Enabled = True
             Dim selectedDisplayName = Me.ComboBoxSearchKey.SelectedItem.ToString
-            Dim field = (From f In Me.Configuration.GetFields(Me.Mode) Where f.DisplayName = selectedDisplayName Select f).First
+            Dim field = (From f In Me.Configuration.GetFields(Me.Mode) Where f.DisplayName.GetValue = selectedDisplayName Select f).First
             Call Me.RefreshSearchByType(field.Type.GetValue)
         End If
     End Sub
