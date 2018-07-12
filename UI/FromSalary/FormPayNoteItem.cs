@@ -12,10 +12,12 @@ namespace WMS.UI.FromSalary
     public partial class FormPayNoteItem : Form
     {
         private int payNoteId;
-        public FormPayNoteItem(int payNoteId)
+        private int periodId;
+        public FormPayNoteItem(int payNoteId,int periodId)
         {
             InitializeComponent();
             this.payNoteId = payNoteId;
+            this.periodId = periodId;
         }
 
         private void FormPayNoteItem_Load(object sender, EventArgs e)
@@ -30,10 +32,8 @@ namespace WMS.UI.FromSalary
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
-            {               
-                { "personId",GlobalData.Person["id"]},
-                { "personName",GlobalData.Person["name"]},
-                { "payNoteId",payNoteId},
+            {                             
+                { "payNoteId",payNoteId}
             });
         }
 
