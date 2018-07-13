@@ -77,15 +77,15 @@ namespace WMS.UI.FormAcccount
 
         private void StateContentChanged([Row]int row, [Data]string state)
         {
-            if (state == "定额收税")
+            if (state == "比例税率")
             {
-                this.model1[row, "taxAmount"] = "";
+                this.model1[row, "taxAmount"] = 0;
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";
             }
-            else if (state == "比例税率")
+            else if (state == "定额收税")
             {
-                this.model1[row, "taxRate"] = "";
+                this.model1[row, "taxRate"] = 0;
                 this.basicView1.Mode = "type_quota";
                 this.reoGridView1.Mode = "type_quota";
             }
