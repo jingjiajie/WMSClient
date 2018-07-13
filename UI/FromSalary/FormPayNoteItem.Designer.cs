@@ -284,6 +284,7 @@
             this.buttonRealPayItems.TabIndex = 3;
             this.buttonRealPayItems.Text = "确认选中实付";
             this.buttonRealPayItems.UseVisualStyleBackColor = false;
+            this.buttonRealPayItems.Click += new System.EventHandler(this.buttonRealPayItems_Click);
             // 
             // reoGridView1
             // 

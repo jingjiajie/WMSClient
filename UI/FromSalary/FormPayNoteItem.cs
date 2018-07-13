@@ -142,7 +142,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(this.getSelectRowIds());
-
+       
             StringBuilder payNoteIds = new StringBuilder();
             payNoteIds.Append("[");
             foreach (var a in rowData) {
@@ -176,6 +176,46 @@ namespace WMS.UI.FromSalary
             {
                 string body = $"{{\"taxId\":\"{this.taxId}\",\"payNoteId\":\"{payNoteId}\"}}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note_item/calculate_tax";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("计算成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void buttonRealPayItems_Click(object sender, EventArgs e)
+        {
+
+            if (this.model1.SelectionRange.Rows == 0)
+            {
+                MessageBox.Show("请选择税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(this.getSelectRowIds());
+
+            StringBuilder payNoteIds = new StringBuilder();
+            payNoteIds.Append("[");
+            foreach (var a in rowData)
+            {
+                payNoteIds.Append(a["id"]);
+                payNoteIds.Append(",");
+            }
+            payNoteIds.Remove(payNoteIds.Length - 1, 1);
+            payNoteIds.Append("]");
+
+
+            try
+            {
+                string body = payNoteIds.ToString();
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note_item/real_pay_part_items";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("计算成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
