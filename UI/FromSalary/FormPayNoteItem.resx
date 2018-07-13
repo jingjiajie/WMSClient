@@ -128,14 +128,14 @@
 {name:"id",displayName:"ID",type:"int",visible:false},
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
-{name:"preTaxAmount",displayName:"税前应付",type:"double"},
+{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
 {name:"taxAmount",displayName:"扣除税费",type:"double"},
 {name:"afterTaxAmount",displayName:"税后应付",type:"double"},
-{name:"state",displayName:"状态",type:"int"},
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
 {name:"paidAmount",displayName:"实付金额",type:"double"},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"vomment",displayName:"备注",type:"string"},
-{name:"personName",displayName:"人员名称",type:"string"}
+{name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded"}
      ],
     httpAPIs:[
         {type:"get-count",
@@ -168,6 +168,14 @@
     <value>715, 98</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ButtonRefresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
+        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
+        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
