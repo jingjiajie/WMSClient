@@ -30,6 +30,11 @@ namespace WMS.UI.FromSalary
 
         private void FormPayNoteItem_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonCalculateAllTax);
+            Utilities.BindBlueButton(this.buttonCclcultateItemsTax);
+            Utilities.BindBlueButton(this.buttonRealPayAll);
+            Utilities.BindBlueButton(this.buttonRealPayItems);
             this.searchView1.AddStaticCondition("payNoteId", payNoteId);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);

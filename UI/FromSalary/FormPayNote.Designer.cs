@@ -51,8 +51,8 @@
             this.pagerView1 = new FrontWork.PagerView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonFinish = new System.Windows.Forms.Button();
-            this.buttonFinishAll = new System.Windows.Forms.Button();
+            this.buttonAccountRealPay = new System.Windows.Forms.Button();
+            this.buttonAccountPay = new System.Windows.Forms.Button();
             this.basicView1 = new FrontWork.BasicView();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
@@ -287,8 +287,8 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.buttonFinish, 1, 2);
-            this.tableLayoutPanel4.Controls.Add(this.buttonFinishAll, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.buttonAccountRealPay, 1, 2);
+            this.tableLayoutPanel4.Controls.Add(this.buttonAccountPay, 1, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(613, 0);
@@ -302,37 +302,37 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(203, 133);
             this.tableLayoutPanel4.TabIndex = 14;
             // 
-            // buttonFinish
+            // buttonAccountRealPay
             // 
-            this.buttonFinish.BackColor = System.Drawing.Color.White;
-            this.buttonFinish.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonFinish.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonFinish.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonFinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonFinish.FlatAppearance.BorderSize = 0;
-            this.buttonFinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinish.Location = new System.Drawing.Point(29, 69);
-            this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(144, 48);
-            this.buttonFinish.TabIndex = 2;
-            this.buttonFinish.Text = "完成选中条目";
-            this.buttonFinish.UseVisualStyleBackColor = false;
+            this.buttonAccountRealPay.BackColor = System.Drawing.Color.White;
+            this.buttonAccountRealPay.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonAccountRealPay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAccountRealPay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAccountRealPay.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAccountRealPay.FlatAppearance.BorderSize = 0;
+            this.buttonAccountRealPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAccountRealPay.Location = new System.Drawing.Point(29, 69);
+            this.buttonAccountRealPay.Name = "buttonAccountRealPay";
+            this.buttonAccountRealPay.Size = new System.Drawing.Size(144, 48);
+            this.buttonAccountRealPay.TabIndex = 2;
+            this.buttonAccountRealPay.Text = "实付同步总账";
+            this.buttonAccountRealPay.UseVisualStyleBackColor = false;
             // 
-            // buttonFinishAll
+            // buttonAccountPay
             // 
-            this.buttonFinishAll.BackColor = System.Drawing.Color.White;
-            this.buttonFinishAll.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonFinishAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonFinishAll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonFinishAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonFinishAll.FlatAppearance.BorderSize = 0;
-            this.buttonFinishAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinishAll.Location = new System.Drawing.Point(29, 15);
-            this.buttonFinishAll.Name = "buttonFinishAll";
-            this.buttonFinishAll.Size = new System.Drawing.Size(144, 48);
-            this.buttonFinishAll.TabIndex = 3;
-            this.buttonFinishAll.Text = "完成所有条目";
-            this.buttonFinishAll.UseVisualStyleBackColor = false;
+            this.buttonAccountPay.BackColor = System.Drawing.Color.White;
+            this.buttonAccountPay.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonAccountPay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAccountPay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAccountPay.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAccountPay.FlatAppearance.BorderSize = 0;
+            this.buttonAccountPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAccountPay.Location = new System.Drawing.Point(29, 15);
+            this.buttonAccountPay.Name = "buttonAccountPay";
+            this.buttonAccountPay.Size = new System.Drawing.Size(144, 48);
+            this.buttonAccountPay.TabIndex = 3;
+            this.buttonAccountPay.Text = "应付同步总账";
+            this.buttonAccountPay.UseVisualStyleBackColor = false;
             // 
             // basicView1
             // 
@@ -476,7 +476,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private FrontWork.BasicView basicView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Button buttonFinish;
-        private System.Windows.Forms.Button buttonFinishAll;
+        private System.Windows.Forms.Button buttonAccountRealPay;
+        private System.Windows.Forms.Button buttonAccountPay;
     }
 }

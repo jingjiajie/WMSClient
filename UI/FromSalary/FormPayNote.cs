@@ -20,6 +20,8 @@ namespace WMS.UI.FromSalary
 
         private void FormPayNote_Load(object sender, EventArgs e)
         {
+            Utilities.BindBlueButton(this.buttonAccountPay);
+            Utilities.BindBlueButton(this.buttonAccountRealPay);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
