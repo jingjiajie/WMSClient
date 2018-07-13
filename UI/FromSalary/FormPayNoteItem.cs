@@ -125,14 +125,24 @@ namespace WMS.UI.FromSalary
             }
         }
 
+        public int[] getSelectRowIds() {
+            List<int> selectIds = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                selectIds.Add(this.model1.SelectionRange.Row + i);
+            }
+            return selectIds.ToArray();    
+        }
+
         private void ButtonCalculateItemsTax_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows != 1)
+            if (this.model1.SelectionRange.Rows == 0)
             {
-                MessageBox.Show("请选择一项税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            var rowData = this.model1.GetRows(this.getSelectRowIds());
+
             StringBuilder payNoteIds = new StringBuilder();
             payNoteIds.Append("[");
             foreach (var a in rowData) {
