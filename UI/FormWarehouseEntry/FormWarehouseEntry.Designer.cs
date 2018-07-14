@@ -63,6 +63,7 @@ namespace WMS.UI
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
+            this.configuration2 = new FrontWork.Configuration();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -299,6 +300,7 @@ namespace WMS.UI
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.configuration2);
             this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
             this.panel1.Controls.Add(this.synchronizer);
             this.panel1.Controls.Add(this.model1);
@@ -388,6 +390,16 @@ namespace WMS.UI
             this.basicView1.Size = new System.Drawing.Size(1259, 81);
             this.basicView1.TabIndex = 14;
             // 
+            // configuration2
+            // 
+            this.configuration2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration2.ConfigurationString = "";
+            this.configuration2.Location = new System.Drawing.Point(730, 92);
+            this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            this.configuration2.Name = "configuration2";
+            this.configuration2.Size = new System.Drawing.Size(150, 150);
+            this.configuration2.TabIndex = 5;
+            // 
             // FormWarehouseEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -438,5 +450,6 @@ namespace WMS.UI
         private FrontWork.BasicView basicView1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
+        private FrontWork.Configuration configuration2;
     }
 }

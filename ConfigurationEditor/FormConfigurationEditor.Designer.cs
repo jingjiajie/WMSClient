@@ -33,7 +33,7 @@
             this.BtnPrevSearch = new System.Windows.Forms.Button();
             this.BtnNextSearch = new System.Windows.Forms.Button();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +49,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.uppercaseSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lowercaseSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.hiddenCharactersItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +58,8 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.close = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemMaximum = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemClose = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelTop = new System.Windows.Forms.TableLayoutPanel();
@@ -89,7 +90,7 @@
             this.TextPanel.Location = new System.Drawing.Point(0, 72);
             this.TextPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TextPanel.Name = "TextPanel";
-            this.TextPanel.Size = new System.Drawing.Size(1382, 791);
+            this.TextPanel.Size = new System.Drawing.Size(1596, 773);
             this.TextPanel.TabIndex = 0;
             // 
             // PanelSearch
@@ -98,7 +99,7 @@
             this.PanelSearch.BackColor = System.Drawing.Color.White;
             this.PanelSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PanelSearch.Controls.Add(this.tableLayoutPanel3);
-            this.PanelSearch.Location = new System.Drawing.Point(952, 2);
+            this.PanelSearch.Location = new System.Drawing.Point(1166, 2);
             this.PanelSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PanelSearch.Name = "PanelSearch";
             this.PanelSearch.Size = new System.Drawing.Size(430, 40);
@@ -185,21 +186,22 @@
             this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripMenuItem,
-            this.viewToolStripMenuItem,
-            this.close});
-            this.menuStrip.Location = new System.Drawing.Point(1152, 0);
+            this.menuItemEdit,
+            this.menuItemView,
+            this.menuItemMaximum,
+            this.menuItemClose});
+            this.menuStrip.Location = new System.Drawing.Point(1266, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
             this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.menuStrip.Size = new System.Drawing.Size(230, 70);
+            this.menuStrip.Size = new System.Drawing.Size(330, 70);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // editToolStripMenuItem
+            // menuItemEdit
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cutToolStripMenuItem,
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
@@ -215,14 +217,14 @@
             this.toolStripSeparator3,
             this.uppercaseSelectionToolStripMenuItem,
             this.lowercaseSelectionToolStripMenuItem});
-            this.editToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F);
-            this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.editToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(56, 66);
-            this.editToolStripMenuItem.Text = "编辑";
-            this.editToolStripMenuItem.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
-            this.editToolStripMenuItem.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
+            this.menuItemEdit.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F);
+            this.menuItemEdit.ForeColor = System.Drawing.Color.White;
+            this.menuItemEdit.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.menuItemEdit.Name = "menuItemEdit";
+            this.menuItemEdit.Size = new System.Drawing.Size(56, 66);
+            this.menuItemEdit.Text = "编辑";
+            this.menuItemEdit.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.menuItemEdit.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
             // 
             // cutToolStripMenuItem
             // 
@@ -330,10 +332,10 @@
             this.lowercaseSelectionToolStripMenuItem.Text = "转换为小写";
             this.lowercaseSelectionToolStripMenuItem.Click += new System.EventHandler(this.lowercaseSelectionToolStripMenuItem_Click);
             // 
-            // viewToolStripMenuItem
+            // menuItemView
             // 
-            this.viewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.menuItemView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hiddenCharactersItem,
             this.toolStripSeparator4,
             this.zoomInToolStripMenuItem,
@@ -342,13 +344,13 @@
             this.toolStripSeparator5,
             this.collapseAllToolStripMenuItem,
             this.expandAllToolStripMenuItem});
-            this.viewToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.viewToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(56, 66);
-            this.viewToolStripMenuItem.Text = "视图";
-            this.viewToolStripMenuItem.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
-            this.viewToolStripMenuItem.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
+            this.menuItemView.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.menuItemView.ForeColor = System.Drawing.Color.White;
+            this.menuItemView.Name = "menuItemView";
+            this.menuItemView.Size = new System.Drawing.Size(56, 66);
+            this.menuItemView.Text = "视图";
+            this.menuItemView.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.menuItemView.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
             // 
             // hiddenCharactersItem
             // 
@@ -406,15 +408,26 @@
             this.expandAllToolStripMenuItem.Text = "全部展开";
             this.expandAllToolStripMenuItem.Click += new System.EventHandler(this.expandAllToolStripMenuItem_Click);
             // 
-            // close
+            // menuItemMaximum
             // 
-            this.close.ForeColor = System.Drawing.Color.White;
-            this.close.Name = "close";
-            this.close.Size = new System.Drawing.Size(56, 66);
-            this.close.Text = "退出";
-            this.close.Click += new System.EventHandler(this.close_Click);
-            this.close.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
-            this.close.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
+            this.menuItemMaximum.ForeColor = System.Drawing.Color.White;
+            this.menuItemMaximum.Name = "menuItemMaximum";
+            this.menuItemMaximum.Padding = new System.Windows.Forms.Padding(4, 1, 4, 0);
+            this.menuItemMaximum.Size = new System.Drawing.Size(73, 66);
+            this.menuItemMaximum.Text = "最大化";
+            this.menuItemMaximum.Click += new System.EventHandler(this.menuItemMaximum_Click);
+            this.menuItemMaximum.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.menuItemMaximum.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
+            // 
+            // menuItemClose
+            // 
+            this.menuItemClose.ForeColor = System.Drawing.Color.White;
+            this.menuItemClose.Name = "menuItemClose";
+            this.menuItemClose.Size = new System.Drawing.Size(56, 66);
+            this.menuItemClose.Text = "退出";
+            this.menuItemClose.Click += new System.EventHandler(this.close_Click);
+            this.menuItemClose.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.menuItemClose.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
             // 
             // openFileDialog
             // 
@@ -431,7 +444,7 @@
             this.tableLayoutPanel1.Controls.Add(this.TextPanel, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 3);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -439,7 +452,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 2F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1382, 913);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1596, 895);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // tableLayoutPanelTop
@@ -448,7 +461,7 @@
             this.tableLayoutPanelTop.ColumnCount = 3;
             this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500F));
             this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
+            this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 330F));
             this.tableLayoutPanelTop.Controls.Add(this.tableLayoutPanelLogo, 0, 0);
             this.tableLayoutPanelTop.Controls.Add(this.menuStrip, 2, 0);
             this.tableLayoutPanelTop.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -457,7 +470,7 @@
             this.tableLayoutPanelTop.Name = "tableLayoutPanelTop";
             this.tableLayoutPanelTop.RowCount = 1;
             this.tableLayoutPanelTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTop.Size = new System.Drawing.Size(1382, 70);
+            this.tableLayoutPanelTop.Size = new System.Drawing.Size(1596, 70);
             this.tableLayoutPanelTop.TabIndex = 11;
             this.tableLayoutPanelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             this.tableLayoutPanelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
@@ -481,6 +494,9 @@
             this.tableLayoutPanelLogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelLogo.Size = new System.Drawing.Size(500, 70);
             this.tableLayoutPanelLogo.TabIndex = 2;
+            this.tableLayoutPanelLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            this.tableLayoutPanelLogo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.tableLayoutPanelLogo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form_MouseUp);
             // 
             // panelLogo
             // 
@@ -492,6 +508,9 @@
             this.panelLogo.Name = "panelLogo";
             this.panelLogo.Size = new System.Drawing.Size(172, 53);
             this.panelLogo.TabIndex = 0;
+            this.panelLogo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            this.panelLogo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.panelLogo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form_MouseUp);
             // 
             // label1
             // 
@@ -506,6 +525,9 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "配置编辑器";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form_MouseUp);
             // 
             // panelSplitter
             // 
@@ -514,7 +536,7 @@
             this.panelSplitter.Location = new System.Drawing.Point(0, 70);
             this.panelSplitter.Margin = new System.Windows.Forms.Padding(0);
             this.panelSplitter.Name = "panelSplitter";
-            this.panelSplitter.Size = new System.Drawing.Size(1382, 2);
+            this.panelSplitter.Size = new System.Drawing.Size(1596, 2);
             this.panelSplitter.TabIndex = 11;
             // 
             // panel1
@@ -522,10 +544,10 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 863);
+            this.panel1.Location = new System.Drawing.Point(0, 845);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1382, 50);
+            this.panel1.Size = new System.Drawing.Size(1596, 50);
             this.panel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
@@ -542,7 +564,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1382, 50);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1596, 50);
             this.tableLayoutPanel2.TabIndex = 0;
             this.tableLayoutPanel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
             this.tableLayoutPanel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
@@ -557,7 +579,7 @@
             this.buttonOK.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.buttonOK.ForeColor = System.Drawing.Color.White;
             this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonOK.Location = new System.Drawing.Point(546, 5);
+            this.buttonOK.Location = new System.Drawing.Point(653, 5);
             this.buttonOK.Margin = new System.Windows.Forms.Padding(5);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(290, 40);
@@ -577,11 +599,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1382, 913);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(1600, 900);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormConfigurationEditor";
+            this.Padding = new System.Windows.Forms.Padding(2, 3, 2, 2);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "配置编辑器";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -606,7 +631,7 @@
 
 		private System.Windows.Forms.Panel TextPanel;
 		private System.Windows.Forms.MenuStrip menuStrip;
-		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem menuItemView;
 		private System.Windows.Forms.ToolStripMenuItem hiddenCharactersItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem zoomInToolStripMenuItem;
@@ -615,7 +640,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStripMenuItem collapseAllToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem expandAllToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem menuItemEdit;
 		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
@@ -649,7 +674,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTop;
         private System.Windows.Forms.Panel panelLogo;
-        private System.Windows.Forms.ToolStripMenuItem close;
+        private System.Windows.Forms.ToolStripMenuItem menuItemClose;
+        private System.Windows.Forms.ToolStripMenuItem menuItemMaximum;
     }
 }
 
