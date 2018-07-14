@@ -296,7 +296,7 @@ namespace WMS.UI.FromSalary
             try
             {
 
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title/"+rowData[0]["id"].ToString();            
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title/"+rowData[0]["id"].ToString()+"/"+GlobalData.Person["id"];            
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
@@ -323,7 +323,7 @@ namespace WMS.UI.FromSalary
             try
             {
 
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title/" + rowData[0]["id"].ToString();
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title/" + rowData[0]["id"].ToString() + "/" + GlobalData.Person["id"];
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
