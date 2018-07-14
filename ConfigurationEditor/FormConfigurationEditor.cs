@@ -601,5 +601,18 @@ namespace FrontWork{
             }
         }
 
+        private void menuItemMaximum_Click(object sender, EventArgs e)
+        {
+            if(this.WindowState != FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                menuItemMaximum.Text = "普通大小";
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                menuItemMaximum.Text = "最大化";
+            }
+        }
     }
 }
