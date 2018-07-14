@@ -159,7 +159,7 @@ namespace WMS.UI
                         if ((int)transferOrderItem["state"] == 0)
                         {
                             remindBody = remindBody
-                                    .Append(transferOrderItem["supplierName"])
+                                .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
                                     .Append("”，代号：“").Append(transferOrderItem["supplierNo"]).Append("”，")
                                     .Append("物料“").Append(transferOrderItem["materialName"])
                                     .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["sourceUnitAmount"])
@@ -169,7 +169,7 @@ namespace WMS.UI
                         if ((int)transferOrderItem["state"] == 1)
                         {
                             remindBody = remindBody
-                                .Append(transferOrderItem["supplierName"])
+                                .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
                                     .Append("”，代号：“").Append(transferOrderItem["supplierNo"]).Append("”，")
                                     .Append("物料“").Append(transferOrderItem["materialName"])
                                     .Append("”（单位：“").Append(transferOrderItem["unit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
@@ -179,7 +179,7 @@ namespace WMS.UI
                         if ((int)transferOrderItem["state"] == 2)
                         {
                             remindBody = remindBody
-                                .Append(transferOrderItem["supplierName"])
+                                .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
                                     .Append("”，代号：“").Append(transferOrderItem["supplierNo"]).Append("”，")
                                     .Append("物料“").Append(transferOrderItem["materialName"])
                                     .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
