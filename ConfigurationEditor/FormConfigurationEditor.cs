@@ -27,16 +27,16 @@ namespace FrontWork{
 
 		private Scintilla scintillaTextArea;
 
-        //启用双缓冲技术
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;
-                return cp;
-            }
-        }
+        ////启用双缓冲技术
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //        cp.ExStyle |= 0x02000000;
+        //        return cp;
+        //    }
+        //}
 
         public void SetText(string text)
         {
