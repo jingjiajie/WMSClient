@@ -67,6 +67,7 @@ namespace WMS.UI.FromSalary
             else
             {
                 this.model1[row, "salaryItemId"] = foundSalaryIteme["id"];
+                this.model1[row, "amount"] = foundSalaryIteme["defaultAmount"];
             }
         }
 
