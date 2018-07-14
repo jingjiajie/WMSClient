@@ -129,7 +129,7 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded"},
-{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
+{name:"preTaxAmount",displayName:"税前应付",type:"double"},
 {name:"taxAmount",displayName:"扣除税费",type:"double"},
 {name:"afterTaxAmount",displayName:"税后应付",type:"double"},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
