@@ -20,6 +20,8 @@ namespace WMS.UI.FromSalary
 
         private void FormPayNote_Load(object sender, EventArgs e)
         {
+            Utilities.BindBlueButton(this.buttonAccountPay);
+            Utilities.BindBlueButton(this.buttonAccountRealPay);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -204,7 +206,7 @@ namespace WMS.UI.FromSalary
             {
                 case 0: return "待确认";
                 case 1: return "已确认应付";
-                case 2: return "已付款实付";
+                case 2: return "已确认实付";
                 default: return "未知状态";
             }
         }
@@ -266,7 +268,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"]);
+            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"]);
             form.Show();
         }
     }
