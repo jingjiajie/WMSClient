@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using System.Web.Script.Serialization;
+using System.IO;
+using System.Net;
 
 namespace WMS.UI.FromSalary
 {
@@ -270,6 +273,70 @@ namespace WMS.UI.FromSalary
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"]);
             form.Show();
+        }
+
+        public int[] getSelectRowIds()
+        {
+            List<int> selectIds = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                selectIds.Add(this.model1.SelectionRange.Row + i);
+            }
+            return selectIds.ToArray();
+        }
+
+        private void buttonAccountPay_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange.Rows !=1 )
+            {
+                MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(getSelectRowIds());
+            try
+            {
+
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title/"+rowData[0]["id"].ToString();            
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void buttonAccountRealPay_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(getSelectRowIds());
+            try
+            {
+
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title/" + rowData[0]["id"].ToString();
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }

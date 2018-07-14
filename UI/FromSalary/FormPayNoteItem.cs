@@ -138,7 +138,7 @@ namespace WMS.UI.FromSalary
         {
             if (this.model1.SelectionRange.Rows == 0)
             {
-                MessageBox.Show("请选择税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择薪金单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             var rowData = this.model1.GetRows(this.getSelectRowIds());
@@ -196,7 +196,7 @@ namespace WMS.UI.FromSalary
 
             if (this.model1.SelectionRange.Rows == 0)
             {
-                MessageBox.Show("请选择税务条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择薪金单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             var rowData = this.model1.GetRows(this.getSelectRowIds()); 
