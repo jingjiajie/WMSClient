@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormConfigurationEditor));
             this.TextPanel = new System.Windows.Forms.Panel();
             this.PanelSearch = new System.Windows.Forms.Panel();
@@ -31,12 +32,14 @@
             this.BtnCloseSearch = new System.Windows.Forms.Button();
             this.BtnPrevSearch = new System.Windows.Forms.Button();
             this.BtnNextSearch = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.selectLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,15 +49,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.uppercaseSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lowercaseSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findDialogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findAndReplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.goToLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wordWrapItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.indentGuidesItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hiddenCharactersItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,26 +58,38 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.close = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelTop = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelLogo = new System.Windows.Forms.TableLayoutPanel();
+            this.panelLogo = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panelSplitter = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.TextPanel.SuspendLayout();
             this.PanelSearch.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanelTop.SuspendLayout();
+            this.tableLayoutPanelLogo.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // TextPanel
             // 
+            this.TextPanel.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.TextPanel.Controls.Add(this.PanelSearch);
             this.TextPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TextPanel.Location = new System.Drawing.Point(0, 0);
+            this.TextPanel.Location = new System.Drawing.Point(0, 72);
             this.TextPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TextPanel.Name = "TextPanel";
-            this.TextPanel.Size = new System.Drawing.Size(1474, 828);
+            this.TextPanel.Size = new System.Drawing.Size(1382, 791);
             this.TextPanel.TabIndex = 0;
             // 
             // PanelSearch
@@ -91,10 +98,10 @@
             this.PanelSearch.BackColor = System.Drawing.Color.White;
             this.PanelSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PanelSearch.Controls.Add(this.tableLayoutPanel3);
-            this.PanelSearch.Location = new System.Drawing.Point(990, 2);
+            this.PanelSearch.Location = new System.Drawing.Point(952, 2);
             this.PanelSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PanelSearch.Name = "PanelSearch";
-            this.PanelSearch.Size = new System.Drawing.Size(484, 40);
+            this.PanelSearch.Size = new System.Drawing.Size(430, 40);
             this.PanelSearch.TabIndex = 10;
             this.PanelSearch.Visible = false;
             // 
@@ -102,9 +109,9 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 4;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tableLayoutPanel3.Controls.Add(this.textBoxSearch, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.BtnCloseSearch, 3, 0);
             this.tableLayoutPanel3.Controls.Add(this.BtnPrevSearch, 2, 0);
@@ -114,7 +121,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(482, 38);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(428, 38);
             this.tableLayoutPanel3.TabIndex = 10;
             // 
             // textBoxSearch
@@ -124,7 +131,7 @@
             this.textBoxSearch.Font = new System.Drawing.Font("Microsoft YaHei UI", 13F);
             this.textBoxSearch.Location = new System.Drawing.Point(3, 3);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(356, 28);
+            this.textBoxSearch.Size = new System.Drawing.Size(314, 28);
             this.textBoxSearch.TabIndex = 6;
             this.textBoxSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
             this.textBoxSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
@@ -135,9 +142,9 @@
             this.BtnCloseSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCloseSearch.ForeColor = System.Drawing.Color.White;
             this.BtnCloseSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearch.Image")));
-            this.BtnCloseSearch.Location = new System.Drawing.Point(445, 3);
+            this.BtnCloseSearch.Location = new System.Drawing.Point(395, 3);
             this.BtnCloseSearch.Name = "BtnCloseSearch";
-            this.BtnCloseSearch.Size = new System.Drawing.Size(34, 32);
+            this.BtnCloseSearch.Size = new System.Drawing.Size(30, 32);
             this.BtnCloseSearch.TabIndex = 7;
             this.BtnCloseSearch.Tag = "Close (Esc)";
             this.BtnCloseSearch.UseVisualStyleBackColor = true;
@@ -149,9 +156,9 @@
             this.BtnPrevSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnPrevSearch.ForeColor = System.Drawing.Color.White;
             this.BtnPrevSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearch.Image")));
-            this.BtnPrevSearch.Location = new System.Drawing.Point(405, 3);
+            this.BtnPrevSearch.Location = new System.Drawing.Point(359, 3);
             this.BtnPrevSearch.Name = "BtnPrevSearch";
-            this.BtnPrevSearch.Size = new System.Drawing.Size(34, 32);
+            this.BtnPrevSearch.Size = new System.Drawing.Size(30, 32);
             this.BtnPrevSearch.TabIndex = 8;
             this.BtnPrevSearch.Tag = "Find previous (Shift+Enter)";
             this.BtnPrevSearch.UseVisualStyleBackColor = true;
@@ -163,28 +170,32 @@
             this.BtnNextSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnNextSearch.ForeColor = System.Drawing.Color.White;
             this.BtnNextSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearch.Image")));
-            this.BtnNextSearch.Location = new System.Drawing.Point(365, 3);
+            this.BtnNextSearch.Location = new System.Drawing.Point(323, 3);
             this.BtnNextSearch.Name = "BtnNextSearch";
-            this.BtnNextSearch.Size = new System.Drawing.Size(34, 32);
+            this.BtnNextSearch.Size = new System.Drawing.Size(30, 32);
             this.BtnNextSearch.TabIndex = 9;
             this.BtnNextSearch.Tag = "Find next (Enter)";
             this.BtnNextSearch.UseVisualStyleBackColor = true;
             this.BtnNextSearch.Click += new System.EventHandler(this.BtnNextSearch_Click);
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.menuStrip.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
-            this.searchToolStripMenuItem,
-            this.viewToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1474, 31);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.viewToolStripMenuItem,
+            this.close});
+            this.menuStrip.Location = new System.Drawing.Point(1152, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.menuStrip.Size = new System.Drawing.Size(230, 70);
+            this.menuStrip.TabIndex = 2;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // editToolStripMenuItem
             // 
@@ -193,6 +204,8 @@
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.toolStripSeparator1,
+            this.toolStripMenuItem3,
+            this.toolStripSeparator6,
             this.selectLineToolStripMenuItem,
             this.selectAllToolStripMenuItem,
             this.clearSelectionToolStripMenuItem,
@@ -202,156 +215,125 @@
             this.toolStripSeparator3,
             this.uppercaseSelectionToolStripMenuItem,
             this.lowercaseSelectionToolStripMenuItem});
+            this.editToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F);
+            this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.editToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(51, 27);
-            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(56, 66);
+            this.editToolStripMenuItem.Text = "编辑";
+            this.editToolStripMenuItem.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.editToolStripMenuItem.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+X";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.cutToolStripMenuItem.Text = "Cut";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.cutToolStripMenuItem.Text = "剪切";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+C";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.copyToolStripMenuItem.Text = "复制";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+V";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.pasteToolStripMenuItem.Text = "粘贴";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(241, 6);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(244, 28);
+            this.toolStripMenuItem3.Text = "查找";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(241, 6);
             // 
             // selectLineToolStripMenuItem
             // 
             this.selectLineToolStripMenuItem.Name = "selectLineToolStripMenuItem";
-            this.selectLineToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.selectLineToolStripMenuItem.Text = "Select Line";
+            this.selectLineToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.selectLineToolStripMenuItem.Text = "选择整行";
             this.selectLineToolStripMenuItem.Click += new System.EventHandler(this.selectLineToolStripMenuItem_Click);
             // 
             // selectAllToolStripMenuItem
             // 
             this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
             this.selectAllToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+A";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.selectAllToolStripMenuItem.Text = "Select All";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.selectAllToolStripMenuItem.Text = "选择全部";
             this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
             // 
             // clearSelectionToolStripMenuItem
             // 
             this.clearSelectionToolStripMenuItem.Name = "clearSelectionToolStripMenuItem";
-            this.clearSelectionToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.clearSelectionToolStripMenuItem.Text = "Clear Selection";
+            this.clearSelectionToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.clearSelectionToolStripMenuItem.Text = "清除选区";
             this.clearSelectionToolStripMenuItem.Click += new System.EventHandler(this.clearSelectionToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(229, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(241, 6);
             // 
             // indentSelectionToolStripMenuItem
             // 
             this.indentSelectionToolStripMenuItem.Name = "indentSelectionToolStripMenuItem";
             this.indentSelectionToolStripMenuItem.ShortcutKeyDisplayString = "Tab";
-            this.indentSelectionToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.indentSelectionToolStripMenuItem.Text = "Indent";
+            this.indentSelectionToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.indentSelectionToolStripMenuItem.Text = "缩进";
             this.indentSelectionToolStripMenuItem.Click += new System.EventHandler(this.indentSelectionToolStripMenuItem_Click);
             // 
             // outdentSelectionToolStripMenuItem
             // 
             this.outdentSelectionToolStripMenuItem.Name = "outdentSelectionToolStripMenuItem";
             this.outdentSelectionToolStripMenuItem.ShortcutKeyDisplayString = "Shift+Tab";
-            this.outdentSelectionToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.outdentSelectionToolStripMenuItem.Text = "Outdent";
+            this.outdentSelectionToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.outdentSelectionToolStripMenuItem.Text = "取消缩进";
             this.outdentSelectionToolStripMenuItem.Click += new System.EventHandler(this.outdentSelectionToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(241, 6);
             // 
             // uppercaseSelectionToolStripMenuItem
             // 
             this.uppercaseSelectionToolStripMenuItem.Name = "uppercaseSelectionToolStripMenuItem";
             this.uppercaseSelectionToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+U";
-            this.uppercaseSelectionToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.uppercaseSelectionToolStripMenuItem.Text = "Uppercase";
+            this.uppercaseSelectionToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.uppercaseSelectionToolStripMenuItem.Text = "转换为大写";
             this.uppercaseSelectionToolStripMenuItem.Click += new System.EventHandler(this.uppercaseSelectionToolStripMenuItem_Click);
             // 
             // lowercaseSelectionToolStripMenuItem
             // 
             this.lowercaseSelectionToolStripMenuItem.Name = "lowercaseSelectionToolStripMenuItem";
             this.lowercaseSelectionToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+L";
-            this.lowercaseSelectionToolStripMenuItem.Size = new System.Drawing.Size(232, 28);
-            this.lowercaseSelectionToolStripMenuItem.Text = "Lowercase";
+            this.lowercaseSelectionToolStripMenuItem.Size = new System.Drawing.Size(244, 28);
+            this.lowercaseSelectionToolStripMenuItem.Text = "转换为小写";
             this.lowercaseSelectionToolStripMenuItem.Click += new System.EventHandler(this.lowercaseSelectionToolStripMenuItem_Click);
-            // 
-            // searchToolStripMenuItem
-            // 
-            this.searchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.findToolStripMenuItem,
-            this.findDialogToolStripMenuItem,
-            this.findAndReplaceToolStripMenuItem,
-            this.toolStripSeparator7,
-            this.goToLineToolStripMenuItem});
-            this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(73, 27);
-            this.searchToolStripMenuItem.Text = "Search";
-            // 
-            // findToolStripMenuItem
-            // 
-            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
-            this.findToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+F";
-            this.findToolStripMenuItem.Size = new System.Drawing.Size(289, 28);
-            this.findToolStripMenuItem.Text = "Quick Find...";
-            this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
-            // 
-            // findDialogToolStripMenuItem
-            // 
-            this.findDialogToolStripMenuItem.Name = "findDialogToolStripMenuItem";
-            this.findDialogToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Alt+F";
-            this.findDialogToolStripMenuItem.Size = new System.Drawing.Size(289, 28);
-            this.findDialogToolStripMenuItem.Text = "Find...";
-            this.findDialogToolStripMenuItem.Click += new System.EventHandler(this.findDialogToolStripMenuItem_Click);
-            // 
-            // findAndReplaceToolStripMenuItem
-            // 
-            this.findAndReplaceToolStripMenuItem.Name = "findAndReplaceToolStripMenuItem";
-            this.findAndReplaceToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+H";
-            this.findAndReplaceToolStripMenuItem.Size = new System.Drawing.Size(289, 28);
-            this.findAndReplaceToolStripMenuItem.Text = "Find and Replace...";
-            this.findAndReplaceToolStripMenuItem.Click += new System.EventHandler(this.findAndReplaceToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(286, 6);
-            // 
-            // goToLineToolStripMenuItem
-            // 
-            this.goToLineToolStripMenuItem.Name = "goToLineToolStripMenuItem";
-            this.goToLineToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+G";
-            this.goToLineToolStripMenuItem.Size = new System.Drawing.Size(289, 28);
-            this.goToLineToolStripMenuItem.Text = "Go To Line...";
             // 
             // viewToolStripMenuItem
             // 
+            this.viewToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wordWrapItem,
-            this.indentGuidesItem,
             this.hiddenCharactersItem,
             this.toolStripSeparator4,
             this.zoomInToolStripMenuItem,
@@ -360,80 +342,79 @@
             this.toolStripSeparator5,
             this.collapseAllToolStripMenuItem,
             this.expandAllToolStripMenuItem});
+            this.viewToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.viewToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(58, 27);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
-            // wordWrapItem
-            // 
-            this.wordWrapItem.Name = "wordWrapItem";
-            this.wordWrapItem.Size = new System.Drawing.Size(260, 28);
-            this.wordWrapItem.Text = "Word Wrap";
-            this.wordWrapItem.Click += new System.EventHandler(this.wordWrapToolStripMenuItem1_Click);
-            // 
-            // indentGuidesItem
-            // 
-            this.indentGuidesItem.Checked = true;
-            this.indentGuidesItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.indentGuidesItem.Name = "indentGuidesItem";
-            this.indentGuidesItem.Size = new System.Drawing.Size(260, 28);
-            this.indentGuidesItem.Text = "Show Indent Guides";
-            this.indentGuidesItem.Click += new System.EventHandler(this.indentGuidesToolStripMenuItem_Click);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(56, 66);
+            this.viewToolStripMenuItem.Text = "视图";
+            this.viewToolStripMenuItem.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.viewToolStripMenuItem.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
             // 
             // hiddenCharactersItem
             // 
+            this.hiddenCharactersItem.BackColor = System.Drawing.SystemColors.Control;
             this.hiddenCharactersItem.Name = "hiddenCharactersItem";
-            this.hiddenCharactersItem.Size = new System.Drawing.Size(260, 28);
-            this.hiddenCharactersItem.Text = "Show Whitespace";
+            this.hiddenCharactersItem.Size = new System.Drawing.Size(249, 28);
+            this.hiddenCharactersItem.Text = "显示空格";
             this.hiddenCharactersItem.Click += new System.EventHandler(this.hiddenCharactersToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(257, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(246, 6);
             // 
             // zoomInToolStripMenuItem
             // 
             this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
             this.zoomInToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Plus";
-            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(260, 28);
-            this.zoomInToolStripMenuItem.Text = "Zoom In";
+            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(249, 28);
+            this.zoomInToolStripMenuItem.Text = "放大";
             this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click);
             // 
             // zoomOutToolStripMenuItem
             // 
             this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
             this.zoomOutToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Minus";
-            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(260, 28);
-            this.zoomOutToolStripMenuItem.Text = "Zoom Out";
+            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(249, 28);
+            this.zoomOutToolStripMenuItem.Text = "缩小";
             this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click);
             // 
             // zoom100ToolStripMenuItem
             // 
             this.zoom100ToolStripMenuItem.Name = "zoom100ToolStripMenuItem";
             this.zoom100ToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+0";
-            this.zoom100ToolStripMenuItem.Size = new System.Drawing.Size(260, 28);
-            this.zoom100ToolStripMenuItem.Text = "Zoom 100%";
+            this.zoom100ToolStripMenuItem.Size = new System.Drawing.Size(249, 28);
+            this.zoom100ToolStripMenuItem.Text = "恢复默认缩放";
             this.zoom100ToolStripMenuItem.Click += new System.EventHandler(this.zoom100ToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(257, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(246, 6);
             // 
             // collapseAllToolStripMenuItem
             // 
             this.collapseAllToolStripMenuItem.Name = "collapseAllToolStripMenuItem";
-            this.collapseAllToolStripMenuItem.Size = new System.Drawing.Size(260, 28);
-            this.collapseAllToolStripMenuItem.Text = "Collapse All";
+            this.collapseAllToolStripMenuItem.Size = new System.Drawing.Size(249, 28);
+            this.collapseAllToolStripMenuItem.Text = "全部折叠";
             this.collapseAllToolStripMenuItem.Click += new System.EventHandler(this.collapseAllToolStripMenuItem_Click);
             // 
             // expandAllToolStripMenuItem
             // 
             this.expandAllToolStripMenuItem.Name = "expandAllToolStripMenuItem";
-            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(260, 28);
-            this.expandAllToolStripMenuItem.Text = "Expand All";
+            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(249, 28);
+            this.expandAllToolStripMenuItem.Text = "全部展开";
             this.expandAllToolStripMenuItem.Click += new System.EventHandler(this.expandAllToolStripMenuItem_Click);
+            // 
+            // close
+            // 
+            this.close.ForeColor = System.Drawing.Color.White;
+            this.close.Name = "close";
+            this.close.Size = new System.Drawing.Size(56, 66);
+            this.close.Text = "退出";
+            this.close.Click += new System.EventHandler(this.close_Click);
+            this.close.MouseEnter += new System.EventHandler(this.ToolStripMenuItem_MouseEnter);
+            this.close.MouseLeave += new System.EventHandler(this.ToolStripMenuItem_MouseLeave);
             // 
             // openFileDialog
             // 
@@ -445,59 +426,161 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.TextPanel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelTop, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panelSplitter, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.TextPanel, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 31);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1474, 898);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 2F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1382, 913);
             this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // tableLayoutPanelTop
+            // 
+            this.tableLayoutPanelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.tableLayoutPanelTop.ColumnCount = 3;
+            this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500F));
+            this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
+            this.tableLayoutPanelTop.Controls.Add(this.tableLayoutPanelLogo, 0, 0);
+            this.tableLayoutPanelTop.Controls.Add(this.menuStrip, 2, 0);
+            this.tableLayoutPanelTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTop.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelTop.Name = "tableLayoutPanelTop";
+            this.tableLayoutPanelTop.RowCount = 1;
+            this.tableLayoutPanelTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTop.Size = new System.Drawing.Size(1382, 70);
+            this.tableLayoutPanelTop.TabIndex = 11;
+            this.tableLayoutPanelTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            this.tableLayoutPanelTop.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.tableLayoutPanelTop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form_MouseUp);
+            // 
+            // tableLayoutPanelLogo
+            // 
+            this.tableLayoutPanelLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.tableLayoutPanelLogo.ColumnCount = 4;
+            this.tableLayoutPanelLogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelLogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tableLayoutPanelLogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanelLogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelLogo.Controls.Add(this.panelLogo, 1, 0);
+            this.tableLayoutPanelLogo.Controls.Add(this.label1, 2, 0);
+            this.tableLayoutPanelLogo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelLogo.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelLogo.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelLogo.Name = "tableLayoutPanelLogo";
+            this.tableLayoutPanelLogo.RowCount = 1;
+            this.tableLayoutPanelLogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelLogo.Size = new System.Drawing.Size(500, 70);
+            this.tableLayoutPanelLogo.TabIndex = 2;
+            // 
+            // panelLogo
+            // 
+            this.panelLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelLogo.BackgroundImage")));
+            this.panelLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panelLogo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLogo.Location = new System.Drawing.Point(44, 12);
+            this.panelLogo.Margin = new System.Windows.Forms.Padding(4, 12, 4, 5);
+            this.panelLogo.Name = "panelLogo";
+            this.panelLogo.Size = new System.Drawing.Size(172, 53);
+            this.panelLogo.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(226, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(191, 70);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "配置编辑器";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panelSplitter
+            // 
+            this.panelSplitter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.panelSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSplitter.Location = new System.Drawing.Point(0, 70);
+            this.panelSplitter.Margin = new System.Windows.Forms.Padding(0);
+            this.panelSplitter.Name = "panelSplitter";
+            this.panelSplitter.Size = new System.Drawing.Size(1382, 2);
+            this.panelSplitter.TabIndex = 11;
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.Controls.Add(this.tableLayoutPanel2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 863);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1382, 50);
+            this.panel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.buttonOK, 2, 0);
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.buttonOK, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 828);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1474, 70);
-            this.tableLayoutPanel2.TabIndex = 1;
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1382, 50);
+            this.tableLayoutPanel2.TabIndex = 0;
+            this.tableLayoutPanel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form_MouseDown);
+            this.tableLayoutPanel2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form_MouseMove);
+            this.tableLayoutPanel2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form_MouseUp);
             // 
             // buttonOK
             // 
+            this.buttonOK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.buttonOK.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOK.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonOK.Location = new System.Drawing.Point(1229, 4);
-            this.buttonOK.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOK.Font = new System.Drawing.Font("Microsoft JhengHei UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.buttonOK.ForeColor = System.Drawing.Color.White;
+            this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonOK.Location = new System.Drawing.Point(546, 5);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(5);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(140, 62);
+            this.buttonOK.Size = new System.Drawing.Size(290, 40);
             this.buttonOK.TabIndex = 0;
-            this.buttonOK.Text = "确定";
-            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Text = "保 存 配 置";
+            this.buttonOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonOK.UseVisualStyleBackColor = false;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // FormConfigurationEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1474, 929);
+            this.ClientSize = new System.Drawing.Size(1382, 913);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.menuStrip1);
-            this.Font = new System.Drawing.Font("宋体", 9F);
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "FormConfigurationEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "配置编辑器";
@@ -506,21 +589,24 @@
             this.PanelSearch.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanelTop.ResumeLayout(false);
+            this.tableLayoutPanelTop.PerformLayout();
+            this.tableLayoutPanelLogo.ResumeLayout(false);
+            this.tableLayoutPanelLogo.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private System.Windows.Forms.Panel TextPanel;
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem wordWrapItem;
 		private System.Windows.Forms.ToolStripMenuItem hiddenCharactersItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem zoomInToolStripMenuItem;
@@ -549,18 +635,21 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private System.Windows.Forms.ToolStripMenuItem selectLineToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem clearSelectionToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem goToLineToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem findAndReplaceToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-		private System.Windows.Forms.ToolStripMenuItem findDialogToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem indentGuidesItem;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelLogo;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panelSplitter;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTop;
+        private System.Windows.Forms.Panel panelLogo;
+        private System.Windows.Forms.ToolStripMenuItem close;
     }
 }
 

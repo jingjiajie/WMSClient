@@ -13,9 +13,14 @@ using System.Drawing.Design;
 namespace FrontWork{
 	public partial class FormConfigurationEditor : Form
     {
-		public FormConfigurationEditor() {
+        Point mouseOff;//鼠标移动位置变量
+        bool leftFlag;//标签是否为左键
+
+        public FormConfigurationEditor() {
 			InitializeComponent();
             scintillaTextArea = new ScintillaNET.Scintilla();
+            scintillaTextArea.Margin = new Padding(0);
+            scintillaTextArea.BorderStyle = BorderStyle.None;
             scintillaTextArea.Dock = System.Windows.Forms.DockStyle.Fill;
             TextPanel.Controls.Add(scintillaTextArea);
         }
@@ -32,13 +37,14 @@ namespace FrontWork{
             return this.scintillaTextArea.Text;
         }
 
-		private void MainForm_Load(object sender, EventArgs e) { 
+		private void MainForm_Load(object sender, EventArgs e) {
 			// BASIC CONFIG
 			scintillaTextArea.TextChanged += (this.OnTextChanged);
 
 			// INITIAL VIEW CONFIG
-			scintillaTextArea.WrapMode = WrapMode.None;
+			//scintillaTextArea.WrapMode = WrapMode.None;
 			scintillaTextArea.IndentationGuides = IndentView.LookBoth;
+            scintillaTextArea.ScrollWidth = 100;
 
 			// STYLING
 			InitColors();
@@ -58,7 +64,6 @@ namespace FrontWork{
 
 			// INIT HOTKEYS
 			InitHotkeys();
-
 		}
 
 		private void InitColors()
@@ -72,9 +77,6 @@ namespace FrontWork{
 
 			// register the hotkeys with the form
 			HotKeyManager.AddHotKey(this, OpenSearch, Keys.F, true);
-			HotKeyManager.AddHotKey(this, OpenFindDialog, Keys.F, true, false, true);
-			HotKeyManager.AddHotKey(this, OpenReplaceDialog, Keys.R, true);
-			HotKeyManager.AddHotKey(this, OpenReplaceDialog, Keys.H, true);
 			HotKeyManager.AddHotKey(this, Uppercase, Keys.U, true);
 			HotKeyManager.AddHotKey(this, Lowercase, Keys.L, true);
 			HotKeyManager.AddHotKey(this, ZoomIn, Keys.Oemplus, true);
@@ -97,10 +99,9 @@ namespace FrontWork{
 			scintillaTextArea.StyleResetDefault();
             scintillaTextArea.Styles[Style.Default].Font = "Consolas";
 			scintillaTextArea.Styles[Style.Default].Size = 12;
-			scintillaTextArea.Styles[Style.Default].BackColor = IntToColor(0x1E1E1E);
-			scintillaTextArea.Styles[Style.Default].ForeColor = IntToColor(0X9CDCFE);
+            scintillaTextArea.Styles[Style.Default].BackColor = IntToColor(0x1E1E1E);
+            scintillaTextArea.Styles[Style.Default].ForeColor = IntToColor(0X9CDCFE);
 			scintillaTextArea.StyleClearAll();
-
             
             scintillaTextArea.Styles[Style.Cpp.Word].ForeColor = IntToColor(0X569CD6);
             scintillaTextArea.Styles[Style.Cpp.Number].ForeColor = IntToColor(0XB5CEA8);
@@ -132,19 +133,19 @@ namespace FrontWork{
 		private void OnTextChanged(object sender, EventArgs e) {
 
 		}
-		
 
-		#region Numbers, Bookmarks, Code Folding
 
-		/// <summary>
-		/// the background color of the text area
-		/// </summary>
-		private const int BACK_COLOR = 0x2A211C;
+        #region Numbers, Bookmarks, Code Folding
 
-		/// <summary>
-		/// default text color of the text area
-		/// </summary>
-		private const int FORE_COLOR = 0xB7B7B7;
+        /// <summary>
+        /// the background color of the text area
+        /// </summary>
+        private const int BACK_COLOR = 0x2A211C;
+
+        /// <summary>
+        /// default text color of the text area
+        /// </summary>
+        private const int FORE_COLOR = 0xB7B7B7;
 
 		/// <summary>
 		/// change this to whatever margin you want the line numbers to show in
@@ -303,14 +304,6 @@ namespace FrontWork{
 			OpenSearch();
 		}
 
-		private void findDialogToolStripMenuItem_Click(object sender, EventArgs e) {
-			OpenFindDialog();
-		}
-
-		private void findAndReplaceToolStripMenuItem_Click(object sender, EventArgs e) {
-			OpenReplaceDialog();
-		}
-
 		private void cutToolStripMenuItem_Click(object sender, EventArgs e) {
 			scintillaTextArea.Cut();
 		}
@@ -352,19 +345,18 @@ namespace FrontWork{
 			Lowercase();
 		}
 
-		private void wordWrapToolStripMenuItem1_Click(object sender, EventArgs e) {
-
-			// toggle word wrap
-			wordWrapItem.Checked = !wordWrapItem.Checked;
-			scintillaTextArea.WrapMode = wordWrapItem.Checked ? WrapMode.Word : WrapMode.None;
-		}
+		//private void wordWrapToolStripMenuItem1_Click(object sender, EventArgs e) {
+		//	// toggle word wrap
+		//	wordWrapItem.Checked = !wordWrapItem.Checked;
+		//	scintillaTextArea.WrapMode = wordWrapItem.Checked ? WrapMode.Word : WrapMode.None;
+		//}
 		
-		private void indentGuidesToolStripMenuItem_Click(object sender, EventArgs e) {
+		//private void indentGuidesToolStripMenuItem_Click(object sender, EventArgs e) {
 
-			// toggle indent guides
-			indentGuidesItem.Checked = !indentGuidesItem.Checked;
-			scintillaTextArea.IndentationGuides = indentGuidesItem.Checked ? IndentView.LookBoth : IndentView.None;
-		}
+		//	// toggle indent guides
+		//	indentGuidesItem.Checked = !indentGuidesItem.Checked;
+		//	scintillaTextArea.IndentationGuides = indentGuidesItem.Checked ? IndentView.LookBoth : IndentView.None;
+		//}
 
 		private void hiddenCharactersToolStripMenuItem_Click(object sender, EventArgs e) {
 
@@ -525,18 +517,6 @@ namespace FrontWork{
 
 		#endregion
 
-		#region Find & Replace Dialog
-
-		private void OpenFindDialog() {
-
-		}
-		private void OpenReplaceDialog() {
-
-
-		}
-
-		#endregion
-
 		#region Utils
 
 		public static Color IntToColor(int rgb) {
@@ -565,5 +545,61 @@ namespace FrontWork{
         {
             this.Close();
         }
+
+        private void searchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            OpenSearch();
+        }
+
+        private void close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.ForeColor = Color.Black;
+        }
+
+        private void ToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            var menuItem = sender as ToolStripMenuItem;
+            menuItem.ForeColor = Color.White;
+        }
+
+        private void Form_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point workAreaPosition = this.PointToClient(Control.MousePosition);
+                mouseOff = new Point(-workAreaPosition.X, -workAreaPosition.Y); //得到鼠标偏移量
+                leftFlag = true;   //点击左键按下时标注为true;
+            }
+        }
+
+        private void Form_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (leftFlag)
+            {
+                Point mouseSet = Control.MousePosition;
+                mouseSet.Offset(mouseOff.X, mouseOff.Y);  //设置移动后的位置
+                Location = mouseSet;
+            }
+        }
+
+        private void Form_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (leftFlag)
+            {
+                leftFlag = false;//释放鼠标后标注为false;
+            }
+        }
+
     }
 }
