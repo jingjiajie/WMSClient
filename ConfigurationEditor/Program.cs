@@ -17,6 +17,8 @@ namespace FrontWork {
             FormConfigurationEditor form = new FormConfigurationEditor();
             form.SetText("hehe");
             form.ShowDialog();
+            //TestForm t = new TestForm();
+            //t.ShowDialog();
             return;
         }
 	}
