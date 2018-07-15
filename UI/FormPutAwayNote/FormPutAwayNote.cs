@@ -159,9 +159,10 @@ namespace WMS.UI
                         if ((int)transferOrderItem["state"] == 0)
                         {
                             remindBody = remindBody
-                                .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
-                                    .Append("”，代号：“").Append(transferOrderItem["supplierNo"]).Append("”，")
-                                    .Append("物料“").Append(transferOrderItem["materialName"])
+                                 .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
+                                    .Append("”，代号：“").Append(transferOrderItem["supplierNo"])
+                                    .Append("”，物料“").Append(transferOrderItem["materialName"]).Append("”，代号：“").Append(transferOrderItem["materialNo"])
+                                    .Append("”，系列：“").Append(transferOrderItem["materialProductLine"])
                                     .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["sourceUnitAmount"])
                                     .Append("”检测状态：“合格”），在源库位：“").Append(transferOrderItem["sourceStorageLocationName"])
                                     .Append("”上不存在库存信息！请核准库存！\r\n\r\n");
@@ -169,9 +170,10 @@ namespace WMS.UI
                         if ((int)transferOrderItem["state"] == 1)
                         {
                             remindBody = remindBody
-                                .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
-                                    .Append("”，代号：“").Append(transferOrderItem["supplierNo"]).Append("”，")
-                                    .Append("物料“").Append(transferOrderItem["materialName"])
+                                 .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
+                                    .Append("”，代号：“").Append(transferOrderItem["supplierNo"])
+                                    .Append("”，物料“").Append(transferOrderItem["materialName"]).Append("”，代号：“").Append(transferOrderItem["materialNo"])
+                                    .Append("”，系列：“").Append(transferOrderItem["materialProductLine"])
                                     .Append("”（单位：“").Append(transferOrderItem["unit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
                                     .Append("”检测状态：“合格”），在目标库位：“").Append(transferOrderItem["targetStorageLocationName"])
                                     .Append("”上库存充足！无需上架操作！\r\n\r\n");
@@ -180,8 +182,9 @@ namespace WMS.UI
                         {
                             remindBody = remindBody
                                 .Append("供货商名称：“").Append(transferOrderItem["supplierName"])
-                                    .Append("”，代号：“").Append(transferOrderItem["supplierNo"]).Append("”，")
-                                    .Append("物料“").Append(transferOrderItem["materialName"])
+                                    .Append("”，代号：“").Append(transferOrderItem["supplierNo"])
+                                    .Append("”，物料“").Append(transferOrderItem["materialName"]).Append("”，代号：“").Append(transferOrderItem["materialNo"])
+                                    .Append("”，系列：“").Append(transferOrderItem["materialProductLine"])
                                     .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
                                     .Append("”检测状态：“合格”），在源库位：“").Append(transferOrderItem["sourceStorageLocationName"])
                                     .Append("”上库存可用数量不足！需要库存数量：“").Append(transferOrderItem["scheduledAmount"]).Append("”，现有库存：“")
