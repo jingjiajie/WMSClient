@@ -28,12 +28,56 @@ namespace WMS.UI.FromSalary
             this.periodId = periodId;
             this.taxId = taxId;
             this.payNoteState = payNoteState;
+           // this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
+        }
+
+        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            if ((int)rowData[0]["state"] == 0)
+            {
+                this.model1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                //this.synchronizer.Mode = "default";
+                this.buttonCclcultateItemsTax.Enabled =true;
+                this.buttonCalculateAllTax.Enabled = true;
+                this.buttonRealPayAll.Enabled = true;
+                this.buttonRealPayItems.Enabled =true;
+                this.ButtonRefresh.Enabled = true;
+                this.toolStripButtonAdd.Enabled =true;
+                this.toolStripButtonDelete.Enabled = true;
+            }
+            else if ((int)rowData[0]["state"] == 1)
+            {
+                this.basicView1.Mode = "pay";
+                this.reoGridView1.Mode = "pay";
+                this.model1.Mode = "pay";
+                //this.synchronizer.Mode = "pay";
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.ButtonRefresh.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+            }
+            else {
+                this.basicView1.Mode = "payed";
+                this.reoGridView1.Mode = "payed";
+                this.model1.Mode = "payed";
+                //this.synchronizer.Mode = "payed";
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonRealPayAll.Enabled = false;
+                this.buttonRealPayItems.Enabled = false;
+                this.ButtonRefresh.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+            }
         }
 
         private void FormPayNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-
             Utilities.BindBlueButton(this.buttonCalculateAllTax);
             Utilities.BindBlueButton(this.buttonCclcultateItemsTax);
             Utilities.BindBlueButton(this.buttonRealPayAll);
@@ -44,6 +88,7 @@ namespace WMS.UI.FromSalary
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
             this.updateState();
+
         }
 
         private void updateState() {
@@ -52,13 +97,25 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "pay";
                 this.reoGridView1.Mode = "pay";
                 this.model1.Mode = "pay";
-                this.synchronizer.Mode = "pay";
+                //this.synchronizer.Mode = "pay";
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.ButtonRefresh.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
             }
             else if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY) {
                 this.basicView1.Mode = "payed";
                 this.reoGridView1.Mode = "payed";
                 this.model1.Mode = "payed";
-                this.synchronizer.Mode = "payed";
+                //this.synchronizer.Mode = "payed";
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonRealPayAll.Enabled = false;
+                this.buttonRealPayItems.Enabled = false;
+                this.ButtonRefresh.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
             }
 
         }
