@@ -19,18 +19,21 @@ namespace WMS.UI.FromSalary
         private int payNoteId;
         private int periodId;
         private int taxId;
-        public FormPayNoteItem(int payNoteId,int periodId,int taxId)
+        private int payNoteState;
+        public FormPayNoteItem(int payNoteId,int periodId,int taxId,int payNoteState)
         {
             MethodListenerContainer.Register("FormPayNoteItem", this);
             InitializeComponent();
             this.payNoteId = payNoteId;
             this.periodId = periodId;
             this.taxId = taxId;
+            this.payNoteState = payNoteState;
         }
 
         private void FormPayNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+
             Utilities.BindBlueButton(this.buttonCalculateAllTax);
             Utilities.BindBlueButton(this.buttonCclcultateItemsTax);
             Utilities.BindBlueButton(this.buttonRealPayAll);
@@ -40,6 +43,24 @@ namespace WMS.UI.FromSalary
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.updateState();
+        }
+
+        private void updateState() {
+            if (this.payNoteState == FormPayNote.CONFIRM_PAY)
+            {
+                this.basicView1.Mode = "pay";
+                this.reoGridView1.Mode = "pay";
+                this.model1.Mode = "pay";
+                this.synchronizer.Mode = "pay";
+            }
+            else if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY) {
+                this.basicView1.Mode = "payed";
+                this.reoGridView1.Mode = "payed";
+                this.model1.Mode = "payed";
+                this.synchronizer.Mode = "payed";
+            }
+
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)

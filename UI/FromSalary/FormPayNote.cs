@@ -21,6 +21,10 @@ namespace WMS.UI.FromSalary
             InitializeComponent();
         }
 
+        public const  int WAITING_FOR_CONFIRM = 0;
+        public const  int CONFIRM_PAY = 1;
+        public const  int CONFIRM_REAL_PAY = 2;
+
         private void FormPayNote_Load(object sender, EventArgs e)
         {
             Utilities.BindBlueButton(this.buttonAccountPay);
@@ -271,7 +275,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"]);
+            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"]);
             form.Show();
         }
 

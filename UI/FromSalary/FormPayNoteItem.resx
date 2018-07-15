@@ -158,6 +158,78 @@
             url:"{$url}/warehouse/{$accountBook}/pay_note_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
+    },
+{mode:"pay",
+     fields:[
+{name:"id",displayName:"ID",type:"int",visible:false},
+{name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
+{name:"personId",displayName:"人员ID",type:"int",visible:false},
+{name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded"},
+{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
+{name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
+{name:"paidAmount",displayName:"实付金额",type:"double"},
+{name:"vocherNo",displayName:"凭证号",type:"string"},
+{name:"vomment",displayName:"备注",type:"string"}
+     ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    },
+{mode:"payed",
+     fields:[
+{name:"id",displayName:"ID",type:"int",visible:false},
+{name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
+{name:"personId",displayName:"人员ID",type:"int",visible:false},
+{name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded"},
+{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
+{name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
+{name:"paidAmount",displayName:"实付金额",type:"double",editable:false},
+{name:"vocherNo",displayName:"凭证号",type:"string"},
+{name:"vomment",displayName:"备注",type:"string"}
+     ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/pay_note_item/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
     }
 ]</value>
   </data>
