@@ -14,8 +14,13 @@ using System.Net;
 
 namespace WMS.UI.FromSalary
 {
+
     public partial class FormPayNoteItem : Form
     {
+        public static int WAITING_FOR_CALCULATE_PAY = 0;
+        public static int CALCULATED_PAY = 1;
+        public static int PAYED = 2;
+
         private int payNoteId;
         private int periodId;
         private int taxId;
@@ -44,7 +49,7 @@ namespace WMS.UI.FromSalary
                 this.buttonCalculateAllTax.Enabled = true;
                 this.buttonRealPayAll.Enabled = true;
                 this.buttonRealPayItems.Enabled =true;
-                this.ButtonRefresh.Enabled = true;
+                this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled =true;
                 this.toolStripButtonDelete.Enabled = true;
             }
@@ -56,7 +61,7 @@ namespace WMS.UI.FromSalary
                 //this.synchronizer.Mode = "pay";
                 this.buttonCalculateAllTax.Enabled = false;
                 this.buttonCclcultateItemsTax.Enabled = false;
-                this.ButtonRefresh.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
             }
@@ -69,7 +74,7 @@ namespace WMS.UI.FromSalary
                 this.buttonCalculateAllTax.Enabled = false;
                 this.buttonRealPayAll.Enabled = false;
                 this.buttonRealPayItems.Enabled = false;
-                this.ButtonRefresh.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
             }
@@ -100,7 +105,7 @@ namespace WMS.UI.FromSalary
                 //this.synchronizer.Mode = "pay";
                 this.buttonCalculateAllTax.Enabled = false;
                 this.buttonCclcultateItemsTax.Enabled = false;
-                this.ButtonRefresh.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
             }
@@ -113,7 +118,7 @@ namespace WMS.UI.FromSalary
                 this.buttonCalculateAllTax.Enabled = false;
                 this.buttonRealPayAll.Enabled = false;
                 this.buttonRealPayItems.Enabled = false;
-                this.ButtonRefresh.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
             }
@@ -244,8 +249,32 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);                  
+                MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+            if (this.judgeAllFinish(payNoteId, CALCULATED_PAY)) {
+                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                try
+                {
+
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title/" + payNoteId + "/" + GlobalData.Person["id"];
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.payNoteState = FormPayNote.CONFIRM_PAY;
+                    this.updateState();
+                    this.searchView1.Search();
+                }
+                catch (WebException ex)
+                {
+                    string message = ex.Message;
+                    if (ex.Response != null)
+                    {
+                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    }
+                    MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+
         }
 
         private void buttonCalculateAllTax_Click(object sender, EventArgs e)
@@ -266,6 +295,30 @@ namespace WMS.UI.FromSalary
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (this.judgeAllFinish(payNoteId, CALCULATED_PAY))
+            {
+                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                try
+                {
+
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title/" +payNoteId + "/" + GlobalData.Person["id"];
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.searchView1.Search();
+                    this.payNoteState = FormPayNote.CONFIRM_PAY;
+                    this.updateState();
+                }
+                catch (WebException ex)
+                {
+                    string message = ex.Message;
+                    if (ex.Response != null)
+                    {
+                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    }
+                    MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
@@ -296,6 +349,30 @@ namespace WMS.UI.FromSalary
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (this.judgeAllFinish(payNoteId,PAYED))
+            {
+                if (MessageBox.Show("本单全部条目已经支付，是否直接同步到实付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                try
+                {
+
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title/" + payNoteId + "/" + GlobalData.Person["id"];
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.searchView1.Search();
+                    this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
+                    this.updateState();
+                }
+                catch (WebException ex)
+                {
+                    string message = ex.Message;
+                    if (ex.Response != null)
+                    {
+                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    }
+                    MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
@@ -317,7 +394,50 @@ namespace WMS.UI.FromSalary
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+            if (this.judgeAllFinish(payNoteId, PAYED))
+            {
+                if (MessageBox.Show("本单全部条目已经支付，是否直接同步到实付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                try
+                {
+
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title/" + payNoteId + "/" + GlobalData.Person["id"];
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.searchView1.Search();
+                    this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
+                    this.updateState();
+                }
+                catch (WebException ex)
+                {
+                    string message = ex.Message;
+                    if (ex.Response != null)
+                    {
+                        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                    }
+                    MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+        }
+
+        private bool judgeAllFinish(int payNoteId, int state) {
+
+            try
+            {             
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note_item/judge_all_finish/"+payNoteId+"/"+state;
+                return RestClient.RequestPost<bool>(url);          
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                return false;
+            } 
         }
     }
 }

@@ -55,7 +55,7 @@
             this.basicView1 = new FrontWork.BasicView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.ButtonRefresh = new System.Windows.Forms.ToolStripButton();
+            this.ButtonAllPerson = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
@@ -359,7 +359,7 @@
             this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ButtonRefresh,
+            this.ButtonAllPerson,
             this.toolStripButtonAdd,
             this.toolStripButtonDelete,
             this.toolStripButtonAlter});
@@ -369,14 +369,14 @@
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
-            // ButtonRefresh
+            // ButtonAllPerson
             // 
-            this.ButtonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("ButtonRefresh.Image")));
-            this.ButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonRefresh.Name = "ButtonRefresh";
-            this.ButtonRefresh.Size = new System.Drawing.Size(104, 19);
-            this.ButtonRefresh.Text = "添加所有人员";
-            this.ButtonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
+            this.ButtonAllPerson.Image = ((System.Drawing.Image)(resources.GetObject("ButtonAllPerson.Image")));
+            this.ButtonAllPerson.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonAllPerson.Name = "ButtonAllPerson";
+            this.ButtonAllPerson.Size = new System.Drawing.Size(104, 19);
+            this.ButtonAllPerson.Text = "添加所有人员";
+            this.ButtonAllPerson.Click += new System.EventHandler(this.ButtonRefresh_Click);
             // 
             // toolStripButtonAdd
             // 
@@ -525,7 +525,7 @@
         private System.Windows.Forms.ToolStrip toolStripTop;
         private FrontWork.BasicView basicView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ToolStripButton ButtonRefresh;
+        private System.Windows.Forms.ToolStripButton ButtonAllPerson;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;

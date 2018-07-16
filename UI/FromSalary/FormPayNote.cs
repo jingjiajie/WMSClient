@@ -34,6 +34,31 @@ namespace WMS.UI.FromSalary
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
+        }
+
+        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            try
+            {
+                if ((int)rowData[0]["state"] == 0)
+                {
+                    this.buttonAccountPay.Enabled = true;
+                    this.buttonAccountRealPay.Enabled = true;
+                }
+                else if ((int)rowData[0]["state"] == 1)
+                {
+                    this.buttonAccountPay.Enabled = false;
+                    this.buttonAccountRealPay.Enabled = true;
+                }
+                else
+                {
+                    this.buttonAccountPay.Enabled = false;
+                    this.buttonAccountRealPay.Enabled = false;
+                }
+            }
+            catch { }
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -276,7 +301,7 @@ namespace WMS.UI.FromSalary
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"]);
-            form.Show();
+            form.ShowDialog();
         }
 
         public int[] getSelectRowIds()
