@@ -25,6 +25,7 @@ namespace WMS.UI.FromSalary
         public const  int CONFIRM_PAY = 1;
         public const  int CONFIRM_REAL_PAY = 2;
 
+    
         private void FormPayNote_Load(object sender, EventArgs e)
         {
             Utilities.BindBlueButton(this.buttonAccountPay);
@@ -321,11 +322,17 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(getSelectRowIds());
+            var rowData = this.model1.GetRows(getSelectRowIds());        
+            AccountSynchronize accountSynchronize=new AccountSynchronize();
+            accountSynchronize.setPayNoteId ((int)rowData[0]["id"]);
+            accountSynchronize.setPersonId((int)GlobalData.Person["id"]);
+            accountSynchronize.setWarehouseId((int)GlobalData.Warehouse["id"]);
+        
+            string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);      
             try
             {
 
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title/"+rowData[0]["id"].ToString()+"/"+GlobalData.Person["id"];            
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";            
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
@@ -352,7 +359,7 @@ namespace WMS.UI.FromSalary
             try
             {
 
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title/" + rowData[0]["id"].ToString() + "/" + GlobalData.Person["id"];
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
