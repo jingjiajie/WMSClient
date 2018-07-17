@@ -72,9 +72,9 @@ namespace WMS.UI.FormAcccount
             {
                 this.searchView1.Search();
                 
-                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
+             //   Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+             //   GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+             //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
             }
         }
 
