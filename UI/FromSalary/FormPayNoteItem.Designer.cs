@@ -486,6 +486,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormPayNoteItem";
             this.Text = "薪金发放单条目";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormPayNoteItem_FormClosed);
             this.Load += new System.EventHandler(this.FormPayNoteItem_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
