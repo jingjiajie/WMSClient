@@ -10,6 +10,8 @@ using FrontWork;
 using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WMS.UI.FromSalary
 {
@@ -324,16 +326,16 @@ namespace WMS.UI.FromSalary
             }
             var rowData = this.model1.GetRows(getSelectRowIds());        
             AccountSynchronize accountSynchronize=new AccountSynchronize();
-            accountSynchronize.setPayNoteId ((int)rowData[0]["id"]);
-            accountSynchronize.setPersonId((int)GlobalData.Person["id"]);
-            accountSynchronize.setWarehouseId((int)GlobalData.Warehouse["id"]);
-        
+            accountSynchronize.payNoteId=((int)rowData[0]["id"]);
+            accountSynchronize.personId=((int)GlobalData.Person["id"]);
+            accountSynchronize.warehouseId=((int)GlobalData.Warehouse["id"]);
+            string jsonstr = JsonConvert.SerializeObject(accountSynchronize);       
             string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);      
             try
             {
 
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";            
-                RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";                
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
             }
@@ -356,12 +358,18 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(getSelectRowIds());
+            AccountSynchronize accountSynchronize = new AccountSynchronize();
+            accountSynchronize.payNoteId = ((int)rowData[0]["id"]);
+            accountSynchronize.personId = ((int)GlobalData.Person["id"]);
+            accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+            string jsonstr = JsonConvert.SerializeObject(accountSynchronize);
+            string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
             try
             {
 
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
-                RestClient.RequestPost<List<IDictionary<string, object>>>(url);
-                MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
+                MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
             }
             catch (WebException ex)
@@ -371,7 +379,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("实付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

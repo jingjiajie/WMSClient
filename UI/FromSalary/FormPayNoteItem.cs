@@ -10,6 +10,8 @@ using FrontWork;
 using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace WMS.UI.FromSalary
@@ -254,11 +256,16 @@ namespace WMS.UI.FromSalary
             }
             if (this.judgeAllFinish(payNoteId, CALCULATED_PAY)) {
                 if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                AccountSynchronize accountSynchronize = new AccountSynchronize();
+                accountSynchronize.payNoteId = payNoteId;
+                accountSynchronize.personId = ((int)GlobalData.Person["id"]);
+                accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
 
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
-                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.payNoteState = FormPayNote.CONFIRM_PAY;
                     this.updateState();
@@ -300,11 +307,16 @@ namespace WMS.UI.FromSalary
             if (this.judgeAllFinish(payNoteId, CALCULATED_PAY))
             {
                 if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                AccountSynchronize accountSynchronize = new AccountSynchronize();
+                accountSynchronize.payNoteId = payNoteId;
+                accountSynchronize.personId = ((int)GlobalData.Person["id"]);
+                accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
 
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
-                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_PAY;
@@ -354,12 +366,17 @@ namespace WMS.UI.FromSalary
             if (this.judgeAllFinish(payNoteId,PAYED))
             {
                 if (MessageBox.Show("本单全部条目已经支付，是否直接同步到实付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                AccountSynchronize accountSynchronize = new AccountSynchronize();
+                accountSynchronize.payNoteId = payNoteId;
+                accountSynchronize.personId = ((int)GlobalData.Person["id"]);
+                accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                string json1 = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
 
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
-                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
-                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url,json1);
+                    MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
                     this.updateState();
@@ -371,7 +388,7 @@ namespace WMS.UI.FromSalary
                     {
                         message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                     }
-                    MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(("实付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -399,12 +416,17 @@ namespace WMS.UI.FromSalary
             if (this.judgeAllFinish(payNoteId, PAYED))
             {
                 if (MessageBox.Show("本单全部条目已经支付，是否直接同步到实付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                AccountSynchronize accountSynchronize = new AccountSynchronize();
+                accountSynchronize.payNoteId = payNoteId;
+                accountSynchronize.personId = ((int)GlobalData.Person["id"]);
+                accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
 
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
-                    RestClient.RequestPost<List<IDictionary<string, object>>>(url);
-                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
+                    MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
                     this.updateState();
@@ -416,7 +438,7 @@ namespace WMS.UI.FromSalary
                     {
                         message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                     }
-                    MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(("实付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
