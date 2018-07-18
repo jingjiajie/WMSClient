@@ -22,12 +22,14 @@ namespace WMS.UI.FromSalary
         public static int WAITING_FOR_CALCULATE_PAY = 0;
         public static int CALCULATED_PAY = 1;
         public static int PAYED = 2;
+        private Action addFinishedCallback = null;
 
         private int payNoteId;
         private int periodId;
         private int taxId;
         private int payNoteState;
-        public FormPayNoteItem(int payNoteId,int periodId,int taxId,int payNoteState)
+        private string payNoteNo;
+        public FormPayNoteItem(int payNoteId,int periodId,int taxId,int payNoteState,string payNoteNo)
         {
             MethodListenerContainer.Register("FormPayNoteItem", this);
             InitializeComponent();
@@ -36,6 +38,11 @@ namespace WMS.UI.FromSalary
             this.taxId = taxId;
             this.payNoteState = payNoteState;
            // this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
+        }
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
@@ -260,6 +267,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -311,6 +319,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -370,6 +379,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json1 = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -420,6 +430,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -460,6 +471,11 @@ namespace WMS.UI.FromSalary
                 }
                 return false;
             } 
+        }
+
+        private void FormPayNoteItem_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            addFinishedCallback?.Invoke();
         }
     }
 }

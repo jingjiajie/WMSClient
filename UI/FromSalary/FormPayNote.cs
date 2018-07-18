@@ -42,9 +42,14 @@ namespace WMS.UI.FromSalary
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
-            try
+            if (this.model1.SelectionRange.Rows != 1)
             {
+                this.buttonAccountPay.Enabled = false;
+                this.buttonAccountRealPay.Enabled = false;
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+
                 if ((int)rowData[0]["state"] == 0)
                 {
                     this.buttonAccountPay.Enabled = true;
@@ -60,8 +65,14 @@ namespace WMS.UI.FromSalary
                     this.buttonAccountPay.Enabled = false;
                     this.buttonAccountRealPay.Enabled = false;
                 }
-            }
-            catch { }
+        }
+
+        private void changeConfigMode(string mode)
+        {
+            this.model1.Mode =mode;
+            this.basicView1.Mode = mode;
+            this.reoGridView1.Mode = mode;
+            //this.synchronizer.Mode = mode;
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -303,8 +314,12 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"]);
-            form.ShowDialog();
+            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"],(string)rowData["no"]);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            form.ShowDialog();      
         }
 
         public int[] getSelectRowIds()
@@ -319,16 +334,23 @@ namespace WMS.UI.FromSalary
 
         private void buttonAccountPay_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows !=1 )
+            try
             {
-                MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (this.model1.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            catch { return; }
             var rowData = this.model1.GetRows(getSelectRowIds());        
             AccountSynchronize accountSynchronize=new AccountSynchronize();
+            if (rowData[0]["id"] == null || rowData[0]["no"] == null) { return; }
             accountSynchronize.payNoteId=((int)rowData[0]["id"]);
             accountSynchronize.personId=((int)GlobalData.Person["id"]);
             accountSynchronize.warehouseId=((int)GlobalData.Warehouse["id"]);
+            accountSynchronize.voucherInfo= (string)rowData[0]["no"];
+            accountSynchronize.comment = "应付自动同步到总账";
             string jsonstr = JsonConvert.SerializeObject(accountSynchronize);       
             string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);      
             try
@@ -352,16 +374,23 @@ namespace WMS.UI.FromSalary
 
         private void buttonAccountRealPay_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows != 1)
+            try
             {
-                MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (this.model1.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            catch { return; }
             var rowData = this.model1.GetRows(getSelectRowIds());
             AccountSynchronize accountSynchronize = new AccountSynchronize();
+            if (rowData[0]["id"] == null || rowData[0]["no"] == null) { return; }
             accountSynchronize.payNoteId = ((int)rowData[0]["id"]);
             accountSynchronize.personId = ((int)GlobalData.Person["id"]);
             accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+            accountSynchronize.voucherInfo = (string)rowData[0]["no"];
+            accountSynchronize.comment = "实付自动同步到总账";
             string jsonstr = JsonConvert.SerializeObject(accountSynchronize);
             string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
             try

@@ -55,6 +55,7 @@ namespace WMS.UI.FromDeliverOrder
         private void FormSelectPakage_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            Utilities.BindBlueButton(this.buttonADD);
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
