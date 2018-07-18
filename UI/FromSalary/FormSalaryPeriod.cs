@@ -47,10 +47,11 @@ namespace WMS.UI.FromSalary
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();/*
+                this.searchView1.Search();
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");*/
+                GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
+
             }
         }
     }
