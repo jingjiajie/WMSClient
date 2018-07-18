@@ -125,7 +125,8 @@
         {name:"id",displayName:"ID",type:"int",visible:false},     
         {name:"name",displayName:"期间名称",type:"string"},          
         {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
+        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},
+        {name:"createTime",displayName:"创建时间",type:"dateTime"}
      ],
     httpAPIs:[
         {type:"get-count",
