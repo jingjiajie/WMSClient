@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPersonSalary));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -115,12 +115,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(65, 35);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPersonSalary",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair3.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair3};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
