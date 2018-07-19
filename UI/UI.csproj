@@ -633,6 +633,8 @@
     <None Include="icon\package.png" />
     <None Include="icon\20180114034630784_easyicon_net_64.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

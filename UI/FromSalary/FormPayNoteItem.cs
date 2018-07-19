@@ -28,7 +28,8 @@ namespace WMS.UI.FromSalary
         private int periodId;
         private int taxId;
         private int payNoteState;
-        public FormPayNoteItem(int payNoteId,int periodId,int taxId,int payNoteState)
+        private string payNoteNo;
+        public FormPayNoteItem(int payNoteId,int periodId,int taxId,int payNoteState,string payNoteNo)
         {
             MethodListenerContainer.Register("FormPayNoteItem", this);
             InitializeComponent();
@@ -266,6 +267,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -317,6 +319,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -376,6 +379,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json1 = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {
@@ -426,6 +430,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+                accountSynchronize.voucherInfo = this.payNoteNo;
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
                 try
                 {

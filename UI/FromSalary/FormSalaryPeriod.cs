@@ -32,7 +32,8 @@ namespace WMS.UI.FromSalary
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]}
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "createTime",DateTime.Now}
             });
         }
 
@@ -40,16 +41,21 @@ namespace WMS.UI.FromSalary
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+            this.searchView1.Search();
+            Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+            GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+         $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();/*
+                this.searchView1.Search();
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");*/
+                GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
+
             }
         }
     }

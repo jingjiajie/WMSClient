@@ -130,7 +130,7 @@
         {name:"salaryItemName",displayName:"项目名称",type:"string",association:"#salaryItemNameAssociation",editEnded:"#salaryItemNameEditEnded"}, 
         {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"}, 
         {name:"amount",displayName:"金额",type:"double"},  
-        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
+        {name:"warehouseId",displayName:"仓库id",defaultValue:"#warehouseIdDefaultValue",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
      ],
     httpAPIs:[
@@ -222,5 +222,8 @@
   </metadata>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>363, 98</value>
+  </metadata>
+  <metadata name="pivotTableAdapter1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>430, 27</value>
   </metadata>
 </root>

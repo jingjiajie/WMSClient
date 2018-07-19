@@ -193,8 +193,12 @@ Public Class ModelCore
                 newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
-            '增加行状态的记录
-            Me.RowStates.Insert(realRow, New ModelRowState(SynchronizationState.ADDED))
+            '增加行状态的记录,如果增加的是空数据，则为ADDED，否则为ADDED_UPDATED
+            Dim rowState As SynchronizationState = SynchronizationState.ADDED
+            If curData.Count > 0 Then
+                rowState = SynchronizationState.ADDED_UPDATED
+            End If
+            Me.RowStates.Insert(realRow, New ModelRowState(rowState))
         Next
         RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
                              .AddedRows = oriRowInfos
@@ -383,25 +387,30 @@ Public Class ModelCore
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         Call Me.Data.Rows.Clear()
-        '刷新数据
-        For Each dataRow In dataRows
-            Dim newRow = Me.Data.NewRow
-            Me.Data.Rows.Add(newRow)
-            For Each colAndValue In dataRow
-                Dim colName = colAndValue.Key
-                Dim colValue = colAndValue.Value
-                If Me.Data.Columns.Contains(colName) Then
-                    newRow(colName) = If(colValue, DBNull.Value)
-                End If
+        If dataRows IsNot Nothing Then
+            '刷新数据
+            For Each dataRow In dataRows
+                Dim newRow = Me.Data.NewRow
+                Me.Data.Rows.Add(newRow)
+                For Each colAndValue In dataRow
+                    Dim colName = colAndValue.Key
+                    Dim colValue = colAndValue.Value
+                    If Me.Data.Columns.Contains(colName) Then
+                        newRow(colName) = If(colValue, DBNull.Value)
+                    End If
+                Next
             Next
-        Next
-        '刷新同步状态字典 
-        Dim stateArray(dataRows.Length - 1) As ModelRowState
-        For i = 0 To stateArray.Length - 1
-            stateArray(i) = New ModelRowState(SynchronizationState.SYNCHRONIZED)
-        Next
-        Me.RowStates.Clear()
-        Me.RowStates.AddRange(stateArray)
+            '刷新同步状态字典 
+            Dim stateArray(dataRows.Length - 1) As ModelRowState
+            For i = 0 To stateArray.Length - 1
+                stateArray(i) = New ModelRowState(SynchronizationState.SYNCHRONIZED)
+            Next
+            Me.RowStates.Clear()
+            Me.RowStates.AddRange(stateArray)
+        Else
+            Me.RowStates.Clear()
+        End If
+
         '触发刷新事件
         RaiseEvent Refreshed(Me, New ModelRefreshedEventArgs)
     End Sub

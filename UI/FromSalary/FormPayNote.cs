@@ -65,7 +65,14 @@ namespace WMS.UI.FromSalary
                     this.buttonAccountPay.Enabled = false;
                     this.buttonAccountRealPay.Enabled = false;
                 }
+        }
 
+        private void changeConfigMode(string mode)
+        {
+            this.model1.Mode =mode;
+            this.basicView1.Mode = mode;
+            this.reoGridView1.Mode = mode;
+            //this.synchronizer.Mode = mode;
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -307,7 +314,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"]);
+            FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"],(string)rowData["no"]);
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
@@ -338,9 +345,12 @@ namespace WMS.UI.FromSalary
             catch { return; }
             var rowData = this.model1.GetRows(getSelectRowIds());        
             AccountSynchronize accountSynchronize=new AccountSynchronize();
+            if (rowData[0]["id"] == null || rowData[0]["no"] == null) { return; }
             accountSynchronize.payNoteId=((int)rowData[0]["id"]);
             accountSynchronize.personId=((int)GlobalData.Person["id"]);
             accountSynchronize.warehouseId=((int)GlobalData.Warehouse["id"]);
+            accountSynchronize.voucherInfo= (string)rowData[0]["no"];
+            accountSynchronize.comment = "应付自动同步到总账";
             string jsonstr = JsonConvert.SerializeObject(accountSynchronize);       
             string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);      
             try
@@ -375,9 +385,12 @@ namespace WMS.UI.FromSalary
             catch { return; }
             var rowData = this.model1.GetRows(getSelectRowIds());
             AccountSynchronize accountSynchronize = new AccountSynchronize();
+            if (rowData[0]["id"] == null || rowData[0]["no"] == null) { return; }
             accountSynchronize.payNoteId = ((int)rowData[0]["id"]);
             accountSynchronize.personId = ((int)GlobalData.Person["id"]);
             accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
+            accountSynchronize.voucherInfo = (string)rowData[0]["no"];
+            accountSynchronize.comment = "实付自动同步到总账";
             string jsonstr = JsonConvert.SerializeObject(accountSynchronize);
             string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
             try
