@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 98</value>
-  </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>
 [
@@ -147,7 +144,103 @@
 {name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded"}, 
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
 {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"},
-{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false}
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0}
+     ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    },
+    {mode:"pay",
+     fields:[
+{name:"id",displayName:"ID",type:"int",visible:false},
+{name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+{name:"salaryPeriodId",displayName:"期间ID",type:"int",visible:false},
+{name:"taxId",displayName:"税务ID",type:"int",visible:false},
+{name:"no",displayName:"单号",type:"string"},   
+{name:"accountTitleExpenseId",displayName:"薪资费用科目ID",type:"int",visible:false},
+{name:"accountTitlePayableId",displayName:"应付款科目ID",type:"int",visible:false},
+{name:"accountTitlePropertyId",displayName:"资产科目ID",type:"int",visible:false},
+{name:"description",displayName:"描述",type:"string"},
+{name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
+{name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
+{name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
+{name:"accountTitleExpenseName",displayName:"薪资费用科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleExpenseNameEditEnded",editable:false},
+{name:"accountTitleExpenseNo",displayName:"薪资费用科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleExpenseNoEditEnded",editable:false},
+{name:"accountTitlePayableName",displayName:"应付款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePayableNameEditEnded",editable:false},
+{name:"accountTitlePayableNo",displayName:"应付款科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePayableNoEditEnded",editable:false},
+{name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded"},
+{name:"accountTitlePropertyNo",displayName:"资产科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded"},
+{name:"taxName",displayName:"税务名称",type:"string",association:"#taxNameAssociation",editEnded:"#taxNameEditEnded",editable:false},          
+{name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded",editable:false}, 
+{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
+{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"},
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0}
+     ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/pay_note/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    },
+    {mode:"payed",
+     fields:[
+{name:"id",displayName:"ID",type:"int",visible:false},
+{name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+{name:"salaryPeriodId",displayName:"期间ID",type:"int",visible:false},
+{name:"taxId",displayName:"税务ID",type:"int",visible:false},
+{name:"no",displayName:"单号",type:"string"},   
+{name:"accountTitleExpenseId",displayName:"薪资费用科目ID",type:"int",visible:false},
+{name:"accountTitlePayableId",displayName:"应付款科目ID",type:"int",visible:false},
+{name:"accountTitlePropertyId",displayName:"资产科目ID",type:"int",visible:false},
+{name:"description",displayName:"描述",type:"string"},
+{name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
+{name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
+{name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
+{name:"accountTitleExpenseName",displayName:"薪资费用科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleExpenseNameEditEnded",editable:false},
+{name:"accountTitleExpenseNo",displayName:"薪资费用科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleExpenseNoEditEnded",editable:false},
+{name:"accountTitlePayableName",displayName:"应付款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePayableNameEditEnded",editable:false},
+{name:"accountTitlePayableNo",displayName:"应付款科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePayableNoEditEnded",editable:false},
+{name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded",editable:false},
+{name:"accountTitlePropertyNo",displayName:"资产科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded",editable:false},
+{name:"taxName",displayName:"税务名称",type:"string",association:"#taxNameAssociation",editEnded:"#taxNameEditEnded",editable:false},          
+{name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded",editable:false}, 
+{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
+{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"},
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0}
      ],
     httpAPIs:[
         {type:"get-count",
@@ -173,6 +266,9 @@
     }
 ]</value>
   </data>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>127, 98</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -20,7 +20,21 @@ namespace WMS.UI.FromSalary
 
         private void FormPersonSalary_Load(object sender, EventArgs e)
         {
+            //刷新期间
+            this.comboBoxSalaryPeriod.Items.AddRange((from item in GlobalData.AllSalaryPeriod
+                                                   select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+            GlobalData.SalaryPeriod = GlobalData.AllSalaryPeriod[0];
+            for (int i = 0; i < this.comboBoxSalaryPeriod.Items.Count; i++)
+            {
+                if (GlobalData.AllSalaryPeriod[i] == GlobalData.SalaryPeriod)
+                {
+                    this.comboBoxSalaryPeriod.SelectedIndexChanged -= this.comboBoxSalaryPeriod_SelectedIndexChanged;
+                    this.comboBoxSalaryPeriod.SelectedIndex = i;
+                    this.comboBoxSalaryPeriod.SelectedIndexChanged += this.comboBoxSalaryPeriod_SelectedIndexChanged;
+                }
+            }            
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.searchView1.AddStaticCondition("salaryPeriodId", GlobalData.SalaryPeriod["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -106,6 +120,13 @@ namespace WMS.UI.FromSalary
                 this.model1[row, "personId"] = foundPerson["id"];
             }
         }
-     
+
+        private void comboBoxSalaryPeriod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalData.SalaryPeriod = ((ComboBoxItem)this.comboBoxSalaryPeriod.SelectedItem).Value as IDictionary<string, object>;
+            this.searchView1.ClearStaticCondition("salaryPeriodId");
+            this.searchView1.AddStaticCondition("salaryPeriodId", GlobalData.SalaryPeriod["id"]);
+            this.searchView1.Search();
+        }
     }
 }
