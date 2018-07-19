@@ -48,7 +48,9 @@ namespace WMS.UI.FromSalary
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
-                { "warehouseName",GlobalData.Warehouse["name"]}              
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "salaryPeriodId",GlobalData.SalaryPeriod["id"]},
+                { "salaryPeriodName",GlobalData.SalaryPeriod["name"]}
             });
         }
 
