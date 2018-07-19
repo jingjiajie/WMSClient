@@ -118,8 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
+    <value>[
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
@@ -128,7 +127,7 @@
         {name:"personId",displayName:"人员id",type:"string",visible:false},    
         {name:"personName",displayName:"人员名称",type:"string",association:"#personAssociation",editEnded:"#personNameEditEnded"},                       
         {name:"salaryItemName",displayName:"项目名称",type:"string",association:"#salaryItemNameAssociation",editEnded:"#salaryItemNameEditEnded"}, 
-        {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded"}, 
+        {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",visible:false}, 
         {name:"amount",displayName:"金额",type:"double"},  
         {name:"warehouseId",displayName:"仓库id",defaultValue:"#warehouseIdDefaultValue",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
@@ -224,6 +223,6 @@
     <value>363, 98</value>
   </metadata>
   <metadata name="pivotTableAdapter1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>430, 27</value>
+    <value>401, 23</value>
   </metadata>
 </root>

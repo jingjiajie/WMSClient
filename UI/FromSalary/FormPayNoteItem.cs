@@ -228,19 +228,26 @@ namespace WMS.UI.FromSalary
 
         private void ButtonCalculateItemsTax_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange.Rows == 0)
+            try
             {
-                MessageBox.Show("请选择薪金单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (this.model1.SelectionRange.Rows == 0)
+                {
+                    MessageBox.Show("请选择薪金单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            catch { return; }
             var rowData = this.model1.GetRows(this.getSelectRowIds());
-       
+            bool dateNull = true;
             StringBuilder payNoteIds = new StringBuilder();
             payNoteIds.Append("[");
             foreach (var a in rowData) {
-                payNoteIds.Append( a["id"]);
+                if (a["id"] == null) { continue; }
+                dateNull = false;
+                payNoteIds.Append((int)a["id"]);
                 payNoteIds.Append(",");               
             }
+            if (dateNull) { MessageBox.Show("计算失败：薪金发放单中无条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);return; }
             payNoteIds.Remove(payNoteIds.Length - 1, 1);
             payNoteIds.Append("]");     
             try
@@ -258,7 +265,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("计算失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("计算") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (this.judgeAllFinish(payNoteId, CALCULATED_PAY)) {
@@ -293,7 +300,8 @@ namespace WMS.UI.FromSalary
         }
 
         private void buttonCalculateAllTax_Click(object sender, EventArgs e)
-        {         
+        {
+            if (this.model1.RowCount == 0) { return; }
             try
             {
                 string body = $"{{\"taxId\":\"{this.taxId}\",\"payNoteId\":\"{payNoteId}\"}}";
@@ -345,15 +353,20 @@ namespace WMS.UI.FromSalary
 
         private void buttonRealPayItems_Click(object sender, EventArgs e)
         {
-
-            if (this.model1.SelectionRange.Rows == 0)
+            try
             {
-                MessageBox.Show("请选择薪金单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (this.model1.SelectionRange.Rows == 0)
+                {
+                    MessageBox.Show("请选择薪金单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
-            var rowData = this.model1.GetRows(this.getSelectRowIds()); 
-            string json = (new JavaScriptSerializer()).Serialize(rowData);
+            catch { return; }
 
+
+            var rowData = this.model1.GetRows(this.getSelectRowIds());
+            
+            string json = (new JavaScriptSerializer()).Serialize(rowData);       
             try
             {
                 string body =json ;
@@ -405,6 +418,7 @@ namespace WMS.UI.FromSalary
 
         private void buttonRealPayAll_Click(object sender, EventArgs e)
         {
+            if (this.model1.RowCount == 0) { return; }
             try
             {
                 string body = $"{{\"taxId\":\"{this.taxId}\",\"payNoteId\":\"{payNoteId}\"}}";
