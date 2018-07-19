@@ -30,15 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPersonSalary));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair14 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.panelPager = new System.Windows.Forms.Panel();
+            this.model2 = new FrontWork.Model();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.pagerView1 = new FrontWork.PagerView();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
@@ -58,7 +59,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pivotTableAdapter1 = new FrontWork.PivotTableAdapter(this.components);
-            this.model2 = new FrontWork.Model();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -116,16 +116,16 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(41, 75);
+            this.configuration1.Location = new System.Drawing.Point(85, 16);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair14.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPersonSalary",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair14.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair14};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(88, 115);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // panelPager
@@ -144,17 +144,30 @@
             this.panelPager.Size = new System.Drawing.Size(918, 204);
             this.panelPager.TabIndex = 8;
             // 
+            // model2
+            // 
+            this.model2.AllSelectionRanges = new FrontWork.Range[0];
+            this.model2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.model2.Configuration = this.configuration1;
+            this.model2.Font = new System.Drawing.Font("宋体", 10F);
+            this.model2.Location = new System.Drawing.Point(671, 44);
+            this.model2.Mode = "default";
+            this.model2.Name = "model2";
+            this.model2.SelectionRange = null;
+            this.model2.Size = new System.Drawing.Size(86, 96);
+            this.model2.TabIndex = 5;
+            // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(387, 110);
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(410, 75);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -179,12 +192,12 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(280, 110);
+            this.synchronizer.Location = new System.Drawing.Point(499, 56);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(73, 55);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
@@ -193,12 +206,12 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(157, 110);
+            this.model1.Location = new System.Drawing.Point(289, 56);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(82, 55);
+            this.model1.Size = new System.Drawing.Size(97, 96);
             this.model1.TabIndex = 2;
             // 
             // reoGridView1
@@ -209,7 +222,7 @@
             this.reoGridView1.Location = new System.Drawing.Point(0, 0);
             this.reoGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridView1.Mode = "default";
-            this.reoGridView1.Model = this.model2;
+            this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(918, 204);
             this.reoGridView1.TabIndex = 0;
@@ -386,22 +399,9 @@
             this.pivotTableAdapter1.ColumnNamesAsValue = new string[] {
         "amount"};
             this.pivotTableAdapter1.SourceMode = "default";
-            this.pivotTableAdapter1.SourceModel = this.model1;
+            this.pivotTableAdapter1.SourceModel = null;
             this.pivotTableAdapter1.TargetMode = "default";
-            this.pivotTableAdapter1.TargetModel = this.model2;
-            // 
-            // model2
-            // 
-            this.model2.AllSelectionRanges = new FrontWork.Range[0];
-            this.model2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.model2.Configuration = this.configuration1;
-            this.model2.Font = new System.Drawing.Font("宋体", 10F);
-            this.model2.Location = new System.Drawing.Point(467, 30);
-            this.model2.Mode = "default";
-            this.model2.Name = "model2";
-            this.model2.SelectionRange = null;
-            this.model2.Size = new System.Drawing.Size(86, 96);
-            this.model2.TabIndex = 5;
+            this.pivotTableAdapter1.TargetModel = null;
             // 
             // FormPersonSalary
             // 
