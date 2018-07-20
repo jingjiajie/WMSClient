@@ -23,7 +23,7 @@ namespace WMS.UI.FromSalary
             //刷新期间
             this.comboBoxSalaryPeriod.Items.AddRange((from item in GlobalData.AllSalaryPeriod
                                                    select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
-            if (GlobalData.AllSalaryPeriod == null)
+            if (GlobalData.AllSalaryPeriod.Count!=0)
             {
                 GlobalData.SalaryPeriod = GlobalData.AllSalaryPeriod[0];
                 for (int i = 0; i < this.comboBoxSalaryPeriod.Items.Count; i++)
