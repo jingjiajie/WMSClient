@@ -72,9 +72,28 @@ namespace WMS.UI.FromDeliverOrder
                 {
                     string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"packageId\":\"" + this.packageId + "\",\"deliveryOrderId\":\"" + this.deliveryId+ "\"}"; 
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/delivery_by_package";
-                    RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
-                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
+                    var remindData=RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                    if (remindData.Count == 0)
+                    {
+                        MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        StringBuilder remindBody = new StringBuilder();
+                        foreach (IDictionary<string, object> deliveryOrderItemView in remindData)
+                        {
+                                remindBody = remindBody
+                                        .Append("供货商名称：“").Append(deliveryOrderItemView["supplierName"])
+                                        .Append("”，代号：“").Append(deliveryOrderItemView["supplierNo"])
+                                        .Append("”，物料“").Append(deliveryOrderItemView["materialName"]).Append("”，代号：“").Append(deliveryOrderItemView["materialNo"])
+                                        .Append("”，系列：“").Append(deliveryOrderItemView["materialProductLine"])
+                                        .Append("”（单位：“").Append(deliveryOrderItemView["unit"]).Append("”，单位数量：“").Append(deliveryOrderItemView["unitAmount"])
+                                        .Append("”检测状态：“合格”），在库位：“").Append(deliveryOrderItemView["sourceStorageLocationName"])
+                                        .Append("”上库存不足！请核准库存！\r\n");                         
+                        }
+                        new FormRemind(remindBody.ToString()).Show();
+
+                    }
 
                 }
                 catch (WebException ex)
