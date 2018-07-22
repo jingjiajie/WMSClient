@@ -59,6 +59,29 @@ namespace WMS.UI.FormAcccount
 
         private void FormAccountRecord_Load(object sender, EventArgs e)
         {
+            //刷新期间
+            this.comboBoxAccountPeriod.Items.AddRange((from item in GlobalData.AllAccountPeriod
+                                                      select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+            if (GlobalData.AllAccountPeriod.Count != 0)
+            {
+                GlobalData.AccountPeriod = GlobalData.AllAccountPeriod[0];
+                for (int i = 0; i < this.comboBoxAccountPeriod.Items.Count; i++)
+                {
+                    if (GlobalData.AllAccountPeriod[i] == GlobalData.AccountPeriod)
+                    {
+                        this.comboBoxAccountPeriod.SelectedIndexChanged -= this.comboBoxAccountPeriod_SelectedIndexChanged;
+                        this.comboBoxAccountPeriod.SelectedIndex = i;
+                        this.comboBoxAccountPeriod.SelectedIndexChanged += this.comboBoxAccountPeriod_SelectedIndexChanged;
+                    }
+                }
+                this.searchView1.AddStaticCondition("accountPeriodId", GlobalData.AccountPeriod["id"]);
+            }
+
+            //刷新科目
+            this.comboBoxAccountTitle.Items.Add("无");
+            this.comboBoxAccountTitle.Items.AddRange((from item in GlobalData.AllAccountTitle
+                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -92,9 +115,26 @@ namespace WMS.UI.FormAcccount
             }
         }
 
-        private void pagerSearchJsonRESTAdapter1_Load(object sender, EventArgs e)
+        private void comboBoxAccountPeriod_SelectedIndexChanged(object sender, EventArgs e)
         {
+            GlobalData.AccountPeriod = ((ComboBoxItem)this.comboBoxAccountPeriod.SelectedItem).Value as IDictionary<string, object>;
+            this.searchView1.ClearStaticCondition("accountPeriodId");
+            this.searchView1.AddStaticCondition("accountPeriodId", GlobalData.AccountPeriod["id"]);
+            this.searchView1.Search();
+        }
 
+        private void comboBoxAccountTitle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.searchView1.ClearStaticCondition("accountTitleId");
+            if (this.comboBoxAccountTitle.SelectedIndex==0) {
+                this.searchView1.Search();
+            }
+            else
+            {
+                GlobalData.AccountTitle = ((ComboBoxItem)this.comboBoxAccountTitle.SelectedItem).Value as IDictionary<string, object>;
+                this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
+                this.searchView1.Search();
+            }        
         }
     }
 }

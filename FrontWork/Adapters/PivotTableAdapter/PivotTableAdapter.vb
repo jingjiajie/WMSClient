@@ -57,6 +57,17 @@ Public Class PivotTableAdapter
     <Category("FrontWork")>
     Public Property ColumnNamesAsValue As String()
 
+    Private ReadOnly Property ColumnDisplayNamesAsValue As String()
+        Get
+            Dim displayNames(Me.ColumnNamesAsValue.Length - 1) As String
+            For i = 0 To displayNames.Length - 1
+                Dim field = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(i))
+                displayNames(i) = field.DisplayName.GetValue
+            Next
+            Return displayNames
+        End Get
+    End Property
+
     Private Property SourceModelOperator As New ConfigurableModelOperator
     Private Property TargetModelOperator As New ConfigurableModelOperator
 
@@ -129,7 +140,7 @@ Public Class PivotTableAdapter
     End Sub
 
     Private Sub SourceModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
-        Dim removedRowNums = e.RemovedRows.Select(Function(r) r.Row)
+        Dim removedRowNums = e.RemovedRows.Select(Function(r) r.Row).ToArray
         Call Me._CellMapManager.AdjustSourceRowsAfterRowsRemoved(removedRowNums)
     End Sub
 
@@ -139,7 +150,6 @@ Public Class PivotTableAdapter
 
     Private Sub PivotColumns(rows As Integer())
         Dim colsAsCol = Me.ColumnNamesAsColumn
-        Dim colsAsValue = Me.ColumnNamesAsValue
         Dim colsAsRow = Me.ColumnNamesAsRow
         Dim oriTargetColumnNames = (From f In TargetModel.Configuration.GetFields(Me.TargetMode) Select f.Name.GetValue)
         Dim addTargetFields As New List(Of Field) '要添加到TargetModel的字段
@@ -148,7 +158,7 @@ Public Class PivotTableAdapter
             If Not oriTargetColumnNames.Contains(colAsRow) Then
                 Dim sourceFieldAsRow = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, colAsRow)
                 Dim newFieldAsRow As Field = sourceFieldAsRow.Clone
-                newFieldAsRow.Editable = New FieldProperty(False) '目标表的定行列禁止编辑
+                newFieldAsRow.Editable = New FieldProperty(Of Boolean)(False) '目标表的定行列禁止编辑
                 addTargetFields.Add(newFieldAsRow)
             End If
         Next
@@ -161,7 +171,7 @@ Public Class PivotTableAdapter
             For j = 0 To Me.ColumnNamesAsColumn.Length - 1
                 colsAsColValues(j) = sourceRowData(Me.ColumnNamesAsColumn(j))
             Next
-            Dim targetColumnNames = Me.GetPivotColumnNames(colsAsColValues, Me.ColumnNamesAsValue)
+            Dim targetColumnNames = Me.GetPivotColumnNames(colsAsColValues, Me.ColumnDisplayNamesAsValue)
             For j = 0 To targetColumnNames.Length - 1
                 Dim targetColumnName = targetColumnNames(j)
                 '如果目标表中或者本次添加的列中已经包含同名列，则不要重复添加
@@ -170,8 +180,8 @@ Public Class PivotTableAdapter
                 '否则生成新字段，添加到目标表
                 Dim sourceValueField = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(j))
                 Dim newField As Field = sourceValueField.Clone
-                newField.Name = New FieldProperty(targetColumnName)
-                newField.DisplayName = New FieldProperty(targetColumnName)
+                newField.Name = New FieldProperty(Of String)(targetColumnName)
+                newField.DisplayName = New FieldProperty(Of String)(targetColumnName)
                 addTargetFields.Add(newField)
                 '记录列映射
                 Me._ColumnMapManager.SetColumnMap(colsAsColValues, Me.ColumnNamesAsValue(j), targetColumnName)
@@ -205,7 +215,7 @@ Public Class PivotTableAdapter
             For j = 0 To Me.ColumnNamesAsColumn.Length - 1
                 colsAsColValues(j) = If(sourceRowData(Me.ColumnNamesAsColumn(j))?.ToString, "")
             Next
-            Dim targetColNames = Me.GetPivotColumnNames(colsAsColValues, Me.ColumnNamesAsValue)
+            Dim targetColNames = Me.GetPivotColumnNames(colsAsColValues, Me.ColumnDisplayNamesAsValue)
             For j = 0 To Me.ColumnNamesAsValue.Length - 1
                 Dim targetColName = targetColNames(j)
                 Dim targetValue = sourceRowData(Me.ColumnNamesAsValue(j))
@@ -263,7 +273,7 @@ Public Class PivotTableAdapter
                 addSourceRows.Add(newSourceRow)
                 Dim newSourceRowColumnsAsColumnValues = colMap.SourceColumnsAsColumnValues.ToArray
                 '将新加的一整行都进行单元格映射
-                Dim pivotColumnNames = Me.GetPivotColumnNames(newSourceRowColumnsAsColumnValues, Me.ColumnNamesAsValue)
+                Dim pivotColumnNames = Me.GetPivotColumnNames(newSourceRowColumnsAsColumnValues, Me.ColumnDisplayNamesAsValue)
                 For j = 0 To pivotColumnNames.Length - 1
                     Me._CellMapManager.SetPositionMap(New CellPosition(newSourceRowNum, Me.ColumnNamesAsValue(j)),
                                                       New CellPosition(targetRow, pivotColumnNames(j)))

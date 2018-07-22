@@ -48,14 +48,14 @@ namespace WMS.UI.FromSalary
                 this.buttonAccountRealPay.Enabled = false;
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            var rowData = this.model1.GetSelectedRow();
 
-                if ((int)rowData[0]["state"] == 0)
+                if ((int)rowData["state"] == 0)
                 {
                     this.buttonAccountPay.Enabled = true;
                     this.buttonAccountRealPay.Enabled = true;
                 }
-                else if ((int)rowData[0]["state"] == 1)
+                else if ((int)rowData["state"] == 1)
                 {
                     this.buttonAccountPay.Enabled = false;
                     this.buttonAccountRealPay.Enabled = true;
