@@ -147,7 +147,7 @@ namespace WMS.UI
                 var remindData = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 if (remindData.Count == 0)
                 {
-                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("上架成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                 }
                 else

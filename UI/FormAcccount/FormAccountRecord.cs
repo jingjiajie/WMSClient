@@ -25,7 +25,7 @@ namespace WMS.UI.FormAcccount
                 GlobalData.AllAccountTitle.Find((s) =>
                 {
                     if (s["name"] == null) return false;
-                    return s["name"].ToString() == accountTitleName && s["warehouseId"] != GlobalData.Warehouse["id"];
+                    return s["name"].ToString() == accountTitleName;
                 });
             if (foundAccountTitle == null)
             {
@@ -34,6 +34,7 @@ namespace WMS.UI.FormAcccount
             else
             {
                 this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
+                this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
             }
 
         }
@@ -43,7 +44,7 @@ namespace WMS.UI.FormAcccount
                     GlobalData.AllAccountTitle.Find((s) =>
                     {
                         if (s["no"] == null) return false;
-                        return s["no"].ToString() == accountTitleNo && s["warehouseId"] != GlobalData.Warehouse["id"];
+                        return s["no"].ToString() == accountTitleNo;
                     });
                 if (foundAccountTitle == null)
                 {
@@ -52,7 +53,8 @@ namespace WMS.UI.FormAcccount
                 else
                 {
                     this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
-                }
+                this.model1[row, "accountTitleName"] = foundAccountTitle["name"];
+            }
             }
 
         private void FormAccountRecord_Load(object sender, EventArgs e)
@@ -69,7 +71,10 @@ namespace WMS.UI.FormAcccount
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
-                { "persomName",GlobalData.Person["name"]}
+                { "personName",GlobalData.Person["name"]},
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "accountPeriodName",GlobalData.AccountPeriod["name"]},
+                { "accountPeriodId",GlobalData.AccountPeriod["id"]},
             });
         }
 

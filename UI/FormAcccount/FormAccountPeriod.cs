@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Net;
+using System.IO;
 
 namespace WMS.UI.FormAcccount
 {
@@ -39,6 +41,7 @@ namespace WMS.UI.FormAcccount
         }
         private void FormAccountPeriod_Load(object sender, EventArgs e)
         {
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -68,6 +71,27 @@ namespace WMS.UI.FormAcccount
                 //   Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                 //   GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
                 //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
+            }
+        }
+
+        private void toolStripCarryOver_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 0 + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_period/carry_over";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("结转成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("结转失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
