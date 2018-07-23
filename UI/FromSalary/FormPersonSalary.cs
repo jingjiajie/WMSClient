@@ -57,15 +57,9 @@ namespace WMS.UI.FromSalary
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "salaryPeriodId",GlobalData.SalaryPeriod["id"]},
-                { "salaryPeriodName",GlobalData.SalaryPeriod["name"]}
-            });
+            FormAddPersonSalary form = new FormAddPersonSalary();
+            form.ShowDialog();
+           
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
