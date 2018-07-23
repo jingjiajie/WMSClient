@@ -78,7 +78,7 @@ namespace WMS.UI.FormAcccount
         {
             try
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 0 + "\"}";
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_period/carry_over";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("结转成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

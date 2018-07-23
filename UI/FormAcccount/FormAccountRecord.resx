@@ -120,6 +120,56 @@
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>402, 56</value>
   </metadata>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+{name:"id",displayName:"ID",type:"int",visible:false},
+{name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+{name:"accountTitleId",displayName:"科目ID",type:"int",visible:false},
+{name:"accountPeriodId",displayName:"会计期间ID",type:"int",visible:false},
+{name:"accountTitleName",displayName:"科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleNameEditEnded"},
+{name:"accountTitleNo",displayName:"科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleNoEditEnded"},
+
+
+{name:"debitAmount",displayName:"借方金额",type:"double"},
+{name:"creditAmount",displayName:"贷方金额",type:"double"},
+{name:"balance",displayName:"余额",type:"double"},
+{name:"voucherInfo",displayName:"凭证信息",type:"string"},
+{name:"summary",displayName:"摘要信息",type:"string"},
+{name:"comment",displayName:"备注",type:"string"},
+{name:"personId",displayName:"记录人ID",type:"int",visible:false},
+{name:"time",displayName:"记录时间",type:"datetime"},
+{name:"accountPeriodName",displayName:"期间名称",type:"string"},
+{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
+{name:"personName",displayName:"人员姓名",type:"string"},
+
+    ],
+httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/account_record/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/account_record/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/account_record/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/account_record/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/account_record/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
+  </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>512, 56</value>
   </metadata>
@@ -179,56 +229,6 @@
         IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-{name:"id",displayName:"ID",type:"int",visible:false},
-{name:"warehouseID",displayName:"仓库ID",type:"int",visible:false},
-{name:"accountTitleID",displayName:"科目ID",type:"int",visible:false},
-{name:"accountPeriodID",displayName:"会计期间ID",type:"int",visible:false},
-{name:"accountTitleName",displayName:"科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleNameEditEnded"},
-{name:"accountTitleNo",displayName:"科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleNoEditEnded"},
-
-
-{name:"debitAmount",displayName:"借方金额",type:"double"},
-{name:"creditAmount",displayName:"贷方金额",type:"double"},
-{name:"balance",displayName:"余额",type:"double"},
-{name:"voucherInfo",displayName:"凭证信息",type:"string"},
-{name:"summary",displayName:"摘要信息",type:"string"},
-{name:"comment",displayName:"备注",type:"string"},
-{name:"personID",displayName:"记录人ID",type:"int",visible:false},
-{name:"time",displayName:"记录时间",type:"datetime"},
-{name:"accountPeriodName",displayName:"期间名称",type:"string"},
-{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-{name:"personName",displayName:"人员姓名",type:"string"},
-
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/account_record/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/account_record/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/account_record/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/account_record/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/account_record/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
   </data>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>638, 56</value>
