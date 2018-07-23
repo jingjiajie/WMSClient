@@ -293,6 +293,7 @@
       <DependentUpon>FormSelectPakage.cs</DependentUpon>
     </Compile>
     <Compile Include="FromSalary\AccountSynchronize.cs" />
+    <Compile Include="FromSalary\AddPersonSalary.cs" />
     <Compile Include="FromSalary\FormPayNote.cs">
       <SubType>Form</SubType>
     </Compile>

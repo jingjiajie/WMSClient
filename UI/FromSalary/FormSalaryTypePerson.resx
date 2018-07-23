@@ -131,7 +131,7 @@
         {name:"id",displayName:"ID",type:"int",visible:false},    
         {name:"salaryTypeId",displayName:"ID",type:"int",visible:false},               
         {name:"personId",displayName:"人员ID",type:"int",visible:false},
-        {name:"personName",displayName:"人员名称",type:"string"}
+        {name:"personName",displayName:"人员名称",type:"string",association:"#personAssociation",editEnded:"#personNameEditEnded"}
      ],
     httpAPIs:[
         {type:"get-count",
