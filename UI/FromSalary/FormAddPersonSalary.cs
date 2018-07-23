@@ -15,6 +15,7 @@ namespace WMS.UI.FromSalary
 {
     public partial class FormAddPersonSalary : Form
     {
+        private Action addFinishedCallback = null;
         public FormAddPersonSalary()
         {
             MethodListenerContainer.Register("formAddPersonSalary",this);
@@ -25,6 +26,11 @@ namespace WMS.UI.FromSalary
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0,null);
+        }
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -86,6 +92,12 @@ namespace WMS.UI.FromSalary
             {
                 this.model1[row, "id"] = foundSalaryTyped["id"];               
             }
+        }
+
+        private void FormAddPersonSalary_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            { this.addFinishedCallback(); }
         }
     }
 }

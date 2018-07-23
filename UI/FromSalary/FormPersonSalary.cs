@@ -58,6 +58,10 @@ namespace WMS.UI.FromSalary
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             FormAddPersonSalary form = new FormAddPersonSalary();
+            form.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();               
+            });
             form.ShowDialog();
            
         }

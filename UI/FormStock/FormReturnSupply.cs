@@ -15,7 +15,7 @@ namespace WMS.UI.FormStock
         private Action addFinishedCallback = null;
         public FormReturnSupply()
         {         
-            MethodListenerContainer.Register(this);
+            MethodListenerContainer.Register("FormReturnSupply",this);
             InitializeComponent();
         }
 
@@ -140,7 +140,6 @@ namespace WMS.UI.FormStock
                 return amount * unitAmount.Value;
             }
         }
-
 
 
         //===========为了实现一个看起来天经地义的交互逻辑=========

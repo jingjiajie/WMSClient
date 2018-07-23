@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAddPersonSalary));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -117,12 +117,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(65, 35);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormAddPersonSalary",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -143,14 +143,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(640, 65);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -278,8 +278,8 @@
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
-            this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(80, 19);
+            this.toolStripButtonAdd.Text = "添加类型";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonDelete
@@ -293,11 +293,11 @@
             // 
             // toolStripButtonAlter
             // 
-            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
+            this.toolStripButtonAlter.Image = global::WMS.UI.Properties.Resources.add_b;
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 19);
-            this.toolStripButtonAlter.Text = "保存修改";
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(92, 19);
+            this.toolStripButtonAlter.Text = "按类型添加";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
             // FormAddPersonSalary
@@ -310,6 +310,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormAddPersonSalary";
             this.Text = "FormAddPersonSalary";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormAddPersonSalary_FormClosed);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panelPager.ResumeLayout(false);
