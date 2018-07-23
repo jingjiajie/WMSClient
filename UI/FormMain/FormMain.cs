@@ -369,6 +369,7 @@ namespace WMS.UI
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             GlobalData.Warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as IDictionary<string,object>;
+            Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
             Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
@@ -397,10 +398,9 @@ namespace WMS.UI
 
             GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
-
+            
             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.ToString()}");
-
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
