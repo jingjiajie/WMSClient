@@ -128,9 +128,14 @@
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false,defaultValue:0},       
-        {name:"name",displayName:"类别名称",type:"string"},      
-     ]   
+        {name:"id",displayName:"ID",type:"int",visible:false},       
+        {name:"name",displayName:"类别名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"},      
+     ],
+ httpAPIs:[     
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/person_salary/remove_no",
+            method:"DELETE"}
+	]   
     }
 ]</value>
   </data>

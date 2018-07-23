@@ -52,5 +52,17 @@ namespace WMS.UI.FromSalary
                    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
             }
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项薪金类型！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            FormSalaryTypePerson form = new FormSalaryTypePerson((int)rowData["id"]);
+            form.ShowDialog();
+        }
     }
 }
