@@ -81,8 +81,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 17);
-            this.labelStatus.Text = "薪金类型";
+            this.labelStatus.Size = new System.Drawing.Size(80, 17);
+            this.labelStatus.Text = "薪金类型人员";
             // 
             // toolStrip1
             // 
@@ -309,7 +309,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSalaryTypePerson";
-            this.Text = "FormSalaryTypePerson";
+            this.Text = "薪资类型人员";
             this.Load += new System.EventHandler(this.FormSalaryTypePerson_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

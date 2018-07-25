@@ -81,8 +81,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 17);
-            this.labelStatus.Text = "薪金类型";
+            this.labelStatus.Size = new System.Drawing.Size(68, 17);
+            this.labelStatus.Text = "按类型添加";
             // 
             // toolStrip1
             // 
@@ -309,7 +309,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormAddPersonSalary";
-            this.Text = "FormAddPersonSalary";
+            this.Text = "按类型添加";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormAddPersonSalary_FormClosed);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
