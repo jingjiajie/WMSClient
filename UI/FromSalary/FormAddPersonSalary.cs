@@ -15,9 +15,10 @@ namespace WMS.UI.FromSalary
 {
     public partial class FormAddPersonSalary : Form
     {
+        private Action addFinishedCallback = null;
         public FormAddPersonSalary()
         {
-            MethodListenerContainer.Register(this);
+            MethodListenerContainer.Register("formAddPersonSalary",this);
             this.CenterToScreen();
             InitializeComponent();          
         }
@@ -25,6 +26,11 @@ namespace WMS.UI.FromSalary
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0,null);
+        }
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -37,9 +43,8 @@ namespace WMS.UI.FromSalary
         {
             List<int> typeId = new List<int>();
             for (int i = 0; i < this.model1.RowCount; i++)
-            {
-
-                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED_UPDATED && (int)this.model1[i, "id"] != 0)
+            {             
+                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED_UPDATED && this.model1[i, "id"] != null)
                 {
                     typeId.Add((int)this.model1[i, "id"]);
                 }
@@ -57,7 +62,7 @@ namespace WMS.UI.FromSalary
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/add_person_salary_by_salary_type";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
+                this.Close();
             }
             catch (WebException ex)
             {
@@ -69,6 +74,30 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show(("添加") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+        }
+
+        private void SalaryTypeNameEditEnded([Row]int row, [Data]string salaryTypeName)
+        {
+            IDictionary<string, object> foundSalaryTyped =
+                GlobalData.AllSalaryType.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == salaryTypeName;
+                });
+            if (foundSalaryTyped == null)
+            {
+                MessageBox.Show($"薪金类型名称\"{salaryTypeName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "id"] = foundSalaryTyped["id"];               
+            }
+        }
+
+        private void FormAddPersonSalary_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            { this.addFinishedCallback(); }
         }
     }
 }

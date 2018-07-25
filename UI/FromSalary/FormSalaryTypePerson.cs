@@ -32,20 +32,14 @@ namespace WMS.UI.FromSalary
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.model1.RemoveSelectedRows();
-            this.searchView1.Search();
+            this.model1.RemoveSelectedRows();           
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();
-                /*
-                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");*/
-
+                this.searchView1.Search();            
             }
         }
 

@@ -369,6 +369,7 @@ namespace WMS.UI
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             GlobalData.Warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as IDictionary<string,object>;
+            Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
             Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
@@ -397,9 +398,15 @@ namespace WMS.UI
 
             GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
-
+            
             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.ToString()}");
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
+
+            GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
+
+            GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
 
         }
 

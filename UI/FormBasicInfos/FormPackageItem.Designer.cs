@@ -232,7 +232,7 @@
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(63, 22);
+            this.buttonAdd.Size = new System.Drawing.Size(56, 22);
             this.buttonAdd.Text = "添加";
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -241,7 +241,7 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(63, 22);
+            this.buttonDelete.Size = new System.Drawing.Size(56, 22);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -250,7 +250,7 @@
             this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
             this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(93, 22);
+            this.buttonSave.Size = new System.Drawing.Size(80, 22);
             this.buttonSave.Text = "保存修改";
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -278,18 +278,18 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(129, 20);
+            this.lableStatus.Size = new System.Drawing.Size(104, 20);
             this.lableStatus.Text = "发货套餐条目信息";
             // 
             // FormPackageItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1057, 494);
             this.Controls.Add(this.tableLayoutPanel1);

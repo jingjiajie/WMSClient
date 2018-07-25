@@ -81,8 +81,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(68, 17);
-            this.labelStatus.Text = "按类型添加";
+            this.labelStatus.Size = new System.Drawing.Size(56, 17);
+            this.labelStatus.Text = "薪金类型";
             // 
             // toolStrip1
             // 
@@ -118,7 +118,7 @@
             this.configuration1.Location = new System.Drawing.Point(65, 35);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormSalaryType",
+        "FormAddPersonSalary",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
@@ -278,8 +278,8 @@
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
-            this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(80, 19);
+            this.toolStripButtonAdd.Text = "添加类型";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonDelete
@@ -293,7 +293,7 @@
             // 
             // toolStripButtonAlter
             // 
-            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
+            this.toolStripButtonAlter.Image = global::WMS.UI.Properties.Resources.cancle;
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
             this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 19);
@@ -309,7 +309,8 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormAddPersonSalary";
-            this.Text = "按类型添加";
+            this.Text = "FormAddPersonSalary";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormAddPersonSalary_FormClosed);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panelPager.ResumeLayout(false);
