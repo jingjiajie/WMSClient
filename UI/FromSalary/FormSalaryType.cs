@@ -62,7 +62,7 @@ namespace WMS.UI.FromSalary
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             FormSalaryTypePerson form = new FormSalaryTypePerson((int)rowData["id"]);
-            form.ShowDialog();
+            form.Show();
         }
     }
 }
