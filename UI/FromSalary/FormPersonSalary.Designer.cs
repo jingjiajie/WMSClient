@@ -149,7 +149,7 @@
             // 
             this.configuration2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration2.ConfigurationString = "{\r\n    mode:\"default\",\r\n    fields:[]\r\n}";
-            this.configuration2.Location = new System.Drawing.Point(546, 46);
+            this.configuration2.Location = new System.Drawing.Point(571, 19);
             this.configuration2.Margin = new System.Windows.Forms.Padding(2);
             this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration2.Name = "configuration2";
@@ -180,12 +180,12 @@
             orderParamNamesType2.Order = "order";
             apiParamNamesType2.OrderParamNames = orderParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(299, 30);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(343, 46);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(76, 102);
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(76, 86);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
@@ -219,7 +219,7 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(118, 88);
+            this.model1.Location = new System.Drawing.Point(149, 98);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -243,14 +243,14 @@
             // basicView1
             // 
             this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.basicView1.Configuration = this.configuration1;
+            this.basicView1.Configuration = this.configuration2;
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView1.ItemsPerRow = 4;
             this.basicView1.Location = new System.Drawing.Point(0, 46);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
-            this.basicView1.Model = this.model1;
+            this.basicView1.Model = this.model2;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(2);
             this.basicView1.Size = new System.Drawing.Size(762, 34);
