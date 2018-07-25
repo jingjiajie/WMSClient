@@ -91,7 +91,23 @@ namespace WMS.UI.FormAcccount
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            if (GlobalData.AccountTitle != null)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "personId",GlobalData.Person["id"]},
+                { "personName",GlobalData.Person["name"]},
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "accountPeriodName",GlobalData.AccountPeriod["name"]},
+                { "accountPeriodId",GlobalData.AccountPeriod["id"]},
+                { "accountTitleName",GlobalData.AccountTitle["name"]},
+                { "accountTitleNo",GlobalData.AccountTitle["no"]},
+                { "accountTitleId",GlobalData.AccountTitle["id"]},
+            });
+            }
+            else
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
@@ -99,6 +115,7 @@ namespace WMS.UI.FormAcccount
                 { "accountPeriodName",GlobalData.AccountPeriod["name"]},
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
             });
+            }
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -127,6 +144,7 @@ namespace WMS.UI.FormAcccount
         {
             this.searchView1.ClearStaticCondition("accountTitleId");
             if (this.comboBoxAccountTitle.SelectedIndex==0) {
+                GlobalData.AccountTitle = null;
                 this.searchView1.Search();
             }
             else
