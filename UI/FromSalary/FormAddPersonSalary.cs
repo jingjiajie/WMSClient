@@ -10,11 +10,13 @@ using FrontWork;
 using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
+using System.Collections;
 
 namespace WMS.UI.FromSalary
 {
     public partial class FormAddPersonSalary : Form
     {
+        private Action addFinishedCallback = null;
         public FormAddPersonSalary()
         {
             MethodListenerContainer.Register("formAddPersonSalary",this);
@@ -25,6 +27,11 @@ namespace WMS.UI.FromSalary
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.model1.InsertRow(0,null);
+        }
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -44,6 +51,7 @@ namespace WMS.UI.FromSalary
                 }
             }
             if (typeId.Count == 0) return;
+            if (this.IsRepeat(typeId.ToArray())) { MessageBox.Show("添加的类型重复！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
             AddPersonSalary addPersonSalary = new AddPersonSalary();
             addPersonSalary.salaryTypeId = typeId;
             addPersonSalary.warehouseId =(int) GlobalData.Warehouse["id"];
@@ -87,5 +95,29 @@ namespace WMS.UI.FromSalary
                 this.model1[row, "id"] = foundSalaryTyped["id"];               
             }
         }
+
+        private void FormAddPersonSalary_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            { this.addFinishedCallback(); }
+        }
+
+        private  bool IsRepeat(int[] array)
+        {
+            Hashtable ht = new Hashtable();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (ht.Contains(array[i]))
+                {
+                    return true;
+                }
+                else
+                {
+                    ht.Add(array[i], array[i]);
+                }
+            }       
+            return false;
+        }
+
     }
 }

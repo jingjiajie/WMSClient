@@ -130,8 +130,8 @@
        {name:"startAmount",displayName:"起始金额",type:"double"},
        {name:"endAmount",displayName:"截止金额",type:"double"},
        {name:"type",displayName:"类型",type:"int",values:["定额收税","比例税率"],defaultValue:1,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper",contentChanged:"#stateContentChanged"},
-       {name:"taxAmount",displayName:"定额金额",type:"double",editable:false},
-       {name:"taxRate",displayName:"金额比例",type:"double"},
+       {name:"taxAmount",displayName:"定额金额",type:"double",defaultValue:0,editable:false},
+       {name:"taxRate",displayName:"金额比例",type:"double",defaultValue:0,editable:true},
     ],
 httpAPIs:[
         {type:"get-count",
@@ -158,8 +158,8 @@ httpAPIs:[
     {mode:"type_quota",
      ref:"default",
      fields:[
-            {name:"taxAmount",displayName:"定额金额",type:"double"},
-        {name:"taxRate",displayName:"金额比例",type:"double",editable:false}
+            {name:"taxAmount",displayName:"定额金额",type:"double",defaultValue:0,editable:true},
+        {name:"taxRate",displayName:"金额比例",type:"double",defaultValue:0,editable:false}
         ]
     }
 ]</value>

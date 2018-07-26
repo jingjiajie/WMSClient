@@ -97,7 +97,7 @@
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(117, 120);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 11;
             // 
             // model1
@@ -345,7 +345,7 @@
             this.ClientSize = new System.Drawing.Size(751, 423);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "FormTaxItem";
-            this.Text = "FormTaxItem";
+            this.Text = "税务明细信息";
             this.Load += new System.EventHandler(this.FormTaxItem_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

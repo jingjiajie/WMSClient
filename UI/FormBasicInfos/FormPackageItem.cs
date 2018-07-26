@@ -77,6 +77,25 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
+        private void defaultDeliveryStorageLocationNoEditEnded([Row]int row, [Data] string defaultDeliveryStorageLocationNo)
+        {
+            this.model[row, "defaultDeliveryStorageLocationId"] = 0;
+            IDictionary<string, object> foundStorageLocation =
+                GlobalData.AllStorageLocations.Find((s) =>
+                {
+                    if (s["no"] == null) return false;
+                    return s["no"].ToString() == defaultDeliveryStorageLocationNo;
+                });
+            if (foundStorageLocation == null)
+            {
+                MessageBox.Show($"库位\"{defaultDeliveryStorageLocationNo}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model[row, "defaultDeliveryStorageLocationId"] = foundStorageLocation["id"];
+            }
+        }
+
         //写了一个小时发感觉不太对然后发现有这个东西
         //丧心病狂的交互逻辑
         private void SupplierNoEditEnded([Row]int row)

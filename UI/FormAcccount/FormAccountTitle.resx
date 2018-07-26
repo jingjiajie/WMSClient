@@ -128,10 +128,10 @@
        {name:"id",displayName:"ID",type:"int",visible:false},
        {name:"name",displayName:"科目名称",type:"string"},
        {name:"no",displayName:"科目编码",type:"string"},
-       {name:"type",displayName:"科目类型",type:"string"},
+       {name:"type",displayName:"科目类型",type:"int",values:["资产类","负债类","共同类","权益类","成本类","损益类"],defaultValue:0,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
        {name:"direction",displayName:"余额方向",type:"int",values:["借方","贷方"],defaultValue:1,forwardMapper:"#DirectionForwardMapper",backwardMapper:"#DirectionBackwardMapper"},
        {name:"enabled",displayName:"启用",type:"int",values:["启用","禁用"],defaultValue:1,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"},
-    ],
+],
 httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/account_title/count/{{conditions:$conditions,orders:$orders}}",

@@ -132,7 +132,7 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private string EnableForwardMapper(int state)
+        private string EnableForwardMapper([Data]int state)
         {
             switch (state)
             {
