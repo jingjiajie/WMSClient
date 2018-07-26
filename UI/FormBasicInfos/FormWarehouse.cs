@@ -28,9 +28,10 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, null);
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {          
+                { "enable",1}
+            });
         }
 
         private void FormWarehouse_QueryAccessibilityHelp(object sender, QueryAccessibilityHelpEventArgs e)
@@ -46,16 +47,16 @@ namespace WMS.UI.FormBasicInfos
         private void updateBasicAndReoGridView()
         {
 
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
+            //if (this.model1.RowCount == 0)
+            //{
+            //    this.basicView1.Enabled = false;
+            //    this.reoGridView1.Enabled = false;
+            //}
+            //else
+            //{
+            //    this.basicView1.Enabled = true;
+            //    this.reoGridView1.Enabled = true;
+            //}
 
         }
 
