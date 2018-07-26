@@ -37,8 +37,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panelSearchWidget = new System.Windows.Forms.Panel();
-            this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.panelPager = new System.Windows.Forms.Panel();
             this.model1 = new FrontWork.Model();
@@ -54,7 +52,6 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
@@ -63,22 +60,21 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.panelSearchWidget, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelPager, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.basicView1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.pagerView1, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.panelPager, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.basicView1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pagerView1, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1067, 379);
             this.tableLayoutPanel1.TabIndex = 22;
             // 
@@ -107,28 +103,6 @@
             this.labelStatus.Size = new System.Drawing.Size(92, 17);
             this.labelStatus.Text = "盘点单条目信息";
             // 
-            // panelSearchWidget
-            // 
-            this.panelSearchWidget.Controls.Add(this.searchView1);
-            this.panelSearchWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSearchWidget.Location = new System.Drawing.Point(0, 0);
-            this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
-            this.panelSearchWidget.Name = "panelSearchWidget";
-            this.panelSearchWidget.Size = new System.Drawing.Size(1067, 29);
-            this.panelSearchWidget.TabIndex = 12;
-            // 
-            // searchView1
-            // 
-            this.searchView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.searchView1.Configuration = this.configuration1;
-            this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
-            this.searchView1.Mode = "default";
-            this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(1067, 29);
-            this.searchView1.TabIndex = 0;
-            // 
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -154,10 +128,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 174);
+            this.panelPager.Location = new System.Drawing.Point(0, 110);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1067, 150);
+            this.panelPager.Size = new System.Drawing.Size(1067, 214);
             this.panelPager.TabIndex = 8;
             // 
             // model1
@@ -187,7 +161,6 @@
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
-            this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
             this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(91, 98);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
@@ -228,7 +201,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(1067, 150);
+            this.reoGridView1.Size = new System.Drawing.Size(1067, 214);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop
@@ -242,7 +215,7 @@
             this.buttonStartAdd,
             this.toolStripButtonDelete,
             this.toolStripButtonAlter});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 29);
+            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(1067, 26);
             this.toolStripTop.TabIndex = 9;
@@ -283,13 +256,13 @@
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView1.ItemsPerRow = 4;
-            this.basicView1.Location = new System.Drawing.Point(0, 55);
+            this.basicView1.Location = new System.Drawing.Point(0, 26);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
-            this.basicView1.Size = new System.Drawing.Size(1067, 119);
+            this.basicView1.Size = new System.Drawing.Size(1067, 84);
             this.basicView1.TabIndex = 13;
             // 
             // toolStrip1
@@ -319,7 +292,6 @@
             this.tableLayoutPanel1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.panelSearchWidget.ResumeLayout(false);
             this.panelPager.ResumeLayout(false);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
@@ -336,8 +308,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
-        private System.Windows.Forms.Panel panelSearchWidget;
-        private FrontWork.SearchView searchView1;
         private FrontWork.Configuration configuration1;
         private System.Windows.Forms.Panel panelPager;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
