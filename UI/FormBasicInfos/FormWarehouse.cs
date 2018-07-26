@@ -47,16 +47,16 @@ namespace WMS.UI.FormBasicInfos
         private void updateBasicAndReoGridView()
         {
 
-            //if (this.model1.RowCount == 0)
-            //{
-            //    this.basicView1.Enabled = false;
-            //    this.reoGridView1.Enabled = false;
-            //}
-            //else
-            //{
-            //    this.basicView1.Enabled = true;
-            //    this.reoGridView1.Enabled = true;
-            //}
+            if (this.model1.RowCount == 0)
+            {
+                this.basicView1.Enabled = false;
+                this.reoGridView1.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Enabled = true;
+                this.reoGridView1.Enabled = true;
+            }
 
         }
 
