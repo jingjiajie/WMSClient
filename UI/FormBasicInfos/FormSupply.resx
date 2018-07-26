@@ -124,13 +124,15 @@
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
-		{name:"supplierName",type:"string",displayName:"供货商名称",placeHolder:"请输入必填信息",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+		{name:"supplierName",type:"string",displayName:"供货商名称",placeHolder:"必填信息",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
 		{name:"warehouseName",type:"string",displayName:"仓库名称",visible:false},
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
-		{name:"materialNo",displayName:"物料代号",type:"string",placeHolder:"请输入必填信息",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
-        {name:"materialName",displayName:"物料名称",type:"string",placeHolder:"请输入必填信息",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
-        {name:"materialProductLine",displayName:"物料系列",placeHolder:"请输入必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+		{name:"materialNo",displayName:"物料代号",type:"string",placeHolder:"必填信息",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",placeHolder:"必填信息",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",placeHolder:"必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:true,editable:true,forwardMapper:"#entryAmountForwardMapper",backwardMapper:"#entryAmountBackwardMapper"},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:true,editable:true},
@@ -241,6 +243,8 @@
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
@@ -335,6 +339,8 @@
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
@@ -428,6 +434,8 @@
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
