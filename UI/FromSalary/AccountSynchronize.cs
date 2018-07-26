@@ -18,5 +18,7 @@ namespace WMS.UI.FromSalary
         public String voucherInfo;
 
         public String summary;
+
+        public int accountPeriodId;
     }
 }

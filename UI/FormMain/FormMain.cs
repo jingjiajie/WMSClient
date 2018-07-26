@@ -405,9 +405,12 @@ namespace WMS.UI
             GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
 
-            GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
-
+            try
+            {
+                GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
+            }
+            catch { GlobalData.AccountPeriod = null; }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
