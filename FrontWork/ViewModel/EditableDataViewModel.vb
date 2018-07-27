@@ -380,7 +380,7 @@ Public Class EditableDataViewModel
             Throw New FrontWorkException("View is not set")
         End If
 
-        Dim modelCellInfos = e.UpdatedCells.ToList
+        Dim modelCellInfos = (From c In e.UpdatedCells Select CType(c.Clone, ModelCellInfo)).ToList
         modelCellInfos.RemoveAll(Function(cellInfo)
                                      Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
                                      Return Not curField.Visible.GetValue
