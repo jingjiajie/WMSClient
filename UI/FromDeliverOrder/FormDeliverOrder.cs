@@ -110,6 +110,21 @@ namespace WMS.UI.FromDeliverOrder
                 default: return "未知状态";
             }
         }
+        private int stateBackwardMapper([Data]string state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case "待装车": return 0;
+                case "装车中": return 1;
+                case "整单装车": return 2;
+                case "发运在途": return 3;
+                case "核减完成": return 4;
+                default: return -1;
+            }
+        }
+
+        
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
@@ -176,23 +191,24 @@ namespace WMS.UI.FromDeliverOrder
                 //    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 //    return;
                 //}
-                if ((int)rowData[i]["state"] == 4)
+                if ((int)rowData[i]["state"] == DeliveryOrderState.DELIVERY_STATE_DELIVER_FINNISH)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if ((int)rowData[i]["state"] == 3)
+                if ((int)rowData[i]["state"] == DeliveryOrderState.DELIVERY_STATE_IN_DELIVER)
                 {
                     MessageBox.Show("选中出库单已经发运无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if ((int)rowData[i]["state"] != 2)
+                if ((int)rowData[i]["state"] != DeliveryOrderState.DELIVERY_STATE_ALL_LOADING)
                 {
                     MessageBox.Show("选中出库单未完成装车无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
-            this.model1[this.model1.SelectionRange.Row, "state"] = 3;
+            int a = this.model1.SelectionRange.Row;
+            this.model1[this.model1.SelectionRange.Row, "state"] = DeliveryOrderState.DELIVERY_STATE_IN_DELIVER;
             if (this.synchronizer.Save())
             {
                // MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -288,17 +304,7 @@ namespace WMS.UI.FromDeliverOrder
             if (previewData == null) return;
             FormDeliveryOrderChooseExcelType form = new FormDeliveryOrderChooseExcelType(previewData);
             form.Show();
-            //StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
-            //foreach (IDictionary<string, object> orderAndItem in previewData)
-            //{
-            //    IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
-            //    object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
-            //    string no = (string)deliveryOrder["no"];
-            //    if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketNormal.xlsx", no)) return;
-            //    formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
-            //    formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
-            //}
-            //formPreviewExcel.Show();
+
         }
 
         private void toolStripButtonDecrease_Click(object sender, EventArgs e)

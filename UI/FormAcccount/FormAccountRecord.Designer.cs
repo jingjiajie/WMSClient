@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -175,15 +175,15 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(135, 144);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
             // 
             // panel1
@@ -218,7 +218,7 @@
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(200, 37);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -248,21 +248,21 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(135, 144);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 10;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(553, 65);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
@@ -330,7 +330,7 @@
             this.comboBoxAccountPeriod.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxAccountPeriod.FormattingEnabled = true;
             this.comboBoxAccountPeriod.Location = new System.Drawing.Point(84, 2);
-            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxAccountPeriod.Name = "comboBoxAccountPeriod";
             this.comboBoxAccountPeriod.Size = new System.Drawing.Size(108, 27);
             this.comboBoxAccountPeriod.TabIndex = 0;
@@ -377,7 +377,7 @@
             this.comboBoxAccountTitle.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxAccountTitle.FormattingEnabled = true;
             this.comboBoxAccountTitle.Location = new System.Drawing.Point(83, 2);
-            this.comboBoxAccountTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxAccountTitle.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxAccountTitle.Name = "comboBoxAccountTitle";
             this.comboBoxAccountTitle.Size = new System.Drawing.Size(108, 27);
             this.comboBoxAccountTitle.TabIndex = 0;
