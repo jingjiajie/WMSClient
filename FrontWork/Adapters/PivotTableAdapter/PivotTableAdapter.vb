@@ -115,7 +115,25 @@ Public Class PivotTableAdapter
     End Sub
 
     Private Sub TargetModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
-        Throw New FrontWorkException("PivotTableAdapter: Cannot update rows from target model!")
+        Dim rows = e.UpdatedRows.Select(Function(c) c.Row).ToArray
+        Dim targetFields = Me.TargetModel.Configuration.GetFields(Me.TargetMode)
+        Dim fieldNames = (From f In targetFields Select f.Name.GetValue).ToArray
+        Dim updatableFieldNames = fieldNames.Where(
+        Function(name)
+            Return Not Me.ColumnNamesAsRow.Contains(name)
+        End Function).ToArray
+
+        Dim updateCells(rows.Length * updatableFieldNames.Length - 1) As CellPosition
+        For i = 0 To rows.Length - 1
+            For j = 0 To updatableFieldNames.Length - 1
+                Dim row = rows(i)
+                Dim colName = updatableFieldNames(j)
+                updateCells(i * updatableFieldNames.Length + j) = New CellPosition(row, colName)
+            Next
+        Next
+
+        Call Me.UnpivotCells(updateCells.Select(Function(c) c.Row).ToArray,
+                            updateCells.Select(Function(c) c.ColumnName).ToArray)
     End Sub
 
     Private Sub SourceModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)

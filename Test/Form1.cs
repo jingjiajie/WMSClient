@@ -32,7 +32,13 @@ namespace Test
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.model1.AddRows(new Dictionary<string,object>[]
+            {
+               new Dictionary<string, object> { { "姓名","小明"} ,{ "科目","语文"},{ "成绩",100} },
+               new Dictionary<string, object> { { "姓名","小明"} ,{ "科目","数学"},{ "成绩",100} },
+               new Dictionary<string, object> { { "姓名","小红"} ,{ "科目","语文"},{ "成绩",100} },
+               new Dictionary<string, object> { { "姓名","小红"} ,{ "科目","数学"},{ "成绩",100} },
+            });
         }
 
         private void TestEditEnded([Model]Model model,[Row]int row,[Data] int data)

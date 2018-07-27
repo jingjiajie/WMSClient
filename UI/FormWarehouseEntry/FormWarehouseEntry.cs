@@ -42,13 +42,22 @@ namespace WMS.UI
         //添加按钮点击事件
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0,new Dictionary<string, object>()
-            {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now}
-            });
+            this.model1.InsertRow(0, null);
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"]; 
+        }
+
+        private int CreatePersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string CreatePersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
         }
 
         //删除按钮点击事件
