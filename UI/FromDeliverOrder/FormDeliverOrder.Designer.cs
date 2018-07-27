@@ -460,7 +460,7 @@
         }
 
         #endregion
-
+        private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.Panel panelSearchWidget;
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -486,7 +486,6 @@
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.Configuration configuration1;
         private FrontWork.Model model1;
-        private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
         private System.Windows.Forms.ToolStripButton toolStripButtonDecrease;
