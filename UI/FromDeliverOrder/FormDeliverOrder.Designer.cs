@@ -61,7 +61,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
-            this.reoGridView2 = new FrontWork.ReoGridView();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -356,7 +355,6 @@
             this.panel2.Controls.Add(this.synchronizer);
             this.panel2.Controls.Add(this.model1);
             this.panel2.Controls.Add(this.configuration1);
-            this.panel2.Controls.Add(this.reoGridView2);
             this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 153);
@@ -396,28 +394,15 @@
             this.synchronizer.Size = new System.Drawing.Size(135, 144);
             this.synchronizer.TabIndex = 8;
             // 
-            // reoGridView2
-            // 
-            this.reoGridView2.Configuration = this.configuration1;
-            this.reoGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridView2.Font = new System.Drawing.Font("黑体", 11F);
-            this.reoGridView2.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView2.Margin = new System.Windows.Forms.Padding(0);
-            this.reoGridView2.Mode = "default";
-            this.reoGridView2.Model = this.model1;
-            this.reoGridView2.Name = "reoGridView2";
-            this.reoGridView2.Size = new System.Drawing.Size(868, 235);
-            this.reoGridView2.TabIndex = 5;
-            // 
             // reoGridView1
             // 
-            this.reoGridView1.Configuration = null;
+            this.reoGridView1.Configuration = this.configuration1;
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView1.Location = new System.Drawing.Point(0, 0);
             this.reoGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.reoGridView1.Mode = "default";
-            this.reoGridView1.Model = null;
+            this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(868, 235);
             this.reoGridView1.TabIndex = 1;
@@ -500,7 +485,6 @@
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.Configuration configuration1;
         private FrontWork.Model model1;
-        private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
         private System.Windows.Forms.ToolStripButton toolStripButtonDecrease;

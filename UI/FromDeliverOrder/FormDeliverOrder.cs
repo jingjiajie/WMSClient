@@ -22,47 +22,20 @@ namespace WMS.UI.FromDeliverOrder
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
-            if ((int)rowData[0]["state"] == 3)
+            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
             {
-                this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
                 this.reoGridView1.Mode = "default1";
-                this.synchronizer.Mode = "default1";
             }
             else {
-                this.model1.Mode = "default";
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";
-                this.synchronizer.Mode = "default";
             }
-        }
-
-        private void updateBasicAndReoGridView()
-        {
-
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
-
-        }
-
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
         }
 
         //查看条目
@@ -144,7 +117,6 @@ namespace WMS.UI.FromDeliverOrder
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
         }
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {
