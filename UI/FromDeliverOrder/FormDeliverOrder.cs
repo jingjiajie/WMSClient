@@ -33,13 +33,13 @@ namespace WMS.UI.FromDeliverOrder
             {
                 this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
-                this.reoGridView1.Mode = "default1";
+                this.reoGridView2.Mode = "default1";
                 this.synchronizer.Mode = "default1";
             }
             else {
                 this.model1.Mode = "default";
                 this.basicView1.Mode = "default";
-                this.reoGridView1.Mode = "default";
+                this.reoGridView2.Mode = "default";
                 this.synchronizer.Mode = "default";
             }
         }
@@ -50,12 +50,12 @@ namespace WMS.UI.FromDeliverOrder
             if (this.model1.RowCount == 0)
             {
                 this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
+                this.reoGridView2.Enabled = false;
             }
             else
             {
                 this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
+                this.reoGridView2.Enabled = true;
             }
 
         }
@@ -246,7 +246,7 @@ namespace WMS.UI.FromDeliverOrder
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
