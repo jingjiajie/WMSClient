@@ -65,12 +65,18 @@ namespace WMS.UI.FormAcccount
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save())
-            {
-                this.searchView1.Search();
+            {             
+                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
 
-                //   Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                //   GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-                //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condWarehouse.ToString()}"); ;
+                try
+                {
+                    GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
+                }
+                catch { GlobalData.AccountPeriod = null; }
+                this.searchView1.Search();
             }
         }
 
@@ -82,6 +88,17 @@ namespace WMS.UI.FormAcccount
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_period/carry_over";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("结转成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
+
+                try
+                {
+                    GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
+                }
+                catch { GlobalData.AccountPeriod = null; }
                 this.searchView1.Search();
             }
             catch (WebException ex)
