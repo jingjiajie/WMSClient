@@ -118,7 +118,7 @@
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 22);
-            this.toolStripButtonAdd.Text = "增加";
+            this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonDelete
@@ -229,7 +229,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(240, 225);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // jsonRESTSynchronizer1
@@ -241,7 +241,7 @@
             this.jsonRESTSynchronizer1.Mode = "default";
             this.jsonRESTSynchronizer1.Model = this.model1;
             this.jsonRESTSynchronizer1.Name = "jsonRESTSynchronizer1";
-            this.jsonRESTSynchronizer1.Size = new System.Drawing.Size(240, 225);
+            this.jsonRESTSynchronizer1.Size = new System.Drawing.Size(180, 180);
             this.jsonRESTSynchronizer1.TabIndex = 3;
             // 
             // model1
@@ -307,7 +307,7 @@
             this.checkBoxOnlyThisProAndWare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.checkBoxOnlyThisProAndWare.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBoxOnlyThisProAndWare.Location = new System.Drawing.Point(243, 32);
-            this.checkBoxOnlyThisProAndWare.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBoxOnlyThisProAndWare.Margin = new System.Windows.Forms.Padding(4);
             this.checkBoxOnlyThisProAndWare.Name = "checkBoxOnlyThisProAndWare";
             this.checkBoxOnlyThisProAndWare.Size = new System.Drawing.Size(172, 24);
             this.checkBoxOnlyThisProAndWare.TabIndex = 12;
