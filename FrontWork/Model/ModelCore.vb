@@ -167,7 +167,8 @@ Public Class ModelCore
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
         End If
         '带有插入请求的原始行号的RowInfo
-        Dim oriRowInfos = (From i In Util.Range(0, rows.Length) Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(SynchronizationState.ADDED))).ToArray
+        Dim oriRowInfos = (From i In Util.Range(0, rows.Length)
+                           Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(If(dataOfEachRow(i) Is Nothing OrElse dataOfEachRow(i).Count = 0, SynchronizationState.ADDED, SynchronizationState.ADDED_UPDATED)))).ToArray
         Dim adjustedRowInfos(oriRowInfos.Length - 1) As ModelRowInfo
         For i = 0 To adjustedRowInfos.Length - 1
             adjustedRowInfos(i) = oriRowInfos(i).clone
@@ -177,6 +178,7 @@ Public Class ModelCore
         For i = 0 To adjustedRowInfos.Length - 1
             Dim realRow = adjustedRowInfos(i).Row
             Dim curData = If(adjustedRowInfos(i).RowData, New Dictionary(Of String, Object))
+            Dim dataCountWithoutDefaultValue = curData.Count
             Dim newRow = Me.Data.NewRow
             '置入默认值
             For Each curColumn In Me._modelColumns
@@ -193,12 +195,12 @@ Public Class ModelCore
                 newRow(item.Key) = If(item.Value, DBNull.Value)
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
-            '增加行状态的记录,如果增加的是空数据，则为ADDED，否则为ADDED_UPDATED
-            Dim rowState As SynchronizationState = SynchronizationState.ADDED
-            If curData.Count > 0 Then
-                rowState = SynchronizationState.ADDED_UPDATED
-            End If
-            Me.RowStates.Insert(realRow, New ModelRowState(rowState))
+            '增加行状态的记录, 如果增加的是空数据， 则为ADDED， 否则为ADDED_UPDATED
+            'Dim rowState As SynchronizationState = SynchronizationState.ADDED
+            'If dataCountWithoutDefaultValue > 0 Then
+            '    rowState = SynchronizationState.ADDED_UPDATED
+            'End If
+            Me.RowStates.Insert(realRow, adjustedRowInfos(i).State)
         Next
         RaiseEvent RowAdded(Me, New ModelRowAddedEventArgs() With {
                              .AddedRows = oriRowInfos
@@ -287,10 +289,18 @@ Public Class ModelCore
                 For Each item In dataOfEachRow(i)
                     Dim key = item.Key
                     Dim value = item.Value
-                    If value Is Nothing Then
-                        Me.Data.Rows(row)(key) = DBNull.Value
+                    Dim colType = Me.Data.Columns(key).DataType
+                    If String.IsNullOrWhiteSpace(value) Then
+                        If colType = GetType(String) Then
+                            Me.Data.Rows(row)(key) = value
+                        Else
+                            If Not Me.Data.Columns(key).AllowDBNull Then
+                                Dim col = Me.GetColumns({key})(0)
+                                Throw New FrontWorkException($"""{col.Name}""不允许为空！")
+                            End If
+                            Me.Data.Rows(row)(key) = DBNull.Value
+                        End If
                     Else
-                        Dim colType = Me.Data.Columns(key).DataType
                         If colType = value.GetType Then
                             Me.Data.Rows(row)(key) = value
                         Else
