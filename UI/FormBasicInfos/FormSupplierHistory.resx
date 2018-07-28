@@ -141,6 +141,7 @@
         {name:"address",displayName:"地址",type:"string",editable:false},
         {name:"tel",displayName:"电话",type:"string",editable:false},
         {name:"bankName",displayName:"开户行",type:"string",editable:false},
+        {name:"bankAccount",displayName:"账号",type:"string"},
         {name:"zipCode",displayName:"邮编",type:"string",editable:false},
         {name:"recipientName",displayName:"收件人",type:"string",editable:false},
         {name:"contractState",displayName:"合同状态",values:["已签合同","未签合同"],editable:false},
