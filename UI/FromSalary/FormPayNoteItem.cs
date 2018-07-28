@@ -386,7 +386,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("计算") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("确认") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (this.judgeAllFinish(payNoteId,PAYED))
@@ -440,7 +440,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("计算") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("确认") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (this.judgeAllFinish(payNoteId, PAYED))

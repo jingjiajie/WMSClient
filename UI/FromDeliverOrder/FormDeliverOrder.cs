@@ -22,24 +22,20 @@ namespace WMS.UI.FromDeliverOrder
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
-            if ((int)rowData[0]["state"] == 3)
+            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
             {
-                this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
-                this.reoGridView1.Mode = "default1";
+                this.reoGridView2.Mode = "default1";
                 this.synchronizer.Mode = "default1";
             }
             else {
-                this.model1.Mode = "default";
                 this.basicView1.Mode = "default";
-                this.reoGridView1.Mode = "default";
+                this.reoGridView2.Mode = "default";
                 this.synchronizer.Mode = "default";
             }
         }
@@ -50,12 +46,12 @@ namespace WMS.UI.FromDeliverOrder
             if (this.model1.RowCount == 0)
             {
                 this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
+                this.reoGridView2.Enabled = false;
             }
             else
             {
                 this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
+                this.reoGridView2.Enabled = true;
             }
 
         }
@@ -110,6 +106,21 @@ namespace WMS.UI.FromDeliverOrder
                 default: return "未知状态";
             }
         }
+        private int stateBackwardMapper([Data]string state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case "待装车": return 0;
+                case "装车中": return 1;
+                case "整单装车": return 2;
+                case "发运在途": return 3;
+                case "核减完成": return 4;
+                default: return -1;
+            }
+        }
+
+        
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
@@ -129,7 +140,6 @@ namespace WMS.UI.FromDeliverOrder
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
         }
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
         {
@@ -176,23 +186,24 @@ namespace WMS.UI.FromDeliverOrder
                 //    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 //    return;
                 //}
-                if ((int)rowData[i]["state"] == 4)
+                if ((int)rowData[i]["state"] == DeliveryOrderState.DELIVERY_STATE_DELIVER_FINNISH)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if ((int)rowData[i]["state"] == 3)
+                if ((int)rowData[i]["state"] == DeliveryOrderState.DELIVERY_STATE_IN_DELIVER)
                 {
                     MessageBox.Show("选中出库单已经发运无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if ((int)rowData[i]["state"] != 2)
+                if ((int)rowData[i]["state"] != DeliveryOrderState.DELIVERY_STATE_ALL_LOADING)
                 {
                     MessageBox.Show("选中出库单未完成装车无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
-            this.model1[this.model1.SelectionRange.Row, "state"] = 3;
+            int a = this.model1.SelectionRange.Row;
+            this.model1[this.model1.SelectionRange.Row, "state"] = DeliveryOrderState.DELIVERY_STATE_IN_DELIVER;
             if (this.synchronizer.Save())
             {
                // MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -230,7 +241,7 @@ namespace WMS.UI.FromDeliverOrder
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
+            this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
@@ -288,17 +299,7 @@ namespace WMS.UI.FromDeliverOrder
             if (previewData == null) return;
             FormDeliveryOrderChooseExcelType form = new FormDeliveryOrderChooseExcelType(previewData);
             form.Show();
-            //StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("出库单预览");
-            //foreach (IDictionary<string, object> orderAndItem in previewData)
-            //{
-            //    IDictionary<string, object> deliveryOrder = (IDictionary<string, object>)orderAndItem["deliveryOrder"];
-            //    object[] deliveryOrderItems = (object[])orderAndItem["deliveryOrderItems"];
-            //    string no = (string)deliveryOrder["no"];
-            //    if (!formPreviewExcel.AddPatternTable("Excel/patternPutOutStorageTicketNormal.xlsx", no)) return;
-            //    formPreviewExcel.AddData("deliveryOrder", deliveryOrder, no);
-            //    formPreviewExcel.AddData("deliveryOrderItems", deliveryOrderItems, no);
-            //}
-            //formPreviewExcel.Show();
+
         }
 
         private void toolStripButtonDecrease_Click(object sender, EventArgs e)

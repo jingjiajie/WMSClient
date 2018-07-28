@@ -30,18 +30,50 @@ namespace WMS.UI.FromSalary
     
         private void FormPayNote_Load(object sender, EventArgs e)
         {
-            Utilities.BindBlueButton(this.buttonAccountPay);
-            Utilities.BindBlueButton(this.buttonAccountRealPay);
+
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
             this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
+            this.model1.RowRemoved += this.model_RowRemoved;
+            this.model1.Refreshed += this.model_Refreshed;
+            Utilities.BindBlueButton(this.buttonAccountPay);
+            Utilities.BindBlueButton(this.buttonAccountRealPay);
+            this.updateBasicAndReoGridView();
+        }
+
+        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
+        }
+
+        private void updateBasicAndReoGridView()
+        {
+
+            if (this.model1.RowCount == 0)
+            {
+                this.buttonAccountPay.Enabled = false;
+                this.buttonAccountRealPay.Enabled= false;
+                //Utilities.ButtonEffectsCancel(this.buttonAccountPay);
+                //Utilities.ButtonEffectsCancel(this.buttonAccountRealPay);
+            }
+            else
+            {
+                this.buttonAccountPay.Enabled = true;
+                this.buttonAccountRealPay.Enabled = true;
+            }
+        }
+
+        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        {
+            this.updateBasicAndReoGridView();
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
+            if (this.model1.RowCount == 0) { return; }
             if (this.model1.SelectionRange.Rows != 1)
             {
                 this.buttonAccountPay.Enabled = false;
@@ -85,6 +117,7 @@ namespace WMS.UI.FromSalary
                 { "createTime",DateTime.Now},
                 { "warehouseName",GlobalData.Warehouse["name"]}
             });
+            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -371,7 +404,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("应付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -413,7 +446,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("实付同步到总账失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("实付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

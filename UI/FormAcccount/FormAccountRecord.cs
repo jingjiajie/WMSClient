@@ -137,6 +137,20 @@ namespace WMS.UI.FormAcccount
             GlobalData.AccountPeriod = ((ComboBoxItem)this.comboBoxAccountPeriod.SelectedItem).Value as IDictionary<string, object>;
             this.searchView1.ClearStaticCondition("accountPeriodId");
             this.searchView1.AddStaticCondition("accountPeriodId", GlobalData.AccountPeriod["id"]);
+
+            //如果该期间已经截止
+            if ((int)GlobalData.AccountPeriod["ended"] == 1)
+            {
+                this.toolStripButtonAdd.Visible = false;
+                this.toolStripButtonAlter.Visible = false;
+                this.toolStripButtonDelete.Visible = false;
+            }
+            else {
+                this.toolStripButtonAdd.Visible = true;
+                this.toolStripButtonAlter.Visible = true;
+                this.toolStripButtonDelete.Visible = true;
+            }
+
             this.searchView1.Search();
         }
 

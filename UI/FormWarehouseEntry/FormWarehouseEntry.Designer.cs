@@ -54,16 +54,16 @@ namespace WMS.UI
             this.ButtonToInspectionNote = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.pagerView1 = new FrontWork.PagerView();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.configuration2 = new FrontWork.Configuration();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
-            this.configuration2 = new FrontWork.Configuration();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -254,6 +254,21 @@ namespace WMS.UI
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.configuration2);
+            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
+            this.panel1.Controls.Add(this.synchronizer);
+            this.panel1.Controls.Add(this.model1);
+            this.panel1.Controls.Add(this.configuration1);
+            this.panel1.Controls.Add(this.reoGridView1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 136);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1259, 261);
+            this.panel1.TabIndex = 13;
+            // 
             // searchView1
             // 
             this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -298,20 +313,15 @@ namespace WMS.UI
             this.pagerView1.Size = new System.Drawing.Size(1257, 36);
             this.pagerView1.TabIndex = 12;
             // 
-            // panel1
+            // configuration2
             // 
-            this.panel1.Controls.Add(this.configuration2);
-            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
-            this.panel1.Controls.Add(this.synchronizer);
-            this.panel1.Controls.Add(this.model1);
-            this.panel1.Controls.Add(this.configuration1);
-            this.panel1.Controls.Add(this.reoGridView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 136);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1259, 261);
-            this.panel1.TabIndex = 13;
+            this.configuration2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration2.ConfigurationString = "";
+            this.configuration2.Location = new System.Drawing.Point(730, 92);
+            this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
+            this.configuration2.Name = "configuration2";
+            this.configuration2.Size = new System.Drawing.Size(180, 180);
+            this.configuration2.TabIndex = 5;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
@@ -389,16 +399,6 @@ namespace WMS.UI
             this.basicView1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 0);
             this.basicView1.Size = new System.Drawing.Size(1259, 81);
             this.basicView1.TabIndex = 14;
-            // 
-            // configuration2
-            // 
-            this.configuration2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration2.ConfigurationString = "";
-            this.configuration2.Location = new System.Drawing.Point(730, 92);
-            this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
-            this.configuration2.Name = "configuration2";
-            this.configuration2.Size = new System.Drawing.Size(150, 150);
-            this.configuration2.TabIndex = 5;
             // 
             // FormWarehouseEntry
             // 

@@ -524,6 +524,14 @@ namespace WMS.UI
             button.MouseLeave += (sender, e) => { button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s; };
         }
 
+        public static void ButtonEffectsCancel(Button button)
+        {
+            button.BackgroundImageLayout = ImageLayout.None;
+            button.MouseDown += null;
+            button.MouseEnter += null;
+            button.MouseLeave += null;
+        }
+
     }
 
     class Translator

@@ -368,7 +368,7 @@ namespace WMS.UI
                 if (((int?)this.model[row, "storageLocationId"] ?? 0) == 0)
                 {
                     this.model[row, "storageLocationId"] = foundSupplies[0]["defaultEntryStorageLocationId"];
-                    this.model[row, "storageLocationNo"] = foundSupplies[0]["defaultInspectionStorageLocationNo"];
+                    this.model[row, "storageLocationNo"] = foundSupplies[0]["defaultEntryStorageLocationNo"];
                     this.model[row, "storageLocationName"] = foundSupplies[0]["defaultEntryStorageLocationName"];
                 }
                 if (((int?)this.model[row, "qualifiedStorageLocationId"] ?? 0) == 0)

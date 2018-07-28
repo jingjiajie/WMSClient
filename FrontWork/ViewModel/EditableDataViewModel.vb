@@ -41,6 +41,9 @@ Public Class EditableDataViewModel
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
+        If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+        End If
     End Sub
 
     Private Sub ConfigurationFieldUpdatedEvent(sender As Object, e As ConfigurationFieldUpdatedEventArgs)
@@ -49,6 +52,9 @@ Public Class EditableDataViewModel
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
+        If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+        End If
     End Sub
 
     Private Sub ConfigurationFieldAddedEvent(sender As Object, e As ConfigurationFieldAddedEventArgs)
@@ -57,7 +63,25 @@ Public Class EditableDataViewModel
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
+        If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+        End If
     End Sub
+
+    Protected Overridable Sub ConfigurationRefreshedEvent(sender As Object, e As ConfigurationRefreshedEventArgs)
+        If Me.Configuration Is Nothing Then
+            Throw New FrontWorkException($"Configuration not set for view!")
+        End If
+        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim allFields = Me.Configuration.GetFields(Me.Mode)
+        Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
+        Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
+        Call Me.RefreshViewSchema(oldColumns, newColumns)
+        If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+        End If
+    End Sub
+
 
     Public Overridable Property Mode As String Implements IConfigurable.Mode
         Get
@@ -87,14 +111,6 @@ Public Class EditableDataViewModel
     Public Sub New(model As IModel, view As IEditableDataView)
         Me.Model = model
         Me.View = view
-    End Sub
-
-    Protected Overridable Sub ConfigurationRefreshedEvent(sender As Object, e As ConfigurationRefreshedEventArgs)
-        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
-        Dim allFields = Me.Configuration.GetFields(Me.Mode)
-        Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
-        Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
-        Call Me.RefreshViewSchema(oldColumns, newColumns)
     End Sub
 
     ''' <summary>
@@ -380,7 +396,7 @@ Public Class EditableDataViewModel
             Throw New FrontWorkException("View is not set")
         End If
 
-        Dim modelCellInfos = e.UpdatedCells.ToList
+        Dim modelCellInfos = (From c In e.UpdatedCells Select CType(c.Clone, ModelCellInfo)).ToList
         modelCellInfos.RemoveAll(Function(cellInfo)
                                      Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
                                      Return Not curField.Visible.GetValue
@@ -461,7 +477,12 @@ Public Class EditableDataViewModel
 
     Protected Overridable Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
         Dim rows = (From r In e.UpdatedRows Select r.Row).ToArray
-        Dim data = (From r In e.UpdatedRows Select r.RowData).ToArray
+        Call Me.PushModelRow(rows)
+    End Sub
+
+    Protected Overridable Sub PushModelRow(rows As Integer())
+        If Me.Model Is Nothing Then Return
+        Dim data = Me.Model.GetRows(rows)
 
         '遍历传入数据
         For i = 0 To rows.Length - 1
