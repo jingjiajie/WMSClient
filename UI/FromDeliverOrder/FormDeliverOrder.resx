@@ -125,7 +125,7 @@
         {name:"no",displayName:"出库单号",type:"string",placeHolder:"留空自动生成"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"description",displayName:"描述",type:"string"},
-        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
+        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper"},
         {name:"deliverTime",displayName:"发运时间",type:"datetime"},
         {name:"liscensePlateNumber",displayName:"车牌号",type:"string",placeHolder:"必填信息"},
         {name:"driverName",displayName:"司机",type:"string",placeHolder:"必填信息"},
@@ -162,25 +162,10 @@
 	]
     },
 {mode:"default1",
+     ref:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},
-        {name:"no",displayName:"出库单号",type:"string",editable:false,placeHolder:"留空自动生成"},
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-        {name:"description",displayName:"描述",type:"string"},
-        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
-        {name:"deliverTime",displayName:"发运时间",type:"datetime"},
-        {name:"liscensePlateNumber",displayName:"车牌号",type:"string",placeHolder:"必填信息"},
-        {name:"driverName",displayName:"司机",type:"string",placeHolder:"必填信息"},
-        {name:"returnNoteNo",displayName:"回单号",type:"string",editEnded:"#returnNoteNoEditEnded"},
-        {name:"returnNoteTime",displayName:"回单时间",type:"datetime",editable:false},
-        {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
-        {name:"lastUpdatePersonName",displayName:"最后修改用户",type:"string",editable:false,placeHolder:"修改时自动生成"},
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
-
-    ]
+        {name:"returnNoteNo",displayName:"回单号",type:"string",editEnded:"#returnNoteNoEditEnded",editable:true},
+   ]
     }
 ]</value>
   </data>

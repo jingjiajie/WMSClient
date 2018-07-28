@@ -262,6 +262,7 @@
     <Compile Include="FormWarehouseEntry\FormWarehouseEntryInspect.Designer.cs">
       <DependentUpon>FormWarehouseEntryInspect.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromDeliverOrder\DeliveryOrderState.cs" />
     <Compile Include="FromDeliverOrder\FormDeliverOrder.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -62,7 +62,6 @@
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView2 = new FrontWork.ReoGridView();
-            this.reoGridView1 = new FrontWork.ReoGridView();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -357,7 +356,6 @@
             this.panel2.Controls.Add(this.model1);
             this.panel2.Controls.Add(this.configuration1);
             this.panel2.Controls.Add(this.reoGridView2);
-            this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(4, 191);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -409,19 +407,6 @@
             this.reoGridView2.Name = "reoGridView2";
             this.reoGridView2.Size = new System.Drawing.Size(1157, 296);
             this.reoGridView2.TabIndex = 5;
-            // 
-            // reoGridView1
-            // 
-            this.reoGridView1.Configuration = null;
-            this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
-            this.reoGridView1.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.reoGridView1.Mode = "default";
-            this.reoGridView1.Model = null;
-            this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(1157, 296);
-            this.reoGridView1.TabIndex = 1;
             // 
             // labelStatus
             // 
@@ -475,7 +460,7 @@
         }
 
         #endregion
-
+        private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.Panel panelSearchWidget;
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -497,12 +482,10 @@
         private System.Windows.Forms.Panel panel2;
         private FrontWork.BasicView basicView1;
         private System.Windows.Forms.ToolStripButton buttonDeliver;
-        private FrontWork.ReoGridView reoGridView1;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.Configuration configuration1;
         private FrontWork.Model model1;
-        private FrontWork.ReoGridView reoGridView2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripAutoTransfer;
         private System.Windows.Forms.ToolStripButton toolStripButtonDecrease;

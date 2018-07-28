@@ -2,6 +2,7 @@
 ''' 一个单元格的索引和数据
 ''' </summary>
 Public Class ModelCellInfo
+    Implements ICloneable
     ''' <summary>
     ''' 所在行号
     ''' </summary>
@@ -25,4 +26,9 @@ Public Class ModelCellInfo
         Me.CellData = cellData
         Me.ColumnName = columnName
     End Sub
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Dim newInstance As New ModelCellInfo(Me.Row, Me.ColumnName, Me.CellData)
+        Return newInstance
+    End Function
 End Class
