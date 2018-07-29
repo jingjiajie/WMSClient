@@ -353,7 +353,7 @@ namespace WMS.UI.FromSalary
             {
                 this.searchView1.Search();
             });
-            form.ShowDialog();      
+            form.Show();      
         }
 
         public int[] getSelectRowIds()
