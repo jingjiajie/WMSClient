@@ -33,7 +33,7 @@ namespace WMS.UI.FromSalary
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
-                { "createTime",DateTime.Now}
+                { "endTime",DateTime.Now}
             });
         }
 
@@ -53,7 +53,7 @@ namespace WMS.UI.FromSalary
                 this.searchView1.Search();
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                 GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
 
             }
         }
