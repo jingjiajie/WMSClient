@@ -160,6 +160,7 @@ namespace WMS.UI.FromSalary
         private void FormAddPersonSalary_Load(object sender, EventArgs e)
         {
             this.model1.InsertRow(0, null);
+            Utilities.BindBlueButton(this.buttonADD);
         }
     }
 }

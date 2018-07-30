@@ -43,7 +43,7 @@ namespace WMS.UI.FromSalary
             this.model1.RemoveSelectedRows();            
             Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-         $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("createTime", OrderItemOrder.DESC).ToString()}");
+         $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
