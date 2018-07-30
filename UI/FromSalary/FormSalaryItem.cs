@@ -18,7 +18,7 @@ namespace WMS.UI.FromSalary
             InitializeComponent();
         }
 
-        private string TypeForwardMapper(int state)
+        private string TypeForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -28,7 +28,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private int TypeBackwardMapper(string enable)
+        private int TypeBackwardMapper([Data]string enable)
         {
             switch (enable)
             {
@@ -44,7 +44,31 @@ namespace WMS.UI.FromSalary
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            //this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
             this.searchView1.Search();         
+        }
+
+        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            if (this.model1.RowCount == 0) { return; }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+            else
+            {           
+                if ((int)this.model1[this.model1.SelectionRange.Row, "type"] == 1)
+                {
+                    this.basicView1.Mode = "count";
+                    this.reoGridView1.Mode = "count";
+                }
+                else if ((int)this.model1[this.model1.SelectionRange.Row, "type"] == 0)
+                {
+                    this.basicView1.Mode = "default";
+                    this.reoGridView1.Mode = "default";
+                }
+            }
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
