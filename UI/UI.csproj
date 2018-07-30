@@ -88,6 +88,12 @@
     <Compile Include="FormAcccount\FormTaxItem.Designer.cs">
       <DependentUpon>FormTaxItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAcccount\FormTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAcccount\FormTime.Designer.cs">
+      <DependentUpon>FormTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRemind.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -402,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAcccount\FormTaxItem.resx">
       <DependentUpon>FormTaxItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAcccount\FormTime.resx">
+      <DependentUpon>FormTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRemind.resx">
       <DependentUpon>FormRemind.cs</DependentUpon>

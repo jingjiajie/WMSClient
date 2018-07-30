@@ -170,9 +170,9 @@
        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
        {name:"lastAccountPeriodId",displayName:"上期ID",type:"int",visible:false},
        {name:"name",displayName:"期间名称",type:"string"},
-       {name:"startTime",displayName:"起始日期",type:"datetime",editable:false},
-       {name:"endTime",displayName:"结束日期",type:"datetime",editable:false},
-       {name:"ended",displayName:"是否截止",type:"int",values:["否","是"],defaultValue:0,forwardMapper:"#endedForwardMapper",backwardMapper:"#endedBackwardMapper"},
+       {name:"startTime",displayName:"起始日期",type:"datetime"},
+       {name:"endTime",displayName:"结束日期",type:"datetime"},
+       {name:"ended",displayName:"是否截止",type:"int",editable:false,defaultValue:0,forwardMapper:"#endedForwardMapper",backwardMapper:"#endedBackwardMapper"},
 
     ],
 httpAPIs:[
