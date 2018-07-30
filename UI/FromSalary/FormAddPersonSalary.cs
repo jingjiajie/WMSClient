@@ -119,5 +119,48 @@ namespace WMS.UI.FromSalary
             return false;
         }
 
+        private void buttonADD_Click(object sender, EventArgs e)
+        {
+            List<int> typeId = new List<int>();
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.ADDED_UPDATED && this.model1[i, "id"] != null)
+                {
+                    typeId.Add((int)this.model1[i, "id"]);
+                }
+            }
+            if (typeId.Count == 0) return;
+            if (this.IsRepeat(typeId.ToArray())) { MessageBox.Show("添加的类型重复！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
+            AddPersonSalary addPersonSalary = new AddPersonSalary();
+            addPersonSalary.salaryTypeId = typeId;
+            addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+            if (GlobalData.SalaryPeriod == null) { MessageBox.Show("当前仓库无任何区间，无法添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
+            string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+            try
+            {
+                string body = json;
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/add_person_salary_by_salary_type";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("添加") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+        }
+
+        private void FormAddPersonSalary_Load(object sender, EventArgs e)
+        {
+            this.model1.InsertRow(0, null);
+            Utilities.BindBlueButton(this.buttonADD);
+        }
     }
 }
