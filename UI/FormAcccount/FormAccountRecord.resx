@@ -133,9 +133,9 @@
 {name:"accountTitleNo",displayName:"科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleNoEditEnded"},
 
 
-{name:"debitAmount",displayName:"借方金额",type:"double"},
-{name:"creditAmount",displayName:"贷方金额",type:"double"},
-{name:"balance",displayName:"余额",type:"double"},
+{name:"debitAmount",displayName:"借方金额",type:"double",defaultValue:0},
+{name:"creditAmount",displayName:"贷方金额",type:"double",defaultValue:0},
+{name:"balance",displayName:"余额",type:"double",defaultValue:0},
 {name:"voucherInfo",displayName:"凭证信息",type:"string"},
 {name:"summary",displayName:"摘要信息",type:"string"},
 {name:"comment",displayName:"备注",type:"string"},

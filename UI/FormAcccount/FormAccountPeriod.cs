@@ -14,6 +14,7 @@ namespace WMS.UI.FormAcccount
 {
     public partial class FormAccountPeriod : Form
     {
+        private Action addFinishedCallback = null;
         public FormAccountPeriod()
         {
             MethodListenerContainer.Register(this);
@@ -80,36 +81,55 @@ namespace WMS.UI.FormAcccount
             }
         }
 
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
+
+        private void FormDeliverOrderItemClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
+        }
+
         private void toolStripCarryOver_Click(object sender, EventArgs e)
         {
-            try
+            var a1 = new FormTime();
+            a1.SetAddFinishedCallback(() =>
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\"}";
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_period/carry_over";
-                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
-                MessageBox.Show("结转成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
-
-                try
-                {
-                    GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-                       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
-                }
-                catch { GlobalData.AccountPeriod = null; }
                 this.searchView1.Search();
-            }
-            catch (WebException ex)
-            {
-                string message = ex.Message;
-                if (ex.Response != null)
-                {
-                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
-                }
-                MessageBox.Show("结转失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            });
+            a1.Show();
+            //try
+            //{
+            //    string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\"}";
+            //    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_period/carry_over";
+            //    RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+            //    MessageBox.Show("结转成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            //    Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+            //    GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            //   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
+
+            //    try
+            //    {
+            //        GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            //           $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
+            //    }
+            //    catch { GlobalData.AccountPeriod = null; }
+            //    this.searchView1.Search();
+            //}
+            //catch (WebException ex)
+            //{
+            //    string message = ex.Message;
+            //    if (ex.Response != null)
+            //    {
+            //        message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+            //    }
+            //    MessageBox.Show("结转失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
         }
     }
 }
