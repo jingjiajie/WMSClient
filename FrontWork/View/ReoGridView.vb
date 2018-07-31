@@ -1117,6 +1117,8 @@ Public Class ReoGridView
     End Function
 
     Private Sub SetCellEdited(pos As CellPosition, edited As Boolean)
+        If pos.Row > Me.Panel.RowCount - 1 Then Return
+        If pos.Col > Me.Panel.ColumnCount - 1 Then Return
         Dim cell = Me.Panel.CreateAndGetCell(pos)
         Dim cellTag As CellTag = cell.Tag
         If cellTag Is Nothing Then
