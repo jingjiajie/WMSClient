@@ -446,9 +446,7 @@ Public Class EditableDataViewModel
             Next
             Call Me.ViewOperationsWrapper.UpdateRows(Util.Range(0, updateData.Length), updateData)
         End If
-        If Me.ModelOperationsWrapper.AllSelectionRanges.Length > 0 Then
-            Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
-        End If
+        Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
         '刷新行状态
         Dim rowNums = Util.Range(0, newRowCount)
         Dim modelRowStates = Me.ModelOperationsWrapper.GetRowStates(rowNums)
