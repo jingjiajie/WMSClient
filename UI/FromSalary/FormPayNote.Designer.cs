@@ -90,7 +90,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(822, 349);
-            this.tableLayoutPanel1.TabIndex = 23;            
+            this.tableLayoutPanel1.TabIndex = 23;
             // 
             // panelSearchWidget
             // 

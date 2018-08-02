@@ -126,7 +126,7 @@
         {name:"name",displayName:"期间名称",type:"string"},          
         {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},
-        {name:"endTime",displayName:"截止时间",type:"dateTime",association:"#datetimeAssociation",editable:false},
+        {name:"endTime",displayName:"截止时间",type:"dateTime",association:"#datetimeAssociation"},
         {name:"startTime",displayName:"起始时间",type:"dateTime",association:"#datetimeAssociation"}
      ],
     httpAPIs:[
