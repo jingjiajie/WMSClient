@@ -66,6 +66,32 @@ namespace WMS.UI.FromSalary
             }
         }
 
+        private void refreshState()
+        {
+            var rowData = this.model1.GetSelectedRow();
+            if (rowData["id"] == null)
+            {
+                this.buttonAccountPay.Enabled = false;
+                this.buttonAccountRealPay.Enabled = false;
+                return;
+            }
+            if ((int)rowData["state"] == 0)
+            {          
+                this.buttonAccountPay.Enabled = true;
+                this.buttonAccountRealPay.Enabled = true;
+            }
+            else if ((int)rowData["state"] == 1)
+            {
+                this.buttonAccountPay.Enabled = false;           
+                this.buttonAccountRealPay.Enabled = true;
+            }
+            else
+            {
+                this.buttonAccountPay.Enabled = false;
+                this.buttonAccountRealPay.Enabled = false;
+            }                           
+        }
+
         private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
         {
             this.updateBasicAndReoGridView();
@@ -117,7 +143,8 @@ namespace WMS.UI.FromSalary
                 { "createTime",DateTime.Now},
                 { "warehouseName",GlobalData.Warehouse["name"]}
             });
-            this.updateBasicAndReoGridView();
+            //this.updateBasicAndReoGridView();
+            this.refreshState();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -348,6 +375,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            if (rowData["id"] ==null) { return; }
             FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"],(string)rowData["no"]);
             form.SetAddFinishedCallback(() =>
             {
@@ -396,6 +424,7 @@ namespace WMS.UI.FromSalary
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
+                this.refreshState();
             }
             catch (WebException ex)
             {
@@ -407,6 +436,8 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
+
+
 
         private void buttonAccountRealPay_Click(object sender, EventArgs e)
         {
@@ -438,6 +469,7 @@ namespace WMS.UI.FromSalary
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                 MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
+                this.refreshState();
             }
             catch (WebException ex)
             {
