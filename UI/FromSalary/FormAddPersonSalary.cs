@@ -129,7 +129,7 @@ namespace WMS.UI.FromSalary
                     typeId.Add((int)this.model1[i, "id"]);
                 }
             }
-            if (typeId.Count == 0) return;
+            if (typeId.Count == 0) { MessageBox.Show("添加的类型不存在！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }           
             if (this.IsRepeat(typeId.ToArray())) { MessageBox.Show("添加的类型重复！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
             AddPersonSalary addPersonSalary = new AddPersonSalary();
             addPersonSalary.salaryTypeId = typeId;
