@@ -33,14 +33,6 @@ namespace WMS.UI.FormAcccount
             this.addFinishedCallback = callback;
         }
 
-        private void FormSelectPakageClosed(object sender, FormClosedEventArgs e)
-        {
-            if (this.addFinishedCallback != null)
-            {
-                this.addFinishedCallback();
-            }
-        }
-
         private void buttonADD_Click_1(object sender, EventArgs e)
         {
             this.buttonADD.Focus();
@@ -71,6 +63,15 @@ namespace WMS.UI.FormAcccount
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show("结转失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            this.Close();
+        }
+
+        private void FormTimeClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
             }
         }
     }
