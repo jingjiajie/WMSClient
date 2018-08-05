@@ -99,12 +99,12 @@ Partial Public Class AdsorbableAssociationForm
 
     Private Sub textBox_LocationChanged(sender As Object, e As EventArgs)
         If Me.Visible <> True Then Return
-        Me.AdjustPosition()
+        Call Me.AdjustPosition()
     End Sub
 
     Private Sub parentForm_LocationChanged(ByVal sender As Object, ByVal e As EventArgs)
         If Me.Visible <> True Then Return
-        Me.AdjustPosition()
+        Call Me.AdjustPosition()
     End Sub
 
     Private Sub parentForm_Deactivate(sender, e)

@@ -105,31 +105,7 @@ Public Class SearchView
                                       Where f.DisplayName = searchDisplayName
                                       Select f).FirstOrDefault
             Dim valueCount = 1 '最终上传的Value个数
-            Dim texts = {Me.TextBoxSearchCondition.Text, Me.TextBoxSearchCondition1.Text} '输入字符串
-            Dim mappedValues(texts.Length - 1) As Object '映射后的值
-            Dim searchValues(texts.Length - 1) As Object '转型后最终用于搜索的值
-            If fieldConfiguration.BackwardMapper IsNot Nothing Then
-                For i = 0 To texts.Length - 1
-                    Dim context As New ViewEditInvocationContext(Me, -1, fieldConfiguration.Name, texts(i))
-                    mappedValues(i) = fieldConfiguration.BackwardMapper.Invoke(context)
-                Next
-            Else
-                For i = 0 To texts.Length - 1
-                    mappedValues(i) = texts(i)
-                Next
-            End If
-            For i = 0 To texts.Length - 1
-                Try
-                    searchValues(i) = Convert.ChangeType(mappedValues(i), fieldConfiguration.Type.GetValue)
-                Catch
-                    MessageBox.Show($"""{texts(i)}""不是合法的数据，请检查输入！")
-                    Return Nothing
-                End Try
-            Next
-            Dim relation As Relation
-            Dim searchName = (From m In Me.Configuration.GetFields(Me.Mode)
-                              Where m.DisplayName = searchDisplayName
-                              Select m.Name).First
+            Dim relation As Relation '根据选择的关系确定ValueCount和Relation
             Select Case Me.ComboBoxSearchRelation.SelectedItem.ToString
                 Case "包含"
                     relation = Relation.CONTAINS
@@ -143,11 +119,31 @@ Public Class SearchView
                 Case "小于等于"
                     relation = Relation.LESS_THAN_OR_EQUAL_TO
             End Select
-            Dim finalSearchValues(valueCount - 1)
-            For i = 0 To finalSearchValues.Length - 1
-                finalSearchValues(i) = searchValues(i)
+            Dim texts = {Me.TextBoxSearchCondition.Text, Me.TextBoxSearchCondition1.Text} '输入字符串
+            Dim mappedValues(valueCount - 1) As Object '映射后的值
+            Dim searchValues(valueCount - 1) As Object '转型后最终用于搜索的值
+            If fieldConfiguration.BackwardMapper IsNot Nothing Then
+                For i = 0 To valueCount - 1
+                    Dim context As New ViewEditInvocationContext(Me, -1, fieldConfiguration.Name, texts(i))
+                    mappedValues(i) = fieldConfiguration.BackwardMapper.Invoke(context)
+                Next
+            Else
+                For i = 0 To valueCount - 1
+                    mappedValues(i) = texts(i)
+                Next
+            End If
+            For i = 0 To valueCount - 1
+                Try
+                    searchValues(i) = Convert.ChangeType(mappedValues(i), fieldConfiguration.Type.GetValue)
+                Catch
+                    MessageBox.Show($"""{texts(i)}""不是合法的数据，请检查输入！")
+                    Return Nothing
+                End Try
             Next
-            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, finalSearchValues)}).ToArray
+            Dim searchName = (From m In Me.Configuration.GetFields(Me.Mode)
+                              Where m.DisplayName = searchDisplayName
+                              Select m.Name).First
+            newSearchArgs.Conditions = Me.StaticConditions.Union({New SearchConditionItem(searchName, relation, searchValues)}).ToArray
         Else
             newSearchArgs.Conditions = Me.StaticConditions.ToArray
         End If
