@@ -59,6 +59,10 @@ namespace WMS.UI.FormAcccount
 
         private void FormAccountRecord_Load(object sender, EventArgs e)
         {
+            if (this.comboBoxAccountTitle.SelectedIndex == 0)
+            {
+                GlobalData.AccountTitle = null;
+            }
             //刷新期间
             this.comboBoxAccountPeriod.Items.AddRange((from item in GlobalData.AllAccountPeriod
                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
