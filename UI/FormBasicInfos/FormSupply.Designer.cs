@@ -37,8 +37,6 @@
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
-            this.searchView1 = new FrontWork.SearchView();
-            this.configuration1 = new FrontWork.Configuration();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSupplyShipmentInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSupplyOuterPackingSize = new System.Windows.Forms.ToolStripButton();
@@ -55,16 +53,18 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripLabel();
             this.panelPager = new System.Windows.Forms.Panel();
-            this.pagerView1 = new FrontWork.PagerView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.pagerView1 = new FrontWork.PagerView();
+            this.searchView1 = new FrontWork.SearchView();
+            this.configuration1 = new FrontWork.Configuration();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.model1 = new FrontWork.Model();
             this.reoGridView1 = new FrontWork.ReoGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.basicView1 = new FrontWork.BasicView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.panelSearchWidget.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -83,49 +83,6 @@
             this.panelSearchWidget.Name = "panelSearchWidget";
             this.panelSearchWidget.Size = new System.Drawing.Size(977, 25);
             this.panelSearchWidget.TabIndex = 6;
-            // 
-            // searchView1
-            // 
-            this.searchView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.searchView1.Configuration = this.configuration1;
-            this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
-            this.searchView1.Mode = "default";
-            this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(977, 25);
-            this.searchView1.TabIndex = 2;
-            // 
-            // configuration1
-            // 
-            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(125, -4);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormSupply",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
-        "FormSupply",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default1";
-            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
-        "FormSupply",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair3.Mode = "default2";
-            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
-        "FormSupply",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair4.Mode = "default3";
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1,
-        modeMethodListenerNamesPair2,
-        modeMethodListenerNamesPair3,
-        modeMethodListenerNamesPair4};
-            this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
-            this.configuration1.TabIndex = 3;
             // 
             // toolStripSeparator1
             // 
@@ -292,18 +249,6 @@
             this.panelPager.Size = new System.Drawing.Size(971, 24);
             this.panelPager.TabIndex = 5;
             // 
-            // pagerView1
-            // 
-            this.pagerView1.BackColor = System.Drawing.SystemColors.Control;
-            this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pagerView1.Location = new System.Drawing.Point(0, 0);
-            this.pagerView1.Margin = new System.Windows.Forms.Padding(0);
-            this.pagerView1.Mode = "default";
-            this.pagerView1.Name = "pagerView1";
-            this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(971, 24);
-            this.pagerView1.TabIndex = 16;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
@@ -317,6 +262,84 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(977, 173);
             this.panel1.TabIndex = 7;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.basicView1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 50);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(977, 200);
+            this.panel2.TabIndex = 8;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(977, 478);
+            this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // pagerView1
+            // 
+            this.pagerView1.BackColor = System.Drawing.SystemColors.Control;
+            this.pagerView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pagerView1.Location = new System.Drawing.Point(0, 0);
+            this.pagerView1.Margin = new System.Windows.Forms.Padding(0);
+            this.pagerView1.Mode = "default";
+            this.pagerView1.Name = "pagerView1";
+            this.pagerView1.PageSize = 50;
+            this.pagerView1.Size = new System.Drawing.Size(971, 24);
+            this.pagerView1.TabIndex = 16;
+            // 
+            // searchView1
+            // 
+            this.searchView1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.searchView1.Configuration = this.configuration1;
+            this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchView1.Location = new System.Drawing.Point(0, 0);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
+            this.searchView1.Mode = "default";
+            this.searchView1.Name = "searchView1";
+            this.searchView1.Size = new System.Drawing.Size(977, 25);
+            this.searchView1.TabIndex = 2;
+            // 
+            // configuration1
+            // 
+            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
+            this.configuration1.Location = new System.Drawing.Point(125, -4);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormSupply",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormSupply",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair2.Mode = "default1";
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+        "FormSupply",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair3.Mode = "default2";
+            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
+        "FormSupply",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair4.Mode = "default3";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1,
+        modeMethodListenerNamesPair2,
+        modeMethodListenerNamesPair3,
+        modeMethodListenerNamesPair4};
+            this.configuration1.Name = "configuration1";
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.TabIndex = 3;
             // 
             // pagerSearchJsonRESTAdapter1
             // 
@@ -378,16 +401,6 @@
             this.reoGridView1.Size = new System.Drawing.Size(977, 173);
             this.reoGridView1.TabIndex = 2;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.basicView1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 50);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(977, 200);
-            this.panel2.TabIndex = 8;
-            // 
             // basicView1
             // 
             this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -402,19 +415,6 @@
             this.basicView1.Name = "basicView1";
             this.basicView1.Size = new System.Drawing.Size(977, 200);
             this.basicView1.TabIndex = 16;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(977, 478);
-            this.tableLayoutPanel1.TabIndex = 7;
             // 
             // FormSupply
             // 

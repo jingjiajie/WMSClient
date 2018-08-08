@@ -59,6 +59,7 @@ Public Class ReoGridView
     Private canChangeSelectionRangeNextTime As Boolean = True
     Private copied As Boolean = False '是否复制粘贴。如果为真，则下次选区改变事件时处理粘贴后的选区
     Private copyStartCellPos As CellPosition '复制起始单元格。用来判断复制是否选区没变导致不会触发选区改变事件
+    Private bindedAssociationTextBox As Boolean = False
 
     Private textBox As TextBox = Nothing
     Private formAssociation As AdsorbableAssociationForm
@@ -407,56 +408,47 @@ Public Class ReoGridView
         Dim newCols = System.Math.Max(e.StartCol, e.EndCol) - newCol + 1
         Dim copyRange As RangePosition = Nothing '如果之前复制，则会为此赋值
 
-        '首先更新数据
-        '判断是单元格更新还是整行更新
+        '要更新的数据的选区
         Dim selectionRange = Me.Panel.SelectionRange
-        If selectionRange.IsSingleCell Then
-            Call Me.ExportCells(selectionRange, False)
-        Else
-            Call Me.ExportRows(selectionRange, False)
-        End If
-        Call Me.PaintRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows))
+        Dim syncRange = selectionRange
 
-        If Me.copied Then
-            '如果新选区起始单元格和复制起始单元格相同，说明是复制引起的选取变化
-            If New CellPosition(newRow, newCol).Equals(Me.copyStartCellPos) Then
-                '对于复制的选区，全部作为已修改状态
-                For curRow = newRow To newRow + newRows - 1
-                    For curCol = newCol To newCol + newCols - 1
-                        Me.SetCellEdited(New CellPosition(curRow, curCol), True)
-                    Next
-                Next
-                copyRange = New RangePosition(newRow, newCol, newRows, newCols)
-                '同步复制选区的数据
-                Call Me.ExportRows(copyRange, False)
-                Me.copied = False
-            Else '否则说明复制只复制了一个单元格，没有触发选取变化，而是下一次选取变化触发。此时更新复制的单元格
-                Call Me.SetCellEdited(Me.copyStartCellPos, True)
-                Call Me.ExportCells(New RangePosition(Me.copyStartCellPos), False)
-                copyRange = New RangePosition(Me.copyStartCellPos)
-                Me.copied = False
-            End If
+        '如果新选区起始单元格和复制起始单元格不同，说明是复制单独一个单元格
+        Dim copiedSingleCell = False
+        If Me.copied AndAlso Not New CellPosition(newRow, newCol).Equals(Me.copyStartCellPos) Then
+            copiedSingleCell = True
         End If
+
+        '如果是复制的单独单元格，则额外同步此单元格的数据并触发事件
+        If Me.copied AndAlso copiedSingleCell Then
+            Call Me.SetCellEdited(Me.copyStartCellPos, True)
+            Call Me.ExportCells(New RangePosition(Me.copyStartCellPos), False)
+            RaiseRangeEditEnded(New RangePosition(Me.copyStartCellPos))
+            Call Me.SetCellEdited(Me.copyStartCellPos, False)
+        ElseIf Me.copied Then
+            '对于复制的选区，全部作为已修改状态
+            For curRow = newRow To newRow + newRows - 1
+                For curCol = newCol To newCol + newCols - 1
+                    Me.SetCellEdited(New CellPosition(curRow, curCol), True)
+                Next
+            Next
+            copyRange = New RangePosition(newRow, newCol, newRows, newCols)
+            syncRange = copyRange
+        End If
+
+        '同步数据
+        Call Me.ExportCells(syncRange, False)
+        ''绘制行
+        'Call Me.PaintRows(Util.Range(selectionRange.Row, selectionRange.Row + selectionRange.Rows))
 
         '同步Model的选区
         RaiseEvent SelectionRangeChanged(Me, New ViewSelectionRangeChangedEventArgs({New Range(newRow, newCol, newRows, newCols)}))
 
-        ''初始化新的选中行。如果选区首行没变，就不重新初始化行了
-        'If Not newRow = Me.Panel.SelectionRange.Row Then
-        '    If Not Me.Panel.RowHeaders(newRow).Tag.Inited Then
-        '        Me.InitRow(newRow)
-        '    End If
-        'End If
-
         '触发编辑完成事件
-        Call Me.RaiseRangeEditEnded(New RangePosition(row, col, rows, cols))
-        If Me.copied Then
-            Call Me.RaiseRangeEditEnded(copyRange)
-        End If
+        Call Me.RaiseRangeEditEnded(syncRange)
+        Me.copied = False '清除复制状态
 
-        '清除编辑完成
-        SetCellEdited(copyRange, False)
-        SetCellEdited(New RangePosition(row, col, rows, cols), False)
+        '清除编辑状态
+        SetCellEdited(syncRange, False)
     End Sub
 
     Private Sub RaiseRangeEditEnded(range As RangePosition)
@@ -472,7 +464,6 @@ Public Class ReoGridView
     End Sub
 
     Private Sub CellEditingTextChangingEvent(sender As Object, e As EventArgs)
-        Static bindedAssociationTextBox As Boolean = False
         If Not bindedAssociationTextBox Then
             bindedAssociationTextBox = True
             Call Me.BindAssociationTextBox()
@@ -617,30 +608,20 @@ Public Class ReoGridView
     Protected Sub ExportCells(rangePosition As RangePosition, Optional clearCellEdited As Boolean = True)
         If Not Me.InSync Then Return
 
-        If rangePosition.Cols <> 1 Then
-            Throw New FrontWorkException("ExportCells() can only be used when single column selected")
-        End If
         Dim modelRowCount = Me.Panel.RowCount
         Dim rowsUpdated As List(Of Integer) = Me.Range(rangePosition.Row, System.Math.Min(modelRowCount, rangePosition.EndRow + 1)).ToList
-        Dim colUpdated As Integer = rangePosition.Col
-        Dim fieldName = Me.FindNameByColumn(colUpdated)
-        Dim updateCellData = New List(Of Object)
-
-        '删除掉没有真正修改内容的行
-        rowsUpdated.RemoveAll(Function(row) Not Me.GetCellEdited(New CellPosition(row, colUpdated)))
-
-
-        'rowsUpdated的每一项和updateData的每一项相对应
-        For Each curReoGridRowNum In rowsUpdated
-            Call updateCellData.Add(Me.GetCellData(curReoGridRowNum, colUpdated))
+        Dim updatedCells As New List(Of ViewCellInfo) '更新的单元格
+        For row = rangePosition.Row To rangePosition.Row + rowsUpdated.Count - 1
+            For col = rangePosition.Col To rangePosition.Col + rangePosition.Cols
+                If Me.GetCellEdited(New CellPosition(row, col)) Then
+                    Dim fieldName = Me.FindNameByColumn(col)
+                    updatedCells.Add(New ViewCellInfo(row, fieldName, Me.GetCellData(row, col)))
+                End If
+            Next
         Next
 
-        If rowsUpdated.Count > 0 Then
-            Dim cellInfos(rowsUpdated.Count - 1) As ViewCellInfo
-            For i = 0 To rowsUpdated.Count - 1
-                cellInfos(i) = New ViewCellInfo(rowsUpdated(i), fieldName, updateCellData(i))
-            Next
-            RaiseEvent CellUpdated(Me, New ViewCellUpdatedEventArgs(cellInfos))
+        If updatedCells.Count > 0 Then
+            RaiseEvent CellUpdated(Me, New ViewCellUpdatedEventArgs(updatedCells.ToArray))
         End If
 
         If clearCellEdited Then
@@ -825,6 +806,7 @@ Public Class ReoGridView
     End Sub
 
     Public Sub ShowAssociationForm() Implements IAssociableDataView.ShowAssociationForm
+        If Not Me.bindedAssociationTextBox Then Return   
         Call Me.formAssociation.Show()
     End Sub
 
