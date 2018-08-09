@@ -22,6 +22,7 @@ namespace WMS.UI.FromSalary
             MethodListenerContainer.Register("FormPayNote", this);
             InitializeComponent();
         }
+        private FormPayNoteItem form ;
 
         public const  int WAITING_FOR_CONFIRM = 0;
         public const  int CONFIRM_PAY = 1;
@@ -41,15 +42,16 @@ namespace WMS.UI.FromSalary
             this.model1.Refreshed += this.model_Refreshed;
             Utilities.BindBlueButton(this.buttonAccountPay);
             Utilities.BindBlueButton(this.buttonAccountRealPay);
-            this.updateBasicAndReoGridView();
+            this.UpdateBasicAndReoGridView();
+            this.RefreshState();
         }
 
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            this.UpdateBasicAndReoGridView();
         }
 
-        private void updateBasicAndReoGridView()
+        private void UpdateBasicAndReoGridView()
         {
 
             if (this.model1.RowCount == 0)
@@ -66,7 +68,7 @@ namespace WMS.UI.FromSalary
             }
         }
 
-        private void refreshState()
+        private void RefreshState()
         {
             var rowData = this.model1.GetSelectedRow();
             if (rowData["id"] == null)
@@ -79,22 +81,25 @@ namespace WMS.UI.FromSalary
             {          
                 this.buttonAccountPay.Enabled = true;
                 this.buttonAccountRealPay.Enabled = true;
+                this.ChangeConfigMode("default");
             }
             else if ((int)rowData["state"] == 1)
             {
                 this.buttonAccountPay.Enabled = false;           
                 this.buttonAccountRealPay.Enabled = true;
+                this.ChangeConfigMode("pay");
             }
             else
             {
                 this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
+                this.ChangeConfigMode("payed");
             }                           
         }
 
         private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            this.UpdateBasicAndReoGridView();
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
@@ -112,20 +117,23 @@ namespace WMS.UI.FromSalary
                 {
                     this.buttonAccountPay.Enabled = true;
                     this.buttonAccountRealPay.Enabled = true;
+                this.ChangeConfigMode("default");
                 }
                 else if ((int)rowData["state"] == 1)
                 {
                     this.buttonAccountPay.Enabled = false;
                     this.buttonAccountRealPay.Enabled = true;
+                this.ChangeConfigMode("pay");
                 }
                 else
                 {
                     this.buttonAccountPay.Enabled = false;
                     this.buttonAccountRealPay.Enabled = false;
+                this.ChangeConfigMode("payed");
                 }
         }
 
-        private void changeConfigMode(string mode)
+        private void ChangeConfigMode(string mode)
         {
             this.model1.Mode =mode;
             this.basicView1.Mode = mode;
@@ -144,7 +152,7 @@ namespace WMS.UI.FromSalary
                 { "warehouseName",GlobalData.Warehouse["name"]}
             });
             //this.updateBasicAndReoGridView();
-            this.refreshState();
+            this.RefreshState();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -377,6 +385,7 @@ namespace WMS.UI.FromSalary
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             if (rowData["id"] ==null) { return; }
             FormPayNoteItem form = new FormPayNoteItem((int)rowData["id"], (int)rowData["salaryPeriodId"], (int)rowData["taxId"],(int)rowData["state"],(string)rowData["no"]);
+            this.form = form;
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
@@ -424,7 +433,9 @@ namespace WMS.UI.FromSalary
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
-                this.refreshState();
+                this.RefreshState();
+                this.form.payNoteState = FormPayNote.CONFIRM_PAY;
+                this.form.UpdateState();
             }
             catch (WebException ex)
             {
@@ -469,7 +480,9 @@ namespace WMS.UI.FromSalary
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                 MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
-                this.refreshState();
+                this.RefreshState();
+                this.form.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
+                this.form.UpdateState();
             }
             catch (WebException ex)
             {

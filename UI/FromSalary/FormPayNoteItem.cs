@@ -27,7 +27,7 @@ namespace WMS.UI.FromSalary
         private int payNoteId;
         private int periodId;
         private int taxId;
-        private int payNoteState;
+        public int payNoteState;
         private string payNoteNo;
         public FormPayNoteItem(int payNoteId,int periodId,int taxId,int payNoteState,string payNoteNo)
         {
@@ -101,11 +101,11 @@ namespace WMS.UI.FromSalary
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
-            this.updateState();
+            this.UpdateState();
 
         }
 
-        private void updateState() {
+        public void UpdateState() {
             if (this.payNoteState == FormPayNote.CONFIRM_PAY)
             {
                 this.basicView1.Mode = "pay";
@@ -285,7 +285,7 @@ namespace WMS.UI.FromSalary
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.payNoteState = FormPayNote.CONFIRM_PAY;
-                    this.updateState();
+                    this.UpdateState();
                     this.searchView1.Search();
                 }
                 catch (WebException ex)
@@ -341,7 +341,7 @@ namespace WMS.UI.FromSalary
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_PAY;
-                    this.updateState();
+                    this.UpdateState();
                 }
                 catch (WebException ex)
                 {
@@ -408,7 +408,7 @@ namespace WMS.UI.FromSalary
                     MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
-                    this.updateState();
+                    this.UpdateState();
                 }
                 catch (WebException ex)
                 {
@@ -462,7 +462,7 @@ namespace WMS.UI.FromSalary
                     MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
-                    this.updateState();
+                    this.UpdateState();
                 }
                 catch (WebException ex)
                 {
