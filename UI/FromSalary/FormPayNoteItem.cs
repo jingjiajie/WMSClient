@@ -284,6 +284,7 @@ namespace WMS.UI.FromSalary
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    addFinishedCallback?.Invoke();
                     this.payNoteState = FormPayNote.CONFIRM_PAY;
                     this.UpdateState();
                     this.searchView1.Search();
@@ -298,7 +299,6 @@ namespace WMS.UI.FromSalary
                     MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-
         }
 
         private void buttonCalculateAllTax_Click(object sender, EventArgs e)
@@ -339,6 +339,7 @@ namespace WMS.UI.FromSalary
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    addFinishedCallback?.Invoke();
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_PAY;
                     this.UpdateState();
@@ -406,6 +407,7 @@ namespace WMS.UI.FromSalary
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json1);
                     MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    addFinishedCallback?.Invoke();
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
                     this.UpdateState();
@@ -460,6 +462,7 @@ namespace WMS.UI.FromSalary
                     string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    addFinishedCallback?.Invoke();
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
                     this.UpdateState();

@@ -87,7 +87,7 @@ namespace WMS.UI.FromSalary
             {
                 this.buttonAccountPay.Enabled = false;           
                 this.buttonAccountRealPay.Enabled = true;
-                this.ChangeConfigMode("pay");
+                this.ChangeConfigMode("payed");
             }
             else
             {
@@ -123,7 +123,7 @@ namespace WMS.UI.FromSalary
                 {
                     this.buttonAccountPay.Enabled = false;
                     this.buttonAccountRealPay.Enabled = true;
-                this.ChangeConfigMode("pay");
+                this.ChangeConfigMode("payed");
                 }
                 else
                 {
@@ -389,6 +389,7 @@ namespace WMS.UI.FromSalary
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
+                this.RefreshState();             
             });
             form.Show();      
         }
