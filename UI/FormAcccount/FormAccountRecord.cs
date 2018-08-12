@@ -138,6 +138,7 @@ namespace WMS.UI.FormAcccount
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+                this.showAccrual();
             }
         }
 
@@ -161,6 +162,7 @@ namespace WMS.UI.FormAcccount
             }
 
             this.searchView1.Search();
+            this.showAccrual();
         }
 
         private void comboBoxAccountTitle_SelectedIndexChanged(object sender, EventArgs e)
@@ -193,6 +195,7 @@ namespace WMS.UI.FormAcccount
                 string operatioName = "write_off";
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/" + operatioName, strIDs, "POST");
                 this.searchView1.Search();
+                this.showAccrual();
                 MessageBox.Show("冲销操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (WebException ex)
@@ -216,13 +219,13 @@ namespace WMS.UI.FormAcccount
         {
             try
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"accountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/accrual_check";
                 var returnAccrualCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 foreach (IDictionary<string, object> theReturnAccrualCheck in returnAccrualCheck)
                 {
-                    this.textBoxCreditAmount.Text = (string)theReturnAccrualCheck["creditAmount"];
-                    this.textBoxDebitAmount.Text = (string)theReturnAccrualCheck["debitAmount"];
+                    this.textBoxCreditAmount.Text = theReturnAccrualCheck["creditAmount"].ToString();
+                    this.textBoxDebitAmount.Text = theReturnAccrualCheck["debitAmount"].ToString();
                 }
 
             }
