@@ -5,7 +5,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.IO;
+using System.Net;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace WMS.UI.FormAcccount
@@ -91,6 +94,8 @@ namespace WMS.UI.FormAcccount
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+
+            this.showAccrual();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -171,6 +176,65 @@ namespace WMS.UI.FormAcccount
                 this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
                 this.searchView1.Search();
             }        
+        }
+
+        private void ButtonWriteOff_Click(object sender, EventArgs e)
+        {
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行冲销操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "write_off";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("冲销操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("选中条目冲销") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+        }
+
+        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void showAccrual()
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"accountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/accrual_check";
+                var returnAccrualCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                foreach (IDictionary<string, object> theReturnAccrualCheck in returnAccrualCheck)
+                {
+                    this.textBoxCreditAmount.Text = (string)theReturnAccrualCheck["creditAmount"];
+                    this.textBoxDebitAmount.Text = (string)theReturnAccrualCheck["debitAmount"];
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
