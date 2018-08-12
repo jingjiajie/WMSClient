@@ -20,6 +20,7 @@ namespace WMS.UI.FromSalary
 
         private void FormSalaryType_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -64,6 +65,20 @@ namespace WMS.UI.FromSalary
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             if (rowData["id"] == null) { return; }
             FormSalaryTypePerson form = new FormSalaryTypePerson((int)rowData["id"]);
+            form.Show();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            if (this.model1.RowCount == 0) { return; }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项薪金项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            if (rowData["id"] == null) { return; }
+            FormSalaryItem form = new FormSalaryItem((int)rowData["id"]);
             form.Show();
         }
     }

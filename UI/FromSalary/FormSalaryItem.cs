@@ -12,13 +12,15 @@ namespace WMS.UI.FromSalary
 {
     public partial class FormSalaryItem : Form
     {
-        public FormSalaryItem()
+        private int salaryTypeId;
+        public FormSalaryItem(int salaryTypeId)
         {
             MethodListenerContainer.Register("FormSalaryItem", this);
             InitializeComponent();
+            this.salaryTypeId = salaryTypeId;
         }
 
-        private string TypeForwardMapper([Data]int state)
+         private string TypeForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -40,7 +42,8 @@ namespace WMS.UI.FromSalary
 
         private void FormSalaryItem_Load(object sender, EventArgs e)
         {
-            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);         
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            this.searchView1.AddStaticCondition("salaryTypeId", this.salaryTypeId);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
