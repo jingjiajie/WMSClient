@@ -42,7 +42,33 @@ namespace WMS.UI.FromSalary
                 this.comboBoxSalaryPeriod.Items.Add("无");
                 this.comboBoxSalaryPeriod.SelectedIndex = 0;               
             }
-                this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+
+            //刷新类别
+            this.comboBoxSalaryType.Items.AddRange((from item in GlobalData.AllSalaryType
+                                                      select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+            if (GlobalData.AllSalaryType.Count != 0)
+            {
+                GlobalData.SalaryType = GlobalData.AllSalaryType[0];
+                for (int i = 0; i < this.comboBoxSalaryType.Items.Count; i++)
+                {
+                    if (GlobalData.AllSalaryType[i] == GlobalData.SalaryType)
+                    {
+                        this.comboBoxSalaryType.SelectedIndexChanged -= this.comboBoxSalaryType_SelectedIndexChanged;
+                        this.comboBoxSalaryType.SelectedIndex = i;
+                        this.comboBoxSalaryType.SelectedIndexChanged += this.comboBoxSalaryType_SelectedIndexChanged;
+                    }
+                }
+                this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
+            }
+            else
+            {
+                this.comboBoxSalaryType.SelectedIndexChanged -= this.comboBoxSalaryType_SelectedIndexChanged;
+                this.comboBoxSalaryType.Items.Add("无");
+                this.comboBoxSalaryType.SelectedIndex = 0;
+            }
+
+
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -140,6 +166,14 @@ namespace WMS.UI.FromSalary
             GlobalData.SalaryPeriod = ((ComboBoxItem)this.comboBoxSalaryPeriod.SelectedItem).Value as IDictionary<string, object>;
             this.searchView1.ClearStaticCondition("salaryPeriodId");
             this.searchView1.AddStaticCondition("salaryPeriodId", GlobalData.SalaryPeriod["id"]);
+            this.searchView1.Search();
+        }
+
+        private void comboBoxSalaryType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GlobalData.SalaryType = ((ComboBoxItem)this.comboBoxSalaryType.SelectedItem).Value as IDictionary<string, object>;
+            this.searchView1.ClearStaticCondition("salaryTypeId");
+            this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
             this.searchView1.Search();
         }
     }

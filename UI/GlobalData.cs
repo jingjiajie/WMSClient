@@ -11,6 +11,7 @@ namespace WMS.UI
         public static IDictionary<string, object> Person;
         public static IDictionary<string, object> Warehouse;
         public static IDictionary<string, object> SalaryPeriod;
+        public static IDictionary<string, object> SalaryType;
         public static IDictionary<string, object> AccountTitle;
         public static List<IDictionary<string, object>> AllWarehouses;
         public static List<IDictionary<string, object>> AllSuppliers;
