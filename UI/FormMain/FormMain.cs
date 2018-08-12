@@ -62,8 +62,7 @@ namespace WMS.UI
                     }),
                  MakeTreeNode("薪金管理",new TreeNode[]{
                     MakeTreeNode("薪金类别"),
-                    MakeTreeNode("薪金期间"),
-                    MakeTreeNode("薪金项目"),                 
+                    MakeTreeNode("薪金期间"),              
                     MakeTreeNode("人员薪金"),
                     MakeTreeNode("薪资发放单")
                     }),
@@ -270,9 +269,6 @@ namespace WMS.UI
                     break;
                 case "薪金类别":
                     this.LoadSubWindow(new FromSalary.FormSalaryType());
-                    break;
-                case "薪金项目":
-                    this.LoadSubWindow(new FromSalary.FormSalaryItem());
                     break;
                 case "薪金期间":
                     this.LoadSubWindow(new FromSalary.FormSalaryPeriod());
