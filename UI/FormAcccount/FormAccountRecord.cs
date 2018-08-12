@@ -62,10 +62,7 @@ namespace WMS.UI.FormAcccount
 
         private void FormAccountRecord_Load(object sender, EventArgs e)
         {
-            if (this.comboBoxAccountTitle.SelectedIndex == 0)
-            {
-                GlobalData.AccountTitle = null;
-            }
+            GlobalData.AccountTitle = null;
             //刷新期间
             this.comboBoxAccountPeriod.Items.AddRange((from item in GlobalData.AllAccountPeriod
                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
@@ -170,11 +167,13 @@ namespace WMS.UI.FormAcccount
             this.searchView1.ClearStaticCondition("accountTitleId");
             if (this.comboBoxAccountTitle.SelectedIndex==0) {
                 GlobalData.AccountTitle = null;
+                this.searchView1.ClearStaticCondition();
                 this.searchView1.Search();
             }
             else
             {
                 GlobalData.AccountTitle = ((ComboBoxItem)this.comboBoxAccountTitle.SelectedItem).Value as IDictionary<string, object>;
+                this.searchView1.ClearStaticCondition();
                 this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
                 this.searchView1.Search();
             }        
@@ -238,6 +237,11 @@ namespace WMS.UI.FormAcccount
                 }
                 MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void toolStripButtonDeficit_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
