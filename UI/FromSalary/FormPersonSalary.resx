@@ -130,7 +130,8 @@
         {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",visible:false}, 
         {name:"amount",displayName:"金额",type:"double"},  
         {name:"warehouseId",displayName:"仓库id",defaultValue:"#warehouseIdDefaultValue",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
+        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},
+        {name:"edited",displayName:"是否编辑",type:"double",visible:true},
      ],
     httpAPIs:[
         {type:"get-count",
@@ -156,6 +157,9 @@
     }
 ]</value>
   </data>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>127, 98</value>
+  </metadata>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>127, 98</value>
   </metadata>
