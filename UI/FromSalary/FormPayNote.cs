@@ -71,6 +71,7 @@ namespace WMS.UI.FromSalary
         private void RefreshState()
         {
             var rowData = this.model1.GetSelectedRow();
+            if (rowData == null) { return; }
             if (rowData["id"] == null)
             {
                 this.buttonAccountPay.Enabled = false;
