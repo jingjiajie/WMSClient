@@ -303,6 +303,24 @@ namespace WMS.UI.FromSalary
             }
         }
 
+        private void SalaryTypeNameEditEnded([Row]int row, [Data] string typeName)
+        {
+            IDictionary<string, object> foundSalaryType =
+                GlobalData.AllSalaryType.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == typeName;
+                });
+            if (foundSalaryType == null)
+            {
+                MessageBox.Show($"类型\"{typeName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {               
+                this.model1[row, "salaryTypeId"] = foundSalaryType["id"];
+            }
+        }
+
         private void buttonItems_Click(object sender, EventArgs e)
         {
             if (this.model1.SelectionRange.Rows != 1)

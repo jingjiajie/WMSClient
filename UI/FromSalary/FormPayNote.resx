@@ -144,8 +144,10 @@
 {name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded",placeHolder:"必填项"}, 
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
 {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",placeHolder:"必填项",editable:false},
-{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0}
-     ],
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0},
+{name:"salaryTypeId",displayName:"类型ID",type:"int",visible:false},
+{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"}
+],
     httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/pay_note/count/{{conditions:$conditions,orders:$orders}}",
@@ -192,8 +194,10 @@
 {name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded",editable:false}, 
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
 {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",editable:false},
-{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0}
-     ],
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0},
+{name:"salaryTypeId",displayName:"类型ID",type:"int",visible:false},
+{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"}
+],
     httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/pay_note/count/{{conditions:$conditions,orders:$orders}}",
@@ -240,8 +244,10 @@
 {name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded",editable:false}, 
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
 {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",editable:false},
-{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0}
-     ],
+{name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0},
+{name:"salaryTypeId",displayName:"类型ID",type:"int",visible:false},
+{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"}
+],
     httpAPIs:[
         {type:"get-count",
             url:"{$url}/warehouse/{$accountBook}/pay_note/count/{{conditions:$conditions,orders:$orders}}",

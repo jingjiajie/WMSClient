@@ -81,6 +81,7 @@
             this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.pagerView1, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.configuration1, 0, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -120,7 +121,7 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(308, 270);
+            this.configuration1.Location = new System.Drawing.Point(2, 332);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPayNote",
@@ -139,7 +140,7 @@
         modeMethodListenerNamesPair2,
         modeMethodListenerNamesPair3};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(180, 15);
             this.configuration1.TabIndex = 1;
             // 
             // panelPager
@@ -442,7 +443,6 @@
             this.Controls.Add(this.synchronizer);
             this.Controls.Add(this.pagerSearchJsonRESTAdapter1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.configuration1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormPayNote";
             this.Text = "薪资发放单";
