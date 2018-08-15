@@ -89,12 +89,14 @@ namespace WMS.UI.FromSalary
             {
                 this.buttonAccountPay.Enabled = false;           
                 this.buttonAccountRealPay.Enabled = true;
+                this.toolStripButtonDelete.Enabled = false;
                 this.ChangeConfigMode("payed");
             }
             else
             {
                 this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
                 this.ChangeConfigMode("payed");
             }                           
         }
