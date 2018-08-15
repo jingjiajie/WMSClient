@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair6 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -184,12 +184,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(37, 81);
             this.configuration1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair6.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair3.Mode = "default";
+            modeMethodListenerNamesPair6.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair3};
+        modeMethodListenerNamesPair6};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -236,14 +236,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(737, 81);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";

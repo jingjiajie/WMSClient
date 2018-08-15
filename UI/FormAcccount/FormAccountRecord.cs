@@ -167,13 +167,12 @@ namespace WMS.UI.FormAcccount
             this.searchView1.ClearStaticCondition("accountTitleId");
             if (this.comboBoxAccountTitle.SelectedIndex==0) {
                 GlobalData.AccountTitle = null;
-                this.searchView1.ClearStaticCondition();
                 this.searchView1.Search();
             }
             else
             {
                 GlobalData.AccountTitle = ((ComboBoxItem)this.comboBoxAccountTitle.SelectedItem).Value as IDictionary<string, object>;
-                this.searchView1.ClearStaticCondition();
+
                 this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
                 this.searchView1.Search();
             }        
