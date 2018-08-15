@@ -130,7 +130,7 @@
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormPayNote",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "pay";
+            modeMethodListenerNamesPair2.Mode = "creat";
             modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
         "FormPayNote",
         "AssociationMethodListener"};

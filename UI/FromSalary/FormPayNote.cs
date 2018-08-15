@@ -76,6 +76,7 @@ namespace WMS.UI.FromSalary
             {
                 this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
+                this.ChangeConfigMode("creat");
                 return;
             }
             if ((int)rowData["state"] == 0)
@@ -112,26 +113,27 @@ namespace WMS.UI.FromSalary
                 this.buttonAccountRealPay.Enabled = false;
                 return;
             }
-            var rowData = this.model1.GetSelectedRow();
+            this.RefreshState();
+            //var rowData = this.model1.GetSelectedRow();
 
-                if ((int)rowData["state"] == 0)
-                {
-                    this.buttonAccountPay.Enabled = true;
-                    this.buttonAccountRealPay.Enabled = true;
-                this.ChangeConfigMode("default");
-                }
-                else if ((int)rowData["state"] == 1)
-                {
-                    this.buttonAccountPay.Enabled = false;
-                    this.buttonAccountRealPay.Enabled = true;
-                this.ChangeConfigMode("payed");
-                }
-                else
-                {
-                    this.buttonAccountPay.Enabled = false;
-                    this.buttonAccountRealPay.Enabled = false;
-                this.ChangeConfigMode("payed");
-                }
+            //    if ((int)rowData["state"] == 0)
+            //    {
+            //        this.buttonAccountPay.Enabled = true;
+            //        this.buttonAccountRealPay.Enabled = true;
+            //    this.ChangeConfigMode("default");
+            //    }
+            //    else if ((int)rowData["state"] == 1)
+            //    {
+            //        this.buttonAccountPay.Enabled = false;
+            //        this.buttonAccountRealPay.Enabled = true;
+            //    this.ChangeConfigMode("payed");
+            //    }
+            //    else
+            //    {
+            //        this.buttonAccountPay.Enabled = false;
+            //        this.buttonAccountRealPay.Enabled = false;
+            //    this.ChangeConfigMode("payed");
+            //    }
         }
 
         private void ChangeConfigMode(string mode)

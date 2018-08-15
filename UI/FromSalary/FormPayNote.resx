@@ -120,7 +120,7 @@
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>
 [
-    {mode:"default",
+    {mode:"creat",
      fields:[
 {name:"id",displayName:"ID",type:"int",visible:false},
 {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
@@ -143,10 +143,10 @@
 {name:"taxName",displayName:"税务名称",type:"string",association:"#taxNameAssociation",editEnded:"#taxNameEditEnded",placeHolder:"必填项"},          
 {name:"taxNo",displayName:"税务代码",type:"string",association:"#taxNoAssociation",editEnded:"#taxNoEditEnded",placeHolder:"必填项"}, 
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",placeHolder:"必填项",editable:false},
+{name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",placeHolder:"必填项",editable:true},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0},
 {name:"salaryTypeId",displayName:"类型ID",type:"int",visible:false},
-{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"}
+{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded",placeHolder:"必填项",editable:true}
 ],
     httpAPIs:[
         {type:"get-count",
@@ -170,7 +170,7 @@
             method:"DELETE"}
 	]
     },
-    {mode:"pay",
+    {mode:"default",
      fields:[
 {name:"id",displayName:"ID",type:"int",visible:false},
 {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
@@ -184,10 +184,10 @@
 {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
 {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
 {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
-{name:"accountTitleExpenseName",displayName:"薪资费用科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleExpenseNameEditEnded",editable:false},
-{name:"accountTitleExpenseNo",displayName:"薪资费用科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleExpenseNoEditEnded",editable:false},
-{name:"accountTitlePayableName",displayName:"应付款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePayableNameEditEnded",editable:false},
-{name:"accountTitlePayableNo",displayName:"应付款科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePayableNoEditEnded",editable:false},
+{name:"accountTitleExpenseName",displayName:"薪资费用科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleExpenseNameEditEnded"},
+{name:"accountTitleExpenseNo",displayName:"薪资费用科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleExpenseNoEditEnded"},
+{name:"accountTitlePayableName",displayName:"应付款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePayableNameEditEnded"},
+{name:"accountTitlePayableNo",displayName:"应付款科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePayableNoEditEnded"},
 {name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded"},
 {name:"accountTitlePropertyNo",displayName:"资产科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded"},
 {name:"taxName",displayName:"税务名称",type:"string",association:"#taxNameAssociation",editEnded:"#taxNameEditEnded",editable:false},          
@@ -196,7 +196,7 @@
 {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0},
 {name:"salaryTypeId",displayName:"类型ID",type:"int",visible:false},
-{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"}
+{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded",editable:false}
 ],
     httpAPIs:[
         {type:"get-count",
@@ -246,7 +246,7 @@
 {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false,defaultValue:0},
 {name:"salaryTypeId",displayName:"类型ID",type:"int",visible:false},
-{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded"}
+{name:"salaryTypeName",displayName:"类型名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#salaryTypeNameEditEnded",editable:false}
 ],
     httpAPIs:[
         {type:"get-count",
