@@ -240,7 +240,43 @@ namespace WMS.UI.FormAcccount
 
         private void toolStripButtonDeficit_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/deficit_check";
+                var returnDeficitCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                if (returnDeficitCheck.Count == 0)
+                {
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.searchView1.Search();
+                }
+                else
+                {
+                    this.searchView1.Search();
+                    StringBuilder remindBody = new StringBuilder();
+                    foreach (IDictionary<string, object> AccountRecordView in returnDeficitCheck)
+                    {
 
+                            remindBody = remindBody
+                                    .Append("科目名称：“").Append(AccountRecordView["accountTitleName"])
+                                    .Append("”，余额：“").Append(AccountRecordView["balance"])
+                                    .Append("”存在赤字！请核准账目记录！\r\n");
+
+                    }
+                    new FormRemind(remindBody.ToString()).Show();
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("赤字提醒失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
