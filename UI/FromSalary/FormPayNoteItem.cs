@@ -48,6 +48,7 @@ namespace WMS.UI.FromSalary
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            if (rowData == null) { return; }
             if ((int)rowData[0]["state"] == 0)
             {
                 this.model1.Mode = "default";
@@ -105,6 +106,64 @@ namespace WMS.UI.FromSalary
 
         }
 
+        private void UpdateItemState()
+        {
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            if (rowData == null) { return; }
+            if (rowData[0]["id"] == null) {
+                this.model1.Mode = "add";
+                this.basicView1.Mode = "add";
+                this.reoGridView1.Mode = "add";
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonRealPayAll.Enabled = false;
+                this.buttonRealPayItems.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
+                return;
+            }
+            if ((int)rowData[0]["state"] == 0)
+            {
+                this.model1.Mode = "default";
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";           
+                this.buttonCclcultateItemsTax.Enabled = true;
+                this.buttonCalculateAllTax.Enabled = true;
+                this.buttonRealPayAll.Enabled = true;
+                this.buttonRealPayItems.Enabled = true;
+                this.ButtonAllPerson.Enabled = true;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
+            }
+            else if ((int)rowData[0]["state"] == 1)
+            {
+                this.basicView1.Mode = "pay";
+                this.reoGridView1.Mode = "pay";
+                this.model1.Mode = "pay";            
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+            }
+            else
+            {
+                this.basicView1.Mode = "payed";
+                this.reoGridView1.Mode = "payed";
+                this.model1.Mode = "payed";            
+                this.buttonCclcultateItemsTax.Enabled = false;
+                this.buttonCalculateAllTax.Enabled = false;
+                this.buttonRealPayAll.Enabled = false;
+                this.buttonRealPayItems.Enabled = false;
+                this.ButtonAllPerson.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+            }
+
+        }
+
+
         public void UpdateState() {
             if (this.payNoteState == FormPayNote.CONFIRM_PAY)
             {
@@ -131,6 +190,20 @@ namespace WMS.UI.FromSalary
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
             }
+            else
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+                this.model1.Mode = "default";
+                //this.synchronizer.Mode = "payed";
+                this.buttonCclcultateItemsTax.Enabled = true;
+                this.buttonCalculateAllTax.Enabled = true;
+                this.buttonRealPayAll.Enabled = true;
+                this.buttonRealPayItems.Enabled = true;
+                this.ButtonAllPerson.Enabled = true;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;              
+            }
 
         }
 
@@ -138,8 +211,11 @@ namespace WMS.UI.FromSalary
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {                             
-                { "payNoteId",payNoteId}
+                { "payNoteId",payNoteId},
+                { "state",WAITING_FOR_CALCULATE_PAY},
+                { "paidAmount",0}
             });
+            this.UpdateItemState();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

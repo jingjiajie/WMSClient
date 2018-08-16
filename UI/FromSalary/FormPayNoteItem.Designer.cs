@@ -35,6 +35,7 @@
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair4 = new FrontWork.ModeMethodListenerNamesPair();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -172,10 +173,15 @@
         "FormPayNoteItem",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair3.Mode = "payed";
+            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
+        "FormPayNoteItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair4.Mode = "add";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2,
-        modeMethodListenerNamesPair3};
+        modeMethodListenerNamesPair3,
+        modeMethodListenerNamesPair4};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -376,6 +382,7 @@
             this.ButtonAllPerson.Name = "ButtonAllPerson";
             this.ButtonAllPerson.Size = new System.Drawing.Size(104, 19);
             this.ButtonAllPerson.Text = "添加所有人员";
+            this.ButtonAllPerson.Visible = false;
             this.ButtonAllPerson.Click += new System.EventHandler(this.ButtonRefresh_Click);
             // 
             // toolStripButtonAdd
@@ -385,7 +392,6 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 19);
             this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonDelete
