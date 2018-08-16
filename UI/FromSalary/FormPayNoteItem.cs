@@ -245,7 +245,14 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show($"人员\"{personName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
-            {             
+            {
+                List<int> personIdExist = this.GetPersonId();
+                if (personIdExist.Contains((int)foundPerson["id"])) {                
+                    MessageBox.Show($"人员\"{personName}\"已经在此单中存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.model1[row, "personName"] = "";
+                    this.model1[row, "personId"] = null;
+                    return;
+                }
                 this.model1[row, "personId"] = foundPerson["id"];
             }
         }
@@ -577,6 +584,19 @@ namespace WMS.UI.FromSalary
         private void FormPayNoteItem_FormClosed(object sender, FormClosedEventArgs e)
         {
             addFinishedCallback?.Invoke();
+        }
+
+        private List<int> GetPersonId()
+        {
+            List<int> personId = new List<int>();
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                if (this.model1.GetRow(i)["id"] != null)
+                {
+                    personId.Add((int)this.model1.GetRow(i)["personId"]);
+                }       
+            }
+            return personId;      
         }
     }
 }
