@@ -79,7 +79,8 @@ namespace WMS.UI.FromSalary
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]}
+                { "warehouseName",GlobalData.Warehouse["name"]},
+                { "salaryTypeId",salaryTypeId}
             });
         }
 
