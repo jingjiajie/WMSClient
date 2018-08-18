@@ -76,6 +76,7 @@ namespace WMS.UI.FromSalary
             {
                 this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
+                this.toolStripButtonDelete.Enabled = true;
                 this.ChangeConfigMode("creat");
                 return;
             }
@@ -83,6 +84,7 @@ namespace WMS.UI.FromSalary
             {          
                 this.buttonAccountPay.Enabled = true;
                 this.buttonAccountRealPay.Enabled = true;
+                this.toolStripButtonDelete.Enabled = true;
                 this.ChangeConfigMode("default");
             }
             else if ((int)rowData["state"] == 1)
@@ -157,7 +159,6 @@ namespace WMS.UI.FromSalary
                 { "warehouseName",GlobalData.Warehouse["name"]}
             });
             //this.updateBasicAndReoGridView();
-            this.RefreshState();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -171,6 +172,7 @@ namespace WMS.UI.FromSalary
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+                this.RefreshState();
             }
         }
 
