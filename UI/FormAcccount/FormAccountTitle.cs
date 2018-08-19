@@ -112,6 +112,12 @@ namespace WMS.UI.FormAcccount
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+
+            Condition condAccountTitle = new Condition();
+
+            GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.AddCondition("enabled", 1)}");
+
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
