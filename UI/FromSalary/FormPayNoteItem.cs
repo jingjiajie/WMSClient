@@ -229,6 +229,7 @@ namespace WMS.UI.FromSalary
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+                this.UpdateItemState();
             }
         }
 

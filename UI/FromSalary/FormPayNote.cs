@@ -460,8 +460,11 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
                 this.RefreshState();
-                this.form.payNoteState = FormPayNote.CONFIRM_PAY;
-                this.form.UpdateState();
+                if (form != null)
+                {
+                    this.form.payNoteState = FormPayNote.CONFIRM_PAY;
+                    this.form.UpdateState();
+                }
             }
             catch (WebException ex)
             {
@@ -507,8 +510,11 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
                 this.RefreshState();
-                this.form.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
-                this.form.UpdateState();
+                if (form != null)
+                {
+                    this.form.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
+                    this.form.UpdateState();
+                }
             }
             catch (WebException ex)
             {

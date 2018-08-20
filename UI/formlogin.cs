@@ -282,7 +282,7 @@ namespace WMS.UI
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("endTime",OrderItemOrder.DESC).ToString()}");
 
             GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.AddCondition("enabled", 1)}");
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle}/find_son");
 
             GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");

@@ -102,9 +102,9 @@ namespace WMS.UI.FormAcccount
                 this.searchView1.Search();
 
                 Condition condAccountTitle = new Condition();
-
+                
                 GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
-                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.AddCondition("enabled", 1)}");
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle.AddCondition("enabled", 1)}/find_son");
             }
         }
 
