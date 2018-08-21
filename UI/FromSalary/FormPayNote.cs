@@ -414,7 +414,8 @@ namespace WMS.UI.FromSalary
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
-                this.RefreshState();             
+                this.RefreshState();
+                this.form = null;
             });
             form.Show();      
         }

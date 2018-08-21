@@ -103,7 +103,7 @@ namespace WMS.UI.FromSalary
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
             this.UpdateState();
-
+            this.UpdateItemState();
         }
 
         private void UpdateItemState()
@@ -146,19 +146,38 @@ namespace WMS.UI.FromSalary
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
+                this.buttonRealPayAll.Enabled = true;
+                this.buttonRealPayItems.Enabled = true;
             }
-            else
+            else if ((int)rowData[0]["state"] == 2)
             {
-                this.basicView1.Mode = "payed";
-                this.reoGridView1.Mode = "payed";
-                this.model1.Mode = "payed";            
-                this.buttonCclcultateItemsTax.Enabled = false;
-                this.buttonCalculateAllTax.Enabled = false;
-                this.buttonRealPayAll.Enabled = false;
-                this.buttonRealPayItems.Enabled = false;
-                this.ButtonAllPerson.Enabled = false;
-                this.toolStripButtonAdd.Enabled = false;
-                this.toolStripButtonDelete.Enabled = false;
+                //条目已确认实付后根据整单状态分为两种情况
+                if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY)
+                {
+                    this.basicView1.Mode = "payed";
+                    this.reoGridView1.Mode = "payed";
+                    this.model1.Mode = "payed";
+                    this.buttonCclcultateItemsTax.Enabled = false;
+                    this.buttonCalculateAllTax.Enabled = false;
+                    this.buttonRealPayAll.Enabled = false;
+                    this.buttonRealPayItems.Enabled = false;
+                    this.ButtonAllPerson.Enabled = false;
+                    this.toolStripButtonAdd.Enabled = false;
+                    this.toolStripButtonDelete.Enabled = false;
+                }
+                else if (this.payNoteState == FormPayNote.CONFIRM_PAY)
+                {
+                    this.basicView1.Mode = "pay";
+                    this.reoGridView1.Mode = "pay";
+                    this.model1.Mode = "pay";
+                    this.buttonCalculateAllTax.Enabled = false;
+                    this.buttonCclcultateItemsTax.Enabled = false;
+                    this.ButtonAllPerson.Enabled = false;
+                    this.toolStripButtonAdd.Enabled = false;
+                    this.toolStripButtonDelete.Enabled = false;
+                    this.buttonRealPayAll.Enabled = true;
+                    this.buttonRealPayItems.Enabled = true;
+                }
             }
 
         }
@@ -170,7 +189,6 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "pay";
                 this.reoGridView1.Mode = "pay";
                 this.model1.Mode = "pay";
-                //this.synchronizer.Mode = "pay";
                 this.buttonCalculateAllTax.Enabled = false;
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.ButtonAllPerson.Enabled = false;
@@ -180,8 +198,7 @@ namespace WMS.UI.FromSalary
             else if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY) {
                 this.basicView1.Mode = "payed";
                 this.reoGridView1.Mode = "payed";
-                this.model1.Mode = "payed";
-                //this.synchronizer.Mode = "payed";
+                this.model1.Mode = "payed";               
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.buttonCalculateAllTax.Enabled = false;
                 this.buttonRealPayAll.Enabled = false;
@@ -195,7 +212,6 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";
                 this.model1.Mode = "default";
-                //this.synchronizer.Mode = "payed";
                 this.buttonCclcultateItemsTax.Enabled = true;
                 this.buttonCalculateAllTax.Enabled = true;
                 this.buttonRealPayAll.Enabled = true;
