@@ -498,6 +498,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
                 accountSynchronize.voucherInfo = this.payNoteNo;
+                accountSynchronize.comment = "实付自动同步到总账";
                 if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
                 string json1 = (new JavaScriptSerializer()).Serialize(accountSynchronize);
@@ -553,6 +554,7 @@ namespace WMS.UI.FromSalary
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
                 accountSynchronize.voucherInfo = this.payNoteNo;
+                accountSynchronize.comment = "实付自动同步到总账";
                 if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
                 string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);
