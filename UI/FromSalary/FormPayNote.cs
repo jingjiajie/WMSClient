@@ -158,6 +158,7 @@ namespace WMS.UI.FromSalary
                 { "createTime",DateTime.Now},
                 { "warehouseName",GlobalData.Warehouse["name"]}
             });
+            this.RefreshState();
             //this.updateBasicAndReoGridView();
         }
 
