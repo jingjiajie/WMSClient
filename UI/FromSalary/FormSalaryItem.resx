@@ -124,19 +124,18 @@
     <value>17, 98</value>
   </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
+    <value>[
+{mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"salaryTypeId",displayName:"salaryTypeID",type:"int",visible:false},              
         {name:"name",displayName:"名称",type:"string"},      
-        {name:"defaultAmount",displayName:"默认金额",type:"double"}, 
-        {name:"formula",displayName:"公式",type:"string"}, 
-        {name:"identifier",displayName:"公式标识符",type:"string"}, 
+        {name:"defaultAmount",displayName:"默认金额",type:"double",editable:true}, 
+        {name:"formula",displayName:"公式",type:"string",editable:false}, 
+        {name:"identifier",displayName:"公式标识符",type:"string",editable:false}, 
         {name:"salaryTypeName",displayName:"类别名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#SalaryTypeNameEditEnded",visible:false},  
         {name:"type",displayName:"工资类别",type:"int",values:["固定工资","计件工资","公式计算"],defaultValue:0,forwardMapper:"#TypeForwardMapper",backwardMapper:"#TypeBackwardMapper"},   
-        {name:"priority",displayName:"计算优先级",type:"int",defaultValue:0},         
+        {name:"priority",displayName:"计算优先级",type:"int",defaultValue:0,editable:false},         
         {name:"giveOut",displayName:"是否计入发放金额",type:"int",values:["是","否"],defaultValue:1,forwardMapper:"#GiveOutForwardMapper",backwardMapper:"#GiveOutBackwardMapper"},      
         {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
@@ -163,14 +162,55 @@
             method:"DELETE"}
 	]
     },
-    {mode:"count",
+{mode:"count",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"salaryTypeId",displayName:"salaryTypeID",type:"int",visible:false},              
+        {name:"name",displayName:"名称",type:"string",editable:true},      
+        {name:"defaultAmount",displayName:"单价",type:"double",editable:true}, 
+        {name:"formula",displayName:"公式",type:"string",editable:false}, 
+        {name:"identifier",displayName:"公式标识符",type:"string",editable:false}, 
+        {name:"salaryTypeName",displayName:"类别名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#SalaryTypeNameEditEnded",visible:false},  
+        {name:"type",displayName:"工资类别",type:"int",values:["固定工资","计件工资","公式计算"],defaultValue:0,forwardMapper:"#TypeForwardMapper",backwardMapper:"#TypeBackwardMapper"},   
+        {name:"priority",displayName:"计算优先级",type:"int",defaultValue:0,editable:false},         
+        {name:"giveOut",displayName:"是否计入发放金额",type:"int",values:["是","否"],defaultValue:1,forwardMapper:"#GiveOutForwardMapper",backwardMapper:"#GiveOutBackwardMapper"},      
+        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
+        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
+     ],
+    httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/salary_item/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/salary_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/salary_item/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/salary_item/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/salary_item/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    },
+{mode:"formula",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"salaryTypeId",displayName:"salaryTypeID",type:"int",visible:false},              
         {name:"name",displayName:"名称",type:"string"},      
-        {name:"defaultAmount",displayName:"单价",type:"double"}, 
-        {name:"salaryTypeName",displayName:"类别名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#SalaryTypeNameEditEnded"},  
-        {name:"type",displayName:"工资类别",type:"int",values:["固定工资","计件工资"],defaultValue:0,forwardMapper:"#TypeForwardMapper",backwardMapper:"#TypeBackwardMapper"},      
+        {name:"defaultAmount",displayName:"默认金额",type:"double",editable:false}, 
+        {name:"formula",displayName:"公式",type:"string",editable:true}, 
+        {name:"identifier",displayName:"公式标识符",type:"string",editable:true}, 
+        {name:"salaryTypeName",displayName:"类别名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#SalaryTypeNameEditEnded",visible:false},  
+        {name:"type",displayName:"工资类别",type:"int",values:["固定工资","计件工资","公式计算"],defaultValue:0,forwardMapper:"#TypeForwardMapper",backwardMapper:"#TypeBackwardMapper"},   
+        {name:"priority",displayName:"计算优先级",type:"int",defaultValue:0,editable:true},         
+        {name:"giveOut",displayName:"是否计入发放金额",type:"int",values:["是","否"],defaultValue:1,forwardMapper:"#GiveOutForwardMapper",backwardMapper:"#GiveOutBackwardMapper"},      
         {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
      ],
