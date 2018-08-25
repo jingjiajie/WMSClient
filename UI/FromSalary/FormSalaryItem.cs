@@ -69,8 +69,9 @@ namespace WMS.UI.FromSalary
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-            //this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
-            this.searchView1.Search();         
+            this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
+            this.searchView1.Search();
+            this.RefreshState();
         }
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
@@ -82,17 +83,18 @@ namespace WMS.UI.FromSalary
                 this.reoGridView1.Mode = "default";
             }
             else
-            {           
-                if ((int)this.model1[this.model1.SelectionRange.Row, "type"] == 1)
-                {
-                    this.basicView1.Mode = "count";
-                    this.reoGridView1.Mode = "count";
-                }
-                else if ((int)this.model1[this.model1.SelectionRange.Row, "type"] == 0)
-                {
-                    this.basicView1.Mode = "default";
-                    this.reoGridView1.Mode = "default";
-                }
+            {
+                //if ((int)this.model1[this.model1.SelectionRange.Row, "type"] == 1)
+                //{
+                //    this.basicView1.Mode = "count";
+                //    this.reoGridView1.Mode = "count";
+                //}
+                //else if ((int)this.model1[this.model1.SelectionRange.Row, "type"] == 0)
+                //{
+                //    this.basicView1.Mode = "default";
+                //    this.reoGridView1.Mode = "default";
+                //}
+                this.RefreshState();
             }
         }
 
@@ -138,6 +140,56 @@ namespace WMS.UI.FromSalary
             else
             {
                 this.model1[row, "salaryTypeId"] = foundSalaryType["id"];              
+            }
+        }
+
+        private void RefreshState()
+        {
+            var rowData = this.model1.GetSelectedRow();
+            if (rowData == null) { return; }
+            if ((int)rowData["type"] == 0)
+            {             
+                this.ChangeConfigMode("default");
+            }
+            else if ((int)rowData["type"] == 1)
+            {                
+                this.ChangeConfigMode("count");
+            }
+            else
+            {              
+                this.ChangeConfigMode("formula");
+            }
+        }
+
+        private void ChangeConfigMode(string mode)
+        {
+            this.model1.Mode = mode;
+            this.basicView1.Mode = mode;
+            this.reoGridView1.Mode = mode;
+            //this.synchronizer.Mode = mode;
+        }
+
+        private void TypeContentChanged([Row]int row, [Data]string state)
+        {
+            if (state == "固定工资")
+            {
+                this.model1[row, "formula"] = null;
+                this.model1[row, "identifier"] = null;
+                this.model1[row, "priority"] = null;
+                this.ChangeConfigMode("default");
+            }
+            else if (state == "计件工资")
+            {
+                this.model1[row, "formula"] = null;
+                this.model1[row, "identifier"] = null;
+                this.model1[row, "priority"] = null;
+                this.ChangeConfigMode("count");
+            }
+        
+            else if (state == "公式计算")
+            {
+                this.model1[row, "defaultAmount"] = null;
+                this.ChangeConfigMode("formula");
             }
         }
     }
