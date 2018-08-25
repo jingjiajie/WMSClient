@@ -26,6 +26,7 @@ namespace WMS.UI.FromSalary
             {
                 case 0: return "固定工资";
                 case 1: return "计件工资";
+                case 2: return "公式计算";
                 default: return "未知状态";
             }
         }
@@ -36,6 +37,27 @@ namespace WMS.UI.FromSalary
             {
                 case "固定工资": return 0;
                 case "计件工资": return 1;
+                case "公式计算": return 2;
+                default: return -1;
+            }
+        }
+
+        private string GiveOutForwardMapper([Data]int state)
+        {
+            switch (state)
+            {
+                case 0: return "否";
+                case 1: return "是";
+                default: return "未知状态";
+            }
+        }
+
+        private int GiveOutBackwardMapper([Data]string enable)
+        {
+            switch (enable)
+            {
+                case "否": return 0;
+                case "是": return 1;
                 default: return -1;
             }
         }

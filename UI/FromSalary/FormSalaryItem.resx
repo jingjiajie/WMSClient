@@ -132,8 +132,12 @@
         {name:"salaryTypeId",displayName:"salaryTypeID",type:"int",visible:false},              
         {name:"name",displayName:"名称",type:"string"},      
         {name:"defaultAmount",displayName:"默认金额",type:"double"}, 
+        {name:"formula",displayName:"公式",type:"string"}, 
+        {name:"identifier",displayName:"公式标识符",type:"string"}, 
         {name:"salaryTypeName",displayName:"类别名称",type:"string",association:"#salaryTypeNameAssociation",editEnded:"#SalaryTypeNameEditEnded",visible:false},  
-        {name:"type",displayName:"工资类别",type:"int",values:["固定工资","计件工资"],defaultValue:0,forwardMapper:"#TypeForwardMapper",backwardMapper:"#TypeBackwardMapper"},      
+        {name:"type",displayName:"工资类别",type:"int",values:["固定工资","计件工资","公式计算"],defaultValue:0,forwardMapper:"#TypeForwardMapper",backwardMapper:"#TypeBackwardMapper"},   
+        {name:"priority",displayName:"计算优先级",type:"int",defaultValue:0},         
+        {name:"giveOut",displayName:"是否计入发放金额",type:"int",values:["是","否"],defaultValue:1,forwardMapper:"#GiveOutForwardMapper",backwardMapper:"#GiveOutBackwardMapper"},      
         {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false}
      ],
