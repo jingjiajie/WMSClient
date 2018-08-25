@@ -168,5 +168,29 @@ namespace WMS.UI.FromSalary
             this.reoGridView1.Mode = mode;
             //this.synchronizer.Mode = mode;
         }
+
+        private void TypeContentChanged([Row]int row, [Data]string state)
+        {
+            if (state == "固定工资")
+            {
+                this.model1[row, "formula"] = null;
+                this.model1[row, "identifier"] = null;
+                this.model1[row, "priority"] = null;
+                this.ChangeConfigMode("default");
+            }
+            else if (state == "计件工资")
+            {
+                this.model1[row, "formula"] = null;
+                this.model1[row, "identifier"] = null;
+                this.model1[row, "priority"] = null;
+                this.ChangeConfigMode("count");
+            }
+        
+            else if (state == "公式计算")
+            {
+                this.model1[row, "defaultAmount"] = null;
+                this.ChangeConfigMode("formula");
+            }
+        }
     }
 }
