@@ -28,7 +28,7 @@ namespace WMS.UI
             };
 
             InitializeComponent();
-            this.comboBoxAccountBook.Items.Add("测试账套");
+            this.comboBoxAccountBook.Items.Add("默认账套");
             this.comboBoxAccountBook.SelectedIndex = 0;
         }
 
