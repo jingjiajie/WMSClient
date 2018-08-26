@@ -15,6 +15,7 @@ namespace WMS.UI.FormAcccount
 {
     public partial class FormAccountRecord : Form
     {
+        private Boolean DoneDeficitCheck = false;
         public FormAccountRecord()
         {
             MethodListenerContainer.Register(this);
@@ -93,6 +94,11 @@ namespace WMS.UI.FormAcccount
             this.searchView1.Search();
 
             this.showAccrual();
+            if (!this.DoneDeficitCheck)
+            {
+                this.DeficitCheck();
+            }
+            
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -240,14 +246,20 @@ namespace WMS.UI.FormAcccount
 
         private void toolStripButtonDeficit_Click(object sender, EventArgs e)
         {
+            this.DeficitCheck();
+        }
+
+        private void DeficitCheck()
+        {
             try
             {
+                this.DoneDeficitCheck = true;
                 string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/deficit_check";
                 var returnDeficitCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 if (returnDeficitCheck.Count == 0)
                 {
-                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("当前仓库无赤字记录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.searchView1.Search();
                 }
                 else
@@ -257,10 +269,10 @@ namespace WMS.UI.FormAcccount
                     foreach (IDictionary<string, object> AccountRecordView in returnDeficitCheck)
                     {
 
-                            remindBody = remindBody
-                                    .Append("科目名称：“").Append(AccountRecordView["accountTitleName"])
-                                    .Append("”，余额：“").Append(AccountRecordView["balance"])
-                                    .Append("”存在赤字！请核准账目记录！\r\n");
+                        remindBody = remindBody
+                                .Append("科目名称：“").Append(AccountRecordView["accountTitleName"])
+                                .Append("”，余额：“").Append(AccountRecordView["balance"])
+                                .Append("”存在赤字！请核准账目记录！\r\n");
 
                     }
                     new FormRemind(remindBody.ToString()).Show();
@@ -276,6 +288,37 @@ namespace WMS.UI.FormAcccount
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show("赤字提醒失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void ButtonAccrualCheck_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/accrual_check";
+                var returnAccrualCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                foreach (IDictionary<string, object> theReturnAccrualCheck in returnAccrualCheck)
+                {
+                    if (theReturnAccrualCheck["debitAmount"].ToString() == theReturnAccrualCheck["creditAmount"].ToString())
+                    {
+                        MessageBox.Show("自动对账正确！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else {
+                        MessageBox.Show("自动对账错误！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
