@@ -61,6 +61,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ButtonWriteOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDeficit = new System.Windows.Forms.ToolStripButton();
+            this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.basicView1 = new FrontWork.BasicView();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -70,7 +71,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
+            this.ButtonTransfer = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -184,7 +185,7 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
@@ -192,7 +193,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(135, 144);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
             // 
             // panel2
@@ -218,7 +219,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(135, 144);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 10;
             // 
             // model1
@@ -228,7 +229,7 @@
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(200, 37);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -246,7 +247,7 @@
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(553, 65);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
@@ -314,7 +315,7 @@
             this.comboBoxAccountPeriod.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxAccountPeriod.FormattingEnabled = true;
             this.comboBoxAccountPeriod.Location = new System.Drawing.Point(109, 2);
-            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxAccountPeriod.Name = "comboBoxAccountPeriod";
             this.comboBoxAccountPeriod.Size = new System.Drawing.Size(108, 27);
             this.comboBoxAccountPeriod.TabIndex = 0;
@@ -361,7 +362,7 @@
             this.comboBoxAccountTitle.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxAccountTitle.FormattingEnabled = true;
             this.comboBoxAccountTitle.Location = new System.Drawing.Point(109, 2);
-            this.comboBoxAccountTitle.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxAccountTitle.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxAccountTitle.Name = "comboBoxAccountTitle";
             this.comboBoxAccountTitle.Size = new System.Drawing.Size(108, 27);
             this.comboBoxAccountTitle.TabIndex = 0;
@@ -392,6 +393,7 @@
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
             this.toolStripSeparator3,
+            this.ButtonTransfer,
             this.ButtonWriteOff,
             this.toolStripButtonDeficit,
             this.ButtonAccrualCheck});
@@ -453,6 +455,15 @@
             this.toolStripButtonDeficit.Text = "赤字提醒";
             this.toolStripButtonDeficit.Click += new System.EventHandler(this.toolStripButtonDeficit_Click);
             // 
+            // ButtonAccrualCheck
+            // 
+            this.ButtonAccrualCheck.Image = global::WMS.UI.Properties.Resources.check;
+            this.ButtonAccrualCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonAccrualCheck.Name = "ButtonAccrualCheck";
+            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 24);
+            this.ButtonAccrualCheck.Text = "自动对账";
+            this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
+            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
@@ -513,7 +524,7 @@
             this.textBoxDebitAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDebitAmount.Enabled = false;
             this.textBoxDebitAmount.Location = new System.Drawing.Point(109, 21);
-            this.textBoxDebitAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxDebitAmount.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDebitAmount.Name = "textBoxDebitAmount";
             this.textBoxDebitAmount.Size = new System.Drawing.Size(108, 21);
             this.textBoxDebitAmount.TabIndex = 0;
@@ -523,7 +534,7 @@
             this.textBoxCreditAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxCreditAmount.Enabled = false;
             this.textBoxCreditAmount.Location = new System.Drawing.Point(109, 61);
-            this.textBoxCreditAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxCreditAmount.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCreditAmount.Name = "textBoxCreditAmount";
             this.textBoxCreditAmount.Size = new System.Drawing.Size(108, 21);
             this.textBoxCreditAmount.TabIndex = 1;
@@ -562,14 +573,13 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
-            // ButtonAccrualCheck
+            // ButtonTransfer
             // 
-            this.ButtonAccrualCheck.Image = global::WMS.UI.Properties.Resources.check;
-            this.ButtonAccrualCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonAccrualCheck.Name = "ButtonAccrualCheck";
-            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 22);
-            this.ButtonAccrualCheck.Text = "自动对账";
-            this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
+            this.ButtonTransfer.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.ButtonTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonTransfer.Name = "ButtonTransfer";
+            this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
+            this.ButtonTransfer.Text = "转账";
             // 
             // FormAccountRecord
             // 
@@ -643,5 +653,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripButton toolStripButtonDeficit;
         private System.Windows.Forms.ToolStripButton ButtonAccrualCheck;
+        private System.Windows.Forms.ToolStripButton ButtonTransfer;
     }
 }
