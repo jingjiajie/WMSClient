@@ -114,7 +114,7 @@
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 117F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
@@ -142,10 +142,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 137);
+            this.panelPager.Location = new System.Drawing.Point(0, 141);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(974, 320);
+            this.panelPager.Size = new System.Drawing.Size(974, 316);
             this.panelPager.TabIndex = 8;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -227,7 +227,7 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(556, 246);
+            this.toolStrip1.Location = new System.Drawing.Point(556, 242);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 21;
@@ -244,7 +244,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(974, 320);
+            this.reoGridView1.Size = new System.Drawing.Size(974, 316);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop
@@ -286,7 +286,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
-            this.basicView1.Size = new System.Drawing.Size(974, 113);
+            this.basicView1.Size = new System.Drawing.Size(974, 117);
             this.basicView1.TabIndex = 13;
             // 
             // FormReturnSupply
