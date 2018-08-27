@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using System.Web.Script.Serialization;
+using System.IO;
+using System.Net;
 
 namespace WMS.UI.FromSalary
 {
@@ -179,6 +182,38 @@ namespace WMS.UI.FromSalary
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            AddPersonSalary addPersonSalary = new AddPersonSalary();
+            if (GlobalData.SalaryPeriod == null) {
+                MessageBox.Show($"无薪资期间无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (GlobalData.SalaryType == null)
+            {
+                MessageBox.Show($"无薪资类型无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            addPersonSalary.salaryPeriodId =(int) GlobalData.SalaryPeriod["id"];
+            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryPeriod["id"];
+            addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+            string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+            try
+            {
+                string body = json;
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
         }
     }
