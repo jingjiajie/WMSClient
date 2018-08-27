@@ -21,6 +21,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2BF00D0E631348D08BFE2F906ADC6160"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3DD0413834D440E18E8417C961D7E198"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_434665E822964D76B644DE535893BACB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6B5FA6FA34559042C2229725DDD182AE"
         "OwnerKey" = "8:_AFC063A4C04D4B41931CD929A01B9246"
         "MsmSig" = "8:_UNDEFINED"
@@ -33,7 +51,37 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8072D658EC8D4906B9D05BF781662A97"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_80EB434CBF9A474E851B04F0A256A992"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8A4C4D52FF9B43B7B63E77FF0C54FA32"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8E18D21402FC46A29F98D21B4F0AA99B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A09E2EAA70A0408382B8A66B284BF038"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A2C4A4714AD54E549D5B0E1591517DA2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -105,6 +153,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_EE94F53CD3C340ABA1E9181B558E5CA3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F61CE39B10DE47A0905A195970603843"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_F9BE2DDEA29E26621155FE6D2273C434"
         "OwnerKey" = "8:_AFC063A4C04D4B41931CD929A01B9246"
         "MsmSig" = "8:_UNDEFINED"
@@ -119,12 +179,6 @@
         {
         "MsmKey" = "8:_FAE5E57E9DFE5618031B569F13B810EB"
         "OwnerKey" = "8:_B4730B46BB28BE7A60F87954579A0487"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FAE5E57E9DFE5618031B569F13B810EB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -173,6 +227,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_DD197355DD9FEA5F07769CE6B297D9EB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FAE5E57E9DFE5618031B569F13B810EB"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -290,6 +350,66 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2BF00D0E631348D08BFE2F906ADC6160"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\patternPutOutStorageTicketNormal.xlsx"
+            "TargetName" = "8:patternPutOutStorageTicketNormal.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3DD0413834D440E18E8417C961D7E198"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\WarehouseEntry.xlsx"
+            "TargetName" = "8:WarehouseEntry.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_434665E822964D76B644DE535893BACB"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\TransferOrderNote.xlsx"
+            "TargetName" = "8:TransferOrderNote.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6B5FA6FA34559042C2229725DDD182AE"
             {
             "AssemblyRegister" = "3:1"
@@ -321,12 +441,112 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8072D658EC8D4906B9D05BF781662A97"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\patternPutOutStorageTicketMoBiSi.xlsx"
+            "TargetName" = "8:patternPutOutStorageTicketMoBiSi.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_80EB434CBF9A474E851B04F0A256A992"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\InspectionNote.xlsx"
+            "TargetName" = "8:InspectionNote.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A4C4D52FF9B43B7B63E77FF0C54FA32"
             {
             "SourcePath" = "8:C:\\Windows\\System32\\msiexec.exe"
             "TargetName" = "8:msiexec.exe"
             "Tag" = "8:"
             "Folder" = "8:_F9FF976C88404EF7A008B4B997447BC7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8E18D21402FC46A29F98D21B4F0AA99B"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\patternPutOutStorageTicketCover.xlsx"
+            "TargetName" = "8:patternPutOutStorageTicketCover.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A09E2EAA70A0408382B8A66B284BF038"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\patternPutOutStorageTicketZhongDuFlow.xlsx"
+            "TargetName" = "8:patternPutOutStorageTicketZhongDuFlow.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A2C4A4714AD54E549D5B0E1591517DA2"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\patternPutOutStorageTicketZhongDu.xlsx"
+            "TargetName" = "8:patternPutOutStorageTicketZhongDu.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -496,6 +716,46 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EE94F53CD3C340ABA1E9181B558E5CA3"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\PutAwayNote.xlsx"
+            "TargetName" = "8:PutAwayNote.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F61CE39B10DE47A0905A195970603843"
+            {
+            "SourcePath" = "8:..\\UI\\bin\\Debug\\Excel\\StockInfoCheckTicket.xlsx"
+            "TargetName" = "8:StockInfoCheckTicket.xlsx"
+            "Tag" = "8:"
+            "Folder" = "8:_3A35236BB0AA46BAB969D9C5E50727A7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F9BE2DDEA29E26621155FE6D2273C434"
             {
             "AssemblyRegister" = "3:1"
@@ -596,6 +856,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_3A35236BB0AA46BAB969D9C5E50727A7"
+                    {
+                    "Name" = "8:Excel"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A75B04262D7C4593B49E2CE95B2B5EC2"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
