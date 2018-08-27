@@ -53,7 +53,7 @@ namespace WMS.UI.FromSalary
             if (typeId.Count == 0) return;
             if (this.IsRepeat(typeId.ToArray())) { MessageBox.Show("添加的类型重复！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); return; }
             AddPersonSalary addPersonSalary = new AddPersonSalary();
-            addPersonSalary.salaryTypeId = typeId;
+            //addPersonSalary.salaryTypeId =typeId;
             addPersonSalary.warehouseId =(int) GlobalData.Warehouse["id"];
             if (GlobalData.SalaryPeriod == null) { MessageBox.Show("当前仓库无任何区间，无法添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);return; }
             addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
