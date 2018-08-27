@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSalaryItem));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -109,7 +110,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
-            this.basicView1.Size = new System.Drawing.Size(767, 60);
+            this.basicView1.Size = new System.Drawing.Size(767, 88);
             this.basicView1.TabIndex = 13;
             // 
             // configuration1
@@ -125,10 +126,15 @@
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormSalaryItem",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "count";
+            modeMethodListenerNamesPair2.Mode = "formula";
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+        "FormSalaryItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair3.Mode = "count";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair2,
+        modeMethodListenerNamesPair3};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -211,10 +217,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 107);
+            this.panelPager.Location = new System.Drawing.Point(0, 135);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(767, 212);
+            this.panelPager.Size = new System.Drawing.Size(767, 184);
             this.panelPager.TabIndex = 8;
             // 
             // reoGridView1
@@ -227,7 +233,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(767, 212);
+            this.reoGridView1.Size = new System.Drawing.Size(767, 184);
             this.reoGridView1.TabIndex = 0;
             // 
             // panelSearchWidget
@@ -255,7 +261,7 @@
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));

@@ -93,10 +93,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 136);
+            this.panelPager.Location = new System.Drawing.Point(0, 152);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(974, 341);
+            this.panelPager.Size = new System.Drawing.Size(974, 325);
             this.panelPager.TabIndex = 8;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -178,7 +178,7 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(595, 281);
+            this.toolStrip1.Location = new System.Drawing.Point(595, 265);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 21;
@@ -195,7 +195,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(974, 341);
+            this.reoGridView1.Size = new System.Drawing.Size(974, 325);
             this.reoGridView1.TabIndex = 0;
             // 
             // panelSearchWidget
@@ -221,7 +221,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
-            this.basicView1.Size = new System.Drawing.Size(974, 108);
+            this.basicView1.Size = new System.Drawing.Size(974, 124);
             this.basicView1.TabIndex = 13;
             // 
             // tableLayoutPanel1
@@ -240,7 +240,7 @@
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 124F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));

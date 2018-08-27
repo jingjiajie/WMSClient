@@ -176,5 +176,10 @@ namespace WMS.UI.FromSalary
             this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
             this.searchView1.Search();
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

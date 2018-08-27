@@ -139,9 +139,9 @@ namespace WMS.UI
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(51, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(601, 36);
+            this.label1.Size = new System.Drawing.Size(588, 36);
             this.label1.TabIndex = 0;
-            this.label1.Text = "安途丰达WMS仓库管理系统 V2.0.0 - Build825";
+            this.label1.Text = "安途丰达WMS仓库管理系统 V2.0.0 - Build827";
             // 
             // panel1
             // 
