@@ -193,7 +193,7 @@ namespace WMS.UI.FromSalary
                 return;
             }
             addPersonSalary.salaryPeriodId =(int) GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryPeriod["id"];
+            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try
@@ -202,7 +202,7 @@ namespace WMS.UI.FromSalary
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                this.searchView1.Search();
             }
             catch (WebException ex)
             {
