@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -59,6 +59,7 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ButtonTransfer = new System.Windows.Forms.ToolStripButton();
             this.ButtonWriteOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDeficit = new System.Windows.Forms.ToolStripButton();
             this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
@@ -71,7 +72,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.ButtonTransfer = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -186,12 +186,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -238,14 +238,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(553, 65);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -437,6 +437,15 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
             // 
+            // ButtonTransfer
+            // 
+            this.ButtonTransfer.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.ButtonTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonTransfer.Name = "ButtonTransfer";
+            this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
+            this.ButtonTransfer.Text = "转账";
+            this.ButtonTransfer.Click += new System.EventHandler(this.ButtonTransfer_Click);
+            // 
             // ButtonWriteOff
             // 
             this.ButtonWriteOff.Image = global::WMS.UI.Properties.Resources.cancle;
@@ -460,7 +469,7 @@
             this.ButtonAccrualCheck.Image = global::WMS.UI.Properties.Resources.check;
             this.ButtonAccrualCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonAccrualCheck.Name = "ButtonAccrualCheck";
-            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 24);
+            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 22);
             this.ButtonAccrualCheck.Text = "自动对账";
             this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
             // 
@@ -572,14 +581,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
             this.tableLayoutPanel1.TabIndex = 11;
-            // 
-            // ButtonTransfer
-            // 
-            this.ButtonTransfer.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.ButtonTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonTransfer.Name = "ButtonTransfer";
-            this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
-            this.ButtonTransfer.Text = "转账";
             // 
             // FormAccountRecord
             // 

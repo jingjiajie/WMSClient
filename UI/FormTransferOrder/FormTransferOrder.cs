@@ -64,7 +64,7 @@ namespace WMS.UI.FormTransferOrder
         {
             try
             {
-                if (this.model1.SelectionRange.Rows != 1)
+                if (this.model1.SelectionRange == null || this.model1.SelectionRange.Rows != 1)
                 {
                     MessageBox.Show("请选择一项移库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

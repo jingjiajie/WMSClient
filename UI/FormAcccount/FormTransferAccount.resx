@@ -122,33 +122,14 @@
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"name",displayName:"套餐名",type:"string",association:"#packageAssociation",editEnded:"#packageNameEditEnded"},
-        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false,editable:false},
-        {name:"enabled",displayName:"是否启用",type:"int",visible:false},
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/package/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/package/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/package/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/package/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/package/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
+        {name:"outAccountTitleId",displayName:"转出科目ID",type:"int",visible:false},       
+        {name:"outAccountTitleName",displayName:"转出科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#outAccountTitleNameEditEnded"},
+        {name:"inAccountTitleId",displayName:"转入科目ID",type:"int",visible:false},
+        {name:"inAccountTitleName",displayName:"转入科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#inAccountTitleNameEditEnded"},
+
+        {name:"changeAmount",displayName:"发生金额",type:"double"},
+        {name:"voucherInfo",displayName:"凭证号",type:"string"},
+    ]
     }
 ]</value>
   </data>

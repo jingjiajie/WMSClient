@@ -157,11 +157,15 @@ namespace WMS.UI.FormAcccount
                 this.toolStripButtonAdd.Visible = false;
                 this.toolStripButtonAlter.Visible = false;
                 this.toolStripButtonDelete.Visible = false;
+                this.ButtonTransfer.Visible = false;
+                this.ButtonWriteOff.Visible = false;
             }
             else {
                 this.toolStripButtonAdd.Visible = true;
                 this.toolStripButtonAlter.Visible = true;
                 this.toolStripButtonDelete.Visible = true;
+                this.ButtonTransfer.Visible = true;
+                this.ButtonWriteOff.Visible = true;
             }
 
             this.searchView1.Search();
@@ -320,6 +324,16 @@ namespace WMS.UI.FormAcccount
                 }
                 MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void ButtonTransfer_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormTransferAccount();
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
     }
 }

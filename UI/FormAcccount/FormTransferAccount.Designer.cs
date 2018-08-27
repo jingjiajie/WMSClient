@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTransferAccount));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             this.basicView1 = new FrontWork.BasicView();
             this.configuration1 = new FrontWork.Configuration();
             this.model1 = new FrontWork.Model();
@@ -37,9 +37,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonADD = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonADD = new System.Windows.Forms.Button();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -52,29 +52,29 @@
             this.basicView1.Configuration = this.configuration1;
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
-            this.basicView1.ItemsPerRow = 3;
+            this.basicView1.ItemsPerRow = 2;
             this.basicView1.Location = new System.Drawing.Point(0, 0);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(440, 80);
+            this.basicView1.Size = new System.Drawing.Size(536, 80);
             this.basicView1.TabIndex = 20;
             // 
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(259, 24);
+            this.configuration1.Location = new System.Drawing.Point(291, 14);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormSelectPakage",
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormTransferAccount",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(68, 66);
             this.configuration1.TabIndex = 17;
             // 
             // model1
@@ -103,7 +103,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(440, 169);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(536, 179);
             this.tableLayoutPanel2.TabIndex = 12;
             // 
             // panel1
@@ -115,7 +115,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(440, 80);
+            this.panel1.Size = new System.Drawing.Size(536, 80);
             this.panel1.TabIndex = 7;
             // 
             // tableLayoutPanel3
@@ -134,31 +134,18 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(440, 89);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(536, 99);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.buttonADD);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(145, 24);
+            this.panel2.Location = new System.Drawing.Point(193, 29);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(150, 40);
             this.panel2.TabIndex = 0;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(440, 169);
-            this.tableLayoutPanel1.TabIndex = 11;
             // 
             // buttonADD
             // 
@@ -173,18 +160,34 @@
             this.buttonADD.Name = "buttonADD";
             this.buttonADD.Size = new System.Drawing.Size(150, 40);
             this.buttonADD.TabIndex = 11;
-            this.buttonADD.Text = "按套餐添加";
+            this.buttonADD.Text = "确认转账";
             this.buttonADD.UseVisualStyleBackColor = true;
+            this.buttonADD.Click += new System.EventHandler(this.buttonADD_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(536, 179);
+            this.tableLayoutPanel1.TabIndex = 11;
             // 
             // FormTransferAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(440, 169);
+            this.ClientSize = new System.Drawing.Size(536, 179);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormTransferAccount";
-            this.Text = "FormTransferAccount";
+            this.Text = "科目转账";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormTransferAccountClosed);
+            this.Load += new System.EventHandler(this.FormTransferAccount_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
