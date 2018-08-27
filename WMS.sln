@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{A852
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMacro", "EMacro\EMacro.csproj", "{DC602B46-DC15-42B2-9136-19ED6876AB1F}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WMSSetup", "WMSSetup\WMSSetup.vdproj", "{92E2C29A-05B0-40F5-A146-D2D07393006D}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FrontWork", "FrontWork\FrontWork.vbproj", "{32AD3F4C-4A95-4B21-8B9B-5AFB8DAAFDDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationEditor", "ConfigurationEditor\ConfigurationEditor.csproj", "{69CE0FB9-99CF-4A40-A0AB-E39F5050054E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{471E8DF2-F1E8-425C-82B5-8CC75BF730E7}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{5199C0BE-3810-4544-8903-682790B930DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,16 +49,6 @@ Global
 		{DC602B46-DC15-42B2-9136-19ED6876AB1F}.Release|x64.Build.0 = Release|Any CPU
 		{DC602B46-DC15-42B2-9136-19ED6876AB1F}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC602B46-DC15-42B2-9136-19ED6876AB1F}.Release|x86.Build.0 = Release|Any CPU
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Debug|Any CPU.ActiveCfg = Debug
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Debug|x64.ActiveCfg = Debug
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Debug|x64.Build.0 = Debug
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Debug|x86.ActiveCfg = Debug
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Debug|x86.Build.0 = Debug
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Release|Any CPU.ActiveCfg = Release
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Release|x64.ActiveCfg = Release
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Release|x64.Build.0 = Release
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Release|x86.ActiveCfg = Release
-		{92E2C29A-05B0-40F5-A146-D2D07393006D}.Release|x86.Build.0 = Release
 		{32AD3F4C-4A95-4B21-8B9B-5AFB8DAAFDDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32AD3F4C-4A95-4B21-8B9B-5AFB8DAAFDDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32AD3F4C-4A95-4B21-8B9B-5AFB8DAAFDDA}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -95,6 +85,12 @@ Global
 		{471E8DF2-F1E8-425C-82B5-8CC75BF730E7}.Release|x64.Build.0 = Release|Any CPU
 		{471E8DF2-F1E8-425C-82B5-8CC75BF730E7}.Release|x86.ActiveCfg = Release|Any CPU
 		{471E8DF2-F1E8-425C-82B5-8CC75BF730E7}.Release|x86.Build.0 = Release|Any CPU
+		{5199C0BE-3810-4544-8903-682790B930DB}.Debug|Any CPU.ActiveCfg = Debug
+		{5199C0BE-3810-4544-8903-682790B930DB}.Debug|x64.ActiveCfg = Debug
+		{5199C0BE-3810-4544-8903-682790B930DB}.Debug|x86.ActiveCfg = Debug
+		{5199C0BE-3810-4544-8903-682790B930DB}.Release|Any CPU.ActiveCfg = Release
+		{5199C0BE-3810-4544-8903-682790B930DB}.Release|x64.ActiveCfg = Release
+		{5199C0BE-3810-4544-8903-682790B930DB}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
