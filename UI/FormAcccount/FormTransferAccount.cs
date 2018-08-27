@@ -40,6 +40,10 @@ namespace WMS.UI.FormAcccount
                 MessageBox.Show($"发生金额不能为空，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (this.outAccountTitleId ==this.inAccountTitleId) {
+                MessageBox.Show($"目标科目和原科目不能相同，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
 
             var changeAmount = rowData["changeAmount"];
             var voucherInfo = rowData["voucherInfo"];
