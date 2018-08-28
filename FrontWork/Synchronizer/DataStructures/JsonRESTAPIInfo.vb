@@ -305,7 +305,7 @@ Public Class JsonRESTAPIInfo
         Logger.Debug(Me.HTTPMethod.ToString & " " & strUrl & vbCrLf & requestBody)
         Dim httpWebRequest = CType(WebRequest.Create(uri), HttpWebRequest)
         httpWebRequest.Method = Me.HTTPMethod.ToString
-        'httpWebRequest.ServicePoint.Expect100Continue = False
+        httpWebRequest.ServicePoint.Expect100Continue = False
         If Me.HTTPMethod = HTTPMethod.POST OrElse Me.HTTPMethod = HTTPMethod.PUT Then
             httpWebRequest.ContentType = "application/json"
             Dim bytes = Encoding.UTF8.GetBytes(requestBody)
