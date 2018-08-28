@@ -52,18 +52,18 @@ namespace WMS.UI.FormBasicInfos
 
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
-        {            
+        {
             foreach (var cell in e.UpdatedCells)
-            {          
+            {
                 if (cell.ColumnName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;               
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
                 //if (!rowChange.Contains(cell.Row))
                 //{
-               //     rowChange.Add(cell.Row);
+                //     rowChange.Add(cell.Row);
                 //}                
-            }          
+            }
         }
 
         private string EnableForwardMapper([Data]int state)

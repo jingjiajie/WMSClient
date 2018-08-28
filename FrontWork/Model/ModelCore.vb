@@ -362,7 +362,7 @@ Public Class ModelCore
                 Throw New FrontWorkException($"UpdateCells failed: column ""{columnName}"" not found!")
             End If
             Try
-                Me.Data.Rows(rows(i))(dataColumn) = If(dataOfEachCell(i), DBNull.Value)
+                Me.Data.Rows(rows(i))(dataColumn) = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), DBNull.Value, dataOfEachCell(i))
             Catch ex As IndexOutOfRangeException
                 Throw New FrontWorkException($"UpdateCells failed: index {i} exceeded max row index: {Me.GetRowCount}")
             Catch ex As ArgumentException
