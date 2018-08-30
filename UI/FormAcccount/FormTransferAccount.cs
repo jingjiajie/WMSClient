@@ -42,7 +42,7 @@ namespace WMS.UI.FormAcccount
             }
             if (this.outAccountTitleId ==this.inAccountTitleId) {
                 MessageBox.Show($"目标科目和原科目不能相同，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+                return;
             }
 
             var changeAmount = rowData["changeAmount"];

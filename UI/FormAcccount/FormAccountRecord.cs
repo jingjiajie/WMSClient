@@ -16,10 +16,13 @@ namespace WMS.UI.FormAcccount
     public partial class FormAccountRecord : Form
     {
         private Boolean DoneDeficitCheck = false;
+        System.Timers.Timer timer = new System.Timers.Timer();
+        Timer T = new Timer();
         public FormAccountRecord()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+           
         }
 
 
@@ -94,11 +97,33 @@ namespace WMS.UI.FormAcccount
             this.searchView1.Search();
 
             this.showAccrual();
-            if (!this.DoneDeficitCheck)
+            
+            timer.Enabled = true;
+            timer.AutoReset = false;
+
+            T.Interval=100;
+            T.Tick += new EventHandler(t_tick);
+            T.Start();
+            //timer.Elapsed += new System.Timers.ElapsedEventHandler(Timerup);
+            //timer.Start();
+
+        }
+
+        private void t_tick(object sender, EventArgs e)
+        {
+            if (GlobalData.REMAINDENABLE)
             {
                 this.DeficitCheck();
             }
-            
+            T.Stop();
+        }
+
+        private void Timerup(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (GlobalData.REMAINDENABLE)
+            {
+                this.DeficitCheck();
+            }
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -178,6 +203,8 @@ namespace WMS.UI.FormAcccount
             if (this.comboBoxAccountTitle.SelectedIndex==0) {
                 GlobalData.AccountTitle = null;
                 this.searchView1.Search();
+                this.textBoxBalance.Text = null;
+
             }
             else
             {
@@ -185,6 +212,7 @@ namespace WMS.UI.FormAcccount
 
                 this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
                 this.searchView1.Search();
+                this.showBalance();
             }        
         }
 
@@ -248,6 +276,30 @@ namespace WMS.UI.FormAcccount
             }
         }
 
+        private void showBalance()
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\",\"curAccountTitleId\":\"" + GlobalData.AccountTitle["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/show_balance";
+                var returnAccrualCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                foreach (IDictionary<string, object> theReturnAccrualCheck in returnAccrualCheck)
+                {
+                    this.textBoxBalance.Text = theReturnAccrualCheck["balance"].ToString();
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         private void toolStripButtonDeficit_Click(object sender, EventArgs e)
         {
             this.DeficitCheck();
@@ -264,11 +316,9 @@ namespace WMS.UI.FormAcccount
                 if (returnDeficitCheck.Count == 0)
                 {
                     //MessageBox.Show("当前仓库无赤字记录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.searchView1.Search();
                 }
                 else
                 {
-                    this.searchView1.Search();
                     StringBuilder remindBody = new StringBuilder();
                     foreach (IDictionary<string, object> AccountRecordView in returnDeficitCheck)
                     {
@@ -282,6 +332,7 @@ namespace WMS.UI.FormAcccount
                     new FormRemind(remindBody.ToString()).Show();
 
                 }
+                GlobalData.REMAINDENABLE = false;
 
             }
             catch (WebException ex)
@@ -306,10 +357,10 @@ namespace WMS.UI.FormAcccount
                 {
                     if (theReturnAccrualCheck["debitAmount"].ToString() == theReturnAccrualCheck["creditAmount"].ToString())
                     {
-                        MessageBox.Show("自动对账正确！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("自动对账正确！\n\r借方发生额："+ theReturnAccrualCheck["debitAmount"].ToString()+ "，\n\r贷方发生额：" + theReturnAccrualCheck["creditAmount"].ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else {
-                        MessageBox.Show("自动对账错误！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("自动对账错误！\n\r借方发生额：" + theReturnAccrualCheck["debitAmount"].ToString() + "，\n\r贷方发生额：" + theReturnAccrualCheck["creditAmount"].ToString()+"，不相等！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                 }

@@ -31,6 +31,7 @@ namespace WMS.UI
         private static int projectID = -1;
         private static int warehouseID = -1;
         private static int userID = -1;
+        public static Boolean REMAINDENABLE=true;
 
         [Obsolete("二期已弃用")]
         public static int ProjectID { get => projectID; set => projectID = value; }
