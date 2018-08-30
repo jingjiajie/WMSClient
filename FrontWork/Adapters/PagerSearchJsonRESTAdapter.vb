@@ -57,17 +57,14 @@ Public Class PagerSearchJsonRESTAdapter
         Call Me.SetConditionAndOrdersToAPI(Me.Synchronizer.GetCountAPI, searchArgs)
         '获取搜索结果总数量
         Dim responseStr As String = Nothing
-        Try
-            Dim response = Me.Synchronizer.GetCountAPI.Invoke()
-            responseStr = New StreamReader(response.GetResponseStream).ReadToEnd
-        Catch ex As WebException
-            Dim message = ex.Message
-            If ex.Response IsNot Nothing Then
-                message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
-            End If
+        Dim response = Me.Synchronizer.GetCountAPI.Invoke()
+        If response.StatusCode = 200 Then
+            responseStr = response.BodyString
+        Else
+            Dim message = response.ErrorMessage
             MessageBox.Show("查询结果总数失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
-        End Try
+        End If
 
         Me.Synchronizer.GetCountAPI.SetResponseParameter("$count")
         Dim countStr = Me.Synchronizer.GetCountAPI.GetResponseParameters(responseStr, {"$count"})(0)
