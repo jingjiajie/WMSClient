@@ -228,7 +228,7 @@ namespace WMS.UI
         {
             string accountBook = "WMS_Template";
             var warehouseList = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + accountBook + "/warehouse/"+
-                new Condition().AddOrder("name"));
+                new Condition().AddOrder("name",OrderItemOrder.DESC));
             if (warehouseList == null)
             {
                 this.Close();

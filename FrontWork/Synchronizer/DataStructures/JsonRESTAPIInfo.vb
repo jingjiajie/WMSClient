@@ -1,4 +1,5 @@
 ﻿Imports Jint.Native
+Imports System.IO
 Imports System.Net
 Imports System.Reflection
 Imports System.Text
@@ -293,7 +294,7 @@ Public Class JsonRESTAPIInfo
         Return result
     End Function
 
-    Public Function Invoke() As HttpWebResponse
+    Public Function Invoke() As HTTPResponse
         Static calledLeaveDotsAndSlashesEscaped As Boolean = False
         If Not calledLeaveDotsAndSlashesEscaped Then
             Call LeaveDotsAndSlashesEscaped()
@@ -304,8 +305,12 @@ Public Class JsonRESTAPIInfo
         Dim requestBody = Me.GetRequestBody
         Logger.Debug(Me.HTTPMethod.ToString & " " & strUrl & vbCrLf & requestBody)
         Dim httpWebRequest = CType(WebRequest.Create(uri), HttpWebRequest)
+        httpWebRequest.Timeout = 15000
+        httpWebRequest.ReadWriteTimeout = 15000
+        ServicePointManager.DefaultConnectionLimit = 500
+
         httpWebRequest.Method = Me.HTTPMethod.ToString
-        'httpWebRequest.ServicePoint.Expect100Continue = False
+        httpWebRequest.ServicePoint.Expect100Continue = False
         If Me.HTTPMethod = HTTPMethod.POST OrElse Me.HTTPMethod = HTTPMethod.PUT Then
             httpWebRequest.ContentType = "application/json"
             Dim bytes = Encoding.UTF8.GetBytes(requestBody)
@@ -313,8 +318,29 @@ Public Class JsonRESTAPIInfo
             stream.Write(bytes, 0, bytes.Length)
         End If
 
-        Dim response = httpWebRequest.GetResponse
-        Return response
+        Dim httpResponse As HTTPResponse
+        Try
+            Using response = CType(httpWebRequest.GetResponse, HttpWebResponse)
+                Dim code = response.StatusCode
+                Dim reader = New StreamReader(response.GetResponseStream)
+                Dim body = reader.ReadToEnd
+                httpResponse = New HTTPResponse(code, body)
+            End Using
+        Catch ex As WebException
+            Dim response As HttpWebResponse = ex.Response
+            Dim code As Integer
+            Dim errorMsg As String
+            If response Is Nothing Then
+                code = -1
+                errorMsg = ex.Message
+            Else
+                code = response.StatusCode
+                errorMsg = (New StreamReader(response.GetResponseStream)).ReadToEnd
+            End If
+            httpResponse = New HTTPResponse(code, Nothing, errorMsg)
+        End Try
+
+        Return httpResponse
     End Function
 
     Private Const UnEscapeDotsAndSlashes As Integer = &H2000000

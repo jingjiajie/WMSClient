@@ -83,7 +83,7 @@ namespace WMS.UI
                 {
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     responseStr = reader.ReadToEnd();
-                }          
+                }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T result = serializer.Deserialize<T>(responseStr);
             return result;
