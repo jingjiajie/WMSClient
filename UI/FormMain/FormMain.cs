@@ -408,6 +408,7 @@ namespace WMS.UI
                    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
             }
             catch { GlobalData.AccountPeriod = null; }
+            GlobalData.REMAINDENABLE = true;
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -46,6 +46,9 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxAccountPeriod = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBoxAccountTitle = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
@@ -70,19 +73,17 @@
             this.textBoxCreditAmount = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBoxAccountTitle = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxBalance = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -90,7 +91,6 @@
             this.panel1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -192,12 +192,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -266,6 +266,53 @@
             this.label1.Size = new System.Drawing.Size(54, 25);
             this.label1.TabIndex = 2;
             this.label1.Text = "会计期间";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tableLayoutPanel4.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.tableLayoutPanel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tableLayoutPanel4.ColumnCount = 4;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.comboBoxAccountTitle, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label2, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(509, 0);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(254, 25);
+            this.tableLayoutPanel4.TabIndex = 4;
+            // 
+            // comboBoxAccountTitle
+            // 
+            this.comboBoxAccountTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxAccountTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAccountTitle.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.comboBoxAccountTitle.FormattingEnabled = true;
+            this.comboBoxAccountTitle.Location = new System.Drawing.Point(109, 2);
+            this.comboBoxAccountTitle.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxAccountTitle.Name = "comboBoxAccountTitle";
+            this.comboBoxAccountTitle.Size = new System.Drawing.Size(108, 27);
+            this.comboBoxAccountTitle.TabIndex = 0;
+            this.comboBoxAccountTitle.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountTitle_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(37, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "科目名称";
             // 
             // toolStripTop
             // 
@@ -432,14 +479,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(555, 55);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -573,66 +620,6 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "贷方发生额";
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
-            this.tableLayoutPanel1.TabIndex = 11;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(37, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 25);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "科目名称";
-            // 
-            // comboBoxAccountTitle
-            // 
-            this.comboBoxAccountTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxAccountTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAccountTitle.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.comboBoxAccountTitle.FormattingEnabled = true;
-            this.comboBoxAccountTitle.Location = new System.Drawing.Point(109, 2);
-            this.comboBoxAccountTitle.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxAccountTitle.Name = "comboBoxAccountTitle";
-            this.comboBoxAccountTitle.Size = new System.Drawing.Size(108, 27);
-            this.comboBoxAccountTitle.TabIndex = 0;
-            this.comboBoxAccountTitle.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountTitle_SelectedIndexChanged);
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.tableLayoutPanel4.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.tableLayoutPanel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tableLayoutPanel4.ColumnCount = 4;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.comboBoxAccountTitle, 2, 0);
-            this.tableLayoutPanel4.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(509, 0);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(254, 25);
-            this.tableLayoutPanel4.TabIndex = 4;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -650,6 +637,19 @@
             this.textBoxBalance.Name = "textBoxBalance";
             this.textBoxBalance.Size = new System.Drawing.Size(106, 21);
             this.textBoxBalance.TabIndex = 5;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
+            this.tableLayoutPanel1.TabIndex = 11;
             // 
             // FormAccountRecord
             // 
@@ -671,6 +671,8 @@
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
@@ -680,8 +682,6 @@
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
