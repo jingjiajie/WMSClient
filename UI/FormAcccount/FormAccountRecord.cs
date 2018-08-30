@@ -22,7 +22,8 @@ namespace WMS.UI.FormAcccount
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-           
+
+
         }
 
 
@@ -385,6 +386,55 @@ namespace WMS.UI.FormAcccount
                 this.searchView1.Search();
             });
             a1.Show();
+        }
+
+        private List<string> GetAllNodeInfo(TreeView tvDept)
+        {
+            List<string> lst = new List<string>();
+            for (int i = 0; i < tvDept.Nodes.Count; i++)
+            {
+                string od = string.Empty;
+                od = string.Format("Level：{0}，Nodes：{1}，Name：{2}，Text：{3}\r\n",
+                    tvDept.Nodes[i].Level.ToString().PadLeft(3), tvDept.Nodes[i].Nodes.Count.ToString().PadLeft(3),
+                    tvDept.Nodes[i].Name, tvDept.Nodes[i].Text);
+                lst.Add(od);
+
+                if (tvDept.Nodes[i].Nodes.Count > 0)
+                {
+                    GetAllNodeInfoSub(tvDept.Nodes[i], lst);
+                }
+            }
+
+            return lst;
+        }
+        private void GetAllNodeInfoSub(TreeNode nodeRoot, List<string> lst)
+        {
+            for (int i = 0; i < nodeRoot.Nodes.Count; i++)
+            {
+                string od = string.Empty;
+                od = string.Format("Level：{0}，Nodes：{1}，Name：{2}，Text：{3}\r\n",
+                    nodeRoot.Nodes[i].Level.ToString().PadLeft(3), nodeRoot.Nodes[i].Nodes.Count.ToString().PadLeft(3),
+                    nodeRoot.Nodes[i].Name, nodeRoot.Nodes[i].Text);
+                lst.Add(od);
+
+                if (nodeRoot.Nodes[i].Nodes.Count > 0)
+                {
+                    GetAllNodeInfoSub(nodeRoot.Nodes[i], lst);
+                }
+            }
+        }
+
+        private void frmTree_Load(object sender, EventArgs e)
+        {
+            treeViewAccountTitle.ExpandAll();
+            treeViewAccountTitle.HideSelection = false;
+            treeViewAccountTitle.ShowLines = true;
+            treeViewAccountTitle.ShowRootLines = true;
+        }
+
+        private void treeViewAccountTitle_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }

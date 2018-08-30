@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -77,6 +77,7 @@
             this.textBoxBalance = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.treeViewAccountTitle = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -192,12 +193,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair3.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair3};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -409,15 +410,16 @@
             // tableLayoutPanel8
             // 
             this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.38735F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.61265F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.treeViewAccountTitle, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 50);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(1018, 389);
             this.tableLayoutPanel8.TabIndex = 11;
             // 
@@ -434,7 +436,7 @@
             this.tableLayoutPanel9.RowCount = 2;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(859, 389);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(838, 389);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
             // panel2
@@ -448,7 +450,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 118);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(859, 271);
+            this.panel2.Size = new System.Drawing.Size(838, 271);
             this.panel2.TabIndex = 9;
             // 
             // synchronizer
@@ -507,7 +509,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(859, 271);
+            this.reoGridView1.Size = new System.Drawing.Size(838, 271);
             this.reoGridView1.TabIndex = 2;
             // 
             // panel1
@@ -517,7 +519,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(859, 118);
+            this.panel1.Size = new System.Drawing.Size(838, 118);
             this.panel1.TabIndex = 10;
             // 
             // tableLayoutPanel6
@@ -533,7 +535,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(859, 118);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(838, 118);
             this.tableLayoutPanel6.TabIndex = 11;
             // 
             // basicView1
@@ -548,7 +550,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(647, 118);
+            this.basicView1.Size = new System.Drawing.Size(631, 118);
             this.basicView1.TabIndex = 18;
             // 
             // tableLayoutPanel7
@@ -561,12 +563,12 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.Controls.Add(this.textBoxDebitAmount, 2, 2);
             this.tableLayoutPanel7.Controls.Add(this.textBoxCreditAmount, 2, 3);
-            this.tableLayoutPanel7.Controls.Add(this.label3, 1, 2);
             this.tableLayoutPanel7.Controls.Add(this.label4, 1, 3);
             this.tableLayoutPanel7.Controls.Add(this.label5, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.textBoxBalance, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label3, 1, 2);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(647, 0);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(631, 0);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 5;
@@ -575,14 +577,14 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(212, 118);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(207, 118);
             this.tableLayoutPanel7.TabIndex = 19;
             // 
             // textBoxDebitAmount
             // 
             this.textBoxDebitAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDebitAmount.Enabled = false;
-            this.textBoxDebitAmount.Location = new System.Drawing.Point(89, 46);
+            this.textBoxDebitAmount.Location = new System.Drawing.Point(87, 46);
             this.textBoxDebitAmount.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxDebitAmount.Name = "textBoxDebitAmount";
             this.textBoxDebitAmount.Size = new System.Drawing.Size(108, 21);
@@ -592,7 +594,7 @@
             // 
             this.textBoxCreditAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxCreditAmount.Enabled = false;
-            this.textBoxCreditAmount.Location = new System.Drawing.Point(89, 76);
+            this.textBoxCreditAmount.Location = new System.Drawing.Point(87, 76);
             this.textBoxCreditAmount.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCreditAmount.Name = "textBoxCreditAmount";
             this.textBoxCreditAmount.Size = new System.Drawing.Size(108, 21);
@@ -602,7 +604,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(12, 44);
+            this.label3.Location = new System.Drawing.Point(10, 44);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(75, 30);
@@ -613,7 +615,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(12, 74);
+            this.label4.Location = new System.Drawing.Point(10, 74);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 30);
@@ -624,7 +626,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(15, 14);
+            this.label5.Location = new System.Drawing.Point(13, 14);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 30);
             this.label5.TabIndex = 4;
@@ -633,7 +635,7 @@
             // textBoxBalance
             // 
             this.textBoxBalance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBalance.Location = new System.Drawing.Point(90, 17);
+            this.textBoxBalance.Location = new System.Drawing.Point(88, 17);
             this.textBoxBalance.Name = "textBoxBalance";
             this.textBoxBalance.Size = new System.Drawing.Size(106, 21);
             this.textBoxBalance.TabIndex = 5;
@@ -650,6 +652,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
             this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // treeViewAccountTitle
+            // 
+            this.treeViewAccountTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewAccountTitle.Location = new System.Drawing.Point(838, 0);
+            this.treeViewAccountTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.treeViewAccountTitle.Name = "treeViewAccountTitle";
+            this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 389);
+            this.treeViewAccountTitle.TabIndex = 1;
+            this.treeViewAccountTitle.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAccountTitle_AfterSelect);
             // 
             // FormAccountRecord
             // 
@@ -732,5 +744,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxBalance;
+        private System.Windows.Forms.TreeView treeViewAccountTitle;
     }
 }
