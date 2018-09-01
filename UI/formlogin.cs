@@ -284,6 +284,9 @@ namespace WMS.UI
             GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle}/find_son");
 
+            GlobalData.AllAccountTitleTure = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.ToString()}");
+
             GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");
 

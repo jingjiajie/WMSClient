@@ -25,6 +25,7 @@ namespace WMS.UI
         public static List<IDictionary<string, object>> AllSalaryPeriod;
         public static List<IDictionary<string, object>> AllSalaryItem;        
         public static List<IDictionary<string, object>> AllAccountTitle;
+        public static List<IDictionary<string, object>> AllAccountTitleTure;
         public static List<IDictionary<string, object>> AllTax;
         public static List<IDictionary<string, object>> AllAccountPeriod;
         public static IDictionary<string, object> AccountPeriod;

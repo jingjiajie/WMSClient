@@ -22,8 +22,7 @@ namespace WMS.UI.FormAcccount
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-
-
+            InitTree();
         }
 
 
@@ -388,52 +387,69 @@ namespace WMS.UI.FormAcccount
             a1.Show();
         }
 
-        private List<string> GetAllNodeInfo(TreeView tvDept)
+        //初始化树
+        private void InitTree()
         {
-            List<string> lst = new List<string>();
-            for (int i = 0; i < tvDept.Nodes.Count; i++)
-            {
-                string od = string.Empty;
-                od = string.Format("Level：{0}，Nodes：{1}，Name：{2}，Text：{3}\r\n",
-                    tvDept.Nodes[i].Level.ToString().PadLeft(3), tvDept.Nodes[i].Nodes.Count.ToString().PadLeft(3),
-                    tvDept.Nodes[i].Name, tvDept.Nodes[i].Text);
-                lst.Add(od);
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/build_tree_view";
+            string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+            var buildAccountTitleTreeView = RestClient.RequestPost<List<IDictionary<string, object>>>(url);
 
-                if (tvDept.Nodes[i].Nodes.Count > 0)
+            foreach (IDictionary<string, object> accountTitleNode in buildAccountTitleTreeView)
+            {
+                if (accountTitleNode["accountTitleId"].ToString() == "0")
                 {
-                    GetAllNodeInfoSub(tvDept.Nodes[i], lst);
+                    TreeNode tchild = new TreeNode();
+                    tchild.Name = accountTitleNode["accountTitleNo"].ToString();
+                    tchild.Text = accountTitleNode["accountTitleName"].ToString();
+                    LoadAll(accountTitleNode["accountTitleId"].ToString(), tchild, buildAccountTitleTreeView);
+                    this.treeViewAccountTitle.Nodes.Add(tchild);//把根节点加入到treeview的根节点
                 }
             }
 
-            return lst;
+            
         }
-        private void GetAllNodeInfoSub(TreeNode nodeRoot, List<string> lst)
+        //加载所属节点
+        public void LoadAll(string parentAccountTitleId, TreeNode tn, List<IDictionary<string, object>> buildAccountTitleTreeView)
         {
-            for (int i = 0; i < nodeRoot.Nodes.Count; i++)
-            {
-                string od = string.Empty;
-                od = string.Format("Level：{0}，Nodes：{1}，Name：{2}，Text：{3}\r\n",
-                    nodeRoot.Nodes[i].Level.ToString().PadLeft(3), nodeRoot.Nodes[i].Nodes.Count.ToString().PadLeft(3),
-                    nodeRoot.Nodes[i].Name, nodeRoot.Nodes[i].Text);
-                lst.Add(od);
 
-                if (nodeRoot.Nodes[i].Nodes.Count > 0)
+            foreach (IDictionary<string, object> accountTitleNode in buildAccountTitleTreeView)
+            {
+                if (accountTitleNode["parentAccountTitleId"].ToString() == parentAccountTitleId
+                    &&accountTitleNode["accountTitleId"].ToString()!= "0")
                 {
-                    GetAllNodeInfoSub(nodeRoot.Nodes[i], lst);
+                    TreeNode tchild = new TreeNode();
+                    tchild.Name = accountTitleNode["accountTitleNo"].ToString();
+                    tchild.Text = accountTitleNode["accountTitleName"].ToString();
+                    LoadAll(accountTitleNode["accountTitleId"].ToString(), tchild, buildAccountTitleTreeView);
+                    tn.Nodes.Add(tchild);//把当前节点加入到tn数的节点中
                 }
             }
-        }
 
-        private void frmTree_Load(object sender, EventArgs e)
-        {
-            treeViewAccountTitle.ExpandAll();
-            treeViewAccountTitle.HideSelection = false;
-            treeViewAccountTitle.ShowLines = true;
-            treeViewAccountTitle.ShowRootLines = true;
         }
 
         private void treeViewAccountTitle_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            string accountTitleNo = treeViewAccountTitle.SelectedNode.Name;
+            string accountTitleName = treeViewAccountTitle.SelectedNode.Text;
+
+            this.searchView1.ClearStaticCondition("accountTitleNo");
+            if (accountTitleNo == "全部科目")
+            {
+                GlobalData.AccountTitle = null;
+                this.searchView1.Search();
+                this.textBoxBalance.Text = null;
+            }
+            else {
+                GlobalData.AccountTitle = (from item in GlobalData.AllAccountTitleTure
+                                          where item["name"].ToString() == accountTitleName
+                                           select item).ToList().First();
+                this.searchView1.AddStaticCondition("accountTitleNo", accountTitleNo,Relation.CONTAINS);
+                this.searchView1.Search();
+
+                this.showBalance();
+            }
+
+
 
         }
     }
