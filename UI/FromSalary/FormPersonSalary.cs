@@ -15,10 +15,18 @@ namespace WMS.UI.FromSalary
 {
     public partial class FormPersonSalary : Form
     {
+        public static FormPersonSalary formPersonSalary=null;
+
         public FormPersonSalary()
         {
             MethodListenerContainer.Register("FormPersonSalary", this);
             InitializeComponent();
+            formPersonSalary = this;
+        }
+
+        public void Search()
+        {        
+            this.searchView1.Search();
         }
 
         private void FormPersonSalary_Load(object sender, EventArgs e)
