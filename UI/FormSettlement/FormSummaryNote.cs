@@ -13,6 +13,7 @@ namespace WMS.UI.FormSettlement
     {
         public FormSummaryNote()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 

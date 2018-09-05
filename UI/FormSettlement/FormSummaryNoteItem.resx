@@ -120,6 +120,45 @@
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 98</value>
   </metadata>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+{mode:"default",
+     fields:[
+    {name:"id",displayName:"ID",type:"int",visible:false},
+    {name:"summaryNoteID",displayName:"汇总单ID",type:"int",visible:false},
+    {name:"supplierID",displayName:"供应商ID",type:"int",visible:false},
+    {name:"area",displayName:"使用面积",type:"double"},
+    {name:"days",displayName:"放置天数",type:"double"},
+    {name:"deliveryTimes",displayName:"出货次数",type:"double"},
+    {name:"state",displayName:"状态",type:"int",editable:false},
+    {name:"supplierNo",displayName:"供应商代码",type:"string"},
+    {name:"supplierName",displayName:"供应商名称",type:"string"}
+    ],
+httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/summary_note_item/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/summary_note_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/summary_note_item/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/summary_note_item/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/summary_note_item/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+}
+]</value>
+  </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>138, 98</value>
   </metadata>
@@ -179,45 +218,6 @@
         +e6NFHQfToXU+joHbjU0xHkgckn7/0fbjt4Ig1hMD7u08VAKOmTPwnr2leSpz87O5jee3gVaPklTtduL
         iktK0NPd8/iBiSC9crslenDuwIHdOvA7jR9uIAdEjT8AAAAASUVORK5CYII=
 </value>
-  </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-{mode:"default",
-     fields:[
-    {name:"id",displayName:"ID",type:"int",visible:false},
-    {name:"summaryNoteID",displayName:"汇总单ID",type:"int",visible:false},
-    {name:"supplierID",displayName:"供应商ID",type:"int",visible:false},
-    {name:"area",displayName:"使用面积",type:"double"},
-    {name:"days",displayName:"放置天数",type:"double"},
-    {name:"deliveryTimes",displayName:"出货次数",type:"double"},
-    {name:"state",displayName:"状态",type:"int",editable:false},
-    {name:"supplierNo",displayName:"供应商代码",type:"string"},
-    {name:"supplierName",displayName:"供应商名称",type:"string"}
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-}
-]</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>264, 98</value>

@@ -13,6 +13,7 @@ namespace WMS.UI.FormSettlement
     {
         public FormSummaryNoteItem()
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
         }
 
@@ -35,5 +36,11 @@ namespace WMS.UI.FormSettlement
         {
             if (this.synchronizer.Save()) { this.searchView1.Search(); }
         }
+    }
+
+    public class summaryNoteItemState
+    {
+        public const int WAITTING_FOR_SUPPLIER_CONFIRM = 0;
+        public const int SUPPLIER_CONFIRMED = 1;
     }
 }
