@@ -85,10 +85,7 @@ namespace WMS.UI.FormAcccount
                 this.searchView1.AddStaticCondition("accountPeriodId", GlobalData.AccountPeriod["id"]);
             }
 
-            //刷新科目
-            this.comboBoxAccountTitle.Items.Add("无");
-            this.comboBoxAccountTitle.Items.AddRange((from item in GlobalData.AllAccountTitle
-                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+
 
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
@@ -195,25 +192,6 @@ namespace WMS.UI.FormAcccount
 
             this.searchView1.Search();
             this.showAccrual();
-        }
-
-        private void comboBoxAccountTitle_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.searchView1.ClearStaticCondition("accountTitleId");
-            if (this.comboBoxAccountTitle.SelectedIndex==0) {
-                GlobalData.AccountTitle = null;
-                this.searchView1.Search();
-                this.textBoxBalance.Text = null;
-
-            }
-            else
-            {
-                GlobalData.AccountTitle = ((ComboBoxItem)this.comboBoxAccountTitle.SelectedItem).Value as IDictionary<string, object>;
-
-                this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
-                this.searchView1.Search();
-                this.showBalance();
-            }        
         }
 
         private void ButtonWriteOff_Click(object sender, EventArgs e)
@@ -452,5 +430,7 @@ namespace WMS.UI.FormAcccount
 
 
         }
+
+
     }
 }

@@ -105,6 +105,9 @@ namespace WMS.UI.FormAcccount
                 
                 GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle.AddCondition("enabled", 1)}/find_son");
+
+                GlobalData.AllAccountTitleTure = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.ToString()}");
             }
         }
 
@@ -117,6 +120,9 @@ namespace WMS.UI.FormAcccount
 
             GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.AddCondition("enabled", 1)}");
+
+            GlobalData.AllAccountTitleTure = RestClient.Get<List<IDictionary<string, object>>>(
+            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.ToString()}");
 
         }
 
