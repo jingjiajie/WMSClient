@@ -73,7 +73,9 @@ namespace WMS.UI
                     MakeTreeNode("会计期间")
                     }),
                  MakeTreeNode("结算管理",new TreeNode[]{
-                   MakeTreeNode("汇总单")
+                   MakeTreeNode("汇总单管理"),
+                   MakeTreeNode("结算单管理"),
+                   MakeTreeNode("发票管理")
                     })
             };
 
@@ -294,8 +296,14 @@ namespace WMS.UI
                 case "会计期间":
                     this.LoadSubWindow(new FormAcccount.FormAccountPeriod());
                     break;
-                case "汇总单":
+                case "汇总单管理":
                     this.LoadSubWindow(new FormSettlement.FormSummaryNote());
+                    break;
+                case "结算单管理":
+                    this.LoadSubWindow(new FormSettlement.FormSettlementNote());
+                    break;
+                case "发票管理":
+                    this.LoadSubWindow(new FormSettlement.FormSettlementNote());
                     break;
             }
             this.panelRight.ResumeLayout();
