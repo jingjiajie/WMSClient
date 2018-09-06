@@ -342,6 +342,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSummaryNote";
             this.Text = "汇总单";
+            this.Load += new System.EventHandler(this.FormSummaryNote_Load);
             this.panelPager.ResumeLayout(false);
             this.panelSearchWidget.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

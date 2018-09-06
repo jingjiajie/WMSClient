@@ -16,6 +16,7 @@ namespace WMS.UI.FormSettlement
         public FormSummaryNoteItem(IDictionary<string, object> summaryNote)
         {
             MethodListenerContainer.Register(this);
+            this.summaryNote = summaryNote;
             InitializeComponent();
         }
 
@@ -23,7 +24,7 @@ namespace WMS.UI.FormSettlement
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "summaryNoteID",GlobalData.Person["id"]},             
+                { "summaryNoteID",this.summaryNote["id"]},             
                 { "state",0},
             });
         }
@@ -99,6 +100,15 @@ namespace WMS.UI.FormSettlement
             }
         }
 
+        private void FormSummaryNoteItem_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+            this.searchView1.AddStaticCondition("summaryNoteId", this.summaryNote["id"]);
+            //设置两个请求参数
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);          
+            this.searchView1.Search();
+        }
     }
 
     public class summaryNoteItemState

@@ -51,5 +51,13 @@ namespace WMS.UI.FormSettlement
             var a1 = new FormSummaryNoteItem(rowData);
             a1.Show();
         }
+
+        private void FormSummaryNote_Load(object sender, EventArgs e)
+        {                    
+            //设置两个请求参数
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
     }
 }
