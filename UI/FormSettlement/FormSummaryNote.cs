@@ -48,8 +48,8 @@ namespace WMS.UI.FormSettlement
                 return;
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            //var a1 = new FormStockTakingOrderItem(rowData);
-            //a1.Show();
+            var a1 = new FormSummaryNoteItem(rowData);
+            a1.Show();
         }
     }
 }
