@@ -42,6 +42,19 @@
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBoxAccountPeriod = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ButtonTransfer = new System.Windows.Forms.ToolStripButton();
+            this.ButtonWriteOff = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDeficit = new System.Windows.Forms.ToolStripButton();
+            this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -63,32 +76,19 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.ButtonTransfer = new System.Windows.Forms.ToolStripButton();
-            this.ButtonWriteOff = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDeficit = new System.Windows.Forms.ToolStripButton();
-            this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBoxAccountPeriod = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            this.toolStripTop.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -199,6 +199,161 @@
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
+            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.toolStripTop, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 25);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1018, 25);
+            this.tableLayoutPanel3.TabIndex = 9;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tableLayoutPanel5.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.tableLayoutPanel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tableLayoutPanel5.ColumnCount = 4;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.comboBoxAccountPeriod, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.label1, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(763, 0);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(255, 25);
+            this.tableLayoutPanel5.TabIndex = 5;
+            // 
+            // comboBoxAccountPeriod
+            // 
+            this.comboBoxAccountPeriod.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxAccountPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAccountPeriod.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.comboBoxAccountPeriod.FormattingEnabled = true;
+            this.comboBoxAccountPeriod.Location = new System.Drawing.Point(109, 2);
+            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxAccountPeriod.Name = "comboBoxAccountPeriod";
+            this.comboBoxAccountPeriod.Size = new System.Drawing.Size(108, 27);
+            this.comboBoxAccountPeriod.TabIndex = 0;
+            this.comboBoxAccountPeriod.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountPeriod_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(37, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 25);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "会计期间";
+            // 
+            // toolStripTop
+            // 
+            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonAdd,
+            this.toolStripButtonDelete,
+            this.toolStripButtonAlter,
+            this.toolStripSeparator3,
+            this.ButtonTransfer,
+            this.ButtonWriteOff,
+            this.toolStripButtonDeficit,
+            this.ButtonAccrualCheck});
+            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
+            this.toolStripTop.Name = "toolStripTop";
+            this.toolStripTop.Size = new System.Drawing.Size(763, 25);
+            this.toolStripTop.TabIndex = 3;
+            this.toolStripTop.Text = "toolStrip1";
+            // 
+            // toolStripButtonAdd
+            // 
+            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
+            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
+            // 
+            // toolStripButtonDelete
+            // 
+            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
+            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButtonDelete.Text = "删除";
+            this.toolStripButtonDelete.Visible = false;
+            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
+            // 
+            // toolStripButtonAlter
+            // 
+            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
+            this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAlter.Name = "toolStripButtonAlter";
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonAlter.Text = "保存修改";
+            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
+            // ButtonTransfer
+            // 
+            this.ButtonTransfer.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.ButtonTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonTransfer.Name = "ButtonTransfer";
+            this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
+            this.ButtonTransfer.Text = "转账";
+            this.ButtonTransfer.Click += new System.EventHandler(this.ButtonTransfer_Click);
+            // 
+            // ButtonWriteOff
+            // 
+            this.ButtonWriteOff.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.ButtonWriteOff.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonWriteOff.Name = "ButtonWriteOff";
+            this.ButtonWriteOff.Size = new System.Drawing.Size(104, 22);
+            this.ButtonWriteOff.Text = "冲销当前条目";
+            this.ButtonWriteOff.Click += new System.EventHandler(this.ButtonWriteOff_Click);
+            // 
+            // toolStripButtonDeficit
+            // 
+            this.toolStripButtonDeficit.Image = global::WMS.UI.Properties.Resources.check;
+            this.toolStripButtonDeficit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeficit.Name = "toolStripButtonDeficit";
+            this.toolStripButtonDeficit.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonDeficit.Text = "赤字提醒";
+            this.toolStripButtonDeficit.Click += new System.EventHandler(this.toolStripButtonDeficit_Click);
+            // 
+            // ButtonAccrualCheck
+            // 
+            this.ButtonAccrualCheck.Image = global::WMS.UI.Properties.Resources.check;
+            this.ButtonAccrualCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonAccrualCheck.Name = "ButtonAccrualCheck";
+            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 22);
+            this.ButtonAccrualCheck.Text = "自动对账";
+            this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
             // 
             // tableLayoutPanel8
             // 
@@ -471,161 +626,6 @@
             this.miniToolStrip.Size = new System.Drawing.Size(509, 25);
             this.miniToolStrip.TabIndex = 3;
             // 
-            // toolStripTop
-            // 
-            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonAdd,
-            this.toolStripButtonDelete,
-            this.toolStripButtonAlter,
-            this.toolStripSeparator3,
-            this.ButtonTransfer,
-            this.ButtonWriteOff,
-            this.toolStripButtonDeficit,
-            this.ButtonAccrualCheck});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
-            this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(763, 25);
-            this.toolStripTop.TabIndex = 3;
-            this.toolStripTop.Text = "toolStrip1";
-            // 
-            // toolStripButtonAdd
-            // 
-            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 22);
-            this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
-            // 
-            // toolStripButtonDelete
-            // 
-            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
-            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 22);
-            this.toolStripButtonDelete.Text = "删除";
-            this.toolStripButtonDelete.Visible = false;
-            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
-            // 
-            // toolStripButtonAlter
-            // 
-            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
-            this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButtonAlter.Text = "保存修改";
-            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.AutoSize = false;
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
-            // 
-            // ButtonTransfer
-            // 
-            this.ButtonTransfer.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.ButtonTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonTransfer.Name = "ButtonTransfer";
-            this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
-            this.ButtonTransfer.Text = "转账";
-            this.ButtonTransfer.Click += new System.EventHandler(this.ButtonTransfer_Click);
-            // 
-            // ButtonWriteOff
-            // 
-            this.ButtonWriteOff.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.ButtonWriteOff.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonWriteOff.Name = "ButtonWriteOff";
-            this.ButtonWriteOff.Size = new System.Drawing.Size(104, 22);
-            this.ButtonWriteOff.Text = "冲销当前条目";
-            this.ButtonWriteOff.Click += new System.EventHandler(this.ButtonWriteOff_Click);
-            // 
-            // toolStripButtonDeficit
-            // 
-            this.toolStripButtonDeficit.Image = global::WMS.UI.Properties.Resources.check;
-            this.toolStripButtonDeficit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDeficit.Name = "toolStripButtonDeficit";
-            this.toolStripButtonDeficit.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButtonDeficit.Text = "赤字提醒";
-            this.toolStripButtonDeficit.Click += new System.EventHandler(this.toolStripButtonDeficit_Click);
-            // 
-            // ButtonAccrualCheck
-            // 
-            this.ButtonAccrualCheck.Image = global::WMS.UI.Properties.Resources.check;
-            this.ButtonAccrualCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ButtonAccrualCheck.Name = "ButtonAccrualCheck";
-            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 22);
-            this.ButtonAccrualCheck.Text = "自动对账";
-            this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.tableLayoutPanel5.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.tableLayoutPanel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tableLayoutPanel5.ColumnCount = 4;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.comboBoxAccountPeriod, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.label1, 1, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(763, 0);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(255, 25);
-            this.tableLayoutPanel5.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(37, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 25);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "会计期间";
-            // 
-            // comboBoxAccountPeriod
-            // 
-            this.comboBoxAccountPeriod.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxAccountPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAccountPeriod.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.comboBoxAccountPeriod.FormattingEnabled = true;
-            this.comboBoxAccountPeriod.Location = new System.Drawing.Point(109, 2);
-            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxAccountPeriod.Name = "comboBoxAccountPeriod";
-            this.comboBoxAccountPeriod.Size = new System.Drawing.Size(108, 27);
-            this.comboBoxAccountPeriod.TabIndex = 0;
-            this.comboBoxAccountPeriod.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountPeriod_SelectedIndexChanged);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
-            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.toolStripTop, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 25);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1018, 25);
-            this.tableLayoutPanel3.TabIndex = 9;
-            // 
             // FormAccountRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -642,6 +642,12 @@
             this.toolStrip1.PerformLayout();
             this.panelPager.ResumeLayout(false);
             this.panelSearchWidget.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            this.toolStripTop.ResumeLayout(false);
+            this.toolStripTop.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -649,12 +655,6 @@
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
-            this.toolStripTop.ResumeLayout(false);
-            this.toolStripTop.PerformLayout();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
