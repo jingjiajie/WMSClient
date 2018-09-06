@@ -303,7 +303,7 @@ namespace WMS.UI
                     this.LoadSubWindow(new FormSettlement.FormSettlementNote());
                     break;
                 case "∑¢∆±π‹¿Ì":
-                    this.LoadSubWindow(new FormSettlement.FormSettlementNote());
+                    this.LoadSubWindow(new FormSettlement.FormInvoice());
                     break;
             }
             this.panelRight.ResumeLayout();
