@@ -50,12 +50,77 @@ namespace WMS.UI.FormSettlement
 
         private void toolStripButtonSend_Click(object sender, EventArgs e)
         {
-
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                if ((int)rowData[i]["state"] == 1)
+                {
+                    MessageBox.Show("选中发票已经确认寄出，无法重复操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] == 2)
+                {
+                    MessageBox.Show("选中发票已经确认收到，无法进行寄出操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (rowData[i]["trackingNumber"] == null)
+                {
+                    MessageBox.Show("请输入相应快递单号以继续核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            this.model1[this.model1.SelectionRange.Row, "state"] = 1;
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         private void toolStripButtonReceive_Click(object sender, EventArgs e)
         {
-
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                if ((int)rowData[i]["state"] == 0)
+                {
+                    MessageBox.Show("选中发票未确定寄出，无法进行收到确认操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] == 2)
+                {
+                    MessageBox.Show("选中发票已经确认收到，无法重复确认操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            this.model1[this.model1.SelectionRange.Row, "state"] = 2;
+            if (this.synchronizer.Save())
+            {
+                this.searchView1.Search();
+            }
         }
 
         //供应商名称编辑完成，根据名称自动搜索ID和No
