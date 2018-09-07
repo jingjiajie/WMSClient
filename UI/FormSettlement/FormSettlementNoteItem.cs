@@ -17,6 +17,16 @@ namespace WMS.UI.FormSettlement
         public FormSettlementNoteItem(IDictionary<string, object> settlementNote)
         {
             this.settlementNote = settlementNote;
+            this.searchView1.AddStaticCondition("settlementNoteId", this.settlementNote["id"]);
+
+            int noteState = (int)this.settlementNote["state"];
+            if (noteState ==1)
+            {
+                this.basicView1.Mode = "default1";
+                this.reoGridView1.Mode = "default1";
+                this.synchronizer.Mode = "default1";
+            }
+
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
@@ -27,6 +37,7 @@ namespace WMS.UI.FormSettlement
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+
             this.searchView1.Search();
         }
 

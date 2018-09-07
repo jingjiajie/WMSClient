@@ -186,7 +186,14 @@ httpAPIs:[
             url:"{$url}/warehouse/{$accountBook}/settlement_note_item/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
-}
+},
+{mode:"default1",
+     ref:"default",
+     fields:[
+    {name:"StorageCharge",displayName:"仓储费",type:"double",editable:false},
+    {name:"LogisticFee",displayName:"物流费",type:"double",editable:false},
+   ]
+    }
 ]</value>
   </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
