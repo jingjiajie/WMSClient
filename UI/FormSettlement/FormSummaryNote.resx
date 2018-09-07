@@ -126,12 +126,14 @@
     {mode:"default",
      fields:[
        {name:"id",displayName:"ID",type:"int",visible:false},
+       {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
        {name:"no",displayName:"单号",type:"string"},
        {name:"startTime",displayName:"起始时间",type:"datetime"},
        {name:"endTime",displayName:"截止时间",type:"datetime"},
        {name:"createTime",displayName:"创建时间",type:"datetime"},
        {name:"createPersonID",displayName:"创建人",type:"string",visible:false},
        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
+       {name:"warehouseName",displayName:"仓库名",type:"string",visible:false}
     ],
 httpAPIs:[
         {type:"get-count",

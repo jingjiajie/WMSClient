@@ -23,7 +23,9 @@ namespace WMS.UI.FormSettlement
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {             
                 { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},            
+                { "createPersonName",GlobalData.Person["name"]},
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "warehouseName",GlobalData.Warehouse["name"]},
                 { "createTime",DateTime.Now},
             });
         }
@@ -53,7 +55,8 @@ namespace WMS.UI.FormSettlement
         }
 
         private void FormSummaryNote_Load(object sender, EventArgs e)
-        {                    
+        {
+            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
