@@ -409,7 +409,10 @@ namespace WMS.UI
 
             GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
-            
+
+            GlobalData.AllSummaryNote = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/settlement/{GlobalData.AccountBook}/summary_note/{condWarehouse.ToString()}");
+
             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
 

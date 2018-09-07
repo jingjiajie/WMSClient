@@ -184,5 +184,14 @@ namespace WMS.UI
                        && s["name"].ToString().StartsWith(str)
                     select s["name"]).Distinct().ToArray();
         }
+
+        //税务编码输入联想
+        private object[] SummaryNoteNoAssociation([Data]string str)
+        {
+            return (from s in GlobalData.AllSummaryNote
+                    where s["no"] != null
+                       && s["no"].ToString().StartsWith(str)
+                    select s["no"]).Distinct().ToArray();
+        }
     }
 }

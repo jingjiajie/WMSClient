@@ -124,7 +124,9 @@
      fields:[
        {name:"id",displayName:"ID",type:"int",visible:false},
        {name:"no",displayName:"单号",type:"string"},
-       {name:"summaryNoteId",displayName:"汇总单ID",type:"int"},
+       {name:"summaryNoteId",displayName:"汇总单ID",type:"int",visible:false},
+       {name:"summaryNoteNo",displayName:"汇总单号",type:"string",association:"#summaryNoteNoAssociation",editEnded:"#summaryNoteNoEditEnded"},
+       {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
 
        {name:"accountTitleIncomeId",displayName:"收入科目ID",type:"int",visible:false},
        {name:"accountTitleIncomeNo",displayName:"收入科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleIncomeNoEditEnded"},
