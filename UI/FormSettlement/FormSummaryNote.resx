@@ -131,7 +131,7 @@
        {name:"startTime",displayName:"起始时间",type:"datetime"},
        {name:"endTime",displayName:"截止时间",type:"datetime"},
        {name:"createTime",displayName:"创建时间",type:"datetime"},
-       {name:"createPersonID",displayName:"创建人",type:"string",visible:false},
+       {name:"createPersonId",displayName:"创建人",type:"string",visible:false},
        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
        {name:"warehouseName",displayName:"仓库名",type:"string",visible:false}
     ],
