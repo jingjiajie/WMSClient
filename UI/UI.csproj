@@ -232,6 +232,7 @@
     <Compile Include="FormSettlement\FormSummaryNoteItem.Designer.cs">
       <DependentUpon>FormSummaryNoteItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSettlement\LedgerSynchronous.cs" />
     <Compile Include="FormStock\FormAddStockRecord.cs">
       <SubType>Form</SubType>
     </Compile>

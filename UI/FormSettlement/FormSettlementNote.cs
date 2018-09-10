@@ -238,11 +238,16 @@ namespace WMS.UI.FormSettlement
             }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(selectedIDs);
-            string body = "{\"settlementNoteIds\":\"" + strIDs + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"accountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+            LedgerSynchronous ledgerSynchronous = new LedgerSynchronous();
+            ledgerSynchronous.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
+            ledgerSynchronous.personId = (int)GlobalData.Person["id"];
+            ledgerSynchronous.settlementNoteIds = selectedIDs;
+            string body1 = serializer.Serialize(ledgerSynchronous);
+            string body = "{\"settlementNoteIds\":\"" + "{" +strIDs+"}" + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"accountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
             try
             {
                 string operatioName = "synchronous_receivables";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, strIDs, "POST");
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, body1, "POST");
                 this.searchView1.Search();
                 MessageBox.Show("同步结算单应收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -273,7 +278,7 @@ namespace WMS.UI.FormSettlement
             try
             {
                 string operatioName = "synchronous_receipt";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, strIDs, "POST");
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, body, "POST");
                 this.searchView1.Search();
                 MessageBox.Show("同步结算单实收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

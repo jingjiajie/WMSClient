@@ -37,6 +37,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.basicView1 = new FrontWork.BasicView();
             this.configuration1 = new FrontWork.Configuration();
             this.model1 = new FrontWork.ModelBox();
@@ -51,7 +52,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelPager = new System.Windows.Forms.Panel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -101,6 +101,15 @@
             this.toolStripTop.Size = new System.Drawing.Size(798, 24);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(116, 21);
+            this.toolStripButton1.Text = "供货商条目确认";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // basicView1
             // 
@@ -293,15 +302,6 @@
             this.panelPager.Name = "panelPager";
             this.panelPager.Size = new System.Drawing.Size(798, 246);
             this.panelPager.TabIndex = 8;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(116, 21);
-            this.toolStripButton1.Text = "供货商条目确认";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // FormSettlementNoteItem
             // 
