@@ -163,7 +163,10 @@
    
     {name:"StorageCharge",displayName:"仓储费",type:"double"},
     {name:"LogisticFee",displayName:"物流费",type:"double"},
-    {name:"ActualPayment",displayName:"实付金额",type:"double"},    
+    {name:"ActualPayment",displayName:"实付金额",type:"double"}, 
+
+    {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#StateForwardMapper",backwardMapper:"#StateBackwardMapper"},
+   
     ],
 httpAPIs:[
         {type:"get-count",

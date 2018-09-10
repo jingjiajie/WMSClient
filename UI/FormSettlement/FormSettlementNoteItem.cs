@@ -17,7 +17,7 @@ namespace WMS.UI.FormSettlement
         public FormSettlementNoteItem(IDictionary<string, object> settlementNote)
         {
             this.settlementNote = settlementNote;
-            this.searchView1.AddStaticCondition("settlementNoteId", this.settlementNote["id"]);
+            
 
             int noteState = (int)this.settlementNote["state"];
             if (noteState ==1)
@@ -34,6 +34,7 @@ namespace WMS.UI.FormSettlement
         private void FormSettlementNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            this.searchView1.AddStaticCondition("settlementNoteId", this.settlementNote["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -99,6 +100,26 @@ namespace WMS.UI.FormSettlement
             if (this.addFinishedCallback != null)
             {
                 this.addFinishedCallback();
+            }
+        }
+
+        private string StateForwardMapper([Data]int state)
+        {
+            switch (state)
+            {
+                case 0: return "待供货商确认";
+                case 1: return "供货商已确认";
+                default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "待供货商确认": return 0;
+                case "供货商已确认": return 1;
+                default: return -1;
             }
         }
     }
