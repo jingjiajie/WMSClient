@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using System.Web.Script.Serialization;
+using System.IO;
+using System.Net;
 
 namespace WMS.UI.FormSettlement
 {
@@ -17,7 +20,7 @@ namespace WMS.UI.FormSettlement
         public FormSettlementNoteItem(IDictionary<string, object> settlementNote)
         {
             this.settlementNote = settlementNote;
-            this.searchView1.AddStaticCondition("settlementNoteId", this.settlementNote["id"]);
+            
 
             int noteState = (int)this.settlementNote["state"];
             if (noteState ==1)
@@ -34,6 +37,7 @@ namespace WMS.UI.FormSettlement
         private void FormSettlementNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            this.searchView1.AddStaticCondition("settlementNoteId", this.settlementNote["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -99,6 +103,57 @@ namespace WMS.UI.FormSettlement
             if (this.addFinishedCallback != null)
             {
                 this.addFinishedCallback();
+            }
+        }
+
+        private string StateForwardMapper([Data]int state)
+        {
+            switch (state)
+            {
+                case 0: return "待供货商确认";
+                case 1: return "供货商已确认";
+                default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "待供货商确认": return 0;
+                case "供货商已确认": return 1;
+                default: return -1;
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确认保存当前修改并确认选中条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.synchronizer.Save();
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            try
+            {
+                string operatioName = "confirm";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note_item/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("选中条目确认") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

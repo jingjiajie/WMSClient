@@ -117,60 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-       {name:"id",displayName:"ID",type:"int",visible:false},
-       {name:"no",displayName:"单号",type:"string"},
-       {name:"summaryNoteId",displayName:"汇总单ID",type:"int",visible:false},
-       {name:"summaryNoteNo",displayName:"汇总单号",type:"string",association:"#summaryNoteNoAssociation",editEnded:"#summaryNoteNoEditEnded"},
-       {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-
-       {name:"accountTitleIncomeId",displayName:"收入科目ID",type:"int",visible:false},
-       {name:"accountTitleIncomeNo",displayName:"收入科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleIncomeNoEditEnded"},
-       {name:"accountTitleIncomeName",displayName:"收入科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleIncomeNameEditEnded"},
-
-       {name:"accountTitleReceivableId",displayName:"应收款科目ID",type:"int",visible:false},
-       {name:"accountTitleReceivableNo",displayName:"应收款科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleReceivableNoEditEnded"},
-       {name:"accountTitleReceivableName",displayName:"应收款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleReceivableNameEditEnded"},
-
-       {name:"accountTitlePropertyId",displayName:"资产科目ID",type:"int",visible:false},
-       {name:"accountTitlePropertyNo",displayName:"资产科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded"},
-       {name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded"},
-
-       {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#StateForwardMapper",backwardMapper:"#StateBackwardMapper"},
-
-       
-       {name:"createPersonId",displayName:"创建人",type:"string",visible:false},
-       {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
-       {name:"createTime",displayName:"创建时间",type:"datetime"},
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/settlement_note/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/settlement_note/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/settlement_note/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/settlement_note/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/settlement_note/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
-  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>374, 98</value>
   </metadata>
@@ -233,6 +179,112 @@ httpAPIs:[
         IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="toolStripButtonReceivables.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
+        NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
+        ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
+        bjSOw+fzwmjQwWo18167w4EpnxstLc0oKysTtr8lHCjdHbjf7xeqvHA6nbDZbALICJ1Ox+ByeT/aO37A
+        xIQO0WgAwaAPkmSGfEDOxGw2C+rr6hg0Ly+PF5EJBYOIxaf/mUgoGBKqfNhWb7FYoNfrWf2gchCdnR2C
+        jBaJRJyVjmnVUCgUYvWLdxxobPoGlZWV3G9Sf/78WRhNBlhtJnjc9r8nEAptgZN6t9vF6s0mE3SCwOjo
+        KLq6uxl8MTGHcCQAtXoESqUcY2MaJqQQ7lDPKXQ5OTk49fEpfp9cikZDGBkZ3JlAOBwWG4Pw+/xwuVy/
+        957Uq1Uq9Pb2QavVYnkpjpnpIAMTgUDQy+DXrrWhtFTGfafEE7h+XCO+Y4XDIYmQetDX3/9XAqFIBBGx
+        SD313uPx/Kn3BKoU1qsECQJ68GCJbb91SyX2SZiacgkiQ6iq+hAnKio47Scq3heEbgi3xkQLTfwOhZgc
+        aCx8/jGJcFiAC+Xb6rd6T+qlpPU67js5sLIyj/X1hxgfV8Fg0GJ+bpoXpf/MmU9xvPw49/1Y2Ul8VX+J
+        95F6aldsJgy10QXT9YrH4POJe6A1m/gFM/MriMTm8dPPdzEViMDpnoLN7obeJEFnMGBpOYbNzVVWQ7ZO
+        Tro4VDSGFDKyvaioBCWlFfjskw/gvPoyYsosLLibsPpog0dTstvQUv3SFgGLWo6tpYBV0w+TqhcTQzd5
+        qXq+x0BnK6/utmb8aNTi0fqacCDOYZqdjXL6TSY9WluvcOhovSt7D1UfnYay7kV4m5+G/etULNhrMbe0
+        CqsnCt9o7c4B3Kmqj76AG0210JttsEsWkZUgh47mX69Xc+ho5GjmyXpSONmcCufl59gFahm5GoyICTj3
+        6u4JUHVcaWACNOt02FAeyE5KfUmJjMFJfXNDNdtOBCxfPsXqyX7//Coi6pq9gVOZ5E38EcqF9Y5DjKaF
+        x4lOPbKebjqynlp1PzGJtYXbuO9vw+bGQ8wt3MPi4t29q6eiNnSefo0THPZboZ+wQKUe4zGrqTmHLy5e
+        wsjQCCSHSLlFEJS8HGAa78TqJgex/s1n9k7gj0Ufopbc7Olj4MbGRh7JmFDqDcywS5R4qyQOH5dXuLAG
+        R+vb+wO+XXQR0Xn/+YULuHwyA/7v8nBHcx1zUQnxeJjJhGZ+xfTyBrfj6jv7pJ5KoRgQUxBkB5KPuL59
+        IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
+        iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonReceipts.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
+        NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
+        ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
+        bjSOw+fzwmjQwWo18167w4EpnxstLc0oKysTtr8lHCjdHbjf7xeqvHA6nbDZbALICJ1Ox+ByeT/aO37A
+        xIQO0WgAwaAPkmSGfEDOxGw2C+rr6hg0Ly+PF5EJBYOIxaf/mUgoGBKqfNhWb7FYoNfrWf2gchCdnR2C
+        jBaJRJyVjmnVUCgUYvWLdxxobPoGlZWV3G9Sf/78WRhNBlhtJnjc9r8nEAptgZN6t9vF6s0mE3SCwOjo
+        KLq6uxl8MTGHcCQAtXoESqUcY2MaJqQQ7lDPKXQ5OTk49fEpfp9cikZDGBkZ3JlAOBwWG4Pw+/xwuVy/
+        957Uq1Uq9Pb2QavVYnkpjpnpIAMTgUDQy+DXrrWhtFTGfafEE7h+XCO+Y4XDIYmQetDX3/9XAqFIBBGx
+        SD313uPx/Kn3BKoU1qsECQJ68GCJbb91SyX2SZiacgkiQ6iq+hAnKio47Scq3heEbgi3xkQLTfwOhZgc
+        aCx8/jGJcFiAC+Xb6rd6T+qlpPU67js5sLIyj/X1hxgfV8Fg0GJ+bpoXpf/MmU9xvPw49/1Y2Ul8VX+J
+        95F6aldsJgy10QXT9YrH4POJe6A1m/gFM/MriMTm8dPPdzEViMDpnoLN7obeJEFnMGBpOYbNzVVWQ7ZO
+        Tro4VDSGFDKyvaioBCWlFfjskw/gvPoyYsosLLibsPpog0dTstvQUv3SFgGLWo6tpYBV0w+TqhcTQzd5
+        qXq+x0BnK6/utmb8aNTi0fqacCDOYZqdjXL6TSY9WluvcOhovSt7D1UfnYay7kV4m5+G/etULNhrMbe0
+        CqsnCt9o7c4B3Kmqj76AG0210JttsEsWkZUgh47mX69Xc+ho5GjmyXpSONmcCufl59gFahm5GoyICTj3
+        6u4JUHVcaWACNOt02FAeyE5KfUmJjMFJfXNDNdtOBCxfPsXqyX7//Coi6pq9gVOZ5E38EcqF9Y5DjKaF
+        x4lOPbKebjqynlp1PzGJtYXbuO9vw+bGQ8wt3MPi4t29q6eiNnSefo0THPZboZ+wQKUe4zGrqTmHLy5e
+        wsjQCCSHSLlFEJS8HGAa78TqJgex/s1n9k7gj0Ufopbc7Olj4MbGRh7JmFDqDcywS5R4qyQOH5dXuLAG
+        R+vb+wO+XXQR0Xn/+YULuHwyA/7v8nBHcx1zUQnxeJjJhGZ+xfTyBrfj6jv7pJ5KoRgQUxBkB5KPuL59
+        IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
+        iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+       {name:"id",displayName:"ID",type:"int",visible:false},
+       {name:"no",displayName:"单号",type:"string"},
+       {name:"summaryNoteId",displayName:"汇总单ID",type:"int",visible:false},
+       {name:"summaryNoteNo",displayName:"汇总单号",type:"string",association:"#summaryNoteNoAssociation",editEnded:"#summaryNoteNoEditEnded"},
+       {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+
+       {name:"accountTitleIncomeId",displayName:"收入科目ID",type:"int",visible:false},
+       {name:"accountTitleIncomeNo",displayName:"收入科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleIncomeNoEditEnded"},
+       {name:"accountTitleIncomeName",displayName:"收入科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleIncomeNameEditEnded"},
+
+       {name:"accountTitleReceivableId",displayName:"应收款科目ID",type:"int",visible:false},
+       {name:"accountTitleReceivableNo",displayName:"应收款科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleReceivableNoEditEnded"},
+       {name:"accountTitleReceivableName",displayName:"应收款科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleReceivableNameEditEnded"},
+
+       {name:"accountTitlePropertyId",displayName:"资产科目ID",type:"int",visible:false},
+       {name:"accountTitlePropertyNo",displayName:"资产科目代码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitlePropertyNoEditEnded"},
+       {name:"accountTitlePropertyName",displayName:"资产科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitlePropertyNameEditEnded"},
+
+       {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#StateForwardMapper",backwardMapper:"#StateBackwardMapper"},
+
+       
+       {name:"createPersonId",displayName:"创建人",type:"string",visible:false},
+       {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
+       {name:"createTime",displayName:"创建时间",type:"datetime"},
+    ],
+httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/settlement_note/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/settlement_note/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/settlement_note/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/settlement_note/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/settlement_note/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>621, 98</value>
