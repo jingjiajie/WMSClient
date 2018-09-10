@@ -7,6 +7,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Net;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FormSettlement
 {
@@ -220,6 +223,68 @@ namespace WMS.UI.FormSettlement
                 case "已同步总账应收款": return 1;
                 case "已同步总账实付款": return 2;
                 default: return -1;
+            }
+        }
+
+        //同步应收款
+        private void toolStripButtonReceivables_Click(object sender, EventArgs e)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            string body = "{\"settlementNoteIds\":\"" + strIDs + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"accountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+            try
+            {
+                string operatioName = "synchronous_receivables";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("同步结算单应收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("同步结算单应收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        //同步实收款
+        private void toolStripButtonReceipts_Click(object sender, EventArgs e)
+        {
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(selectedIDs);
+            string body = "{\"settlementNoteIds\":\"" + strIDs + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"accountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+            try
+            {
+                string operatioName = "synchronous_receipt";
+                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, strIDs, "POST");
+                this.searchView1.Search();
+                MessageBox.Show("同步结算单实收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("同步结算单实收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
