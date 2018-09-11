@@ -36,6 +36,8 @@ namespace WMS.UI.FormSettlement
             {
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "createTime",DateTime.Now},
             });
         }
 

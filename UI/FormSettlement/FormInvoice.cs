@@ -82,6 +82,7 @@ namespace WMS.UI.FormSettlement
                 }
             }
             this.model1[this.model1.SelectionRange.Row, "state"] = 1;
+            //this.model1[this.model1.SelectionRange.Row, "sendingTime"] = DateTime.Now;
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
@@ -139,7 +140,7 @@ namespace WMS.UI.FormSettlement
             else
             {
                 this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "no"] = foundSupplier["no"];
+                this.model1[row, "supplierNo"] = foundSupplier["no"];
             }
         }
 
@@ -159,7 +160,7 @@ namespace WMS.UI.FormSettlement
             else
             {
                 this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "name"] = foundSupplier["name"];
+                this.model1[row, "suppliername"] = foundSupplier["name"];
             }
         }
 
