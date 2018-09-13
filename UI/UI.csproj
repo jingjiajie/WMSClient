@@ -202,6 +202,7 @@
     <Compile Include="FormPutAwayNote\FormPutAwayNoteItem.Designer.cs">
       <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSettlement\CommonData.cs" />
     <Compile Include="FormSettlement\FormInvoice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +220,12 @@
     </Compile>
     <Compile Include="FormSettlement\FormSettlementNoteItem.Designer.cs">
       <DependentUpon>FormSettlementNoteItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettlement\FormSetTray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettlement\FormSetTray.Designer.cs">
+      <DependentUpon>FormSetTray.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSettlement\FormSummaryNote.cs">
       <SubType>Form</SubType>
@@ -518,6 +525,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSettlementNoteItem.resx">
       <DependentUpon>FormSettlementNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettlement\FormSetTray.resx">
+      <DependentUpon>FormSetTray.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSummaryNote.resx">
       <DependentUpon>FormSummaryNote.cs</DependentUpon>
