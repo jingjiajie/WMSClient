@@ -132,6 +132,7 @@
         {name:"materialName",displayName:"物料名称",type:"string",placeHolder:"必填信息",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",placeHolder:"必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+        {name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:true},
 
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:true,editable:true,forwardMapper:"#entryAmountForwardMapper",backwardMapper:"#entryAmountBackwardMapper"},
@@ -243,8 +244,8 @@
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
-
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:false},
+{name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:false},
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
@@ -339,7 +340,8 @@
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:false},
+{name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:false},
 
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
@@ -434,7 +436,8 @@
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:false},
+{name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:false},
 
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},

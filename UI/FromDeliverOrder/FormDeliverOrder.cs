@@ -204,6 +204,7 @@ namespace WMS.UI.FromDeliverOrder
             }
             int a = this.model1.SelectionRange.Row;
             this.model1[this.model1.SelectionRange.Row, "state"] = DeliveryOrderState.DELIVERY_STATE_IN_DELIVER;
+            this.model1[this.model1.SelectionRange.Row, "deliverTime"] = DateTime.Now;
             if (this.synchronizer.Save())
             {
                // MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
