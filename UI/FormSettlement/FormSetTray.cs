@@ -16,6 +16,9 @@ namespace WMS.UI.FormSettlement
     {
         string lengthKey;
         string widthKey;
+        CommonData commonDataLength = new CommonData();
+        CommonData commonDataWidth = new CommonData();
+
         private FormMode mode = FormMode.ALTER;
         public FormSetTray()
         {
@@ -24,20 +27,20 @@ namespace WMS.UI.FormSettlement
 
         private void FormSetTray_Load(object sender, EventArgs e)
         {
-            this.lengthKey = ("Tray_Length_<" + GlobalData.Warehouse["id"] + ">");
-            this.widthKey = ("Tray_Width_<" + GlobalData.Warehouse["id"] + ">");
+            this.lengthKey = "Tray_Length_<" + GlobalData.Warehouse["id"] + ">";
+            this.widthKey = "Tray_Width_<" + GlobalData.Warehouse["id"] + ">";
             this.CenterToScreen();
             this.Search();
+
         }
 
 
         private void buttonADD_Click(object sender, EventArgs e)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            CommonData commonDataLength = new CommonData();
             commonDataLength.key = this.lengthKey;
             commonDataLength.value = this.textBoxLength.Text;
-            CommonData commonDataWidth = new CommonData();
+          
             commonDataWidth.key = this.widthKey;
             commonDataWidth.value = this.textBoxWidth.Text;
             string body = serializer.Serialize(new CommonData[] {commonDataLength,commonDataWidth});
@@ -68,11 +71,12 @@ namespace WMS.UI.FormSettlement
         private void Search()
         {
             Condition condition = new Condition();
-            condition.AddCondition("key", new object[] { this.lengthKey, this.widthKey }, ConditionItemRelation.IN);
+            condition.AddCondition("key", new object[] { this.lengthKey, this.widthKey }, ConditionItemRelation.IN);    
+            string cond = condition.ToString();
             try
             {
-               var a= RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/"+condition.ToString(), "GET");
-               
+                string url = $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tray/{condition.ToString()}";
+                CommonData[] a= RestClient.RequestPost<CommonData[]>(url,null, "GET");
             }
             catch (WebException ex)
             {
@@ -81,7 +85,7 @@ namespace WMS.UI.FormSettlement
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("同步结算单应收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(("获取托位信息失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
