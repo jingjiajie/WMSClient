@@ -109,6 +109,19 @@ namespace WMS.UI.FormSettlement
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);          
             this.searchView1.Search();
         }
+
+        private void buttonItems_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null) { return; }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项汇总单条目查看详情！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            var a1 = new FormSummaryDetails(rowData);
+            a1.Show();
+        }
     }
 
     public class summaryNoteItemState
