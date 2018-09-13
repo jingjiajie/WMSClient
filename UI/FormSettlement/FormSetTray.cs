@@ -27,8 +27,8 @@ namespace WMS.UI.FormSettlement
 
         private void FormSetTray_Load(object sender, EventArgs e)
         {
-            this.lengthKey = "Tray_Length_<" + GlobalData.Warehouse["id"] + ">";
-            this.widthKey = "Tray_Width_<" + GlobalData.Warehouse["id"] + ">";
+            this.lengthKey = "Tray_Length_" + GlobalData.Warehouse["id"];
+            this.widthKey = "Tray_Width_" + GlobalData.Warehouse["id"];
             this.CenterToScreen();
             this.Search();
 
@@ -46,14 +46,16 @@ namespace WMS.UI.FormSettlement
             string body = serializer.Serialize(new CommonData[] {commonDataLength,commonDataWidth});
             try
             {
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray";
                 if (this.mode == FormMode.ALTER)
                 {
-                    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/", body, "POST");
+                    RestClient.RequestPost<string>(url, body, "PUT");
                     MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (this.mode == FormMode.ADD)
                 {
-                    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/", body, "PUT");
+                    
+                    RestClient.RequestPost<string>(url, body, "POST");
                     MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -76,7 +78,32 @@ namespace WMS.UI.FormSettlement
             try
             {
                 string url = $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tray/{condition.ToString()}";
-                CommonData[] a= RestClient.RequestPost<CommonData[]>(url,null, "GET");
+                CommonData[] trayDates= RestClient.RequestPost<CommonData[]>(url,null, "GET");
+                if (trayDates.Length == 2)
+                {
+                    if (trayDates[0].key == this.lengthKey && trayDates[1].key == this.widthKey)
+                    {
+                        this.textBoxLength.Text = trayDates[0].value;
+                        this.textBoxWidth.Text = trayDates[1].value;
+                        this.mode = FormMode.ALTER;
+                    }
+                    else if (trayDates[1].key == this.lengthKey && trayDates[0].key == this.widthKey)
+                    {
+                        this.textBoxLength.Text = trayDates[1].value;
+                        this.textBoxWidth.Text = trayDates[0].value;
+                        this.mode = FormMode.ALTER;
+                    }
+                    else
+                    {
+                        MessageBox.Show(("托位数据出错！"), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    this.textBoxLength.Text = "";
+                    this.textBoxWidth.Text = "";
+                    this.mode = FormMode.ADD;
+                }
             }
             catch (WebException ex)
             {

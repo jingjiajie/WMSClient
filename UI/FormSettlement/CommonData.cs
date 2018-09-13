@@ -10,6 +10,6 @@ namespace WMS.UI.FormSettlement
         public int id;
         public string key;
         public string value;
-        public DateTime time;
+        public DateTime time=DateTime.Now;
     }
 }
