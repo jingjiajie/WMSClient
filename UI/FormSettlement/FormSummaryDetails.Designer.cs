@@ -84,7 +84,7 @@
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(3);
-            this.basicView1.Size = new System.Drawing.Size(807, 77);
+            this.basicView1.Size = new System.Drawing.Size(807, 95);
             this.basicView1.TabIndex = 13;
             // 
             // configuration1
@@ -201,7 +201,7 @@
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -243,10 +243,10 @@
             this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Controls.Add(this.reoGridView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 128);
+            this.panelPager.Location = new System.Drawing.Point(0, 146);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(807, 237);
+            this.panelPager.Size = new System.Drawing.Size(807, 219);
             this.panelPager.TabIndex = 8;
             // 
             // reoGridView1
@@ -260,7 +260,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(807, 237);
+            this.reoGridView1.Size = new System.Drawing.Size(807, 219);
             this.reoGridView1.TabIndex = 0;
             // 
             // toolStripTop

@@ -24,7 +24,7 @@ namespace WMS.UI.FormSettlement
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "summaryNoteID",this.summaryNote["id"]},             
+                { "summaryNoteId",this.summaryNote["id"]},             
                 { "state",0},
             });
         }

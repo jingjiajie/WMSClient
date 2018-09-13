@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSummaryNoteItem));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -47,13 +47,13 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.basicView1 = new FrontWork.BasicView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -138,12 +138,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(76, 62);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSummaryNoteItem",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -181,14 +181,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(685, 29);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -256,6 +256,16 @@
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // buttonItems
+            // 
+            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
+            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItems.Name = "buttonItems";
+            this.buttonItems.Size = new System.Drawing.Size(104, 21);
+            this.buttonItems.Text = "查看面积详情";
+            this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
+            // 
             // toolStripButtonAdd
             // 
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
@@ -315,16 +325,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 21;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // buttonItems
-            // 
-            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
-            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonItems.Name = "buttonItems";
-            this.buttonItems.Size = new System.Drawing.Size(104, 21);
-            this.buttonItems.Text = "查看面积详情";
-            this.buttonItems.ToolTipText = "查看零件条目";
-            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
             // FormSummaryNoteItem
             // 

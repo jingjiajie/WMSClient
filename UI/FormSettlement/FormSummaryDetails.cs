@@ -15,12 +15,14 @@ namespace WMS.UI.FormSettlement
         private IDictionary<string, object> summaryNoteItem = null;
         public FormSummaryDetails(IDictionary<string, object> summaryNoteItem)
         {
+            MethodListenerContainer.Register(this);
             InitializeComponent();
             this.summaryNoteItem = summaryNoteItem;
         }
 
         private void SummaryDetails_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.searchView1.AddStaticCondition("summaryNoteItemId", this.summaryNoteItem["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -35,7 +37,10 @@ namespace WMS.UI.FormSettlement
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, null);
+            this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "summaryNoteId",this.summaryNoteItem["id"]}       
+            });
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -89,16 +94,17 @@ namespace WMS.UI.FormSettlement
             string materialName = this.model1[row, "materialName"]?.ToString() ?? "";
             string materialProductLine = this.model1[row, "materialProductLine"]?.ToString() ?? "";
             if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
+            //if (string.IsNullOrWhiteSpace(materialProductLine)) return ;
             var foundMaterials = (from m in GlobalData.AllMaterials
                                   where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
                                   && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                     && materialProductLine == (m["productLine"]?.ToString() ?? "")
+                                  && materialProductLine == (m["productLine"]?.ToString() ?? "")
                                   select m).ToArray();
             if (foundMaterials.Length != 1)
             {
                 goto FAILED;
             }
+
             this.model1[row, "materialId"] = foundMaterials[0]["id"];
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
@@ -147,16 +153,7 @@ namespace WMS.UI.FormSettlement
             //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
             if (foundSupplies.Length == 1)
             {
-                this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.FillDefaultValue(row, "scheduledAmount", foundSupplies[0]["defaultDeliveryAmount"]);
-
-                this.FillDefaultValue(row, "unit", foundSupplies[0]["defaultDeliveryUnit"]);
-                this.FillDefaultValue(row, "unitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
-                this.FillDefaultValue(row, "sourceStorageLocationId", foundSupplies[0]["defaultPrepareTargetStorageLocationId"]);
-                //在备货完成的库位里发货
-                this.FillDefaultValue(row, "sourceStorageLocationNo", foundSupplies[0]["defaultPrepareTargetStorageLocationNo"]);
-                this.FillDefaultValue(row, "sourceStorageLocationName", foundSupplies[0]["defaultPrepareTargetStorageLocationName"]);
-
+                this.model1[row, "supplyId"] = foundSupplies[0]["id"];                     
             }
         }
 

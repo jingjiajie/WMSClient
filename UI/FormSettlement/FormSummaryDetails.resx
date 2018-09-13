@@ -136,6 +136,7 @@
         {name:"storageLocations",displayName:"列数",type:"double"},
         {name:"trays",displayName:"托数",type:"double"},
         {name:"area",displayName:"面积",type:"double"},
+        {name:"deliveryAmount",displayName:"出货数",type:"double"},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false}
     ],
