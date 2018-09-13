@@ -7,7 +7,9 @@ namespace WMS.UI.FormSettlement
 {
     class CommonData
     {
+        public int id;
         public string key;
         public string value;
+        //public DateTime time=DateTime.Now;
     }
 }
