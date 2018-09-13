@@ -43,10 +43,16 @@ namespace WMS.UI.FormSettlement
             string body = serializer.Serialize(new CommonData[] {commonDataLength,commonDataWidth});
             try
             {
-                string operatioName = "synchronous_receivables";
-                RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note/" + operatioName, body, "POST");
-               
-                MessageBox.Show("同步结算单应收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (this.mode == FormMode.ALTER)
+                {
+                    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/", body, "POST");
+                    MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (this.mode == FormMode.ADD)
+                {
+                    RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/", body, "PUT");
+                    MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (WebException ex)
             {
@@ -55,10 +61,8 @@ namespace WMS.UI.FormSettlement
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("同步结算单应收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(("设置托位大小失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-
         }
 
         private void Search()
@@ -72,7 +76,11 @@ namespace WMS.UI.FormSettlement
             }
             catch (WebException ex)
             {
-              
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
                 MessageBox.Show(("同步结算单应收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
