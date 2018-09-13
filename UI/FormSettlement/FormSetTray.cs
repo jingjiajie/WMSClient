@@ -27,6 +27,7 @@ namespace WMS.UI.FormSettlement
 
         private void FormSetTray_Load(object sender, EventArgs e)
         {
+            Utilities.BindBlueButton(this.buttonADD);
             this.lengthKey = "Tray_Length_" + GlobalData.Warehouse["id"];
             this.widthKey = "Tray_Width_" + GlobalData.Warehouse["id"];
             this.CenterToScreen();
@@ -37,6 +38,10 @@ namespace WMS.UI.FormSettlement
 
         private void buttonADD_Click(object sender, EventArgs e)
         {
+            if (!this.validateTextBox(textBoxLength.Text))
+            { MessageBox.Show("请输入正确的托位长度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);return; }
+            if (!this.validateTextBox(textBoxWidth.Text))
+            { MessageBox.Show("请输入正确的托位宽度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             commonDataLength.key = this.lengthKey;
             commonDataLength.value = this.textBoxLength.Text;
@@ -46,10 +51,10 @@ namespace WMS.UI.FormSettlement
             string body = serializer.Serialize(new CommonData[] {commonDataLength,commonDataWidth});
             try
             {
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/";
                 if (this.mode == FormMode.ALTER)
                 {
-                    RestClient.RequestPost<string>(url, body, "PUT");
+                    RestClient.RequestPost<int[]>(url, body, "PUT");
                     MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (this.mode == FormMode.ADD)
@@ -86,12 +91,16 @@ namespace WMS.UI.FormSettlement
                         this.textBoxLength.Text = trayDates[0].value;
                         this.textBoxWidth.Text = trayDates[1].value;
                         this.mode = FormMode.ALTER;
+                        this.commonDataLength.id = trayDates[0].id;
+                        this.commonDataWidth.id = trayDates[1].id;
                     }
                     else if (trayDates[1].key == this.lengthKey && trayDates[0].key == this.widthKey)
                     {
                         this.textBoxLength.Text = trayDates[1].value;
                         this.textBoxWidth.Text = trayDates[0].value;
                         this.mode = FormMode.ALTER;
+                        this.commonDataLength.id = trayDates[1].id;
+                        this.commonDataWidth.id = trayDates[0].id;
                     }
                     else
                     {
@@ -103,6 +112,8 @@ namespace WMS.UI.FormSettlement
                     this.textBoxLength.Text = "";
                     this.textBoxWidth.Text = "";
                     this.mode = FormMode.ADD;
+                    this.commonDataLength.id = 0;
+                    this.commonDataWidth.id = 0;
                 }
             }
             catch (WebException ex)
@@ -115,6 +126,21 @@ namespace WMS.UI.FormSettlement
                 MessageBox.Show(("获取托位信息失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private bool validateTextBox(string text)
+        {
+            int num;
+            if (!int.TryParse(text.Trim(), out num))
+            {              
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
 
         public enum FormMode
         {
