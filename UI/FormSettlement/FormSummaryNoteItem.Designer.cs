@@ -47,6 +47,7 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
@@ -244,6 +245,7 @@
             this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonItems,
             this.toolStripButtonAdd,
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
@@ -253,6 +255,16 @@
             this.toolStripTop.Size = new System.Drawing.Size(809, 24);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // buttonItems
+            // 
+            this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
+            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItems.Name = "buttonItems";
+            this.buttonItems.Size = new System.Drawing.Size(104, 21);
+            this.buttonItems.Text = "查看面积详情";
+            this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
             // toolStripButtonAdd
             // 
@@ -358,5 +370,6 @@
         private FrontWork.BasicView basicView1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStripButton buttonItems;
     }
 }
