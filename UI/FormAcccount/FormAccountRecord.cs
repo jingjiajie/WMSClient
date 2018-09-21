@@ -422,11 +422,7 @@ namespace WMS.UI.FormAcccount
                                           where item["name"].ToString() == accountTitleName
                                            select item).ToList().First();
 
-
-                Condition condition = new Condition()
-        .AddCondition("accountTitleNo", accountTitleNo, ConditionItemRelation.STARTS_WITH);
-                this.synchronizer.SetRequestParameter("$condStr", condition.ToString());
-                this.searchView1.AddCondition("accountTitleNo", accountTitleNo, ConditionItemRelation.STARTS_WITH);
+                this.searchView1.AddCondition("accountTitleNo", accountTitleNo, Relation.STARTS_WITH);
                 this.searchView1.Search();
 
                 this.showBalance();
