@@ -129,4 +129,13 @@ Public Enum Relation
     ''' 包含于
     ''' </summary>
     [IN]
+
+    ''' <summary>
+    ''' 以xxx开始
+    ''' </summary>
+    STARTS_WITH
+    ''' <summary>
+    ''' 以xxx结束
+    ''' </summary>
+    ENDS_WITH
 End Enum

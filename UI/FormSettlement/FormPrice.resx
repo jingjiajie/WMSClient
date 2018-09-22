@@ -117,71 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>402, 56</value>
-  </metadata>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-{name:"id",displayName:"ID",type:"int",visible:false},
-{name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-{name:"accountTitleId",displayName:"科目ID",type:"int",visible:false},
-{name:"accountPeriodId",displayName:"会计期间ID",type:"int",visible:false},
-{name:"accountTitleName",displayName:"科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleNameEditEnded"},
-{name:"accountTitleNo",displayName:"科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleNoEditEnded"},
-
-
-{name:"debitAmount",displayName:"借方金额",type:"double",defaultValue:0},
-{name:"creditAmount",displayName:"贷方金额",type:"double",defaultValue:0},
-{name:"balance",displayName:"余额",type:"double",defaultValue:0},
-{name:"voucherInfo",displayName:"凭证信息",type:"string"},
-{name:"summary",displayName:"摘要信息",type:"string"},
-{name:"comment",displayName:"备注",type:"string"},
-{name:"personId",displayName:"记录人ID",type:"int",visible:false},
-{name:"time",displayName:"记录时间",type:"datetime",editable:false,placeHolder:"留空自动生成"},
-{name:"accountPeriodName",displayName:"期间名称",type:"string"},
-{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-{name:"personName",displayName:"人员姓名",type:"string"},
-
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/account_record/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/account_record/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/account_record/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/account_record/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/account_record/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
-  </data>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>512, 56</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="toolStripButtonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -204,6 +140,17 @@ httpAPIs:[
         WAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>731, 98</value>
+  </metadata>
   <data name="toolStripButtonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -230,10 +177,56 @@ httpAPIs:[
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>638, 56</value>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+{mode:"default",
+     fields:[
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
+        {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"必填信息"},
+        {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded",placeHolder:"必填信息"},
+        {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded",placeHolder:"必填信息"},
+        {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"id",displayName:"ID",type:"int",visible:false},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:false},
+
+        {name:"areaUnitPrice",displayName:"面积单价",type:"double",placeHolder:"必填信息"},
+        {name:"logisticsThreshold1",displayName:"物流阈值1",type:"double"},
+        {name:"logisticsUnitPrice1",displayName:"物流阈值1",type:"double"},
+        {name:"logisticsThreshold2",displayName:"物流阈值2",type:"double"},
+        {name:"logisticsUnitPrice2",displayName:"物流阈值2",type:"double"},
+        {name:"logisticsThreshold3",displayName:"物流阈值3",type:"double"},
+        {name:"logisticsUnitPrice3",displayName:"物流阈值3",type:"double"},
+
+    ],
+httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/price/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/price/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/price/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/price/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/price/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+}
+]</value>
+  </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>857, 98</value>
   </metadata>
-  <metadata name="miniToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>787, 56</value>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>978, 98</value>
   </metadata>
 </root>

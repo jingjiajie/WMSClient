@@ -209,6 +209,12 @@
     <Compile Include="FormSettlement\FormInvoice.Designer.cs">
       <DependentUpon>FormInvoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSettlement\FormPrice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettlement\FormPrice.Designer.cs">
+      <DependentUpon>FormPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettlement\FormSettlementNote.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -519,6 +525,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormInvoice.resx">
       <DependentUpon>FormInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettlement\FormPrice.resx">
+      <DependentUpon>FormPrice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSettlementNote.resx">
       <DependentUpon>FormSettlementNote.cs</DependentUpon>
