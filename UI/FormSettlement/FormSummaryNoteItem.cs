@@ -6,7 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 using FrontWork;
+using System.Net;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FormSettlement
 {
@@ -121,6 +124,31 @@ namespace WMS.UI.FormSettlement
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             var a1 = new FormSummaryDetails(rowData);
             a1.Show();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AddAllItem addAllItem = new AddAllItem();
+                addAllItem.summaryNoteId =(int) summaryNote["id"];
+                addAllItem.warehouseId = (int)GlobalData.Warehouse["id"];
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/summary_note/generate_summary/";
+                string body = serializer.Serialize(addAllItem);
+                RestClient.RequestPost<string>(url,body,"POST");
+                this.searchView1.Search();
+                MessageBox.Show("同步结算单应收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("同步结算单应收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 
