@@ -138,7 +138,7 @@ namespace WMS.UI.FormSettlement
                 string body = serializer.Serialize(addAllItem);
                 RestClient.RequestPost<string>(url,body,"POST");
                 this.searchView1.Search();
-                MessageBox.Show("同步结算单应收款操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("添加所有条目成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (WebException ex)
             {
@@ -147,7 +147,7 @@ namespace WMS.UI.FormSettlement
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("同步结算单应收款操作") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(("添加所有条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
