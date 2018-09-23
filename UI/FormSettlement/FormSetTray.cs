@@ -42,6 +42,10 @@ namespace WMS.UI.FormSettlement
             { MessageBox.Show("请输入正确的托位长度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);return; }
             if (!this.validateTextBox(textBoxWidth.Text))
             { MessageBox.Show("请输入正确的托位宽度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (!this.validateDate(textBoxLength.Text))
+            { MessageBox.Show("托位长度不能小于0！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (!this.validateDate(textBoxWidth.Text))
+            { MessageBox.Show("托位宽度不能小于0！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             commonDataLength.key = this.lengthKey;
             commonDataLength.value = this.textBoxLength.Text;
@@ -138,6 +142,17 @@ namespace WMS.UI.FormSettlement
             {
                 return true;
             }
+        }
+
+        private bool validateDate(string text)
+        {
+            int num;
+            int.TryParse(text.Trim(), out num);
+            if (num <= 0) {
+                return false;
+            }
+            else
+            { return true; }
         }
 
 
