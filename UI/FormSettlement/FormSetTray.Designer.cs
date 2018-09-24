@@ -162,7 +162,7 @@
             this.buttonADD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonADD.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonADD.Location = new System.Drawing.Point(0, 0);
-            this.buttonADD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonADD.Margin = new System.Windows.Forms.Padding(4);
             this.buttonADD.Name = "buttonADD";
             this.buttonADD.Size = new System.Drawing.Size(150, 40);
             this.buttonADD.TabIndex = 11;

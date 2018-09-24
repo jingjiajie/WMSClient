@@ -27,6 +27,8 @@ namespace WMS.UI.FormSettlement
 
         private void FormSetTray_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             Utilities.BindBlueButton(this.buttonADD);
             this.lengthKey = "Tray_Length_" + GlobalData.Warehouse["id"];
             this.widthKey = "Tray_Width_" + GlobalData.Warehouse["id"];
