@@ -55,6 +55,12 @@
     <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\..\..\..\Documents\WeChat Files\c568787\Files\TestBarCode\packages\ZXing.Net.0.16.4\lib\net40\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation">
+      <HintPath>..\..\..\..\Documents\WeChat Files\c568787\Files\TestBarCode\packages\ZXing.Net.0.16.4\lib\net40\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Defines.cs" />

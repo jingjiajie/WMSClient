@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ZXing;
+using ZXing.Common;
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -496,6 +498,22 @@ namespace WMS.UI.FormBasicInfos
         //选择保存路径
         private string ShowSaveFileDialog()
         {
+
+            BarcodeWriter writer = new BarcodeWriter();
+            //设置条码格式
+            //使用ITF 格式，不能被现在常用的支付宝、微信扫出来
+            //如果想生成可识别的可以使用 CODE_128 格式
+            writer.Format = BarcodeFormat.CODE_39;
+
+            //设定条码的一些设置
+            EncodingOptions options = new EncodingOptions();
+            options.Width = 382;
+            options.Height = 115;
+            options.Margin = 2;
+            writer.Options = options;
+
+            Bitmap bmp = writer.Write("1234567");
+
             string localFilePath = "";
             //string localFilePath, fileNameExt, newFileName, FilePath; 
             SaveFileDialog sfd = new SaveFileDialog();
