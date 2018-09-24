@@ -478,6 +478,60 @@ namespace WMS.UI.FormBasicInfos
         {
             this.model1.RefreshView(row);
         }
+
+        private void toolStripButtonSaveFileDialog_Click(object sender, EventArgs e)
+        {
+            //OpenFileDialog fileDialog = new OpenFileDialog();
+            //fileDialog.Multiselect = true;
+            //fileDialog.Title = "请选择文件";
+            //fileDialog.Filter = "所有文件(*xls*)|*.xls*"; //设置要选择的文件的类型
+            //if (fileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    string file = fileDialog.FileName;//返回文件的完整路径                
+            //}
+
+            ShowSaveFileDialog();
+        }
+
+        //选择保存路径
+        private string ShowSaveFileDialog()
+        {
+            string localFilePath = "";
+            //string localFilePath, fileNameExt, newFileName, FilePath; 
+            SaveFileDialog sfd = new SaveFileDialog();
+
+            sfd.Title = "保存文件";
+            //设置文件类型 
+            sfd.Filter = "Excel表格（*.xls）|*.xls";
+
+            //设置默认文件类型显示顺序 
+            sfd.FilterIndex = 1;
+
+            //保存对话框是否记忆上次打开的目录 
+            sfd.RestoreDirectory = true;
+
+            //点了保存按钮进入 
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                localFilePath = sfd.FileName.ToString(); //获得文件路径 
+                string fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1); //获取文件名，不带路径
+
+                //获取文件路径，不带文件名 
+                //FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\")); 
+
+                //给文件名前加上时间 
+                //newFileName = DateTime.Now.ToString("yyyyMMdd") + fileNameExt; 
+
+                //在文件名里加字符 
+                //saveFileDialog1.FileName.Insert(1,"dameng"); 
+
+                //System.IO.FileStream fs = (System.IO.FileStream)sfd.OpenFile();//输出文件 
+
+                ////fs输出带文字或图片的文件，就看需求了 
+            }
+
+            return localFilePath;
+        }
     }
      
 }
