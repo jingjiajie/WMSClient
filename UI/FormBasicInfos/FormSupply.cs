@@ -483,36 +483,56 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonSaveFileDialog_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog fileDialog = new OpenFileDialog();
-            //fileDialog.Multiselect = true;
-            //fileDialog.Title = "请选择文件";
-            //fileDialog.Filter = "所有文件(*xls*)|*.xls*"; //设置要选择的文件的类型
-            //if (fileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    string file = fileDialog.FileName;//返回文件的完整路径                
-            //}
+            string localFilePath = ShowSaveFileDialog();
+            {
+                if (localFilePath == null) return;
+            }
+            string FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
+            string fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1); //获取文件名，不带路径
 
-            ShowSaveFileDialog();
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                if (rowData[i]["barCodeNo"].ToString().Length==0)
+                {
+                    MessageBox.Show("选中供货未录入条码号信息！" , "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string barCodeNo = (string)rowData[i]["barCodeNo"];
+
+                BarcodeWriter writer = new BarcodeWriter();
+                //设置条码格式
+                //使用ITF 格式，不能被现在常用的支付宝、微信扫出来
+                //如果想生成可识别的可以使用 CODE_128 格式
+                writer.Format = BarcodeFormat.CODE_39;
+
+                //设定条码的一些设置
+                EncodingOptions options = new EncodingOptions();
+                options.Width = 382;
+                options.Height = 115;
+                options.Margin = 2;
+                writer.Options = options;
+
+                Bitmap bmp = writer.Write(barCodeNo);
+
+
+                bmp.Save(FilePath+ "\\"+barCodeNo +"_"+ fileNameExt, System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
+
+            
         }
 
         //选择保存路径
         private string ShowSaveFileDialog()
         {
-
-            BarcodeWriter writer = new BarcodeWriter();
-            //设置条码格式
-            //使用ITF 格式，不能被现在常用的支付宝、微信扫出来
-            //如果想生成可识别的可以使用 CODE_128 格式
-            writer.Format = BarcodeFormat.CODE_39;
-
-            //设定条码的一些设置
-            EncodingOptions options = new EncodingOptions();
-            options.Width = 382;
-            options.Height = 115;
-            options.Margin = 2;
-            writer.Options = options;
-
-            Bitmap bmp = writer.Write("1234567");
 
             string localFilePath = "";
             //string localFilePath, fileNameExt, newFileName, FilePath; 
@@ -532,7 +552,7 @@ namespace WMS.UI.FormBasicInfos
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 localFilePath = sfd.FileName.ToString(); //获得文件路径 
-                string fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1); //获取文件名，不带路径
+                
 
                 //获取文件路径，不带文件名 
                 //FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\")); 
@@ -541,12 +561,12 @@ namespace WMS.UI.FormBasicInfos
                 //newFileName = DateTime.Now.ToString("yyyyMMdd") + fileNameExt; 
 
                 //在文件名里加字符 
-                //saveFileDialog1.FileName.Insert(1,"dameng"); 
+                //sfd.FileName.Insert(1, "dameng");
 
                 //System.IO.FileStream fs = (System.IO.FileStream)sfd.OpenFile();//输出文件 
 
                 ////fs输出带文字或图片的文件，就看需求了 
-                bmp.Save(localFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
             }
 
             return localFilePath;
