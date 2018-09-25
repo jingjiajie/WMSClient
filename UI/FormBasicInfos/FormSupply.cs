@@ -520,7 +520,7 @@ namespace WMS.UI.FormBasicInfos
 
             sfd.Title = "保存文件";
             //设置文件类型 
-            sfd.Filter = "Excel表格（*.xls）|*.xls";
+            sfd.Filter = "jpg图片文件（*.jpg）|*.jpg";
 
             //设置默认文件类型显示顺序 
             sfd.FilterIndex = 1;
@@ -546,9 +546,11 @@ namespace WMS.UI.FormBasicInfos
                 //System.IO.FileStream fs = (System.IO.FileStream)sfd.OpenFile();//输出文件 
 
                 ////fs输出带文字或图片的文件，就看需求了 
+                bmp.Save(localFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
 
             return localFilePath;
+            
         }
     }
      
