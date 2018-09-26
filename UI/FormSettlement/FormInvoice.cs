@@ -77,7 +77,7 @@ namespace WMS.UI.FormSettlement
                 }
                 if (rowData[i]["trackingNumber"] == null)
                 {
-                    MessageBox.Show("请输入相应快递单号以继续核减操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("请输入相应快递单号以继续寄出操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
