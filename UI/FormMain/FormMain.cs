@@ -75,7 +75,8 @@ namespace WMS.UI
                  MakeTreeNode("结算管理",new TreeNode[]{
                    MakeTreeNode("汇总单管理"),
                    MakeTreeNode("结算单管理"),
-                   MakeTreeNode("发票管理")
+                   MakeTreeNode("发票管理"),
+                   MakeTreeNode("价格管理")
                     })
             };
 
@@ -304,6 +305,9 @@ namespace WMS.UI
                     break;
                 case "发票管理":
                     this.LoadSubWindow(new FormSettlement.FormInvoice());
+                    break;
+                case "价格管理":
+                    this.LoadSubWindow(new FormSettlement.FormPrice());
                     break;
             }
             this.panelRight.ResumeLayout();
