@@ -497,16 +497,16 @@ namespace WMS.UI.FormBasicInfos
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            string[] rowData = this.model1.GetSelectedRows<string>("barCodeNo").Except(new string[] { "" }).ToArray();
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                if (rowData[i]["barCodeNo"].ToString().Length==0)
+                if (rowData[i].Length==0)
                 {
                     MessageBox.Show("选中供货未录入条码号信息！" , "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                string barCodeNo = (string)rowData[i]["barCodeNo"];
+                string barCodeNo = (string)rowData[i];
 
                 BarcodeWriter writer = new BarcodeWriter();
                 //设置条码格式
