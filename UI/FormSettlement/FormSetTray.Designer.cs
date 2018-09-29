@@ -64,7 +64,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(778, 44);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1076, 178);
             this.tableLayoutPanel4.TabIndex = 31;
             // 
             // label1
@@ -75,17 +75,17 @@
             this.label1.Location = new System.Drawing.Point(4, 4);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 40);
+            this.label1.Size = new System.Drawing.Size(129, 174);
             this.label1.TabIndex = 0;
             this.label1.Text = "托位长度";
             // 
             // textBoxLength
             // 
             this.textBoxLength.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxLength.Location = new System.Drawing.Point(103, 5);
+            this.textBoxLength.Location = new System.Drawing.Point(141, 5);
             this.textBoxLength.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxLength.Name = "textBoxLength";
-            this.textBoxLength.Size = new System.Drawing.Size(244, 21);
+            this.textBoxLength.Size = new System.Drawing.Size(341, 21);
             this.textBoxLength.TabIndex = 1;
             // 
             // label2
@@ -93,20 +93,20 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("宋体", 15F);
-            this.label2.Location = new System.Drawing.Point(355, 4);
+            this.label2.Location = new System.Drawing.Point(490, 4);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(111, 40);
+            this.label2.Size = new System.Drawing.Size(157, 174);
             this.label2.TabIndex = 2;
             this.label2.Text = " 托位宽度";
             // 
             // textBoxWidth
             // 
             this.textBoxWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxWidth.Location = new System.Drawing.Point(474, 5);
+            this.textBoxWidth.Location = new System.Drawing.Point(655, 5);
             this.textBoxWidth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxWidth.Name = "textBoxWidth";
-            this.textBoxWidth.Size = new System.Drawing.Size(300, 21);
+            this.textBoxWidth.Size = new System.Drawing.Size(417, 21);
             this.textBoxWidth.TabIndex = 2;
             // 
             // tableLayoutPanel1
@@ -121,7 +121,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 209F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 261);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1082, 395);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // tableLayoutPanel3
@@ -133,21 +133,21 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.panel2, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 52);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 186);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(784, 209);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1082, 209);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.buttonADD);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(317, 84);
+            this.panel2.Location = new System.Drawing.Point(466, 84);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(150, 40);
@@ -175,7 +175,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(784, 261);
+            this.ClientSize = new System.Drawing.Size(1082, 395);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSetTray";
             this.Text = "设置托位";

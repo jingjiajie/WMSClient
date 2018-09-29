@@ -89,7 +89,7 @@ namespace WMS.UI.FormSettlement
             else
             {
                 this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "name"] = foundSupplier["name"];
+                this.model1[row, "supplierName"] = foundSupplier["name"];
             }
         }
 
