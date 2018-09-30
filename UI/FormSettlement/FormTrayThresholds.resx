@@ -125,53 +125,37 @@
 [
     {mode:"default",
      fields:[
-{name:"id",displayName:"ID",type:"int",visible:false},
-{name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
-{name:"accountTitleId",displayName:"科目ID",type:"int",visible:false},
-{name:"accountPeriodId",displayName:"会计期间ID",type:"int",visible:false},
-{name:"accountTitleName",displayName:"科目名称",type:"string",association:"#accountTitleNameAssociation",editEnded:"#accountTitleNameEditEnded"},
-{name:"accountTitleNo",displayName:"科目编码",type:"string",association:"#accountTitleNoAssociation",editEnded:"#accountTitleNoEditEnded"},
-
-
-{name:"debitAmount",displayName:"借方金额",type:"double",defaultValue:0},
-{name:"creditAmount",displayName:"贷方金额",type:"double",defaultValue:0},
-{name:"balance",displayName:"余额",type:"double",defaultValue:0},
-{name:"voucherInfo",displayName:"凭证信息",type:"string"},
-{name:"summary",displayName:"摘要信息",type:"string"},
-{name:"comment",displayName:"备注",type:"string"},
-{name:"personId",displayName:"记录人ID",type:"int",visible:false},
-{name:"time",displayName:"记录时间",type:"datetime",editable:false,placeHolder:"留空自动生成"},
-{name:"accountPeriodName",displayName:"期间名称",type:"string"},
-{name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-{name:"personName",displayName:"人员姓名",type:"string"},
-
+            {name:"id",displayName:"ID",type:"int",visible:false},
+            {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
+            {name:"threshold",displayName:"阙值",type:"double"},
+            {name:"warehouseName",displayName:"仓库名",type:"string",visible:false}
     ],
 httpAPIs:[
         {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/account_record/count/{{conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/tray_thresholds/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/account_record/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            url:"{$url}/warehouse/{$accountBook}/tray_thresholds/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$data"},
 		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/account_record/",
+            url:"{$url}/warehouse/{$accountBook}/tray_thresholds/",
             method:"PUT",
             requestBody:"$data"},
 		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/account_record/",
+            url:"{$url}/warehouse/{$accountBook}/tray_thresholds/",
             method:"POST",
             requestBody:"$data"},
 		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/account_record/{mapProperty($data,'id')}",
+            url:"{$url}/warehouse/{$accountBook}/tray_thresholds/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
     }
 ]</value>
   </data>
   <metadata name="miniToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>166, 95</value>
+    <value>166, 58</value>
   </metadata>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>297, 95</value>
