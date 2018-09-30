@@ -421,7 +421,8 @@ namespace WMS.UI.FormAcccount
                 GlobalData.AccountTitle = (from item in GlobalData.AllAccountTitleTure
                                           where item["name"].ToString() == accountTitleName
                                            select item).ToList().First();
-                this.searchView1.AddStaticCondition("accountTitleNo", accountTitleNo,Relation.CONTAINS);
+
+                this.searchView1.AddStaticCondition("accountTitleNo", accountTitleNo, Relation.STARTS_WITH);
                 this.searchView1.Search();
 
                 this.showBalance();

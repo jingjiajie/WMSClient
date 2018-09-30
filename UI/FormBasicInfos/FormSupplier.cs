@@ -103,7 +103,7 @@ namespace WMS.UI.FormBasicInfos
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             bool update = false;
-
+            this.panelPager.Focus();
             for (int i = 0; i < this.model1.RowCount; i++)
             {                             
                 if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.UPDATED)

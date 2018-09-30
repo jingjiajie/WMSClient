@@ -62,5 +62,11 @@ namespace WMS.UI.FormSettlement
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            FormSetTray form = new FormSetTray();
+            form.Show();
+        }
     }
 }

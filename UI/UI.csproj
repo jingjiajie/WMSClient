@@ -55,6 +55,12 @@
     <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
     </Reference>
+    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net40\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net40\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Defines.cs" />
@@ -202,11 +208,19 @@
     <Compile Include="FormPutAwayNote\FormPutAwayNoteItem.Designer.cs">
       <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSettlement\AddAllItem.cs" />
+    <Compile Include="FormSettlement\CommonData.cs" />
     <Compile Include="FormSettlement\FormInvoice.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSettlement\FormInvoice.Designer.cs">
       <DependentUpon>FormInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettlement\FormPrice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettlement\FormPrice.Designer.cs">
+      <DependentUpon>FormPrice.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSettlement\FormSettlementNote.cs">
       <SubType>Form</SubType>
@@ -219,6 +233,12 @@
     </Compile>
     <Compile Include="FormSettlement\FormSettlementNoteItem.Designer.cs">
       <DependentUpon>FormSettlementNoteItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettlement\FormSetTray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettlement\FormSetTray.Designer.cs">
+      <DependentUpon>FormSetTray.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSettlement\FormSummaryNote.cs">
       <SubType>Form</SubType>
@@ -519,11 +539,17 @@
     <EmbeddedResource Include="FormSettlement\FormInvoice.resx">
       <DependentUpon>FormInvoice.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSettlement\FormPrice.resx">
+      <DependentUpon>FormPrice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSettlementNote.resx">
       <DependentUpon>FormSettlementNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSettlementNoteItem.resx">
       <DependentUpon>FormSettlementNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettlement\FormSetTray.resx">
+      <DependentUpon>FormSetTray.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSummaryNote.resx">
       <DependentUpon>FormSummaryNote.cs</DependentUpon>
