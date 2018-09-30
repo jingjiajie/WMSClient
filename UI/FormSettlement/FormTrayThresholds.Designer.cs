@@ -304,7 +304,6 @@
             // textBoxWidth
             // 
             this.textBoxWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxWidth.Enabled = false;
             this.textBoxWidth.Location = new System.Drawing.Point(186, 61);
             this.textBoxWidth.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxWidth.Name = "textBoxWidth";

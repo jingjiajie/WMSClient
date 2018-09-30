@@ -84,13 +84,13 @@ namespace WMS.UI.FormSettlement
                 if (this.mode == FormMode.ALTER)
                 {
                     RestClient.RequestPost<int[]>(url, body, "PUT");
-                    MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (this.mode == FormMode.ADD)
                 {
 
                     RestClient.RequestPost<string>(url, body, "POST");
-                    MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (WebException ex)
