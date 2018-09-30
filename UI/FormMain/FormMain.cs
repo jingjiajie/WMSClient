@@ -311,7 +311,7 @@ namespace WMS.UI
                     this.LoadSubWindow(new FormSettlement.FormPrice());
                     break;
                 case "…Ë÷√Õ–Œª":
-                    this.LoadSubWindow(new FormSettlement.FormTrayThresholds);
+                    this.LoadSubWindow(new FormSettlement.FormTrayThresholds());
                     break;
             }
             this.panelRight.ResumeLayout();
