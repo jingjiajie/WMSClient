@@ -79,7 +79,7 @@ namespace WMS.UI.FormSettlement
             else
             {
                 this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "no"] = foundSupplier["no"];
+                this.model1[row, "supplierNo"] = foundSupplier["no"];
             }
         }
 
@@ -90,7 +90,7 @@ namespace WMS.UI.FormSettlement
                 GlobalData.AllSuppliers.Find((s) =>
                 {
                     if (s["no"] == null) return false;
-                    return s["name"].ToString() == supplierNo && s["warehouseId"] != GlobalData.Warehouse["id"];
+                    return s["no"].ToString() == supplierNo && s["warehouseId"] != GlobalData.Warehouse["id"];
                 });
             if (foundSupplier == null)
             {
@@ -99,7 +99,7 @@ namespace WMS.UI.FormSettlement
             else
             {
                 this.model1[row, "supplierId"] = foundSupplier["id"];
-                this.model1[row, "name"] = foundSupplier["name"];
+                this.model1[row, "supplierName"] = foundSupplier["name"];
             }
         }
 
