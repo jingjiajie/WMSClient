@@ -252,6 +252,12 @@
     <Compile Include="FormSettlement\FormSummaryNoteItem.Designer.cs">
       <DependentUpon>FormSummaryNoteItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSettlement\FormTrayThresholds.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettlement\FormTrayThresholds.Designer.cs">
+      <DependentUpon>FormTrayThresholds.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettlement\LedgerSynchronous.cs" />
     <Compile Include="FormSettlement\FormSummaryDetails.cs">
       <SubType>Form</SubType>
@@ -553,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormSummaryDetails.resx">
       <DependentUpon>FormSummaryDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettlement\FormTrayThresholds.resx">
+      <DependentUpon>FormTrayThresholds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormAddStockRecord.resx">
       <DependentUpon>FormAddStockRecord.cs</DependentUpon>
