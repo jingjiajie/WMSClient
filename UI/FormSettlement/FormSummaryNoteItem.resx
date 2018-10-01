@@ -130,8 +130,8 @@
     {name:"supplierName",displayName:"供应商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
     {name:"summaryNoteId",displayName:"汇总单ID",type:"int",visible:false},
     {name:"supplierId",displayName:"供应商ID",type:"int",visible:false},
-    {name:"totalArea",displayName:"使用面积",type:"double"},
-    {name:"days",displayName:"放置天数",type:"double"},
+    {name:"totalArea",displayName:"单天最大使用面积",type:"double"},
+    {name:"days",displayName:"出货总次数",type:"double"},
     {name:"totalDeliveryAmount",displayName:"出货次数",type:"double"}
   
     //{name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#StateForwardMapper",backwardMapper:"#StateBackwardMapper"}

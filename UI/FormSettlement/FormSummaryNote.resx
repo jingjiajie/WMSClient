@@ -127,9 +127,9 @@
      fields:[
        {name:"id",displayName:"ID",type:"int",visible:false},
        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
-       {name:"no",displayName:"单号",type:"string"},
-       {name:"startTime",displayName:"起始时间",type:"datetime"},
-       {name:"endTime",displayName:"截止时间",type:"datetime"},
+       {name:"no",displayName:"单号",type:"string",placeHolder:"留空自动生成"},
+       {name:"startTime",displayName:"起始时间",type:"datetime",placeHolder:"必填项"},
+       {name:"endTime",displayName:"截止时间",type:"datetime",placeHolder:"必填项"},
        {name:"createTime",displayName:"创建时间",type:"datetime"},
        {name:"createPersonId",displayName:"创建人",type:"string",visible:false},
        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false},
