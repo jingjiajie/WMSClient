@@ -39,7 +39,10 @@ namespace WMS.UI.FormSettlement
         {
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "summaryNoteId",this.summaryNoteItem["id"]}       
+                { "supplierName",this.summaryNoteItem["supplierName"]},
+                { "supplierId",this.summaryNoteItem["supplierId"]},
+                { "supplierNo",this.summaryNoteItem["supplierNo"]},
+                { "summaryNoteItemId",this.summaryNoteItem["id"]}       
             });
         }
 
