@@ -48,6 +48,7 @@ namespace WMS.UI.FormSettlement
 
         private void FormTrayThresholds_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);

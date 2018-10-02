@@ -65,7 +65,7 @@ namespace WMS.UI.FormSettlement
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            FormSetTray form = new FormSetTray();
+            FormTrayThresholds form = new FormTrayThresholds();
             form.Show();
         }
     }

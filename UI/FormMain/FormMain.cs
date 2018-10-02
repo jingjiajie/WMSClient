@@ -74,7 +74,6 @@ namespace WMS.UI
                     }),
                  MakeTreeNode("结算管理",new TreeNode[]{
                    MakeTreeNode("汇总单管理"),
-                   MakeTreeNode("设置托位"),
                    MakeTreeNode("结算单管理"),
                    MakeTreeNode("发票管理"),
                    MakeTreeNode("价格管理")
