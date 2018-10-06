@@ -39,6 +39,11 @@ namespace WMS.UI.FormSettlement
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             if (this.synchronizer.Save()) { this.searchView1.Search(); }
+
+            Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+
+            GlobalData.AllSummaryNote = RestClient.Get<List<IDictionary<string, object>>>(
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/summary_note/{condWarehouse.ToString()}");
         }
 
         private void buttonItems_Click(object sender, EventArgs e)

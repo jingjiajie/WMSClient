@@ -484,9 +484,9 @@ namespace WMS.UI.FormBasicInfos
         private void toolStripButtonSaveFileDialog_Click(object sender, EventArgs e)
         {
             string localFilePath = ShowSaveFileDialog();
-            {
-                if (localFilePath == null) return;
-            }
+            
+            if (localFilePath == null) return;
+            
             string FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
             string fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1); //获取文件名，不带路径
 
