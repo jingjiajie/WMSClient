@@ -13,12 +13,11 @@ namespace WMS.UI.FormStock
     public partial class FormAddStockRecord : Form
     {
         private Action addFinishedCallback = null;
+        private int rowCur = 0;
         public FormAddStockRecord()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-           
-
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -223,7 +222,8 @@ namespace WMS.UI.FormStock
 
             FAILED:
             if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            rowCur = row + 1;
+            MessageBox.Show("行:"+rowCur+" 物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
@@ -246,7 +246,8 @@ namespace WMS.UI.FormStock
             return;
 
             FAILED:
-            MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            rowCur = row + 1;
+            MessageBox.Show("行:" + rowCur + "供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
@@ -267,7 +268,8 @@ namespace WMS.UI.FormStock
             }
             else
             {
-                MessageBox.Show("无此供货！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                rowCur = row + 1;
+                MessageBox.Show("行:" + rowCur +"无此供货！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
         }
