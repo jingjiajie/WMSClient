@@ -90,7 +90,7 @@ namespace WMS.UI.FormSettlement
                 else if (this.mode == FormMode.ADD)
                 {
 
-                    RestClient.RequestPost<string>(url, body, "POST");
+                    RestClient.RequestPost<int[]>(url, body, "POST");
                     //MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
