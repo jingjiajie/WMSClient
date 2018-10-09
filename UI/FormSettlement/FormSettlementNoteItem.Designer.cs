@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettlementNoteItem));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -123,7 +125,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.basicView1.Padding = new System.Windows.Forms.Padding(3);
             this.basicView1.Size = new System.Drawing.Size(798, 75);
             this.basicView1.TabIndex = 13;
             // 
@@ -132,15 +134,25 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(84, 39);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSettlementNoteItem",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormSettlementNoteItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair2.Mode = "default1";
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+        "FormSettlementNoteItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair3.Mode = "default2";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair1,
+        modeMethodListenerNamesPair2,
+        modeMethodListenerNamesPair3};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(135, 144);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // model1
@@ -151,7 +163,7 @@
             this.model1.CurrentModelName = "default";
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(312, 51);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -182,7 +194,7 @@
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(671, 29);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
@@ -197,7 +209,7 @@
             this.searchView1.Configuration = this.configuration1;
             this.searchView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchView1.Location = new System.Drawing.Point(0, 0);
-            this.searchView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchView1.Margin = new System.Windows.Forms.Padding(2);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(798, 27);
@@ -212,7 +224,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(135, 144);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // reoGridView1
@@ -222,7 +234,7 @@
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView1.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";

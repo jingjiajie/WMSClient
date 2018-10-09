@@ -20,16 +20,7 @@ namespace WMS.UI.FormSettlement
         public FormSettlementNoteItem(IDictionary<string, object> settlementNote)
         {
             this.settlementNote = settlementNote;
-            
-
-            int noteState = (int)this.settlementNote["state"];
-            if (noteState ==1)
-            {
-                this.basicView1.Mode = "default1";
-                this.reoGridView1.Mode = "default1";
-                this.synchronizer.Mode = "default1";
-            }
-
+         
             MethodListenerContainer.Register(this);
             InitializeComponent();
         }
@@ -37,12 +28,28 @@ namespace WMS.UI.FormSettlement
         private void FormSettlementNoteItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+
             this.searchView1.AddStaticCondition("settlementNoteId", this.settlementNote["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
-
             this.searchView1.Search();
+
+            int noteState = (int)this.settlementNote["state"];
+            if (noteState == 1)
+            {
+                this.model1.Mode = "default1";
+                this.basicView1.Mode = "default1";
+                this.reoGridView1.Mode = "default1";
+            }
+            if (noteState == 2)
+            {
+                this.model1.Mode = "default2";
+                this.basicView1.Mode = "default2";
+                this.reoGridView1.Mode = "default2";
+            }
+
+            
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -141,7 +148,7 @@ namespace WMS.UI.FormSettlement
             string strIDs = serializer.Serialize(selectedIDs);
             try
             {
-                string operatioName = "confirm";
+                string operatioName = "normalConfirm";
                 RestClient.RequestPost<string>(Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/settlement_note_item/" + operatioName, strIDs, "POST");
                 this.searchView1.Search();
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

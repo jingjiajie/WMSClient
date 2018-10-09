@@ -219,10 +219,18 @@ httpAPIs:[
 {mode:"default1",
      ref:"default",
      fields:[
-    {name:"StorageCharge",displayName:"仓储费",type:"double",editable:false},
+    {name:"storageCharge",displayName:"仓储费",type:"double",editable:false},
     {name:"actualPayment",displayName:"实付金额",type:"double",editable:true}, 
-
-    {name:"LogisticFee",displayName:"物流费",type:"double",editable:false},
+    {name:"logisticFee",displayName:"物流费",type:"double",editable:false},
+   ]
+    }
+,
+{mode:"default2",
+     ref:"default",
+     fields:[
+    {name:"storageCharge",displayName:"仓储费",type:"double",editable:false},
+    {name:"actualPayment",displayName:"实付金额",type:"double",editable:false}, 
+    {name:"logisticFee",displayName:"物流费",type:"double",editable:false},
    ]
     }
 ]</value>
