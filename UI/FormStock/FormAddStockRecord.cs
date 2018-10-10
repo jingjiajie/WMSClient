@@ -227,7 +227,7 @@ namespace WMS.UI.FormStock
             FAILED:
             if (string.IsNullOrWhiteSpace(materialProductLine)) return;
             rowCur = row + 1;
-            MessageBox.Show("行:"+rowCur+" 物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("行:"+rowCur+" 物料 名称："+ materialName+" 代号："+materialNo + " 不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
@@ -251,7 +251,7 @@ namespace WMS.UI.FormStock
 
             FAILED:
             rowCur = row + 1;
-            MessageBox.Show("行:" + rowCur + "供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("行:" + rowCur + "供应商 名称："+supplierName+" 代号： "+supplierNo+"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
