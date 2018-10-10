@@ -122,7 +122,10 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        
+        private int warehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
@@ -241,17 +244,22 @@ namespace WMS.UI.FromDeliverOrder
             //}
         }
 
+        private int createPersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string createPersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
             this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "state",0}
             });
         }
 

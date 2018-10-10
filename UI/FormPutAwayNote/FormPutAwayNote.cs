@@ -40,9 +40,7 @@ namespace WMS.UI
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "type",0}
+                { "createPersonName",GlobalData.Person["name"]}
             });
         }
 

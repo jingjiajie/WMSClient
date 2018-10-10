@@ -165,7 +165,7 @@ namespace WMS.UI.FormBasicInfos
 
             FAILED:
             if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show($"物料\"{materialName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
         //供应商名称编辑完成，根据名称自动搜索ID和No
