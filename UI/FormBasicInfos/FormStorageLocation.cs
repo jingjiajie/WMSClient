@@ -33,6 +33,11 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
             if (this.model1.RowCount == 0)
@@ -111,7 +116,7 @@ namespace WMS.UI.FormBasicInfos
             this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
+                
             });
         }
 

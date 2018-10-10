@@ -11,12 +11,14 @@ using WMS.UI.FormBasicInfos;
 using WMS.UI.FormStockTaking;
 using WMS.UI.FormStock;
 using WMS.UI.FromDeliverOrder;
+using WMS;
 
 namespace WMS.UI
 {
     public partial class FormMain : Form
     {
         private Action formClosedCallback;
+        private FormInspectionNote formInspectionNoteInstance = new FormInspectionNote();
 
         public FormMain()
         {
@@ -32,51 +34,50 @@ namespace WMS.UI
         {
             TreeNode[] treeNodes = new TreeNode[]
             {
-                MakeTreeNode("基本信息",new TreeNode[]{
-                    MakeTreeNode("用户管理"),
-                    MakeTreeNode("供应商管理"),
-                    MakeTreeNode("物料管理"),
-                    MakeTreeNode("仓库管理"),
-                    MakeTreeNode("库区管理"),
-                    MakeTreeNode("库位管理"),
-                    MakeTreeNode("供货管理"),
-                    MakeTreeNode("发货套餐管理"),
-                    MakeTreeNode("上架库存设置"),
-                    MakeTreeNode("备货库存设置")                    
+                MakeTreeNode("基本信息",null,new TreeNode[]{
+                    MakeTreeNode("用户管理", new FormPerson()),
+                    MakeTreeNode("供应商管理", new FormSupplier()),
+                    MakeTreeNode("物料管理", new FormMaterial()),
+                    MakeTreeNode("仓库管理", new FormWarehouse(this.comboBoxWarehouse,this.panelRight,this.treeViewLeft)),
+                    MakeTreeNode("库区管理", new FormStorageArea()),
+                    MakeTreeNode("库位管理", new FormStorageLocation()),
+                    MakeTreeNode("供货管理", new FormSupply()),
+                    MakeTreeNode("发货套餐管理", new FormPackage()),
+                    MakeTreeNode("上架库存设置", new FormSafetyStock(0)),
+                    MakeTreeNode("备货库存设置", new FormSafetyStock(1))
                     }),
-                MakeTreeNode("入库管理",new TreeNode[]{
-                    MakeTreeNode("入库单管理"),
-                    MakeTreeNode("送检单管理"),
-                    MakeTreeNode("上架单管理")
+                MakeTreeNode("入库管理", null, new TreeNode[]{
+                    MakeTreeNode("入库单管理", new FormWarehouseEntry(ToInspectionNoteSelectIDsCallback, ToInspectionNoteSearchNoCallback)),
+                    MakeTreeNode("送检单管理", formInspectionNoteInstance),
+                    MakeTreeNode("上架单管理", new FormPutAwayNote())
                     }),
-                MakeTreeNode("发货管理",new TreeNode[]{
-                    MakeTreeNode("备货作业单管理"),
-                    MakeTreeNode("出库单管理")
-                    //MakeTreeNode("工作任务单管理"),
+                MakeTreeNode("发货管理", null, new TreeNode[]{
+                    MakeTreeNode("备货作业单管理", new FormTransferOrder.FormTransferOrder()),
+                    MakeTreeNode("出库单管理", new FormDeliverOrder())
 
                     }),
-                MakeTreeNode("库存管理",new TreeNode[]{
-                    MakeTreeNode("库存批次"),
-                    MakeTreeNode("库存盘点"),
-                    MakeTreeNode("移位记录")
+                MakeTreeNode("库存管理", null, new TreeNode[]{
+                    MakeTreeNode("库存批次", new FormStockRecord()),
+                    MakeTreeNode("库存盘点", new FormStockTakingOrder()),
+                    MakeTreeNode("移位记录", new FormTransferRecord())
                     }),
-                 MakeTreeNode("薪金管理",new TreeNode[]{
-                    MakeTreeNode("薪金类别"),
-                    MakeTreeNode("薪金期间"),              
-                    MakeTreeNode("人员薪金"),
-                    MakeTreeNode("薪资发放单")
+                 MakeTreeNode("薪金管理",null ,new TreeNode[]{
+                    MakeTreeNode("薪金类别", new FromSalary.FormSalaryType()),
+                    MakeTreeNode("薪金期间", new FromSalary.FormSalaryPeriod()),
+                    MakeTreeNode("人员薪金", new FromSalary.FormPersonSalary()),
+                    MakeTreeNode("薪资发放单", new FromSalary.FormPayNote())
                     }),
-                 MakeTreeNode("总账管理",new TreeNode[]{
-                    MakeTreeNode("科目管理"),
-                    MakeTreeNode("税务管理"),
-                    MakeTreeNode("账目记录"),
-                    MakeTreeNode("会计期间")
+                 MakeTreeNode("总账管理", null, new TreeNode[]{
+                    MakeTreeNode("科目管理", new FormAcccount.FormAccountTitle()),
+                    MakeTreeNode("税务管理", new FormAcccount.FormTax()),
+                    MakeTreeNode("账目记录", new FormAcccount.FormAccountRecord()),
+                    MakeTreeNode("会计期间", new FormAcccount.FormAccountPeriod())
                     }),
-                 MakeTreeNode("结算管理",new TreeNode[]{
-                   MakeTreeNode("汇总单管理"),
-                   MakeTreeNode("结算单管理"),
-                   MakeTreeNode("发票管理"),
-                   MakeTreeNode("价格管理")
+                 MakeTreeNode("结算管理",null, new TreeNode[]{
+                   MakeTreeNode("汇总单管理", new FormSettlement.FormSummaryNote()),
+                   MakeTreeNode("结算单管理", new FormSettlement.FormSettlementNote()),
+                   MakeTreeNode("发票管理",  new FormSettlement.FormInvoice()),
+                   MakeTreeNode("价格管理",  new FormSettlement.FormPrice())
                     })
             };
 
@@ -85,51 +86,13 @@ namespace WMS.UI
             this.treeViewLeft.Nodes.AddRange(nodes);
         }
 
-        ////检测用户是否有相应功能的权限
-        //private bool HasAuthority(string funcName)
-        //{
-        //    var searchResult = (from fa in FormMainMetaData.FunctionAuthorities
-        //                        where fa.FunctionName == funcName
-        //                        select fa.Authorities).FirstOrDefault();
-        //    if (searchResult == null)
-        //    {
-        //        return true;
-        //    }
-        //    Authority[] authorities = searchResult;
-        //    foreach (Authority authority in authorities)
-        //    {
-        //        if (((int)authority & this.user.Authority) == (int)authority)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
-        ////获取有权限的所有子节点
-        //private TreeNode GetAuthenticatedSubTreeNodes(TreeNode node)
-        //{
-        //    if (HasAuthority(node.Text) == false)
-        //    {
-        //        return null;
-        //    }
-
-        //    TreeNode newNode = (TreeNode)node.Clone();
-        //    newNode.Nodes.Clear();
-
-        //    foreach (TreeNode curNode in node.Nodes)
-        //    {
-        //        if (HasAuthority(curNode.Text))
-        //        {
-        //            newNode.Nodes.Add(GetAuthenticatedSubTreeNodes(curNode));
-        //        }
-        //    }
-        //    return newNode;
-        //}
-
-        private static TreeNode MakeTreeNode(string text, TreeNode[] subNodes = null)
+        private static TreeNode MakeTreeNode(string text, Form form , TreeNode[] subNodes = null)
         {
-            TreeNode node = new TreeNode() { Text = text };
+            TreeNode node = new TreeNode()
+            {
+                Text = text,
+                Tag = new TreeNodeTag(form)
+            };
             if (subNodes == null)
             {
                 return node;
@@ -178,181 +141,20 @@ namespace WMS.UI
                     this.comboBoxWarehouse.SelectedIndexChanged += this.comboBoxWarehouse_SelectedIndexChanged;
                 }
             }
-            //new Thread(() =>
-            //{
-            //    RestClient.Get<List<IDictionary<string,object>>>
-            //    //下拉栏显示仓库
-            //    var allWarehouses = (from s in wms.Warehouse select s).ToArray();
-            //    var allProjects = (from s in wms.Project select s).ToArray();
-            //    if (this.IsDisposed)
-            //    {
-            //        return;
-            //    }
-            //    this.Invoke(new Action(() =>
-            //    {
-            //        this.comboBoxWarehouse.Items.AddRange((from w in allWarehouses select new ComboBoxItem(w.Name, w)).ToArray());
-
-            //        for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
-            //        {
-            //            if (((Warehouse)(((ComboBoxItem)this.comboBoxWarehouse.Items[i]).Value)).ID == this.warehouse.ID)
-            //            {
-            //                this.comboBoxWarehouse.SelectedIndex = i;
-            //                break;
-            //            }
-            //        }
-            //        this.comboBoxProject.Items.AddRange((from p in allProjects select new ComboBoxItem(p.Name, p)).ToArray());
-            //        for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
-            //        {
-            //            if (((Project)(((ComboBoxItem)this.comboBoxProject.Items[i]).Value)).ID == this.project.ID)
-            //            {
-            //                this.comboBoxProject.SelectedIndex = i;
-            //                break;
-            //            }
-            //        }
-            //    }));
-            //}).Start();
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            this.panelRight.Hide();
-            this.panelRight.SuspendLayout();
-            switch (treeViewLeft.SelectedNode.Text)
+            TreeNodeTag tag = treeViewLeft.SelectedNode.Tag as TreeNodeTag;
+            if (tag.Form != null)
             {
-                case "用户管理":
-                    this.LoadSubWindow(new FormPerson());
-                    break;
-                case "入库单管理":
-                    this.LoadSubWindow(new FormWarehouseEntry(ToInspectionNoteSelectIDsCallback, ToInspectionNoteSearchNoCallback));
-                    break;
-                case "送检单管理":
-                    this.LoadSubWindow(new FormInspectionNote());
-                    break;
-                case "上架单管理":
-                    this.LoadSubWindow(new FormPutAwayNote());
-                    break;
-                case "供应商管理":
-                    this.LoadSubWindow(new FormSupplier());
-                    break;
-                case "供货管理":
-                    this.LoadSubWindow(new FormSupply());
-                    break;
-                case "物料管理":
-                    this.LoadSubWindow(new FormMaterial());
-                    break;
-                case "备货库存设置":
-                    this.LoadSubWindow(new FormSafetyStock(1));
-                    break;
-                case "上架库存设置":
-                    this.LoadSubWindow(new FormSafetyStock(0));
-                    break;
-                case "发货套餐管理":
-                    this.LoadSubWindow(new FormPackage());
-                    break;
-                case "仓库管理":
-                    this.LoadSubWindow(new FormWarehouse(this.comboBoxWarehouse,this.panelRight,this.treeViewLeft));
-                    break;
-                case "库区管理":
-                    this.LoadSubWindow(new FormStorageArea());
-                    break;
-                case "库位管理":
-                    this.LoadSubWindow(new FormStorageLocation());
-                    break;
-                case "库存盘点":
-                    this.LoadSubWindow(new FormStockTakingOrder());
-                    break;
-                case "库存批次":
-                    this.LoadSubWindow(new FormStockRecord());
-                    break;
-                case "移位记录":
-                    this.LoadSubWindow(new FormTransferRecord());
-                    break;
-                case "出库单管理":
-                    this.LoadSubWindow(new FormDeliverOrder());
-                    break;
-                case "备货作业单管理":
-                    this.LoadSubWindow(new FormTransferOrder.FormTransferOrder());
-                    break;
-                case "薪金类别":
-                    this.LoadSubWindow(new FromSalary.FormSalaryType());
-                    break;
-                case "薪金期间":
-                    this.LoadSubWindow(new FromSalary.FormSalaryPeriod());
-                    break;
-                 case "人员薪金":
-                    this.LoadSubWindow(new FromSalary.FormPersonSalary());
-                    break;
-                case "薪资发放单":
-                    this.LoadSubWindow(new FromSalary.FormPayNote());
-                    break;
-                case "科目管理":
-                    this.LoadSubWindow(new FormAcccount.FormAccountTitle());
-                    break;
-                case "税务管理":
-                    this.LoadSubWindow(new FormAcccount.FormTax());
-                    break;
-                case "账目记录":
-                    this.LoadSubWindow(new FormAcccount.FormAccountRecord());
-                    break;
-                case "会计期间":
-                    this.LoadSubWindow(new FormAcccount.FormAccountPeriod());
-                    break;
-                case "汇总单管理":
-                    this.LoadSubWindow(new FormSettlement.FormSummaryNote());
-                    break;
-                case "结算单管理":
-                    this.LoadSubWindow(new FormSettlement.FormSettlementNote());
-                    break;
-                case "发票管理":
-                    this.LoadSubWindow(new FormSettlement.FormInvoice());
-                    break;
-                case "价格管理":
-                    this.LoadSubWindow(new FormSettlement.FormPrice());
-                    break;
-                case "设置托位":
-                    this.LoadSubWindow(new FormSettlement.FormTrayThresholds());
-                    break;
+                this.panelRight.Hide();
+                this.panelRight.SuspendLayout();
+                this.LoadSubWindow(tag.Form);
+                this.panelRight.ResumeLayout();
+                this.panelRight.Show();
             }
-            this.panelRight.ResumeLayout();
-            this.panelRight.Show();
         }
-
-        private void ToInspectionNoteSelectIDsCallback(int[] selectedIDs)
-        {
-            this.SetTreeViewSelectedNodeByText("送检单管理");
-            this.LoadSubWindow(new FormInspectionNote(selectedIDs));
-        }
-
-        private void ToInspectionNoteSearchNoCallback(string searchNo)
-        {
-            this.SetTreeViewSelectedNodeByText("送检单管理");
-            this.LoadSubWindow(new FormInspectionNote(null,searchNo));
-        }
-
-        //private void ToJobTicketCallback(string condition, string value)
-        //{
-        //    if (this.IsDisposed) return;
-        //    this.Invoke(new Action(() =>
-        //    {
-        //        FormJobTicket formJobTicket = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-        //        formJobTicket.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
-        //        formJobTicket.SetSearchCondition(condition, value);
-        //        this.LoadSubWindow(formJobTicket);
-        //        this.SetTreeViewSelectedNodeByText("翻包作业单管理");
-        //    }));
-        //}
-
-        //private void ToPutOutStorageTicketCallback(string condition, string jobTicketNo)
-        //{
-        //    if (this.IsDisposed) return;
-        //    this.Invoke(new Action(() =>
-        //    {
-        //        FormPutOutStorageTicket formPutOutStorageTicket = new FormPutOutStorageTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-        //        formPutOutStorageTicket.SetSearchCondition(condition, jobTicketNo);
-        //        this.LoadSubWindow(formPutOutStorageTicket);
-        //        this.SetTreeViewSelectedNodeByText("出库单管理");
-        //    }));
-        //}
 
         private void LoadSubWindow(Form form)
         {
@@ -364,23 +166,24 @@ namespace WMS.UI
             form.Show();
         }
 
+
+        private void ToInspectionNoteSelectIDsCallback(int[] selectedIDs)
+        {
+            this.SetTreeViewSelectedNodeByText("送检单管理");
+            this.LoadSubWindow(formInspectionNoteInstance);
+            formInspectionNoteInstance.SearchAndSelectByIDs(selectedIDs);
+        }
+
+        private void ToInspectionNoteSearchNoCallback(string searchNo)
+        {
+            this.SetTreeViewSelectedNodeByText("送检单管理");
+            this.LoadSubWindow(formInspectionNoteInstance);
+            formInspectionNoteInstance.SearchByWarehouseEntryNo(searchNo);
+        }
+        
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.formClosedCallback?.Invoke();
-        }
-
-        private void comboBoxProject_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
-            //GlobalData.ProjectID = this.project.ID;
-            //this.panelRight.Controls.Clear();
-            //if (this.Run1 ==true  )
-            //{
-            //     FormSupplyRemind.RemindStockinfo();
-                 
-            //}
-            //this.treeViewLeft.SelectedNode = null;
-            //this.Run1 = true;
         }
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
@@ -433,6 +236,8 @@ namespace WMS.UI
             }
             catch { GlobalData.AccountPeriod = null; }
             GlobalData.REMAINDENABLE = true;
+            //刷新左边树形框
+            this.RefreshTreeView();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -514,4 +319,14 @@ namespace WMS.UI
         }
 
     }
+}
+
+class TreeNodeTag
+{
+    public TreeNodeTag(Form form)
+    {
+        Form = form;
+    }
+
+    public Form Form { get; set; }
 }

@@ -13,6 +13,7 @@ namespace WMS.UI.FormStock
     public partial class FormReturnSupply : Form
     {
         private Action addFinishedCallback = null;
+        private int rowCur;
         public FormReturnSupply()
         {         
             MethodListenerContainer.Register("FormReturnSupply",this);
@@ -206,7 +207,8 @@ namespace WMS.UI.FormStock
 
             FAILED:
             if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            rowCur = row + 1;
+            MessageBox.Show("行:" + rowCur + " 物料 名称：" + materialName + " 代号：" + materialNo + " 不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
@@ -229,7 +231,8 @@ namespace WMS.UI.FormStock
             return;
 
             FAILED:
-            MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            rowCur = row + 1;
+            MessageBox.Show("行:" + rowCur + "供应商 名称：" + supplierName + " 代号： " + supplierNo + "不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
@@ -276,10 +279,12 @@ namespace WMS.UI.FormStock
             //this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0}
             });
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -363,6 +368,12 @@ namespace WMS.UI.FormStock
                     this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
                 }
             }
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.model1.RemoveSelectedRows();
         }
     }
 }
