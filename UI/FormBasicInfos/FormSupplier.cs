@@ -90,14 +90,23 @@ namespace WMS.UI.FormBasicInfos
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
+            //this.model1.InsertRow(0, new Dictionary<string, object>()
+            //{
+            //    { "warehouseId",GlobalData.Warehouse["id"]},
+            //    { "createPersonId",GlobalData.Person["id"]},
+            //    { "createPersonName",GlobalData.Person["name"]},
+            //    { "warehouseName",GlobalData.Warehouse["name"]}
+
+            //});
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "createTime",DateTime.Now}
-            });        
+            });
+
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)

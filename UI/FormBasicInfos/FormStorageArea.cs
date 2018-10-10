@@ -30,6 +30,11 @@ namespace WMS.UI.FormBasicInfos
             this.updateBasicAndReoGridView();
         }
 
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
         private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
         {
             this.updateBasicAndReoGridView();
@@ -61,8 +66,7 @@ namespace WMS.UI.FormBasicInfos
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
-            {
-                { "warehouseId",GlobalData.Warehouse["id"]},                             
+            {                         
             });
         }
 
