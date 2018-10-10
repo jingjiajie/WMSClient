@@ -295,7 +295,7 @@ Public Class SearchView
         If values.Length = 0 Then
             Throw New FrontWorkException($"{Me.Name}: Values of condition cannot be empty!")
         End If
-        Dim displayName = Nothing
+        Dim displayName As FieldProperty = Nothing
         Dim strRelation = Me.RelationToString(relation)
         Dim fields = Me.Configuration.GetFields(Me.Mode)
 
@@ -316,7 +316,7 @@ Public Class SearchView
         If displayName Is Nothing Then
             Throw New FrontWorkException($"{Me.Name}: field ""{key}"" not found in configuration!")
         End If
-        Me.ComboBoxSearchKey.SelectedItem = displayName
+        Me.ComboBoxSearchKey.SelectedItem = displayName.GetValue()
         Me.TextBoxSearchCondition.Text = values(0)
         If values.Length > 1 Then
             Me.TextBoxSearchCondition1.Text = values(1)

@@ -13,13 +13,9 @@ namespace WMS.UI
 {
     public partial class FormInspectionNote : Form
     {
-        private int[] initialSelectedIDs = null;
-        private string searchNo = null;
-        public FormInspectionNote(int[] initialSelectedIDs = null,string searchNo = null)
+        public FormInspectionNote()
         {
             MethodListenerContainer.Register(this);
-            this.initialSelectedIDs = initialSelectedIDs;
-            this.searchNo = searchNo;
             InitializeComponent();
         }
 
@@ -28,20 +24,7 @@ namespace WMS.UI
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
-            if (searchNo != null)
-            {
-                this.searchView1.AddCondition("warehouseEntryNo", searchNo);
-            }
-            if (initialSelectedIDs != null)
-            {
-                this.searchView1.AddStaticCondition("id", (from id in initialSelectedIDs select (object)id).ToArray(), Relation.IN);
-            }
             this.searchView1.Search();
-            if (initialSelectedIDs != null)
-            {
-                this.model1.SelectRowsByValues("id", initialSelectedIDs);
-            }
-            this.searchView1.ClearStaticCondition("id");
         }
 
         private string StateForwardMapper(int state)
@@ -90,6 +73,20 @@ namespace WMS.UI
             }
             var formChooseType = new FormInspectionNoteChoosePreviewType(selectedIDs);
             formChooseType.Show();
+        }
+
+        public void SearchAndSelectByIDs(int[] ids)
+        {
+            this.searchView1.AddStaticCondition("id", (from id in ids select (object)id).ToArray(), Relation.IN);
+            this.searchView1.Search();
+            this.model1.SelectRowsByValues("id", ids);
+            this.searchView1.ClearStaticCondition("id");
+        }
+
+        public void SearchByWarehouseEntryNo(string warehouseEntryNo)
+        {
+            this.searchView1.AddCondition("warehouseEntryNo", warehouseEntryNo);
+            this.searchView1.Search();
         }
     }
 }
