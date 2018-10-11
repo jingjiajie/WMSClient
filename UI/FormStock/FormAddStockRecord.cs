@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FormStock
 {
