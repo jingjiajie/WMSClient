@@ -74,13 +74,15 @@ Public Class MethodListenerContainer
     ''' </summary>
     ''' <param name="methodListener">方法监听器对象。名称默认为方法监听器对象的类名。如果要指定其它名称，请使用Register函数的其他重载</param>
     Public Shared Sub Register(methodListener As Object)
+        Dim methodListenerName = methodListener.GetType.Name
         Dim found = (From m In MethodListeners
-                     Where m.Name.Equals(methodListener.GetType.Name, StringComparison.OrdinalIgnoreCase)
+                     Where m.Name.Equals(methodListenerName, StringComparison.OrdinalIgnoreCase)
                      Select m).FirstOrDefault
         If found Is Nothing Then
             MethodListeners.Add(New NameMethodListenerPair(methodListener.GetType.Name, methodListener))
         Else
             found.MethodListener = methodListener
+            'Throw New FrontWorkException(String.Format("MethodListener ""{0}"" already exists!", methodListenerName))
         End If
     End Sub
 

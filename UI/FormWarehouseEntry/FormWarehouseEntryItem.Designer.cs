@@ -225,11 +225,13 @@ namespace WMS.UI
             this.configuration1.Location = new System.Drawing.Point(49, 66);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormWarehouseEntryItem",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "SupplyMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormWarehouseEntryItem",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "SupplyMethodListener"};
             modeMethodListenerNamesPair2.Mode = "put_in";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,

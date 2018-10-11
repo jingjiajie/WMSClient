@@ -14,464 +14,182 @@ Partial Public Class Model
     Public WithEvents PanelIcon As Panel
     Public WithEvents LabelText As Label
 
-    Protected Property ModelConfigurationWrapper As ModelConfigurationWrapper
+    Protected Property ModelOperator As ConfigurableModelOperator
 
     Public Shadows Property Name As String
         Get
             Return MyBase.Name
         End Get
         Set(value As String)
-            Me.ModelConfigurationWrapper.Name = value
+            Me.ModelOperator.Name = value
             MyBase.Name = value
         End Set
     End Property
 
-    ''' <summary>
-    ''' 配置中心对象
-    ''' </summary>
-    ''' <returns></returns>
-    <Description("配置中心对象"), Category("FrontWork")>
-    Public Property Configuration As Configuration Implements IConfigurableModel.Configuration
+    Public Property Configuration As Configuration Implements IConfigurable.Configuration
         Get
-            Return Me.ModelConfigurationWrapper.Configuration
+            Return DirectCast(ModelOperator, IConfigurableModel).Configuration
         End Get
         Set(value As Configuration)
-            Me.ModelConfigurationWrapper.Configuration = value
+            DirectCast(ModelOperator, IConfigurableModel).Configuration = value
         End Set
     End Property
 
-    ''' <summary>
-    ''' 数据行数
-    ''' </summary>
-    ''' <returns></returns>
-    <Browsable(False)>
-    Public ReadOnly Property RowCount As Integer
+    Public Property Mode As String Implements IConfigurable.Mode
         Get
-            Return Me.ModelConfigurationWrapper.GetRowCount
-        End Get
-    End Property
-
-    Public Function GetRowCount() As Integer Implements IModel.GetRowCount
-        Return Me.ModelConfigurationWrapper.GetRowCount
-    End Function
-
-    <Browsable(False)>
-    Public ReadOnly Property ColumnCount As Integer
-        Get
-            Return Me.GetColumnCount
-        End Get
-    End Property
-
-    Public Function GetColumnCount() As Integer Implements IModel.GetColumnCount
-        Return Me.ModelConfigurationWrapper.GetColumnCount
-    End Function
-
-    Public Function GetSelectionRanges() As Range() Implements IModel.GetSelectionRanges
-        Return Me.ModelConfigurationWrapper.GetSelectionRanges
-    End Function
-
-    Public Sub SetSelectionRanges(ranges As Range()) Implements IModel.SetSelectionRanges
-        Call Me.ModelConfigurationWrapper.SetSelectionRanges(ranges)
-    End Sub
-
-    ''' <summary>
-    ''' 选区
-    ''' </summary>
-    ''' <returns></returns>
-    <Browsable(False)>
-    Public Property AllSelectionRanges As Range()
-        Get
-            Return Me.GetSelectionRanges
-        End Get
-        Set(value As Range())
-            Me.SetSelectionRanges(value)
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' 选区
-    ''' </summary>
-    ''' <returns></returns>
-    <Browsable(False)>
-    Public Property AllSelectionRanges(i As Integer) As Range
-        Get
-            Return Me.GetSelectionRanges(i)
-        End Get
-        Set(value As Range)
-            Dim allSelectionRanges = Me.GetSelectionRanges
-            allSelectionRanges(i) = value
-            Me.SetSelectionRanges(allSelectionRanges)
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' 首个选区
-    ''' </summary>
-    ''' <returns></returns>
-    <Browsable(False)>
-    Public Property SelectionRange As Range
-        Get
-            If Me.AllSelectionRanges Is Nothing Then Return Nothing
-            If Me.AllSelectionRanges.Length = 0 Then Return Nothing
-            Return Me.AllSelectionRanges(0)
-        End Get
-        Set(value As Range)
-            If value Is Nothing Then
-                Me.AllSelectionRanges = {}
-            ElseIf Me.AllSelectionRanges Is Nothing Then
-                Me.AllSelectionRanges = {value}
-            ElseIf Me.AllSelectionRanges.Length = 0 Then
-                Me.AllSelectionRanges = {value}
-            Else
-                Me.AllSelectionRanges(0) = value
-            End If
-        End Set
-    End Property
-
-    Default Public Property _Item(row As Integer) As IDictionary(Of String, Object)
-        Get
-            Return Me.GetRow(row)
-        End Get
-        Set(value As IDictionary(Of String, Object))
-            Call Me.UpdateRow(row, value)
-        End Set
-    End Property
-
-    Default Public Property _Item(row As Integer, column As Integer) As Object
-        Get
-            Return Me.GetCell(row, column)
-        End Get
-        Set(value As Object)
-            Call Me.UpdateCell(row, column, value)
-        End Set
-    End Property
-
-    Default Public Property _Item(row As Integer, columnName As String) As Object
-        Get
-            Return Me.GetCell(row, columnName)
-        End Get
-        Set(value As Object)
-            Call Me.UpdateCell(row, columnName, value)
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' 当前模式
-    ''' </summary>
-    ''' <returns></returns>
-    <Description("当前配置模式"), Category("FrontWork")>
-    Public Property Mode As String Implements IConfigurableModel.Mode
-        Get
-            Return Me.ModelConfigurationWrapper.Mode
+            Return DirectCast(ModelOperator, IConfigurableModel).Mode
         End Get
         Set(value As String)
-            ModelConfigurationWrapper.Mode = value
+            DirectCast(ModelOperator, IConfigurableModel).Mode = value
         End Set
+    End Property
+
+    Public Property AllSelectionRanges As Range() Implements IModel.AllSelectionRanges
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel).AllSelectionRanges
+        End Get
+        Set(value As Range())
+            DirectCast(ModelOperator, IConfigurableModel).AllSelectionRanges = value
+        End Set
+    End Property
+
+    Public Property AllSelectionRanges(i As Integer) As Range Implements IModel.AllSelectionRanges
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel).AllSelectionRanges(i)
+        End Get
+        Set(value As Range)
+            DirectCast(ModelOperator, IConfigurableModel).AllSelectionRanges(i) = value
+        End Set
+    End Property
+
+    Public Property SelectionRange As Range Implements IModel.SelectionRange
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel).SelectionRange
+        End Get
+        Set(value As Range)
+            DirectCast(ModelOperator, IConfigurableModel).SelectionRange = value
+        End Set
+    End Property
+
+    Default Public Property _Item(row As Integer, column As String) As Object Implements IModel._Item
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel)(row, column)
+        End Get
+        Set(value As Object)
+            DirectCast(ModelOperator, IConfigurableModel)(row, column) = value
+        End Set
+    End Property
+
+    Default Public Property _Item(row As Integer) As IDictionary(Of String, Object) Implements IModel._Item
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel)(row)
+        End Get
+        Set(value As IDictionary(Of String, Object))
+            DirectCast(ModelOperator, IConfigurableModel)(row) = value
+        End Set
+    End Property
+
+    Public ReadOnly Property RowCount As Integer Implements IModel.RowCount
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel).RowCount
+        End Get
+    End Property
+
+    Public ReadOnly Property ColumnCount As Integer Implements IModel.ColumnCount
+        Get
+            Return DirectCast(ModelOperator, IConfigurableModel).ColumnCount
+        End Get
     End Property
 
     Public Sub New()
-        Me.ModelConfigurationWrapper = New ModelConfigurationWrapper(New ModelCore)
+        Me.ModelOperator = New ConfigurableModelOperator(New ModelCore)
     End Sub
 
-    Public Function GetCell(row As Integer, columnName As String) As Object
-        Return Me.ModelConfigurationWrapper.GetCell(row, columnName)
-    End Function
-
-    ''' <summary>
-    ''' 获取行并自动转换成相应类型的对象返回
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="rows"></param>
-    ''' <returns></returns>
-    Public Function GetRows(Of T As New)(rows As Integer()) As T()
-        Return ModelConfigurationWrapper.GetRows(Of T)(rows)
-    End Function
-
-    Public Function GetRow(Of T As New)(row As Integer) As T
-        Return Me.ModelConfigurationWrapper.GetRow(Of T)(row)
-    End Function
-
-    ''' <summary>
-    ''' 获取行
-    ''' </summary>
-    ''' <param name="rows">行号</param>
-    ''' <returns>相应行数据</returns>
-    Public Function GetRows(rows As Integer()) As IDictionary(Of String, Object)() Implements IModel.GetRows
-        Return Me.ModelConfigurationWrapper.GetRows(rows)
-    End Function
-
-    ''' <summary>
-    ''' 获取行
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <returns>相应行数据</returns>
-    Public Function GetRow(row As Integer) As IDictionary(Of String, Object)
-        Return Me.ModelConfigurationWrapper.GetRow(row)
-    End Function
-
-    ''' <summary>
-    ''' 增加行
-    ''' </summary>
-    ''' <param name="data">增加行的数据</param>
-    ''' <returns>增加的行号</returns>
-    Public Function AddRow(data As IDictionary(Of String, Object)) As Integer
-        Return Me.ModelConfigurationWrapper.AddRow(data)
-    End Function
-
-    ''' <summary>
-    ''' 增加行
-    ''' </summary>
-    ''' <param name="dataOfEachRow">增加行的数据</param>
-    ''' <returns>增加的行号</returns>
-    Public Function AddRows(dataOfEachRow As IDictionary(Of String, Object)()) As Integer() Implements IModel.AddRows
-        Return Me.ModelConfigurationWrapper.AddRows(dataOfEachRow)
-    End Function
-
-    ''' <summary>
-    ''' 插入行
-    ''' </summary>
-    ''' <param name="row">插入行行号</param>
-    ''' <param name="data">数据</param>
-    Public Sub InsertRow(row As Integer, data As IDictionary(Of String, Object))
-        Call Me.ModelConfigurationWrapper.InsertRow(row, data)
-    End Sub
-
-    ''' <summary>
-    ''' 插入行
-    ''' </summary>
-    ''' <param name="rows">插入行行号</param>
-    ''' <param name="dataOfEachRow">数据</param>
-    Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.InsertRows
-        Call Me.ModelConfigurationWrapper.InsertRows(rows, dataOfEachRow)
-    End Sub
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="row">删除行行号</param>
-    Public Sub RemoveRow(row As Integer)
-        Call Me.ModelConfigurationWrapper.RemoveRow(row)
-    End Sub
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="startRow">起始行号</param>
-    ''' <param name="rowCount">删除行数</param>
-    Public Sub RemoveRows(startRow As Integer, rowCount As Integer)
-        Call Me.ModelConfigurationWrapper.RemoveRows(startRow, rowCount)
-    End Sub
-
-    ''' <summary>
-    ''' 删除行
-    ''' </summary>
-    ''' <param name="rows">删除行行号</param>
-    Public Sub RemoveRows(rows As Integer()) Implements IModel.RemoveRows
-        Call Me.ModelConfigurationWrapper.RemoveRows(rows)
-    End Sub
-
-    Public Sub RemoveSelectedRows()
-        Call Me.ModelConfigurationWrapper.RemoveSelectedRows()
-    End Sub
-
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="row">更新行行号</param>
-    ''' <param name="data">数据</param>
-    Public Sub UpdateRow(row As Integer, data As IDictionary(Of String, Object))
-        Call Me.ModelConfigurationWrapper.UpdateRow(row, data)
-    End Sub
-
-    ''' <summary>
-    ''' 更新行
-    ''' </summary>
-    ''' <param name="rows">行号</param>
-    ''' <param name="dataOfEachRow">对应的数据</param>
-    Public Sub UpdateRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModel.UpdateRows
-        Call Me.ModelConfigurationWrapper.UpdateRows(rows, dataOfEachRow)
-    End Sub
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="columnName">列名</param>
-    ''' <param name="data">更新的数据</param>
-    Public Sub UpdateCell(row As Integer, columnName As String, data As Object)
-        Call Me.ModelConfigurationWrapper.UpdateCell(row, columnName, data)
-    End Sub
-
-    ''' <summary>
-    ''' 更新单元格
-    ''' </summary>
-    ''' <param name="rows">行号</param>
-    ''' <param name="columnNames">列名</param>
-    ''' <param name="dataOfEachCell">相应的数据</param>
-    Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModel.UpdateCells
-        Call Me.ModelConfigurationWrapper.UpdateCells(rows, columnNames, dataOfEachCell)
-    End Sub
-
-    Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModel.Refresh
-        Call Me.ModelConfigurationWrapper.Refresh(args)
-    End Sub
-
-    Public Sub UpdateRowStates(rows As Integer(), states As ModelRowState()) Implements IModel.UpdateRowStates
-        Call Me.ModelConfigurationWrapper.UpdateRowStates(rows, states)
-    End Sub
-
-    ''' <summary>
-    ''' 更新行同步状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="state">同步状态</param>
-    Public Sub UpdateRowState(row As Integer, state As ModelRowState)
-        Call Me.ModelConfigurationWrapper.UpdateRowState(row, state)
-    End Sub
-
-    ''' <summary>
-    ''' 获取行状态
-    ''' </summary>
-    ''' <param name="rows">行号</param>
-    ''' <returns>状态</returns>
-    Public Function GetRowStates(rows As Integer()) As ModelRowState() Implements IModel.GetRowStates
-        Return Me.ModelConfigurationWrapper.GetRowStates(rows)
-    End Function
-
-    ''' <summary>
-    ''' 获取行同步状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <returns>同步状态</returns>
-    Public Function GetRowState(row As Integer) As ModelRowState
-        Return Me.ModelConfigurationWrapper.GetRowState(row)
-    End Function
-
-    Public Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
-        Dim rowStates = Me.GetRowStates(rows)
-        Return (From s In rowStates Select s.SynchronizationState).ToArray
-    End Function
-
-    Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState
-        Return Me.GetRowSynchronizationStates({row})(0)
-    End Function
-
-    ''' <summary>
-    ''' Model刷新事件
-    ''' </summary>
-    Public Custom Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModel.Refreshed
+    Public Custom Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModelCore.Refreshed
         AddHandler(value As EventHandler(Of ModelRefreshedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.Refreshed, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).Refreshed, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelRefreshedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.Refreshed, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).Refreshed, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelRefreshedEventArgs)
         End RaiseEvent
     End Event
 
-    ''' <summary>
-    ''' 增加行事件
-    ''' </summary>
-    Public Custom Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModel.RowAdded
+    Public Custom Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModelCore.RowAdded
         AddHandler(value As EventHandler(Of ModelRowAddedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.RowAdded, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).RowAdded, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelRowAddedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.RowAdded, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).RowAdded, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelRowAddedEventArgs)
-
         End RaiseEvent
     End Event
 
-    ''' <summary>
-    ''' 更新行数据事件
-    ''' </summary>
-    Public Custom Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModel.RowUpdated
+    Public Custom Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModelCore.RowUpdated
         AddHandler(value As EventHandler(Of ModelRowUpdatedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.RowUpdated, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).RowUpdated, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelRowUpdatedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.RowUpdated, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).RowUpdated, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelRowUpdatedEventArgs)
-
         End RaiseEvent
     End Event
 
-    ''' <summary>
-    ''' 删除行事件
-    ''' </summary>
-    Public Custom Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModel.BeforeRowRemove
+    Public Custom Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModelCore.RowRemoved
+        AddHandler(value As EventHandler(Of ModelRowRemovedEventArgs))
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).RowRemoved, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ModelRowRemovedEventArgs))
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).RowRemoved, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ModelRowRemovedEventArgs)
+        End RaiseEvent
+    End Event
+
+    Public Custom Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModelCore.BeforeRowRemove
         AddHandler(value As EventHandler(Of ModelBeforeRowRemoveEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.BeforeRowRemove, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).BeforeRowRemove, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelBeforeRowRemoveEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.BeforeRowRemove, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).BeforeRowRemove, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelBeforeRowRemoveEventArgs)
         End RaiseEvent
     End Event
 
-    ''' <summary>
-    ''' 删除行事件
-    ''' </summary>
-    Public Custom Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModel.RowRemoved
-        AddHandler(value As EventHandler(Of ModelRowRemovedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.RowRemoved, value
-        End AddHandler
-        RemoveHandler(value As EventHandler(Of ModelRowRemovedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.RowRemoved, value
-        End RemoveHandler
-        RaiseEvent(sender As Object, e As ModelRowRemovedEventArgs)
-
-        End RaiseEvent
-    End Event
-
-    ''' <summary>
-    ''' 单元格数据更新事件
-    ''' </summary>
-    Public Custom Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModel.CellUpdated
+    Public Custom Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModelCore.CellUpdated
         AddHandler(value As EventHandler(Of ModelCellUpdatedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.CellUpdated, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).CellUpdated, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelCellUpdatedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.CellUpdated, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).CellUpdated, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelCellUpdatedEventArgs)
-
         End RaiseEvent
     End Event
 
-    ''' <summary>
-    ''' 选区改变事件
-    ''' </summary>
-    Public Custom Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModel.SelectionRangeChanged
+    Public Custom Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModelCore.SelectionRangeChanged
         AddHandler(value As EventHandler(Of ModelSelectionRangeChangedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.SelectionRangeChanged, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).SelectionRangeChanged, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelSelectionRangeChangedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.SelectionRangeChanged, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).SelectionRangeChanged, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelSelectionRangeChangedEventArgs)
-
         End RaiseEvent
     End Event
 
-    ''' <summary>
-    ''' 行同步状态改变事件
-    ''' </summary>
-    Public Custom Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModel.RowStateChanged
+    Public Custom Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModelCore.RowStateChanged
         AddHandler(value As EventHandler(Of ModelRowStateChangedEventArgs))
-            AddHandler Me.ModelConfigurationWrapper.RowStateChanged, value
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).RowStateChanged, value
         End AddHandler
         RemoveHandler(value As EventHandler(Of ModelRowStateChangedEventArgs))
-            RemoveHandler Me.ModelConfigurationWrapper.RowStateChanged, value
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).RowStateChanged, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ModelRowStateChangedEventArgs)
-
         End RaiseEvent
     End Event
 
@@ -541,121 +259,191 @@ Partial Public Class Model
         Call Me.InitializeComponent()
     End Sub
 
-    Public Function ContainsColumn(columnName As String) As Boolean
-        Return Me.GetColumns({columnName})(0) IsNot Nothing
+    Public Function GetCell(row As Integer, columnName As String) As Object Implements IModel.GetCell
+        Return DirectCast(ModelOperator, IConfigurableModel).GetCell(row, columnName)
     End Function
 
-    Public Sub SelectRowsByValues(Of T)(columnName As String, values As T())
-        Call Me.ModelConfigurationWrapper.SelectRowsByValues(columnName, values)
-    End Sub
-
-    ''' <summary>
-    ''' 获取所有选中行
-    ''' </summary>
-    ''' <typeparam name="T">要映射成的类型</typeparam>
-    ''' <returns>选中行映射后的对象数组</returns>
-    Public Function GetSelectedRows(Of T As New)() As T()
-        Return Me.ModelConfigurationWrapper.GetSelectedRows(Of T)
+    Public Function GetRows(Of T As New)(rows() As Integer) As T() Implements IModel.GetRows
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRows(Of T)(rows)
     End Function
 
-    ''' <summary>
-    ''' 获取所有选中行的某一列
-    ''' </summary>
-    ''' <typeparam name="T">返回类型</typeparam>
-    ''' <param name="columnName">列名</param>
-    ''' <returns>所有选中行指定列的数据</returns>
-    Public Function GetSelectedRows(Of T)(columnName As String) As T()
-        Return Me.ModelConfigurationWrapper.GetSelectedRows(Of T)(columnName)
+    Public Function GetRow(Of T As New)(row As Integer) As T Implements IModel.GetRow
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRow(Of T)(row)
     End Function
 
-    Public Function GetSelectedRows() As IDictionary(Of String, Object)()
-        Return Me.ModelConfigurationWrapper.GetSelectedRows
+    Public Function GetRow(row As Integer) As IDictionary(Of String, Object) Implements IModel.GetRow
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRow(row)
     End Function
 
-    Public Function GetSelectedRow() As IDictionary(Of String, Object)
-        Return Me.ModelConfigurationWrapper.GetSelectedRow
+    Public Function AddRow(data As IDictionary(Of String, Object)) As Integer Implements IModel.AddRow
+        Return DirectCast(ModelOperator, IConfigurableModel).AddRow(data)
     End Function
 
-    Public Function GetSelectedRow(Of T As New)() As IDictionary(Of String, Object)
-        Return Me.ModelConfigurationWrapper.GetSelectedRow(Of T)
+    Public Sub InsertRow(row As Integer, data As IDictionary(Of String, Object)) Implements IModel.InsertRow
+        DirectCast(ModelOperator, IConfigurableModel).InsertRow(row, data)
+    End Sub
+
+    Public Sub RemoveRow(row As Integer) Implements IModel.RemoveRow
+        DirectCast(ModelOperator, IConfigurableModel).RemoveRow(row)
+    End Sub
+
+    Public Sub RemoveRows(startRow As Integer, rowCount As Integer) Implements IModel.RemoveRows
+        DirectCast(ModelOperator, IConfigurableModel).RemoveRows(startRow, rowCount)
+    End Sub
+
+    Public Sub RemoveSelectedRows() Implements IModel.RemoveSelectedRows
+        DirectCast(ModelOperator, IConfigurableModel).RemoveSelectedRows()
+    End Sub
+
+    Public Function GetRows(rows() As Integer) As IDictionary(Of String, Object)() Implements IModel.GetRows
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRows(rows)
     End Function
 
-    Public Function GetSelectedRow(Of T)(columnName As String) As T
-        Return Me.ModelConfigurationWrapper.GetSelectedRow(Of T)(columnName)
+    Public Sub UpdateRow(row As Integer, data As IDictionary(Of String, Object)) Implements IModel.UpdateRow
+        DirectCast(ModelOperator, IConfigurableModel).UpdateRow(row, data)
+    End Sub
+
+    Public Sub UpdateCell(row As Integer, columnName As String, data As Object) Implements IModel.UpdateCell
+        DirectCast(ModelOperator, IConfigurableModel).UpdateCell(row, columnName, data)
+    End Sub
+
+    Public Function DataRowToDictionary(dataRow As DataRow) As IDictionary(Of String, Object) Implements IModel.DataRowToDictionary
+        Return DirectCast(ModelOperator, IConfigurableModel).DataRowToDictionary(dataRow)
     End Function
 
-    ''' <summary>
-    ''' 删除新增但未编辑的行
-    ''' </summary>
-    Public Sub RemoveUneditedNewRows()
-        Call Me.ModelConfigurationWrapper.RemoveUneditedNewRows()
+    Public Sub UpdateRowState(row As Integer, state As ModelRowState) Implements IModel.UpdateRowState
+        DirectCast(ModelOperator, IConfigurableModel).UpdateRowState(row, state)
     End Sub
 
-    Public Function HasUnsynchronizedUpdatedRow() As Boolean
-        Return Me.ModelConfigurationWrapper.HasUnsynchronizedUpdatedRow
+    Public Function GetRowState(row As Integer) As ModelRowState Implements IModel.GetRowState
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRowState(row)
     End Function
 
-    Public Sub AddColumns(columns() As ModelColumn) Implements IModel.AddColumns
-        Call Me.ModelConfigurationWrapper.AddColumns(columns)
-    End Sub
-
-    Public Sub RemoveColumns(indexes As Integer()) Implements IModel.RemoveColumns
-        Call Me.ModelConfigurationWrapper.RemoveColumns(indexes)
-    End Sub
-
-    Public Function GetColumns() As ModelColumn() Implements IModel.GetColumns
-        Return Me.ModelConfigurationWrapper.GetColumns
+    Public Function ContainsColumn(columnName As String) As Boolean Implements IModel.ContainsColumn
+        Return DirectCast(ModelOperator, IConfigurableModel).ContainsColumn(columnName)
     End Function
 
-    Public Function GetColumns(columnNames() As String) As ModelColumn() Implements IModel.GetColumns
-        Return Me.ModelConfigurationWrapper.GetColumns(columnNames)
+    Public Sub SelectRowsByValues(Of T)(columnName As String, values() As T) Implements IModel.SelectRowsByValues
+        DirectCast(ModelOperator, IConfigurableModel).SelectRowsByValues(columnName, values)
+    End Sub
+
+    Public Function GetSelectedRows(Of T As New)() As T() Implements IModel.GetSelectedRows
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectedRows(Of T)()
     End Function
 
-    Public Function GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModel.GetCells
-        Return Me.ModelConfigurationWrapper.GetCells(rows, columnNames)
+    Public Function GetSelectedRows() As IDictionary(Of String, Object)() Implements IModel.GetSelectedRows
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectedRows()
     End Function
 
-    Public Sub RefreshView(rows As Integer())
-        Call Me.ModelConfigurationWrapper.RefreshView(rows)
+    Public Function GetSelectedRows(Of T)(columnName As String) As T() Implements IModel.GetSelectedRows
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectedRows(Of T)(columnName)
+    End Function
+
+    Public Function GetSelectedRow() As IDictionary(Of String, Object) Implements IModel.GetSelectedRow
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectedRow()
+    End Function
+
+    Public Function GetSelectedRow(Of T As New)() As IDictionary(Of String, Object) Implements IModel.GetSelectedRow
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectedRow(Of T)()
+    End Function
+
+    Public Function GetSelectedRow(Of T)(columnName As String) As T Implements IModel.GetSelectedRow
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectedRow(Of T)(columnName)
+    End Function
+
+    Public Sub RemoveUneditedNewRows() Implements IModel.RemoveUneditedNewRows
+        DirectCast(ModelOperator, IConfigurableModel).RemoveUneditedNewRows()
     End Sub
 
-    Public Sub RefreshView(row As Integer)
-        Call Me.ModelConfigurationWrapper.RefreshView(row)
+    Public Function HasUnsynchronizedUpdatedRow() As Boolean Implements IModel.HasUnsynchronizedUpdatedRow
+        Return DirectCast(ModelOperator, IConfigurableModel).HasUnsynchronizedUpdatedRow()
+    End Function
+
+    Public Sub RefreshView(rows() As Integer) Implements IModel.RefreshView
+        DirectCast(ModelOperator, IConfigurableModel).RefreshView(rows)
     End Sub
 
-    Public Sub RaiseRefreshedEvent(sender As Object, args As ModelRefreshedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseRefreshedEvent(sender, args)
+    Public Sub RefreshView(row As Integer) Implements IModel.RefreshView
+        DirectCast(ModelOperator, IConfigurableModel).RefreshView(row)
     End Sub
 
-    Public Sub RaiseCellUpdatedEvent(sender As Object, args As ModelCellUpdatedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseCellUpdatedEvent(sender, args)
+    Public Function GetRowSynchronizationStates(rows() As Integer) As SynchronizationState() Implements IModel.GetRowSynchronizationStates
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRowSynchronizationStates(rows)
+    End Function
+
+    Public Sub AddColumns(columns() As ModelColumn) Implements IModelCore.AddColumns
+        DirectCast(ModelOperator, IConfigurableModel).AddColumns(columns)
     End Sub
 
-    Public Sub RaiseRowUpdatedEvent(sender As Object, args As ModelRowUpdatedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseRowUpdatedEvent(sender, args)
+    Public Sub UpdateColumn(indexes() As Integer, columns() As ModelColumn) Implements IModelCore.UpdateColumn
+        DirectCast(ModelOperator, IConfigurableModel).UpdateColumn(indexes, columns)
     End Sub
 
-    Public Sub RaiseRowAddedEvent(sender As Object, args As ModelRowAddedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseRowAddedEvent(sender, args)
+    Public Sub RemoveColumns(indexes() As Integer) Implements IModelCore.RemoveColumns
+        DirectCast(ModelOperator, IConfigurableModel).RemoveColumns(indexes)
     End Sub
 
-    Public Sub RaiseBeforeRowRemoveEvent(sender As Object, args As ModelBeforeRowRemoveEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseBeforeRowRemoveEvent(sender, args)
+    Public Function GetColumns() As ModelColumn() Implements IModelCore.GetColumns
+        Return DirectCast(ModelOperator, IConfigurableModel).GetColumns()
+    End Function
+
+    Public Function GetColumns(columnNames() As String) As ModelColumn() Implements IModelCore.GetColumns
+        Return DirectCast(ModelOperator, IConfigurableModel).GetColumns(columnNames)
+    End Function
+
+    Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IModelCore.AddRows
+        Return DirectCast(ModelOperator, IConfigurableModel).AddRows(data)
+    End Function
+
+    Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IModelCore.InsertRows
+        DirectCast(ModelOperator, IConfigurableModel).InsertRows(rows, data)
     End Sub
 
-    Public Sub RaiseRowRemovedEvent(sender As Object, args As ModelRowRemovedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseRowRemovedEvent(sender, args)
+    Public Sub RemoveRows(rows() As Integer) Implements IModelCore.RemoveRows
+        DirectCast(ModelOperator, IConfigurableModel).RemoveRows(rows)
     End Sub
 
-    Public Sub RaiseSelectionRangeChangedEvent(sender As Object, args As ModelSelectionRangeChangedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseSelectionRangeChangedEvent(sender, args)
+    Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IModelCore.UpdateRows
+        DirectCast(ModelOperator, IConfigurableModel).UpdateRows(rows, dataOfEachRow)
     End Sub
 
-    Public Sub RaiseRowSynchronizationStateChangedEvent(sender As Object, args As ModelRowStateChangedEventArgs)
-        Call Me.ModelConfigurationWrapper.RaiseRowStateChangedEvent(sender, args)
+    Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IModelCore.UpdateCells
+        DirectCast(ModelOperator, IConfigurableModel).UpdateCells(rows, columnNames, dataOfEachCell)
     End Sub
 
-    Public Sub UpdateColumn(indexes() As Integer, columns() As ModelColumn) Implements IModel.UpdateColumn
-        DirectCast(ModelConfigurationWrapper, IConfigurableModel).UpdateColumn(indexes, columns)
+    Public Sub UpdateRowStates(rows() As Integer, states() As ModelRowState) Implements IModelCore.UpdateRowStates
+        DirectCast(ModelOperator, IConfigurableModel).UpdateRowStates(rows, states)
     End Sub
+
+    Public Function GetRowStates(rows() As Integer) As ModelRowState() Implements IModelCore.GetRowStates
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRowStates(rows)
+    End Function
+
+    Public Function GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModelCore.GetCells
+        Return DirectCast(ModelOperator, IConfigurableModel).GetCells(rows, columnNames)
+    End Function
+
+    Public Shadows Sub Refresh(args As ModelRefreshArgs) Implements IModelCore.Refresh
+        DirectCast(ModelOperator, IConfigurableModel).Refresh(args)
+    End Sub
+
+    Public Function GetRowCount() As Integer Implements IModelCore.GetRowCount
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRowCount()
+    End Function
+
+    Public Function GetColumnCount() As Integer Implements IModelCore.GetColumnCount
+        Return DirectCast(ModelOperator, IConfigurableModel).GetColumnCount()
+    End Function
+
+    Public Function GetSelectionRanges() As Range() Implements IModelCore.GetSelectionRanges
+        Return DirectCast(ModelOperator, IConfigurableModel).GetSelectionRanges()
+    End Function
+
+    Public Sub SetSelectionRanges(ranges() As Range) Implements IModelCore.SetSelectionRanges
+        DirectCast(ModelOperator, IConfigurableModel).SetSelectionRanges(ranges)
+    End Sub
+
+    Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
+        Return DirectCast(ModelOperator, IConfigurableModel).GetRowSynchronizationState(row)
+    End Function
 End Class

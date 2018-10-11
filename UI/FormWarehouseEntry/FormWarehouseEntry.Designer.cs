@@ -54,10 +54,10 @@ namespace WMS.UI
             this.ButtonToInspectionNote = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
             this.configuration1 = new FrontWork.Configuration();
             this.pagerView1 = new FrontWork.PagerView();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.configuration2 = new FrontWork.Configuration();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
@@ -254,21 +254,6 @@ namespace WMS.UI
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.configuration2);
-            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
-            this.panel1.Controls.Add(this.synchronizer);
-            this.panel1.Controls.Add(this.model1);
-            this.panel1.Controls.Add(this.configuration1);
-            this.panel1.Controls.Add(this.reoGridView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 136);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1259, 261);
-            this.panel1.TabIndex = 13;
-            // 
             // searchView1
             // 
             this.searchView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -285,7 +270,7 @@ namespace WMS.UI
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(3, 102);
+            this.configuration1.Location = new System.Drawing.Point(139, 147);
             this.configuration1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormWarehouseEntry",
@@ -299,7 +284,7 @@ namespace WMS.UI
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(122, 110);
             this.configuration1.TabIndex = 1;
             // 
             // pagerView1
@@ -313,14 +298,29 @@ namespace WMS.UI
             this.pagerView1.Size = new System.Drawing.Size(1257, 36);
             this.pagerView1.TabIndex = 12;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.configuration2);
+            this.panel1.Controls.Add(this.pagerSearchJsonRESTAdapter1);
+            this.panel1.Controls.Add(this.synchronizer);
+            this.panel1.Controls.Add(this.model1);
+            this.panel1.Controls.Add(this.configuration1);
+            this.panel1.Controls.Add(this.reoGridView1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 136);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1259, 261);
+            this.panel1.TabIndex = 13;
+            // 
             // configuration2
             // 
             this.configuration2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration2.ConfigurationString = "";
-            this.configuration2.Location = new System.Drawing.Point(730, 92);
+            this.configuration2.Location = new System.Drawing.Point(603, 147);
             this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration2.Name = "configuration2";
-            this.configuration2.Size = new System.Drawing.Size(180, 180);
+            this.configuration2.Size = new System.Drawing.Size(130, 125);
             this.configuration2.TabIndex = 5;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -347,12 +347,12 @@ namespace WMS.UI
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(303, 79);
+            this.synchronizer.Location = new System.Drawing.Point(364, 147);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(180, 180);
+            this.synchronizer.Size = new System.Drawing.Size(119, 112);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
@@ -361,12 +361,12 @@ namespace WMS.UI
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(160, 79);
+            this.model1.Location = new System.Drawing.Point(251, 147);
             this.model1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(180, 180);
+            this.model1.Size = new System.Drawing.Size(110, 112);
             this.model1.TabIndex = 2;
             this.model1.Refreshed += new System.EventHandler<FrontWork.ModelRefreshedEventArgs>(this.model1_Refreshed);
             this.model1.SelectionRangeChanged += new System.EventHandler<FrontWork.ModelSelectionRangeChangedEventArgs>(this.model1_SelectionRangeChanged);
@@ -383,6 +383,7 @@ namespace WMS.UI
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(1259, 261);
             this.reoGridView1.TabIndex = 0;
+            this.reoGridView1.Load += new System.EventHandler(this.reoGridView1_Load);
             // 
             // basicView1
             // 

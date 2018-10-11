@@ -285,5 +285,10 @@ namespace WMS.UI
         {
             this.RefreshMode();
         }
+
+        private void reoGridView1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

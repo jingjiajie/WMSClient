@@ -189,6 +189,7 @@
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false,defaultValue:0},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,defaultValue:0},
         {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,defaultValue:"#supplierIdDefaultValue"},
+        {name:"supplySerialNo",displayName:"序列号"},
         {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},

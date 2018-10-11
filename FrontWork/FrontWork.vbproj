@@ -155,10 +155,9 @@
     <Compile Include="Model\DataStructures\ModelRefreshArgs.vb" />
     <Compile Include="Model\DataStructures\ModelRowState.vb" />
     <Compile Include="Model\Interfaces\IConfigurableModel.vb" />
+    <Compile Include="Model\Interfaces\IModelCore.vb" />
     <Compile Include="Model\Wrappers\ConfigurableModelOperator.vb" />
-    <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
     <Compile Include="Model\Wrappers\ModelOperator.vb" />
-    <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
     <Compile Include="Synchronizer\DataStructures\HTTPResponse.vb" />
     <Compile Include="ViewModel\AssociableDataViewModel.vb" />
     <Compile Include="View\BasicView\BasicViewTextBox.vb">

@@ -4,10 +4,10 @@ Imports FrontWork
 
 Public Class EditableDataViewModel
     Implements IConfigurable
-    Protected ModelOperationsWrapper As New ModelOperator
     Protected ViewOperationsWrapper As New EditableDataViewOperationsWrapper
     Protected _Configuration As Configuration
     Protected _Mode As String = "default"
+    Protected _Model As IModel
 
     Public Overridable Property Configuration As Configuration Implements IConfigurable.Configuration
         Get
@@ -114,20 +114,20 @@ Public Class EditableDataViewModel
     End Sub
 
     ''' <summary>
-    ''' ModelOperationsWrapper对象，用来存取数据
+    ''' Model对象，用来存取数据
     ''' </summary>
-    ''' <returns>ModelOperationsWrapper对象</returns>
+    ''' <returns>Model对象</returns>
     Public Overridable Property Model As IModel
         Get
-            Return Me.ModelOperationsWrapper.Model
+            Return Me._Model
         End Get
         Set(value As IModel)
-            If value Is Me.ModelOperationsWrapper.Model Then Return
-            If Me.ModelOperationsWrapper.Model IsNot Nothing Then
+            If value Is Me._Model Then Return
+            If Me._Model IsNot Nothing Then
                 Call Me.UnbindModel()
             End If
-            Me.ModelOperationsWrapper.Model = value
-            If Me.ModelOperationsWrapper.Model IsNot Nothing Then
+            Me._Model = value
+            If Me._Model IsNot Nothing Then
                 Call Me.BindModel()
             End If
         End Set
@@ -200,13 +200,13 @@ Public Class EditableDataViewModel
     ''' 绑定新的Model，将本View的各种事件绑定到Model上以实现数据变化的同步
     ''' </summary>
     Protected Overridable Sub BindModel()
-        AddHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        AddHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
-        AddHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-        AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        AddHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
-        AddHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
+        AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+        AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+        AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        AddHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        AddHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
 
         Call Me.ModelRefreshedEvent(Me, Nothing)
     End Sub
@@ -215,13 +215,13 @@ Public Class EditableDataViewModel
     ''' 解绑Model，取消本视图绑定的所有事件
     ''' </summary>
     Protected Overridable Sub UnbindModel()
-        RemoveHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-        RemoveHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
-        RemoveHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
+        RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+        RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+        RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        RemoveHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        RemoveHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
     End Sub
 
     Private Sub ViewEditEndedEvent(sender As Object, e As ViewEditEndedEventArgs)
@@ -258,18 +258,18 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Sub ViewSelectionRangeChangedEvent(sender As Object, e As ViewSelectionRangeChangedEventArgs)
-        RemoveHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        Me.ModelOperationsWrapper.AllSelectionRanges = e.NewSelectionRanges
-        AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        Me.Model.AllSelectionRanges = e.NewSelectionRanges
+        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
     End Sub
 
     Protected Overridable Sub ViewRowRemovedEvent(sender As Object, e As ViewRowRemovedEventArgs)
         Dim rows = (From r In e.Rows Select r.Row).ToArray
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-            Call Me.ModelOperationsWrapper.RemoveRows(rows)
-            AddHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+            RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+            Call Me.Model.RemoveRows(rows)
+            AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
@@ -284,9 +284,9 @@ Public Class EditableDataViewModel
         Next
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
-            Call Me.ModelOperationsWrapper.InsertRows(rows, data)
-            AddHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
+            RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+            Call Me.Model.InsertRows(rows, data)
+            AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
@@ -310,9 +310,9 @@ Public Class EditableDataViewModel
         Next
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-            Call Me.ModelOperationsWrapper.UpdateRows(rows, data)
-            AddHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+            RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+            Call Me.Model.UpdateRows(rows, data)
+            AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
@@ -335,9 +335,9 @@ Public Class EditableDataViewModel
         Next
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-            Call Me.ModelOperationsWrapper.UpdateCells(rows, columnNames, data)
-            AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+            RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+            Call Me.Model.UpdateCells(rows, columnNames, data)
+            AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
@@ -416,7 +416,7 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Sub ModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
-        Dim data = Me.ModelOperationsWrapper.GetRows(Util.Range(0, Me.ModelOperationsWrapper.GetRowCount))
+        Dim data = Me.Model.GetRows(Util.Range(0, Me.Model.GetRowCount))
         Dim newRowCount = data.Length
         Dim oriViewRowCount = Me.ViewOperationsWrapper.GetRowCount
         For i = 0 To newRowCount - 1
@@ -446,10 +446,10 @@ Public Class EditableDataViewModel
             Next
             Call Me.ViewOperationsWrapper.UpdateRows(Util.Range(0, updateData.Length), updateData)
         End If
-        Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+        Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.Model.AllSelectionRanges)
         '刷新行状态
         Dim rowNums = Util.Range(0, newRowCount)
-        Dim modelRowStates = Me.ModelOperationsWrapper.GetRowStates(rowNums)
+        Dim modelRowStates = Me.Model.GetRowStates(rowNums)
         Dim viewRowStates = (From s In modelRowStates Select New ViewRowState(s)).ToArray
         Call Me.ViewOperationsWrapper.UpdateRowStates(rowNums, viewRowStates)
         AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
@@ -460,7 +460,7 @@ Public Class EditableDataViewModel
     End Sub
 
     Private Sub ViewRowStateChangedEvent(sender As Object, e As ViewRowStateChangedEventArgs)
-        RemoveHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        RemoveHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
         Dim viewRowInfos = e.StateChangedRows
         Dim modelRowStates(viewRowInfos.Length - 1) As ModelRowState
         Dim rows(viewRowInfos.Length - 1) As Integer
@@ -470,7 +470,7 @@ Public Class EditableDataViewModel
             rows(i) = viewRowInfo.Row
         Next
         Call Me.Model.UpdateRowStates(rows, modelRowStates)
-        AddHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        AddHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
     End Sub
 
     Protected Overridable Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)

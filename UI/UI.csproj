@@ -431,6 +431,7 @@
     <Compile Include="FromSalary\FormSelectTax.Designer.cs">
       <DependentUpon>FormSelectTax.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplyMethodListener.cs" />
     <Compile Include="Utilities\AssociationMethodListener.cs" />
     <Compile Include="Utilities\CommonDataStructures.cs" />
     <Compile Include="Utilities\Condition.cs" />

@@ -11,16 +11,19 @@ Public Class PivotTableAdapter
     '<Category("FrontWork"), Description("使用说明"), Editor(GetType(PivotTableManualUITypeEditor), GetType(UITypeEditor))>
     'Public Property Manual As String = "使用说明"
 
+    Private _SourceModel As IConfigurableModel
+    Private _TargetModel As IConfigurableModel
+
     <Category("FrontWork")>
     Public Property SourceModel As IConfigurableModel
         Get
-            Return Me.SourceModelOperator.Model
+            Return Me._SourceModel
         End Get
         Set(value As IConfigurableModel)
             If Me.SourceModel IsNot Nothing Then
                 Call Me.UnbindSourceModel(Me.SourceModel)
             End If
-            Me.SourceModelOperator.Model = value
+            Me._SourceModel = value
             If Me.SourceModel IsNot Nothing Then
                 Call Me._CellMapManager.ClearPositionMaps()
                 Call Me.BindSourceModel(Me.SourceModel)
@@ -31,13 +34,13 @@ Public Class PivotTableAdapter
     <Category("FrontWork")>
     Public Property TargetModel As IConfigurableModel
         Get
-            Return Me.TargetModelOperator.Model
+            Return Me._TargetModel
         End Get
         Set(value As IConfigurableModel)
             If Me.TargetModel IsNot Nothing Then
                 Call Me.UnbindTargetModel(Me.TargetModel)
             End If
-            Me.TargetModelOperator.Model = value
+            Me._TargetModel = value
             If Me.TargetModel IsNot Nothing Then
                 Call Me._CellMapManager.ClearPositionMaps()
                 Call Me.BindTargetModel(Me.TargetModel)
@@ -61,15 +64,12 @@ Public Class PivotTableAdapter
         Get
             Dim displayNames(Me.ColumnNamesAsValue.Length - 1) As String
             For i = 0 To displayNames.Length - 1
-                Dim field = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(i))
+                Dim field = Me.SourceModel.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(i))
                 displayNames(i) = field.DisplayName.GetValue
             Next
             Return displayNames
         End Get
     End Property
-
-    Private Property SourceModelOperator As New ConfigurableModelOperator
-    Private Property TargetModelOperator As New ConfigurableModelOperator
 
     Private Sub BindSourceModel(model As IConfigurableModel)
         AddHandler model.RowAdded, AddressOf Me.SourceModelRowAddedEvent
@@ -138,14 +138,14 @@ Public Class PivotTableAdapter
 
     Private Sub SourceModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
         Me.TargetModel.Refresh(New ModelRefreshArgs(Nothing, Nothing))
-        Me.TargetModelOperator.Configuration.ClearFields(Me.TargetMode)
+        Me.TargetModel.Configuration.ClearFields(Me.TargetMode)
         Call Me.PivotColumns(Util.Range(0, Me.SourceModel.GetRowCount))
         Call Me.PivotRows(Util.Range(0, Me.SourceModel.GetRowCount))
     End Sub
 
     Private Sub SourceModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
         Dim rowNums = (From r In e.AddedRows Select r.Row).ToArray
-        Dim adjustedRowNums = Util.AdjustInsertIndexes(rowNums, Me.SourceModelOperator.GetRowCount - rowNums.Length)
+        Dim adjustedRowNums = Util.AdjustInsertIndexes(rowNums, Me.SourceModel.GetRowCount - rowNums.Length)
         Call Me._CellMapManager.AdjustSourceRowsAfterRowsInserted(rowNums)
         Call Me.PivotColumns(adjustedRowNums)
         Call Me.PivotRows(adjustedRowNums)
@@ -174,13 +174,13 @@ Public Class PivotTableAdapter
         '将定行列加入目标Model，如果目标Model中不存在相应的列
         For Each colAsRow In colsAsRow
             If Not oriTargetColumnNames.Contains(colAsRow) Then
-                Dim sourceFieldAsRow = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, colAsRow)
+                Dim sourceFieldAsRow = Me.SourceModel.Configuration.GetField(Me.SourceMode, colAsRow)
                 Dim newFieldAsRow As Field = sourceFieldAsRow.Clone
                 newFieldAsRow.Editable = New FieldProperty(Of Boolean)(False) '目标表的定行列禁止编辑
                 addTargetFields.Add(newFieldAsRow)
             End If
         Next
-        Dim allSourceRowData = Me.SourceModelOperator.GetRows(rows)
+        Dim allSourceRowData = Me.SourceModel.GetRows(rows)
         '计算定列列和定值列生成的列
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
@@ -196,7 +196,7 @@ Public Class PivotTableAdapter
                 If oriTargetColumnNames.Contains(targetColumnName) OrElse
                     addTargetFields.FindIndex(Function(f) f.Name.GetValue = targetColumnName) > 0 Then Continue For
                 '否则生成新字段，添加到目标表
-                Dim sourceValueField = Me.SourceModelOperator.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(j))
+                Dim sourceValueField = Me.SourceModel.Configuration.GetField(Me.SourceMode, Me.ColumnNamesAsValue(j))
                 Dim newField As Field = sourceValueField.Clone
                 newField.Name = New FieldProperty(Of String)(targetColumnName)
                 newField.DisplayName = New FieldProperty(Of String)(targetColumnName)
@@ -205,14 +205,14 @@ Public Class PivotTableAdapter
                 Me._ColumnMapManager.SetColumnMap(colsAsColValues, Me.ColumnNamesAsValue(j), targetColumnName)
             Next
         Next
-        Me.TargetModelOperator.Configuration.AddFields(Me.TargetMode, addTargetFields.ToArray)
+        Me.TargetModel.Configuration.AddFields(Me.TargetMode, addTargetFields.ToArray)
     End Sub
 
     Private Sub PivotRows(sourceRows As Integer())
         Dim addRows As New List(Of IDictionary(Of String, Object))
         Dim updateData As New List(Of CellPositionDataPair)
-        Dim allSourceRowData = Me.SourceModelOperator.GetRows(sourceRows)
-        Dim allTargetRowData = Me.TargetModelOperator.GetRows(Util.Range(0, TargetModelOperator.GetRowCount)).ToList
+        Dim allSourceRowData = Me.SourceModel.GetRows(sourceRows)
+        Dim allTargetRowData = Me.TargetModel.GetRows(Util.Range(0, TargetModel.GetRowCount)).ToList
         For i = 0 To sourceRows.Length - 1
             Dim sourceRow = sourceRows(i)
             Dim sourceRowData = allSourceRowData(i)
@@ -223,7 +223,7 @@ Public Class PivotTableAdapter
                 For Each col In Me.ColumnNamesAsRow
                     newRow.Add(col, sourceRowData(col))
                 Next
-                targetRow = Me.TargetModelOperator.GetRowCount + addRows.Count
+                targetRow = Me.TargetModel.GetRowCount + addRows.Count
                 addRows.Add(newRow)
                 '把要添加和更新的行先同步到allTargetRowData，以免在下次循环时读取不到变化
                 allTargetRowData.Add(newRow)
@@ -247,10 +247,10 @@ Public Class PivotTableAdapter
         RemoveHandler Me.TargetModel.RowAdded, AddressOf Me.TargetModelRowAddedEvent
         RemoveHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent
         If addRows.Count > 0 Then
-            Me.TargetModelOperator.AddRows(addRows.ToArray)
+            Me.TargetModel.AddRows(addRows.ToArray)
         End If
         If updateData.Count > 0 Then
-            Me.TargetModelOperator.UpdateCells(updateData.Select(Function(p) p.Row).ToArray,
+            Me.TargetModel.UpdateCells(updateData.Select(Function(p) p.Row).ToArray,
                                            updateData.Select(Function(p) p.ColumnName).ToArray,
                                            updateData.Select(Function(p) p.Data).ToArray)
         End If
@@ -259,8 +259,8 @@ Public Class PivotTableAdapter
     End Sub
 
     Private Sub UnpivotCells(targetRows As Integer(), targetColumnNames As String())
-        Dim allCellData = Me.TargetModelOperator.GetCells(targetRows, targetColumnNames)
-        Dim allRowData = Me.TargetModelOperator.GetRows(targetRows)
+        Dim allCellData = Me.TargetModel.GetCells(targetRows, targetColumnNames)
+        Dim allRowData = Me.TargetModel.GetRows(targetRows)
         Dim addSourceRows As New List(Of IDictionary(Of String, Object))
         Dim updateSourceData As New List(Of CellPositionDataPair)
         For i = 0 To allCellData.Length - 1
@@ -300,13 +300,13 @@ Public Class PivotTableAdapter
         Next
         If addSourceRows.Count > 0 Then
             RemoveHandler Me.SourceModel.RowAdded, AddressOf Me.SourceModelRowAddedEvent
-            Call Me.SourceModelOperator.AddRows(addSourceRows.ToArray)
+            Call Me.SourceModel.AddRows(addSourceRows.ToArray)
             AddHandler Me.SourceModel.RowAdded, AddressOf Me.SourceModelRowAddedEvent
         End If
 
         If updateSourceData.Count > 0 Then
             RemoveHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
-        Call Me.SourceModelOperator.UpdateCells(updateSourceData.Select(Function(p) p.Row).ToArray,
+            Call Me.SourceModel.UpdateCells(updateSourceData.Select(Function(p) p.Row).ToArray,
                                                 updateSourceData.Select(Function(p) p.ColumnName).ToArray,
                                                 updateSourceData.Select(Function(p) p.Data).ToArray)
             AddHandler Me.SourceModel.CellUpdated, AddressOf Me.SourceModelCellUpdatedEvent
@@ -314,7 +314,7 @@ Public Class PivotTableAdapter
     End Sub
 
     Private Sub PivotCells(sourceRows As Integer(), sourceColumnNames As String())
-        Dim allCellData = Me.SourceModelOperator.GetCells(sourceRows, sourceColumnNames)
+        Dim allCellData = Me.SourceModel.GetCells(sourceRows, sourceColumnNames)
         Dim updateTargetData As New List(Of CellPositionDataPair)
         For i = 0 To allCellData.Length - 1
             Dim cellData = allCellData(i)
@@ -325,7 +325,7 @@ Public Class PivotTableAdapter
             updateTargetData.Add(New CellPositionDataPair(mappedTargetPos, cellData))
         Next
         RemoveHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent
-        Call Me.TargetModelOperator.UpdateCells(updateTargetData.Select(Function(p) p.Row).ToArray,
+        Call Me.TargetModel.UpdateCells(updateTargetData.Select(Function(p) p.Row).ToArray,
                                                 updateTargetData.Select(Function(p) p.ColumnName).ToArray,
                                                 updateTargetData.Select(Function(p) p.Data).ToArray)
         AddHandler Me.TargetModel.CellUpdated, AddressOf Me.TargetModelCellUpdatedEvent

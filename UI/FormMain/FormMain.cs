@@ -17,8 +17,8 @@ namespace WMS.UI
 {
     public partial class FormMain : Form
     {
+        private SingletonManager<Form> formManager = new SingletonManager<Form>();
         private Action formClosedCallback;
-        private FormInspectionNote formInspectionNoteInstance = new FormInspectionNote();
 
         public FormMain()
         {
@@ -30,54 +30,54 @@ namespace WMS.UI
             this.formClosedCallback = callback;
         }
 
-        private void RefreshTreeView()
+        private void InitTreeView()
         {
             TreeNode[] treeNodes = new TreeNode[]
             {
                 MakeTreeNode("基本信息",null,new TreeNode[]{
-                    MakeTreeNode("用户管理", new FormPerson()),
-                    MakeTreeNode("供应商管理", new FormSupplier()),
-                    MakeTreeNode("物料管理", new FormMaterial()),
-                    MakeTreeNode("仓库管理", new FormWarehouse(this.comboBoxWarehouse,this.panelRight,this.treeViewLeft)),
-                    MakeTreeNode("库区管理", new FormStorageArea()),
-                    MakeTreeNode("库位管理", new FormStorageLocation()),
-                    MakeTreeNode("供货管理", new FormSupply()),
-                    MakeTreeNode("发货套餐管理", new FormPackage()),
-                    MakeTreeNode("上架库存设置", new FormSafetyStock(0)),
-                    MakeTreeNode("备货库存设置", new FormSafetyStock(1))
+                    MakeTreeNode("用户管理", "FormPerson"),
+                    MakeTreeNode("供应商管理", "FormSupplier"),
+                    MakeTreeNode("物料管理", "FormMaterial"),
+                    MakeTreeNode("仓库管理", "FormWarehouse"),
+                    MakeTreeNode("库区管理", "FormStorageArea"),
+                    MakeTreeNode("库位管理", "FormStorageLocation"),
+                    MakeTreeNode("供货管理", "FormSupply"),
+                    MakeTreeNode("发货套餐管理", "FormPackage"),
+                    MakeTreeNode("上架库存设置", "FormSafetyStock0"),
+                    MakeTreeNode("备货库存设置","FormSafetyStock1")
                     }),
                 MakeTreeNode("入库管理", null, new TreeNode[]{
-                    MakeTreeNode("入库单管理", new FormWarehouseEntry(ToInspectionNoteSelectIDsCallback, ToInspectionNoteSearchNoCallback)),
-                    MakeTreeNode("送检单管理", formInspectionNoteInstance),
-                    MakeTreeNode("上架单管理", new FormPutAwayNote())
+                    MakeTreeNode("入库单管理", "FormWarehouseEntry"),
+                    MakeTreeNode("送检单管理", "FormInspectionNote"),
+                    MakeTreeNode("上架单管理", "FormPutAwayNote")
                     }),
                 MakeTreeNode("发货管理", null, new TreeNode[]{
-                    MakeTreeNode("备货作业单管理", new FormTransferOrder.FormTransferOrder()),
-                    MakeTreeNode("出库单管理", new FormDeliverOrder())
+                    MakeTreeNode("备货作业单管理", "FormTransferOrder"),
+                    MakeTreeNode("出库单管理", "FormDeliverOrder")
 
                     }),
                 MakeTreeNode("库存管理", null, new TreeNode[]{
-                    MakeTreeNode("库存批次", new FormStockRecord()),
-                    MakeTreeNode("库存盘点", new FormStockTakingOrder()),
-                    MakeTreeNode("移位记录", new FormTransferRecord())
+                    MakeTreeNode("库存批次", "FormStockRecord"),
+                    MakeTreeNode("库存盘点","FormStockTakingOrder"),
+                    MakeTreeNode("移位记录", "FormTransferRecord")
                     }),
                  MakeTreeNode("薪金管理",null ,new TreeNode[]{
-                    MakeTreeNode("薪金类别", new FromSalary.FormSalaryType()),
-                    MakeTreeNode("薪金期间", new FromSalary.FormSalaryPeriod()),
-                    MakeTreeNode("人员薪金", new FromSalary.FormPersonSalary()),
-                    MakeTreeNode("薪资发放单", new FromSalary.FormPayNote())
+                    MakeTreeNode("薪金类别","FormSalaryType"),
+                    MakeTreeNode("薪金期间", "FormSalaryPeriod"),
+                    MakeTreeNode("人员薪金", "FormPersonSalary"),
+                    MakeTreeNode("薪资发放单", "FormPayNote")
                     }),
                  MakeTreeNode("总账管理", null, new TreeNode[]{
-                    MakeTreeNode("科目管理", new FormAcccount.FormAccountTitle()),
-                    MakeTreeNode("税务管理", new FormAcccount.FormTax()),
-                    MakeTreeNode("账目记录", new FormAcccount.FormAccountRecord()),
-                    MakeTreeNode("会计期间", new FormAcccount.FormAccountPeriod())
+                    MakeTreeNode("科目管理","FormAccountTitle"),
+                    MakeTreeNode("税务管理","FormTax"),
+                    MakeTreeNode("账目记录", "FormAccountRecord"),
+                    MakeTreeNode("会计期间", "FormAccountPeriod")
                     }),
                  MakeTreeNode("结算管理",null, new TreeNode[]{
-                   MakeTreeNode("汇总单管理", new FormSettlement.FormSummaryNote()),
-                   MakeTreeNode("结算单管理", new FormSettlement.FormSettlementNote()),
-                   MakeTreeNode("发票管理",  new FormSettlement.FormInvoice()),
-                   MakeTreeNode("价格管理",  new FormSettlement.FormPrice())
+                   MakeTreeNode("汇总单管理","FormSummaryNote"),
+                   MakeTreeNode("结算单管理","FormSettlementNote"),
+                   MakeTreeNode("发票管理", "FormInvoice"),
+                   MakeTreeNode("价格管理", "FormPrice")
                     })
             };
 
@@ -86,12 +86,47 @@ namespace WMS.UI
             this.treeViewLeft.Nodes.AddRange(nodes);
         }
 
-        private static TreeNode MakeTreeNode(string text, Form form , TreeNode[] subNodes = null)
+        private void InitFormManager(SingletonManager<Form> formManager)
+        {
+            formManager.ClearInstances();
+            formManager.Set("FormPerson", () => new FormPerson());
+            formManager.Set("FormSupplier", () => new FormSupplier());
+            formManager.Set("FormMaterial", () => new FormMaterial());
+            formManager.Set("FormWarehouse", () => new FormWarehouse(this.comboBoxWarehouse, this.panelRight, this.treeViewLeft));
+            formManager.Set("FormStorageArea", () => new FormStorageArea());
+            formManager.Set("FormStorageLocation", () => new FormStorageLocation());
+            formManager.Set("FormSupply", () => new FormSupply());
+            formManager.Set("FormPackage", () => new FormPackage());
+            formManager.Set("FormSafetyStock0", () => new FormSafetyStock(0));
+            formManager.Set("FormSafetyStock1", () => new FormSafetyStock(1));
+            formManager.Set("FormWarehouseEntry", () => new FormWarehouseEntry(ToInspectionNoteSelectIDsCallback, ToInspectionNoteSearchNoCallback));
+            formManager.Set("FormInspectionNote", () => new FormInspectionNote());
+            formManager.Set("FormPutAwayNote", () => new FormPutAwayNote());
+            formManager.Set("FormTransferOrder", () => new FormTransferOrder.FormTransferOrder());
+            formManager.Set("FormDeliverOrder", () => new FormDeliverOrder());
+            formManager.Set("FormStockRecord", () => new FormStockRecord());
+            formManager.Set("FormStockTakingOrder", () => new FormStockTakingOrder());
+            formManager.Set("FormTransferRecord", () => new FormTransferRecord());
+            formManager.Set("FormSalaryType", () => new FromSalary.FormSalaryType());
+            formManager.Set("FormSalaryPeriod", () => new FromSalary.FormSalaryPeriod());
+            formManager.Set("FormPersonSalary", () => new FromSalary.FormPersonSalary());
+            formManager.Set("FormPayNote", () => new FromSalary.FormPayNote());
+            formManager.Set("FormAccountTitle", () => new FormAcccount.FormAccountTitle());
+            formManager.Set("FormTax", () => new FormAcccount.FormTax());
+            formManager.Set("FormAccountRecord", () => new FormAcccount.FormAccountRecord());
+            formManager.Set("FormAccountPeriod", () => new FormAcccount.FormAccountPeriod());
+            formManager.Set("FormSummaryNote", () => new FormSettlement.FormSummaryNote());
+            formManager.Set("FormSettlementNote", () => new FormSettlement.FormSettlementNote());
+            formManager.Set("FormInvoice", () => new FormSettlement.FormInvoice());
+            formManager.Set("FormPrice", () => new FormSettlement.FormPrice());
+        }
+
+        private static TreeNode MakeTreeNode(string text, string formName, TreeNode[] subNodes = null)
         {
             TreeNode node = new TreeNode()
             {
                 Text = text,
-                Tag = new TreeNodeTag(form)
+                Tag = new TreeNodeTag(formName)
             };
             if (subNodes == null)
             {
@@ -117,7 +152,9 @@ namespace WMS.UI
         private void FormMain_Load(object sender, EventArgs e)
         {
             //刷新左边树形框
-            this.RefreshTreeView();
+            this.InitTreeView();
+            //刷新窗口管理器
+            this.InitFormManager(this.formManager);
 
             //刷新顶部
             this.labelUsername.Text = GlobalData.Person["name"].ToString();
@@ -146,18 +183,19 @@ namespace WMS.UI
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNodeTag tag = treeViewLeft.SelectedNode.Tag as TreeNodeTag;
-            if (tag.Form != null)
+            if (tag.FormName != null)
             {
                 this.panelRight.Hide();
                 this.panelRight.SuspendLayout();
-                this.LoadSubWindow(tag.Form);
+                this.LoadSubWindow(tag.FormName);
                 this.panelRight.ResumeLayout();
                 this.panelRight.Show();
             }
         }
 
-        private void LoadSubWindow(Form form)
+        private void LoadSubWindow(string formName)
         {
+            Form form = this.formManager.Get(formName);
             form.TopLevel = false;
             form.Dock = DockStyle.Fill;//窗口大小
             form.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -170,15 +208,17 @@ namespace WMS.UI
         private void ToInspectionNoteSelectIDsCallback(int[] selectedIDs)
         {
             this.SetTreeViewSelectedNodeByText("送检单管理");
-            this.LoadSubWindow(formInspectionNoteInstance);
-            formInspectionNoteInstance.SearchAndSelectByIDs(selectedIDs);
+            FormInspectionNote formInspectionNote = (FormInspectionNote)this.formManager.Get("FormInspectionNote");
+            this.LoadSubWindow("FormInspectionNote");
+            formInspectionNote.SearchAndSelectByIDs(selectedIDs);
         }
 
         private void ToInspectionNoteSearchNoCallback(string searchNo)
         {
             this.SetTreeViewSelectedNodeByText("送检单管理");
-            this.LoadSubWindow(formInspectionNoteInstance);
-            formInspectionNoteInstance.SearchByWarehouseEntryNo(searchNo);
+            FormInspectionNote formInspectionNote = (FormInspectionNote)this.formManager.Get("FormInspectionNote");
+            this.LoadSubWindow("FormInspectionNote");
+            formInspectionNote.SearchByWarehouseEntryNo(searchNo);
         }
         
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -236,8 +276,8 @@ namespace WMS.UI
             }
             catch { GlobalData.AccountPeriod = null; }
             GlobalData.REMAINDENABLE = true;
-            //刷新左边树形框
-            this.RefreshTreeView();
+            //清除窗口管理器缓存的窗口实例
+            this.formManager.ClearInstances();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -323,10 +363,54 @@ namespace WMS.UI
 
 class TreeNodeTag
 {
-    public TreeNodeTag(Form form)
+    public string FormName;
+
+    public TreeNodeTag(string formName)
     {
-        Form = form;
+        FormName = formName;
+    }
+}
+
+class SingletonManager<T> where T:class
+{
+    class ObjectInfo
+    {
+        public T Obj { get; set; }
+        public Func<T> FuncCreateObject { get; set; }
     }
 
-    public Form Form { get; set; }
+    private IDictionary<string, ObjectInfo> objs = new Dictionary<string, ObjectInfo>();
+    public void Set(string name, Func<T> funcCreateObj)
+    {
+        objs[name] = new ObjectInfo()
+        {
+            FuncCreateObject = funcCreateObj
+        };
+    }
+
+    public T Get(string name)
+    {
+        if(this.objs.ContainsKey(name) == false)
+        {
+            return default(T);
+        }
+        ObjectInfo info = this.objs[name];
+        if (info.Obj != null)
+        {
+            return info.Obj;
+        }
+        else
+        {
+            info.Obj = info.FuncCreateObject();
+            return info.Obj;
+        }
+    }
+
+    public void ClearInstances()
+    {
+        foreach (var item in this.objs)
+        {
+            item.Value.Obj = default(T);
+        }
+    }
 }
