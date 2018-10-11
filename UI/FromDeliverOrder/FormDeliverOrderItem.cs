@@ -65,17 +65,30 @@ namespace WMS.UI.FromDeliverOrder
             return (int)this.deliveryOrder["id"];
         }
 
+        private string deliveryOrderNoDefaultValue()
+        {
+            return (string)this.deliveryOrder["no"];
+        }
+
+        private int PersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string PersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
             this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "personId",GlobalData.Person["id"]},
-                { "personName",GlobalData.Person["name"]},
-                { "realAmount",0},
-                { "deliveryOrderNo", this.deliveryOrder["no"]},
-                { "deliveryOrderId", this.deliveryOrder["id"]}
+                //{ "personId",GlobalData.Person["id"]},
+                //{ "personName",GlobalData.Person["name"]},
+                //{ "deliveryOrderNo", this.deliveryOrder["no"]}
             });
         }
 

@@ -128,7 +128,7 @@ namespace WMS.UI.FormTransferOrder
         {
             if (this.model1.SelectionRange == null)
             {
-                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择要预览的备货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             List<int> ids = new List<int>();
@@ -156,18 +156,28 @@ namespace WMS.UI.FormTransferOrder
             formPreviewExcel.Show();
         }
 
+        private int warehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
+        private int createPersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string createPersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
-            int a = (int)GlobalData.Warehouse["id"];
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "type",1}
+                { "createPersonName",GlobalData.Person["name"]}
             });
         }
 

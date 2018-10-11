@@ -1,4 +1,5 @@
 ﻿using FrontWork;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -65,14 +66,33 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            //this.basicView1.Enabled = true;
+            //this.reoGridView1.Enabled = true;
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+                {{ "warehouseId",GlobalData.Warehouse["id"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "enabled",1}
-            });
+                });
+            }
+            //this.model1.InsertRow(0, new Dictionary<string, object>()
+            //{
+            //    { "warehouseId",GlobalData.Warehouse["id"]},
+            //    { "warehouseName",GlobalData.Warehouse["name"]},
+            //    { "enabled",1}
+            //});
         }
 
         private void configuration1_Load(object sender, EventArgs e)

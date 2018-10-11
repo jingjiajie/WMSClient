@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using ZXing;
 using ZXing.Common;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -19,34 +20,6 @@ namespace WMS.UI.FormBasicInfos
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
-        }
-
-        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
-        }
-
-        private void updateBasicAndReoGridView()
-        {
-
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
-
-        }
-
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
         }
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
@@ -66,22 +39,43 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.searchView1.Search();
-            this.updateBasicAndReoGridView();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            //Interaction.InputBox();
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+                {
+                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
                 { "createPersonName",GlobalData.Person["name"]},
                 { "warehouseName",GlobalData.Warehouse["name"]},
                 { "createTime",DateTime.Now},
                 { "enabled",1}
-            });
+                });
+            }
+            //this.model1.InsertRow(0, new Dictionary<string, object>()
+            //{
+            //    { "warehouseId",GlobalData.Warehouse["id"]},
+            //    { "createPersonId",GlobalData.Person["id"]},
+            //    { "createPersonName",GlobalData.Person["name"]},
+            //    { "warehouseName",GlobalData.Warehouse["name"]},
+            //    { "createTime",DateTime.Now},
+            //    { "enabled",1}
+            //});
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -165,7 +159,7 @@ namespace WMS.UI.FormBasicInfos
 
             FAILED:
             if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show($"物料\"{materialName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
         //供应商名称编辑完成，根据名称自动搜索ID和No
