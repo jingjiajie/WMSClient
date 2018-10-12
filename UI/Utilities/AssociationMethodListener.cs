@@ -6,7 +6,8 @@ using FrontWork;
 
 namespace WMS.UI
 {
-    class AssociationMethodListener : MethodListenerBase
+    [MethodListener]
+    class AssociationMethodListener
     {
         //物料名称输入联想
         private object[] MaterialNameAssociation([Data]string str)

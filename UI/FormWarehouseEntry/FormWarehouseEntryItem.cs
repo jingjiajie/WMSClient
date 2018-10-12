@@ -367,21 +367,15 @@ namespace WMS.UI
                 this.FillValueIfEmpty(row, "refuseUnitAmount", foundSupplies[0]["defaultEntryUnitAmount"]);
                 if (((int?)this.model[row, "storageLocationId"] ?? 0) == 0)
                 {
-                    this.model[row, "storageLocationId"] = foundSupplies[0]["defaultEntryStorageLocationId"];
                     this.model[row, "storageLocationNo"] = foundSupplies[0]["defaultEntryStorageLocationNo"];
-                    this.model[row, "storageLocationName"] = foundSupplies[0]["defaultEntryStorageLocationName"];
                 }
                 if (((int?)this.model[row, "qualifiedStorageLocationId"] ?? 0) == 0)
                 {
-                    this.model[row, "qualifiedStorageLocationId"] = foundSupplies[0]["defaultQualifiedStorageLocationId"];
                     this.model[row, "qualifiedStorageLocationNo"] = foundSupplies[0]["defaultQualifiedStorageLocationNo"];
-                    this.model[row, "qualifiedStorageLocationName"] = foundSupplies[0]["defaultQualifiedStorageLocationName"];
                 }
                 if (((int?)this.model[row, "unqualifiedStorageLocationId"] ?? 0) == 0)
                 {
-                    this.model[row, "unqualifiedStorageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
                     this.model[row, "unqualifiedStorageLocationNo"] = foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
-                    this.model[row, "unqualifiedStorageLocationName"] = foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
                 }
                 this.model.RefreshView(row);
             }

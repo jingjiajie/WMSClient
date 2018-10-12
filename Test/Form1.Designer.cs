@@ -72,7 +72,7 @@
             this.configuration1.Location = new System.Drawing.Point(84, 348);
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(150, 150);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 2;
             // 
             // model2
@@ -95,7 +95,7 @@
             this.configuration2.Location = new System.Drawing.Point(332, 348);
             this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration2.Name = "configuration2";
-            this.configuration2.Size = new System.Drawing.Size(150, 150);
+            this.configuration2.Size = new System.Drawing.Size(180, 180);
             this.configuration2.TabIndex = 4;
             // 
             // pivotTableAdapter1

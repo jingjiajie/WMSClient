@@ -284,7 +284,7 @@ namespace WMS.UI
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(122, 110);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // pagerView1
@@ -320,7 +320,7 @@ namespace WMS.UI
             this.configuration2.Location = new System.Drawing.Point(603, 147);
             this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration2.Name = "configuration2";
-            this.configuration2.Size = new System.Drawing.Size(130, 125);
+            this.configuration2.Size = new System.Drawing.Size(180, 180);
             this.configuration2.TabIndex = 5;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -352,7 +352,7 @@ namespace WMS.UI
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(119, 112);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
