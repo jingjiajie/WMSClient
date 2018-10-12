@@ -496,7 +496,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormTrayThresholds";
-            this.Text = "阙值管理";
+            this.Text = "托位管理";
             this.Load += new System.EventHandler(this.FormTrayThresholds_Load);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
