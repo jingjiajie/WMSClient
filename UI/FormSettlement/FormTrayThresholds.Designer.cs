@@ -398,7 +398,7 @@
             // 
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(56, 22);
-            this.labelStatus.Text = "账目记录";
+            this.labelStatus.Text = "托位管理";
             // 
             // tableLayoutPanel2
             // 
