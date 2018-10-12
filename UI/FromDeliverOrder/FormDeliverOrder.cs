@@ -32,13 +32,11 @@ namespace WMS.UI.FromDeliverOrder
                 this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
                 this.reoGridView2.Mode = "default1";
-                this.synchronizer.Mode = "default1";
             }
             else {
                 this.model1.Mode = "default";
                 this.basicView1.Mode = "default";
                 this.reoGridView2.Mode = "default";
-                this.synchronizer.Mode = "default";
             }
         }
 

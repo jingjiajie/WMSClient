@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -16,8 +17,6 @@ namespace WMS.UI.FormBasicInfos
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-            this.model1.RowRemoved += this.model_RowRemoved;
-            this.model1.Refreshed += this.model_Refreshed;
         }
 
         private void FormPackage_Load(object sender, EventArgs e)
@@ -29,32 +28,6 @@ namespace WMS.UI.FormBasicInfos
             this.searchView1.Search();
         }
 
-        private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
-        }
-
-        private void updateBasicAndReoGridView()
-        {
-
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView1.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView1.Enabled = true;
-            }
-
-        }
-
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
-        {
-            this.updateBasicAndReoGridView();
-        }
-
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -63,14 +36,29 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.basicView1.Enabled = true;
-            this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
             {
-                 { "warehouseId",GlobalData.Warehouse["id"]},
-                 { "warehouseName",GlobalData.Warehouse["name"]},
-                 { "enabled",1},
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
             });
+            }
+
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

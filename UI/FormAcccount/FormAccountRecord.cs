@@ -427,11 +427,6 @@ namespace WMS.UI.FormAcccount
 
                 this.showBalance();
             }
-
-
-
         }
-
-
     }
 }

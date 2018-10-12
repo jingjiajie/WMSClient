@@ -59,12 +59,6 @@ namespace WMS.UI.FormBasicInfos
             {
                 this.model1.InsertRow(0, new Dictionary<string, object>()
                 {
-                 { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "createTime",DateTime.Now},
-                { "enabled",1}
                 });
             }
             //this.model1.InsertRow(0, new Dictionary<string, object>()
@@ -76,6 +70,21 @@ namespace WMS.UI.FormBasicInfos
             //    { "createTime",DateTime.Now},
             //    { "enabled",1}
             //});
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
+        private int createPersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string createPersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
