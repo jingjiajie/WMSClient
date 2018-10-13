@@ -13,6 +13,7 @@ Public Class ModelCore
     Private _allSelectionRange As Range() = New Range() {}
     Private Property RowStates As New List(Of ModelRowState)
 
+
     ''' <summary>
     ''' 数据表
     ''' </summary>
@@ -25,6 +26,7 @@ Public Class ModelCore
 
     Public Function GetRowCount() As Integer Implements IModelCore.GetRowCount
         Return Me.Data.Rows.Count
+
     End Function
 
     Public Function GetColumnCount() As Integer Implements IModelCore.GetColumnCount
@@ -50,8 +52,7 @@ Public Class ModelCore
             If Not Me.Data.Columns.Contains(column.Name) Then
                 Dim newColumn As New DataColumn
                 newColumn.ColumnName = column.Name
-                newColumn.DataType = column.Type
-                newColumn.AllowDBNull = column.Nullable
+                newColumn.DataType = GetType(ModelCell)
                 Me.Data.Columns.Add(newColumn)
             End If
         Next
@@ -77,10 +78,7 @@ Public Class ModelCore
             Me._modelColumns(index) = column
             '更新数据表
             Dim dataColumn = Me.Data.Columns(index)
-            dataColumn.DefaultValue = column.DefaultValue
-            dataColumn.Namespace = column.Name
-            dataColumn.AllowDBNull = column.Nullable
-            dataColumn.DataType = column.Type
+            dataColumn.ColumnName = column.Name
         Next
     End Sub
 
@@ -134,12 +132,8 @@ Public Class ModelCore
             If Not Me.Data.Columns.Contains(columnName) Then
                 Throw New FrontWorkException($"Model doesn't contain column:""{columnName}""")
             End If
-            Dim data As Object = Me.Data.Rows(row)(columnName)
-            If IsDBNull(data) Then
-                result(i) = Nothing
-            Else
-                result(i) = data
-            End If
+            Dim modelCell As ModelCell = Me.Data.Rows(row)(columnName)
+            result(i) = modelCell.Data
         Next
         Return result
     End Function
@@ -179,7 +173,11 @@ Public Class ModelCore
             Dim realRow = adjustedRowInfos(i).Row
             Dim curData = If(adjustedRowInfos(i).RowData, New Dictionary(Of String, Object))
             Dim dataCountWithoutDefaultValue = curData.Count
-            Dim newRow = Me.Data.NewRow
+            Dim newRow = Me.Data.NewRow()
+            '初始化所有单元格为ModelCell对象
+            For j = 0 To newRow.ItemArray.Length - 1
+                newRow(j) = New ModelCell
+            Next
             '置入默认值
             For Each curColumn In Me._modelColumns
                 If curColumn.DefaultValue Is Nothing Then Continue For
@@ -192,7 +190,13 @@ Public Class ModelCore
             '将值写入datatable
             For Each item In curData
                 If Not Me.Data.Columns.Contains(item.Key) Then Continue For
-                newRow(item.Key) = If(item.Value, DBNull.Value)
+                Dim colType = Me._modelColumns(Me.Data.Columns.IndexOf(item.Key)).Type
+                Try
+                    Dim convertedValue As Object = Util.ChangeType(item.Value, colType)
+                    DirectCast(newRow(item.Key), ModelCell).Data = convertedValue
+                Catch ex As Exception
+                    Throw New FrontWorkException($"Value {item.Value} of ""{item.Key}"" cannot be converted to {colType.Name}")
+                End Try
             Next
             Me.Data.Rows.InsertAt(newRow, realRow)
             '增加行状态的记录, 如果增加的是空数据， 则为ADDED， 否则为ADDED_UPDATED
@@ -289,20 +293,21 @@ Public Class ModelCore
                 For Each item In dataOfEachRow(i)
                     Dim key = item.Key
                     Dim value = item.Value
-                    Dim colType = Me.Data.Columns(key).DataType
+                    Dim columnInfo = Me._modelColumns(Me.Data.Columns.IndexOf(key))
+                    Dim colType = columnInfo.Type
                     If String.IsNullOrWhiteSpace(value) Then
                         If colType = GetType(String) Then
-                            Me.Data.Rows(row)(key) = value
+                            DirectCast(Me.Data.Rows(row)(key), ModelCell).Data = value
                         Else
-                            If Not Me.Data.Columns(key).AllowDBNull Then
+                            If Not columnInfo.Nullable Then
                                 Dim col = Me.GetColumns({key})(0)
                                 Throw New FrontWorkException($"""{col.Name}""不允许为空！")
                             End If
-                            Me.Data.Rows(row)(key) = DBNull.Value
+                            DirectCast(Me.Data.Rows(row)(key), ModelCell).Data = Nothing
                         End If
                     Else
                         If colType = value.GetType Then
-                            Me.Data.Rows(row)(key) = value
+                            DirectCast(Me.Data.Rows(row)(key), ModelCell).Data = value
                         Else
                             Try
                                 Convert.ChangeType(value, colType)
@@ -362,14 +367,14 @@ Public Class ModelCore
                 Throw New FrontWorkException($"UpdateCells failed: column ""{columnName}"" not found!")
             End If
             Try
-                Me.Data.Rows(rows(i))(dataColumn) = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), DBNull.Value, dataOfEachCell(i))
+                DirectCast(Me.Data.Rows(row)(dataColumn), ModelCell).Data = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), Nothing, dataOfEachCell(i))
             Catch ex As IndexOutOfRangeException
                 Throw New FrontWorkException($"UpdateCells failed: index {i} exceeded max row index: {Me.GetRowCount}")
             Catch ex As ArgumentException
-                Me.Data.Rows(rows(i))(dataColumn) = DBNull.Value
+                DirectCast(Me.Data.Rows(row)(dataColumn), ModelCell).Data = Nothing
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
             End Try
-            posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i)))
+            posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i), Me.GetCellState(rows(i), columnName)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
             Select Case curState
                 Case SynchronizationState.ADDED
@@ -406,7 +411,14 @@ Public Class ModelCore
                     Dim colName = colAndValue.Key
                     Dim colValue = colAndValue.Value
                     If Me.Data.Columns.Contains(colName) Then
-                        newRow(colName) = If(colValue, DBNull.Value)
+                        Dim column = Me._modelColumns(Me.Data.Columns.IndexOf(colName))
+                        Dim colType = column.Type
+                        Try
+                            Dim convertedValue = If(colValue Is Nothing, Nothing, Util.ChangeType(colValue, colType))
+                            newRow(colName) = New ModelCell(If(convertedValue, Nothing))
+                        Catch ex As Exception
+                            Throw New FrontWorkException($"Value {colValue} of ""{colName}"" cannot be converted to {colType.Name}")
+                        End Try
                     End If
                 Next
             Next
@@ -434,7 +446,8 @@ Public Class ModelCore
         Dim result As New Dictionary(Of String, Object)
         Dim columns = dataRow.Table.Columns
         For Each column As DataColumn In columns
-            result.Add(column.ColumnName, If(dataRow(column) Is DBNull.Value, Nothing, dataRow(column)))
+            Dim modelCell = DirectCast(dataRow(column), ModelCell)
+            result.Add(column.ColumnName, modelCell.Data)
         Next
         Return result
     End Function
@@ -581,10 +594,36 @@ Public Class ModelCore
         Return result
     End Function
 
-    Public Function ToDataTable() As DataTable
-        Return Me.Data
+    Public Function GetCellStates(rows As Integer(), fields As String()) As ModelCellState() Implements IModelCore.GetCellStates
+        If rows.Length <> fields.Length Then
+            Throw New FrontWorkException($"Length of rows({rows.Length}) must be equal to length of fields({fields.Length})")
+        End If
+        Dim result(rows.Length - 1) As ModelCellState
+        For i = 0 To rows.Length
+            Dim row = rows(i)
+            Dim field = fields(i)
+            Dim cell As ModelCell = Me.Data.Rows(row)(field)
+            result(i) = cell.State
+        Next
+        Return result
     End Function
 
+    Private Function GetCellState(row As Integer, field As String) As ModelCellState
+        Return Me.GetCellStates({row}, {field})(0)
+    End Function
+
+    Public Sub UpdateCellStates(rows As Integer(), fields As String(), states As ModelCellState()) Implements IModelCore.UpdateCellStates
+        If rows.Length <> fields.Length OrElse rows.Length <> states.Length Then
+            Throw New FrontWorkException($"Length of row, fields and states must be equal")
+        End If
+        For i = 0 To rows.Length
+            Dim row = rows(i)
+            Dim field = fields(i)
+            Dim state = states(i)
+            Dim cell As ModelCell = Me.Data.Rows(row)(field)
+            cell.State = state
+        Next
+    End Sub
 
     Friend Structure RowSynchronizationStatePair
         Public Row As Integer
@@ -595,5 +634,24 @@ Public Class ModelCore
             Me.SynchronizationState = state
         End Sub
     End Structure
-End Class
 
+    Private Class ModelCell
+        Public State As ModelCellState
+        Public Data As Object
+
+        Public Sub New()
+
+        End Sub
+
+        Public Sub New(state As ModelCellState, data As Object)
+            Me.State = state
+            Me.Data = data
+        End Sub
+
+        Public Sub New(data As Object)
+            Me.Data = data
+            Me.State = New ModelCellState(ValidationState.OK)
+        End Sub
+
+    End Class
+End Class

@@ -446,4 +446,20 @@ Partial Public Class Model
     Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
         Return DirectCast(ModelOperator, IConfigurableModel).GetRowSynchronizationState(row)
     End Function
+
+    Public Function GetCellState(row As Integer, field As String) As ModelCellState Implements IModel.GetCellState
+        Return DirectCast(ModelOperator, IConfigurableModel).GetCellState(row, field)
+    End Function
+
+    Public Sub UpdateCellState(row As Integer, field As String, states As ModelCellState) Implements IModel.UpdateCellState
+        DirectCast(ModelOperator, IConfigurableModel).UpdateCellState(row, field, states)
+    End Sub
+
+    Public Function GetCellStates(rows() As Integer, fields() As String) As ModelCellState() Implements IModelCore.GetCellStates
+        Return DirectCast(ModelOperator, IConfigurableModel).GetCellStates(rows, fields)
+    End Function
+
+    Public Sub UpdateCellStates(rows() As Integer, fields() As String, states() As ModelCellState) Implements IModelCore.UpdateCellStates
+        DirectCast(ModelOperator, IConfigurableModel).UpdateCellStates(rows, fields, states)
+    End Sub
 End Class

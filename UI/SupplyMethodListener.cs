@@ -10,6 +10,15 @@ namespace WMS.UI
     [MethodListener]
     class SupplyMethodListener
     {
+        public string[] SupplySerialNoAssociation([Data] string input)
+        {
+            return (from s in GlobalData.AllSupplies
+                    where s["serialNo"] != null
+                    && s["serialNo"].ToString().StartsWith(input)
+                    && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    select s["serialNo"]?.ToString()).Distinct().ToArray();
+        }
+
         public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
         {
             string supplySerialNo = model[row, "supplySerialNo"]?.ToString() ?? "";

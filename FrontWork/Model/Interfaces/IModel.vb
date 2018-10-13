@@ -38,6 +38,8 @@ Public Interface IModel
     Function HasUnsynchronizedUpdatedRow() As Boolean
     Sub RefreshView(rows() As Integer)
     Sub RefreshView(row As Integer)
-    Function GetRowSynchronizationStates(rows() As Integer) As SynchronizationState()
     Function GetRowSynchronizationState(row As Integer) As SynchronizationState
+    Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
+    Function GetCellState(row As Integer, field As String) As ModelCellState
+    Sub UpdateCellState(row As Integer, field As String, states As ModelCellState)
 End Interface

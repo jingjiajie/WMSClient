@@ -2,6 +2,8 @@
     Public Property Message As String
     Public Property Type As ValidationStateType
 
+    Public Shared Property OK = New ValidationState(Nothing, ValidationStateType.OK)
+
     Public Sub New(message As String, type As ValidationStateType)
         Me.Message = message
         Me.Type = type

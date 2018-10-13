@@ -668,4 +668,20 @@ Public Class ModelOperator
     Public Function GetRowSynchronizationState(row As Integer) As SynchronizationState Implements IModel.GetRowSynchronizationState
         Return Me.GetRowSynchronizationStates({row})(0)
     End Function
+
+    Public Function GetCellState(row As Integer, field As String) As ModelCellState Implements IModel.GetCellState
+        Return Me._ModelCore.GetCellStates({row}, {field})(0)
+    End Function
+
+    Public Sub UpdateCellState(row As Integer, field As String, states As ModelCellState) Implements IModel.UpdateCellState
+        Call Me._ModelCore.UpdateCellStates({row}, {field}, {states})
+    End Sub
+
+    Public Function GetCellStates(rows() As Integer, fields() As String) As ModelCellState() Implements IModelCore.GetCellStates
+        Return Me._ModelCore.GetCellStates(rows, fields)
+    End Function
+
+    Public Sub UpdateCellStates(rows() As Integer, fields() As String, states() As ModelCellState) Implements IModelCore.UpdateCellStates
+        Call Me._ModelCore.UpdateCellStates(rows, fields, states)
+    End Sub
 End Class

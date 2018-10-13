@@ -226,12 +226,12 @@ namespace WMS.UI
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormWarehouseEntryItem",
         "AssociationMethodListener",
-        "SupplyMethodListener"};
+        "FormWarehouseEntryItemMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormWarehouseEntryItem",
         "AssociationMethodListener",
-        "SupplyMethodListener"};
+        "FormWarehouseEntryItemMethodListener"};
             modeMethodListenerNamesPair2.Mode = "put_in";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,

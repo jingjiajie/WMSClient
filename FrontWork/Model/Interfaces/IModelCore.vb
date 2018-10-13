@@ -76,11 +76,27 @@ Public Interface IModelCore
     Sub UpdateRowStates(rows As Integer(), states As ModelRowState())
 
     ''' <summary>
-    ''' 获取若干行的同步状态
+    ''' 获取若干行的状态
     ''' </summary>
     ''' <param name="rows">行号</param>
-    ''' <returns>对应的同步状态</returns>
+    ''' <returns>对应的状态</returns>
     Function GetRowStates(rows As Integer()) As ModelRowState()
+
+    ''' <summary>
+    ''' 获取单元格的状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="fields">列名</param>
+    ''' <returns></returns>
+    Function GetCellStates(rows As Integer(), fields As String()) As ModelCellState()
+
+    ''' <summary>
+    ''' 更新单元格的状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="fields">列名</param>
+    ''' <param name="states">单元格状态</param>
+    Sub UpdateCellStates(rows As Integer(), fields As String(), states As ModelCellState())
 
     ''' <summary>
     ''' 获取行数据

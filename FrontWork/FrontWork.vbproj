@@ -91,6 +91,7 @@
     <Compile Include="Adapters\PivotTableAdapter\DataStructures.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\DataStructures\ValidationState.vb" />
     <Compile Include="Common\ManualBrowserForm.Designer.vb">
       <DependentUpon>ManualBrowserForm.vb</DependentUpon>
     </Compile>
@@ -152,8 +153,10 @@
     <Compile Include="Configuration\DataStructures\InvocationContext\InvocationContext.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
+    <Compile Include="Model\DataStructures\ModelCellState.vb" />
     <Compile Include="Model\DataStructures\ModelRefreshArgs.vb" />
     <Compile Include="Model\DataStructures\ModelRowState.vb" />
+    <Compile Include="Model\EventArgs\ModelCellStateChangedEventArgs.vb" />
     <Compile Include="Model\Interfaces\IConfigurableModel.vb" />
     <Compile Include="Model\Interfaces\IModelCore.vb" />
     <Compile Include="Model\Wrappers\ConfigurableModelOperator.vb" />
@@ -206,7 +209,7 @@
     <Compile Include="Common\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelCollectionChangedEventArgs.vb" />
-    <Compile Include="Model\EventArgs\ModelRowSynchronizationStateChangedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelRowStateChangedEventArgs.vb" />
     <Compile Include="Model\EventArgs\SelectedModelChangedEventArgs.vb" />
     <Compile Include="Model\ModelBox.Designer.vb">
       <DependentUpon>ModelBox.vb</DependentUpon>

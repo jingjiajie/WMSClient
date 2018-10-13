@@ -21,14 +21,20 @@ Public Class ModelCellInfo
     ''' <returns></returns>
     Public Property CellData As Object
 
-    Public Sub New(row As Integer, columnName As String, cellData As Object)
+    ''' <summary>
+    ''' 单元格状态
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property State As ModelCellState
+
+    Public Sub New(row As Integer, columnName As String, cellData As Object, state As ModelCellState)
         Me.Row = row
         Me.CellData = cellData
         Me.ColumnName = columnName
     End Sub
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim newInstance As New ModelCellInfo(Me.Row, Me.ColumnName, Me.CellData)
+        Dim newInstance As New ModelCellInfo(Me.Row, Me.ColumnName, Me.CellData, Me.State)
         Return newInstance
     End Function
 End Class
