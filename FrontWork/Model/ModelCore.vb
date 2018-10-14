@@ -20,6 +20,16 @@ Public Class ModelCore
     ''' <returns></returns>
     Private Property Data As New DataTable
 
+    Public Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModelCore.Refreshed
+    Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModelCore.RowAdded
+    Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModelCore.RowUpdated
+    Public Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModelCore.BeforeRowRemove
+    Public Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModelCore.RowRemoved
+    Public Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModelCore.CellUpdated
+    Public Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModelCore.SelectionRangeChanged
+    Public Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModelCore.RowStateChanged
+    Public Event CellStateChanged As EventHandler(Of ModelCellStateChangedEventArgs) Implements IModelCore.CellStateChanged
+
     Public Sub New()
 
     End Sub
@@ -53,6 +63,7 @@ Public Class ModelCore
                 Dim newColumn As New DataColumn
                 newColumn.ColumnName = column.Name
                 newColumn.DataType = GetType(ModelCell)
+                newColumn.AllowDBNull = False
                 Me.Data.Columns.Add(newColumn)
             End If
         Next
@@ -360,18 +371,17 @@ Public Class ModelCore
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim columnName = columnNames(i)
-            Dim dataColumn = (From col As DataColumn In Me.Data.Columns
-                              Where col.ColumnName.Equals(columnName, StringComparison.OrdinalIgnoreCase)
-                              Select col).FirstOrDefault
-            If dataColumn Is Nothing Then
+            Dim col = Me.Data.Columns.IndexOf(columnName)
+            If col = -1 Then
                 Throw New FrontWorkException($"UpdateCells failed: column ""{columnName}"" not found!")
             End If
+            Dim column = Me._modelColumns(col)
             Try
-                DirectCast(Me.Data.Rows(row)(dataColumn), ModelCell).Data = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), Nothing, dataOfEachCell(i))
+                Dim convertedValue = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), Nothing, Util.ChangeType(dataOfEachCell(i), column.Type))
+                DirectCast(Me.Data.Rows(row)(col), ModelCell).Data = convertedValue
             Catch ex As IndexOutOfRangeException
                 Throw New FrontWorkException($"UpdateCells failed: index {i} exceeded max row index: {Me.GetRowCount}")
             Catch ex As ArgumentException
-                DirectCast(Me.Data.Rows(row)(dataColumn), ModelCell).Data = Nothing
                 Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
             End Try
             posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i), Me.GetCellState(rows(i), columnName)))
@@ -406,6 +416,10 @@ Public Class ModelCore
             '刷新数据
             For Each dataRow In dataRows
                 Dim newRow = Me.Data.NewRow
+                '初始化成ModelCell
+                For i = 0 To newRow.ItemArray.Length - 1
+                    newRow(i) = New ModelCell
+                Next
                 Me.Data.Rows.Add(newRow)
                 For Each colAndValue In dataRow
                     Dim colName = colAndValue.Key
@@ -415,7 +429,7 @@ Public Class ModelCore
                         Dim colType = column.Type
                         Try
                             Dim convertedValue = If(colValue Is Nothing, Nothing, Util.ChangeType(colValue, colType))
-                            newRow(colName) = New ModelCell(If(convertedValue, Nothing))
+                            DirectCast(newRow(colName), ModelCell).Data = If(convertedValue, Nothing)
                         Catch ex As Exception
                             Throw New FrontWorkException($"Value {colValue} of ""{colName}"" cannot be converted to {colType.Name}")
                         End Try
@@ -518,46 +532,6 @@ Public Class ModelCore
         Return states
     End Function
 
-    ''' <summary>
-    ''' Model刷新事件
-    ''' </summary>
-    Public Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModelCore.Refreshed
-
-    ''' <summary>
-    ''' 增加行事件
-    ''' </summary>
-    Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModelCore.RowAdded
-
-    ''' <summary>
-    ''' 更新行数据事件
-    ''' </summary>
-    Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModelCore.RowUpdated
-
-    ''' <summary>
-    ''' 删除行事件
-    ''' </summary>
-    Public Event BeforeRowRemove As EventHandler(Of ModelBeforeRowRemoveEventArgs) Implements IModelCore.BeforeRowRemove
-
-    ''' <summary>
-    ''' 删除行事件
-    ''' </summary>
-    Public Event RowRemoved As EventHandler(Of ModelRowRemovedEventArgs) Implements IModelCore.RowRemoved
-
-    ''' <summary>
-    ''' 单元格数据更新事件
-    ''' </summary>
-    Public Event CellUpdated As EventHandler(Of ModelCellUpdatedEventArgs) Implements IModelCore.CellUpdated
-
-    ''' <summary>
-    ''' 选区改变事件
-    ''' </summary>
-    Public Event SelectionRangeChanged As EventHandler(Of ModelSelectionRangeChangedEventArgs) Implements IModelCore.SelectionRangeChanged
-
-    ''' <summary>
-    ''' 行同步状态改变事件
-    ''' </summary>
-    Public Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs) Implements IModelCore.RowStateChanged
-
     Private Function DictionaryToObject(Of T As New)(dic As IDictionary(Of String, Object)) As T
         Dim result As New T
         Dim type = GetType(T)
@@ -599,7 +573,7 @@ Public Class ModelCore
             Throw New FrontWorkException($"Length of rows({rows.Length}) must be equal to length of fields({fields.Length})")
         End If
         Dim result(rows.Length - 1) As ModelCellState
-        For i = 0 To rows.Length
+        For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim field = fields(i)
             Dim cell As ModelCell = Me.Data.Rows(row)(field)
@@ -616,14 +590,34 @@ Public Class ModelCore
         If rows.Length <> fields.Length OrElse rows.Length <> states.Length Then
             Throw New FrontWorkException($"Length of row, fields and states must be equal")
         End If
-        For i = 0 To rows.Length
+        Dim fieldCol As New Dictionary(Of String, DataColumn)
+        For Each field In fields
+            Dim col = Me.Data.Columns.IndexOf(field)
+            If col = -1 Then
+                Throw New FrontWorkException($"Cannot find field ""{field}"" in model!")
+            End If
+            fieldCol(field) = Me.Data.Columns(col)
+        Next
+
+        For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim field = fields(i)
             Dim state = states(i)
-            Dim cell As ModelCell = Me.Data.Rows(row)(field)
+            Dim cell As ModelCell = Me.Data.Rows(row)(fieldCol(field))
             cell.State = state
         Next
+        RaiseEvent CellStateChanged(Me, New ModelCellStateChangedEventArgs(Me.GetCellInfos(rows, fields)))
     End Sub
+
+    Private Function GetCellInfos(rows As Integer(), fields As String()) As ModelCellInfo()
+        Dim dataOfCells = Me.GetCells(rows, fields)
+        Dim states = Me.GetCellStates(rows, fields)
+        Dim result(rows.Length - 1) As ModelCellInfo
+        For i = 0 To rows.Length - 1
+            result(i) = New ModelCellInfo(rows(i), fields(i), dataOfCells(i), states(i))
+        Next
+        Return result
+    End Function
 
     Friend Structure RowSynchronizationStatePair
         Public Row As Integer

@@ -148,7 +148,7 @@ namespace WMS.UI.FromDeliverOrder
         {
             foreach (var cell in e.UpdatedCells)
             {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;

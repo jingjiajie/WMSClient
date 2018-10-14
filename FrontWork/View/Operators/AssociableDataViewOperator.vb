@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
-Public Class AssociableDataViewOperationsWrapper
-    Inherits EditableDataViewOperationsWrapper
+Public Class AssociableDataViewOperator
+    Inherits EditableDataViewOperator
     Implements IAssociableDataView
 
     Public Shadows Property View As IAssociableDataView

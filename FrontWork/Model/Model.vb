@@ -193,6 +193,17 @@ Partial Public Class Model
         End RaiseEvent
     End Event
 
+    Public Custom Event CellStateChanged As EventHandler(Of ModelCellStateChangedEventArgs) Implements IModelCore.CellStateChanged
+        AddHandler(value As EventHandler(Of ModelCellStateChangedEventArgs))
+            AddHandler DirectCast(ModelOperator, IConfigurableModel).CellStateChanged, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ModelCellStateChangedEventArgs))
+            RemoveHandler DirectCast(ModelOperator, IConfigurableModel).CellStateChanged, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ModelCellStateChangedEventArgs)
+        End RaiseEvent
+    End Event
+
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Model))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()

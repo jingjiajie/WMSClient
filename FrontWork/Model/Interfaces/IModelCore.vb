@@ -183,4 +183,9 @@ Public Interface IModelCore
     ''' 行状态改变事件
     ''' </summary>
     Event RowStateChanged As EventHandler(Of ModelRowStateChangedEventArgs)
+
+    ''' <summary>
+    ''' 单元格状态改变事件
+    ''' </summary>
+    Event CellStateChanged As EventHandler(Of ModelCellStateChangedEventArgs)
 End Interface

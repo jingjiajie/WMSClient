@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
-Public Class SelectableDataViewOperationsWrapper
-    Inherits DataViewOperationsWrapper
+Public Class SelectableDataViewOperator
+    Inherits DataViewOperator
     Implements ISelectableDataView
 
     Public Shadows Property View As ISelectableDataView

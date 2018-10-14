@@ -1,6 +1,6 @@
 ﻿Imports FrontWork
 
-Public Class DataViewOperationsWrapperBase
+Public Class DataViewOperatorBase
     Implements IDataView
 
     Public Overridable Property View As IDataView
@@ -86,4 +86,12 @@ Public Class DataViewOperationsWrapperBase
     Public Function GetRowStates(rows() As Integer) As ViewRowState() Implements IDataView.GetRowStates
         Return View.GetRowStates(rows)
     End Function
+
+    Public Function GetCellStates(rows() As Integer, fields() As String) As ViewCellState() Implements IDataView.GetCellStates
+        Return View.GetCellStates(rows, fields)
+    End Function
+
+    Public Sub UpdateCellStates(rows() As Integer, fields() As String, states As ViewCellState()) Implements IDataView.UpdateCellStates
+        View.UpdateCellStates(rows, fields, states)
+    End Sub
 End Class

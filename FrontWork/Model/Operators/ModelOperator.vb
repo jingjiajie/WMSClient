@@ -127,6 +127,18 @@ Public Class ModelOperator
         End RaiseEvent
     End Event
 
+    Public Custom Event CellStateChanged As EventHandler(Of ModelCellStateChangedEventArgs) Implements IModelCore.CellStateChanged
+        AddHandler(value As EventHandler(Of ModelCellStateChangedEventArgs))
+            AddHandler _ModelCore.CellStateChanged, value
+        End AddHandler
+        RemoveHandler(value As EventHandler(Of ModelCellStateChangedEventArgs))
+            RemoveHandler _ModelCore.CellStateChanged, value
+        End RemoveHandler
+        RaiseEvent(sender As Object, e As ModelCellStateChangedEventArgs)
+        End RaiseEvent
+    End Event
+
+
     Public Property Name As String
 
     Default Public Property _Item(row As Integer) As IDictionary(Of String, Object) Implements IModel._Item

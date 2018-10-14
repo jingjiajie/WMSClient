@@ -159,14 +159,15 @@
     <Compile Include="Model\EventArgs\ModelCellStateChangedEventArgs.vb" />
     <Compile Include="Model\Interfaces\IConfigurableModel.vb" />
     <Compile Include="Model\Interfaces\IModelCore.vb" />
-    <Compile Include="Model\Wrappers\ConfigurableModelOperator.vb" />
-    <Compile Include="Model\Wrappers\ModelOperator.vb" />
+    <Compile Include="Model\Operators\ConfigurableModelOperator.vb" />
+    <Compile Include="Model\Operators\ModelOperator.vb" />
     <Compile Include="Synchronizer\DataStructures\HTTPResponse.vb" />
     <Compile Include="ViewModel\AssociableDataViewModel.vb" />
     <Compile Include="View\BasicView\BasicViewTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="View\DataStructures\ViewCellInfo.vb" />
+    <Compile Include="View\DataStructures\ViewCellState.vb" />
     <Compile Include="View\DataStructures\ViewRowInfo.vb" />
     <Compile Include="View\DataStructures\ViewRowState.vb" />
     <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />
@@ -196,9 +197,7 @@
     <Compile Include="View\GridView.Designer.vb">
       <DependentUpon>GridView.vb</DependentUpon>
     </Compile>
-    <Compile Include="View\GridView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="View\GridView.vb" />
     <Compile Include="View\Interfaces\IAssociableDataView.vb" />
     <Compile Include="View\Interfaces\IDataView.vb" />
     <Compile Include="Logger\Logger.vb" />
@@ -292,11 +291,11 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ViewModel\EditableDataViewModel.vb" />
-    <Compile Include="View\Wrappers\AssociableDataViewOperationsWrapper.vb" />
-    <Compile Include="View\Wrappers\DataViewOperationsWrapper.vb" />
-    <Compile Include="View\Wrappers\DataViewOperationsWrapperBase.vb" />
-    <Compile Include="View\Wrappers\EditableDataViewOperationsWrapper.vb" />
-    <Compile Include="View\Wrappers\SelectableDataViewOperationsWrapper.vb" />
+    <Compile Include="View\Operators\AssociableDataViewOperator.vb" />
+    <Compile Include="View\Operators\DataViewOperator.vb" />
+    <Compile Include="View\Operators\DataViewOperatorBase.vb" />
+    <Compile Include="View\Operators\EditableDataViewOperator.vb" />
+    <Compile Include="View\Operators\SelectableDataViewOperator.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\ManualBrowserForm.resx">

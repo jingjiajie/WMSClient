@@ -14,16 +14,13 @@ Imports unvell.ReoGrid.Events
 Public Class ReoGridView
     Implements IAssociableDataView
 
-    ''' <summary>
-    ''' 单元格状态，绘制单元格颜色用
-    ''' </summary>
-    Protected Enum CellState
-        [Default] = 0
-        INVALID_DATA = 1
-    End Enum
+    Private COLOR_ROW_UNSYNCHRONIZED As Color = Color.AliceBlue
+    Private COLOR_ROW_SYNCHRONIZED As Color = Color.Transparent
+    Private COLOR_CELL_VALIDATION_ERROR As Color = Color.FromArgb(255, 107, 107)
+    Private COLOR_CELL_VALIDATION_WARNING As Color = Color.FromArgb(255, 230, 109)
 
-    Protected Class CellTag
-        Public Property State As Integer
+    Protected Class CellTag '太爽了，ReoGridView的Cell居然支持Tag，不用像Model一样麻烦了
+        Public Property State As New ViewCellState
         Public Property Edited As Boolean
     End Class
 
@@ -51,9 +48,6 @@ Public Class ReoGridView
         End Property
     End Class
 
-    Private COLOR_UNSYNCHRONIZED As Color = Color.AliceBlue
-    Private COLOR_SYNCHRONIZED As Color = Color.Transparent
-
     Private Property ViewModel As AssociableDataViewModel
 
     Private canChangeSelectionRangeNextTime As Boolean = True
@@ -68,10 +62,6 @@ Public Class ReoGridView
     Public Event EditStarted As EventHandler(Of ViewEditStartedEventArgs) Implements IEditableDataView.EditStarted
     Public Event ContentChanged As EventHandler(Of ViewContentChangedEventArgs) Implements IEditableDataView.ContentChanged
     Public Event EditEnded As EventHandler(Of ViewEditEndedEventArgs) Implements IEditableDataView.EditEnded
-    Public Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IEditableDataView.BeforeRowUpdate
-    Public Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IEditableDataView.BeforeRowAdd
-    Public Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IEditableDataView.BeforeRowRemove
-    Public Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IEditableDataView.BeforeCellUpdate
     Public Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs) Implements IEditableDataView.RowUpdated
     Public Event RowAdded As EventHandler(Of ViewRowAddedEventArgs) Implements IEditableDataView.RowAdded
     Public Event RowRemoved As EventHandler(Of ViewRowRemovedEventArgs) Implements IEditableDataView.RowRemoved
@@ -213,40 +203,74 @@ Public Class ReoGridView
     ''' <summary>
     ''' 根据各个单元格的状态，按行绘制单元格的颜色
     ''' </summary>
-    Private Sub PaintRows(Optional rows As Integer() = Nothing)
+    Private Sub PaintRowsAndCells(Optional rows As Integer() = Nothing)
         If rows Is Nothing Then
             rows = Util.Range(0, Me.Panel.Rows)
         End If
-        For Each row In rows
-            '先绘制整行颜色
-            If CType(Me.Panel.RowHeaders(row).Tag, RowTag).RowSyncState <> SynchronizationState.SYNCHRONIZED Then
-                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                Me.Panel.SetRangeStyles(row, 0, 1, Me.Panel.ColumnCount, New WorksheetRangeStyle() With {
+        Dim rowColors = Me.GetRowColors(rows)
+        For i = 0 To rows.Length - 1
+            '绘制行
+            Dim row = rows(i)
+            'Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
+            Me.Panel.SetRangeStyles(row, 0, 1, Me.Panel.ColumnCount, New WorksheetRangeStyle() With {
                         .Flag = PlainStyleFlag.BackColor,
-                        .BackColor = Me.COLOR_UNSYNCHRONIZED
+                        .BackColor = rowColors(i)
                     })
-                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
-            Else
-                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                Me.Panel.SetRangeStyles(row, 0, 1, Me.Panel.ColumnCount, New WorksheetRangeStyle() With {
-                        .Flag = PlainStyleFlag.BackColor,
-                        .BackColor = Color.Transparent
-                    })
-                Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.Empty)
-            End If
-            '再绘制单元格颜色
-            For Each col In Util.Range(0, Me.Panel.Columns)
-                Dim curCellState = Me.GetCellState(row, col)
-                If (curCellState And CellState.INVALID_DATA) > 0 Then
-                    Me.Panel.SetRangeStyles(row, col, 1, 1, New WorksheetRangeStyle() With {
-                        .Flag = PlainStyleFlag.BackColor,
-                        .BackColor = Color.IndianRed
-                    })
-                    Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.SilverSolid)
-                End If
-            Next
+            Me.Panel.SetRangeBorders(row, 0, 1, Me.Panel.ColumnCount, BorderPositions.All, RangeBorderStyle.SilverSolid)
+            '绘制行内单元格
+            Dim cols = Util.Range(0, Me.Panel.ColumnCount)
+            Call Me.PaintCells(Util.Times(row, cols.Length), cols)
         Next
     End Sub
+
+    Private Sub PaintCells(rows As Integer(), cols As Integer())
+        Dim cellColors = Me.GetCellColors(rows, cols)
+        For j = 0 To rows.Length - 1
+            Dim row = rows(j), col = cols(j)
+            Dim oriCellColor = Me.Panel.GetCell(row, col)?.Style.BackColor
+            If oriCellColor.HasValue AndAlso oriCellColor.Value = cellColors(j) Then Continue For
+            Me.Panel.SetRangeStyles(row, col, 1, 1, New WorksheetRangeStyle() With {
+                .Flag = PlainStyleFlag.BackColor,
+                .BackColor = cellColors(j)
+            })
+            Me.Panel.SetRangeBorders(row, col, 1, 1, BorderPositions.All, RangeBorderStyle.SilverSolid)
+        Next
+    End Sub
+
+    Private Function GetCellColors(rows As Integer(), cols As Integer()) As Color()
+        Dim tmpRowColors As New Dictionary(Of Integer, Color)
+        Dim cellStates = Me.GetCellStates(rows, cols)
+        Dim result(rows.Length - 1) As Color
+        For i = 0 To result.Length - 1
+            Dim row = rows(i)
+            Dim curCellState = cellStates(i)
+            If curCellState.ValidationState.Type = ValidationStateType.ERROR Then
+                result(i) = COLOR_CELL_VALIDATION_ERROR
+            ElseIf curCellState.ValidationState.Type = ValidationStateType.WARNING Then
+                result(i) = COLOR_CELL_VALIDATION_WARNING
+            ElseIf tmpRowColors.ContainsKey(row) Then
+                result(i) = tmpRowColors(row)
+            Else
+                Dim curRowColor = Me.GetRowColors({row})(0)
+                tmpRowColors(row) = curRowColor
+                result(i) = curRowColor
+            End If
+        Next
+        Return result
+    End Function
+
+    Private Function GetRowColors(rows As Integer()) As Color()
+        Dim result(rows.Length - 1) As Color
+        For i = 0 To result.Length - 1
+            Dim rowState = DirectCast(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState
+            If rowState.SynchronizationState <> SynchronizationState.SYNCHRONIZED Then
+                result(i) = COLOR_ROW_UNSYNCHRONIZED
+            Else
+                result(i) = COLOR_ROW_SYNCHRONIZED
+            End If
+        Next
+        Return result
+    End Function
 
     ''' <summary>
     ''' 从Model同步选区
@@ -264,31 +288,6 @@ Public Class ReoGridView
         AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
     End Sub
 
-    '''' <summary>
-    '''' 从Model同步各行同步状态
-    '''' </summary>
-    '''' <param name="rows"></param>
-    'Protected Sub RefreshRowSynchronizationStates(Optional rows As Integer() = Nothing)
-    '    If Me.CurSyncMode = SyncMode.NOT_SYNC Then Return
-    '    Logger.SetMode(LogMode.REFRESH_VIEW)
-    '    If rows Is Nothing Then
-    '        rows = Me.Range(0, Me.Model.RowCount)
-    '    End If
-    '    For Each row In rows
-    '        Dim state = Me.Model.GetRowSynchronizationState(row)
-    '        If row >= Me.Panel.RowCount Then
-    '            Logger.PutMessage($"Row number {row} exceeded max row in the ReoGridView")
-    '            Return
-    '        End If
-    '        If state <> SynchronizationState.SYNCHRONIZED Then
-    '            Call Me.AddCellState(row, CellState.UNSYNCHRONIZED)
-    '        Else
-    '            Call Me.RemoveCellState(row, CellState.UNSYNCHRONIZED)
-    '        End If
-    '    Next
-    '    Call Me.PaintRows(rows)
-    'End Sub
-
     ''' <summary>
     ''' 显示默认页面
     ''' </summary>
@@ -302,7 +301,7 @@ Public Class ReoGridView
         Next
         '设定提示文本
         Me.Panel.Item(0, 0) = "暂无数据"
-        Call Me.PaintRows()
+        Call Me.PaintRowsAndCells()
     End Sub
 
     Private Sub textBoxLeave(sender As Object, e As EventArgs)
@@ -501,31 +500,12 @@ Public Class ReoGridView
         If viewColumn.Values IsNot Nothing Then
             '同步数据
             Call Me.ExportCells(e.Cell.PositionAsRange)
-            '验证数据
-            Call Me.ValidateComboBoxData(row, col)
         End If
-        Call Me.PaintRows({row})
+        ''内容改变应该会触发Model的同步状态改变，从而触发相关函数。不用在这里paint
+        'Call Me.PaintRows({row})
 
         '触发内容改变事件
         RaiseEvent ContentChanged(Me, New ViewContentChangedEventArgs(row, fieldName, Me.GetCellData(row, col)))
-    End Sub
-
-    ''' <summary>
-    ''' 验证下拉框数据，不正确时将单元格状态增加CellState.INVALID_DATA，正确时去除CellState.INVALID_DATA
-    ''' </summary>
-    ''' <param name="row">行</param>
-    ''' <param name="col">列</param>
-    Private Sub ValidateComboBoxData(row As Integer, col As Integer)
-        Dim fieldName = Me.FindNameByColumn(col)
-        Dim viewColumn As ViewColumn = Me.Panel.ColumnHeaders(col).Tag?.ViewColumn
-        If viewColumn Is Nothing Then Return
-        '验证数据
-        Dim values As Object() = viewColumn.Values
-        If Not values.Contains(Me.Panel(row, col)) Then
-            Call Me.AddCellState(row, col, CellState.INVALID_DATA)
-        Else
-            Call Me.RemoveCellState(row, col, CellState.INVALID_DATA)
-        End If
     End Sub
 
     ''' <summary>
@@ -670,67 +650,57 @@ Public Class ReoGridView
         Return items.ToArray
     End Function
 
-    ''' <summary>
-    ''' 获取单元格的状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="col">列号</param>
-    ''' <returns>单元格状态</returns>
-    Protected Function GetCellState(row As Integer, col As Integer) As Integer
-        Return GetCellState(New CellPosition(row, col))
-    End Function
+    '''' <summary>
+    '''' 增加单元格状态
+    '''' </summary>
+    '''' <param name="row">行号</param>
+    '''' <param name="col">列号</param>
+    '''' <param name="cellState">单元格状态</param>
+    'Protected Sub AddCellState(row As Integer, col As Integer, cellState As CellState)
+    '    Dim oriCellState = Me.GetCellState(row, col)
+    '    cellState = oriCellState Or cellState
+    '    Call Me.SetCellState(New CellPosition(row, col), cellState)
+    'End Sub
 
-    ''' <summary>
-    ''' 增加单元格状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="col">列号</param>
-    ''' <param name="cellState">单元格状态</param>
-    Protected Sub AddCellState(row As Integer, col As Integer, cellState As CellState)
-        Dim oriCellState = Me.GetCellState(row, col)
-        cellState = oriCellState Or cellState
-        Call Me.SetCellState(New CellPosition(row, col), cellState)
-    End Sub
+    '''' <summary>
+    '''' 增加整行的单元格状态
+    '''' </summary>
+    '''' <param name="row">行号</param>
+    '''' <param name="cellState">单元格状态</param>
+    'Protected Sub AddCellState(row As Integer, cellState As CellState)
+    '    Dim cols = Util.Range(0, Me.Panel.Columns)
+    '    For Each col In cols
+    '        Dim oriCellState = Me.GetCellState(row, col)
+    '        Dim newCellState = oriCellState Or cellState
+    '        Call Me.SetCellState(New CellPosition(row, col), newCellState)
+    '    Next
+    'End Sub
 
-    ''' <summary>
-    ''' 增加整行的单元格状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="cellState">单元格状态</param>
-    Protected Sub AddCellState(row As Integer, cellState As CellState)
-        Dim cols = Util.Range(0, Me.Panel.Columns)
-        For Each col In cols
-            Dim oriCellState = Me.GetCellState(row, col)
-            Dim newCellState = oriCellState Or cellState
-            Call Me.SetCellState(New CellPosition(row, col), newCellState)
-        Next
-    End Sub
+    '''' <summary>
+    '''' 去除单元格状态
+    '''' </summary>
+    '''' <param name="row">行号</param>
+    '''' <param name="col">列号</param>
+    '''' <param name="cellState">要去除的状态</param>
+    'Protected Sub RemoveCellState(row As Integer, col As Integer, cellState As CellState)
+    '    Dim oriCellState = Me.GetCellState(row, col)
+    '    Dim newCellState = oriCellState And Not cellState
+    '    Call Me.SetCellState(New CellPosition(row, col), newCellState)
+    'End Sub
 
-    ''' <summary>
-    ''' 去除单元格状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="col">列号</param>
-    ''' <param name="cellState">要去除的状态</param>
-    Protected Sub RemoveCellState(row As Integer, col As Integer, cellState As CellState)
-        Dim oriCellState = Me.GetCellState(row, col)
-        Dim newCellState = oriCellState And Not cellState
-        Call Me.SetCellState(New CellPosition(row, col), newCellState)
-    End Sub
-
-    ''' <summary>
-    ''' 去除单元格状态
-    ''' </summary>
-    ''' <param name="row">行号</param>
-    ''' <param name="cellState">要去除的状态</param>
-    Protected Sub RemoveCellState(row As Integer, cellState As CellState)
-        Dim cols = Util.Range(0, Me.Panel.Columns)
-        For Each col In cols
-            Dim oriCellState = Me.GetCellState(row, col)
-            Dim newCellState = oriCellState And Not cellState
-            Call Me.SetCellState(New CellPosition(row, col), newCellState)
-        Next
-    End Sub
+    '''' <summary>
+    '''' 去除单元格状态
+    '''' </summary>
+    '''' <param name="row">行号</param>
+    '''' <param name="cellState">要去除的状态</param>
+    'Protected Sub RemoveCellState(row As Integer, cellState As CellState)
+    '    Dim cols = Util.Range(0, Me.Panel.Columns)
+    '    For Each col In cols
+    '        Dim oriCellState = Me.GetCellState(row, col)
+    '        Dim newCellState = oriCellState And Not cellState
+    '        Call Me.SetCellState(New CellPosition(row, col), newCellState)
+    '    Next
+    'End Sub
 
     Private Sub ReoGridView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '禁止自动判断单元格格式
@@ -960,7 +930,7 @@ Public Class ReoGridView
             AddHandler Me.Panel.BeforeSelectionRangeChange, AddressOf Me.ReoGrid_BeforeSelectionRangeChange
         Next
         Dim minRemovedRow = rowsDESC(rowsDESC.Length - 1)
-        Call Me.PaintRows(Util.Range(minRemovedRow, Me.Panel.RowCount))
+        Call Me.PaintRowsAndCells(Util.Range(minRemovedRow, Me.Panel.RowCount))
         'Call Me.Panel.ResumeUIUpdates()
     End Sub
 
@@ -1018,14 +988,11 @@ Public Class ReoGridView
             RemoveHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
             cell.Data = value
             AddHandler Me.Panel.CellDataChanged, AddressOf CellDataChanged
-            If viewColumn.Values IsNot Nothing Then '如果是编辑框，则验证数据
-                Call Me.ValidateComboBoxData(cell.Row, cell.Column)
-            End If
         Next
         For Each colName In columnNames
             Me.AutoFitColumnWidth(Me.FindColumnByName(colName))
         Next
-        Call Me.PaintRows(rows)
+        Call Me.PaintCells(rows, Me.GetColumnsByNames(columnNames))
         'If suspendUIUpdates Then Call Me.Panel.ResumeUIUpdates()
     End Sub
 
@@ -1065,30 +1032,80 @@ Public Class ReoGridView
         Return Me.Panel.ColumnHeaders(column).Tag.Name
     End Function
 
-    Private Function GetCellState(pos As CellPosition) As Integer
-        Dim cell = Me.Panel.GetCell(pos)
-        If cell Is Nothing Then Return 0
-        If cell.Tag Is Nothing Then Return 0
-        Return CType(cell.Tag, CellTag).State
+    Public Function GetCellStates(rows As Integer(), cols As Integer()) As ViewCellState()
+        Dim result(rows.Length - 1) As ViewCellState
+        For i = 0 To result.Length - 1
+            Dim row = rows(i)
+            Dim col = cols(i)
+            Dim cell = Me.Panel.GetCell(row, col)
+            If cell Is Nothing Then
+                result(i) = New ViewCellState
+            ElseIf cell.Tag Is Nothing Then
+                result(i) = New ViewCellState
+            Else
+                result(i) = CType(cell.Tag, CellTag).State
+            End If
+        Next
+        Return result
     End Function
 
-    Private Sub SetCellState(pos As CellPosition, cellState As Integer)
-        Dim cell = Me.Panel.CreateAndGetCell(pos)
-        Dim cellTag As CellTag = cell.Tag
-        If cellTag Is Nothing Then
-            If cellState = 0 Then Return
-            cellTag = New CellTag
-        End If
-        cellTag.State = cellState
-        cell.Tag = cellTag
+    Public Function GetCellStates(rows As Integer(), fields As String()) As ViewCellState() Implements IDataView.GetCellStates
+        Dim cols = Me.GetColumnsByNames(fields)
+        Return Me.GetCellStates(rows, cols)
+    End Function
+
+    Public Function GetCellState(row As Integer, col As Integer) As ViewCellState
+        Return Me.GetCellStates({row}, {col})?(0)
+    End Function
+
+    Public Function GetCellState(row As Integer, field As String) As ViewCellState
+        Return Me.GetCellStates({row}, {field})?(0)
+    End Function
+
+    Private Function GetColumnsByNames(fieldNames As String()) As Integer()
+        Dim tmp As New Dictionary(Of String, Integer)
+        Dim result(fieldNames.Length - 1) As Integer
+        Dim viewColumns = Me.ViewColumns
+        For i = 0 To result.Length - 1
+            Dim fieldName = fieldNames(i)
+            If tmp.ContainsKey(fieldName) Then
+                result(i) = tmp(fieldName)
+            Else
+                For j = 0 To viewColumns.Length - 1
+                    If viewColumns(j).Name = fieldName Then
+                        result(i) = j
+                        Exit For
+                    End If
+                Next
+            End If
+        Next
+        Return result
+    End Function
+
+    Public Sub UpdateCellStates(rows As Integer(), cols As Integer(), states As ViewCellState())
+        For i = 0 To rows.Length - 1
+            Dim cell = Me.Panel.CreateAndGetCell(rows(i), cols(i))
+            Dim cellTag As CellTag = cell.Tag
+            If cellTag Is Nothing Then
+                cellTag = New CellTag
+            End If
+            cellTag.State = states(i)
+            cell.Tag = cellTag
+        Next
+        Call Me.PaintCells(rows, cols)
     End Sub
 
-    Private Sub SetCellState(rangePosition As RangePosition, state As Integer)
-        For row = rangePosition.Row To rangePosition.EndRow
-            For col = rangePosition.Col To rangePosition.EndCol
-                Call Me.SetCellState(New CellPosition(row, col), state)
-            Next
-        Next
+    Public Sub UpdateCellState(row As Integer, col As Integer, state As ViewCellState)
+        Call Me.UpdateCellStates({row}, {col}, {state})
+    End Sub
+
+    Public Sub UpdateCellStates(rows As Integer(), fields As String(), states As ViewCellState()) Implements IDataView.UpdateCellStates
+        Dim cols = Me.GetColumnsByNames(fields)
+        Call Me.UpdateCellStates(rows, cols, states)
+    End Sub
+
+    Public Sub UpdateCellState(row As Integer, field As String, state As ViewCellState)
+        Call Me.UpdateCellStates({row}, {field}, {state})
     End Sub
 
     Private Function GetCellEdited(pos As CellPosition) As Boolean
@@ -1123,7 +1140,7 @@ Public Class ReoGridView
         For i = 0 To rows.Length - 1
             CType(Me.Panel.RowHeaders(rows(i)).Tag, RowTag).RowState = states(i)
         Next
-        Call Me.PaintRows(rows)
+        Call Me.PaintRowsAndCells(rows)
     End Sub
 
     Public Function GetRowStates(rows() As Integer) As ViewRowState() Implements IDataView.GetRowStates

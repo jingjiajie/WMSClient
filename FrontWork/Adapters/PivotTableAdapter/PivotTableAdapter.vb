@@ -103,7 +103,7 @@ Public Class PivotTableAdapter
 
     Private Sub TargetModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
         Call Me.UnpivotCells(e.UpdatedCells.Select(Function(c) c.Row).ToArray,
-                            e.UpdatedCells.Select(Function(c) c.ColumnName).ToArray)
+                            e.UpdatedCells.Select(Function(c) c.FieldName).ToArray)
     End Sub
 
     Private Sub TargetModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
@@ -153,7 +153,7 @@ Public Class PivotTableAdapter
 
     Private Sub SourceModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
         Dim rowNums = (From c In e.UpdatedCells Select c.Row).ToArray
-        Dim cellNames = (From c In e.UpdatedCells Select c.ColumnName).ToArray
+        Dim cellNames = (From c In e.UpdatedCells Select c.FieldName).ToArray
         Call Me.PivotCells(rowNums, cellNames)
     End Sub
 
