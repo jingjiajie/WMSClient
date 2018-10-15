@@ -292,6 +292,7 @@ Partial Public Class BasicView
 
             Call Me.SetFieldValue(key, Text)
         Next
+        Call Me.PaintRow(row)
     End Sub
 
     Private Sub PaintRow(row As Integer)
@@ -302,6 +303,7 @@ Partial Public Class BasicView
             Dim oriColor = control.BackColor
             Dim targetColor As Color
             Dim cellState = Me.RecordedRows(row)(fieldName).State
+            Dim message As String = cellState.ValidationState.Message
             If cellState.ValidationState.Type = ValidationStateType.ERROR Then
                 targetColor = COLOR_CELL_VALIDATION_ERROR
             ElseIf cellState.ValidationState.Type = ValidationStateType.WARNING Then
@@ -311,6 +313,9 @@ Partial Public Class BasicView
             End If
             If oriColor = targetColor Then Continue For
             control.BackColor = targetColor
+            If TypeOf (control) Is BasicViewTextBox Then
+                DirectCast(control, BasicViewTextBox).HintMessage = message
+            End If
         Next
         Call Me.Panel.ResumeLayout()
     End Sub
@@ -440,6 +445,7 @@ Partial Public Class BasicView
             .Dock = DockStyle.Fill
             .Padding = New Padding(0)
             .Tag = New ControlTag(index)
+            .HintMessage = Nothing
         End With
         Call Me.BindTextBox(textBox)
     End Sub
