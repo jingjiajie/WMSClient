@@ -234,6 +234,7 @@
 
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
@@ -324,6 +325,7 @@
 {mode:"default2",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
@@ -413,6 +415,7 @@
 {mode:"default3",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
