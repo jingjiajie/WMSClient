@@ -36,6 +36,8 @@ Public Interface IModel
     Function GetSelectedRow(Of T)(columnName As String) As T
     Sub RemoveUneditedNewRows()
     Function HasUnsynchronizedUpdatedRow() As Boolean
+    Function HasErrorCell() As Boolean
+    Function HasWarningCell() As Boolean
     Sub RefreshView(rows() As Integer)
     Sub RefreshView(row As Integer)
     Function GetRowSynchronizationState(row As Integer) As SynchronizationState

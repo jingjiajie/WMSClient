@@ -9,6 +9,8 @@ Imports FrontWork
 Public Class ModelCore
     Implements IModelCore
 
+    Private _WarningCellCount As Integer = 0
+    Private _ErrorCellCount As Integer = 0
     Private _modelColumns As New List(Of ModelColumn)
     Private _allSelectionRange As Range() = New Range() {}
     Private Property RowStates As New List(Of ModelRowState)
@@ -420,6 +422,9 @@ Public Class ModelCore
     Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModelCore.Refresh
         Dim dataRows = args.DataRows
         Dim ranges As Range() = args.SelectionRanges
+        '清除状态
+        Me._WarningCellCount = 0
+        Me._ErrorCellCount = 0
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         Call Me.Data.Rows.Clear()
@@ -614,8 +619,23 @@ Public Class ModelCore
             Dim row = rows(i)
             Dim field = fields(i)
             Dim state = states(i)
-            Dim cell As ModelCell = Me.Data.Rows(row)(fieldCol(field))
-            cell.State = state
+            Dim oriState = Me.GetCellState(row, field)
+            If oriState.ValidationState.Type <> state.ValidationState.Type Then
+                Dim cell As ModelCell = Me.Data.Rows(row)(fieldCol(field))
+                cell.State = state
+
+                If oriState.ValidationState.Type = ValidationStateType.ERROR Then
+                    Me._ErrorCellCount -= 1
+                ElseIf oriState.ValidationState.Type = ValidationStateType.WARNING Then
+                    Me._WarningCellCount -= 1
+                End If
+
+                If state.ValidationState.Type = ValidationStateType.ERROR Then
+                    Me._ErrorCellCount += 1
+                ElseIf state.ValidationState.Type = ValidationStateType.WARNING Then
+                    Me._WarningCellCount += 1
+                End If
+            End If
         Next
         RaiseEvent CellStateChanged(Me, New ModelCellStateChangedEventArgs(Me.GetCellInfos(rows, fields)))
     End Sub
@@ -628,6 +648,26 @@ Public Class ModelCore
             result(i) = New ModelCellInfo(rows(i), fields(i), dataOfCells(i), states(i))
         Next
         Return result
+    End Function
+
+    Public Function GetInfo(infoItem As ModelInfo) As Object Implements IModelCore.GetInfo
+        Select Case infoItem
+            Case ModelInfo.HAS_WARNING_CELL
+                Return Me._WarningCellCount > 0
+            Case ModelInfo.HAS_ERROR_CELL
+                Return Me._ErrorCellCount > 0
+            Case ModelInfo.HAS_UNSYNCHRONIZED_ROW
+                For i = 0 To Me.GetRowCount - 1
+                    If {SynchronizationState.UPDATED,
+                        SynchronizationState.ADDED_UPDATED
+                       }.Contains(Me.GetRowStates({i})(0).SynchronizationState) Then
+                        Return True
+                    End If
+                Next
+                Return False
+            Case Else
+                Throw New FrontWorkException($"Bad ModelInfo: {infoItem.ToString}")
+        End Select
     End Function
 
     Private Structure RowSynchronizationStatePair

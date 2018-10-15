@@ -485,16 +485,8 @@ Public Class ModelOperator
     End Sub
 
     Public Function HasUnsynchronizedUpdatedRow() As Boolean Implements IModel.HasUnsynchronizedUpdatedRow
-        For i = 0 To Me.RowCount - 1
-            If {SynchronizationState.UPDATED,
-                SynchronizationState.ADDED_UPDATED
-               }.Contains(Me.GetRowState(i).SynchronizationState) Then
-                Return True
-            End If
-        Next
-        Return False
+        Return Me._ModelCore.GetInfo(ModelInfo.HAS_UNSYNCHRONIZED_ROW)
     End Function
-
 
     Public Sub RefreshView(rows As Integer()) Implements IModel.RefreshView
         Dim args = New ModelRowUpdatedEventArgs() With {
@@ -696,4 +688,16 @@ Public Class ModelOperator
     Public Sub UpdateCellStates(rows() As Integer, fields() As String, states() As ModelCellState) Implements IModelCore.UpdateCellStates
         Call Me._ModelCore.UpdateCellStates(rows, fields, states)
     End Sub
+
+    Public Function HasErrorCell() As Boolean Implements IModel.HasErrorCell
+        Return Me._ModelCore.GetInfo(ModelInfo.HAS_ERROR_CELL)
+    End Function
+
+    Public Function HasWarningCell() As Boolean Implements IModel.HasWarningCell
+        Return Me._ModelCore.GetInfo(ModelInfo.HAS_WARNING_CELL)
+    End Function
+
+    Public Function GetInfo(infoItem As ModelInfo) As Object Implements IModelCore.GetInfo
+        Return Me._ModelCore.GetInfo(infoItem)
+    End Function
 End Class
