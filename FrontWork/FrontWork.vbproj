@@ -328,6 +328,9 @@
     <EmbeddedResource Include="View\AdsorbableAssociationForm.resx">
       <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\BasicView\BasicViewTextBox.resx">
+      <DependentUpon>BasicViewTextBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\GridView.resx">
       <DependentUpon>GridView.vb</DependentUpon>
     </EmbeddedResource>
