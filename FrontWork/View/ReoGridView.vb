@@ -52,7 +52,7 @@ Public Class ReoGridView
 
     Private canChangeSelectionRangeNextTime As Boolean = True
     Private copied As Boolean = False '是否复制粘贴。如果为真，则下次选区改变事件时处理粘贴后的选区
-    Private copyStartCellPos As CellPosition '复制起始单元格。用来判断复制是否选区没变导致不会触发选区改变事件
+    Private copyStartCellPos As unvell.ReoGrid.CellPosition '复制起始单元格。用来判断复制是否选区没变导致不会触发选区改变事件
     Private bindedAssociationTextBox As Boolean = False
 
     Private textBox As TextBox = Nothing
@@ -413,7 +413,7 @@ Public Class ReoGridView
 
         '如果新选区起始单元格和复制起始单元格不同，说明是复制单独一个单元格
         Dim copiedSingleCell = False
-        If Me.copied AndAlso Not New CellPosition(newRow, newCol).Equals(Me.copyStartCellPos) Then
+        If Me.copied AndAlso Not New unvell.ReoGrid.CellPosition(newRow, newCol).Equals(Me.copyStartCellPos) Then
             copiedSingleCell = True
         End If
 
@@ -427,7 +427,7 @@ Public Class ReoGridView
             '对于复制的选区，全部作为已修改状态
             For curRow = newRow To newRow + newRows - 1
                 For curCol = newCol To newCol + newCols - 1
-                    Me.SetCellEdited(New CellPosition(curRow, curCol), True)
+                    Me.SetCellEdited(New unvell.ReoGrid.CellPosition(curRow, curCol), True)
                 Next
             Next
             copyRange = New RangePosition(newRow, newCol, newRows, newCols)
@@ -454,7 +454,7 @@ Public Class ReoGridView
         For curRow = range.Row To range.Row + range.Rows - 1
             For curCol = range.Col To range.Col + range.Cols - 1
                 '如果该列没被编辑，则继续下一列
-                If Not GetCellEdited(New CellPosition(curRow, curCol)) Then Continue For
+                If Not GetCellEdited(New unvell.ReoGrid.CellPosition(curRow, curCol)) Then Continue For
                 Dim data = If(Me.Panel(curRow, curCol), "")
                 Dim columnName = Me.FindNameByColumn(curCol)
                 RaiseEvent EditEnded(Me, New ViewEditEndedEventArgs(curRow, columnName, data))
@@ -473,7 +473,7 @@ Public Class ReoGridView
             Return
         End If
         Dim colName = CType(Me.Panel.ColumnHeaders(col).Tag, ColumnTag).Name
-        Me.SetCellEdited(New CellPosition(row, col), True)
+        Me.SetCellEdited(New unvell.ReoGrid.CellPosition(row, col), True)
         RaiseEvent ContentChanged(Me, New ViewContentChangedEventArgs(row, colName, Me.textBox.Text))
     End Sub
 
@@ -559,7 +559,7 @@ Public Class ReoGridView
         '删除掉没有真正修改内容的行
         rowsUpdated.RemoveAll(Function(row)
                                   For i = 0 To Me.ViewColumns.Count - 1
-                                      If Me.GetCellEdited(New CellPosition(row, i)) Then Return False
+                                      If Me.GetCellEdited(New unvell.ReoGrid.CellPosition(row, i)) Then Return False
                                   Next
                                   Return True
                               End Function)
@@ -593,7 +593,7 @@ Public Class ReoGridView
         Dim updatedCells As New List(Of ViewCellInfo) '更新的单元格
         For row = rangePosition.Row To rangePosition.Row + rowsUpdated.Count - 1
             For col = rangePosition.Col To rangePosition.Col + rangePosition.Cols
-                If Me.GetCellEdited(New CellPosition(row, col)) Then
+                If Me.GetCellEdited(New unvell.ReoGrid.CellPosition(row, col)) Then
                     Dim fieldName = Me.FindNameByColumn(col)
                     updatedCells.Add(New ViewCellInfo(row, fieldName, Me.GetCellData(row, col)))
                 End If
@@ -757,7 +757,7 @@ Public Class ReoGridView
             Dim row = Me.Panel.SelectionRange.Row
             Dim col = Me.Panel.SelectionRange.Col
             Me.Panel.SelectionRange = New RangePosition(row, col, 1, 1)
-            Me.copyStartCellPos = New CellPosition(row, col)
+            Me.copyStartCellPos = New unvell.ReoGrid.CellPosition(row, col)
             Call Me.SetCellEdited(Me.copyStartCellPos, True)
             Me.copied = True
         ElseIf e.KeyCode = Keys.Delete Then '处理Del删除单元格不会触发事件的问题
@@ -1108,14 +1108,14 @@ Public Class ReoGridView
         Call Me.UpdateCellStates({row}, {field}, {state})
     End Sub
 
-    Private Function GetCellEdited(pos As CellPosition) As Boolean
+    Private Function GetCellEdited(pos As unvell.ReoGrid.CellPosition) As Boolean
         Dim cell = Me.Panel.GetCell(pos)
         If cell Is Nothing Then Return False
         If cell.Tag Is Nothing Then Return False
         Return CType(cell.Tag, CellTag).Edited
     End Function
 
-    Private Sub SetCellEdited(pos As CellPosition, edited As Boolean)
+    Private Sub SetCellEdited(pos As unvell.ReoGrid.CellPosition, edited As Boolean)
         If pos.Row > Me.Panel.RowCount - 1 Then Return
         If pos.Col > Me.Panel.ColumnCount - 1 Then Return
         Dim cell = Me.Panel.CreateAndGetCell(pos)
@@ -1131,7 +1131,7 @@ Public Class ReoGridView
     Private Sub SetCellEdited(rangePosition As RangePosition, edited As Boolean)
         For row = rangePosition.Row To rangePosition.EndRow
             For col = rangePosition.Col To rangePosition.EndCol
-                Call Me.SetCellEdited(New CellPosition(row, col), edited)
+                Call Me.SetCellEdited(New unvell.ReoGrid.CellPosition(row, col), edited)
             Next
         Next
     End Sub

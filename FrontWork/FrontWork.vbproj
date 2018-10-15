@@ -91,6 +91,7 @@
     <Compile Include="Adapters\PivotTableAdapter\DataStructures.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\DataStructures\CellPosition.vb" />
     <Compile Include="Common\DataStructures\ValidationState.vb" />
     <Compile Include="Common\ManualBrowserForm.Designer.vb">
       <DependentUpon>ManualBrowserForm.vb</DependentUpon>

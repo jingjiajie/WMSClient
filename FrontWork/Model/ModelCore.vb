@@ -368,6 +368,7 @@ Public Class ModelCore
     Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModelCore.UpdateCells
         Dim posCellPairs As New List(Of ModelCellInfo)
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
+        Dim updateStateCells As New List(Of CellPositionStatePair)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim columnName = columnNames(i)
@@ -379,10 +380,14 @@ Public Class ModelCore
             Try
                 Dim convertedValue = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), Nothing, Util.ChangeType(dataOfEachCell(i), column.Type))
                 DirectCast(Me.Data.Rows(row)(col), ModelCell).Data = convertedValue
+                Dim oriCellState = Me.GetCellState(row, columnName)
+                If oriCellState.ValidationState.Type <> ValidationStateType.OK Then
+                    updateStateCells.Add(New CellPositionStatePair(row, columnName, New ModelCellState(ValidationState.OK)))
+                End If
             Catch ex As IndexOutOfRangeException
                 Throw New FrontWorkException($"UpdateCells failed: index {i} exceeded max row index: {Me.GetRowCount}")
-            Catch ex As ArgumentException
-                Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
+            Catch ex As Exception
+                updateStateCells.Add(New CellPositionStatePair(row, columnName, New ModelCellState(New ValidationState(ValidationStateType.ERROR, $"""{dataOfEachCell(i)}""不是有效的格式"))))
             End Try
             posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i), Me.GetCellState(rows(i), columnName)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
@@ -404,6 +409,12 @@ Public Class ModelCore
             rowSyncStatePairs.Select(Function(pair)
                                          Return pair.SynchronizationState
                                      End Function).ToArray)
+        '更新单元格状态
+        Me.UpdateCellStates(
+            updateStateCells.Select(Function(item) item.Row).ToArray,
+            updateStateCells.Select(Function(item) item.Field).ToArray,
+            updateStateCells.Select(Function(item) item.State).ToArray
+        )
     End Sub
 
     Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModelCore.Refresh
@@ -619,7 +630,7 @@ Public Class ModelCore
         Return result
     End Function
 
-    Friend Structure RowSynchronizationStatePair
+    Private Structure RowSynchronizationStatePair
         Public Row As Integer
         Public SynchronizationState As SynchronizationState
 
@@ -629,8 +640,20 @@ Public Class ModelCore
         End Sub
     End Structure
 
-    Private Class ModelCell
+    Private Structure CellPositionStatePair
+        Public Row As Integer
+        Public Field As String
         Public State As ModelCellState
+
+        Public Sub New(row As Integer, field As String, state As ModelCellState)
+            Me.Row = row
+            Me.Field = field
+            Me.State = state
+        End Sub
+    End Structure
+
+    Private Class ModelCell
+        Public State As ModelCellState = New ModelCellState(ValidationState.OK)
         Public Data As Object
 
         Public Sub New()
