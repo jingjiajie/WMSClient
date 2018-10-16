@@ -3,6 +3,13 @@
 ''' </summary>
 Public Interface IModelCore
     ''' <summary>
+    ''' 获取Model相关信息
+    ''' </summary>
+    ''' <param name="infoItem"></param>
+    ''' <returns></returns>
+    Function GetInfo(infoItem As ModelInfo) As Object
+
+    ''' <summary>
     ''' Model增加列
     ''' </summary>
     ''' <param name="columns">要增加的各列</param>
@@ -189,3 +196,9 @@ Public Interface IModelCore
     ''' </summary>
     Event CellStateChanged As EventHandler(Of ModelCellStateChangedEventArgs)
 End Interface
+
+Public Enum ModelInfo
+    HAS_ERROR_CELL
+    HAS_WARNING_CELL
+    HAS_UNSYNCHRONIZED_ROW
+End Enum

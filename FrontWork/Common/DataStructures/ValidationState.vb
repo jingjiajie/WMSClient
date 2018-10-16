@@ -2,7 +2,7 @@
     Public Property Message As String
     Public Property Type As ValidationStateType
 
-    Public Shared Property OK As New ValidationState(ValidationStateType.OK, Nothing)
+    Public Shared ReadOnly Property OK As New ValidationState(ValidationStateType.OK, Nothing)
 
     Public Sub New(type As ValidationStateType, Optional message As String = Nothing)
         Me.Message = message

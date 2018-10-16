@@ -91,6 +91,7 @@
     <Compile Include="Adapters\PivotTableAdapter\DataStructures.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\DataStructures\CellPosition.vb" />
     <Compile Include="Common\DataStructures\ValidationState.vb" />
     <Compile Include="Common\ManualBrowserForm.Designer.vb">
       <DependentUpon>ManualBrowserForm.vb</DependentUpon>
@@ -327,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\AdsorbableAssociationForm.resx">
       <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\BasicView\BasicViewTextBox.resx">
+      <DependentUpon>BasicViewTextBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\GridView.resx">
       <DependentUpon>GridView.vb</DependentUpon>

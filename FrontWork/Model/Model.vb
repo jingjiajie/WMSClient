@@ -473,4 +473,16 @@ Partial Public Class Model
     Public Sub UpdateCellStates(rows() As Integer, fields() As String, states() As ModelCellState) Implements IModelCore.UpdateCellStates
         DirectCast(ModelOperator, IConfigurableModel).UpdateCellStates(rows, fields, states)
     End Sub
+
+    Public Function HasErrorCell() As Boolean Implements IModel.HasErrorCell
+        Return DirectCast(ModelOperator, IConfigurableModel).HasErrorCell()
+    End Function
+
+    Public Function HasWarningCell() As Boolean Implements IModel.HasWarningCell
+        Return DirectCast(ModelOperator, IConfigurableModel).HasWarningCell()
+    End Function
+
+    Public Function GetInfo(infoItem As ModelInfo) As Object Implements IModelCore.GetInfo
+        Return DirectCast(ModelOperator, IConfigurableModel).GetInfo(infoItem)
+    End Function
 End Class

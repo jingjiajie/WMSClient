@@ -9,6 +9,8 @@ Imports FrontWork
 Public Class ModelCore
     Implements IModelCore
 
+    Private _WarningCellCount As Integer = 0
+    Private _ErrorCellCount As Integer = 0
     Private _modelColumns As New List(Of ModelColumn)
     Private _allSelectionRange As Range() = New Range() {}
     Private Property RowStates As New List(Of ModelRowState)
@@ -368,6 +370,7 @@ Public Class ModelCore
     Public Sub UpdateCells(rows As Integer(), columnNames As String(), dataOfEachCell As Object()) Implements IModelCore.UpdateCells
         Dim posCellPairs As New List(Of ModelCellInfo)
         Dim rowSyncStatePairs As New List(Of RowSynchronizationStatePair)
+        Dim updateStateCells As New List(Of CellPositionStatePair)
         For i = 0 To rows.Length - 1
             Dim row = rows(i)
             Dim columnName = columnNames(i)
@@ -379,10 +382,14 @@ Public Class ModelCore
             Try
                 Dim convertedValue = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), Nothing, Util.ChangeType(dataOfEachCell(i), column.Type))
                 DirectCast(Me.Data.Rows(row)(col), ModelCell).Data = convertedValue
+                Dim oriCellState = Me.GetCellState(row, columnName)
+                If oriCellState.ValidationState.Type <> ValidationStateType.OK Then
+                    updateStateCells.Add(New CellPositionStatePair(row, columnName, New ModelCellState(ValidationState.OK)))
+                End If
             Catch ex As IndexOutOfRangeException
                 Throw New FrontWorkException($"UpdateCells failed: index {i} exceeded max row index: {Me.GetRowCount}")
-            Catch ex As ArgumentException
-                Throw New InvalidDataException($"""{dataOfEachCell(i)}""不是有效的格式")
+            Catch ex As Exception
+                updateStateCells.Add(New CellPositionStatePair(row, columnName, New ModelCellState(New ValidationState(ValidationStateType.ERROR, $"""{dataOfEachCell(i)}""不是有效的格式"))))
             End Try
             posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i), Me.GetCellState(rows(i), columnName)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
@@ -404,11 +411,20 @@ Public Class ModelCore
             rowSyncStatePairs.Select(Function(pair)
                                          Return pair.SynchronizationState
                                      End Function).ToArray)
+        '更新单元格状态
+        Me.UpdateCellStates(
+            updateStateCells.Select(Function(item) item.Row).ToArray,
+            updateStateCells.Select(Function(item) item.Field).ToArray,
+            updateStateCells.Select(Function(item) item.State).ToArray
+        )
     End Sub
 
     Public Overloads Sub Refresh(args As ModelRefreshArgs) Implements IModelCore.Refresh
         Dim dataRows = args.DataRows
         Dim ranges As Range() = args.SelectionRanges
+        '清除状态
+        Me._WarningCellCount = 0
+        Me._ErrorCellCount = 0
         '刷新选区
         Me._allSelectionRange = If(ranges, {})
         Call Me.Data.Rows.Clear()
@@ -603,8 +619,23 @@ Public Class ModelCore
             Dim row = rows(i)
             Dim field = fields(i)
             Dim state = states(i)
-            Dim cell As ModelCell = Me.Data.Rows(row)(fieldCol(field))
-            cell.State = state
+            Dim oriState = Me.GetCellState(row, field)
+            If oriState.ValidationState.Type <> state.ValidationState.Type Then
+                Dim cell As ModelCell = Me.Data.Rows(row)(fieldCol(field))
+                cell.State = state
+
+                If oriState.ValidationState.Type = ValidationStateType.ERROR Then
+                    Me._ErrorCellCount -= 1
+                ElseIf oriState.ValidationState.Type = ValidationStateType.WARNING Then
+                    Me._WarningCellCount -= 1
+                End If
+
+                If state.ValidationState.Type = ValidationStateType.ERROR Then
+                    Me._ErrorCellCount += 1
+                ElseIf state.ValidationState.Type = ValidationStateType.WARNING Then
+                    Me._WarningCellCount += 1
+                End If
+            End If
         Next
         RaiseEvent CellStateChanged(Me, New ModelCellStateChangedEventArgs(Me.GetCellInfos(rows, fields)))
     End Sub
@@ -619,7 +650,27 @@ Public Class ModelCore
         Return result
     End Function
 
-    Friend Structure RowSynchronizationStatePair
+    Public Function GetInfo(infoItem As ModelInfo) As Object Implements IModelCore.GetInfo
+        Select Case infoItem
+            Case ModelInfo.HAS_WARNING_CELL
+                Return Me._WarningCellCount > 0
+            Case ModelInfo.HAS_ERROR_CELL
+                Return Me._ErrorCellCount > 0
+            Case ModelInfo.HAS_UNSYNCHRONIZED_ROW
+                For i = 0 To Me.GetRowCount - 1
+                    If {SynchronizationState.UPDATED,
+                        SynchronizationState.ADDED_UPDATED
+                       }.Contains(Me.GetRowStates({i})(0).SynchronizationState) Then
+                        Return True
+                    End If
+                Next
+                Return False
+            Case Else
+                Throw New FrontWorkException($"Bad ModelInfo: {infoItem.ToString}")
+        End Select
+    End Function
+
+    Private Structure RowSynchronizationStatePair
         Public Row As Integer
         Public SynchronizationState As SynchronizationState
 
@@ -629,8 +680,20 @@ Public Class ModelCore
         End Sub
     End Structure
 
-    Private Class ModelCell
+    Private Structure CellPositionStatePair
+        Public Row As Integer
+        Public Field As String
         Public State As ModelCellState
+
+        Public Sub New(row As Integer, field As String, state As ModelCellState)
+            Me.Row = row
+            Me.Field = field
+            Me.State = state
+        End Sub
+    End Structure
+
+    Private Class ModelCell
+        Public State As ModelCellState = New ModelCellState(ValidationState.OK)
         Public Data As Object
 
         Public Sub New()

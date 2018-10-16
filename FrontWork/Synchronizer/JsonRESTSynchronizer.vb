@@ -14,7 +14,7 @@ Imports Jint.Native
 Public Class JsonRESTSynchronizer
     Inherits UserControl
     Implements ISynchronizer
-    Private _model As Model
+    Private _model As IModel
     Private _configuration As Configuration
     Private _mode As String = "default"
     Private Property RequestParams As New List(Of ModeParams)
@@ -87,11 +87,11 @@ Public Class JsonRESTSynchronizer
     ''' </summary>
     ''' <returns></returns>
     <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As Model
+    Public Property Model As IModel
         Get
             Return Me._model
         End Get
-        Set(value As Model)
+        Set(value As IModel)
             If Me._model IsNot Nothing Then
                 'TODO 保存数据
                 Call Me.UnbindModel()
@@ -366,6 +366,10 @@ Public Class JsonRESTSynchronizer
         '获取焦点以触发所有视图的编辑完成保存
         '防止最后一个编辑的单元格不能保存
         Call Util.FindFirstVisibleParent(Me)?.Focus()
+        If Me.Model.HasErrorCell Then
+            MessageBox.Show("请正确填写所有信息再进行保存！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
         Dim addedData As New List(Of IDictionary(Of String, Object))
         Dim addedRows As New List(Of Integer)
         Dim updatedData As New List(Of IDictionary(Of String, Object))
