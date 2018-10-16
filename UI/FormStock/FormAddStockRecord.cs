@@ -65,12 +65,14 @@ namespace WMS.UI.FormStock
                 });
             if (foundStorageLocations == null)
             {
-                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               // MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
             }
             else
             {
                 this.model1[row, "storageLocationId"] = foundStorageLocations["id"];
                 this.model1[row, "storageLocationNo"] = foundStorageLocations["no"];
+                this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(ValidationState.OK));
             }
         }
 
@@ -84,12 +86,14 @@ namespace WMS.UI.FormStock
                 });
             if (foundStorageLcations == null)
             {
-                MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位编号错误！")));
             }
             else
             {
                 this.model1[row, "storageLocationId"] = foundStorageLcations["id"];
                 this.model1[row, "storageLocationName"] = foundStorageLcations["name"];
+                this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(ValidationState.OK));
             }
         }
 
@@ -110,16 +114,19 @@ namespace WMS.UI.FormStock
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
-                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "amount", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "不合法的数字！")));
                 return 0;
             }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
+                this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
                 return amount;
             }
             else
             {
+                this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
                 return amount * unitAmount.Value;
             }
         }
@@ -163,16 +170,19 @@ namespace WMS.UI.FormStock
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
-                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "不合法的数字！")));
                 return 0;
             }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
-            {              
+            {
+                this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
                 return amount;
             }
             else
             {
+                this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
                 return amount * unitAmount.Value;
             }
         }
