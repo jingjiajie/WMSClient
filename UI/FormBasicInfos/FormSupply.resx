@@ -142,17 +142,17 @@
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:true},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:true,editable:true,editEnded:"#inspectionunitAmountEditEnded"},
 
-		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码"},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码"},
+		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码"},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码"},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码"},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码"},
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",association:"#storageLocationNoAssociation"},
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:true,editable:true},
         {name:"photoIndex",type:"string",displayName:"照片索引",visible:true,editable:true},
@@ -253,17 +253,17 @@
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
 
 
-		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false},
+		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false},
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
@@ -344,17 +344,17 @@
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
 
-		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false},
+		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false},
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
@@ -435,17 +435,17 @@
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
 
 
-		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false},
+		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false},
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},

@@ -105,19 +105,23 @@
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "FormSupplyMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "FormSupplyMethodListener"};
             modeMethodListenerNamesPair2.Mode = "default1";
             modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "FormSupplyMethodListener"};
             modeMethodListenerNamesPair3.Mode = "default2";
             modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "FormSupplyMethodListener"};
             modeMethodListenerNamesPair4.Mode = "default3";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,
@@ -225,7 +229,6 @@
             this.toolStripTop.Size = new System.Drawing.Size(977, 25);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
-            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // toolStripButtonSaveFileDialog
             // 
