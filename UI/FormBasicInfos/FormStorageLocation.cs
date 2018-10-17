@@ -63,12 +63,16 @@ namespace WMS.UI.FormBasicInfos
                 });
             if (foundStorageArea == null)
             {
-                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
+
             }
             else
             {
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
                 this.model1[row, "storageAreaNo"] = foundStorageArea["no"];
+                this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+
             }
         }
 
@@ -82,12 +86,16 @@ namespace WMS.UI.FormBasicInfos
                 });
             if (foundStorageArea == null)
             {
-                MessageBox.Show($"库区编号\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"库区编号\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageAreaNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
+
             }
             else
             {
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
                 this.model1[row, "storageAreaName"] = foundStorageArea["name"];
+                this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+
             }
         }
 
