@@ -57,140 +57,110 @@ namespace WMS.UI.FormBasicInfos
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
         }
+    }
 
-        private void defaultDeliveryStorageLocationNameEditEnded([Row]int row,[Data] string defaultDeliveryStorageLocationName)
+    [MethodListener]
+    public class FormPackageItemMethodListener
+    {
+        public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
-            this.model[row, "defaultDeliveryStorageLocationId"] = 0;
-            IDictionary<string, object> foundStorageLocation =
-                GlobalData.AllStorageLocations.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == defaultDeliveryStorageLocationName;
-                });
-            if (foundStorageLocation == null)
+            return (from s in GlobalData.AllSupplies
+                    where s["serialNo"] != null
+                    && s["serialNo"].ToString().StartsWith(input)
+                    && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                    && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                    select s["serialNo"]?.ToString()).Distinct().ToArray();
+        }
+
+        public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
+        {
+            string supplySerialNo = model[row, "supplySerialNo"]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(supplySerialNo)) return;
+            var foundSupplies = (from m in GlobalData.AllSupplies
+                                 where supplySerialNo == (string)m["serialNo"]
+                                 select m).ToArray();
+            if (foundSupplies.Length != 1)
             {
-                MessageBox.Show($"库位\"{defaultDeliveryStorageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                return;
+            }
+            this.FillSupplyFields(model, row, foundSupplies[0]);
+        }
+
+        private void FillSupplyFields(IModel model, int row, IDictionary<string, object> supply)
+        {
+            model[row, "supplyId"] = supply["id"];
+            model[row, "supplySerialNo"] = supply["serialNo"];
+            model[row, "materialId"] = supply["materialId"];
+            model[row, "materialNo"] = supply["materialNo"];
+            model[row, "materialName"] = supply["materialName"];
+            model[row, "materialProductLine"] = supply["materialProductLine"];
+            model[row, "supplierId"] = supply["supplierId"];
+            model[row, "supplierNo"] = supply["supplierNo"];
+            model[row, "supplierName"] = supply["supplierName"];
+
+            string defaultDeliveryStorageLocationNo = supply["defaultPrepareTargetStorageLocationNo"] as string;
+            model[row, "defaultDeliveryStorageLocationName"] = null;
+            model[row, "defaultDeliveryStorageLocationNo"] = defaultDeliveryStorageLocationNo;
+            this.FindStorageLocation(model, row, "defaultDeliveryStorageLocation", FindStorageLocationBy.NO, defaultDeliveryStorageLocationNo, false);
+            model[row, "defaultDeliveryAmount"] = supply["defaultDeliveryAmount"];
+            model[row, "defaultDeliveryUnit"] = supply["defaultDeliveryUnit"];
+            model[row, "defaultDeliveryUnitAmount"] = supply["defaultDeliveryUnitAmount"];
+            model.UpdateCellState(row, "supplySerialNo", new ModelCellState(ValidationState.OK));
+            model.RefreshView(row);
+            return;
+        }
+
+
+        private void defaultDeliveryStorageLocationNoEditEnded([Model] IModel model, [Row] int row, [Data] string storageLocationNo)
+        {
+            this.FindStorageLocation(model, row, "defaultDeliveryStorageLocation", FindStorageLocationBy.NO, storageLocationNo);
+        }
+
+        private void defaultDeliveryStorageLocationNameEditEnded([Model] IModel model, [Row] int row, [Data] string storageLocationName)
+        {
+            this.FindStorageLocation(model, row, "defaultDeliveryStorageLocation", FindStorageLocationBy.NAME, storageLocationName);
+        }
+
+
+
+        enum FindStorageLocationBy
+        {
+            NAME, NO
+        }
+
+        private void FindStorageLocation(IModel model, int row, string storageLocationFieldName, FindStorageLocationBy byField, string value, bool warning = true)
+        {
+            model[row, storageLocationFieldName + "Id"] = 0;//先清除库位ID
+
+            var foundStorageLocations = (from s in GlobalData.AllStorageLocations
+                                         where s[byField == FindStorageLocationBy.NAME ? "name" : "no"]?.ToString() == value
+                                         select s).ToArray();
+            if (foundStorageLocations.Length != 1) goto FAILED;
+            model[row, storageLocationFieldName + "Id"] = (int)foundStorageLocations[0]["id"];
+            if (byField == FindStorageLocationBy.NAME)
+            {
+                model[row, storageLocationFieldName + "No"] = foundStorageLocations[0]["no"];
             }
             else
             {
-                this.model[row, "defaultDeliveryStorageLocationId"] = foundStorageLocation["id"];
+                model[row, storageLocationFieldName + "Name"] = foundStorageLocations[0]["name"];
             }
-        }
-
-        private void defaultDeliveryStorageLocationNoEditEnded([Row]int row, [Data] string defaultDeliveryStorageLocationNo)
-        {
-            this.model[row, "defaultDeliveryStorageLocationId"] = 0;
-            IDictionary<string, object> foundStorageLocation =
-                GlobalData.AllStorageLocations.Find((s) =>
-                {
-                    if (s["no"] == null) return false;
-                    return s["no"].ToString() == defaultDeliveryStorageLocationNo;
-                });
-            if (foundStorageLocation == null)
-            {
-                MessageBox.Show($"库位\"{defaultDeliveryStorageLocationNo}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                this.model[row, "defaultDeliveryStorageLocationId"] = foundStorageLocation["id"];
-            }
-        }
-
-        //写了一个小时发感觉不太对然后发现有这个东西
-        //丧心病狂的交互逻辑
-        private void SupplierNoEditEnded([Row]int row)
-        {
-            if (string.IsNullOrWhiteSpace(this.model[row, "supplierNo"]?.ToString())) return;
-            this.model[row, "supplierName"] = "";
-            this.FindSupplierID(row);
-            this.TryGetSupplyID(row);
-        }
-
-        private void SupplierNameEditEnded([Row]int row)
-        {
-            if (string.IsNullOrWhiteSpace(this.model[row, "supplierName"]?.ToString())) return;
-            this.model[row, "supplierNo"] = "";
-            this.FindSupplierID(row);
-            this.TryGetSupplyID(row);
-        }
-
-        private void MaterialNoEditEnded([Row]int row)
-        {
-            if (string.IsNullOrWhiteSpace(this.model[row, "materialNo"]?.ToString())) return;
-            this.FindMaterialID(row);
-            this.TryGetSupplyID(row);
-        }
-
-        private void MaterialNameEditEnded([Row]int row)
-        {
-            if (string.IsNullOrWhiteSpace(this.model[row, "materialName"]?.ToString())) return;
-            this.FindMaterialID(row);
-            this.TryGetSupplyID(row);
-        }
-
-        private void MaterialProductLineEditEnded([Row]int row)
-        {
-            this.FindMaterialID(row);
-            this.TryGetSupplyID(row);
-        }
-
-        private void FindMaterialID(int row)
-        {
-            this.model[row, "materialId"] = 0; //先清除物料ID
-            string materialNo = this.model[row, "materialNo"]?.ToString() ?? "";
-            string materialName = this.model[row, "materialName"]?.ToString() ?? "";
-            string materialProductLine = this.model[row, "materialProductLine"]?.ToString() ?? "";
-            if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
-            //if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            var foundMaterials = (from m in GlobalData.AllMaterials
-                                  where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
-                                  && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
-                                     && materialProductLine == (m["productLine"]?.ToString() ?? "")
-                                  select m).ToArray();
-            if (foundMaterials.Length != 1)
-            {
-                goto FAILED;
-            }
-            this.model[row, "materialId"] = foundMaterials[0]["id"];
-            this.model[row, "materialNo"] = foundMaterials[0]["no"];
-            this.model[row, "materialName"] = foundMaterials[0]["name"];
-            this.model[row, "materialProductLine"] = foundMaterials[0]["productLine"];
+            model.UpdateCellState(row, storageLocationFieldName + "Name", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+            model.UpdateCellState(row, storageLocationFieldName + "No", new ModelCellState(new ValidationState(ValidationStateType.OK)));
             return;
 
             FAILED:
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            model.UpdateCellState(row, storageLocationFieldName + "Name", new ModelCellState(new ValidationState(ValidationStateType.WARNING, $"库位\"{value}\"不存在！")));
+            model.UpdateCellState(row, storageLocationFieldName + "No", new ModelCellState(new ValidationState(ValidationStateType.WARNING, $"库位\"{value}\"不存在！")));
             return;
         }
 
-        private void FindSupplierID(int row)
+        private void FindSupplyByMaterialAndSupplier(IModel model, int row)
         {
-            this.model[row, "supplierId"] = 0;//先清除供货商ID
-            string supplierNo = this.model[row, "supplierNo"]?.ToString() ?? "";
-            string supplierName = this.model[row, "supplierName"]?.ToString() ?? "";
-            if (string.IsNullOrWhiteSpace(supplierNo) && string.IsNullOrWhiteSpace(supplierName)) return;
-
-            var foundSuppliers = (from s in GlobalData.AllSuppliers
-                                  where (string.IsNullOrWhiteSpace(supplierNo) ? true : (s["no"]?.ToString() ?? "") == supplierNo)
-                                  && (string.IsNullOrWhiteSpace(supplierName) ? true : (s["name"]?.ToString() ?? "") == supplierName)
-                                  select s).ToArray();
-            if (foundSuppliers.Length != 1) goto FAILED;
-            int supplierID = (int)foundSuppliers[0]["id"];
-            this.model[row, "supplierId"] = foundSuppliers[0]["id"];
-            this.model[row, "supplierNo"] = foundSuppliers[0]["no"];
-            this.model[row, "supplierName"] = foundSuppliers[0]["name"];
-            return;
-
-            FAILED:
-            MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        private void TryGetSupplyID(int row)
-        {
-            this.model[row, "supplyId"] = 0; //先清除供货ID
-            int supplierId = (int?)this.model[row, "supplierId"] ?? 0;
-            int materialId = (int?)this.model[row, "materialId"] ?? 0;
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
+            int materialId = (int?)model[row, "materialId"] ?? 0;
             if (supplierId == 0 || materialId == 0) return;
             var foundSupplies = (from s in GlobalData.AllSupplies
                                  where (int)s["supplierId"] == supplierId
@@ -199,57 +169,46 @@ namespace WMS.UI.FormBasicInfos
             //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
             if (foundSupplies.Length == 1)
             {
-                this.model[row, "supplyId"] = foundSupplies[0]["id"];
-
-                this.FillDefaultValue(row, "defaultDeliveryAmount", foundSupplies[0]["defaultDeliveryAmount"]);
-                this.FillDefaultValue(row, "defaultDeliveryUnit", foundSupplies[0]["defaultDeliveryUnit"]);
-                this.FillDefaultValue(row, "defaultDeliveryUnitAmount", foundSupplies[0]["defaultDeliveryUnitAmount"]);
-
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
             }
         }
 
-        private void FillDefaultValue(int row, string fieldName, object value)
-        {
-            this.model[row, fieldName] = value;
-        }
-
         //物料名称输入联想
-        private object[] MaterialNameAssociation([Data]string str)
+        private object[] MaterialNameAssociation([Model] IModel model, [Data] string str)
         {
-            
-            string materialNo = this.model[this.model.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
-            int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
 
-                if (selectedIDs.Length == 0)
-                {
-                    var a = (from s in GlobalData.AllSupplies
-                             where s["materialName"] != null &&
-                             s["materialName"].ToString().StartsWith(str)
-                             && s["warehouseId"] != GlobalData.Warehouse["id"]
-                             && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
-                             select s["materialName"]).ToArray();
-                    return a.GroupBy(p => p).Select(p => p.Key).ToArray();
-                }
-                else
-                {
-                    var a = (from s in GlobalData.AllSupplies
-                             where s["materialName"] != null &&
-                             s["materialName"].ToString().StartsWith(str) &&
-                             (int)s["supplierId"] == selectedIDs[0]
-                             && s["warehouseId"] != GlobalData.Warehouse["id"]
-                             && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
-                             select s["materialName"]).ToArray();
-                    return a.GroupBy(p => p).Select(p => p.Key).ToArray();
-                }
-
+            string materialNo = model[model.SelectionRange.Row, "materialNo"]?.ToString() ?? "";
+            int[] selectedIDs = model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str)
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
+            else
+            {
+                var a = (from s in GlobalData.AllSupplies
+                         where s["materialName"] != null &&
+                         s["materialName"].ToString().StartsWith(str) &&
+                         (int)s["supplierId"] == selectedIDs[0]
+                         && s["warehouseId"] != GlobalData.Warehouse["id"]
+                         && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
+                         select s["materialName"]).ToArray();
+                return a.GroupBy(p => p).Select(p => p.Key).ToArray();
+            }
         }
 
         //物料代号输入联想
-        private object[] MaterialNoAssociation([Data]string str)
+        private object[] MaterialNoAssociation([Model] IModel model, [Data] string str)
         {
-            string materialName = this.model[this.model.SelectionRange.Row, "materialName"]?.ToString() ?? "";
+            string materialName = model[model.SelectionRange.Row, "materialName"]?.ToString() ?? "";
 
-            int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            int[] selectedIDs = model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
             {
                 var a = (from s in GlobalData.AllSupplies
@@ -268,16 +227,16 @@ namespace WMS.UI.FormBasicInfos
                          (int)s["supplierId"] == selectedIDs[0]
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
                          && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
-                         
+
                          select s["materialNo"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
         }
 
         //物料系列输入联想
-        private object[] MaterialProductLineAssociation([Data]string str)
+        private object[] MaterialProductLineAssociation([Model] IModel model, [Data] string str)
         {
-            int[] selectedIDs = this.model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
+            int[] selectedIDs = model.GetSelectedRows<int>("supplierId").Except(new int[] { 0 }).ToArray();
             if (selectedIDs.Length == 0)
             {
                 var a = (from s in GlobalData.AllSupplies
@@ -297,8 +256,95 @@ namespace WMS.UI.FormBasicInfos
                          select s["materialProductLine"]).ToArray();
                 return a.GroupBy(p => p).Select(p => p.Key).ToArray();
             }
-
         }
 
+        private void SupplierNoEditEnded([Model] IModel model, [Row] int row)
+        {
+            if (string.IsNullOrWhiteSpace(model[row, "supplierNo"]?.ToString())) return;
+            model[row, "supplierName"] = "";
+            this.FindSupplierID(model, row);
+            this.FindSupplyByMaterialAndSupplier(model, row);
+        }
+
+        private void SupplierNameEditEnded([Model] IModel model, [Row] int row)
+        {
+            if (string.IsNullOrWhiteSpace(model[row, "supplierName"]?.ToString())) return;
+            model[row, "supplierNo"] = "";
+            this.FindSupplierID(model, row);
+            this.FindSupplyByMaterialAndSupplier(model, row);
+        }
+
+        private void MaterialNoEditEnded([Model] IModel model, [Row] int row)
+        {
+            if (string.IsNullOrWhiteSpace(model[row, "materialNo"]?.ToString())) return;
+            //this.model[row, "materialName"] = "";
+            this.FindMaterialID(model, row);
+            this.FindSupplyByMaterialAndSupplier(model, row);
+        }
+
+        private void MaterialNameEditEnded([Model] IModel model, [Row] int row)
+        {
+            if (string.IsNullOrWhiteSpace(model[row, "materialName"]?.ToString())) return;
+            // this.model[row, "materialNo"] = "";
+            this.FindMaterialID(model, row);
+            this.FindSupplyByMaterialAndSupplier(model, row);
+        }
+
+        private void MaterialProductLineEditEnded([Model] IModel model, [Row] int row)
+        {
+            this.FindMaterialID(model, row);
+            this.FindSupplyByMaterialAndSupplier(model, row);
+        }
+
+        private void FindMaterialID(IModel model, int row)
+        {
+            model[row, "materialId"] = 0; //先清除物料ID
+            string materialNo = model[row, "materialNo"]?.ToString() ?? "";
+            string materialName = model[row, "materialName"]?.ToString() ?? "";
+            string materialProductLine = model[row, "materialProductLine"]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(materialNo) && string.IsNullOrWhiteSpace(materialName)) return;
+            var foundMaterials = (from m in GlobalData.AllMaterials
+                                  where (string.IsNullOrWhiteSpace(materialNo) ? true : (m["no"]?.ToString() ?? "") == materialNo)
+                                  && (string.IsNullOrWhiteSpace(materialName) ? true : (m["name"]?.ToString() ?? "") == materialName)
+                                  && (string.IsNullOrWhiteSpace(materialProductLine) ? true : materialProductLine == (m["productLine"]?.ToString() ?? ""))
+                                  select m).ToArray();
+            if (foundMaterials.Length != 1)
+            {
+                goto FAILED;
+            }
+            model[row, "materialId"] = foundMaterials[0]["id"];
+            model[row, "materialNo"] = foundMaterials[0]["no"];
+            model[row, "materialName"] = foundMaterials[0]["name"];
+            model[row, "materialProductLine"] = foundMaterials[0]["productLine"];
+            return;
+
+            FAILED:
+            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
+            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        private void FindSupplierID(IModel model, int row)
+        {
+            model[row, "supplierId"] = 0;//先清除供货商ID
+            string supplierNo = model[row, "supplierNo"]?.ToString() ?? "";
+            string supplierName = model[row, "supplierName"]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(supplierNo) && string.IsNullOrWhiteSpace(supplierName)) return;
+
+            var foundSuppliers = (from s in GlobalData.AllSuppliers
+                                  where (string.IsNullOrWhiteSpace(supplierNo) ? true : (s["no"]?.ToString() ?? "") == supplierNo)
+                                  && (string.IsNullOrWhiteSpace(supplierName) ? true : (s["name"]?.ToString() ?? "") == supplierName)
+                                  select s).ToArray();
+            if (foundSuppliers.Length != 1) goto FAILED;
+            int supplierID = (int)foundSuppliers[0]["id"];
+            model[row, "supplierId"] = foundSuppliers[0]["id"];
+            model[row, "supplierNo"] = foundSuppliers[0]["no"];
+            model[row, "supplierName"] = foundSuppliers[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
     }
 }
