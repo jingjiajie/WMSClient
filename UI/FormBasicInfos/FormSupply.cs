@@ -102,10 +102,10 @@ namespace WMS.UI.FormBasicInfos
         }
         private void flesh()
         {
-                this.searchView1.Search();
-                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-                GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
+            this.searchView1.Search();
+            Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+            GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
         }
 
         //private void MaterialNameEditEnded(int row, string materialName)
@@ -172,13 +172,13 @@ namespace WMS.UI.FormBasicInfos
             return;
         }
         //供应商名称编辑完成，根据名称自动搜索ID和No
-        private void SupplierNameEditEnded([Row]int row,[Data] string supplierName)
+        private void SupplierNameEditEnded([Row]int row, [Data] string supplierName)
         {
             IDictionary<string, object> foundSupplier =
                 GlobalData.AllSuppliers.Find((s) =>
                 {
                     if (s["name"] == null) return false;
-                    return s["name"].ToString() == supplierName&& s["warehouseId"] != GlobalData.Warehouse["id"];
+                    return s["name"].ToString() == supplierName && s["warehouseId"] != GlobalData.Warehouse["id"];
                 });
             if (foundSupplier == null)
             {
@@ -230,7 +230,7 @@ namespace WMS.UI.FormBasicInfos
             //this.searchView1.Search();
         }
 
-        private string EntryAmountForwardMapper(double amount,[Row]int row)
+        private string EntryAmountForwardMapper(double amount, [Row]int row)
         {
             double? unitAmount = (double?)this.model1[row, "defaultEntryUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -266,7 +266,7 @@ namespace WMS.UI.FormBasicInfos
             this.model1.RefreshView(row);
         }
 
-        private string InspectionAmountForwardMapper([Data]double amount ,[Row] int row)
+        private string InspectionAmountForwardMapper([Data]double amount, [Row] int row)
         {
             double? unitAmount = (double?)this.model1[row, "defaultInspectionUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -341,11 +341,8 @@ namespace WMS.UI.FormBasicInfos
         private void toolStripButtonSaveFileDialog_Click(object sender, EventArgs e)
         {
             string localFilePath = ShowSaveFileDialog();
-            
+
             if (localFilePath == null) return;
-            
-            string FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
-            string fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1); //获取文件名，不带路径
 
             //获取选中行ID，过滤掉新建的行（ID为0的）
             int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
@@ -354,80 +351,74 @@ namespace WMS.UI.FormBasicInfos
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            string[] rowData = this.model1.GetSelectedRows<string>("barCodeNo").Except(new string[] { "" }).ToArray();
+            string[] rowData = this.model1.GetSelectedRows<string>("barCodeNo").ToArray();
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                if (rowData[i].Length==0)
-                {
-                    MessageBox.Show("选中供货未录入条码号信息！" , "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+
 
                 string barCodeNo = (string)rowData[i];
+                if (!string.IsNullOrEmpty(barCodeNo))
+                {
+                    BarcodeWriter writer = new BarcodeWriter();
+                    //设置条码格式
+                    //使用ITF 格式，不能被现在常用的支付宝、微信扫出来
+                    //如果想生成可识别的可以使用 CODE_128 格式
+                    writer.Format = BarcodeFormat.CODE_39;
 
-                BarcodeWriter writer = new BarcodeWriter();
-                //设置条码格式
-                //使用ITF 格式，不能被现在常用的支付宝、微信扫出来
-                //如果想生成可识别的可以使用 CODE_128 格式
-                writer.Format = BarcodeFormat.CODE_39;
+                    //设定条码的一些设置
+                    EncodingOptions options = new EncodingOptions();
+                    options.Width = 382;
+                    options.Height = 115;
+                    options.Margin = 2;
+                    writer.Options = options;
 
-                //设定条码的一些设置
-                EncodingOptions options = new EncodingOptions();
-                options.Width = 382;
-                options.Height = 115;
-                options.Margin = 2;
-                writer.Options = options;
-
-                Bitmap bmp = writer.Write(barCodeNo);
+                    Bitmap bmp = writer.Write(barCodeNo);
 
 
-                bmp.Save(FilePath+ "\\"+barCodeNo +"_"+ fileNameExt, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    bmp.Save(localFilePath + "\\" + barCodeNo + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+                
             }
+            MessageBox.Show("条码导出操作完成", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            
         }
 
         //选择保存路径
         private string ShowSaveFileDialog()
         {
+            //string localFilePath = "";
+            ////string localFilePath, fileNameExt, newFileName, FilePath; 
+            //SaveFileDialog sfd = new SaveFileDialog();
 
-            string localFilePath = "";
-            //string localFilePath, fileNameExt, newFileName, FilePath; 
-            SaveFileDialog sfd = new SaveFileDialog();
+            //sfd.Title = "保存文件";
+            ////设置文件类型 
+            //sfd.Filter = "jpg图片文件（*.jpg）|*.jpg";
 
-            sfd.Title = "保存文件";
-            //设置文件类型 
-            sfd.Filter = "jpg图片文件（*.jpg）|*.jpg";
+            ////设置默认文件类型显示顺序 
+            //sfd.FilterIndex = 1;
 
-            //设置默认文件类型显示顺序 
-            sfd.FilterIndex = 1;
+            ////保存对话框是否记忆上次打开的目录 
+            //sfd.RestoreDirectory = true;
 
-            //保存对话框是否记忆上次打开的目录 
-            sfd.RestoreDirectory = true;
+            ////点了保存按钮进入 
+            //if (sfd.ShowDialog() == DialogResult.OK)
+            //{
+            //    localFilePath = sfd.FileName.ToString(); //获得文件路径 
+            //}
+            //return localFilePath;
 
-            //点了保存按钮进入 
-            if (sfd.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "请选择条形码导出文件夹";
+            dialog.ShowNewFolderButton = true;
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                localFilePath = sfd.FileName.ToString(); //获得文件路径 
-                
-
-                //获取文件路径，不带文件名 
-                //FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\")); 
-
-                //给文件名前加上时间 
-                //newFileName = DateTime.Now.ToString("yyyyMMdd") + fileNameExt; 
-
-                //在文件名里加字符 
-                //sfd.FileName.Insert(1, "dameng");
-
-                //System.IO.FileStream fs = (System.IO.FileStream)sfd.OpenFile();//输出文件 
-
-                ////fs输出带文字或图片的文件，就看需求了 
-
+                if (string.IsNullOrEmpty(dialog.SelectedPath))
+                {
+                    MessageBox.Show(this, "文件夹路径不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return null;
+                }
             }
-
-            return localFilePath;
-            
+            return dialog.SelectedPath;
         }
     }
 
