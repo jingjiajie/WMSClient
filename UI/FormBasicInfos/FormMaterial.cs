@@ -58,16 +58,8 @@ namespace WMS.UI.FormBasicInfos
             this.updateBasicAndReoGridView();
         }
 
-        private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
-        {
-
-        }
-
-
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            //this.basicView1.Enabled = true;
-            //this.reoGridView1.Enabled = true;
             string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
             int row = 1;
             try
@@ -82,22 +74,14 @@ namespace WMS.UI.FormBasicInfos
             for (int i = 0; i < row; i++)
             {
                 this.model1.InsertRow(0, new Dictionary<string, object>()
-                {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "enabled",1}
+                {
                 });
             }
-            //this.model1.InsertRow(0, new Dictionary<string, object>()
-            //{
-            //    { "warehouseId",GlobalData.Warehouse["id"]},
-            //    { "warehouseName",GlobalData.Warehouse["name"]},
-            //    { "enabled",1}
-            //});
         }
 
-        private void configuration1_Load(object sender, EventArgs e)
+        private int WarehouseIdDefaultValue()
         {
-
+            return (int)GlobalData.Warehouse["id"];
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

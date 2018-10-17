@@ -139,7 +139,7 @@
             this.toolStripButtonSupplyShipmentInfo.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplyShipmentInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyShipmentInfo.Name = "toolStripButtonSupplyShipmentInfo";
-            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(159, 22);
+            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(133, 22);
             this.toolStripButtonSupplyShipmentInfo.Text = "查看/修改出货信息";
             this.toolStripButtonSupplyShipmentInfo.Click += new System.EventHandler(this.toolStripButtonSupplyShipmentInfo_Click);
             // 
@@ -148,7 +148,7 @@
             this.toolStripButtonSupplyOuterPackingSize.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplyOuterPackingSize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyOuterPackingSize.Name = "toolStripButtonSupplyOuterPackingSize";
-            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(204, 22);
+            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(169, 22);
             this.toolStripButtonSupplyOuterPackingSize.Text = "查看/修改零件外包装信息";
             this.toolStripButtonSupplyOuterPackingSize.Click += new System.EventHandler(this.toolStripButtonSupplyOuterPackingSize_Click);
             // 
@@ -157,7 +157,7 @@
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Name = "toolStripButtonSupplySingleBoxTranPackingInfo";
-            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(189, 22);
+            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(157, 22);
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Text = "查看/修改单箱包装信息";
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Click += new System.EventHandler(this.toolStripButtonSupplySingleBoxTranPackingInfo_Click);
             // 
@@ -172,7 +172,7 @@
             this.toolStripButtonDelete.Image = global::WMS.UI.Properties.Resources.delete;
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 22);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 22);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -181,7 +181,7 @@
             this.toolStripButtonAlter.Image = global::WMS.UI.Properties.Resources.cancle;
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(93, 22);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 22);
             this.toolStripButtonAlter.Text = "保存修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -190,7 +190,7 @@
             this.toolStripButtonAdd.Image = global::WMS.UI.Properties.Resources.add;
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 22);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 22);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -232,7 +232,7 @@
             this.toolStripButtonSaveFileDialog.Image = global::WMS.UI.Properties.Resources.check;
             this.toolStripButtonSaveFileDialog.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSaveFileDialog.Name = "toolStripButtonSaveFileDialog";
-            this.toolStripButtonSaveFileDialog.Size = new System.Drawing.Size(93, 22);
+            this.toolStripButtonSaveFileDialog.Size = new System.Drawing.Size(80, 22);
             this.toolStripButtonSaveFileDialog.Text = "条码导出";
             this.toolStripButtonSaveFileDialog.Click += new System.EventHandler(this.toolStripButtonSaveFileDialog_Click);
             // 
@@ -241,7 +241,7 @@
             this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(123, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(104, 22);
             this.toolStripButton1.Text = "查看概要信息";
             this.toolStripButton1.Visible = false;
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
@@ -262,7 +262,7 @@
             this.tableLayoutPanel2.RowCount = 6;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -285,13 +285,13 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 22);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(69, 22);
+            this.labelStatus.Size = new System.Drawing.Size(56, 22);
             this.labelStatus.Text = "零件信息";
             // 
             // panelPager
@@ -323,10 +323,10 @@
             this.panel1.Controls.Add(this.configuration1);
             this.panel1.Controls.Add(this.reoGridView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 250);
+            this.panel1.Location = new System.Drawing.Point(0, 290);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(977, 173);
+            this.panel1.Size = new System.Drawing.Size(977, 133);
             this.panel1.TabIndex = 7;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -386,7 +386,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(977, 173);
+            this.reoGridView1.Size = new System.Drawing.Size(977, 133);
             this.reoGridView1.TabIndex = 2;
             // 
             // panel2
@@ -396,7 +396,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 50);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(977, 200);
+            this.panel2.Size = new System.Drawing.Size(977, 240);
             this.panel2.TabIndex = 8;
             // 
             // basicView1
@@ -411,7 +411,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(977, 200);
+            this.basicView1.Size = new System.Drawing.Size(977, 240);
             this.basicView1.TabIndex = 16;
             // 
             // tableLayoutPanel1
@@ -429,7 +429,7 @@
             // 
             // FormSupply
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 478);
             this.Controls.Add(this.tableLayoutPanel2);
