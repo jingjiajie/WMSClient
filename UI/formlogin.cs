@@ -246,6 +246,8 @@ namespace WMS.UI
 
         private void RefreshAssociationData()
         {
+            //GlobalData.AllDate = RestClient.Get<IDictionary<string, IDictionary<string, object[]>>>(
+               //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/{GlobalData.Warehouse["id"]}/refreshGlobalDate");
 
             Condition condWarehouse = new Condition().AddCondition("warehouseId",GlobalData.Warehouse["id"]);
             Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
