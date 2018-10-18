@@ -232,6 +232,74 @@ namespace WMS.UI
             Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
+            /*
+            GlobalData.AllDate = RestClient.Get<IDictionary<string, object[]>>(
+           Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/refreshGlobalDate" + "/" + GlobalData.Warehouse["id"]);
+            foreach (KeyValuePair<string, Object[]> allData in GlobalData.AllDate)
+            {
+                string key = allData.Key;
+                Object[] data = allData.Value;
+                var list = (from x in data.ToList() select (IDictionary<string, object>)x).ToList();
+                switch (key)
+                {
+                    case "AllSuppliers":
+                        GlobalData.AllSuppliers = list;
+                        break;
+                    case "AllMaterial":
+                        GlobalData.AllMaterials = list;
+                        break;
+                    case "AllSupply":
+                        GlobalData.AllSupplies = list;
+                        break;
+                    case "AllStoaregLocation":
+                        GlobalData.AllStorageLocations = list;
+                        break;
+                    case "AllStorageArea":
+                        GlobalData.AllStorageAreas = list;
+                        break;
+                    case "AllPersons":
+                        GlobalData.AllPersons = list;
+                        break;
+                    case "AllPackage":
+                        GlobalData.AllPackage = list;
+                        break;
+                    case "AllSalaryItem":
+                        GlobalData.AllSalaryItem = list;
+                        break;
+                    case "AllSalaryType":
+                        GlobalData.AllSalaryType = list;
+                        break;
+                    case "AllSummaryNote":
+                        GlobalData.AllSummaryNote = list;
+                        break;
+                    case "AllSalaryPeriod":
+                        GlobalData.AllSalaryPeriod = list;
+                        break;
+                    case "AllAccountTitle":
+                        GlobalData.AllAccountTitle = list;
+                        break;
+                    case "AllAccountTitleTrue":
+                        GlobalData.AllAccountTitleTure = list;
+                        break;
+                    case "AllTax":
+                        GlobalData.AllTax = list;
+                        break;
+                    case "AllAccountPeriod":
+                        GlobalData.AllAccountPeriod = list;
+                        break;
+                    case "AccountPeriod":
+                        if (list.Count == 1)
+                        {
+                            GlobalData.AccountPeriod = list[0];
+                        }
+                        else
+                        {
+                            GlobalData.AccountPeriod = null;
+                        }
+                        break;
+                }
+            }
+            */
             Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
