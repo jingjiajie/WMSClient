@@ -82,21 +82,20 @@ namespace WMS.UI
             }
         }
 
-        private double AmountBackwardMapper(string strAmount, int row)
+        private string AmountBackwardMapper(string strAmount, int row)
         {
             if(!Double.TryParse(strAmount,out double amount))
             {
-                MessageBox.Show($"\"{strAmount}\"不是合法的数字","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return 0;
+                return strAmount;
             }
             double? unitAmount = (double?)this.model[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                return amount;
+                return amount.ToString();
             }
             else
             {
-                return amount * unitAmount.Value;
+                return (amount * unitAmount.Value).ToString();
             }
         }
 

@@ -383,6 +383,7 @@ Public Class ModelCore
                 Dim convertedValue = If(String.IsNullOrWhiteSpace(dataOfEachCell(i)), Nothing, Util.ChangeType(dataOfEachCell(i), column.Type))
                 DirectCast(Me.Data.Rows(row)(col), ModelCell).Data = convertedValue
                 Dim oriCellState = Me.GetCellState(row, columnName)
+                posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i), Me.GetCellState(rows(i), columnName)))
                 If oriCellState.ValidationState.Type <> ValidationStateType.OK Then
                     updateStateCells.Add(New CellPositionStatePair(row, columnName, New ModelCellState(ValidationState.OK)))
                 End If
@@ -391,7 +392,6 @@ Public Class ModelCore
             Catch ex As Exception
                 updateStateCells.Add(New CellPositionStatePair(row, columnName, New ModelCellState(New ValidationState(ValidationStateType.ERROR, $"""{dataOfEachCell(i)}""不是有效的格式"))))
             End Try
-            posCellPairs.Add(New ModelCellInfo(rows(i), columnName, dataOfEachCell(i), Me.GetCellState(rows(i), columnName)))
             Dim curState = Me.GetRowSynchronizationState(Me.Data.Rows(rows(i)))
             Select Case curState
                 Case SynchronizationState.ADDED
