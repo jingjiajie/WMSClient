@@ -295,54 +295,80 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Sub ViewRowUpdatedEvent(sender As Object, e As ViewRowUpdatedEventArgs)
-        Dim rows = (From r In e.Rows Select r.Row).ToArray
-        Dim data = (From r In e.Rows Select r.RowData).ToArray
-        Dim fields = Me.Configuration.GetFields(Me.Mode)
-        Dim uneditableFieldNames = (From f In fields
-                                    Where f.Editable.GetValue = False
-                                    Select f.Name.GetValue).ToArray
-        For i = 0 To rows.Length - 1
-            Dim keys = data(i).Keys.ToArray
-            For Each key In keys
-                If uneditableFieldNames.Contains(key) Then
-                    data(i).Remove(key)
-                End If
-            Next
-            data(i) = Me.GetBackwardMappedRowData(data(i), rows(i))
-        Next
+        Throw New NotImplementedException("Don't use this event! It will be soon deleted.")
+        'Dim rows = (From r In e.Rows Select r.Row).ToArray
+        'Dim data = (From r In e.Rows Select r.RowData).ToArray
+        'Dim fields = Me.Configuration.GetFields(Me.Mode)
+        'Dim uneditableFieldNames = (From f In fields
+        '                            Where f.Editable.GetValue = False
+        '                            Select f.Name.GetValue).ToArray
+        'For i = 0 To rows.Length - 1
+        '    Dim keys = data(i).Keys.ToArray
+        '    For Each key In keys
+        '        If uneditableFieldNames.Contains(key) Then
+        '            data(i).Remove(key)
+        '        End If
+        '    Next
+        '    data(i) = Me.GetBackwardMappedRowData(data(i), rows(i))
+        'Next
 
-        Try
-            RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-            Call Me.Model.UpdateRows(rows, data)
-            AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        Catch ex As FrontWorkException
-            Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End Try
+        'Try
+        '    RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        '    Call Me.Model.UpdateRows(rows, data)
+        '    AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        'Catch ex As FrontWorkException
+        '    Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'End Try
     End Sub
 
     Protected Overridable Sub ViewCellUpdatedEvent(sender As Object, e As ViewCellUpdatedEventArgs)
         '删除所有不能编辑的单元格
-        Dim cellInfos As List(Of ViewCellInfo) = e.Cells.ToList()
+        Dim cellInfos As New List(Of ViewCellInfo)(e.Cells)
         cellInfos.RemoveAll(
             Function(cellInfo)
                 Return Not Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName).Editable.GetValue
             End Function)
 
-        Dim rows = (From c In cellInfos Select c.Row).ToArray
-        Dim columnNames = (From c In cellInfos Select c.ColumnName).ToArray
-        Dim data = (From c In cellInfos Select c.CellData).ToArray
+        Dim columns = cellInfos.Select(Function(cellInfo)
+                                           Return Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
+                                       End Function)
+        Dim validationError As New List(Of CellPositionValidationStatePair)
+        Dim updateCell As New List(Of ViewCellInfo)
 
-        For i = 0 To rows.Length - 1
-            data(i) = Me.GetBackwardMappedCellData(data(i), columnNames(i), rows(i))
+        For i = 0 To cellInfos.Count - 1
+            Dim column = columns(i)
+            Dim cellInfo = cellInfos(i)
+            Dim rawData = cellInfo.CellData
+            Try
+                Dim convertedData As Object
+                convertedData = Util.ChangeType(rawData, column.Type.GetValue)
+                Dim mappedData = Me.GetBackwardMappedCellData(convertedData, columns(i).Name, cellInfo.Row)
+                updateCell.Add(New ViewCellInfo(cellInfo.Row, cellInfo.ColumnName, mappedData))
+            Catch ex As Exception
+                validationError.Add(New CellPositionValidationStatePair(
+                                        cellInfo.Row,
+                                        cellInfo.ColumnName,
+                                        New ValidationState(ValidationStateType.ERROR, $"""{rawData}""不是有效的格式！"))
+                                    )
+            End Try
         Next
 
         Try
             RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-            Call Me.Model.UpdateCells(rows, columnNames, data)
+            Call Me.Model.UpdateCells(updateCell.Select(
+                                        Function(item) item.Row).ToArray,
+                                        updateCell.Select(Function(item) item.ColumnName).ToArray,
+                                        updateCell.Select(Function(item) item.CellData).ToArray)
             AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
+
+        Call Me.Model.UpdateCellValidationStates(
+            validationError.Select(Function(item) item.CellPosition.Row).ToArray,
+            validationError.Select(Function(item) item.CellPosition.Field).ToArray,
+            validationError.Select(Function(item) item.State).ToArray
+        )
     End Sub
 
     Protected Overridable Sub UnbindView()

@@ -700,4 +700,16 @@ Public Class ModelOperator
     Public Function GetInfo(infoItem As ModelInfo) As Object Implements IModelCore.GetInfo
         Return Me._ModelCore.GetInfo(infoItem)
     End Function
+
+    Public Sub UpdateCellValidationStates(rows() As Integer, fields() As String, validationStates() As ValidationState) Implements IModel.UpdateCellValidationStates
+        Dim states = Me.ModelCore.GetCellStates(rows, fields)
+        For i = 0 To states.Length - 1
+            states(i).ValidationState = validationStates(i)
+        Next
+        Call Me.ModelCore.UpdateCellStates(rows, fields, states)
+    End Sub
+
+    Public Sub UpdateCellValidationState(row As Integer, field As String, state As ValidationState) Implements IModel.UpdateCellValidationState
+        Call Me.UpdateCellValidationStates({row}, {field}, {state})
+    End Sub
 End Class

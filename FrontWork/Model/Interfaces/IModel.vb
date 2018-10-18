@@ -43,5 +43,7 @@ Public Interface IModel
     Function GetRowSynchronizationState(row As Integer) As SynchronizationState
     Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
     Function GetCellState(row As Integer, field As String) As ModelCellState
-    Sub UpdateCellState(row As Integer, field As String, states As ModelCellState)
+    Sub UpdateCellState(row As Integer, field As String, state As ModelCellState)
+    Sub UpdateCellValidationStates(rows As Integer(), fields As String(), states As ValidationState())
+    Sub UpdateCellValidationState(row As Integer, field As String, state As ValidationState)
 End Interface

@@ -485,4 +485,12 @@ Partial Public Class Model
     Public Function GetInfo(infoItem As ModelInfo) As Object Implements IModelCore.GetInfo
         Return DirectCast(ModelOperator, IConfigurableModel).GetInfo(infoItem)
     End Function
+
+    Public Sub UpdateCellValidationStates(rows() As Integer, fields() As String, states() As ValidationState) Implements IModel.UpdateCellValidationStates
+        DirectCast(ModelOperator, IConfigurableModel).UpdateCellValidationStates(rows, fields, states)
+    End Sub
+
+    Public Sub UpdateCellValidationState(row As Integer, field As String, state As ValidationState) Implements IModel.UpdateCellValidationState
+        DirectCast(ModelOperator, IConfigurableModel).UpdateCellValidationState(row, field, state)
+    End Sub
 End Class

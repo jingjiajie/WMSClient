@@ -82,20 +82,16 @@ namespace WMS.UI
             }
         }
 
-        private string AmountBackwardMapper(string strAmount, int row)
+        private double AmountBackwardMapper([Data]double amount, [Row]int row)
         {
-            if(!Double.TryParse(strAmount,out double amount))
-            {
-                return strAmount;
-            }
             double? unitAmount = (double?)this.model[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                return amount.ToString();
+                return amount;
             }
             else
             {
-                return (amount * unitAmount.Value).ToString();
+                return amount * unitAmount.Value;
             }
         }
 
