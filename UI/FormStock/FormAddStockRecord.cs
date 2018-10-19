@@ -110,23 +110,18 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AmountBackwardMapper([Data]string strAmount, [Row]int row)
+        private double AmountBackwardMapper([Data]double amount, [Row]int row)
         {
-            if (!Double.TryParse(strAmount, out double amount))
-            {
-                //MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.model1.UpdateCellState(row, "amount", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "不合法的数字！")));
-                return 0;
-            }
+
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
+                //this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
                 return amount;
             }
             else
             {
-                this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
+                //this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
                 return amount * unitAmount.Value;
             }
         }
@@ -166,23 +161,23 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AvailableAmountBackwardMapper([Data]string strAmount, [Row] int row)
+        private double AvailableAmountBackwardMapper([Data]Double amount, [Row] int row)
         {
-            if (!Double.TryParse(strAmount, out double amount))
-            {
-                //MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "不合法的数字！")));
-                return 0;
-            }
+            //if (!Double.TryParse(strAmount, out double amount))
+            //{
+            //    //MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "不合法的数字！")));
+            //    return 0;
+            //}
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
-                this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
+                //this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
                 return amount;
             }
             else
             {
-                this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
+                //this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
                 return amount * unitAmount.Value;
             }
         }
