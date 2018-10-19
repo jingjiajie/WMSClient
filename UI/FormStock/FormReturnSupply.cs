@@ -14,7 +14,7 @@ namespace WMS.UI.FormStock
     public partial class FormReturnSupply : Form
     {
         private Action addFinishedCallback = null;
-        private int rowCur;
+        //private int rowCur;
         public FormReturnSupply()
         {         
             MethodListenerContainer.Register("FormReturnSupply",this);

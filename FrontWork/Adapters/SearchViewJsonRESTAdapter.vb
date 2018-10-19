@@ -114,10 +114,14 @@ Public Class SearchViewJsonRESTAdapter
         api.SetRequestParameter("$orders", jsEngine.GetValue("$orders"))
     End Sub
 
-    Protected Overridable Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
+    Protected Overridable Sub SearchViewOnSearch(sender As Object, args As OnSearchEventArgs)
         If Me.Synchronizer.FindAPI Is Nothing Then
             Throw New FrontWorkException("FindAPI not set!")
         End If
+        Call Me.Search(args)
+    End Sub
+
+    Protected Overridable Function Search(args As OnSearchEventArgs) As Boolean
         Me.SetConditionAndOrdersToAPI(Me.Synchronizer.FindAPI, args)
         Return Me.Synchronizer.Find()
     End Function

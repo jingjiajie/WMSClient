@@ -29,11 +29,14 @@ Public Class PagerSearchJsonRESTAdapter
         Call Me.Search(Me.SearchView.GetSearchEventArgs, False)
     End Sub
 
-    Protected Overrides Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
-        Return Me.Search(args, True)
-    End Function
+    Protected Overrides Sub SearchViewOnSearch(sender As Object, args As OnSearchEventArgs)
+        If Me.Synchronizer.FindAPI Is Nothing Then
+            Throw New FrontWorkException("FindAPI not set!")
+        End If
+        Call Me.Search(args, True)
+    End Sub
 
-    Public Function Search(searchArgs As OnSearchEventArgs, resetPage As Boolean) As Boolean
+    Public Overloads Function Search(searchArgs As OnSearchEventArgs, resetPage As Boolean) As Boolean
         If Me.Synchronizer.GetCountAPI Is Nothing Then
             Throw New FrontWorkException("get-count API not set!")
         End If
@@ -52,7 +55,7 @@ Public Class PagerSearchJsonRESTAdapter
 
         '=====刷新分页总数
         '获取搜索结果
-        If Not MyBase.SearchViewOnSearch(Nothing, searchArgs) Then Return False
+        If Not MyBase.Search(searchArgs) Then Return False
 
         Call Me.SetConditionAndOrdersToAPI(Me.Synchronizer.GetCountAPI, searchArgs)
         '获取搜索结果总数量
