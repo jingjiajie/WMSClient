@@ -493,4 +493,8 @@ Partial Public Class Model
     Public Sub UpdateCellValidationState(row As Integer, field As String, state As ValidationState) Implements IModel.UpdateCellValidationState
         DirectCast(ModelOperator, IConfigurableModel).UpdateCellValidationState(row, field, state)
     End Sub
+
+    Public Sub InsertRows(row As Integer, count As Integer, data() As IDictionary(Of String, Object)) Implements IModel.InsertRows
+        DirectCast(ModelOperator, IConfigurableModel).InsertRows(row, count, data)
+    End Sub
 End Class
