@@ -127,7 +127,6 @@
 		{name:"name",type:"string",displayName:"物料名称",visible:true,editable:true,placeHolder:"必填信息"},
 		{name:"no",type:"string",displayName:"代号",visible:true,editable:true,placeHolder:"必填信息"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
-		{name:"warehouseName",type:"string",displayName:"仓库名称",visible:false,editable:false},
 		{name:"productLine",type:"string",displayName:"系列",visible:true,defaultValue:""},
 		{name:"enabled",type:"int",displayName:"是否启用",defaultValue:1,visible:false}
 
