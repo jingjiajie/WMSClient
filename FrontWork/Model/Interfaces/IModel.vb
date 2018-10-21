@@ -17,6 +17,7 @@ Public Interface IModel
     Function GetRow(Of T As New)(row As Integer) As T
     Function GetRow(row As Integer) As IDictionary(Of String, Object)
     Function AddRow(data As IDictionary(Of String, Object)) As Integer
+    Overloads Sub InsertRows(row As Integer, count As Integer, data As IDictionary(Of String, Object)())
     Sub InsertRow(row As Integer, data As IDictionary(Of String, Object))
     Sub RemoveRow(row As Integer)
     Overloads Sub RemoveRows(startRow As Integer, rowCount As Integer)
@@ -43,5 +44,7 @@ Public Interface IModel
     Function GetRowSynchronizationState(row As Integer) As SynchronizationState
     Function GetRowSynchronizationStates(rows As Integer()) As SynchronizationState()
     Function GetCellState(row As Integer, field As String) As ModelCellState
-    Sub UpdateCellState(row As Integer, field As String, states As ModelCellState)
+    Sub UpdateCellState(row As Integer, field As String, state As ModelCellState)
+    Sub UpdateCellValidationStates(rows As Integer(), fields As String(), states As ValidationState())
+    Sub UpdateCellValidationState(row As Integer, field As String, state As ValidationState)
 End Interface

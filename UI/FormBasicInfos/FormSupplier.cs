@@ -90,16 +90,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            //this.basicView1.Enabled = true;
-            //this.reoGridView1.Enabled = true;
-            //this.model1.InsertRow(0, new Dictionary<string, object>()
-            //{
-            //    { "warehouseId",GlobalData.Warehouse["id"]},
-            //    { "createPersonId",GlobalData.Person["id"]},
-            //    { "createPersonName",GlobalData.Person["name"]},
-            //    { "warehouseName",GlobalData.Warehouse["name"]}
-
-            //});
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
             int row = 1;
             try
@@ -122,6 +114,16 @@ namespace WMS.UI.FormBasicInfos
         private int WarehouseIdDefaultValue()
         {
             return (int)GlobalData.Warehouse["id"];
+        }
+
+        private int PersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string PersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)

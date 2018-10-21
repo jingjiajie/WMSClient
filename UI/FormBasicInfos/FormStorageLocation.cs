@@ -72,6 +72,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
                 this.model1[row, "storageAreaNo"] = foundStorageArea["no"];
                 this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "storageAreaNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
 
             }
         }
@@ -95,6 +96,7 @@ namespace WMS.UI.FormBasicInfos
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
                 this.model1[row, "storageAreaName"] = foundStorageArea["name"];
                 this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "storageAreaNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
 
             }
         }
@@ -121,8 +123,8 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            //this.basicView1.Enabled = true;
-            //this.reoGridView1.Enabled = true;
+            this.basicView1.Enabled = true;
+            this.reoGridView1.Enabled = true;
             //this.model1.InsertRow(0, new Dictionary<string, object>()
             //{
                 

@@ -244,10 +244,79 @@ namespace WMS.UI
             this.comboBoxWarehouse.SelectedIndex = 0;
         }
 
+
+
         private void RefreshAssociationData()
         {
-
-            Condition condWarehouse = new Condition().AddCondition("warehouseId",GlobalData.Warehouse["id"]);
+            /*
+            GlobalData.AllDate = RestClient.Get<IDictionary<string, object[]>>(
+            Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/refreshGlobalDate" + "/" + GlobalData.Warehouse["id"]);
+            foreach (KeyValuePair<string, Object[]> allData in GlobalData.AllDate)
+            {
+                string key = allData.Key;
+                Object[] data = allData.Value;
+                var list = (from x in data.ToList() select (IDictionary < string,object>)x).ToList();
+                switch (key)
+                {
+                    case "AllSuppliers":          
+                        GlobalData.AllSuppliers = list;
+                        break;
+                    case "AllMaterial":
+                        GlobalData.AllMaterials = list;
+                        break;
+                    case "AllSupply":
+                        GlobalData.AllSupplies = list;
+                        break;
+                    case "AllStoaregLocation":
+                        GlobalData.AllStorageLocations = list;
+                        break;
+                    case "AllStorageArea":
+                        GlobalData.AllStorageAreas = list;
+                        break;
+                    case "AllPersons":
+                        GlobalData.AllPersons = list;
+                        break;
+                    case "AllPackage":
+                        GlobalData.AllPackage = list;
+                        break;
+                    case "AllSalaryItem":
+                        GlobalData.AllSalaryItem = list;
+                        break;
+                    case "AllSalaryType":
+                        GlobalData.AllSalaryType = list;
+                        break;
+                    case "AllSummaryNote":
+                        GlobalData.AllSummaryNote = list;
+                        break;
+                    case "AllSalaryPeriod":
+                        GlobalData.AllSalaryPeriod = list;
+                        break;
+                    case "AllAccountTitle":
+                        GlobalData.AllAccountTitle = list;
+                        break;
+                    case "AllAccountTitleTrue":
+                        GlobalData.AllAccountTitleTure = list;
+                        break;
+                    case "AllTax":
+                        GlobalData.AllTax = list;
+                        break;
+                    case "AllAccountPeriod":
+                        GlobalData.AllAccountPeriod = list;
+                        break;
+                    case "AccountPeriod":
+                        if (list.Count == 1)
+                        {
+                            GlobalData.AccountPeriod = list[0];
+                        }
+                        else 
+                        {
+                            GlobalData.AccountPeriod = null;
+                        }
+                        break;
+                }
+            }
+            */
+            Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             Condition cond = new Condition();
             Condition condAccountTitle = new Condition();
@@ -282,7 +351,7 @@ namespace WMS.UI
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/summary_note/{condWarehouse.ToString()}");
 
             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("endTime",OrderItemOrder.DESC).ToString()}");
+             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
 
             GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle}/find_son");
@@ -293,8 +362,8 @@ namespace WMS.UI
             GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");
 
-           GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
+            GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
 
             try
             {

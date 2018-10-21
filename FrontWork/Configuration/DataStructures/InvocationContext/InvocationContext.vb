@@ -25,11 +25,7 @@ Public Class InvocationContext
         Else
             parameterArray = {}
         End If
-        Try
-            Return method.Invoke(targetObject, parameterArray)
-        Catch ex As Exception
-            Throw New FrontWorkException($"Invoke method ""{method.DeclaringType.Name}.{method.Name}"" failed: " & vbCrLf & ex.Message)
-        End Try
+        Return method.Invoke(targetObject, parameterArray)
     End Function
 
     Public Function MatchParameters(method As MethodInfo, expectedParamInfos As InvocationExpectedParameterInfo()) As Object()
