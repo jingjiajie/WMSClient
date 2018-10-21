@@ -144,7 +144,6 @@
 
 		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",association:"#storageLocationNoAssociation"},
 
 		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",association:"#storageLocationNoAssociation"},
 
@@ -255,7 +254,6 @@
 
 		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
@@ -346,7 +344,6 @@
 
 		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
@@ -437,7 +434,6 @@
 
 		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationNo",type:"string",displayName:"默认待检物料存放库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
