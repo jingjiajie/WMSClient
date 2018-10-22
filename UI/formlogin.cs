@@ -248,7 +248,7 @@ namespace WMS.UI
 
         private void RefreshAssociationData()
         {
-            /*
+            
             GlobalData.AllDate = RestClient.Get<IDictionary<string, object[]>>(
             Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/refreshGlobalDate" + "/" + GlobalData.Warehouse["id"]);
             foreach (KeyValuePair<string, Object[]> allData in GlobalData.AllDate)
@@ -315,62 +315,62 @@ namespace WMS.UI
                         break;
                 }
             }
-            */
-            Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-            Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
-            Condition cond = new Condition();
-            Condition condAccountTitle = new Condition();
-            GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
+            
+            //Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+            //Condition condSalaryPeriod = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+            //Condition cond = new Condition();
+            //Condition condAccountTitle = new Condition();
+            //GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
+            //   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
 
-            GlobalData.AllMaterials = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{condWarehouse.ToString()}");
+            //GlobalData.AllMaterials = RestClient.Get<List<IDictionary<string, object>>>(
+            //   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{condWarehouse.ToString()}");
 
-            GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
-                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
+            //GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+            //    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
 
-            GlobalData.AllStorageLocations = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_location/{condWarehouse.ToString()}");
+            //GlobalData.AllStorageLocations = RestClient.Get<List<IDictionary<string, object>>>(
+            //   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_location/{condWarehouse.ToString()}");
 
-            GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");
+            //GlobalData.AllStorageAreas = RestClient.Get<List<IDictionary<string, object>>>(
+            //   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/storage_area/{condWarehouse.ToString()}");
 
-            GlobalData.AllPersons = RestClient.Get<List<IDictionary<string, object>>>(
-               $"{Defines.ServerURL}/ledger/{GlobalData.AccountBook}/person/{{}}");
+            //GlobalData.AllPersons = RestClient.Get<List<IDictionary<string, object>>>(
+            //   $"{Defines.ServerURL}/ledger/{GlobalData.AccountBook}/person/{{}}");
 
-            GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
-              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
+            //GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
+            //  $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
 
-            GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
+            //GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
+            // $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
 
-            GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
+            //GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
+            // $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
 
-            GlobalData.AllSummaryNote = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/summary_note/{condWarehouse.ToString()}");
+            //GlobalData.AllSummaryNote = RestClient.Get<List<IDictionary<string, object>>>(
+            // $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/summary_note/{condWarehouse.ToString()}");
 
-            GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-             $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
+            //GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            // $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condSalaryPeriod.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
 
-            GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle}/find_son");
+            //GlobalData.AllAccountTitle = RestClient.Get<List<IDictionary<string, object>>>(
+            //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/pay_note/{condAccountTitle}/find_son");
 
-            GlobalData.AllAccountTitleTure = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.ToString()}");
+            //GlobalData.AllAccountTitleTure = RestClient.Get<List<IDictionary<string, object>>>(
+            //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_title/{condAccountTitle.ToString()}");
 
-            GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
-            $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");
+            //GlobalData.AllTax = RestClient.Get<List<IDictionary<string, object>>>(
+            //$"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tax/{{}}");
 
-            GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-                $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
+            //GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            //    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
 
-            try
-            {
-                GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
-            }
-            catch { GlobalData.AccountPeriod = null; }
+            //try
+            //{
+            //    GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            //       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
+            //}
+            //catch { GlobalData.AccountPeriod = null; }
         }
     }
 }
