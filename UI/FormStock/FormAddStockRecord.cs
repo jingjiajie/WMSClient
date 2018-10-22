@@ -350,11 +350,11 @@ namespace WMS.UI.FormStock
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
-                this.model1.UpdateCellState(row, "materialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
-                this.model1.UpdateCellState(row, "materialName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
-                this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
-                this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));
-                this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));
+                this.model1.UpdateCellState(row, "materialNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "materialName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
                 this.model1.RefreshView(row);
             }
             else
