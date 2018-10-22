@@ -267,7 +267,7 @@ namespace WMS.UI
                     case "AllSupply":
                         GlobalData.AllSupplies = list;
                         break;
-                    case "AllStoaregLocation":
+                    case "AllStorageLocation":
                         GlobalData.AllStorageLocations = list;
                         break;
                     case "AllStorageArea":

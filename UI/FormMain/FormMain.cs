@@ -251,7 +251,7 @@ namespace WMS.UI
                     case "AllSupply":
                         GlobalData.AllSupplies = list;
                         break;
-                    case "AllStoaregLocation":
+                    case "AllStorageLocation":
                         GlobalData.AllStorageLocations = list;
                         break;
                     case "AllStorageArea":
@@ -337,12 +337,12 @@ namespace WMS.UI
             //GlobalData.AllAccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
             //  $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddOrder("startTime", OrderItemOrder.DESC).ToString()}");
 
-            try
-            {
-                GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
-                   $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
-            }
-            catch { GlobalData.AccountPeriod = null; }
+            //try
+            //{
+            //    GlobalData.AccountPeriod = RestClient.Get<List<IDictionary<string, object>>>(
+            //       $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/account_period/{condWarehouse.AddCondition("ended", 0).AddOrder("startTime", OrderItemOrder.DESC).ToString()}")[0];
+            //}
+            //catch { GlobalData.AccountPeriod = null; }
             GlobalData.REMAINDENABLE = true;
             //清除窗口管理器缓存的窗口实例
             this.formManager.ClearInstances();
