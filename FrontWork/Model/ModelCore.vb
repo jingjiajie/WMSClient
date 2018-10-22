@@ -170,8 +170,31 @@ Public Class ModelCore
     ''' <param name="rows">插入行行号</param>
     ''' <param name="dataOfEachRow">数据</param>
     Public Sub InsertRows(rows As Integer(), dataOfEachRow As IDictionary(Of String, Object)()) Implements IModelCore.InsertRows
+        '如果存在Nothing，则创建空的Dictionary代替
         If dataOfEachRow Is Nothing Then
             dataOfEachRow = Util.Times(Of IDictionary(Of String, Object))(Nothing, rows.Length)
+        Else
+            For i = 0 To dataOfEachRow.Length - 1
+                If dataOfEachRow(i) Is Nothing Then
+                    dataOfEachRow(i) = New Dictionary(Of String, Object)
+                End If
+            Next
+        End If
+
+        Dim columnsHavingDefaultValue = (From c In Me._modelColumns Where c.DefaultValue IsNot Nothing Select c).ToArray
+        If columnsHavingDefaultValue.Length > 0 Then
+            '首先对数据置入默认值
+            For i = 0 To dataOfEachRow.Length - 1
+                For Each column In columnsHavingDefaultValue
+                    Dim field = column.Name
+                    Dim curData = dataOfEachRow(i)
+                    '根据ModelColumn中的设定来置入默认值
+                    If Not curData.ContainsKey(field) Then curData.Add(field, Nothing)
+                    If curData(field) Is Nothing Then
+                        curData(field) = column.DefaultValue
+                    End If
+                Next
+            Next
         End If
         '带有插入请求的原始行号的RowInfo
         Dim oriRowInfos = (From i In Util.Range(0, rows.Length)
@@ -190,15 +213,6 @@ Public Class ModelCore
             '初始化所有单元格为ModelCell对象
             For j = 0 To newRow.ItemArray.Length - 1
                 newRow(j) = New ModelCell
-            Next
-            '置入默认值
-            For Each curColumn In Me._modelColumns
-                If curColumn.DefaultValue Is Nothing Then Continue For
-                Dim fieldName = curColumn.Name
-                If Not curData.ContainsKey(fieldName) Then curData.Add(fieldName, Nothing)
-                If curData(fieldName) Is Nothing Then
-                    curData(fieldName) = curColumn.DefaultValue
-                End If
             Next
             '将值写入datatable
             For Each item In curData
