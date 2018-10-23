@@ -65,10 +65,17 @@ namespace WMS.UI.FormBasicInfos
             this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "type",FormSafetyStock.stockType},
             });
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
+        private int TypeDefaultValue()
+        {
+            return FormSafetyStock.stockType;
         }
 
         private string EnableForwardMapper(int state)
