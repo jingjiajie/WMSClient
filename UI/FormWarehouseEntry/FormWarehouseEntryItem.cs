@@ -270,7 +270,7 @@ namespace WMS.UI
 
         private void FindStorageLocation(IModel model, int row, string storageLocationFieldName, FindStorageLocationBy byField , string value, bool warning = true)
         {
-            model[row, storageLocationFieldName + "Id"] = 0;//先清除库位ID
+            model[row, storageLocationFieldName + "Id"] = null;//先清除库位ID
             
             var foundStorageLocations = (from s in GlobalData.AllStorageLocations
                                          where s[byField == FindStorageLocationBy.NAME ? "name" : "no"]?.ToString() == value
