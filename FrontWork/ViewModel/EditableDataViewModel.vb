@@ -340,10 +340,15 @@ Public Class EditableDataViewModel
             Dim cellInfo = cellInfos(i)
             Dim rawData = cellInfo.CellData
             Try
-                Dim convertedData As Object
-                convertedData = Util.ChangeType(rawData, column.Type.GetValue)
-                Dim mappedData = Me.GetBackwardMappedCellData(convertedData, columns(i).Name, cellInfo.Row)
-                updateCell.Add(New ViewCellInfo(cellInfo.Row, cellInfo.ColumnName, mappedData))
+                Dim mappedData = Me.GetBackwardMappedCellData(rawData, columns(i).Name, cellInfo.Row)
+                Dim convertedData = Util.ChangeType(mappedData, column.Type.GetValue)
+                updateCell.Add(New ViewCellInfo(cellInfo.Row, cellInfo.ColumnName, convertedData))
+            Catch ex As ParameterMatchingException '用户输入了错误的数据格式
+                validationError.Add(New CellPositionValidationStatePair(
+                        cellInfo.Row,
+                        cellInfo.ColumnName,
+                        New ValidationState(ValidationStateType.ERROR, $"""{rawData}""不是有效的格式！"))
+                    )
             Catch ex As Exception
                 validationError.Add(New CellPositionValidationStatePair(
                                         cellInfo.Row,

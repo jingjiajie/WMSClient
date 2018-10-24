@@ -315,7 +315,7 @@ Partial Public Class BasicView
             ElseIf cellState.ValidationState.Type = ValidationStateType.WARNING Then
                 targetColor = COLOR_CELL_VALIDATION_WARNING
             Else
-                targetColor = Color.White
+                targetColor = Color.Empty
             End If
             If oriColor = targetColor Then Continue For
             control.BackColor = targetColor
