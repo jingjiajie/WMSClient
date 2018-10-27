@@ -342,7 +342,7 @@ namespace WMS.UI.FormBasicInfos
         {
             string localFilePath = ShowSaveFileDialog();
 
-            if (localFilePath == null) return;
+            if (string.IsNullOrEmpty(localFilePath)) return;
 
             //获取选中行ID，过滤掉新建的行（ID为0的）
             int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
