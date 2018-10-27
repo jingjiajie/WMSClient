@@ -297,19 +297,25 @@ Partial Public Class BasicView
 
     Private Sub PaintRow(row As Integer)
         Call Me.Panel.SuspendLayout()
+        Dim DEFAULT_STATE = New ViewCellState(ValidationState.OK)
         For i = 0 To Me.ViewColumns.Count - 1
             Dim fieldName = Me.ViewColumns(i).Name
             Dim control = Me.GetControlByName(fieldName)
             Dim oriColor = control.BackColor
             Dim targetColor As Color
-            Dim cellState = Me.RecordedRows(row)(fieldName).State
+            Dim cellState As ViewCellState
+            If Me.RecordedRows(row).ContainsKey(fieldName) Then
+                cellState = Me.RecordedRows(row)(fieldName).State
+            Else
+                cellState = DEFAULT_STATE
+            End If
             Dim message As String = cellState.ValidationState.Message
             If cellState.ValidationState.Type = ValidationStateType.ERROR Then
                 targetColor = COLOR_CELL_VALIDATION_ERROR
             ElseIf cellState.ValidationState.Type = ValidationStateType.WARNING Then
                 targetColor = COLOR_CELL_VALIDATION_WARNING
             Else
-                targetColor = Color.White
+                targetColor = Color.Empty
             End If
             If oriColor = targetColor Then Continue For
             control.BackColor = targetColor
