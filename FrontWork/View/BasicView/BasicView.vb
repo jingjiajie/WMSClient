@@ -339,11 +339,36 @@ Partial Public Class BasicView
             srcFieldValue = Me.RecordedRows(Me.TargetRow)(fieldName).Data
         End If
 
-        Me.RecordedRows(Me.TargetRow)(fieldName).Data = newFieldValue '更新缓存值
+        '更新缓存值
+        Call Me.SetRecordedCellData(Me.TargetRow, fieldName, newFieldValue)
+
         Dim cellUpdatedEventArgs As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me.TargetRow, fieldName, newFieldValue)})
         RaiseEvent CellUpdated(Me, cellUpdatedEventArgs)
 
         Me.dicFieldEdited.Remove(fieldName)
+    End Sub
+
+    Private Sub SetRecordedCellData(row As Integer, fieldName As String, data As Object)
+        Dim cell As CellInfo
+        If Me.RecordedRows(Me.TargetRow).ContainsKey(fieldName) Then
+            cell = Me.RecordedRows(Me.TargetRow)(fieldName)
+            cell.Data = data
+        Else
+            cell = New CellInfo(data)
+            Me.RecordedRows(Me.TargetRow)(fieldName) = cell
+        End If
+    End Sub
+
+    Private Sub SetRecordedCellState(row As Integer, fieldName As String, state As ViewCellState)
+        Dim cell As CellInfo
+        If Me.RecordedRows(Me.TargetRow).ContainsKey(fieldName) Then
+            cell = Me.RecordedRows(Me.TargetRow)(fieldName)
+            cell.State = state
+        Else
+            cell = New CellInfo(Nothing)
+            cell.State = state
+            Me.RecordedRows(Me.TargetRow)(fieldName) = cell
+        End If
     End Sub
 
     Private Function GetControlByName(fieldName As String) As Control
@@ -674,10 +699,8 @@ Partial Public Class BasicView
 
     Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IAssociableDataView.UpdateRows
         For i = 0 To rows.Length - 1
-            Dim rowData = Me.RecordedRows(rows(i))
             For Each item In dataOfEachRow(i)
-                If Not rowData.ContainsKey(item.Key) Then Continue For
-                rowData(item.Key).Data = item.Value
+                Call Me.SetRecordedCellData(rows(i), item.Key, item.Value)
             Next
             If rows(i) = Me.TargetRow Then
                 Call Me.PushRow(Me.TargetRow)
@@ -690,8 +713,7 @@ Partial Public Class BasicView
             Dim row = rows(i)
             Dim columnName = columnNames(i)
             Dim data = dataOfEachCell(i)
-            Dim recordedRowData = Me.RecordedRows(row)
-            recordedRowData(columnName).Data = data
+            Call Me.SetRecordedCellData(row, columnName, data)
         Next
 
         If rows.Contains(Me.TargetRow) Then
@@ -753,7 +775,7 @@ Partial Public Class BasicView
             Dim row = rows(i)
             Dim field = fields(i)
             Dim state = states(i)
-            Me.RecordedRows(row)(field).State = state
+            Call Me.SetRecordedCellState(row, field, state)
             If row = Me.TargetRow Then
                 Call Me.PaintRow(row)
             End If

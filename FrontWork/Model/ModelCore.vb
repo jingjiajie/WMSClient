@@ -201,7 +201,7 @@ Public Class ModelCore
                            Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(If(dataOfEachRow(i) Is Nothing OrElse dataOfEachRow(i).Count = 0, SynchronizationState.ADDED, SynchronizationState.ADDED_UPDATED)))).ToArray
         Dim adjustedRowInfos(oriRowInfos.Length - 1) As ModelRowInfo
         For i = 0 To adjustedRowInfos.Length - 1
-            adjustedRowInfos(i) = oriRowInfos(i).Clone
+            adjustedRowInfos(i) = oriRowInfos(i)
         Next
         Util.AdjustInsertIndexes(adjustedRowInfos, Function(rowInfo) rowInfo.Row, Sub(rowInfo, newRow) rowInfo.Row = newRow, Me.GetRowCount)
         '开始添加数据
@@ -537,7 +537,7 @@ Public Class ModelCore
 
     Private Sub SetRowSynchronizationState(row As DataRow, state As SynchronizationState)
         Dim rowNum = Me.Data.Rows.IndexOf(row)
-        Me.RowStates(rowNum).SynchronizationState = state
+        Me.RowStates(rowNum) = New ModelRowState(state)
     End Sub
 
     Private Function GetRowSynchronizationState(row As DataRow) As SynchronizationState
