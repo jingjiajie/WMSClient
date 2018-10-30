@@ -72,6 +72,11 @@ namespace WMS.UI.FromDeliverOrder
                 }
                 var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
                 var a1 = new FormDeliverOrderItem(rowData);
+                if (rowData["id"] == null)
+                {
+                    MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 a1.SetAddFinishedCallback(() =>
                 {
                     this.searchView1.Search();
