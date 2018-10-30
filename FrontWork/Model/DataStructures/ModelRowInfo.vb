@@ -1,8 +1,7 @@
 ﻿''' <summary>
 ''' 一行数据的索引和数据
 ''' </summary>
-Public Class ModelRowInfo
-    Implements ICloneable
+Public Structure ModelRowInfo
     ''' <summary>
     ''' 行号
     ''' </summary>
@@ -27,15 +26,4 @@ Public Class ModelRowInfo
         Me.State = state
     End Sub
 
-    Public Sub New()
-
-    End Sub
-
-    Public Function Clone() As Object Implements ICloneable.Clone
-        Dim newObj As New ModelRowInfo
-        newObj.Row = Me.Row
-        newObj.State = Me.State
-        newObj.RowData = Me.RowData
-        Return newObj
-    End Function
-End Class
+End Structure

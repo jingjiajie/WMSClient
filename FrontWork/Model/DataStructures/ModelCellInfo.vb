@@ -1,7 +1,7 @@
 ﻿''' <summary>
 ''' 一个单元格的索引和数据
 ''' </summary>
-Public Class ModelCellInfo
+Public Structure ModelCellInfo
     Implements ICloneable
     ''' <summary>
     ''' 所在行号
@@ -38,4 +38,4 @@ Public Class ModelCellInfo
         Dim newInstance As New ModelCellInfo(Me.Row, Me.FieldName, Me.CellData, Me.State)
         Return newInstance
     End Function
-End Class
+End Structure

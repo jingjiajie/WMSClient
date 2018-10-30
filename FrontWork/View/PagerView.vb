@@ -98,6 +98,7 @@ Public Class PagerView
     Private Sub ButtonGo_Click(sender As Object, e As EventArgs) Handles ButtonGo.Click
         If Not (Me.CurrentPage >= 1 And Me.CurrentPage <= Me.TotalPage) Then
             MessageBox.Show($"请输入{1}到{Me.TotalPage}之间的页码", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
         End If
         RaiseEvent OnCurrentPageChanged(Me, New PageChangedEventArgs(Me.CurrentPage))
     End Sub
