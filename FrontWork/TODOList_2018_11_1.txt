@@ -1,0 +1,26 @@
+﻿整理时间：2018-11-1
+
+#设计错误：
+Configuration只有Model和View使用
+Synchronizer不应该使用Configuration，也没有Mode，自行提供配置方式
+Model有Mode就是个天大的错误，只有View能切换模式。
+SelectionRangeChanged的事件参数要带上行数据。不能要求BasicView还缓存所有行的数据，又浪费效率又增加bug
+Model的Configuration和View的Configuration要分开，否则一旦数据经过Mapper改变了类型，SearchView上的搜索条件就错了
+所有的事件参数都必须使用Structure类型，防止不小心的修改影响其它事件接收者
+View应该处于被动方式运行，不提供任何数据改变事件。
+View和Model一样使用Refresh来刷新数据，使用RefreshSchema来刷新结构
+
+
+#功能增加（近期）：
+接口化Configuration，创建ConfigurationResolver接口，用来支持多种形式的配置方式。
+将当前的Json配置方式封装为JsonConfigurationResolver
+增加注解配置方式，AttributeConfigurationResolver
+IModel待增加Column变化的各种事件
+ConstraintModel的设计
+通用型HTTPSynchronizer的设计
+
+#功能增加（长期）
+SQL Synchronizer（支持多种Dialog）
+图表功能
+ExcelReport，考虑集成开源项目，或者EMacro（但目前不支持图表）
+原生GridView
