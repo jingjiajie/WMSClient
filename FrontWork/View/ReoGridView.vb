@@ -705,6 +705,10 @@ Public Class ReoGridView
     Private Sub ReoGridView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         '禁止自动判断单元格格式
         Me.Panel.SetSettings(WorksheetSettings.Edit_AutoFormatCell, False)
+        '禁止拖动单元格
+        Me.Panel.SetSettings(WorksheetSettings.Edit_DragSelectionToMoveCells, False)
+        '禁止自动填充
+        Me.Panel.SetSettings(WorksheetSettings.Edit_DragSelectionToFillSerial, False)
         Call Me.ShowDefaultPage()
 
         If Not Me.DesignMode Then
