@@ -32,7 +32,7 @@ namespace WMS.UI
         {
             foreach(var cell in e.UpdatedCells)
             {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
@@ -174,6 +174,19 @@ namespace WMS.UI
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case "待入库": return 0;
+                case "送检中": return 1;
+                case "全部入库": return 2;
+                case "部分入库": return 3;
+                default: return -1;
+            }
+        }
+
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             if(this.model1.SelectionRange == null)
@@ -284,6 +297,11 @@ namespace WMS.UI
         private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
             this.RefreshMode();
+        }
+
+        private void reoGridView1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

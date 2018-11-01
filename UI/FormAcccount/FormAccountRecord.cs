@@ -16,10 +16,13 @@ namespace WMS.UI.FormAcccount
     public partial class FormAccountRecord : Form
     {
         private Boolean DoneDeficitCheck = false;
+        System.Timers.Timer timer = new System.Timers.Timer();
+        Timer T = new Timer();
         public FormAccountRecord()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            InitTree();
         }
 
 
@@ -82,10 +85,7 @@ namespace WMS.UI.FormAcccount
                 this.searchView1.AddStaticCondition("accountPeriodId", GlobalData.AccountPeriod["id"]);
             }
 
-            //刷新科目
-            this.comboBoxAccountTitle.Items.Add("无");
-            this.comboBoxAccountTitle.Items.AddRange((from item in GlobalData.AllAccountTitle
-                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+
 
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
@@ -94,11 +94,33 @@ namespace WMS.UI.FormAcccount
             this.searchView1.Search();
 
             this.showAccrual();
-            if (!this.DoneDeficitCheck)
+            
+            timer.Enabled = true;
+            timer.AutoReset = false;
+
+            T.Interval=100;
+            T.Tick += new EventHandler(t_tick);
+            T.Start();
+            //timer.Elapsed += new System.Timers.ElapsedEventHandler(Timerup);
+            //timer.Start();
+
+        }
+
+        private void t_tick(object sender, EventArgs e)
+        {
+            if (GlobalData.REMAINDENABLE)
             {
                 this.DeficitCheck();
             }
-            
+            T.Stop();
+        }
+
+        private void Timerup(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (GlobalData.REMAINDENABLE)
+            {
+                this.DeficitCheck();
+            }
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -157,31 +179,19 @@ namespace WMS.UI.FormAcccount
                 this.toolStripButtonAdd.Visible = false;
                 this.toolStripButtonAlter.Visible = false;
                 this.toolStripButtonDelete.Visible = false;
+                this.ButtonTransfer.Visible = false;
+                this.ButtonWriteOff.Visible = false;
             }
             else {
                 this.toolStripButtonAdd.Visible = true;
                 this.toolStripButtonAlter.Visible = true;
                 this.toolStripButtonDelete.Visible = true;
+                this.ButtonTransfer.Visible = true;
+                this.ButtonWriteOff.Visible = true;
             }
 
             this.searchView1.Search();
             this.showAccrual();
-        }
-
-        private void comboBoxAccountTitle_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.searchView1.ClearStaticCondition("accountTitleId");
-            if (this.comboBoxAccountTitle.SelectedIndex==0) {
-                GlobalData.AccountTitle = null;
-                this.searchView1.Search();
-            }
-            else
-            {
-                GlobalData.AccountTitle = ((ComboBoxItem)this.comboBoxAccountTitle.SelectedItem).Value as IDictionary<string, object>;
-
-                this.searchView1.AddStaticCondition("accountTitleId", GlobalData.AccountTitle["id"]);
-                this.searchView1.Search();
-            }        
         }
 
         private void ButtonWriteOff_Click(object sender, EventArgs e)
@@ -244,6 +254,30 @@ namespace WMS.UI.FormAcccount
             }
         }
 
+        private void showBalance()
+        {
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\",\"curAccountTitleId\":\"" + GlobalData.AccountTitle["id"] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/show_balance";
+                var returnAccrualCheck = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                foreach (IDictionary<string, object> theReturnAccrualCheck in returnAccrualCheck)
+                {
+                    this.textBoxBalance.Text = theReturnAccrualCheck["balance"].ToString();
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         private void toolStripButtonDeficit_Click(object sender, EventArgs e)
         {
             this.DeficitCheck();
@@ -260,11 +294,9 @@ namespace WMS.UI.FormAcccount
                 if (returnDeficitCheck.Count == 0)
                 {
                     //MessageBox.Show("当前仓库无赤字记录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.searchView1.Search();
                 }
                 else
                 {
-                    this.searchView1.Search();
                     StringBuilder remindBody = new StringBuilder();
                     foreach (IDictionary<string, object> AccountRecordView in returnDeficitCheck)
                     {
@@ -278,6 +310,7 @@ namespace WMS.UI.FormAcccount
                     new FormRemind(remindBody.ToString()).Show();
 
                 }
+                GlobalData.REMAINDENABLE = false;
 
             }
             catch (WebException ex)
@@ -302,10 +335,10 @@ namespace WMS.UI.FormAcccount
                 {
                     if (theReturnAccrualCheck["debitAmount"].ToString() == theReturnAccrualCheck["creditAmount"].ToString())
                     {
-                        MessageBox.Show("自动对账正确！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("自动对账正确！\n\r借方发生额："+ theReturnAccrualCheck["debitAmount"].ToString()+ "，\n\r贷方发生额：" + theReturnAccrualCheck["creditAmount"].ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else {
-                        MessageBox.Show("自动对账错误！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("自动对账错误！\n\r借方发生额：" + theReturnAccrualCheck["debitAmount"].ToString() + "，\n\r贷方发生额：" + theReturnAccrualCheck["creditAmount"].ToString()+"，不相等！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                 }
@@ -319,6 +352,80 @@ namespace WMS.UI.FormAcccount
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show("发生额显示失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void ButtonTransfer_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormTransferAccount();
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
+        }
+
+        //初始化树
+        private void InitTree()
+        {
+            string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/build_tree_view";
+            string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
+            var buildAccountTitleTreeView = RestClient.RequestPost<List<IDictionary<string, object>>>(url);
+
+            foreach (IDictionary<string, object> accountTitleNode in buildAccountTitleTreeView)
+            {
+                if (accountTitleNode["accountTitleId"].ToString() == "0")
+                {
+                    TreeNode tchild = new TreeNode();
+                    tchild.Name = accountTitleNode["accountTitleNo"].ToString();
+                    tchild.Text = accountTitleNode["accountTitleName"].ToString();
+                    LoadAll(accountTitleNode["accountTitleId"].ToString(), tchild, buildAccountTitleTreeView);
+                    this.treeViewAccountTitle.Nodes.Add(tchild);//把根节点加入到treeview的根节点
+                }
+            }
+
+            
+        }
+        //加载所属节点
+        public void LoadAll(string parentAccountTitleId, TreeNode tn, List<IDictionary<string, object>> buildAccountTitleTreeView)
+        {
+
+            foreach (IDictionary<string, object> accountTitleNode in buildAccountTitleTreeView)
+            {
+                if (accountTitleNode["parentAccountTitleId"].ToString() == parentAccountTitleId
+                    &&accountTitleNode["accountTitleId"].ToString()!= "0")
+                {
+                    TreeNode tchild = new TreeNode();
+                    tchild.Name = accountTitleNode["accountTitleNo"].ToString();
+                    tchild.Text = accountTitleNode["accountTitleName"].ToString();
+                    LoadAll(accountTitleNode["accountTitleId"].ToString(), tchild, buildAccountTitleTreeView);
+                    tn.Nodes.Add(tchild);//把当前节点加入到tn数的节点中
+                }
+            }
+
+        }
+
+        private void treeViewAccountTitle_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string accountTitleNo = treeViewAccountTitle.SelectedNode.Name;
+            string accountTitleName = treeViewAccountTitle.SelectedNode.Text;
+
+            this.searchView1.ClearStaticCondition("accountTitleNo");
+            if (accountTitleNo == "全部科目")
+            {
+                GlobalData.AccountTitle = null;
+                this.searchView1.Search();
+                this.textBoxBalance.Text = null;
+            }
+            else {
+                GlobalData.AccountTitle = (from item in GlobalData.AllAccountTitleTure
+                                          where item["name"].ToString() == accountTitleName
+                                           select item).ToList().First();
+
+                this.searchView1.AddStaticCondition("accountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                this.searchView1.Search();
+
+                this.showBalance();
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
-Public Class DataViewOperationsWrapper
-    Inherits DataViewOperationsWrapperBase
+Public Class DataViewOperator
+    Inherits DataViewOperatorBase
     Implements IDataView
 
     Public Overridable Sub InsertRow(row As Integer, data As IDictionary(Of String, Object))

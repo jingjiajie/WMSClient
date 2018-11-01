@@ -123,12 +123,14 @@
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"deliveryOrderId",displayName:"出库单ID",type:"int",visible:false,defaultValue:"#deliveryOrderIdDefaultValue"},
-        {name:"deliveryOrderNo",displayName:"出库单号",editable:false},
-        {name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
-        {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,editable:false},
+        {name:"deliveryOrderNo",displayName:"出库单号",editable:false,defaultValue:"#deliveryOrderNoDefaultValue"},
+        
+        {name:"supplySerialNo",displayName:"序列号",editEnded:"#supplySerialNoEditEnded",association:"#supplySerialNoAssociation"},
+{name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
+        {name:"supplierId",displayName:"供应商ID",type:"int",visible:false,defaultValue:0},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false,editable:false},
-        {name:"supplierNo",displayName:"供应商代号",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
-        {name:"supplierName",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"必填信息"},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
+        {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"必填信息"},
         {name:"materialNo",displayName:"物料代号",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded",placeHolder:"必填信息"},
         {name:"materialName",displayName:"物料名称",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded",placeHolder:"必填信息"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
@@ -142,8 +144,8 @@
         {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
         {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},        
-        {name:"personId",displayName:"作业人ID",type:"int",visible:false},
-        {name:"personName",displayName:"作业人名称"}
+        {name:"personId",displayName:"作业人ID",type:"int",visible:false,defaultValue:"#personIdDefaultValue"},
+        {name:"personName",displayName:"作业人名称",defaultValue:"#personNameDefaultValue"}
 
     ],
     httpAPIs:[

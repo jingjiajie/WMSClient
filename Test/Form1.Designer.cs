@@ -28,15 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.model1 = new FrontWork.Model();
             this.configuration1 = new FrontWork.Configuration();
-            this.model2 = new FrontWork.Model();
-            this.configuration2 = new FrontWork.Configuration();
-            this.pivotTableAdapter1 = new FrontWork.PivotTableAdapter(this.components);
             this.reoGridView1 = new FrontWork.ReoGridView();
-            this.reoGridView2 = new FrontWork.ReoGridView();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +52,7 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(84, 192);
+            this.model1.Location = new System.Drawing.Point(670, 285);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -67,81 +62,31 @@
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = "[\r\n    {mode:\"default\",\r\n     fields:[\r\n        {name:\"姓名\"},\r\n        {name:\"科目\"}" +
-    ",\r\n        {name:\"成绩\"},\r\n     ]\r\n    }\r\n]";
-            this.configuration1.Location = new System.Drawing.Point(84, 348);
+            this.configuration1.ConfigurationString = "[\r\n    {mode:\"default\",\r\n     fields:[\r\n        {name:\"姓名\",defaultValue:\"小明\"},\r\n " +
+    "       {name:\"科目\"},\r\n        {name:\"成绩\"},\r\n     ]\r\n    }\r\n]";
+            this.configuration1.Location = new System.Drawing.Point(640, 81);
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(150, 150);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 2;
-            // 
-            // model2
-            // 
-            this.model2.AllSelectionRanges = new FrontWork.Range[0];
-            this.model2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.model2.Configuration = this.configuration2;
-            this.model2.Font = new System.Drawing.Font("宋体", 10F);
-            this.model2.Location = new System.Drawing.Point(323, 192);
-            this.model2.Mode = "default";
-            this.model2.Name = "model2";
-            this.model2.SelectionRange = null;
-            this.model2.Size = new System.Drawing.Size(150, 150);
-            this.model2.TabIndex = 3;
-            // 
-            // configuration2
-            // 
-            this.configuration2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration2.ConfigurationString = "[\r\n    {mode:\"default\",\r\n     fields:[\r\n     ]\r\n    }\r\n]";
-            this.configuration2.Location = new System.Drawing.Point(332, 348);
-            this.configuration2.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[0];
-            this.configuration2.Name = "configuration2";
-            this.configuration2.Size = new System.Drawing.Size(150, 150);
-            this.configuration2.TabIndex = 4;
-            // 
-            // pivotTableAdapter1
-            // 
-            this.pivotTableAdapter1.ColumnNamesAsColumn = new string[] {
-        "科目"};
-            this.pivotTableAdapter1.ColumnNamesAsRow = new string[] {
-        "姓名"};
-            this.pivotTableAdapter1.ColumnNamesAsValue = new string[] {
-        "成绩"};
-            this.pivotTableAdapter1.SourceMode = "default";
-            this.pivotTableAdapter1.SourceModel = this.model1;
-            this.pivotTableAdapter1.TargetMode = "default";
-            this.pivotTableAdapter1.TargetModel = this.model2;
             // 
             // reoGridView1
             // 
             this.reoGridView1.Configuration = this.configuration1;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
-            this.reoGridView1.Location = new System.Drawing.Point(5, 28);
+            this.reoGridView1.Location = new System.Drawing.Point(54, 56);
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
             this.reoGridView1.Size = new System.Drawing.Size(468, 409);
             this.reoGridView1.TabIndex = 5;
             // 
-            // reoGridView2
-            // 
-            this.reoGridView2.Configuration = this.configuration2;
-            this.reoGridView2.Font = new System.Drawing.Font("黑体", 11F);
-            this.reoGridView2.Location = new System.Drawing.Point(466, 28);
-            this.reoGridView2.Mode = "default";
-            this.reoGridView2.Model = this.model2;
-            this.reoGridView2.Name = "reoGridView2";
-            this.reoGridView2.Size = new System.Drawing.Size(911, 523);
-            this.reoGridView2.TabIndex = 6;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1246, 532);
-            this.Controls.Add(this.reoGridView2);
             this.Controls.Add(this.reoGridView1);
-            this.Controls.Add(this.configuration2);
-            this.Controls.Add(this.model2);
             this.Controls.Add(this.configuration1);
             this.Controls.Add(this.model1);
             this.Controls.Add(this.label1);
@@ -159,11 +104,7 @@
         private System.Windows.Forms.Label label1;
         private FrontWork.Model model1;
         private FrontWork.Configuration configuration1;
-        private FrontWork.Model model2;
-        private FrontWork.Configuration configuration2;
-        private FrontWork.PivotTableAdapter pivotTableAdapter1;
         private FrontWork.ReoGridView reoGridView1;
-        private FrontWork.ReoGridView reoGridView2;
     }
 }
 

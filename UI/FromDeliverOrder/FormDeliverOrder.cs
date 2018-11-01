@@ -29,14 +29,14 @@ namespace WMS.UI.FromDeliverOrder
         {
             if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
             {
+                this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
                 this.reoGridView2.Mode = "default1";
-                this.synchronizer.Mode = "default1";
             }
             else {
+                this.model1.Mode = "default";
                 this.basicView1.Mode = "default";
                 this.reoGridView2.Mode = "default";
-                this.synchronizer.Mode = "default";
             }
         }
 
@@ -72,6 +72,11 @@ namespace WMS.UI.FromDeliverOrder
                 }
                 var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
                 var a1 = new FormDeliverOrderItem(rowData);
+                if (rowData["id"] == null)
+                {
+                    MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 a1.SetAddFinishedCallback(() =>
                 {
                     this.searchView1.Search();
@@ -120,7 +125,10 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
-        
+        private int warehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
@@ -145,7 +153,7 @@ namespace WMS.UI.FromDeliverOrder
         {
             foreach (var cell in e.UpdatedCells)
             {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
@@ -204,6 +212,7 @@ namespace WMS.UI.FromDeliverOrder
             }
             int a = this.model1.SelectionRange.Row;
             this.model1[this.model1.SelectionRange.Row, "state"] = DeliveryOrderState.DELIVERY_STATE_IN_DELIVER;
+            this.model1[this.model1.SelectionRange.Row, "deliverTime"] = DateTime.Now;
             if (this.synchronizer.Save())
             {
                // MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -238,17 +247,22 @@ namespace WMS.UI.FromDeliverOrder
             //}
         }
 
+        private int createPersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string createPersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
             this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "state",0}
             });
         }
 

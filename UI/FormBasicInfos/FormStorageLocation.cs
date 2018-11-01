@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -33,6 +34,11 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
             if (this.model1.RowCount == 0)
@@ -57,12 +63,17 @@ namespace WMS.UI.FormBasicInfos
                 });
             if (foundStorageArea == null)
             {
-                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
+
             }
             else
             {
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
                 this.model1[row, "storageAreaNo"] = foundStorageArea["no"];
+                this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "storageAreaNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+
             }
         }
 
@@ -76,12 +87,17 @@ namespace WMS.UI.FormBasicInfos
                 });
             if (foundStorageArea == null)
             {
-                MessageBox.Show($"库区编号\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"库区编号\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageAreaNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
+
             }
             else
             {
                 this.model1[row, "storageAreaId"] = foundStorageArea["id"];
                 this.model1[row, "storageAreaName"] = foundStorageArea["name"];
+                this.model1.UpdateCellState(row, "storageAreaName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "storageAreaNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+
             }
         }
 
@@ -109,10 +125,28 @@ namespace WMS.UI.FormBasicInfos
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            //this.model1.InsertRow(0, new Dictionary<string, object>()
+            //{
+                
+            //});
+
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-            });
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+                {
+                });
+            }
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

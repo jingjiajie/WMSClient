@@ -123,7 +123,9 @@
     {mode:"default",
         fields:[
 		{name:"id",displayName:"ID",type:"int",visible:false,editable:false},
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,editable:false},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
+        {name:"supplySerialNo",displayName:"序列号",editEnded:"#supplySerialNoEditEnded",association:"#supplySerialNoAssociation"},
+
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false,editable:false},
         {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",placeHolder:"必填信息"},
         {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",placeHolder:"必填信息"},     
@@ -131,7 +133,7 @@
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded",placeHolder:"必填信息"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
  
-        {name:"supplierId",displayName:"供货商ID",type:"int",visible:false,editable:false},
+        {name:"supplierId",displayName:"供货商ID",type:"int",visible:false,defaultValue:0},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
         {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false,editable:false},
         {name:"amount",displayName:"安全库存数",type:"double",forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper",placeHolder:"必填信息"},
@@ -148,7 +150,7 @@
         {name:"sourceUnit",displayName:"源单位",type:"string",placeHolder:"必填信息"},
         {name:"sourceUnitAmount",displayName:"源单位数量",type:"double",placeHolder:"必填信息"},
 
-        {name:"type",displayName:"类型",type:"int",editable:false,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"},
+        {name:"type",displayName:"类型",type:"int",editable:false,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper",defaultValue:"#typeDefaultValue"},
         {name:"warehouseName",displayName:"仓库名",visible:false,type:"string"},
        
 

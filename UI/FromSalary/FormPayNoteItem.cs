@@ -37,7 +37,7 @@ namespace WMS.UI.FromSalary
             this.periodId = periodId;
             this.taxId = taxId;
             this.payNoteState = payNoteState;
-           // this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
+            this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
         public void SetAddFinishedCallback(Action callback)
@@ -47,7 +47,8 @@ namespace WMS.UI.FromSalary
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            this.UpdateItemState();
+            /*var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             if (rowData == null) { return; }
             if ((int)rowData[0]["state"] == 0)
             {
@@ -87,7 +88,7 @@ namespace WMS.UI.FromSalary
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
-            }
+            }*/
         }
 
         private void FormPayNoteItem_Load(object sender, EventArgs e)
@@ -129,8 +130,8 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";           
                 this.buttonCclcultateItemsTax.Enabled = true;
-                this.buttonCalculateAllTax.Enabled = true;
-                this.buttonRealPayAll.Enabled = true;
+                //this.buttonCalculateAllTax.Enabled = true;
+                //this.buttonRealPayAll.Enabled = true;
                 this.buttonRealPayItems.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
@@ -141,12 +142,12 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "pay";
                 this.reoGridView1.Mode = "pay";
                 this.model1.Mode = "pay";            
-                this.buttonCalculateAllTax.Enabled = false;
+                //this.buttonCalculateAllTax.Enabled = false;
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
-                this.buttonRealPayAll.Enabled = true;
+                //this.buttonRealPayAll.Enabled = true;
                 this.buttonRealPayItems.Enabled = true;
             }
             else if ((int)rowData[0]["state"] == 2)
@@ -158,8 +159,8 @@ namespace WMS.UI.FromSalary
                     this.reoGridView1.Mode = "payed";
                     this.model1.Mode = "payed";
                     this.buttonCclcultateItemsTax.Enabled = false;
-                    this.buttonCalculateAllTax.Enabled = false;
-                    this.buttonRealPayAll.Enabled = false;
+                    //this.buttonCalculateAllTax.Enabled = false;
+                    //this.buttonRealPayAll.Enabled = false;
                     this.buttonRealPayItems.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
@@ -171,11 +172,11 @@ namespace WMS.UI.FromSalary
                     this.reoGridView1.Mode = "pay";
                     this.model1.Mode = "pay";
                     this.buttonCalculateAllTax.Enabled = false;
-                    this.buttonCclcultateItemsTax.Enabled = false;
+                    //this.buttonCclcultateItemsTax.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
-                    this.buttonRealPayAll.Enabled = true;
+                    //this.buttonRealPayAll.Enabled = true;
                     this.buttonRealPayItems.Enabled = true;
                 }
             }

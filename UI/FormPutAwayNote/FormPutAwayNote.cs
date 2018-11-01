@@ -26,7 +26,7 @@ namespace WMS.UI
         {
             foreach(var cell in e.UpdatedCells)
             {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
@@ -40,9 +40,7 @@ namespace WMS.UI
             {
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "type",0}
+                { "createPersonName",GlobalData.Person["name"]}
             });
         }
 

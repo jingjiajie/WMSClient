@@ -7,26 +7,44 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FormStock
 {
     public partial class FormAddStockRecord : Form
     {
         private Action addFinishedCallback = null;
+        private int rowCur = 0;
         public FormAddStockRecord()
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
-           
-
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object> {{ "warehouseId",GlobalData.Warehouse["id"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "supplyId",0} ,
-                { "inventoryDate", DateTime.Now} });
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
+            {
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+                {
+                });
+            }
+        }
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
         }
 
         private void FormAddStockRecord_Load(object sender, EventArgs e)
@@ -47,12 +65,14 @@ namespace WMS.UI.FormStock
                 });
             if (foundStorageLocations == null)
             {
-                MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               // MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
             }
             else
             {
                 this.model1[row, "storageLocationId"] = foundStorageLocations["id"];
                 this.model1[row, "storageLocationNo"] = foundStorageLocations["no"];
+                this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(ValidationState.OK));
             }
         }
 
@@ -66,12 +86,14 @@ namespace WMS.UI.FormStock
                 });
             if (foundStorageLcations == null)
             {
-                MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位编号错误！")));
             }
             else
             {
                 this.model1[row, "storageLocationId"] = foundStorageLcations["id"];
                 this.model1[row, "storageLocationName"] = foundStorageLcations["name"];
+                this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(ValidationState.OK));
             }
         }
 
@@ -88,20 +110,18 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AmountBackwardMapper([Data]string strAmount, [Row]int row)
+        private double AmountBackwardMapper([Data]double amount, [Row]int row)
         {
-            if (!Double.TryParse(strAmount, out double amount))
-            {
-                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return 0;
-            }
+
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
+                //this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
                 return amount;
             }
             else
             {
+                //this.model1.UpdateCellState(row, "amount", new ModelCellState(ValidationState.OK));
                 return amount * unitAmount.Value;
             }
         }
@@ -141,22 +161,70 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private double AvailableAmountBackwardMapper([Data]string strAmount, [Row] int row)
+        private double AvailableAmountBackwardMapper([Data]Double amount, [Row] int row)
         {
-            if (!Double.TryParse(strAmount, out double amount))
-            {
-                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return 0;
-            }
+            //if (!Double.TryParse(strAmount, out double amount))
+            //{
+            //    //MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "不合法的数字！")));
+            //    return 0;
+            //}
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
-            {              
+            {
+                //this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
                 return amount;
             }
             else
             {
+                //this.model1.UpdateCellState(row, "availableAmount", new ModelCellState(ValidationState.OK));
                 return amount * unitAmount.Value;
             }
+        }
+
+        public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
+        {
+            string supplySerialNo = model[row, "supplySerialNo"]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(supplySerialNo)) return;
+            var foundSupplies = (from m in GlobalData.AllSupplies
+                                 where supplySerialNo == (string)m["serialNo"]
+                                 select m).ToArray();
+            if (foundSupplies.Length != 1)
+            {
+                model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                return;
+            }
+            this.FillSupplyFields(model, row, foundSupplies[0]);
+        }
+
+        //public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
+        //{
+        //    return (from s in GlobalData.AllSupplies
+        //            where s["serialNo"] != null
+        //            && s["serialNo"].ToString().StartsWith(input)
+        //            && (int)s["supplierId"] == (int)this.model1[row, "supplierId"]
+        //            && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+        //            select s["serialNo"]?.ToString()).Distinct().ToArray();
+        //}
+
+        private void FillSupplyFields(IModel model, int row, IDictionary<string, object> supply)
+        {
+            model[row, "supplyId"] = supply["id"];
+            model[row, "supplySerialNo"] = supply["serialNo"];
+            model[row, "materialId"] = supply["materialId"];
+            model[row, "materialNo"] = supply["materialNo"];
+            model[row, "materialName"] = supply["materialName"];
+            model[row, "materialProductLine"] = supply["materialProductLine"];
+            model[row, "supplierId"] = supply["supplierId"];
+            model[row, "supplierNo"] = supply["supplierNo"];
+            model[row, "supplierName"] = supply["supplierName"];       
+            model[row, "unit"] = supply["defaultEntryUnit"];
+            model[row, "unitAmount"] = supply["defaultEntryUnitAmount"];
+         
+         
+            model.UpdateCellState(row, "supplySerialNo", new ModelCellState(ValidationState.OK));
+            model.RefreshView(row);
+            return;
         }
 
         //===========为了实现一个看起来天经地义的交互逻辑=========
@@ -219,11 +287,21 @@ namespace WMS.UI.FormStock
             this.model1[row, "materialNo"] = foundMaterials[0]["no"];
             this.model1[row, "materialName"] = foundMaterials[0]["name"];
             this.model1[row, "materialProductLine"] = foundMaterials[0]["productLine"];
+            this.model1.UpdateCellState(row, "materialNo", new ModelCellState(ValidationState.OK));
+            this.model1.UpdateCellState(row, "materialName", new ModelCellState(ValidationState.OK));
+            this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(ValidationState.OK));
+            this.model1.RefreshView(row);
             return;
 
             FAILED:
-            if (string.IsNullOrWhiteSpace(materialProductLine)) return;
-            MessageBox.Show("物料不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //if (string.IsNullOrWhiteSpace(materialProductLine)) return;
+            //rowCur = row + 1;
+            //MessageBox.Show("行:"+rowCur+" 物料 名称："+ materialName+" 代号："+materialNo + " 不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //return;
+            this.model1.UpdateCellState(row, "materialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
+            this.model1.UpdateCellState(row, "materialName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
+            this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
+            this.model1.RefreshView(row);
             return;
         }
 
@@ -243,10 +321,18 @@ namespace WMS.UI.FormStock
             this.model1[row, "supplierId"] = foundSuppliers[0]["id"];
             this.model1[row, "supplierNo"] = foundSuppliers[0]["no"];
             this.model1[row, "supplierName"] = foundSuppliers[0]["name"];
+            this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(ValidationState.OK));
+            this.model1.UpdateCellState(row, "supplierName", new ModelCellState(ValidationState.OK));
+            this.model1.RefreshView(row);
             return;
 
             FAILED:
-            MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //rowCur = row + 1;
+            //MessageBox.Show("行:" + rowCur + "供应商 名称："+supplierName+" 代号： "+supplierNo+"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //return;
+            this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));
+            this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));         
+            this.model1.RefreshView(row);
             return;
         }
 
@@ -264,10 +350,24 @@ namespace WMS.UI.FormStock
             if (foundSupplies.Length == 1)
             {
                 this.model1[row, "supplyId"] = foundSupplies[0]["id"];
+                this.model1.UpdateCellState(row, "materialNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "materialName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.model1.RefreshView(row);
             }
             else
             {
-                MessageBox.Show("无此供货！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //rowCur = row + 1;
+                //MessageBox.Show("行:" + rowCur +"无此供货！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //return;
+                this.model1.UpdateCellState(row, "materialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
+                this.model1.UpdateCellState(row, "materialName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
+                this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "物料不存在！")));
+                this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));
+                this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));
+                this.model1.RefreshView(row);
                 return;
             }
         }
@@ -384,8 +484,7 @@ namespace WMS.UI.FormStock
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
-            this.model1.RemoveSelectedRows();
+
         }
 
         private int StateBackwardMapper([Data]string enable)
@@ -410,9 +509,12 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
+    
 
+        private void toolStripButtonDelete_Click_1(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            this.model1.RemoveSelectedRows();
         }
     }
 }

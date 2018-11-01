@@ -4,10 +4,10 @@ Imports FrontWork
 
 Public Class EditableDataViewModel
     Implements IConfigurable
-    Protected ModelOperationsWrapper As New ModelOperator
-    Protected ViewOperationsWrapper As New EditableDataViewOperationsWrapper
+    Protected ViewOperator As New EditableDataViewOperator
     Protected _Configuration As Configuration
     Protected _Mode As String = "default"
+    Protected _Model As IModel
 
     Public Overridable Property Configuration As Configuration Implements IConfigurable.Configuration
         Get
@@ -36,35 +36,35 @@ Public Class EditableDataViewModel
     End Property
 
     Private Sub ConfigurationFieldRemovedEvent(sender As Object, e As ConfigurationFieldRemovedEventArgs)
-        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim oldColumns = Me.ViewOperator.GetColumns
         Dim allFields = Me.Configuration.GetFields(Me.Mode)
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
         If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
-            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperator.GetRowCount))
         End If
     End Sub
 
     Private Sub ConfigurationFieldUpdatedEvent(sender As Object, e As ConfigurationFieldUpdatedEventArgs)
-        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim oldColumns = Me.ViewOperator.GetColumns
         Dim allFields = Me.Configuration.GetFields(Me.Mode)
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
         If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
-            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperator.GetRowCount))
         End If
     End Sub
 
     Private Sub ConfigurationFieldAddedEvent(sender As Object, e As ConfigurationFieldAddedEventArgs)
-        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim oldColumns = Me.ViewOperator.GetColumns
         Dim allFields = Me.Configuration.GetFields(Me.Mode)
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
         If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
-            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperator.GetRowCount))
         End If
     End Sub
 
@@ -72,13 +72,22 @@ Public Class EditableDataViewModel
         If Me.Configuration Is Nothing Then
             Throw New FrontWorkException($"Configuration not set for view!")
         End If
-        Dim oldColumns = Me.ViewOperationsWrapper.GetColumns
+        Dim oldColumns = Me.ViewOperator.GetColumns
         Dim allFields = Me.Configuration.GetFields(Me.Mode)
         Dim visibleFields = (From f In allFields Where f.Visible Select f).ToArray
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
         If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
-            Call Me.PushModelRow(Util.Range(0, Me.ViewOperationsWrapper.GetRowCount))
+            Dim modelRowCount = Me.Model.RowCount
+            Dim viewRowCount = Me.View.GetRowCount
+            If viewRowCount > modelRowCount Then
+                Dim delta = viewRowCount - modelRowCount
+                Call Me.View.RemoveRows(Util.Range(viewRowCount - delta, viewRowCount))
+            ElseIf modelRowCount > viewRowCount Then
+                Dim delta = modelRowCount - viewRowCount
+                Call Me.View.AddRows(Util.Times(Of IDictionary(Of String, Object))(Nothing, delta))
+            End If
+            Call Me.PushModelRow(Util.Range(0, Me.ViewOperator.GetRowCount))
         End If
     End Sub
 
@@ -114,20 +123,20 @@ Public Class EditableDataViewModel
     End Sub
 
     ''' <summary>
-    ''' ModelOperationsWrapper对象，用来存取数据
+    ''' Model对象，用来存取数据
     ''' </summary>
-    ''' <returns>ModelOperationsWrapper对象</returns>
+    ''' <returns>Model对象</returns>
     Public Overridable Property Model As IModel
         Get
-            Return Me.ModelOperationsWrapper.Model
+            Return Me._Model
         End Get
         Set(value As IModel)
-            If value Is Me.ModelOperationsWrapper.Model Then Return
-            If Me.ModelOperationsWrapper.Model IsNot Nothing Then
+            If value Is Me._Model Then Return
+            If Me._Model IsNot Nothing Then
                 Call Me.UnbindModel()
             End If
-            Me.ModelOperationsWrapper.Model = value
-            If Me.ModelOperationsWrapper.Model IsNot Nothing Then
+            Me._Model = value
+            If Me._Model IsNot Nothing Then
                 Call Me.BindModel()
             End If
         End Set
@@ -139,15 +148,15 @@ Public Class EditableDataViewModel
     ''' <returns>ViewOperationsWrapper对象</returns>
     Public Overridable Property View As IEditableDataView
         Get
-            Return Me.ViewOperationsWrapper.View
+            Return Me.ViewOperator.View
         End Get
         Set(value As IEditableDataView)
-            If value Is Me.ViewOperationsWrapper.View Then Return
-            If Me.ViewOperationsWrapper.View IsNot Nothing Then
+            If value Is Me.ViewOperator.View Then Return
+            If Me.ViewOperator.View IsNot Nothing Then
                 Call Me.UnbindView()
             End If
-            Me.ViewOperationsWrapper.View = value
-            If Me.ViewOperationsWrapper IsNot Nothing Then
+            Me.ViewOperator.View = value
+            If Me.ViewOperator IsNot Nothing Then
                 Call Me.BindView()
             End If
         End Set
@@ -175,13 +184,13 @@ Public Class EditableDataViewModel
             End If
         Next
         If updateColumns.Count > 0 Then
-            Call Me.ViewOperationsWrapper.UpdateColumns((From kv In updateColumns Select kv.Key).ToArray, (From kv In updateColumns Select kv.Value).ToArray)
+            Call Me.ViewOperator.UpdateColumns((From kv In updateColumns Select kv.Key).ToArray, (From kv In updateColumns Select kv.Value).ToArray)
         End If
         If addColumns.Count > 0 Then
-            Call Me.ViewOperationsWrapper.AddColumns(addColumns.ToArray)
+            Call Me.ViewOperator.AddColumns(addColumns.ToArray)
         End If
         If removeColumns.Count > 0 Then
-            Call Me.ViewOperationsWrapper.RemoveColumns(removeColumns.ToArray)
+            Call Me.ViewOperator.RemoveColumns(removeColumns.ToArray)
         End If
     End Sub
 
@@ -200,13 +209,14 @@ Public Class EditableDataViewModel
     ''' 绑定新的Model，将本View的各种事件绑定到Model上以实现数据变化的同步
     ''' </summary>
     Protected Overridable Sub BindModel()
-        AddHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        AddHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
-        AddHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-        AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        AddHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
-        AddHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
+        AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+        AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+        AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+        AddHandler Me.Model.CellStateChanged, AddressOf Me.ModelCellStateChanged
+        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        AddHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        AddHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
 
         Call Me.ModelRefreshedEvent(Me, Nothing)
     End Sub
@@ -215,13 +225,14 @@ Public Class EditableDataViewModel
     ''' 解绑Model，取消本视图绑定的所有事件
     ''' </summary>
     Protected Overridable Sub UnbindModel()
-        RemoveHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-        RemoveHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        RemoveHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
-        RemoveHandler Me.ModelOperationsWrapper.Refreshed, AddressOf Me.ModelRefreshedEvent
+        RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+        RemoveHandler Me.Model.CellStateChanged, AddressOf Me.ModelCellStateChanged
+        RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+        RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        RemoveHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        RemoveHandler Me.Model.Refreshed, AddressOf Me.ModelRefreshedEvent
     End Sub
 
     Private Sub ViewEditEndedEvent(sender As Object, e As ViewEditEndedEventArgs)
@@ -243,11 +254,11 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Sub BindView()
-        AddHandler Me.ViewOperationsWrapper.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
-        AddHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
-        AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
-        AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        AddHandler Me.ViewOperator.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
+        AddHandler Me.ViewOperator.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
+        AddHandler Me.ViewOperator.RowAdded, AddressOf Me.ViewRowAddedEvent
+        AddHandler Me.ViewOperator.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        AddHandler Me.ViewOperator.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
 
         AddHandler Me.View.ContentChanged, AddressOf Me.ViewContentChangedEvent
         AddHandler Me.View.EditEnded, AddressOf Me.ViewEditEndedEvent
@@ -258,18 +269,18 @@ Public Class EditableDataViewModel
     End Sub
 
     Protected Overridable Sub ViewSelectionRangeChangedEvent(sender As Object, e As ViewSelectionRangeChangedEventArgs)
-        RemoveHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
-        Me.ModelOperationsWrapper.AllSelectionRanges = e.NewSelectionRanges
-        AddHandler Me.ModelOperationsWrapper.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        RemoveHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
+        Me.Model.AllSelectionRanges = e.NewSelectionRanges
+        AddHandler Me.Model.SelectionRangeChanged, AddressOf Me.ModelSelectionRangeChangedEvent
     End Sub
 
     Protected Overridable Sub ViewRowRemovedEvent(sender As Object, e As ViewRowRemovedEventArgs)
         Dim rows = (From r In e.Rows Select r.Row).ToArray
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
-            Call Me.ModelOperationsWrapper.RemoveRows(rows)
-            AddHandler Me.ModelOperationsWrapper.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+            RemoveHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
+            Call Me.Model.RemoveRows(rows)
+            AddHandler Me.Model.RowRemoved, AddressOf Me.ModelRowRemovedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
@@ -284,80 +295,111 @@ Public Class EditableDataViewModel
         Next
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
-            Call Me.ModelOperationsWrapper.InsertRows(rows, data)
-            AddHandler Me.ModelOperationsWrapper.RowAdded, AddressOf Me.ModelRowAddedEvent
+            RemoveHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
+            Call Me.Model.InsertRows(rows, data)
+            AddHandler Me.Model.RowAdded, AddressOf Me.ModelRowAddedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Sub
 
     Protected Overridable Sub ViewRowUpdatedEvent(sender As Object, e As ViewRowUpdatedEventArgs)
-        Dim rows = (From r In e.Rows Select r.Row).ToArray
-        Dim data = (From r In e.Rows Select r.RowData).ToArray
-        Dim fields = Me.Configuration.GetFields(Me.Mode)
-        Dim uneditableFieldNames = (From f In fields
-                                    Where f.Editable.GetValue = False
-                                    Select f.Name.GetValue).ToArray
-        For i = 0 To rows.Length - 1
-            Dim keys = data(i).Keys.ToArray
-            For Each key In keys
-                If uneditableFieldNames.Contains(key) Then
-                    data(i).Remove(key)
-                End If
-            Next
-            data(i) = Me.GetBackwardMappedRowData(data(i), rows(i))
-        Next
+        Throw New NotImplementedException("Don't use this event! It will be soon deleted.")
+        'Dim rows = (From r In e.Rows Select r.Row).ToArray
+        'Dim data = (From r In e.Rows Select r.RowData).ToArray
+        'Dim fields = Me.Configuration.GetFields(Me.Mode)
+        'Dim uneditableFieldNames = (From f In fields
+        '                            Where f.Editable.GetValue = False
+        '                            Select f.Name.GetValue).ToArray
+        'For i = 0 To rows.Length - 1
+        '    Dim keys = data(i).Keys.ToArray
+        '    For Each key In keys
+        '        If uneditableFieldNames.Contains(key) Then
+        '            data(i).Remove(key)
+        '        End If
+        '    Next
+        '    data(i) = Me.GetBackwardMappedRowData(data(i), rows(i))
+        'Next
 
-        Try
-            RemoveHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-            Call Me.ModelOperationsWrapper.UpdateRows(rows, data)
-            AddHandler Me.ModelOperationsWrapper.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
-        Catch ex As FrontWorkException
-            Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-        End Try
+        'Try
+        '    RemoveHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        '    Call Me.Model.UpdateRows(rows, data)
+        '    AddHandler Me.Model.RowUpdated, AddressOf Me.ModelRowUpdatedEvent
+        'Catch ex As FrontWorkException
+        '    Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        'End Try
     End Sub
 
     Protected Overridable Sub ViewCellUpdatedEvent(sender As Object, e As ViewCellUpdatedEventArgs)
         '删除所有不能编辑的单元格
-        Dim cellInfos As List(Of ViewCellInfo) = e.Cells.ToList()
+        Dim cellInfos As New List(Of ViewCellInfo)(e.Cells)
         cellInfos.RemoveAll(
             Function(cellInfo)
                 Return Not Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName).Editable.GetValue
             End Function)
 
-        Dim rows = (From c In cellInfos Select c.Row).ToArray
-        Dim columnNames = (From c In cellInfos Select c.ColumnName).ToArray
-        Dim data = (From c In cellInfos Select c.CellData).ToArray
+        Dim columns = cellInfos.Select(Function(cellInfo)
+                                           Return Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
+                                       End Function)
+        Dim validationError As New List(Of CellPositionValidationStatePair)
+        Dim updateCell As New List(Of ViewCellInfo)
 
-        For i = 0 To rows.Length - 1
-            data(i) = Me.GetBackwardMappedCellData(data(i), columnNames(i), rows(i))
+        For i = 0 To cellInfos.Count - 1
+            Dim column = columns(i)
+            Dim cellInfo = cellInfos(i)
+            Dim rawData = cellInfo.CellData
+            Try
+                Dim mappedData = Me.GetBackwardMappedCellData(rawData, columns(i).Name, cellInfo.Row)
+                Dim convertedData = Util.ChangeType(mappedData, column.Type.GetValue)
+                updateCell.Add(New ViewCellInfo(cellInfo.Row, cellInfo.ColumnName, convertedData))
+            Catch ex As ParameterMatchingException '用户输入了错误的数据格式
+                validationError.Add(New CellPositionValidationStatePair(
+                        cellInfo.Row,
+                        cellInfo.ColumnName,
+                        New ValidationState(ValidationStateType.ERROR, $"""{rawData}""不是有效的格式！"))
+                    )
+            Catch ex As Exception
+                validationError.Add(New CellPositionValidationStatePair(
+                                        cellInfo.Row,
+                                        cellInfo.ColumnName,
+                                        New ValidationState(ValidationStateType.ERROR, $"""{rawData}""不是有效的格式！"))
+                                    )
+            End Try
         Next
 
         Try
-            RemoveHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
-            Call Me.ModelOperationsWrapper.UpdateCells(rows, columnNames, data)
-            AddHandler Me.ModelOperationsWrapper.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+            RemoveHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
+            Call Me.Model.UpdateCells(updateCell.Select(
+                                        Function(item) item.Row).ToArray,
+                                        updateCell.Select(Function(item) item.ColumnName).ToArray,
+                                        updateCell.Select(Function(item) item.CellData).ToArray)
+            AddHandler Me.Model.CellUpdated, AddressOf Me.ModelCellUpdatedEvent
         Catch ex As FrontWorkException
             Call MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
+
+        Call Me.Model.UpdateCellValidationStates(
+            validationError.Select(Function(item) item.CellPosition.Row).ToArray,
+            validationError.Select(Function(item) item.CellPosition.Field).ToArray,
+            validationError.Select(Function(item) item.State).ToArray
+        )
     End Sub
 
     Protected Overridable Sub UnbindView()
-        RemoveHandler Me.ViewOperationsWrapper.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
-        RemoveHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
-        RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
-        RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        RemoveHandler Me.ViewOperator.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
+        RemoveHandler Me.ViewOperator.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
+        RemoveHandler Me.ViewOperator.RowAdded, AddressOf Me.ViewRowAddedEvent
+        RemoveHandler Me.ViewOperator.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        RemoveHandler Me.ViewOperator.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
 
         RemoveHandler Me.View.ContentChanged, AddressOf Me.ViewContentChangedEvent
         RemoveHandler Me.View.EditEnded, AddressOf Me.ViewEditEndedEvent
     End Sub
 
     Protected Overridable Sub ModelSelectionRangeChangedEvent(sender As Object, e As ModelSelectionRangeChangedEventArgs)
-        RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        Me.ViewOperationsWrapper.SetSelectionRanges(e.NewSelectionRange)
-        AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        RemoveHandler Me.ViewOperator.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        Me.ViewOperator.SetSelectionRanges(e.NewSelectionRange)
+        AddHandler Me.ViewOperator.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
     End Sub
 
     Protected Overridable Sub ModelRowAddedEvent(sender As Object, e As ModelRowAddedEventArgs)
@@ -370,73 +412,80 @@ Public Class EditableDataViewModel
                 data(i) = Me.GetForwardMappedRowData(data(i), indexes(i))
             End If
         Next
-        RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
-        Call Me.ViewOperationsWrapper.InsertRows(indexes, data)
-        AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
+        RemoveHandler Me.ViewOperator.RowAdded, AddressOf Me.ViewRowAddedEvent
+        Call Me.ViewOperator.InsertRows(indexes, data)
+        AddHandler Me.ViewOperator.RowAdded, AddressOf Me.ViewRowAddedEvent
     End Sub
 
     Protected Overridable Sub ModelRowRemovedEvent(sender As Object, e As ModelRowRemovedEventArgs)
         Dim indexes = (From r In e.RemovedRows Select r.Row).ToArray
-        RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        Call Me.ViewOperationsWrapper.RemoveRows(indexes)
-        AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        RemoveHandler Me.ViewOperator.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        Call Me.ViewOperator.RemoveRows(indexes)
+        AddHandler Me.ViewOperator.RowRemoved, AddressOf Me.ViewRowRemovedEvent
     End Sub
 
     Private Sub ModelRowStateChanged(sender As Object, e As ModelRowStateChangedEventArgs)
         Dim rows = (From r In e.StateUpdatedRows Select r.Row).ToArray
         Dim states = (From r In e.StateUpdatedRows Select New ViewRowState(r.State)).ToArray
-        Call Me.ViewOperationsWrapper.UpdateRowStates(rows, states)
+        Call Me.ViewOperator.UpdateRowStates(rows, states)
+    End Sub
+
+    Private Sub ModelCellStateChanged(sender As Object, e As ModelCellStateChangedEventArgs)
+        Dim rows = (From c In e.StateUpdatedCells Select c.Row).ToArray
+        Dim fields = (From c In e.StateUpdatedCells Select c.FieldName).ToArray
+        Dim states = (From c In e.StateUpdatedCells Select New ViewCellState(c.State)).ToArray
+        Call Me.ViewOperator.UpdateCellStates(rows, fields, states)
     End Sub
 
     Protected Overridable Sub ModelCellUpdatedEvent(sender As Object, e As ModelCellUpdatedEventArgs)
         If Me.Configuration Is Nothing Then
             Throw New FrontWorkException("Configuration is not setted")
         End If
-        If Me.ViewOperationsWrapper Is Nothing Then
+        If Me.ViewOperator Is Nothing Then
             Throw New FrontWorkException("View is not set")
         End If
 
         Dim modelCellInfos = (From c In e.UpdatedCells Select CType(c.Clone, ModelCellInfo)).ToList
         modelCellInfos.RemoveAll(Function(cellInfo)
-                                     Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.ColumnName)
+                                     Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.FieldName)
                                      Return Not curField.Visible.GetValue
                                  End Function)
 
         For i = 0 To modelCellInfos.Count - 1
             Dim curCellInfo = modelCellInfos(i)
-            Dim colName = curCellInfo.ColumnName
+            Dim colName = curCellInfo.FieldName
             Dim row = curCellInfo.Row
             curCellInfo.CellData = Me.GetForwardMappedCellData(curCellInfo.CellData, colName, row)
         Next
-        RemoveHandler Me.ViewOperationsWrapper.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
-        Call Me.ViewOperationsWrapper.UpdateCells(modelCellInfos.Select(Function(cellInfo) cellInfo.Row).ToArray,
-                                                  modelCellInfos.Select(Function(cellInfo) cellInfo.ColumnName).ToArray,
+        RemoveHandler Me.ViewOperator.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
+        Call Me.ViewOperator.UpdateCells(modelCellInfos.Select(Function(cellInfo) cellInfo.Row).ToArray,
+                                                  modelCellInfos.Select(Function(cellInfo) cellInfo.FieldName).ToArray,
                                                   modelCellInfos.Select(Function(cellInfo) cellInfo.CellData).ToArray)
-        AddHandler Me.ViewOperationsWrapper.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
+        AddHandler Me.ViewOperator.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
     End Sub
 
     Protected Overridable Sub ModelRefreshedEvent(sender As Object, e As ModelRefreshedEventArgs)
-        Dim data = Me.ModelOperationsWrapper.GetRows(Util.Range(0, Me.ModelOperationsWrapper.GetRowCount))
+        Dim data = Me.Model.GetRows(Util.Range(0, Me.Model.GetRowCount))
         Dim newRowCount = data.Length
-        Dim oriViewRowCount = Me.ViewOperationsWrapper.GetRowCount
+        Dim oriViewRowCount = Me.ViewOperator.GetRowCount
         For i = 0 To newRowCount - 1
             data(i) = Me.GetForwardMappedRowData(data(i), i)
         Next
 
-        RemoveHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
-        RemoveHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf ViewRowUpdatedEvent
-        RemoveHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        RemoveHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        RemoveHandler Me.ViewOperationsWrapper.RowStateChanged, AddressOf Me.ViewRowStateChangedEvent
+        RemoveHandler Me.ViewOperator.RowAdded, AddressOf Me.ViewRowAddedEvent
+        RemoveHandler Me.ViewOperator.RowUpdated, AddressOf ViewRowUpdatedEvent
+        RemoveHandler Me.ViewOperator.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        RemoveHandler Me.ViewOperator.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        RemoveHandler Me.ViewOperator.RowStateChanged, AddressOf Me.ViewRowStateChangedEvent
 
         If newRowCount < oriViewRowCount Then '原来视图行数大于新的行数，删除部分行
-            Call Me.ViewOperationsWrapper.RemoveRows(Util.Range(newRowCount, oriViewRowCount))
+            Call Me.ViewOperator.RemoveRows(Util.Range(newRowCount, oriViewRowCount))
         ElseIf newRowCount > oriViewRowCount Then '原来视图行数小于新的行数，则增加部分行
             Dim addData(newRowCount - oriViewRowCount - 1) As IDictionary(Of String, Object)
             For i = 0 To addData.Length - 1
                 addData(i) = data(oriViewRowCount + i)
             Next
-            Call Me.ViewOperationsWrapper.AddRows(addData)
+            Call Me.ViewOperator.AddRows(addData)
         End If
         Dim commonRowCount = System.Math.Min(newRowCount, oriViewRowCount)
         If commonRowCount > 0 Then
@@ -444,23 +493,23 @@ Public Class EditableDataViewModel
             For i = 0 To updateData.Length - 1
                 updateData(i) = data(i)
             Next
-            Call Me.ViewOperationsWrapper.UpdateRows(Util.Range(0, updateData.Length), updateData)
+            Call Me.ViewOperator.UpdateRows(Util.Range(0, updateData.Length), updateData)
         End If
-        Call Me.ViewOperationsWrapper.SetSelectionRanges(Me.ModelOperationsWrapper.AllSelectionRanges)
+        Call Me.ViewOperator.SetSelectionRanges(Me.Model.AllSelectionRanges)
         '刷新行状态
         Dim rowNums = Util.Range(0, newRowCount)
-        Dim modelRowStates = Me.ModelOperationsWrapper.GetRowStates(rowNums)
+        Dim modelRowStates = Me.Model.GetRowStates(rowNums)
         Dim viewRowStates = (From s In modelRowStates Select New ViewRowState(s)).ToArray
-        Call Me.ViewOperationsWrapper.UpdateRowStates(rowNums, viewRowStates)
-        AddHandler Me.ViewOperationsWrapper.RowAdded, AddressOf Me.ViewRowAddedEvent
-        AddHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf ViewRowUpdatedEvent
-        AddHandler Me.ViewOperationsWrapper.RowRemoved, AddressOf Me.ViewRowRemovedEvent
-        AddHandler Me.ViewOperationsWrapper.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
-        AddHandler Me.ViewOperationsWrapper.RowStateChanged, AddressOf Me.ViewRowStateChangedEvent
+        Call Me.ViewOperator.UpdateRowStates(rowNums, viewRowStates)
+        AddHandler Me.ViewOperator.RowAdded, AddressOf Me.ViewRowAddedEvent
+        AddHandler Me.ViewOperator.RowUpdated, AddressOf ViewRowUpdatedEvent
+        AddHandler Me.ViewOperator.RowRemoved, AddressOf Me.ViewRowRemovedEvent
+        AddHandler Me.ViewOperator.SelectionRangeChanged, AddressOf Me.ViewSelectionRangeChangedEvent
+        AddHandler Me.ViewOperator.RowStateChanged, AddressOf Me.ViewRowStateChangedEvent
     End Sub
 
     Private Sub ViewRowStateChangedEvent(sender As Object, e As ViewRowStateChangedEventArgs)
-        RemoveHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        RemoveHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
         Dim viewRowInfos = e.StateChangedRows
         Dim modelRowStates(viewRowInfos.Length - 1) As ModelRowState
         Dim rows(viewRowInfos.Length - 1) As Integer
@@ -470,7 +519,7 @@ Public Class EditableDataViewModel
             rows(i) = viewRowInfo.Row
         Next
         Call Me.Model.UpdateRowStates(rows, modelRowStates)
-        AddHandler Me.ModelOperationsWrapper.RowStateChanged, AddressOf Me.ModelRowStateChanged
+        AddHandler Me.Model.RowStateChanged, AddressOf Me.ModelRowStateChanged
     End Sub
 
     Protected Overridable Sub ModelRowUpdatedEvent(sender As Object, e As ModelRowUpdatedEventArgs)
@@ -487,9 +536,9 @@ Public Class EditableDataViewModel
             Dim curRowNum = rows(i)
             data(i) = Me.GetForwardMappedRowData(data(i), curRowNum)
         Next
-        RemoveHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
-        Call Me.ViewOperationsWrapper.UpdateRows(rows, data)
-        AddHandler Me.ViewOperationsWrapper.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
+        RemoveHandler Me.ViewOperator.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
+        Call Me.ViewOperator.UpdateRows(rows, data)
+        AddHandler Me.ViewOperator.RowUpdated, AddressOf Me.ViewRowUpdatedEvent
     End Sub
 
     Protected Overridable Function GetForwardMappedRowData(rowData As IDictionary(Of String, Object), rowNum As Integer) As IDictionary(Of String, Object)

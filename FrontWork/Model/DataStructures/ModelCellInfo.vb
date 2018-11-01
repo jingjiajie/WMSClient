@@ -1,7 +1,7 @@
 ﻿''' <summary>
 ''' 一个单元格的索引和数据
 ''' </summary>
-Public Class ModelCellInfo
+Public Structure ModelCellInfo
     Implements ICloneable
     ''' <summary>
     ''' 所在行号
@@ -13,7 +13,7 @@ Public Class ModelCellInfo
     ''' 列名
     ''' </summary>
     ''' <returns></returns>
-    Public Property ColumnName As String
+    Public Property FieldName As String
 
     ''' <summary>
     ''' 单元格数据
@@ -21,14 +21,21 @@ Public Class ModelCellInfo
     ''' <returns></returns>
     Public Property CellData As Object
 
-    Public Sub New(row As Integer, columnName As String, cellData As Object)
+    ''' <summary>
+    ''' 单元格状态
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property State As ModelCellState
+
+    Public Sub New(row As Integer, fieldName As String, cellData As Object, state As ModelCellState)
         Me.Row = row
         Me.CellData = cellData
-        Me.ColumnName = columnName
+        Me.FieldName = fieldName
+        Me.State = state
     End Sub
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim newInstance As New ModelCellInfo(Me.Row, Me.ColumnName, Me.CellData)
+        Dim newInstance As New ModelCellInfo(Me.Row, Me.FieldName, Me.CellData, Me.State)
         Return newInstance
     End Function
-End Class
+End Structure

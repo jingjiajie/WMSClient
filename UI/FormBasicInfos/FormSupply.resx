@@ -123,37 +123,35 @@
     {mode:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",placeHolder:"必填信息",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称",visible:false},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
 		{name:"materialNo",displayName:"物料代号",type:"string",placeHolder:"必填信息",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",placeHolder:"必填信息",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",placeHolder:"必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+        {name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:true},
 
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:true,editable:true,forwardMapper:"#entryAmountForwardMapper",backwardMapper:"#entryAmountBackwardMapper"},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:true,editable:true},
 		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:true,editEnded:"#entryunitAmountEditEnded"},
-		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
-		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
 		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:true,editable:true,forwardMapper:"#inspectionAmountForwardMapper",backwardMapper:"#inspectionAmountBackwardMapper"},
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:true},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:true,editable:true,editEnded:"#inspectionunitAmountEditEnded"},
 
-		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
-		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",association:"#storageLocationNoAssociation"},
 
-		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
-		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
 
-		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
-		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",association:"#storageLocationNoAssociation"},
 
-        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
-		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",association:"#storageLocationNoAssociation"},
+
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",association:"#storageLocationNoAssociation"},
+
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",association:"#storageLocationNoAssociation"},
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:true,editable:true},
         {name:"photoIndex",type:"string",displayName:"照片索引",visible:true,editable:true},
@@ -165,7 +163,7 @@
         {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:true,editable:true},
         {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:true,editable:true},
 
-        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:false,editable:true},
+        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:false},
         {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:false,editable:true},
 		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:false,editable:true},
 		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:false,editable:true},
@@ -198,13 +196,13 @@
 
 		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
-		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
-		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false,placeHolder:"创建时自动生成"},
-		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+	  {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false,defaultValue:"#createPersonIdDefaultValue"},
+        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false,defaultValue:"#createPersonNameDefaultValue"},
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
 		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false,placeHolder:"修改时自动生成"},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
-		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+		{name:"enabled",type:"int",displayName:"是否启用",defaultValue:1,visible:false},
 
 	]
 	,
@@ -232,45 +230,38 @@
     
 },
 { mode:"default1",
-
+ref:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
-
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:false},
+{name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:false},
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
 		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:false},
-		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
-		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
 		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:false,editable:true},
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
 
 
-		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
-		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
-		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
 
-		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
-		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
-		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
-		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
@@ -316,57 +307,52 @@
 
 		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
-		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
-		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
-		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+		  {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false,defaultValue:"#createPersonIdDefaultValue"},
+        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false,defaultValue:"#createPersonNameDefaultValue"},
+
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
 		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
-		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+		{name:"enabled",type:"int",displayName:"是否启用",defaultValue:1,visible:false},
 
 	]
 	
     
 },
 {mode:"default2",
+ref:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:false},
+{name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:false},
 
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
 		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:false},
-		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
-		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
 		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:false,editable:true},
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
 
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
-		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
 
-		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
-		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
-		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
-		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
-		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
-
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
@@ -412,56 +398,52 @@
 
 		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
-		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
-		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
-		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+  {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false,defaultValue:"#createPersonIdDefaultValue"},
+        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false,defaultValue:"#createPersonNameDefaultValue"},
+
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
 		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
-		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+		{name:"enabled",type:"int",displayName:"是否启用",defaultValue:1,visible:false},
 	]
 
     
 },
 {mode:"default3",
+ref:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-        {name:"warehouseId",type:"int",displayName:"仓库ID",visible:false},
-		{name:"warehouseName",type:"string",displayName:"仓库名称"},
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
         {name:"materialId",type:"int",displayName:"物料ID",visible:false},
 		{name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"物料系列",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
-        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
+        {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:false},
+{name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:false},
 
 
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:false,editable:true},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:false,editable:true},
 		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:false},
-		{name:"defaultEntryStorageLocationId",type:"int",displayName:"默认入库目标库位ID",visible:false},
-		{name:"defaultEntryStorageLocationName",type:"string",displayName:"默认入库目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#defaultEntryStorageLocationNameEditEnded"},
 		{name:"defaultInspectionAmount",type:"double",displayName:"默认送检数量（个）",visible:false,editable:true},
 		{name:"defaultInspectionUnit",type:"string",displayName:"默认送检单位",visible:false},
 		{name:"defaultInspectionUnitAmount",type:"double",displayName:"默认送检单位数量",visible:false,editable:true},
 
 
-		{name:"defaultInspectionStorageLocationId",type:"int",displayName:"默认待检物料存放库位ID",visible:false},
-		{name:"defaultInspectionStorageLocationName",type:"string",displayName:"默认待检物料存放库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultInspectionStorageLocationNameEditEnded"},
+		{name:"defaultEntryStorageLocationNo",type:"string",displayName:"默认入库目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultQualifiedStorageLocationId",type:"int",displayName:"默认入库合格品库位ID",visible:false},
-		{name:"defaultQualifiedStorageLocationName",type:"string",displayName:"默认入库合格品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultQualifiedStorageLocationNameEditEnded"},
 
-		{name:"defaultUnqualifiedStorageLocationId",type:"int",displayName:"默认入库不良品库位ID",visible:false},
-		{name:"defaultUnqualifiedStorageLocationName",type:"string",displayName:"默认入库不良品库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultUnqualifiedStorageLocationNameEditEnded"},
+		{name:"defaultQualifiedStorageLocationNo",type:"string",displayName:"默认入库合格品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-		{name:"defaultDeliveryStorageLocationId",type:"int",displayName:"默认出库库位ID",visible:false},
-		{name:"defaultDeliveryStorageLocationName",type:"string",displayName:"默认出库库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultDeliveryStorageLocationNameEditEnded"},
+		{name:"defaultUnqualifiedStorageLocationNo",type:"string",displayName:"默认入库不良品库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
-        {name:"defaultPrepareTargetStorageLocationId",type:"int",displayName:"默认备货目标库位ID",visible:false},
-		{name:"defaultPrepareTargetStorageLocationName",type:"string",displayName:"默认备货目标库位名称",visible:false,association:"#storageLocationNameAssociation",editEnded:"#defaultPrepareTargetStorageLocationNameEditEnded"},
+		{name:"defaultDeliveryStorageLocationNo",type:"string",displayName:"默认出库库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
+		{name:"defaultPrepareTargetStorageLocationNo",type:"string",displayName:"默认备货目标库位编码",visible:false,association:"#storageLocationNoAssociation"},
 
 
         {name:"validPeriod",type:"double",displayName:"有效期限（天）",visible:false,editable:true},
@@ -507,13 +489,14 @@
 
 		{name:"isHistory",type:"int",displayName:"是否为历史信息",visible:false},
 		{name:"newestSupplyId",type:"int",displayName:"最新供货信息ID",visible:false},
-		{name:"createPersonId",type:"int",displayName:"创建人ID",visible:false},
-		{name:"createPersonName",type:"string",displayName:"创建人名称",editable:false},
-		{name:"createTime",type:"datetime",displayName:"创建时间",visible:true,editable:false,placeHolder:"创建时自动生成"},
+  {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false,defaultValue:"#createPersonIdDefaultValue"},
+        {name:"createPersonName",displayName:"创建用户",type:"string",editable:false,defaultValue:"#createPersonNameDefaultValue"},
+
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},
 		{name:"lastUpdatePersonId",type:"int",displayName:"最后修改人ID",visible:false},
 		{name:"lastUpdatePersonName",type:"string",displayName:"最后修改人名称",editable:false},
 		{name:"lastUpdateTime",type:"datetime",displayName:"最后修改时间",visible:true,editable:false,placeHolder:"修改时自动生成"},
-		{name:"enabled",type:"int",displayName:"是否启用",visible:false},
+		{name:"enabled",type:"int",displayName:"是否启用",defaultValue:1,visible:false},
 
 	]	
     

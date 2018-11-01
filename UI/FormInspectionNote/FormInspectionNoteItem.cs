@@ -139,6 +139,17 @@ namespace WMS.UI
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "待检": return 0;
+                case "全部合格": return 1;
+                case "不合格": return 2;
+                default: return -1;
+            }
+        }
+
         private void InspectionStorageLocationNoEditEnded(int row, string inspectionStorageLocationNo)
         {
             this.model[row, "inspectionStorageLocationId"] = 0;//先清除库位ID

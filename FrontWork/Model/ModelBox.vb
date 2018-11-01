@@ -29,13 +29,13 @@ Public Class ModelBox
                 newModel.Name = value
                 newModel.Configuration = Me.Configuration
                 Me._Models.SetModel(newModel)
-                Me.ModelConfigurationWrapper.Model = newModel
+                Me.ModelOperator.ModelCore = newModel
             Else
-                Me.ModelConfigurationWrapper.Model = Me._Models(value)
+                Me.ModelOperator.ModelCore = Me._Models(value)
             End If
             Me._currentModelName = value
             RaiseEvent SelectedModelChanged(Me, New SelectedModelChangedEventArgs)
-            Call Me.RaiseRefreshedEvent(Me, New ModelRefreshedEventArgs)
+            Call Me.ModelOperator.RaiseRefreshedEvent(Me, New ModelRefreshedEventArgs)
         End Set
     End Property
 

@@ -1,12 +1,28 @@
 ﻿Imports System.Linq
-Imports FrontWork
 
-Public Class ModelConfigurationWrapper
+Public Class ConfigurableModelOperator
     Inherits ModelOperator
     Implements IConfigurableModel
 
     Private _configuration As Configuration
     Private _mode As String = "default"
+
+    Public Sub New(modelCore As IModelCore)
+        Call MyBase.New(modelCore)
+    End Sub
+
+    Public Sub New()
+
+    End Sub
+
+    Public Shadows Property ModelCore As IModelCore
+        Get
+            Return MyBase.ModelCore
+        End Get
+        Set(value As IModelCore)
+            MyBase.ModelCore = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' 配置中心对象
@@ -35,14 +51,13 @@ Public Class ModelConfigurationWrapper
     End Property
 
     Private Sub ConfigurationFieldRemovedEvent(sender As Object, e As ConfigurationFieldRemovedEventArgs)
-        Call Me.Model.RemoveColumns(e.RemovedFields.Select(Function(f) f.Index).ToArray)
+        Call Me.ModelCore.RemoveColumns(e.RemovedFields.Select(Function(f) f.Index).ToArray)
     End Sub
 
     Private Sub ConfigurationFieldUpdatedEvent(sender As Object, e As ConfigurationFieldUpdatedEventArgs)
-        Dim context = New ModelInvocationContext(Me.Model)
-        Call Me.Model.UpdateColumn(e.UpdatedFields.Select(Function(f) f.Index).ToArray,
+        Dim context = New ModelInvocationContext(Me)
+        Call Me.ModelCore.UpdateColumn(e.UpdatedFields.Select(Function(f) f.Index).ToArray,
                                    e.UpdatedFields.Select(Function(f) New ModelColumn(context, f.Field)).ToArray)
-
     End Sub
 
     Private Sub ConfigurationFieldAddedEvent(sender As Object, e As ConfigurationFieldAddedEventArgs)
@@ -65,16 +80,12 @@ Public Class ModelConfigurationWrapper
         End Set
     End Property
 
-    Public Sub New(modelCore As IModel)
-        Call MyBase.New(modelCore)
-    End Sub
-
     Private Sub ConfigurationRefreshedEvent(sender As Object, e As ConfigurationRefreshedEventArgs)
         Call Me.RefreshCoreSchema(Me.Configuration)
     End Sub
 
     Private Sub RefreshCoreSchema(config As Configuration)
-        Dim context = New ModelInvocationContext(Me.Model)
+        Dim context = New ModelInvocationContext(Me)
         Dim fields = config.GetFields(Me.Mode)
         Dim addColumns As New List(Of ModelColumn)
         For Each field In fields
@@ -84,7 +95,7 @@ Public Class ModelConfigurationWrapper
             End If
         Next
         If addColumns.Count > 0 Then
-            Call Me.Model.AddColumns(addColumns.ToArray)
+            Call Me.ModelCore.AddColumns(addColumns.ToArray)
         End If
     End Sub
 End Class

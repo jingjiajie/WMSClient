@@ -126,7 +126,8 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},       
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false}, 
+        {name:"serialNo",displayName:"序号",type:"string",editable:false},      
         {name:"no",displayName:"供应商代号",type:"string",editable:false},
         {name:"name",displayName:"供应商名",type:"string",editable:false},
         {name:"fullName",displayName:"供应商全名",type:"string",editable:false},        

@@ -29,11 +29,14 @@ Public Class PagerSearchJsonRESTAdapter
         Call Me.Search(Me.SearchView.GetSearchEventArgs, False)
     End Sub
 
-    Protected Overrides Function SearchViewOnSearch(sender As Object, args As OnSearchEventArgs) As Boolean
-        Return Me.Search(args, True)
-    End Function
+    Protected Overrides Sub SearchViewOnSearch(sender As Object, args As OnSearchEventArgs)
+        If Me.Synchronizer.FindAPI Is Nothing Then
+            Throw New FrontWorkException("FindAPI not set!")
+        End If
+        Call Me.Search(args, True)
+    End Sub
 
-    Public Function Search(searchArgs As OnSearchEventArgs, resetPage As Boolean) As Boolean
+    Public Overloads Function Search(searchArgs As OnSearchEventArgs, resetPage As Boolean) As Boolean
         If Me.Synchronizer.GetCountAPI Is Nothing Then
             Throw New FrontWorkException("get-count API not set!")
         End If
@@ -52,22 +55,19 @@ Public Class PagerSearchJsonRESTAdapter
 
         '=====刷新分页总数
         '获取搜索结果
-        If Not MyBase.SearchViewOnSearch(Nothing, searchArgs) Then Return False
+        If Not MyBase.Search(searchArgs) Then Return False
 
         Call Me.SetConditionAndOrdersToAPI(Me.Synchronizer.GetCountAPI, searchArgs)
         '获取搜索结果总数量
         Dim responseStr As String = Nothing
-        Try
-            Dim response = Me.Synchronizer.GetCountAPI.Invoke()
-            responseStr = New StreamReader(response.GetResponseStream).ReadToEnd
-        Catch ex As WebException
-            Dim message = ex.Message
-            If ex.Response IsNot Nothing Then
-                message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
-            End If
+        Dim response = Me.Synchronizer.GetCountAPI.Invoke()
+        If response.StatusCode = 200 Then
+            responseStr = response.BodyString
+        Else
+            Dim message = response.ErrorMessage
             MessageBox.Show("查询结果总数失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
-        End Try
+        End If
 
         Me.Synchronizer.GetCountAPI.SetResponseParameter("$count")
         Dim countStr = Me.Synchronizer.GetCountAPI.GetResponseParameters(responseStr, {"$count"})(0)

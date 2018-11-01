@@ -13,11 +13,24 @@ Partial Public Class BasicView
     Inherits UserControl
     Implements IAssociableDataView
 
-    Private Class ControlTag
-        Public Property Index As Integer
+    Private COLOR_CELL_VALIDATION_ERROR As Color = Color.FromArgb(255, 107, 107)
+    Private COLOR_CELL_VALIDATION_WARNING As Color = Color.FromArgb(255, 230, 109)
 
+    Private Class ControlTag
         Public Sub New(index As Integer)
             Me.Index = index
+        End Sub
+
+        Public Property Index As Integer
+
+    End Class
+
+    Private Class CellInfo
+        Public Property Data As Object
+        Public Property State As ViewCellState = New ViewCellState(ValidationState.OK)
+
+        Public Sub New(data As Object)
+            Me.Data = data
         End Sub
     End Class
 
@@ -30,7 +43,7 @@ Partial Public Class BasicView
     Private Property _LabelManager As New LabelManager
     Private Property ViewModel As New AssociableDataViewModel(Me)
 
-    Private Property RecordedRows As New List(Of IDictionary(Of String, Object))
+    Private Property RecordedRows As New List(Of IDictionary(Of String, CellInfo))
     Private Property ViewColumns As New List(Of ViewColumn)
 
     ''' <summary>
@@ -87,10 +100,6 @@ Partial Public Class BasicView
     End Sub
 
     Private dicFieldEdited As New Dictionary(Of String, Boolean)
-    Public Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IAssociableDataView.BeforeRowUpdate
-    Public Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IAssociableDataView.BeforeRowAdd
-    Public Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IAssociableDataView.BeforeRowRemove
-    Public Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IAssociableDataView.BeforeCellUpdate
     Public Event BeforeSelectionRangeChange As EventHandler(Of BeforeViewSelectionRangeChangeEventArgs) Implements IAssociableDataView.BeforeSelectionRangeChange
     Public Event RowUpdated As EventHandler(Of ViewRowUpdatedEventArgs) Implements IAssociableDataView.RowUpdated
     Public Event RowAdded As EventHandler(Of ViewRowAddedEventArgs) Implements IAssociableDataView.RowAdded
@@ -276,13 +285,45 @@ Partial Public Class BasicView
         End If
         Me.Panel.Enabled = True
         Dim rowData = Me.RecordedRows(row)
-        For Each kv As KeyValuePair(Of String, Object) In rowData
+        For Each kv As KeyValuePair(Of String, CellInfo) In rowData
             Dim key = kv.Key
-            Dim value = kv.Value
-            Dim Text = If(value?.ToString, "")
+            Dim cellInfo = kv.Value
+            Dim Text = If(cellInfo.Data?.ToString, "")
 
             Call Me.SetFieldValue(key, Text)
         Next
+        Call Me.PaintRow(row)
+    End Sub
+
+    Private Sub PaintRow(row As Integer)
+        Call Me.Panel.SuspendLayout()
+        Dim DEFAULT_STATE = New ViewCellState(ValidationState.OK)
+        For i = 0 To Me.ViewColumns.Count - 1
+            Dim fieldName = Me.ViewColumns(i).Name
+            Dim control = Me.GetControlByName(fieldName)
+            Dim oriColor = control.BackColor
+            Dim targetColor As Color
+            Dim cellState As ViewCellState
+            If Me.RecordedRows(row).ContainsKey(fieldName) Then
+                cellState = Me.RecordedRows(row)(fieldName).State
+            Else
+                cellState = DEFAULT_STATE
+            End If
+            Dim message As String = cellState.ValidationState.Message
+            If cellState.ValidationState.Type = ValidationStateType.ERROR Then
+                targetColor = COLOR_CELL_VALIDATION_ERROR
+            ElseIf cellState.ValidationState.Type = ValidationStateType.WARNING Then
+                targetColor = COLOR_CELL_VALIDATION_WARNING
+            Else
+                targetColor = Color.Empty
+            End If
+            If oriColor = targetColor Then Continue For
+            control.BackColor = targetColor
+            If TypeOf (control) Is BasicViewTextBox Then
+                DirectCast(control, BasicViewTextBox).HintMessage = message
+            End If
+        Next
+        Call Me.Panel.ResumeLayout()
     End Sub
 
     ''' <summary>
@@ -295,25 +336,51 @@ Partial Public Class BasicView
         Dim newFieldValue = Me.GetFieldValue(fieldName)
         Dim srcFieldValue = Nothing
         If Me.RecordedRows(Me.TargetRow).ContainsKey(fieldName) Then
-            srcFieldValue = Me.RecordedRows(Me.TargetRow)(fieldName)
+            srcFieldValue = Me.RecordedRows(Me.TargetRow)(fieldName).Data
         End If
-        Dim beforeCellUpdateEventArgs As New BeforeViewCellUpdateEventArgs({New ViewCellInfo(Me.TargetRow, fieldName, newFieldValue)})
-        RaiseEvent BeforeCellUpdate(Me, beforeCellUpdateEventArgs)
-        If beforeCellUpdateEventArgs.Cancel Then
-            Call Me.SetFieldValue(fieldName, srcFieldValue)
-        Else
-            Me.RecordedRows(Me.TargetRow)(fieldName) = newFieldValue '更新缓存值
-            Dim cellUpdatedEventArgs As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me.TargetRow, fieldName, newFieldValue)})
-            RaiseEvent CellUpdated(Me, cellUpdatedEventArgs)
-        End If
+
+        '更新缓存值
+        Call Me.SetRecordedCellData(Me.TargetRow, fieldName, newFieldValue)
+
+        Dim cellUpdatedEventArgs As New ViewCellUpdatedEventArgs({New ViewCellInfo(Me.TargetRow, fieldName, newFieldValue)})
+        RaiseEvent CellUpdated(Me, cellUpdatedEventArgs)
+
         Me.dicFieldEdited.Remove(fieldName)
     End Sub
 
+    Private Sub SetRecordedCellData(row As Integer, fieldName As String, data As Object)
+        Dim cell As CellInfo
+        If Me.RecordedRows(row).ContainsKey(fieldName) Then
+            cell = Me.RecordedRows(row)(fieldName)
+            cell.Data = data
+        Else
+            cell = New CellInfo(data)
+            Me.RecordedRows(row)(fieldName) = cell
+        End If
+    End Sub
+
+    Private Sub SetRecordedCellState(row As Integer, fieldName As String, state As ViewCellState)
+        Dim cell As CellInfo
+        If Me.RecordedRows(Me.TargetRow).ContainsKey(fieldName) Then
+            cell = Me.RecordedRows(Me.TargetRow)(fieldName)
+            cell.State = state
+        Else
+            cell = New CellInfo(Nothing)
+            cell.State = state
+            Me.RecordedRows(Me.TargetRow)(fieldName) = cell
+        End If
+    End Sub
+
+    Private Function GetControlByName(fieldName As String) As Control
+        Dim ctrl = (From control As Control In Me.Panel.Controls
+                    Where control.Name = fieldName AndAlso control.GetType <> GetType(Label)
+                    Select control).FirstOrDefault()
+        Return ctrl
+    End Function
+
     Private Sub SetFieldValue(fieldName As String, value As String)
         '然后获取Control
-        Dim curControl = (From control As Control In Me.Panel.Controls
-                          Where control.Name = fieldName AndAlso control.GetType <> GetType(Label)
-                          Select control).FirstOrDefault()
+        Dim curControl = Me.GetControlByName(fieldName)
         If curControl Is Nothing Then
             Return
         End If
@@ -407,7 +474,9 @@ Partial Public Class BasicView
             .ReadOnly = Not viewColumn.Editable
             .Font = Me.Font
             .Dock = DockStyle.Fill
+            .Padding = New Padding(0)
             .Tag = New ControlTag(index)
+            .HintMessage = Nothing
         End With
         Call Me.BindTextBox(textBox)
     End Sub
@@ -420,6 +489,7 @@ Partial Public Class BasicView
             .Enabled = viewColumn.Editable
             .DropDownStyle = ComboBoxStyle.DropDownList
             .Dock = DockStyle.Fill
+            .Padding = New Padding(0)
             .Tag = New ControlTag(index)
         End With
         Call comboBox.Items.Clear()
@@ -488,7 +558,7 @@ Partial Public Class BasicView
             Call Me.InitLabel(label, viewColumn, index)
             Me.Panel.Controls.Add(label)
             '如果没有设定Values字段，认为可以用编辑框体现
-            If ViewColumn.Values Is Nothing Then
+            If viewColumn.Values Is Nothing Then
                 Dim textBox = Me._TextBoxManager.PopControl()
                 Call Me.InitTextBox(textBox, viewColumn, index)
                 '将编辑框添加到Panel里
@@ -578,27 +648,45 @@ Partial Public Class BasicView
     End Function
 
     Public Function AddRows(data() As IDictionary(Of String, Object)) As Integer() Implements IAssociableDataView.AddRows
-        Me.RecordedRows.AddRange(data)
+        Dim addRowData(data.Length - 1) As Dictionary(Of String, CellInfo)
+        For i = 0 To data.Length - 1
+            addRowData(i) = Me.RawDataToCellInfos(data(i))
+        Next
+        Me.RecordedRows.AddRange(addRowData)
         Return Nothing
+    End Function
+
+    Private Function RawDataToCellInfos(data As IDictionary(Of String, Object)) As Dictionary(Of String, CellInfo)
+        Dim newData As New Dictionary(Of String, CellInfo)
+        For Each viewColumn In Me.ViewColumns
+            Dim cellInfo As CellInfo
+            If data.ContainsKey(viewColumn.Name) Then
+                cellInfo = New CellInfo(data(viewColumn.Name))
+            Else
+                cellInfo = New CellInfo(Nothing)
+            End If
+            newData.Add(viewColumn.Name, cellInfo)
+        Next
+        Return newData
     End Function
 
     Public Sub InsertRows(rows() As Integer, data() As IDictionary(Of String, Object)) Implements IAssociableDataView.InsertRows
         Dim oriRowCount = Me.RecordedRows.Count
         '原始行每次插入之后，行号会变，所以做调整
-        Dim indexDataPairs(rows.Length - 1) As IndexDataPair
+        Dim indexRowDataPairs(rows.Length - 1) As IndexRowDataPair
         For i = 0 To rows.Length - 1
-            indexDataPairs(i) = New IndexDataPair() With {
+            indexRowDataPairs(i) = New IndexRowDataPair() With {
                 .Index = rows(i),
-                .Data = data(i)
+                .RowData = Me.RawDataToCellInfos(data(i))
             }
         Next
-        Dim adjustedIndexDataPairs = (From i In indexDataPairs Order By i.Index Ascending Select i).ToArray
+        Dim adjustedIndexDataPairs = (From i In indexRowDataPairs Order By i.Index Ascending Select i).ToArray
         For i = 0 To adjustedIndexDataPairs.Length - 1
             adjustedIndexDataPairs(i).Index = adjustedIndexDataPairs(i).Index + System.Math.Min(oriRowCount, i)
         Next
 
-        For Each indexDataPair In adjustedIndexDataPairs
-            Call Me.RecordedRows.Insert(indexDataPair.Index, indexDataPair.Data)
+        For Each pair In adjustedIndexDataPairs
+            Call Me.RecordedRows.Insert(pair.Index, pair.RowData)
         Next
     End Sub
 
@@ -611,11 +699,13 @@ Partial Public Class BasicView
 
     Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object)) Implements IAssociableDataView.UpdateRows
         For i = 0 To rows.Length - 1
-            Me.RecordedRows(rows(i)) = dataOfEachRow(i)
+            For Each item In dataOfEachRow(i)
+                Call Me.SetRecordedCellData(rows(i), item.Key, item.Value)
+            Next
+            If rows(i) = Me.TargetRow Then
+                Call Me.PushRow(Me.TargetRow)
+            End If
         Next
-        If rows.Contains(Me.TargetRow) Then
-            Call Me.PushRow(Me.TargetRow)
-        End If
     End Sub
 
     Public Sub UpdateCells(rows() As Integer, columnNames() As String, dataOfEachCell() As Object) Implements IAssociableDataView.UpdateCells
@@ -623,8 +713,7 @@ Partial Public Class BasicView
             Dim row = rows(i)
             Dim columnName = columnNames(i)
             Dim data = dataOfEachCell(i)
-            Dim recordedRowData = Me.RecordedRows(row)
-            recordedRowData(columnName) = data
+            Call Me.SetRecordedCellData(row, columnName, data)
         Next
 
         If rows.Contains(Me.TargetRow) Then
@@ -677,6 +766,22 @@ Partial Public Class BasicView
         Return Nothing
     End Function
 
+    Public Function GetCellStates(rows() As Integer, fields() As String) As ViewCellState() Implements IDataView.GetCellStates
+        Throw New NotImplementedException
+    End Function
+
+    Public Sub UpdateCellStates(rows() As Integer, fields() As String, states() As ViewCellState) Implements IDataView.UpdateCellStates
+        For i = 0 To rows.Length - 1
+            Dim row = rows(i)
+            Dim field = fields(i)
+            Dim state = states(i)
+            Call Me.SetRecordedCellState(row, field, state)
+            If row = Me.TargetRow Then
+                Call Me.PaintRow(row)
+            End If
+        Next
+    End Sub
+
     Private MustInherit Class ControlManager(Of T As Control)
         Inherits CollectionBase
 
@@ -724,8 +829,8 @@ Partial Public Class BasicView
 
     End Class
 
-    Private Structure IndexDataPair
+    Private Structure IndexRowDataPair
         Property Index As Integer
-        Property Data As Object
+        Property RowData As IDictionary(Of String, CellInfo)
     End Structure
 End Class

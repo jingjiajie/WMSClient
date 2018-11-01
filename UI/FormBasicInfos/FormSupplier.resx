@@ -172,7 +172,8 @@
     {mode:"default",
      fields:[
         {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},       
+        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
+        {name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},    
         {name:"no",displayName:"供应商代号",type:"string",placeHolder:"必填项"},
         {name:"name",displayName:"供应商名",type:"string",placeHolder:"必填项"},
         {name:"fullName",displayName:"供应商全名",type:"string"},        
@@ -194,12 +195,12 @@
         {name:"isHistory",displayName:"是否历史信息",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
         {name:"enabled",displayName:"是否启用",type:"int",values:["启用","禁用"],defaultValue:1,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"},
-        {name:"newestSupplierID",displayName:"最新供应商信息ID",type:"int",visible:false},
-        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false,placeHolder:"留空自动生成"},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false}, 
-        {name:"lastUpdatePersonName",displayName:"最后修改用户名称",type:"string",editable:false,placeHolder:"修改时自动生成"},     
+        {name:"newestSupplierId",displayName:"最新供应商信息ID",type:"int",visible:false},
+        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false,defaultValue:"#personIdDefaultValue"},
+        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false,placeHolder:"留空自动生成",defaultValue:"#personNameDefaultValue"},
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},
+        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false,defaultValue:"#personIdDefaultValue"}, 
+        {name:"lastUpdatePersonName",displayName:"最后修改用户名称",type:"string",editable:false,placeHolder:"修改时自动生成",defaultValue:"#personNameDefaultValue"},     
         {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
     ],
     httpAPIs:[

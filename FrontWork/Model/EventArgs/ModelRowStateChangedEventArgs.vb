@@ -1,5 +1,5 @@
 ﻿''' <summary>
-''' Model行状态改变时间参数
+''' Model行状态改变事件参数
 ''' </summary>
 Public Class ModelRowStateChangedEventArgs
     Inherits FrontWorkEventArgs

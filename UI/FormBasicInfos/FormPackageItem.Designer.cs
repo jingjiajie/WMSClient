@@ -70,7 +70,7 @@
             this.basicView1.Model = this.model;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(7, 7, 7, 0);
-            this.basicView1.Size = new System.Drawing.Size(1057, 100);
+            this.basicView1.Size = new System.Drawing.Size(1057, 105);
             this.basicView1.TabIndex = 14;
             // 
             // configuration1
@@ -81,7 +81,8 @@
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPackageItem",
-        "AssociationMethodListener"};
+        "AssociationMethodListener",
+        "FormPackageItemMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
@@ -165,10 +166,10 @@
             this.panel1.Controls.Add(this.model);
             this.panel1.Controls.Add(this.reoGridView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 150);
+            this.panel1.Location = new System.Drawing.Point(0, 155);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1057, 284);
+            this.panel1.Size = new System.Drawing.Size(1057, 279);
             this.panel1.TabIndex = 13;
             // 
             // reoGridView1
@@ -181,7 +182,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(1057, 284);
+            this.reoGridView1.Size = new System.Drawing.Size(1057, 279);
             this.reoGridView1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -201,7 +202,7 @@
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 105F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));

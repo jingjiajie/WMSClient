@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Web.Script.Serialization;
+using Microsoft.VisualBasic;
+
 
 namespace WMS.UI.FormBasicInfos
 {
@@ -52,18 +54,18 @@ namespace WMS.UI.FormBasicInfos
 
 
         private void model_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
-        {            
+        {
             foreach (var cell in e.UpdatedCells)
-            {          
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+            {
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
-                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;               
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
                 //if (!rowChange.Contains(cell.Row))
                 //{
-               //     rowChange.Add(cell.Row);
+                //     rowChange.Add(cell.Row);
                 //}                
-            }          
+            }
         }
 
         private string EnableForwardMapper([Data]int state)
@@ -90,20 +92,44 @@ namespace WMS.UI.FormBasicInfos
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "warehouseName",GlobalData.Warehouse["name"]},
-                { "createTime",DateTime.Now}
-            });        
+                row = Convert.ToInt32(s);
+            }
+            catch {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+                {
+                });
+            }
+        }
+
+
+        private int WarehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
+        private int PersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string PersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             bool update = false;
-
+            this.panelPager.Focus();
             for (int i = 0; i < this.model1.RowCount; i++)
             {                             
                 if (this.model1.GetRowSynchronizationState(i) == SynchronizationState.UPDATED)

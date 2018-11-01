@@ -1,5 +1,5 @@
-﻿Public Class _StdMethodListener
-    Inherits MethodListenerBase
+﻿<MethodListener("_StdMethodListener")>
+Public Class _StdMethodListener
     Public Function BoolForwardMapper(val As Boolean) As String
         If val = True Then
             Return "是"
