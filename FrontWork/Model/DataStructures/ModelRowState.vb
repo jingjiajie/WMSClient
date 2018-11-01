@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
-Public Class ModelRowState
-    Public SynchronizationState As SynchronizationState = SynchronizationState.SYNCHRONIZED
+Public Structure ModelRowState
+    Public SynchronizationState As SynchronizationState
 
     Public Sub New(synchronizationState As SynchronizationState)
         Me.SynchronizationState = synchronizationState
@@ -10,8 +10,4 @@ Public Class ModelRowState
     Public Sub New(viewRowState As ViewRowState)
         Me.SynchronizationState = viewRowState.SynchronizationState
     End Sub
-
-    Public Sub New()
-
-    End Sub
-End Class
+End Structure

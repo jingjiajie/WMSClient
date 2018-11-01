@@ -58,6 +58,21 @@
     Function GetRowStates(rows As Integer()) As ViewRowState()
 
     ''' <summary>
+    ''' 获取单元格状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="fields">字段</param>
+    ''' <returns></returns>
+    Function GetCellStates(rows As Integer(), fields As String()) As ViewCellState()
+
+    ''' <summary>
+    ''' 更新单元格状态
+    ''' </summary>
+    ''' <param name="rows">行号</param>
+    ''' <param name="fields">字段</param>
+    Sub UpdateCellStates(rows As Integer(), fields As String(), states As ViewCellState())
+
+    ''' <summary>
     ''' View所存储数据的行数
     ''' </summary>
     ''' <returns></returns>

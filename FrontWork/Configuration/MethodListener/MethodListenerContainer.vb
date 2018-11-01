@@ -26,15 +26,20 @@ Public Class MethodListenerContainer
             Dim frontWorkAsm = Assembly.GetExecutingAssembly
             Dim types = If(entryAsm?.GetTypes, {}).Union(frontWorkAsm.GetTypes)
             For Each curType In types
-                If curType.BaseType IsNot GetType(MethodListenerBase) Then Continue For
-                Dim instance As MethodListenerBase = Activator.CreateInstance(curType)
-                Dim name = instance.MethodListenerName
+                Dim attrs = curType.GetCustomAttributes(GetType(MethodListenerAttribute), True)
+                If attrs.Length = 0 Then Continue For
+                Dim methodListenerAttr = DirectCast(attrs(0), MethodListenerAttribute)
+                Dim instance As Object = Activator.CreateInstance(curType)
+                Dim name As String = methodListenerAttr.Name
+                If String.IsNullOrWhiteSpace(name) Then
+                    name = curType.Name
+                End If
 
                 '判断如果目标方法监听器中又包含Configuration类型的对象，则不允许设置。否则会发生无限递归初始化方法监听器
                 Dim properties = curType.GetProperties(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic)
                 For Each prop In properties
                     If prop.PropertyType = GetType(Configuration) Then
-                        throw new FrontWorkException($"MethodListener: {name} cannot contain Configuration property!")
+                        Throw New FrontWorkException($"MethodListener: {name} cannot contain Configuration property!")
                     End If
                 Next
                 Dim fields = curType.GetFields(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic)
@@ -43,7 +48,7 @@ Public Class MethodListenerContainer
                         Console.Write("")
                     End If
                     If field.FieldType = GetType(Configuration) Then
-                        throw new FrontWorkException($"MethodListener: {name} cannot contain Configuration field!")
+                        Throw New FrontWorkException($"MethodListener: {name} cannot contain Configuration field!")
                     End If
                 Next
                 Call MethodListenerContainer.Register(name, instance)
@@ -74,13 +79,15 @@ Public Class MethodListenerContainer
     ''' </summary>
     ''' <param name="methodListener">方法监听器对象。名称默认为方法监听器对象的类名。如果要指定其它名称，请使用Register函数的其他重载</param>
     Public Shared Sub Register(methodListener As Object)
+        Dim methodListenerName = methodListener.GetType.Name
         Dim found = (From m In MethodListeners
-                     Where m.Name.Equals(methodListener.GetType.Name, StringComparison.OrdinalIgnoreCase)
+                     Where m.Name.Equals(methodListenerName, StringComparison.OrdinalIgnoreCase)
                      Select m).FirstOrDefault
         If found Is Nothing Then
             MethodListeners.Add(New NameMethodListenerPair(methodListener.GetType.Name, methodListener))
         Else
             found.MethodListener = methodListener
+            'Throw New FrontWorkException(String.Format("MethodListener ""{0}"" already exists!", methodListenerName))
         End If
     End Sub
 

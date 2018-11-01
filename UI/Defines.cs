@@ -12,6 +12,7 @@ namespace WMS.UI
         //public const string ServerURL = "http://linuxserver.jingjiajie.com:9000";
 
         //正式服，非请勿进
-        public const string ServerURL = "http://47.93.35.199:9000";
+        //※调试时进入后请先改回测试服地址再推！※
+        //public const string ServerURL = "http://47.93.35.199:9000";
     }
 }

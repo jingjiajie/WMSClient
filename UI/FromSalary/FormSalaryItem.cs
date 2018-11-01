@@ -122,6 +122,10 @@ namespace WMS.UI.FromSalary
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                 GlobalData.AllSalaryItem = RestClient.Get<List<IDictionary<string, object>>>(
                    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_item/{condWarehouse.ToString()}");
+                if (FormPersonSalary.formPersonSalary != null)
+                {
+                    FormPersonSalary.formPersonSalary.Search();
+                }
             }
         }
 

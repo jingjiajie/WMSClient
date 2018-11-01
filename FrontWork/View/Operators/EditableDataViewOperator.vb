@@ -1,7 +1,7 @@
 ﻿Imports FrontWork
 
-Public Class EditableDataViewOperationsWrapper
-    Inherits SelectableDataViewOperationsWrapper
+Public Class EditableDataViewOperator
+    Inherits SelectableDataViewOperator
     Implements IEditableDataView
 
     Public Shadows Property View As IEditableDataView
@@ -43,50 +43,6 @@ Public Class EditableDataViewOperationsWrapper
             RemoveHandler View.EditEnded, value
         End RemoveHandler
         RaiseEvent(sender As Object, e As ViewEditEndedEventArgs)
-        End RaiseEvent
-    End Event
-
-    Public Custom Event BeforeRowUpdate As EventHandler(Of BeforeViewRowUpdateEventArgs) Implements IEditableDataView.BeforeRowUpdate
-        AddHandler(value As EventHandler(Of BeforeViewRowUpdateEventArgs))
-            AddHandler View.BeforeRowUpdate, value
-        End AddHandler
-        RemoveHandler(value As EventHandler(Of BeforeViewRowUpdateEventArgs))
-            RemoveHandler View.BeforeRowUpdate, value
-        End RemoveHandler
-        RaiseEvent(sender As Object, e As BeforeViewRowUpdateEventArgs)
-        End RaiseEvent
-    End Event
-
-    Public Custom Event BeforeRowAdd As EventHandler(Of BeforeViewRowAddEventArgs) Implements IEditableDataView.BeforeRowAdd
-        AddHandler(value As EventHandler(Of BeforeViewRowAddEventArgs))
-            AddHandler View.BeforeRowAdd, value
-        End AddHandler
-        RemoveHandler(value As EventHandler(Of BeforeViewRowAddEventArgs))
-            RemoveHandler View.BeforeRowAdd, value
-        End RemoveHandler
-        RaiseEvent(sender As Object, e As BeforeViewRowAddEventArgs)
-        End RaiseEvent
-    End Event
-
-    Public Custom Event BeforeRowRemove As EventHandler(Of BeforeViewRowRemoveEventArgs) Implements IEditableDataView.BeforeRowRemove
-        AddHandler(value As EventHandler(Of BeforeViewRowRemoveEventArgs))
-            AddHandler View.BeforeRowRemove, value
-        End AddHandler
-        RemoveHandler(value As EventHandler(Of BeforeViewRowRemoveEventArgs))
-            RemoveHandler View.BeforeRowRemove, value
-        End RemoveHandler
-        RaiseEvent(sender As Object, e As BeforeViewRowRemoveEventArgs)
-        End RaiseEvent
-    End Event
-
-    Public Custom Event BeforeCellUpdate As EventHandler(Of BeforeViewCellUpdateEventArgs) Implements IEditableDataView.BeforeCellUpdate
-        AddHandler(value As EventHandler(Of BeforeViewCellUpdateEventArgs))
-            AddHandler View.BeforeCellUpdate, value
-        End AddHandler
-        RemoveHandler(value As EventHandler(Of BeforeViewCellUpdateEventArgs))
-            RemoveHandler View.BeforeCellUpdate, value
-        End RemoveHandler
-        RaiseEvent(sender As Object, e As BeforeViewCellUpdateEventArgs)
         End RaiseEvent
     End Event
 

@@ -6,7 +6,7 @@ Public Class AssociableDataViewModel
     Private Property AssociationVisible As Boolean = False
     Private Property EditingRow As Integer = -1
     Private Property EditingColumnName As String
-    Private Shadows Property ViewOperationsWrapper As New AssociableDataViewOperationsWrapper
+    Private Shadows Property ViewOperationsWrapper As New AssociableDataViewOperator
 
     Public Shadows Property View As IAssociableDataView
         Get

@@ -91,6 +91,9 @@
     <Compile Include="Adapters\PivotTableAdapter\DataStructures.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\DataStructures\CellPosition.vb" />
+    <Compile Include="Common\DataStructures\CellPositionValidationStatePair.vb" />
+    <Compile Include="Common\DataStructures\ValidationState.vb" />
     <Compile Include="Common\ManualBrowserForm.Designer.vb">
       <DependentUpon>ManualBrowserForm.vb</DependentUpon>
     </Compile>
@@ -113,13 +116,14 @@
     <Compile Include="Common\Exceptions\FrontWorkException.vb" />
     <Compile Include="Common\Exceptions\InvalidDataException.vb" />
     <Compile Include="Common\Util\JsonSerializer.vb" />
-    <Compile Include="Configuration\Attributes\DataAttribute.vb" />
-    <Compile Include="Configuration\Attributes\FieldAttribute.vb" />
-    <Compile Include="Configuration\Attributes\IInvocationParameterAttribute.vb" />
-    <Compile Include="Configuration\Attributes\ModelAttribute.vb" />
-    <Compile Include="Configuration\Attributes\RowAttribute.vb" />
-    <Compile Include="Configuration\Attributes\SynchronizerAttribute.vb" />
-    <Compile Include="Configuration\Attributes\ViewAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\DataAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\FieldAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\IInvocationParameterAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\MethodListenerAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\ModelAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\RowAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\SynchronizerAttribute.vb" />
+    <Compile Include="Configuration\MethodListener\Attributes\ViewAttribute.vb" />
     <Compile Include="Configuration\DataStructures\GenericFieldProperty.vb" />
     <Compile Include="Configuration\DataStructures\IndexFieldPair.vb" />
     <Compile Include="Configuration\DataStructures\InvocationContext\InvocationExpectedParamInfo.vb" />
@@ -149,21 +153,23 @@
     <Compile Include="Configuration\Exceptions\ParameterMatchingException.vb" />
     <Compile Include="Configuration\Interfaces\IConfigurable.vb" />
     <Compile Include="Configuration\DataStructures\InvocationContext\InvocationContext.vb" />
-    <Compile Include="Configuration\MethodListener\MethodListenerBase.vb" />
     <Compile Include="Configuration\MethodListener\MethodListenerContainer.vb" />
     <Compile Include="Configuration\MethodListener\_StdMethodListener.vb" />
+    <Compile Include="Model\DataStructures\ModelCellState.vb" />
     <Compile Include="Model\DataStructures\ModelRefreshArgs.vb" />
     <Compile Include="Model\DataStructures\ModelRowState.vb" />
+    <Compile Include="Model\EventArgs\ModelCellStateChangedEventArgs.vb" />
     <Compile Include="Model\Interfaces\IConfigurableModel.vb" />
-    <Compile Include="Model\Wrappers\ConfigurableModelOperator.vb" />
-    <Compile Include="Model\Wrappers\ModelConfigurationWrapper.vb" />
-    <Compile Include="Model\Wrappers\ModelOperator.vb" />
-    <Compile Include="Model\Wrappers\ModelWrapperBase.vb" />
+    <Compile Include="Model\Interfaces\IModelCore.vb" />
+    <Compile Include="Model\Operators\ConfigurableModelOperator.vb" />
+    <Compile Include="Model\Operators\ModelOperator.vb" />
+    <Compile Include="Synchronizer\DataStructures\HTTPResponse.vb" />
     <Compile Include="ViewModel\AssociableDataViewModel.vb" />
     <Compile Include="View\BasicView\BasicViewTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="View\DataStructures\ViewCellInfo.vb" />
+    <Compile Include="View\DataStructures\ViewCellState.vb" />
     <Compile Include="View\DataStructures\ViewRowInfo.vb" />
     <Compile Include="View\DataStructures\ViewRowState.vb" />
     <Compile Include="View\DataStructures\ViewSchema\ViewColumn.vb" />
@@ -193,9 +199,7 @@
     <Compile Include="View\GridView.Designer.vb">
       <DependentUpon>GridView.vb</DependentUpon>
     </Compile>
-    <Compile Include="View\GridView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="View\GridView.vb" />
     <Compile Include="View\Interfaces\IAssociableDataView.vb" />
     <Compile Include="View\Interfaces\IDataView.vb" />
     <Compile Include="Logger\Logger.vb" />
@@ -206,7 +210,7 @@
     <Compile Include="Common\DataStructures\SynchronizaionState.vb" />
     <Compile Include="Model\EventArgs\ModelBeforeRowRemoveEventArgs.vb" />
     <Compile Include="Model\EventArgs\ModelCollectionChangedEventArgs.vb" />
-    <Compile Include="Model\EventArgs\ModelRowSynchronizationStateChangedEventArgs.vb" />
+    <Compile Include="Model\EventArgs\ModelRowStateChangedEventArgs.vb" />
     <Compile Include="Model\EventArgs\SelectedModelChangedEventArgs.vb" />
     <Compile Include="Model\ModelBox.Designer.vb">
       <DependentUpon>ModelBox.vb</DependentUpon>
@@ -289,11 +293,11 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ViewModel\EditableDataViewModel.vb" />
-    <Compile Include="View\Wrappers\AssociableDataViewOperationsWrapper.vb" />
-    <Compile Include="View\Wrappers\DataViewOperationsWrapper.vb" />
-    <Compile Include="View\Wrappers\DataViewOperationsWrapperBase.vb" />
-    <Compile Include="View\Wrappers\EditableDataViewOperationsWrapper.vb" />
-    <Compile Include="View\Wrappers\SelectableDataViewOperationsWrapper.vb" />
+    <Compile Include="View\Operators\AssociableDataViewOperator.vb" />
+    <Compile Include="View\Operators\DataViewOperator.vb" />
+    <Compile Include="View\Operators\DataViewOperatorBase.vb" />
+    <Compile Include="View\Operators\EditableDataViewOperator.vb" />
+    <Compile Include="View\Operators\SelectableDataViewOperator.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\ManualBrowserForm.resx">
@@ -325,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\AdsorbableAssociationForm.resx">
       <DependentUpon>AdsorbableAssociationForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\BasicView\BasicViewTextBox.resx">
+      <DependentUpon>BasicViewTextBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\GridView.resx">
       <DependentUpon>GridView.vb</DependentUpon>

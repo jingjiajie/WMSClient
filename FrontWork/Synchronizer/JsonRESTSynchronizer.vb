@@ -14,7 +14,7 @@ Imports Jint.Native
 Public Class JsonRESTSynchronizer
     Inherits UserControl
     Implements ISynchronizer
-    Private _model As Model
+    Private _model As IModel
     Private _configuration As Configuration
     Private _mode As String = "default"
     Private Property RequestParams As New List(Of ModeParams)
@@ -87,11 +87,11 @@ Public Class JsonRESTSynchronizer
     ''' </summary>
     ''' <returns></returns>
     <Description("Model对象"), Category("FrontWork")>
-    Public Property Model As Model
+    Public Property Model As IModel
         Get
             Return Me._model
         End Get
-        Set(value As Model)
+        Set(value As IModel)
             If Me._model IsNot Nothing Then
                 'TODO 保存数据
                 Call Me.UnbindModel()
@@ -274,21 +274,18 @@ Public Class JsonRESTSynchronizer
                            AndAlso rowInfo.State.SynchronizationState <> SynchronizationState.ADDED_UPDATED
                            Select rowInfo.RowData).ToArray
         If rowDataList.Count > 0 Then
-            Try
-                Me.RemoveAPI.SetRequestParameter("$data", rowDataList)
-                Dim response = Me.RemoveAPI.Invoke()
+            Me.RemoveAPI.SetRequestParameter("$data", rowDataList)
+            Dim res = Me.RemoveAPI.Invoke()
+            If res.StatusCode = 200 Then
                 MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Catch ex As WebException
+            Else
                 e.Cancel = True
-                Dim message = ex.Message
-                If ex.Response IsNot Nothing Then
-                    message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
-                End If
+                Dim message = res.ErrorMessage
                 MessageBox.Show("删除失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                If Me.RemoveAPI.Callback IsNot Nothing Then
-                    Me.RemoveAPI.Callback.Invoke(ex.Response, ex)
-                End If
-            End Try
+                'TODO 回调函数的参数类型也不对 If Me.RemoveAPI.Callback IsNot Nothing Then
+                '    Me.RemoveAPI.Callback.Invoke(ex.Response, ex)
+                'End If
+            End If
         End If
     End Sub
 
@@ -297,75 +294,67 @@ Public Class JsonRESTSynchronizer
         If Me.FindAPI Is Nothing Then
             Throw New FrontWorkException("Find API Not set!")
         End If
-        Try
-            Using response As HttpWebResponse = Me.FindAPI.Invoke
-                Dim responseStreamReader = New StreamReader(response.GetResponseStream())
-                Dim responseStr = responseStreamReader.ReadToEnd
-                Me.FindAPI.SetResponseParameter("$data")
-                Dim data = Me.FindAPI.GetResponseParameters(responseStr, {"$data"})(0)
-                If data Is Nothing Then Return False
+        Dim res = Me.FindAPI.Invoke
+        If res.StatusCode = 200 Then
+            Dim responseStr = res.BodyString
+            Me.FindAPI.SetResponseParameter("$data")
+            Dim data = Me.FindAPI.GetResponseParameters(responseStr, {"$data"})(0)
+            If data Is Nothing Then Return False
 
-                '更新Model
-                Dim resultList As New List(Of IDictionary(Of String, Object))
-                '判断是对象还是对象数组
-                If TypeOf (data) Is IDictionary(Of String, Object) Then '如果是对象，则作为数组的第一项
-                    Dim value = CType(data, IDictionary(Of String, Object))
+            '更新Model
+            Dim resultList As New List(Of IDictionary(Of String, Object))
+            '判断是对象还是对象数组
+            If TypeOf (data) Is IDictionary(Of String, Object) Then '如果是对象，则作为数组的第一项
+                Dim value = CType(data, IDictionary(Of String, Object))
+                resultList.Add(value)
+            Else '否则是数组
+                Dim valueArray = CType(data, Object())
+                For Each value In valueArray
                     resultList.Add(value)
-                Else '否则是数组
-                    Dim valueArray = CType(data, Object())
-                    For Each value In valueArray
-                        resultList.Add(value)
-                    Next
-                End If
-                Dim mappedList As New List(Of IDictionary(Of String, Object))
-                For Each item In resultList
-                    Dim curRow = item
-                    Dim newRow As New Dictionary(Of String, Object)
-                    For Each kv In curRow
-                        Dim mappedModelKey = Me.GetMappedModelFieldName(kv.Key)
-                        If Not newRow.ContainsKey(mappedModelKey) Then
-                            newRow.Add(mappedModelKey, kv.Value)
-                        End If
-                    Next
-                    mappedList.Add(newRow)
                 Next
-                '修改完成后整体触发刷新事件
-                Dim selectionRanges As New List(Of Range)
-                For Each oriRange In Me.Model.AllSelectionRanges
-                    '截取选区，如果原选区超过了数据表的范围，则进行截取
-                    If oriRange.Row >= resultList.Count Then Continue For
-                    Dim newRow = oriRange.Row
-                    Dim newCol = oriRange.Column
-                    Dim newRows = oriRange.Rows
-                    Dim newCols = oriRange.Columns
-                    If oriRange.Row + oriRange.Rows > resultList.Count Then
-                        newRows = resultList.Count - newRow
-                    End If
-                    'If oriRange.Column + oriRange.Columns > dataTable.Columns.Count Then
-                    '    newCols = dataTable.Columns.Count - newCol
-                    'End If
-                    selectionRanges.Add(New Range(newRow, newCol, newRows, newCols))
-                Next
-                '如果实在没有选区了，就自动选第一行第一列
-                If selectionRanges.Count = 0 AndAlso resultList.Count > 0 Then
-                    selectionRanges.Add(New Range(0, 0, 1, 1))
-                End If
-                Call Me.Model.Refresh(New ModelRefreshArgs(mappedList.ToArray, selectionRanges.ToArray))
-
-                Call Me.FindAPI.Callback?.Invoke(response, Nothing)
-            End Using
-        Catch ex As WebException
-            Call Me.FindAPI.Callback?.Invoke(CType(ex.Response, HttpWebResponse), ex)
-            Dim message = ex.Message
-            If ex.Response IsNot Nothing Then
-                message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
             End If
+            Dim mappedList As New List(Of IDictionary(Of String, Object))
+            For Each item In resultList
+                Dim curRow = item
+                Dim newRow As New Dictionary(Of String, Object)
+                For Each kv In curRow
+                    Dim mappedModelKey = Me.GetMappedModelFieldName(kv.Key)
+                    If Not newRow.ContainsKey(mappedModelKey) Then
+                        newRow.Add(mappedModelKey, kv.Value)
+                    End If
+                Next
+                mappedList.Add(newRow)
+            Next
+            '修改完成后整体触发刷新事件
+            Dim selectionRanges As New List(Of Range)
+            For Each oriRange In Me.Model.AllSelectionRanges
+                '截取选区，如果原选区超过了数据表的范围，则进行截取
+                If oriRange.Row >= resultList.Count Then Continue For
+                Dim newRow = oriRange.Row
+                Dim newCol = oriRange.Column
+                Dim newRows = oriRange.Rows
+                Dim newCols = oriRange.Columns
+                If oriRange.Row + oriRange.Rows > resultList.Count Then
+                    newRows = resultList.Count - newRow
+                End If
+                'If oriRange.Column + oriRange.Columns > dataTable.Columns.Count Then
+                '    newCols = dataTable.Columns.Count - newCol
+                'End If
+                selectionRanges.Add(New Range(newRow, newCol, newRows, newCols))
+            Next
+            '如果实在没有选区了，就自动选第一行第一列
+            If selectionRanges.Count = 0 AndAlso resultList.Count > 0 Then
+                selectionRanges.Add(New Range(0, 0, 1, 1))
+            End If
+            Call Me.Model.Refresh(New ModelRefreshArgs(mappedList.ToArray, selectionRanges.ToArray))
+
+            'TODO 回调参数的类型也不对 Call Me.FindAPI.Callback?.Invoke(response, Nothing)
+        Else
+            ' TODO 回调参数的类型也不对 Call Me.FindAPI.Callback?.Invoke(CType(ex.Response, HttpWebResponse), ex)
+            Dim message = res.ErrorMessage
             MessageBox.Show("查询失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
-            'Catch ex As Exception
-            '    MessageBox.Show("查询失败：" & ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            '    Return False
-        End Try
+        End If
         Return True
     End Function
 
@@ -377,6 +366,10 @@ Public Class JsonRESTSynchronizer
         '获取焦点以触发所有视图的编辑完成保存
         '防止最后一个编辑的单元格不能保存
         Call Util.FindFirstVisibleParent(Me)?.Focus()
+        If Me.Model.HasErrorCell Then
+            MessageBox.Show("请正确填写所有信息再进行保存！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
         Dim addedData As New List(Of IDictionary(Of String, Object))
         Dim addedRows As New List(Of Integer)
         Dim updatedData As New List(Of IDictionary(Of String, Object))
@@ -396,38 +389,32 @@ Public Class JsonRESTSynchronizer
         Next
 
         If addedData.Count > 0 Then
-            Try
-                Call Me.AddAPI.SetRequestParameter("$data", addedData.ToArray)
-                Call Me.AddAPI.Invoke()
+            Call Me.AddAPI.SetRequestParameter("$data", addedData.ToArray)
+            Dim res = Me.AddAPI.Invoke()
+            If res.StatusCode = 200 Then
                 '将相应行的同步状态更新为已同步
                 Me.Model.UpdateRowStates(addedRows.ToArray, Util.Times(New ModelRowState With {.SynchronizationState = SynchronizationState.SYNCHRONIZED}, addedRows.Count))
-            Catch ex As WebException
-                Dim message = ex.Message
-                If ex.Response IsNot Nothing Then
-                    message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
-                End If
+            Else
+                Dim message = res.ErrorMessage
                 MessageBox.Show($"保存失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Return False
-            End Try
+            End If
         End If
 
         If updatedData.Count > 0 Then
-            Try
-                Call Me.UpdateAPI.SetRequestParameter("$data", updatedData.ToArray)
-                Call Me.UpdateAPI.Invoke()
+            Call Me.UpdateAPI.SetRequestParameter("$data", updatedData.ToArray)
+            Dim res = Me.UpdateAPI.Invoke()
+            If res.StatusCode = 200 Then
                 '将相应行的同步状态更新为已同步
                 Me.Model.UpdateRowStates(updatdRows.ToArray, Util.Times(New ModelRowState With {.SynchronizationState = SynchronizationState.SYNCHRONIZED}, updatdRows.Count))
-            Catch ex As WebException
-                Dim message = ex.Message
-                If ex.Response IsNot Nothing Then
-                    message = New StreamReader(ex.Response.GetResponseStream).ReadToEnd
-                End If
+            Else
+                Dim message = res.ErrorMessage
                 MessageBox.Show($"保存失败：" & message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Return False
-            End Try
+            End If
         End If
 
-        Call Me.Model.RemoveUneditedNewRows()
+            Call Me.Model.RemoveUneditedNewRows()
         MessageBox.Show("保存成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Return True
     End Function

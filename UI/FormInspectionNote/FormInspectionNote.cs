@@ -13,13 +13,9 @@ namespace WMS.UI
 {
     public partial class FormInspectionNote : Form
     {
-        private int[] initialSelectedIDs = null;
-        private string searchNo = null;
-        public FormInspectionNote(int[] initialSelectedIDs = null,string searchNo = null)
+        public FormInspectionNote()
         {
             MethodListenerContainer.Register(this);
-            this.initialSelectedIDs = initialSelectedIDs;
-            this.searchNo = searchNo;
             InitializeComponent();
         }
 
@@ -28,23 +24,10 @@ namespace WMS.UI
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
-            if (searchNo != null)
-            {
-                this.searchView1.AddCondition("warehouseEntryNo", searchNo);
-            }
-            if (initialSelectedIDs != null)
-            {
-                this.searchView1.AddStaticCondition("id", (from id in initialSelectedIDs select (object)id).ToArray(), Relation.IN);
-            }
             this.searchView1.Search();
-            if (initialSelectedIDs != null)
-            {
-                this.model1.SelectRowsByValues("id", initialSelectedIDs);
-            }
-            this.searchView1.ClearStaticCondition("id");
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -52,6 +35,17 @@ namespace WMS.UI
                 case 1: return "部分送检完成";
                 case 2: return "全部送检完成";
                 default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "送检中": return 0;
+                case "部分送检完成": return 1;
+                case "全部送检完成": return 2;
+                default: return -1;
             }
         }
 
@@ -90,6 +84,20 @@ namespace WMS.UI
             }
             var formChooseType = new FormInspectionNoteChoosePreviewType(selectedIDs);
             formChooseType.Show();
+        }
+
+        public void SearchAndSelectByIDs(int[] ids)
+        {
+            this.searchView1.AddStaticCondition("id", (from id in ids select (object)id).ToArray(), Relation.IN);
+            this.searchView1.Search();
+            this.model1.SelectRowsByValues("id", ids);
+            this.searchView1.ClearStaticCondition("id");
+        }
+
+        public void SearchByWarehouseEntryNo(string warehouseEntryNo)
+        {
+            this.searchView1.AddCondition("warehouseEntryNo", warehouseEntryNo);
+            this.searchView1.Search();
         }
     }
 }

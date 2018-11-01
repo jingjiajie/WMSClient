@@ -53,7 +53,7 @@ namespace WMS.UI.FormTransferOrder
         {
             foreach (var cell in e.UpdatedCells)
             {
-                if (cell.ColumnName.StartsWith("lastUpdate")) return;
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
                 this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
                 this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
@@ -64,7 +64,7 @@ namespace WMS.UI.FormTransferOrder
         {
             try
             {
-                if (this.model1.SelectionRange.Rows != 1)
+                if (this.model1.SelectionRange == null || this.model1.SelectionRange.Rows != 1)
                 {
                     MessageBox.Show("请选择一项移库单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -128,7 +128,7 @@ namespace WMS.UI.FormTransferOrder
         {
             if (this.model1.SelectionRange == null)
             {
-                MessageBox.Show("请选择要预览的盘点单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择要预览的备货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             List<int> ids = new List<int>();
@@ -156,18 +156,28 @@ namespace WMS.UI.FormTransferOrder
             formPreviewExcel.Show();
         }
 
+        private int warehouseIdDefaultValue()
+        {
+            return (int)GlobalData.Warehouse["id"];
+        }
+
+        private int createPersonIdDefaultValue()
+        {
+            return (int)GlobalData.Person["id"];
+        }
+
+        private string createPersonNameDefaultValue()
+        {
+            return (string)GlobalData.Person["name"];
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
-            int a = (int)GlobalData.Warehouse["id"];
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
-                { "warehouseId",GlobalData.Warehouse["id"]},
-                { "createPersonId",GlobalData.Person["id"]},
-                { "createPersonName",GlobalData.Person["name"]},
-                { "createTime",DateTime.Now},
-                { "type",1}
+                { "createPersonName",GlobalData.Person["name"]}
             });
         }
 

@@ -34,8 +34,8 @@ namespace Test
         {
             this.model1.AddRows(new Dictionary<string,object>[]
             {
-               new Dictionary<string, object> { { "姓名","小明"} ,{ "科目","语文"},{ "成绩",100} },
-               new Dictionary<string, object> { { "姓名","小明"} ,{ "科目","数学"},{ "成绩",100} },
+               new Dictionary<string, object> { { "科目","语文"},{ "成绩",100} },
+                null,
                new Dictionary<string, object> { { "姓名","小红"} ,{ "科目","语文"},{ "成绩",100} },
                new Dictionary<string, object> { { "姓名","小红"} ,{ "科目","数学"},{ "成绩",100} },
             });

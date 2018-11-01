@@ -1,6 +1,6 @@
 ﻿Imports FrontWork
 
-Public Class ModelRefreshArgs
+Public Structure ModelRefreshArgs
     Public Property DataRows As IDictionary(Of String, Object)()
     Public Property SelectionRanges As Range()
 
@@ -8,4 +8,4 @@ Public Class ModelRefreshArgs
         Me.DataRows = dataRows
         Me.SelectionRanges = selectionRanges
     End Sub
-End Class
+End Structure
