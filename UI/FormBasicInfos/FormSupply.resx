@@ -163,7 +163,7 @@
         {name:"size",type:"string",displayName:"尺寸（大件/小件）",visible:true,editable:true},
         {name:"groupPrincipal",type:"string",displayName:"分组责任人",visible:true,editable:true},
 
-        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:false,editable:true},
+        {name:"singleBoxPhotoIndex",type:"string",displayName:"单箱照片索引",visible:true},
         {name:"singleBoxPackagingBoxType",type:"string",displayName:"单箱包装箱类型",visible:false,editable:true},
 		{name:"singleBoxLength",type:"double",displayName:"单箱长",visible:false,editable:true},
 		{name:"singleBoxWidth",type:"double",displayName:"单箱宽",visible:false,editable:true},
@@ -230,7 +230,7 @@
     
 },
 { mode:"default1",
-
+ref:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
 {name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
@@ -321,6 +321,7 @@
     
 },
 {mode:"default2",
+ref:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
 {name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
@@ -410,6 +411,7 @@
     
 },
 {mode:"default3",
+ref:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
 {name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   

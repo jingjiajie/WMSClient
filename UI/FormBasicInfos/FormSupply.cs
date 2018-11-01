@@ -192,30 +192,24 @@ namespace WMS.UI.FormBasicInfos
 
         private void toolStripButtonSupplySingleBoxTranPackingInfo_Click(object sender, EventArgs e)
         {
-            this.model1.Mode = "default1";
             this.basicView1.Mode = "default1";
             this.reoGridView1.Mode = "default1";
-            this.synchronizer.Mode = "default1";
             this.toolStripButton1.Visible = true;
             //this.searchView1.Search();
         }
 
         private void toolStripButtonSupplyOuterPackingSize_Click(object sender, EventArgs e)
         {
-            this.model1.Mode = "default2";
             this.basicView1.Mode = "default2";
             this.reoGridView1.Mode = "default2";
-            this.synchronizer.Mode = "default2";
             this.toolStripButton1.Visible = true;
             //this.searchView1.Search();
         }
 
         private void toolStripButtonSupplyShipmentInfo_Click(object sender, EventArgs e)
         {
-            this.model1.Mode = "default3";
             this.basicView1.Mode = "default3";
             this.reoGridView1.Mode = "default3";
-            this.synchronizer.Mode = "default3";
             this.toolStripButton1.Visible = true;
             //this.searchView1.Search();
         }
