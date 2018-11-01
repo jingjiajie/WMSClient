@@ -60,25 +60,25 @@ namespace WMS.UI
                     MakeTreeNode("库存批次", "FormStockRecord"),
                     MakeTreeNode("库存盘点","FormStockTakingOrder"),
                     MakeTreeNode("移位记录", "FormTransferRecord")
-                    }),
-                 MakeTreeNode("薪金管理",null ,new TreeNode[]{
-                    MakeTreeNode("薪金类别","FormSalaryType"),
-                    MakeTreeNode("薪金期间", "FormSalaryPeriod"),
-                    MakeTreeNode("人员薪金", "FormPersonSalary"),
-                    MakeTreeNode("薪资发放单", "FormPayNote")
-                    }),
-                 MakeTreeNode("总账管理", null, new TreeNode[]{
-                    MakeTreeNode("科目管理","FormAccountTitle"),
-                    MakeTreeNode("税务管理","FormTax"),
-                    MakeTreeNode("账目记录", "FormAccountRecord"),
-                    MakeTreeNode("会计期间", "FormAccountPeriod")
-                    }),
-                 MakeTreeNode("结算管理",null, new TreeNode[]{
-                   MakeTreeNode("汇总单管理","FormSummaryNote"),
-                   MakeTreeNode("结算单管理","FormSettlementNote"),
-                   MakeTreeNode("发票管理", "FormInvoice"),
-                   MakeTreeNode("价格管理", "FormPrice")
                     })
+                 //MakeTreeNode("薪金管理",null ,new TreeNode[]{
+                 //   MakeTreeNode("薪金类别","FormSalaryType"),
+                 //   MakeTreeNode("薪金期间", "FormSalaryPeriod"),
+                 //   MakeTreeNode("人员薪金", "FormPersonSalary"),
+                 //   MakeTreeNode("薪资发放单", "FormPayNote")
+                 //   }),
+                 //MakeTreeNode("总账管理", null, new TreeNode[]{
+                 //   MakeTreeNode("科目管理","FormAccountTitle"),
+                 //   MakeTreeNode("税务管理","FormTax"),
+                 //   MakeTreeNode("账目记录", "FormAccountRecord"),
+                 //   MakeTreeNode("会计期间", "FormAccountPeriod")
+                 //   }),
+                 //MakeTreeNode("结算管理",null, new TreeNode[]{
+                 //  MakeTreeNode("汇总单管理","FormSummaryNote"),
+                 //  MakeTreeNode("结算单管理","FormSettlementNote"),
+                 //  MakeTreeNode("发票管理", "FormInvoice"),
+                 //  MakeTreeNode("价格管理", "FormPrice")
+                 //   })
             };
 
             this.treeViewLeft.Nodes.Clear();
