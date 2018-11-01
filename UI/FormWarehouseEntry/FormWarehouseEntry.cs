@@ -174,6 +174,19 @@ namespace WMS.UI
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case "待入库": return 0;
+                case "送检中": return 1;
+                case "全部入库": return 2;
+                case "部分入库": return 3;
+                default: return -1;
+            }
+        }
+
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             if(this.model1.SelectionRange == null)

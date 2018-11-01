@@ -209,7 +209,7 @@
         {name:"unqualifiedStorageLocationId",displayName:"不良品库位ID",type:"int",visible:false},
         {name:"unqualifiedStorageLocationNo",displayName:"不良品库位编码",association:"#storageLocationNoAssociation",editEnded:"#unqualifiedStorageLocationNoEditEnded"},
         {name:"unqualifiedStorageLocationName",displayName:"不良品库位名称",association:"#storageLocationNameAssociation",editEnded:"#unqualifiedStorageLocationNameEditEnded"},
-        {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#StateForwardMapper"},
+        {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper"},
         {name:"refuseAmount",displayName:"拒收数量",type:"double",defaultValue:0},
         {name:"refuseUnit",displayName:"拒收单位",defaultValue:"个"},
         {name:"refuseUnitAmount",displayName:"拒收单位数量",type:"double",defaultValue:1},

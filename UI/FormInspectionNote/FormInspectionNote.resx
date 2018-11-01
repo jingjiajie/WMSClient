@@ -127,7 +127,7 @@
         {name:"no",displayName:"送检单号"},
         {name:"inspectionTime",displayName:"送检时间",type:"datetime"},
         {name:"description",displayName:"描述"},
-        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
+        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper"},
         {name:"supplierNo",displayName:"供应商代号",editable:false},
         {name:"supplierName",displayName:"供货商名称",editable:false},
         {name:"warehouseEntryNo",displayName:"源入库单号",editable:false},
@@ -164,9 +164,6 @@
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1310, 17</value>
-  </metadata>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>13, 18</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -209,6 +206,9 @@
         EfkAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>13, 18</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>88</value>
   </metadata>

@@ -350,12 +350,12 @@ Partial Public Class BasicView
 
     Private Sub SetRecordedCellData(row As Integer, fieldName As String, data As Object)
         Dim cell As CellInfo
-        If Me.RecordedRows(Me.TargetRow).ContainsKey(fieldName) Then
-            cell = Me.RecordedRows(Me.TargetRow)(fieldName)
+        If Me.RecordedRows(row).ContainsKey(fieldName) Then
+            cell = Me.RecordedRows(row)(fieldName)
             cell.Data = data
         Else
             cell = New CellInfo(data)
-            Me.RecordedRows(Me.TargetRow)(fieldName) = cell
+            Me.RecordedRows(row)(fieldName) = cell
         End If
     End Sub
 

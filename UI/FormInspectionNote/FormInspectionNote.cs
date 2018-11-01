@@ -27,7 +27,7 @@ namespace WMS.UI
             this.searchView1.Search();
         }
 
-        private string StateForwardMapper(int state)
+        private string StateForwardMapper([Data]int state)
         {
             switch (state)
             {
@@ -35,6 +35,17 @@ namespace WMS.UI
                 case 1: return "部分送检完成";
                 case 2: return "全部送检完成";
                 default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "送检中": return 0;
+                case "部分送检完成": return 1;
+                case "全部送检完成": return 2;
+                default: return -1;
             }
         }
 

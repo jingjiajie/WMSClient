@@ -136,7 +136,7 @@ Public Class SearchView
                 Try
                     searchValues(i) = Convert.ChangeType(mappedValues(i), fieldConfiguration.Type.GetValue)
                 Catch
-                    MessageBox.Show($"""{texts(i)}""不是合法的数据，请检查输入！")
+                    MessageBox.Show($"""{texts(i)}""不是合法的数据，请检查输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Return Nothing
                 End Try
             Next

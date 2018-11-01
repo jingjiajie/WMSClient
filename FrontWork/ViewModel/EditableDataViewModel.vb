@@ -78,6 +78,15 @@ Public Class EditableDataViewModel
         Dim newColumns = Me.FieldConfigurationsToViewColumn(visibleFields)
         Call Me.RefreshViewSchema(oldColumns, newColumns)
         If Me.Model IsNot Nothing AndAlso Me.View IsNot Nothing AndAlso Me.View.GetRowCount > 0 Then
+            Dim modelRowCount = Me.Model.RowCount
+            Dim viewRowCount = Me.View.GetRowCount
+            If viewRowCount > modelRowCount Then
+                Dim delta = viewRowCount - modelRowCount
+                Call Me.View.RemoveRows(Util.Range(viewRowCount - delta, viewRowCount))
+            ElseIf modelRowCount > viewRowCount Then
+                Dim delta = modelRowCount - viewRowCount
+                Call Me.View.AddRows(Util.Times(Of IDictionary(Of String, Object))(Nothing, delta))
+            End If
             Call Me.PushModelRow(Util.Range(0, Me.ViewOperator.GetRowCount))
         End If
     End Sub

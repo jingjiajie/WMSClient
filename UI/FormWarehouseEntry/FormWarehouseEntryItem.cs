@@ -145,7 +145,19 @@ namespace WMS.UI
                 default: return "未知状态";
             }
         }
-        
+
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "待入库": return 0;
+                case "送检中": return 1;
+                case "正品入库": return 2;
+                case "不良品入库": return 3;
+                default: return -1;
+            }
+        }
+
 
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
