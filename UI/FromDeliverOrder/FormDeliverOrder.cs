@@ -159,11 +159,7 @@ namespace WMS.UI.FromDeliverOrder
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
             }
         }
-        //进入备货
-        private void buttonTransferOrder_Click(object sender, EventArgs e)
-        {
-            new FormDeliveryOrderReady().Show();
-        }
+
 
         //完成发货
         private void buttonDeliver_Click(object sender, EventArgs e)
@@ -183,17 +179,11 @@ namespace WMS.UI.FromDeliverOrder
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                //if (rowData[i]["driverName"] == null)
-                //{
-                //    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //    return;
-                //}
-                
-                //if (rowData[i]["liscensePlateNumber"] == null)
-                //{
-                //    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //    return;
-                //}
+                if (string.IsNullOrWhiteSpace((string)rowData[i]["driverName"])|| string.IsNullOrWhiteSpace((string)rowData[i]["liscensePlateNumber"]))
+                {
+                    MessageBox.Show("请输入相应司机/车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if ((int)rowData[i]["state"] == DeliveryOrderState.DELIVERY_STATE_DELIVER_FINNISH)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -264,11 +254,6 @@ namespace WMS.UI.FromDeliverOrder
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
             });
-        }
-
-        private void model1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void toolStripAutoTransfer_Click(object sender, EventArgs e)
@@ -388,5 +373,6 @@ namespace WMS.UI.FromDeliverOrder
         {
             this.model1[row, "returnNoteTime"] = DateTime.Now;
         }
+
     }
 }
