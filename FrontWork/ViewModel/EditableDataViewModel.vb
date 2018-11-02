@@ -445,7 +445,7 @@ Public Class EditableDataViewModel
             Throw New FrontWorkException("View is not set")
         End If
 
-        Dim modelCellInfos = (From c In e.UpdatedCells Select CType(c.Clone, ModelCellInfo)).ToList
+        Dim modelCellInfos = (From c In e.UpdatedCells Select c).ToList
         modelCellInfos.RemoveAll(Function(cellInfo)
                                      Dim curField = Me.Configuration.GetField(Me.Mode, cellInfo.FieldName)
                                      Return Not curField.Visible.GetValue
@@ -453,9 +453,8 @@ Public Class EditableDataViewModel
 
         For i = 0 To modelCellInfos.Count - 1
             Dim curCellInfo = modelCellInfos(i)
-            Dim colName = curCellInfo.FieldName
-            Dim row = curCellInfo.Row
-            curCellInfo.CellData = Me.GetForwardMappedCellData(curCellInfo.CellData, colName, row)
+            curCellInfo.CellData = Me.GetForwardMappedCellData(curCellInfo.CellData, curCellInfo.FieldName, curCellInfo.Row)
+            modelCellInfos(i) = curCellInfo
         Next
         RemoveHandler Me.ViewOperator.CellUpdated, AddressOf Me.ViewCellUpdatedEvent
         Call Me.ViewOperator.UpdateCells(modelCellInfos.Select(Function(cellInfo) cellInfo.Row).ToArray,
