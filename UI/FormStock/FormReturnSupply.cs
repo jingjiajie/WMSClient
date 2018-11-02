@@ -20,47 +20,47 @@ namespace WMS.UI.FormStock
             MethodListenerContainer.Register("FormReturnSupply",this);
             InitializeComponent();
         }
-        private void StorageLocationNameEditEnded([Row]int row, [Data]string storageAreaName)
-        {
-            IDictionary<string, object> foundStorageLocations =
-                GlobalData.AllStorageLocations.Find((s) =>
-                {
-                    if (s["name"] == null) return false;
-                    return s["name"].ToString() == storageAreaName;
-                });
-            if (foundStorageLocations == null)
-            {
-                // MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
-            }
-            else
-            {
-                this.model1[row, "storageLocationId"] = foundStorageLocations["id"];
-                this.model1[row, "storageLocationNo"] = foundStorageLocations["no"];
-                this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(ValidationState.OK));
-            }
-        }
+        //private void StorageLocationNameEditEnded([Row]int row, [Data]string storageAreaName)
+        //{
+        //    IDictionary<string, object> foundStorageLocations =
+        //        GlobalData.AllStorageLocations.Find((s) =>
+        //        {
+        //            if (s["name"] == null) return false;
+        //            return s["name"].ToString() == storageAreaName;
+        //        });
+        //    if (foundStorageLocations == null)
+        //    {
+        //        // MessageBox.Show($"库区\"{storageAreaName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位名称错误！")));
+        //    }
+        //    else
+        //    {
+        //        this.model1[row, "storageLocationId"] = foundStorageLocations["id"];
+        //        this.model1[row, "storageLocationNo"] = foundStorageLocations["no"];
+        //        this.model1.UpdateCellState(row, "storageLocationName", new ModelCellState(ValidationState.OK));
+        //    }
+        //}
 
-        private void StorageLocationNoEditEnded([Row]int row, [Data] string storageLocationName)
-        {
-            IDictionary<string, object> foundStorageLcations =
-                GlobalData.AllStorageLocations.Find((s) =>
-                {
-                    if (s["no"] == null) return false;
-                    return s["no"].ToString() == storageLocationName;
-                });
-            if (foundStorageLcations == null)
-            {
-                //MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位编号错误！")));
-            }
-            else
-            {
-                this.model1[row, "storageLocationId"] = foundStorageLcations["id"];
-                this.model1[row, "storageLocationName"] = foundStorageLcations["name"];
-                this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(ValidationState.OK));
-            }
-        }
+        //private void StorageLocationNoEditEnded([Row]int row, [Data] string storageLocationName)
+        //{
+        //    IDictionary<string, object> foundStorageLcations =
+        //        GlobalData.AllStorageLocations.Find((s) =>
+        //        {
+        //            if (s["no"] == null) return false;
+        //            return s["no"].ToString() == storageLocationName;
+        //        });
+        //    if (foundStorageLcations == null)
+        //    {
+        //        //MessageBox.Show($"库位编号\"{storageLocationName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "库位编号错误！")));
+        //    }
+        //    else
+        //    {
+        //        this.model1[row, "storageLocationId"] = foundStorageLcations["id"];
+        //        this.model1[row, "storageLocationName"] = foundStorageLcations["name"];
+        //        this.model1.UpdateCellState(row, "storageLocationNo", new ModelCellState(ValidationState.OK));
+        //    }
+        //}
 
         private string AmountForwardMapper(double amount,int row)
         {
@@ -196,6 +196,7 @@ namespace WMS.UI.FormStock
                 return;
             }
             this.FillSupplyFields(model, row, foundSupplies[0]);
+            this.FillStorageLocation(row, foundSupplies);
         }
 
         //public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
@@ -249,10 +250,15 @@ namespace WMS.UI.FormStock
 
         private void MaterialNoEditEnded([Row]int row)
         {
+            int a =(int) this.model1[row, "supplierId"];
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
+            if (((int?)this.model1[row, "supplyId"] ?? 0) == 0 && ((int?)this.model1[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(this.model1, row);
+            }
         }
 
         private void MaterialNameEditEnded([Row]int row)
@@ -261,12 +267,37 @@ namespace WMS.UI.FormStock
             //this.model1[row, "materialNo"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
+            if (((int?)this.model1[row, "supplyId"] ?? 0) == 0 && ((int?)this.model1[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(this.model1, row);
+            }
         }
 
         private void MaterialProductLineEditEnded([Row]int row)
         {
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
+            if (((int?)this.model1[row, "supplyId"] ?? 0) == 0 && ((int?)this.model1[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(this.model1, row);
+            }
+        }
+
+        private void TryFindSupplyByMaterialOnly(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int materialId = (int?)model[row, "materialId"] ?? 0;
+            if (materialId == 0) return;
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (int)s["materialId"] == materialId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                this.FillStorageLocation( row, foundSupplies);
+                model.RefreshView(row);
+            }
         }
 
         private void FindMaterialID(int row)
@@ -357,6 +388,8 @@ namespace WMS.UI.FormStock
                 this.model1.UpdateCellState(row, "materialProductLine", new ModelCellState(new ValidationState(ValidationStateType.OK)));
                 this.model1.UpdateCellState(row, "supplierNo", new ModelCellState(new ValidationState(ValidationStateType.OK)));
                 this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+                this.FillSupplyFields(this.model1, row, foundSupplies[0]);
+                this.FillStorageLocation(row, foundSupplies);
                 this.model1.RefreshView(row);
             }
             else
@@ -371,6 +404,17 @@ namespace WMS.UI.FormStock
                 this.model1.UpdateCellState(row, "supplierName", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供应商不存在！")));
                 this.model1.RefreshView(row);
                 return;
+            }
+        }
+
+        private void FillStorageLocation(int row,IDictionary<string,object>[] foundSupplies) {
+            if ((int)this.model1[row, "state"] == 2) {
+                this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
+            }
+
+            if ((int)this.model1[row, "state"] == 1)
+            {
+                this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
             }
         }
 
@@ -478,16 +522,58 @@ namespace WMS.UI.FormStock
                 if (state =="合格")
                 {
                     this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationNo"];
-                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
-                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
+                    //this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultDeliveryStorageLocationName"];
+                    //this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultDeliveryStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultDeliveryStorageLocationId"];
                 }
                 else if (state =="不合格")
                 {
                     this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
-                    this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
-                    this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
+                   // this.model1[row, "storageLocationName"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationName"];
+                   /// this.model1[row, "storageLocationId"] = foundSupplies[0]["defaultUnqualifiedStorageLocationId"] == null ? 0 : (int)foundSupplies[0]["defaultUnqualifiedStorageLocationId"];
                 }
             }
+        }
+
+        private void StorageLocationNoEditEnded([Model] IModel model, [Row] int row, [Data] string storageLocationNo)
+        {
+            this.FindStorageLocation(model, row, "storageLocation", FindStorageLocationBy.NO, storageLocationNo);
+        }
+
+        private void StorageLocationNameEditEnded([Model] IModel model, [Row] int row, [Data] string storageLocationName)
+        {
+            this.FindStorageLocation(model, row, "storageLocation", FindStorageLocationBy.NAME, storageLocationName);
+        }
+
+        enum FindStorageLocationBy
+        {
+            NAME, NO
+        }
+
+        private void FindStorageLocation(IModel model, int row, string storageLocationFieldName, FindStorageLocationBy byField, string value, bool warning = true)
+        {
+            model[row, storageLocationFieldName + "Id"] = null;//先清除库位ID
+
+            var foundStorageLocations = (from s in GlobalData.AllStorageLocations
+                                         where s[byField == FindStorageLocationBy.NAME ? "name" : "no"]?.ToString() == value
+                                         select s).ToArray();
+            if (foundStorageLocations.Length != 1) goto FAILED;
+            model[row, storageLocationFieldName + "Id"] = (int)foundStorageLocations[0]["id"];
+            if (byField == FindStorageLocationBy.NAME)
+            {
+                model[row, storageLocationFieldName + "No"] = foundStorageLocations[0]["no"];
+            }
+            else
+            {
+                model[row, storageLocationFieldName + "Name"] = foundStorageLocations[0]["name"];
+            }
+            model.UpdateCellState(row, storageLocationFieldName + "Name", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+            model.UpdateCellState(row, storageLocationFieldName + "No", new ModelCellState(new ValidationState(ValidationStateType.OK)));
+            return;
+
+            FAILED:
+            model.UpdateCellState(row, storageLocationFieldName + "Name", new ModelCellState(new ValidationState(ValidationStateType.WARNING, $"库位\"{value}\"不存在！")));
+            model.UpdateCellState(row, storageLocationFieldName + "No", new ModelCellState(new ValidationState(ValidationStateType.WARNING, $"库位\"{value}\"不存在！")));
+            return;
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

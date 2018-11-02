@@ -259,16 +259,33 @@ namespace WMS.UI
         public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
         {
             string supplySerialNo = model[row, "supplySerialNo"]?.ToString() ?? "";
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
             if (string.IsNullOrWhiteSpace(supplySerialNo)) return;
-            var foundSupplies = (from m in GlobalData.AllSupplies
-                                 where supplySerialNo == (string)m["serialNo"]
-                                 select m).ToArray();
-            if (foundSupplies.Length != 1)
+            if (supplierId == 0)
             {
-                model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
-                return;
+                var foundSupplies = (from m in GlobalData.AllSupplies
+                                     where supplySerialNo == (string)m["serialNo"]
+                                     select m).ToArray();
+                if (foundSupplies.Length != 1)
+                {
+                    model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                    return;
+                }
+                this.FillSupplyFields(model, row, foundSupplies[0]);
             }
-            this.FillSupplyFields(model, row, foundSupplies[0]);
+            else
+            {
+                var foundSupplies = (from m in GlobalData.AllSupplies
+                                     where supplySerialNo == (string)m["serialNo"]
+                                     && supplierId==(int)m["supplierId"]
+                                     select m).ToArray();
+                if (foundSupplies.Length != 1)
+                {
+                    model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                    return;
+                }
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+            }
         }
 
         private void FillSupplyFields(IModel model, int row, IDictionary<string, object> supply)
