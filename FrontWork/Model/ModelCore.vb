@@ -22,6 +22,8 @@ Public Class ModelCore
     ''' <returns></returns>
     Private Property Data As New DataTable
 
+    Public Property Name As String Implements IModelCore.Name
+
     Public Event Refreshed As EventHandler(Of ModelRefreshedEventArgs) Implements IModelCore.Refreshed
     Public Event RowAdded As EventHandler(Of ModelRowAddedEventArgs) Implements IModelCore.RowAdded
     Public Event RowUpdated As EventHandler(Of ModelRowUpdatedEventArgs) Implements IModelCore.RowUpdated
