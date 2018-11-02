@@ -105,9 +105,9 @@
             this.configuration1.Location = new System.Drawing.Point(148, 35);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormDeliverOrderItemMethodListener",
         "FormDeliverOrderItem",
-        "AssociationMethodListener",
-        "FormDeliverOrderItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
