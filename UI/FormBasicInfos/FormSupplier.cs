@@ -104,9 +104,10 @@ namespace WMS.UI.FormBasicInfos
             }
             for (int i = 0; i < row; i++)
             {
-                this.model1.InsertRow(0, new Dictionary<string, object>()
-                {
-                });
+                //this.model1.InsertRow(0, new Dictionary<string, object>()
+                //{
+                //});
+                this.model1.InsertRow(0, null);
             }
         }
 

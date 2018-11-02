@@ -235,6 +235,10 @@ namespace WMS.UI
             
             GlobalData.AllDate = RestClient.Get<IDictionary<string, object[]>>(
            Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/refreshGlobalDate" + "/" + GlobalData.Warehouse["id"]);
+            if (GlobalData.AllDate == null) {
+                MessageBox.Show("请检查网络连接！","提示",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             foreach (KeyValuePair<string, Object[]> allData in GlobalData.AllDate)
             {
                 string key = allData.Key;
