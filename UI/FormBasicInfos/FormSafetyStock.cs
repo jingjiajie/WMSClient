@@ -197,7 +197,8 @@ namespace WMS.UI.FormBasicInfos
             model[row, "amount"] = supply["defaultDeliveryAmount"];
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
-
+            model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
+            model[row, "sourceUnitAmount"] = supply["defaultDeliveryUnitAmount"];
 
 
 

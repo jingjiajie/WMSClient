@@ -277,6 +277,8 @@ namespace WMS.UI.FormTransferOrder
             }        
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
+            model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
+            model[row, "sourceUnitAmount"] = supply["defaultDeliveryUnitAmount"];
 
             string targetStorageLocationNo = supply["defaultPrepareTargetStorageLocationNo"] as string;
             string sourceStorageLocationNo = supply["defaultDeliveryStorageLocationNo"] as string;

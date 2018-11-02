@@ -285,6 +285,8 @@ namespace WMS.UI
 
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
+            model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
+            model[row, "sourceUnitAmount"] = supply["defaultDeliveryUnitAmount"];
 
             string targetStorageLocationNo = supply["defaultDeliveryStorageLocationNo"] as string;
             string sourceStorageLocationNo = supply["defaultQualifiedStorageLocationNo"] as string;
