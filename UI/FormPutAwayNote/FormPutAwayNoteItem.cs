@@ -259,16 +259,33 @@ namespace WMS.UI
         public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
         {
             string supplySerialNo = model[row, "supplySerialNo"]?.ToString() ?? "";
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
             if (string.IsNullOrWhiteSpace(supplySerialNo)) return;
-            var foundSupplies = (from m in GlobalData.AllSupplies
-                                 where supplySerialNo == (string)m["serialNo"]
-                                 select m).ToArray();
-            if (foundSupplies.Length != 1)
+            if (supplierId == 0)
             {
-                model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
-                return;
+                var foundSupplies = (from m in GlobalData.AllSupplies
+                                     where supplySerialNo == (string)m["serialNo"]
+                                     select m).ToArray();
+                if (foundSupplies.Length != 1)
+                {
+                    model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                    return;
+                }
+                this.FillSupplyFields(model, row, foundSupplies[0]);
             }
-            this.FillSupplyFields(model, row, foundSupplies[0]);
+            else
+            {
+                var foundSupplies = (from m in GlobalData.AllSupplies
+                                     where supplySerialNo == (string)m["serialNo"]
+                                     && supplierId==(int)m["supplierId"]
+                                     select m).ToArray();
+                if (foundSupplies.Length != 1)
+                {
+                    model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                    return;
+                }
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+            }
         }
 
         private void FillSupplyFields(IModel model, int row, IDictionary<string, object> supply)
@@ -285,6 +302,8 @@ namespace WMS.UI
 
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
+            model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
+            model[row, "sourceUnitAmount"] = supply["defaultDeliveryUnitAmount"];
 
             string targetStorageLocationNo = supply["defaultDeliveryStorageLocationNo"] as string;
             string sourceStorageLocationNo = supply["defaultQualifiedStorageLocationNo"] as string;
@@ -473,12 +492,32 @@ namespace WMS.UI
             this.FindSupplyByMaterialAndSupplier(model, row);
         }
 
+        private void TryFindSupplyByMaterialOnly(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int materialId = (int?)model[row, "materialId"] ?? 0;
+            if (materialId == 0) return;
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (int)s["materialId"] == materialId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
+            }
+        }
+
         private void MaterialNoEditEnded([Model] IModel model, [Row] int row)
         {
             if (string.IsNullOrWhiteSpace(model[row, "materialNo"]?.ToString())) return;
             //this.model[row, "materialName"] = "";
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void MaterialNameEditEnded([Model] IModel model, [Row] int row)
@@ -487,12 +526,20 @@ namespace WMS.UI
             // this.model[row, "materialNo"] = "";
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void MaterialProductLineEditEnded([Model] IModel model, [Row] int row)
         {
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void FindMaterialID(IModel model, int row)

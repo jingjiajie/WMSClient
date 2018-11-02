@@ -370,6 +370,7 @@ Public Class JsonRESTSynchronizer
             MessageBox.Show("请正确填写所有信息再进行保存！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return False
         End If
+        Call Me.Model.RemoveUneditedNewRows()
         Dim addedData As New List(Of IDictionary(Of String, Object))
         Dim addedRows As New List(Of Integer)
         Dim updatedData As New List(Of IDictionary(Of String, Object))

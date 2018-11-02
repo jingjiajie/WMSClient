@@ -15,6 +15,7 @@ View和Model一样使用Refresh来刷新数据，使用RefreshSchema来刷新结
 接口化Configuration，创建ConfigurationResolver接口，用来支持多种形式的配置方式。
 将当前的Json配置方式封装为JsonConfigurationResolver
 增加注解配置方式，AttributeConfigurationResolver
+增加Validator函数，即配置中的xxxValidator
 IModel待增加Column变化的各种事件
 ConstraintModel的设计
 通用型HTTPSynchronizer的设计

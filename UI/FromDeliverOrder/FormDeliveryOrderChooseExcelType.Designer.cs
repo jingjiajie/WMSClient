@@ -54,10 +54,11 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonZhongDuFlow, 4, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(682, 82);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(909, 102);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // buttonNormal
@@ -70,10 +71,10 @@
             this.buttonNormal.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonNormal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNormal.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonNormal.Location = new System.Drawing.Point(4, 4);
-            this.buttonNormal.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonNormal.Location = new System.Drawing.Point(5, 5);
+            this.buttonNormal.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.buttonNormal.Name = "buttonNormal";
-            this.buttonNormal.Size = new System.Drawing.Size(128, 74);
+            this.buttonNormal.Size = new System.Drawing.Size(171, 92);
             this.buttonNormal.TabIndex = 0;
             this.buttonNormal.Text = "普通出库单";
             this.buttonNormal.UseVisualStyleBackColor = true;
@@ -87,10 +88,10 @@
             this.buttonZhongDu.FlatAppearance.BorderSize = 0;
             this.buttonZhongDu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonZhongDu.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonZhongDu.Location = new System.Drawing.Point(412, 4);
-            this.buttonZhongDu.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonZhongDu.Location = new System.Drawing.Point(548, 5);
+            this.buttonZhongDu.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.buttonZhongDu.Name = "buttonZhongDu";
-            this.buttonZhongDu.Size = new System.Drawing.Size(128, 74);
+            this.buttonZhongDu.Size = new System.Drawing.Size(171, 92);
             this.buttonZhongDu.TabIndex = 3;
             this.buttonZhongDu.Text = "中都出库单";
             this.buttonZhongDu.UseVisualStyleBackColor = true;
@@ -104,10 +105,10 @@
             this.buttonCover.FlatAppearance.BorderSize = 0;
             this.buttonCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCover.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonCover.Location = new System.Drawing.Point(140, 4);
-            this.buttonCover.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonCover.Location = new System.Drawing.Point(186, 5);
+            this.buttonCover.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.buttonCover.Name = "buttonCover";
-            this.buttonCover.Size = new System.Drawing.Size(128, 74);
+            this.buttonCover.Size = new System.Drawing.Size(171, 92);
             this.buttonCover.TabIndex = 1;
             this.buttonCover.Text = "顺义套单";
             this.buttonCover.UseVisualStyleBackColor = true;
@@ -121,10 +122,10 @@
             this.buttonMoBiSi.FlatAppearance.BorderSize = 0;
             this.buttonMoBiSi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMoBiSi.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonMoBiSi.Location = new System.Drawing.Point(276, 4);
-            this.buttonMoBiSi.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMoBiSi.Location = new System.Drawing.Point(367, 5);
+            this.buttonMoBiSi.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.buttonMoBiSi.Name = "buttonMoBiSi";
-            this.buttonMoBiSi.Size = new System.Drawing.Size(128, 74);
+            this.buttonMoBiSi.Size = new System.Drawing.Size(171, 92);
             this.buttonMoBiSi.TabIndex = 2;
             this.buttonMoBiSi.Text = "摩比斯出库单";
             this.buttonMoBiSi.UseVisualStyleBackColor = true;
@@ -138,10 +139,10 @@
             this.buttonZhongDuFlow.FlatAppearance.BorderSize = 0;
             this.buttonZhongDuFlow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonZhongDuFlow.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonZhongDuFlow.Location = new System.Drawing.Point(548, 4);
-            this.buttonZhongDuFlow.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonZhongDuFlow.Location = new System.Drawing.Point(729, 5);
+            this.buttonZhongDuFlow.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.buttonZhongDuFlow.Name = "buttonZhongDuFlow";
-            this.buttonZhongDuFlow.Size = new System.Drawing.Size(130, 74);
+            this.buttonZhongDuFlow.Size = new System.Drawing.Size(175, 92);
             this.buttonZhongDuFlow.TabIndex = 4;
             this.buttonZhongDuFlow.Text = "中都出库流水";
             this.buttonZhongDuFlow.UseVisualStyleBackColor = true;
@@ -149,13 +150,14 @@
             // 
             // FormDeliveryOrderChooseExcelType
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 82);
+            this.ClientSize = new System.Drawing.Size(909, 102);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormDeliveryOrderChooseExcelType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormDeliveryOrderChooseExcelType";
+            this.Text = "选择打印样式";
             this.Load += new System.EventHandler(this.FormDeliveryOrderChooseExcelType_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

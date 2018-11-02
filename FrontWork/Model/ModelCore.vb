@@ -181,6 +181,12 @@ Public Class ModelCore
             Next
         End If
 
+        '带有插入请求的原始行号的RowInfo
+        '如果插入时自带数据，则状态为ADD_UPDATED,如果插入数据为空，则状态为ADDED
+        Dim oriRowInfos = (From i In Util.Range(0, rows.Length)
+                           Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(If(dataOfEachRow(i) Is Nothing OrElse dataOfEachRow(i).Count = 0, SynchronizationState.ADDED, SynchronizationState.ADDED_UPDATED)))).ToArray
+
+        '注意：此部分必须放在生成行状态之前！
         Dim columnsHavingDefaultValue = (From c In Me._modelColumns Where c.DefaultValue IsNot Nothing Select c).ToArray
         If columnsHavingDefaultValue.Length > 0 Then
             '首先对数据置入默认值
@@ -196,9 +202,7 @@ Public Class ModelCore
                 Next
             Next
         End If
-        '带有插入请求的原始行号的RowInfo
-        Dim oriRowInfos = (From i In Util.Range(0, rows.Length)
-                           Select New ModelRowInfo(rows(i), dataOfEachRow(i), New ModelRowState(If(dataOfEachRow(i) Is Nothing OrElse dataOfEachRow(i).Count = 0, SynchronizationState.ADDED, SynchronizationState.ADDED_UPDATED)))).ToArray
+
         Dim adjustedRowInfos(oriRowInfos.Length - 1) As ModelRowInfo
         For i = 0 To adjustedRowInfos.Length - 1
             adjustedRowInfos(i) = oriRowInfos(i)
