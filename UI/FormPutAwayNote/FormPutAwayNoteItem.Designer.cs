@@ -172,14 +172,14 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(23, 12);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormPutAwayNoteItemMethodListener",
         "FormPutAwayNoteItem",
-        "AssociationMethodListener",
-        "FormPutAwayNoteItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormPutAwayNoteItemMethodListener",
         "FormPutAwayNoteItem",
-        "AssociationMethodListener",
-        "FormPutAwayNoteItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair2.Mode = "no_supplier";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,

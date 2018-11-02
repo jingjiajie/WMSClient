@@ -467,6 +467,14 @@ class SingletonManager<T> where T:class
             return default(T);
         }
         ObjectInfo info = this.objs[name];
+
+        if (name.Equals("FormSafetyStock0")) {
+            FormSafetyStock.stockType = 0;
+        }
+        if (name.Equals("FormSafetyStock1"))
+        {
+            FormSafetyStock.stockType = 1;
+        }
         if (info.Obj != null)
         {
             return info.Obj;
