@@ -390,7 +390,7 @@
     <None Include="Images\synchronizer.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TODOList.txt" />
+    <Content Include="TODOList_2018_11_1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
