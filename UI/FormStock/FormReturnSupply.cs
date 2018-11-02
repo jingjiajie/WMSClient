@@ -457,7 +457,7 @@ namespace WMS.UI.FormStock
             }
         }
 
-        private string StateForwardMapper(int enable)
+        private string StateForwardMapper([Data]int enable)
         {
             switch (enable)
             {              
