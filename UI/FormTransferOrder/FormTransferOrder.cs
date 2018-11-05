@@ -113,6 +113,17 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "待移库": return 0;
+                case "部分移库": return 1;
+                case "移库完成": return 2;
+                default: return -1;
+            }
+        }
+
         private void FormTransferOrder_Load(object sender, EventArgs e)
         {
             //设置两个请求参数
