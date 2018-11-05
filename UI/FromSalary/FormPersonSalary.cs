@@ -29,11 +29,10 @@ namespace WMS.UI.FromSalary
             this.searchView1.Search();
         }
 
-        private void FormPersonSalary_Load(object sender, EventArgs e)
-        {
+        public void RefreshSalaryPeriod() {
             //刷新期间
             this.comboBoxSalaryPeriod.Items.AddRange((from item in GlobalData.AllSalaryPeriod
-                                                   select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+                                                      select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
             if (GlobalData.AllSalaryPeriod.Count != 0)
             {
                 GlobalData.SalaryPeriod = GlobalData.AllSalaryPeriod[0];
@@ -48,15 +47,19 @@ namespace WMS.UI.FromSalary
                 }
                 this.searchView1.AddStaticCondition("salaryPeriodId", GlobalData.SalaryPeriod["id"]);
             }
-            else {
+            else
+            {
                 this.comboBoxSalaryPeriod.SelectedIndexChanged -= this.comboBoxSalaryPeriod_SelectedIndexChanged;
                 this.comboBoxSalaryPeriod.Items.Add("无");
-                this.comboBoxSalaryPeriod.SelectedIndex = 0;               
+                this.comboBoxSalaryPeriod.SelectedIndex = 0;
             }
+        }
 
+        public void RefreshSalaryType()
+        {
             //刷新类别
             this.comboBoxSalaryType.Items.AddRange((from item in GlobalData.AllSalaryType
-                                                      select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+                                                    select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
             if (GlobalData.AllSalaryType.Count != 0)
             {
                 GlobalData.SalaryType = GlobalData.AllSalaryType[0];
@@ -77,10 +80,15 @@ namespace WMS.UI.FromSalary
                 this.comboBoxSalaryType.Items.Add("无");
                 this.comboBoxSalaryType.SelectedIndex = 0;
             }
+        }
 
-
+        private void FormPersonSalary_Load(object sender, EventArgs e)
+        {
+            //刷新期间
+            this.RefreshSalaryPeriod();
+            //刷新类别
+            this.RefreshSalaryType();
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
-            
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);

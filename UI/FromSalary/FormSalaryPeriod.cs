@@ -20,7 +20,7 @@ namespace WMS.UI.FromSalary
 
         private void FormSalaryPeriod_Load(object sender, EventArgs e)
         {
-            this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
+            //this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
@@ -44,6 +44,11 @@ namespace WMS.UI.FromSalary
             Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
             GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
          $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
+
+            if (FormPersonSalary.formPersonSalary != null)
+            {
+                FormPersonSalary.formPersonSalary.RefreshSalaryPeriod();
+            }
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -55,7 +60,17 @@ namespace WMS.UI.FromSalary
                 GlobalData.AllSalaryPeriod = RestClient.Get<List<IDictionary<string, object>>>(
              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_period/{condWarehouse.AddOrder("endTime", OrderItemOrder.DESC).ToString()}");
 
+                if (FormPersonSalary.formPersonSalary != null)
+                {
+                    FormPersonSalary.formPersonSalary.RefreshSalaryPeriod();
+                }
+                this.GetPersonSalary();
             }
+        }
+
+        private void GetPersonSalary() {
+        FormPersonSalary form= (FormPersonSalary)formManager.Get("FormPersonSalary");
+        form.RefreshSalaryPeriod();
         }
     }
 }

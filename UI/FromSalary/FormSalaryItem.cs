@@ -13,6 +13,7 @@ namespace WMS.UI.FromSalary
     public partial class FormSalaryItem : Form
     {
         private int salaryTypeId;
+        private SingletonManager<FormPersonSalary> formManager = new SingletonManager<FormPersonSalary>();
         public FormSalaryItem(int salaryTypeId)
         {
             MethodListenerContainer.Register("FormSalaryItem", this);
@@ -127,6 +128,12 @@ namespace WMS.UI.FromSalary
                     FormPersonSalary.formPersonSalary.Search();
                 }
             }
+        }
+
+        private void GetPersonSalary()
+        {
+            FormPersonSalary form = formManager.Get("FormPersonSalary");
+            form.RefreshSalaryPeriod();
         }
 
         private void SalaryTypeNameEditEnded(int row, string salaryTypeName)
