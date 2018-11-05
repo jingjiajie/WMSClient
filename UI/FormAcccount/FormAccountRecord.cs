@@ -115,13 +115,13 @@ namespace WMS.UI.FormAcccount
             T.Stop();
         }
 
-        private void Timerup(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if (GlobalData.REMAINDENABLE)
-            {
-                this.DeficitCheck();
-            }
-        }
+        //private void Timerup(object sender, System.Timers.ElapsedEventArgs e)
+        //{
+        //    if (GlobalData.REMAINDENABLE)
+        //    {
+        //        this.DeficitCheck();
+        //    }
+        //}
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
@@ -320,7 +320,9 @@ namespace WMS.UI.FormAcccount
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
+                GlobalData.REMAINDENABLE = false;
                 MessageBox.Show("赤字提醒失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
             }
         }
 
