@@ -31,6 +31,7 @@ namespace WMS.UI.FromSalary
 
         public void RefreshSalaryPeriod() {
             //刷新期间
+            this.comboBoxSalaryPeriod.Items.Clear();
             this.comboBoxSalaryPeriod.Items.AddRange((from item in GlobalData.AllSalaryPeriod
                                                       select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
             if (GlobalData.AllSalaryPeriod.Count != 0)
@@ -58,6 +59,7 @@ namespace WMS.UI.FromSalary
         public void RefreshSalaryType()
         {
             //刷新类别
+            this.comboBoxSalaryType.Items.Clear();
             this.comboBoxSalaryType.Items.AddRange((from item in GlobalData.AllSalaryType
                                                     select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
             if (GlobalData.AllSalaryType.Count != 0)
