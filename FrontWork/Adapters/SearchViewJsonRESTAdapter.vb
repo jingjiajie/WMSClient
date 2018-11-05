@@ -2,6 +2,7 @@
 Imports System.Drawing.Design
 Imports System.Globalization
 Imports System.IO
+Imports System.Linq
 Imports System.Net
 Imports System.Web.Script.Serialization
 Imports Jint.Native
@@ -84,10 +85,7 @@ Public Class SearchViewJsonRESTAdapter
             For Each condition In conditions
                 Dim key = condition.Key
                 Dim relation = condition.Relation
-                Dim values = condition.Values
-                For i = 0 To values.Length - 1
-                    values(i) = Util.UrlEncode(values(i))
-                Next
+                Dim values = condition.Values.Select(Function(item) Util.UrlEncode(item))
                 Dim jsonValues = jsSerializer.Serialize(values)
 
                 Dim fieldKey = Me.APIFieldNames.ConditionParamNames.Key
