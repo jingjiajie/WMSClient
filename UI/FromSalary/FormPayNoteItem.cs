@@ -130,8 +130,6 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";           
                 this.buttonCclcultateItemsTax.Enabled = true;
-                //this.buttonCalculateAllTax.Enabled = true;
-                //this.buttonRealPayAll.Enabled = true;
                 this.buttonRealPayItems.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
@@ -139,16 +137,28 @@ namespace WMS.UI.FromSalary
             }
             else if ((int)rowData[0]["state"] == 1)
             {
-                this.basicView1.Mode = "pay";
-                this.reoGridView1.Mode = "pay";
-                this.model1.Mode = "pay";            
-                //this.buttonCalculateAllTax.Enabled = false;
-                this.buttonCclcultateItemsTax.Enabled = false;
-                this.ButtonAllPerson.Enabled = false;
-                this.toolStripButtonAdd.Enabled = false;
-                this.toolStripButtonDelete.Enabled = false;
-                //this.buttonRealPayAll.Enabled = true;
-                this.buttonRealPayItems.Enabled = true;
+                if (this.payNoteState == FormPayNote.CONFIRM_PAY)
+                {
+                    this.basicView1.Mode = "pay";
+                    this.reoGridView1.Mode = "pay";
+                    this.model1.Mode = "pay";
+                    this.buttonCalculateAllTax.Enabled = false;
+                    this.buttonCclcultateItemsTax.Enabled = false;
+                    this.ButtonAllPerson.Enabled = false;
+                    this.toolStripButtonAdd.Enabled = false;
+                    this.toolStripButtonDelete.Enabled = false;
+                    this.buttonRealPayItems.Enabled = true;
+                }
+                else if (this.payNoteState == FormPayNote.WAITING_FOR_CONFIRM) {
+                    this.model1.Mode = "default";
+                    this.basicView1.Mode = "default";
+                    this.reoGridView1.Mode = "default";
+                    this.buttonCclcultateItemsTax.Enabled = true;
+                    this.buttonRealPayItems.Enabled = true;
+                    this.ButtonAllPerson.Enabled = true;
+                    this.toolStripButtonAdd.Enabled = true;
+                    this.toolStripButtonDelete.Enabled = true;
+                }
             }
             else if ((int)rowData[0]["state"] == 2)
             {
