@@ -58,6 +58,7 @@ namespace WMS.UI
             });
         }
 
+
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -246,6 +247,23 @@ namespace WMS.UI
     [MethodListener]
     public class FormPutAwayNoteItemMethodListener
     {
+        private void PersonEditEnded([Model] IModel model, [Row] int row, [Data] string personName)
+        {
+            model[row, "personId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(personName)) return;
+            var foundPersons = (from s in GlobalData.AllPersons
+                                where s["name"]?.ToString() == personName
+                                select s).ToArray();
+            if (foundPersons.Length != 1) goto FAILED;
+            model[row, "personId"] = (int)foundPersons[0]["id"];
+            model[row, "personName"] = foundPersons[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
             return (from s in GlobalData.AllSupplies

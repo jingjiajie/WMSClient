@@ -17,7 +17,14 @@
             {
                 components.Dispose();
             }
-            base.Dispose(disposing);
+            try
+            {
+                base.Dispose(disposing);
+            }
+            catch //莫名其妙崩溃，先catch临时修复。
+            {
+
+            }
         }
 
         #region Windows Form Designer generated code

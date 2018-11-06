@@ -25,10 +25,10 @@ namespace WMS.UI.FromDeliverOrder
             this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
             int OrderState=(int)this.deliveryOrder["state"];
             if (OrderState == 3 || OrderState == 4) {
-                this.toolStripButtonAdd.Visible = false;
-                this.toolStripButtonAlter.Visible = false;
-                this.toolStripButtonDelete.Visible = false;
-                this.toolStripButtonDeliveyPakage.Visible = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonAlter.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+                this.toolStripButtonDeliveyPakage.Enabled = false;
             }
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
@@ -248,6 +248,23 @@ namespace WMS.UI.FromDeliverOrder
         [MethodListener]
         public class FormDeliverOrderItemMethodListener
         {
+            private void PersonEditEnded([Model] IModel model, [Row] int row, [Data] string personName)
+            {
+                model[row, "personId"] = 0;//先清除ID
+                if (string.IsNullOrWhiteSpace(personName)) return;
+                var foundPersons = (from s in GlobalData.AllPersons
+                                    where s["name"]?.ToString() == personName
+                                    select s).ToArray();
+                if (foundPersons.Length != 1) goto FAILED;
+                model[row, "personId"] = (int)foundPersons[0]["id"];
+                model[row, "personName"] = foundPersons[0]["name"];
+                return;
+
+                FAILED:
+                MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
             {
                 return (from s in GlobalData.AllSupplies
