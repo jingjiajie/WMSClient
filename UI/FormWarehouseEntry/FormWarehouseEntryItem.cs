@@ -84,6 +84,10 @@ namespace WMS.UI
 
         private double AmountBackwardMapper([Data]double amount, [Row]int row)
         {
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
