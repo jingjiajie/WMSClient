@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDeliverOrder));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -99,7 +100,7 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(100, 64);
+            this.configuration1.Location = new System.Drawing.Point(97, 64);
             this.configuration1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormDeliverOrder",
@@ -109,9 +110,14 @@
         "FormDeliverOrder",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair2.Mode = "default1";
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+        "FormDeliverOrder",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair3.Mode = "type-can-editable";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair2,
+        modeMethodListenerNamesPair3};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -334,6 +340,8 @@
             this.model1.SelectionRange = null;
             this.model1.Size = new System.Drawing.Size(240, 225);
             this.model1.TabIndex = 7;
+            this.model1.Refreshed += new System.EventHandler<FrontWork.ModelRefreshedEventArgs>(this.model1_Refreshed);
+            this.model1.SelectionRangeChanged += new System.EventHandler<FrontWork.ModelSelectionRangeChangedEventArgs>(this.model1_SelectionRangeChanged);
             // 
             // panel2
             // 

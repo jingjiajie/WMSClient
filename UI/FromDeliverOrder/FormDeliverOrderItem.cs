@@ -64,6 +64,11 @@ namespace WMS.UI.FromDeliverOrder
         {
             return (int)this.deliveryOrder["id"];
         }
+        
+        private int deliveryOrderTypeDefaultValue()
+        {
+            return (int)this.deliveryOrder["type"];
+        }
 
         private string deliveryOrderNoDefaultValue()
         {
@@ -143,6 +148,26 @@ namespace WMS.UI.FromDeliverOrder
         private void UnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
+        }
+
+        private string TypeForwardMapper([Data]int type)
+        {
+            switch (type)
+            {
+                case 0: return "合格品出库";
+                case 1: return "不良品出库";
+                default: return "未知状态";
+            }
+        }
+
+        private int TypeBackwardMapper([Data]string type)
+        {
+            switch (type)
+            {
+                case "合格品出库": return 0;
+                case "不良品出库": return 1;
+                default: return -1;
+            }
         }
 
         private void FormDeliverOrderItem_Load(object sender, EventArgs e)
