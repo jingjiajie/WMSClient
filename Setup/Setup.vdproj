@@ -978,7 +978,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WMS仓库管理系统"
         "ProductCode" = "8:{296566EC-CB41-4FDE-8375-9D63EAAD6DD4}"
-        "PackageCode" = "8:{0265081E-89F0-4AF8-AF67-61C30C7EAE0B}"
+        "PackageCode" = "8:{103A8E72-74F1-4900-BB51-3528443D2AC8}"
         "UpgradeCode" = "8:{A9AE385E-C8FC-4629-8461-1096D01CCA2F}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -1100,7 +1100,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4C13699099554A1AA9E33D06CE3720BB"
             {
-            "Name" = "8:安途丰达WMS系统2.0.12"
+            "Name" = "8:安途丰达WMS系统2.0.13"
             "Arguments" = "8:/x {296566EC-CB41-4FDE-8375-9D63EAAD6DD4}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -1114,7 +1114,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_55E7EFED42274FA1BA308A5A5E9B1E99"
             {
-            "Name" = "8:安途丰达WMS系统2.0.12"
+            "Name" = "8:安途丰达WMS系统2.0.13"
             "Arguments" = "8:/x {296566EC-CB41-4FDE-8375-9D63EAAD6DD4}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
