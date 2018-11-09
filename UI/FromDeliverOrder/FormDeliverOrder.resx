@@ -131,6 +131,7 @@
         {name:"driverName",displayName:"司机",type:"string",placeHolder:"必填信息"},
         {name:"returnNoteNo",displayName:"回单号",type:"string",editEnded:"#returnNoteNoEditEnded",editable:false},
         {name:"returnNoteTime",displayName:"回单时间",type:"datetime",editable:false},
+{name:"type",displayName:"类型",type:"int",values:["合格品出库","不良品出库"],defaultValue:0,editable:false,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
         {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false,defaultValue:"#createPersonIdDefaultValue"},
         {name:"createPersonName",displayName:"创建用户",type:"string",editable:false,defaultValue:"#createPersonNameDefaultValue"},
         {name:"createTime",displayName:"创建时间",type:"datetime",defaultValue:"#now",editable:false},
@@ -165,6 +166,14 @@
      ref:"default",
      fields:[
         {name:"returnNoteNo",displayName:"回单号",type:"string",editEnded:"#returnNoteNoEditEnded",editable:true},
+{name:"type",displayName:"类型",type:"int",defaultValue:0,editable:false,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
+
+   ]
+    },
+{mode:"type-can-editable",
+     ref:"default",
+     fields:[
+        {name:"type",displayName:"类型",type:"int",values:["合格品出库","不良品出库"],defaultValue:0,editable:true,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
    ]
     }
 ]</value>

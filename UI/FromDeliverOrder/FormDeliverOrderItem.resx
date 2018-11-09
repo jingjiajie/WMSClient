@@ -143,7 +143,9 @@
         {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息",editEnded:"#unitAmountEditEnded"},
         {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
         {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
-        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},        
+        {name:"comment",displayName:"备注",placeHolder:"点击填写备注"}, 
+        {name:"deliveryOrderType",displayName:"出库单类型",type:"int",editable:false,defaultValue:"#deliveryOrderTypeDefaultValue",forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
+
         {name:"personId",displayName:"作业人ID",type:"int",visible:false,defaultValue:"#personIdDefaultValue"},
         {name:"personName",displayName:"作业人名称",defaultValue:"#personNameDefaultValue",association:"#personAssociation",editEnded:"#personEditEnded"}
 
