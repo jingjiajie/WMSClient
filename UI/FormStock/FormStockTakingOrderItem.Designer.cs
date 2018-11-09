@@ -146,7 +146,7 @@
             this.model1.Configuration = this.configuration1;
             this.model1.CurrentModelName = "default";
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(325, 29);
+            this.model1.Location = new System.Drawing.Point(317, 59);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -323,8 +323,9 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(104, 21);
-            this.toolStripButton1.Text = "添加仓库记录";
+            this.toolStripButton1.Size = new System.Drawing.Size(80, 21);
+            this.toolStripButton1.Text = "仓库总数";
+            this.toolStripButton1.Visible = false;
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton2
@@ -332,8 +333,8 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(104, 21);
-            this.toolStripButton2.Text = "添加供货记录";
+            this.toolStripButton2.Size = new System.Drawing.Size(92, 21);
+            this.toolStripButton2.Text = "按供货添加";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // buttonStartAdd

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using WMS.UI.FormStock;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FormStockTaking
 {
@@ -316,8 +318,17 @@ namespace WMS.UI.FormStockTaking
             this.basicView1.Enabled = true;
             this.reoGridView1.Enabled = true;
             try
-            {             
-                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\",\"checkTime\":\""+this.stockTakingOrder["createTime"]+ "\"}";
+            {
+                //StockTakingOrderAdd stockTakingOrderAdd = new StockTakingOrderAdd();
+                //stockTakingOrderAdd.warehouseId =(int) GlobalData.Warehouse["id"];
+                //stockTakingOrderAdd.stockTakingOrderId =(int)this.stockTakingOrder["id"];
+                //stockTakingOrderAdd.personId = (int)GlobalData.Person["id"];
+                //stockTakingOrderAdd.checkTime = (DateTime)this.stockTakingOrder["createTime"];
+                //stockTakingOrderAdd.comment = "仓库总数";
+                //string body0 = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"]+"\",\"checkTime\":\""+this.stockTakingOrder["createTime"]+ "\""+",comment:"+"\"123\""+"}";
+                //JavaScriptSerializer serializer = new JavaScriptSerializer();
+                //string body1 = serializer.Serialize(stockTakingOrderAdd);
+                string body = "{\"stockTakingOrderId\":\"" + this.stockTakingOrder["id"] + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"checkTime\":\"" + this.stockTakingOrder["createTime"] + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

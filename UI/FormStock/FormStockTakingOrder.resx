@@ -117,47 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-    {mode:"default",
-     fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"no",displayName:"盘点单号",type:"string",placeHolder:"留空自动生成"},
-        {name:"description",displayName:"描述",type:"string"},
-        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},       
-        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false,placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
-        {name:"lastUpdatePersonId",displayName:"最后修改人ID",type:"int",visible:false},   
-        {name:"lastUpdatePersonName",displayName:"最后修改人名称",type:"string",editable:false,placeHolder:"修改时自动生成"},       
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-    }
-]</value>
-  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>719, 59</value>
   </metadata>
@@ -165,6 +124,14 @@ httpAPIs:[
     <value>440, 59</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -234,6 +201,47 @@ httpAPIs:[
         VI0TBgTouP5EmWrzpAEt06zKRLXMFg2nqm3OjI7FJY21wmJFu0ZnZDG0Y/vIVzBHtKL/F8c7y1WZOtry
         EfkAAAAASUVORK5CYII=
 </value>
+  </data>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>
+[
+    {mode:"default",
+     fields:[
+        {name:"id",displayName:"ID",type:"int",visible:false},       
+        {name:"no",displayName:"盘点单号",type:"string",placeHolder:"留空自动生成"},
+        {name:"description",displayName:"描述",type:"string"},
+        {name:"warehouseId",displayName:"仓库id",type:"int",visible:false},
+        {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},       
+        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
+        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false,placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
+        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
+        {name:"lastUpdatePersonId",displayName:"最后修改人ID",type:"int",visible:false},   
+        {name:"lastUpdatePersonName",displayName:"最后修改人名称",type:"string",editable:false,placeHolder:"修改时自动生成"},       
+        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
+    ],
+httpAPIs:[
+        {type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/warehouse/{$accountBook}/stocktaking_order/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+    }
+]</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>589, 59</value>

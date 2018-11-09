@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using FrontWork;
 using System.Web.Script.Serialization;
+using WMS.UI.FormStock;
 
 namespace WMS.UI.FormStockTaking
 {
@@ -147,6 +148,24 @@ namespace WMS.UI.FormStockTaking
             {
                 MessageBox.Show("无任何数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string body = "{\"stockTakingOrderId\":\"" + 0 + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"checkTime\":\"" + DateTime.Now + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+                this.updateBasicAndReoGridView();
+            }
+            catch
+            {
+                MessageBox.Show("添加失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.updateBasicAndReoGridView();
             }
         }
     }
