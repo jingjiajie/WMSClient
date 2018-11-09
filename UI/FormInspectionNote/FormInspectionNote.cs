@@ -99,5 +99,16 @@ namespace WMS.UI
             this.searchView1.AddCondition("warehouseEntryNo", warehouseEntryNo);
             this.searchView1.Search();
         }
+
+        private void model1_CellUpdated(object sender, ModelCellUpdatedEventArgs e)
+        {
+            foreach (var cell in e.UpdatedCells)
+            {
+                if (cell.FieldName.StartsWith("lastUpdate")) return;
+                this.model1[cell.Row, "lastUpdatePersonId"] = GlobalData.Person["id"];
+                this.model1[cell.Row, "lastUpdatePersonName"] = GlobalData.Person["name"];
+                this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
+            }
+        }
     }
 }

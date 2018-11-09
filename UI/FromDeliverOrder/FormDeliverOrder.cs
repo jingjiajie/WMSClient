@@ -22,43 +22,37 @@ namespace WMS.UI.FromDeliverOrder
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
-        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        private void RefreshMode()
         {
-            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
+            int?[] selectedIDs = this.model1.GetSelectedRows<int?>("id");
+            if (selectedIDs.Length == 0 || selectedIDs[0].HasValue == false)
+            {
+                this.basicView1.Mode = "type-can-editable";
+                this.reoGridView2.Mode = "type-can-editable";
+            }
+            else if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
             {
                 this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
                 this.reoGridView2.Mode = "default1";
             }
-            else {
-                this.model1.Mode = "default";
+            else
+            {
                 this.basicView1.Mode = "default";
                 this.reoGridView2.Mode = "default";
             }
         }
 
-        private void updateBasicAndReoGridView()
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView2.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView2.Enabled = true;
-            }
-
+            this.RefreshMode();
         }
 
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            this.RefreshMode();
         }
 
         //查看条目
@@ -121,6 +115,26 @@ namespace WMS.UI.FromDeliverOrder
                 case "整单装车": return 2;
                 case "发运在途": return 3;
                 case "核减完成": return 4;
+                default: return -1;
+            }
+        }
+
+        private string TypeForwardMapper([Data]int type)
+        {
+            switch (type)
+            {
+                case 0: return "合格品出库";
+                case 1: return "不良品出库";
+                default: return "未知状态";
+            }
+        }
+
+        private int TypeBackwardMapper([Data]string type)
+        {
+            switch (type)
+            {
+                case "合格品出库": return 0;
+                case "不良品出库": return 1;
                 default: return -1;
             }
         }

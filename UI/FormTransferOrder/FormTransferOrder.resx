@@ -134,7 +134,7 @@
         {name:"warehouseName",displayName:"仓库",type:"string",visible:false,editable:false},
         {name:"description",displayName:"描述",type:"string"},
 {name:"type",displayName:"类型",type:"int",defaultValue:1,visible:false},
-        {name:"state",displayName:"状态",type:"int",defaultValue:0,editable:false,forwardMapper:"#stateForwardMapper"},
+        {name:"state",displayName:"状态",type:"int",defaultValue:0,editable:false,forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper"},
         {name:"printTimes",displayName:"打印次数",type:"int",defaultValue:0},
         {name:"createPersonId",displayName:"创建用户ID",type:"int",visible:false,defaultValue:"#createPersonIdDefaultValue"},
         {name:"createPersonName",displayName:"创建用户",type:"string",editable:false,defaultValue:"#createPersonNameDefaultValue"},

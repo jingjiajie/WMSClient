@@ -156,7 +156,7 @@
         {name:"relatedOrderNo",displayName:"相关单号",type:"string"},
         {name:"inventoryDate",displayName:"存货日期",type:"datetime"},
         {name:"manufactureDate",displayName:"生产日期",type:"datetime"},
-        {name:"expiryDate",displayName:"失效日期",type:"datetime"},
+        {name:"expiryDate",displayName:"失效日期",type:"datetime",visible:false},
         {name:"time",displayName:"记录时间",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation",editable:false},
         {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
         {name:"state",displayName:"检测状态",type:"int",defaultValue:2,values:["不合格","合格"],forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",contentChanged:"#stateContentChanged"}      

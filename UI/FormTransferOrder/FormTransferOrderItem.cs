@@ -96,6 +96,10 @@ namespace WMS.UI.FormTransferOrder
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -235,6 +239,23 @@ namespace WMS.UI.FormTransferOrder
     [MethodListener]
     public class FormTransferOrderItemMethodListener
     {
+        private void PersonEditEnded([Model] IModel model, [Row] int row, [Data] string personName)
+        {
+            model[row, "personId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(personName)) return;
+            var foundPersons = (from s in GlobalData.AllPersons
+                                where s["name"]?.ToString() == personName
+                                select s).ToArray();
+            if (foundPersons.Length != 1) goto FAILED;
+            model[row, "personId"] = (int)foundPersons[0]["id"];
+            model[row, "personName"] = foundPersons[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
             return (from s in GlobalData.AllSupplies

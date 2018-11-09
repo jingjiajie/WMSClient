@@ -25,10 +25,10 @@ namespace WMS.UI.FromDeliverOrder
             this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
             int OrderState=(int)this.deliveryOrder["state"];
             if (OrderState == 3 || OrderState == 4) {
-                this.toolStripButtonAdd.Visible = false;
-                this.toolStripButtonAlter.Visible = false;
-                this.toolStripButtonDelete.Visible = false;
-                this.toolStripButtonDeliveyPakage.Visible = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonAlter.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+                this.toolStripButtonDeliveyPakage.Enabled = false;
             }
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
@@ -63,6 +63,11 @@ namespace WMS.UI.FromDeliverOrder
         private int deliveryOrderIdDefaultValue()
         {
             return (int)this.deliveryOrder["id"];
+        }
+        
+        private int deliveryOrderTypeDefaultValue()
+        {
+            return (int)this.deliveryOrder["type"];
         }
 
         private string deliveryOrderNoDefaultValue()
@@ -125,6 +130,10 @@ namespace WMS.UI.FromDeliverOrder
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -139,6 +148,26 @@ namespace WMS.UI.FromDeliverOrder
         private void UnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
+        }
+
+        private string TypeForwardMapper([Data]int type)
+        {
+            switch (type)
+            {
+                case 0: return "合格品出库";
+                case 1: return "不良品出库";
+                default: return "未知状态";
+            }
+        }
+
+        private int TypeBackwardMapper([Data]string type)
+        {
+            switch (type)
+            {
+                case "合格品出库": return 0;
+                case "不良品出库": return 1;
+                default: return -1;
+            }
         }
 
         private void FormDeliverOrderItem_Load(object sender, EventArgs e)
@@ -248,6 +277,23 @@ namespace WMS.UI.FromDeliverOrder
         [MethodListener]
         public class FormDeliverOrderItemMethodListener
         {
+            private void PersonEditEnded([Model] IModel model, [Row] int row, [Data] string personName)
+            {
+                model[row, "personId"] = 0;//先清除ID
+                if (string.IsNullOrWhiteSpace(personName)) return;
+                var foundPersons = (from s in GlobalData.AllPersons
+                                    where s["name"]?.ToString() == personName
+                                    select s).ToArray();
+                if (foundPersons.Length != 1) goto FAILED;
+                model[row, "personId"] = (int)foundPersons[0]["id"];
+                model[row, "personName"] = foundPersons[0]["name"];
+                return;
+
+                FAILED:
+                MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
             {
                 return (from s in GlobalData.AllSupplies

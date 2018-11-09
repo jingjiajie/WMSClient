@@ -52,6 +52,8 @@
             this.toolStripAutoTransfer = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.basicView1 = new FrontWork.BasicView();
@@ -61,8 +63,6 @@
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.reoGridView2 = new FrontWork.ReoGridView();
-            this.toolStripButtonDeliveyPakage = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPagerWidget.SuspendLayout();
@@ -138,7 +138,7 @@
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(240, 225);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 11;
             // 
             // panelPagerWidget
@@ -264,7 +264,7 @@
             this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
             this.toolStripAutoTransfer.Size = new System.Drawing.Size(93, 28);
             this.toolStripAutoTransfer.Text = "一键备货";
-            this.toolStripAutoTransfer.ToolTipText = "发运";
+            this.toolStripAutoTransfer.ToolTipText = "一键备货";
             this.toolStripAutoTransfer.Click += new System.EventHandler(this.toolStripAutoTransfer_Click);
             // 
             // toolStripButtonAdd
@@ -284,6 +284,21 @@
             this.toolStripButtonDelect.Size = new System.Drawing.Size(63, 28);
             this.toolStripButtonDelect.Text = "删除";
             this.toolStripButtonDelect.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.AutoSize = false;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripButtonDeliveyPakage
+            // 
+            this.toolStripButtonDeliveyPakage.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
+            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(123, 28);
+            this.toolStripButtonDeliveyPakage.Text = "按备货单发货";
+            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
             // 
             // buttonPreview
             // 
@@ -380,7 +395,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(240, 225);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 13;
             // 
             // reoGridView1
@@ -410,21 +425,6 @@
             this.reoGridView2.Size = new System.Drawing.Size(1136, 334);
             this.reoGridView2.TabIndex = 6;
             // 
-            // toolStripButtonDeliveyPakage
-            // 
-            this.toolStripButtonDeliveyPakage.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.toolStripButtonDeliveyPakage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDeliveyPakage.Name = "toolStripButtonDeliveyPakage";
-            this.toolStripButtonDeliveyPakage.Size = new System.Drawing.Size(123, 28);
-            this.toolStripButtonDeliveyPakage.Text = "按备货单发货";
-            this.toolStripButtonDeliveyPakage.Click += new System.EventHandler(this.toolStripButtonDeliveyPakage_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.AutoSize = false;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
-            // 
             // FormTransferOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -432,7 +432,7 @@
             this.ClientSize = new System.Drawing.Size(1136, 559);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormTransferOrder";
             this.Text = "FormTransferOrder";
             this.Load += new System.EventHandler(this.FormTransferOrder_Load);

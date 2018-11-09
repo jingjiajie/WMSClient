@@ -2,6 +2,10 @@
 ''' ModelCore的接口
 ''' </summary>
 Public Interface IModelCore
+
+    '填坑用，正式版本一定要去掉这个鬼
+    Property Name As String
+
     ''' <summary>
     ''' 获取Model相关信息
     ''' </summary>

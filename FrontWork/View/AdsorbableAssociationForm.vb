@@ -65,6 +65,7 @@ Partial Public Class AdsorbableAssociationForm
         Me._parentForm = Me.FindTopParentForm(textBox)
         AddHandler Me._parentForm.LocationChanged, AddressOf parentForm_LocationChanged
         AddHandler Me._parentForm.Deactivate, AddressOf parentForm_Deactivate
+        AddHandler Me._parentForm.FormClosing, AddressOf parentForm_Closing
     End Sub
 
     Private Sub UnBindTextBox(textBox As TextBox)
@@ -72,6 +73,7 @@ Partial Public Class AdsorbableAssociationForm
         RemoveHandler textBox.LocationChanged, AddressOf textBox_LocationChanged
         RemoveHandler Me._parentForm.LocationChanged, AddressOf parentForm_LocationChanged
         RemoveHandler Me._parentForm.Deactivate, AddressOf parentForm_Deactivate
+        RemoveHandler Me._parentForm.FormClosing, AddressOf parentForm_Closing
     End Sub
 
     Private Sub textBox_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
@@ -111,6 +113,10 @@ Partial Public Class AdsorbableAssociationForm
         If Me._parentForm.WindowState = FormWindowState.Minimized Then
             Call MyBase.Hide()
         End If
+    End Sub
+
+    Private Sub parentForm_Closing(sender As Object, e As FormClosingEventArgs)
+        Call Me.Close()
     End Sub
 
     Public Shadows Sub Show()
