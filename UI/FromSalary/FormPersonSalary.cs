@@ -200,7 +200,15 @@ namespace WMS.UI.FromSalary
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            List<int> ids = new List<int>();
+            IDictionary<string, object> rowData;
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                rowData = this.model1.GetRows(new int[] { i })[0];
+                ids.Add((int)rowData["id"]);
+            }
             AddPersonSalary addPersonSalary = new AddPersonSalary();
+            addPersonSalary.personSalaryIds = ids;
             if (GlobalData.SalaryPeriod == null) {
                 MessageBox.Show($"无薪资期间无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
