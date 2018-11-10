@@ -13,5 +13,7 @@ namespace WMS.UI.FromSalary
         public int salaryTypeId;
         
         public int warehouseId;
+
+        public List<int> personSalaryIds;
     }
 }
