@@ -16,6 +16,7 @@ namespace WMS.UI.FormAcccount
     public partial class FormAccountRecord : Form
     {
         private Boolean DoneDeficitCheck = false;
+        public static FormAccountRecord formAccountRecord = null;
         System.Timers.Timer timer = new System.Timers.Timer();
         Timer T = new Timer();
         public FormAccountRecord()
@@ -23,6 +24,7 @@ namespace WMS.UI.FormAcccount
             MethodListenerContainer.Register(this);
             InitializeComponent();
             InitTree();
+            formAccountRecord = this;
         }
 
 
@@ -368,7 +370,7 @@ namespace WMS.UI.FormAcccount
         }
 
         //初始化树
-        private void InitTree()
+        public void InitTree()
         {
             string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/build_tree_view";
             string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
