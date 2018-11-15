@@ -375,7 +375,7 @@ namespace WMS.UI.FormAcccount
             string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/build_tree_view";
             string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"curAccountPeriodId\":\"" + GlobalData.AccountPeriod["id"] + "\"}";
             var buildAccountTitleTreeView = RestClient.RequestPost<List<IDictionary<string, object>>>(url);
-
+            this.treeViewAccountTitle.Nodes.Clear();
             foreach (IDictionary<string, object> accountTitleNode in buildAccountTitleTreeView)
             {
                 if (accountTitleNode["accountTitleId"].ToString() == "0")
