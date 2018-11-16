@@ -4,14 +4,15 @@ Imports System.Reflection
 
 Public Class ModelOperator
     Implements IModel
-    Private _ModelCore As IModelCore
 
     Public Property ModelCore As IModelCore
+
+    Public Property Name As String Implements IModelCore.Name
         Get
-            Return Me._ModelCore
+            Return Me.ModelCore.Name
         End Get
-        Set(value As IModelCore)
-            Me._ModelCore = value
+        Set(value As String)
+            Me.ModelCore.Name = value
         End Set
     End Property
 
@@ -137,9 +138,6 @@ Public Class ModelOperator
         RaiseEvent(sender As Object, e As ModelCellStateChangedEventArgs)
         End RaiseEvent
     End Event
-
-
-    Public Property Name As String
 
     Default Public Property _Item(row As Integer) As IDictionary(Of String, Object) Implements IModel._Item
         Get
@@ -489,10 +487,11 @@ Public Class ModelOperator
     End Function
 
     Public Sub RefreshView(rows As Integer()) Implements IModel.RefreshView
-        Dim args = New ModelRowUpdatedEventArgs() With {
-            .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me(row), Me.GetRowState(row))).ToArray
-        }
-        Call Me.RaiseRowUpdatedEvent(Me, args)
+        'Dim args = New ModelRowUpdatedEventArgs() With {
+        '    .UpdatedRows = (From row In rows Select New ModelRowInfo(row, Me(row), Me.GetRowState(row))).ToArray
+        '}
+        'Call Me.RaiseRowUpdatedEvent(Me, args)
+        Call Me.ModelCore.UpdateRows(rows, Me.ModelCore.GetRows(rows))
     End Sub
 
     Public Sub RefreshView(row As Integer) Implements IModel.RefreshView
@@ -576,38 +575,6 @@ Public Class ModelOperator
     Public Function GetCells(rows() As Integer, columnNames() As String) As Object() Implements IModel.GetCells
         Return Me._ModelCore.GetCells(rows, columnNames)
     End Function
-
-    Public Sub RaiseRefreshedEvent(sender As Object, args As ModelRefreshedEventArgs)
-        RaiseEvent Refreshed(sender, args)
-    End Sub
-
-    Public Sub RaiseCellUpdatedEvent(sender As Object, args As ModelCellUpdatedEventArgs)
-        RaiseEvent CellUpdated(sender, args)
-    End Sub
-
-    Public Sub RaiseRowUpdatedEvent(sender As Object, args As ModelRowUpdatedEventArgs)
-        RaiseEvent RowUpdated(sender, args)
-    End Sub
-
-    Public Sub RaiseRowAddedEvent(sender As Object, args As ModelRowAddedEventArgs)
-        RaiseEvent RowAdded(sender, args)
-    End Sub
-
-    Public Sub RaiseBeforeRowRemoveEvent(sender As Object, args As ModelBeforeRowRemoveEventArgs)
-        RaiseEvent BeforeRowRemove(sender, args)
-    End Sub
-
-    Public Sub RaiseRowRemovedEvent(sender As Object, args As ModelRowRemovedEventArgs)
-        RaiseEvent RowRemoved(sender, args)
-    End Sub
-
-    Public Sub RaiseSelectionRangeChangedEvent(sender As Object, args As ModelSelectionRangeChangedEventArgs)
-        RaiseEvent SelectionRangeChanged(sender, args)
-    End Sub
-
-    Public Sub RaiseRowStateChangedEvent(sender As Object, args As ModelRowStateChangedEventArgs)
-        RaiseEvent RowStateChanged(sender, args)
-    End Sub
 
     Public Sub UpdateRowStates(rows() As Integer, states() As ModelRowState) Implements IModel.UpdateRowStates
         Me._ModelCore.UpdateRowStates(rows, states)

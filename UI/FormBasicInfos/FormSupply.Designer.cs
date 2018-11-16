@@ -105,23 +105,23 @@
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener",
-        "FormSupplyMethodListener"};
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener",
-        "FormSupplyMethodListener"};
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair2.Mode = "default1";
             modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener",
-        "FormSupplyMethodListener"};
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair3.Mode = "default2";
             modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
         "FormSupply",
-        "AssociationMethodListener",
-        "FormSupplyMethodListener"};
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair4.Mode = "default3";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,
@@ -267,7 +267,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(977, 478);
             this.tableLayoutPanel2.TabIndex = 8;
@@ -301,9 +301,9 @@
             // 
             this.panelPager.Controls.Add(this.pagerView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(3, 426);
+            this.panelPager.Location = new System.Drawing.Point(3, 421);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(971, 24);
+            this.panelPager.Size = new System.Drawing.Size(971, 29);
             this.panelPager.TabIndex = 5;
             // 
             // pagerView1
@@ -315,7 +315,7 @@
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(971, 24);
+            this.pagerView1.Size = new System.Drawing.Size(971, 29);
             this.pagerView1.TabIndex = 16;
             // 
             // panel1
@@ -329,7 +329,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 290);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(977, 133);
+            this.panel1.Size = new System.Drawing.Size(977, 128);
             this.panel1.TabIndex = 7;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -389,7 +389,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(977, 133);
+            this.reoGridView1.Size = new System.Drawing.Size(977, 128);
             this.reoGridView1.TabIndex = 2;
             // 
             // panel2

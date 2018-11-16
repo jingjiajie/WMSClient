@@ -41,6 +41,10 @@ namespace WMS.UI.FromSalary
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             this.model1.RemoveSelectedRows();
+            if (FormPersonSalary.formPersonSalary != null)
+            {
+                FormPersonSalary.formPersonSalary.RefreshSalaryType();
+            }
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -51,6 +55,10 @@ namespace WMS.UI.FromSalary
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                 GlobalData.AllSalaryType = RestClient.Get<List<IDictionary<string, object>>>(
                    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/salary_type/{condWarehouse.ToString()}");
+                if (FormPersonSalary.formPersonSalary != null)
+                {
+                    FormPersonSalary.formPersonSalary.RefreshSalaryType();
+                }
             }
         }
 

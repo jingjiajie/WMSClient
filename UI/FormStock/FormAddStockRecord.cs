@@ -112,7 +112,10 @@ namespace WMS.UI.FormStock
 
         private double AmountBackwardMapper([Data]double amount, [Row]int row)
         {
-
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {

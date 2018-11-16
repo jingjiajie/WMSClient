@@ -113,6 +113,17 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            switch (state)
+            {
+                case "待移库": return 0;
+                case "部分移库": return 1;
+                case "移库完成": return 2;
+                default: return -1;
+            }
+        }
+
         private void FormTransferOrder_Load(object sender, EventArgs e)
         {
             //设置两个请求参数
@@ -238,7 +249,6 @@ namespace WMS.UI.FormTransferOrder
                     
                 }
                 
-
             }
             catch(WebException ex)
             {
@@ -316,6 +326,63 @@ namespace WMS.UI.FormTransferOrder
         private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
             this.RefreshMode();
+        }
+
+        private void toolStripButtonDeliveyPakage_Click(object sender, EventArgs e)
+        {
+
+            //获取选中行ID，过滤掉新建的行（ID为0的）
+            int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
+            if (selectedIDs.Length == 0)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferOrderId\":\"" + selectedIDs[0] + "\"}";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/transfer_order/order_to_delivery";
+                var remindData = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                if (remindData.Count == 0)
+                {
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    StringBuilder remindBody = new StringBuilder();
+                    foreach (IDictionary<string, object> deliveryOrderItemView in remindData)
+                    {
+                        remindBody = remindBody
+                                .Append("供货商名称：“").Append(deliveryOrderItemView["supplierName"])
+                                .Append("”，代号：“").Append(deliveryOrderItemView["supplierNo"])
+                                .Append("”，物料“").Append(deliveryOrderItemView["materialName"]).Append("”，代号：“").Append(deliveryOrderItemView["materialNo"])
+                                .Append("”，系列：“").Append(deliveryOrderItemView["materialProductLine"])
+                                .Append("”（单位：“").Append(deliveryOrderItemView["unit"]).Append("”，单位数量：“").Append(deliveryOrderItemView["unitAmount"])
+                                .Append("”检测状态：“合格”），在库位：“").Append(deliveryOrderItemView["sourceStorageLocationName"])
+                                .Append("”上库存不足！请核准库存！\r\n");
+                    }
+                    new FormRemind(remindBody.ToString()).Show();
+
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("按备货单添加出库单") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+
         }
     }
 }

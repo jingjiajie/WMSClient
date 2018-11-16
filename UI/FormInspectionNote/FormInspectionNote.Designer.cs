@@ -142,6 +142,7 @@
             this.model1.SelectionRange = null;
             this.model1.Size = new System.Drawing.Size(120, 112);
             this.model1.TabIndex = 2;
+            this.model1.CellUpdated += new System.EventHandler<FrontWork.ModelCellUpdatedEventArgs>(this.model1_CellUpdated);
             // 
             // reoGridView1
             // 

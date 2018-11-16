@@ -36,9 +36,6 @@
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem3 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem4 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem5 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
-            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem6 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
-            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem7 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
-            FrontWork.JsonRESTSynchronizer.FieldMappingItem fieldMappingItem8 = new FrontWork.JsonRESTSynchronizer.FieldMappingItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabView1 = new FrontWork.TabView();
             this.modelBoxInspectionNoteItems = new FrontWork.ModelBox();
@@ -104,7 +101,7 @@
             this.modelBoxInspectionNoteItems.Configuration = this.configurationInspectionNoteItem;
             this.modelBoxInspectionNoteItems.CurrentModelName = "default";
             this.modelBoxInspectionNoteItems.Font = new System.Drawing.Font("宋体", 10F);
-            this.modelBoxInspectionNoteItems.Location = new System.Drawing.Point(2, 53);
+            this.modelBoxInspectionNoteItems.Location = new System.Drawing.Point(-9, 44);
             this.modelBoxInspectionNoteItems.Margin = new System.Windows.Forms.Padding(2);
             this.modelBoxInspectionNoteItems.Mode = "default";
             this.modelBoxInspectionNoteItems.Name = "modelBoxInspectionNoteItems";
@@ -176,29 +173,20 @@
             this.synchronizer.Configuration = this.configurationInspectionNoteItem;
             fieldMappingItem1.APIFieldName = "id";
             fieldMappingItem1.ModelFieldName = "warehouseEntryItemId";
-            fieldMappingItem2.APIFieldName = "defaultInspectionStorageLocationId";
-            fieldMappingItem2.ModelFieldName = "inspectionStorageLocationId";
-            fieldMappingItem3.APIFieldName = "defaultInspectionStorageLocationNo";
-            fieldMappingItem3.ModelFieldName = "inspectionStorageLocationNo";
-            fieldMappingItem4.APIFieldName = "defaultInspectionStorageLocationName";
-            fieldMappingItem4.ModelFieldName = "inspectionStorageLocationName";
-            fieldMappingItem5.APIFieldName = "defaultInspectionAmount";
-            fieldMappingItem5.ModelFieldName = "amount";
-            fieldMappingItem6.APIFieldName = "defaultInspectionUnit";
-            fieldMappingItem6.ModelFieldName = "unit";
-            fieldMappingItem7.APIFieldName = "defaultInspectionUnitAmount";
-            fieldMappingItem7.ModelFieldName = "unitAmount";
-            fieldMappingItem8.APIFieldName = "realAmount";
-            fieldMappingItem8.ModelFieldName = "receivedAmount";
+            fieldMappingItem2.APIFieldName = "supplyDefaultInspectionAmount";
+            fieldMappingItem2.ModelFieldName = "amount";
+            fieldMappingItem3.APIFieldName = "supplyDefaultInspectionUnit";
+            fieldMappingItem3.ModelFieldName = "unit";
+            fieldMappingItem4.APIFieldName = "supplyDefaultInspectionUnitAmount";
+            fieldMappingItem4.ModelFieldName = "unitAmount";
+            fieldMappingItem5.APIFieldName = "realAmount";
+            fieldMappingItem5.ModelFieldName = "receivedAmount";
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[] {
         fieldMappingItem1,
         fieldMappingItem2,
         fieldMappingItem3,
         fieldMappingItem4,
-        fieldMappingItem5,
-        fieldMappingItem6,
-        fieldMappingItem7,
-        fieldMappingItem8};
+        fieldMappingItem5};
             this.synchronizer.Location = new System.Drawing.Point(362, 41);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
