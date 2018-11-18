@@ -304,7 +304,7 @@ namespace WMS.UI.FromDeliverOrder
                 return (from s in GlobalData.AllSupplies
                         where s["serialNo"] != null
                         && s["serialNo"].ToString().StartsWith(input)
-                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
                         && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                         select s["serialNo"]?.ToString()).Distinct().ToArray();
             }
