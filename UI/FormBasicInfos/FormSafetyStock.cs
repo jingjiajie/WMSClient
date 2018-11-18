@@ -134,10 +134,10 @@ namespace WMS.UI.FormBasicInfos
     {
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
-            return (from s in GlobalData.AllSupplies
+          return (from s in GlobalData.AllSupplies
                     where s["serialNo"] != null
                     && s["serialNo"].ToString().StartsWith(input)
-                    && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                    //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["serialNo"]?.ToString()).Distinct().ToArray();
         }
