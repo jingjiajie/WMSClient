@@ -134,13 +134,13 @@
         {name:"materialName",displayName:"物料名称",type:"string",placeHolder:"必填信息",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
         {name:"materialProductLine",displayName:"系列",type:"string",placeHolder:"必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         
-        
+        {name:"scheduledAmount",displayName:"计划数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"realAmount",displayName:"实际数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
         {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false},
         {name:"targetStorageLocationNo",displayName:"目标库位编码",placeHolder:"必填信息",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded"},
         {name:"targetStorageLocationName",displayName:"目标库位名称",placeHolder:"必填信息",association:"#storageLocationNameAssociation",editEnded:"#targetStorageLocationNameEditEnded"},
         
-{name:"scheduledAmount",displayName:"计划数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
-        {name:"realAmount",displayName:"实际数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+
         {name:"unit",displayName:"单位",placeHolder:"必填信息"},
         {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息",editEnded:"#unitAmountEditEnded"},
 {name:"sourceStorageLocationId",displayName:"源库位ID",type:"int",visible:false},

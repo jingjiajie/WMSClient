@@ -258,12 +258,25 @@ namespace WMS.UI.FormTransferOrder
 
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
-            return (from s in GlobalData.AllSupplies
-                    where s["serialNo"] != null
-                    && s["serialNo"].ToString().StartsWith(input)
-                    && (int)s["supplierId"] == (int)model[row, "supplierId"]
-                    && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
-                    select s["serialNo"]?.ToString()).Distinct().ToArray();
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
+            if (supplierId == 0)
+            {
+                return (from s in GlobalData.AllSupplies
+                        where s["serialNo"] != null
+                        && s["serialNo"].ToString().StartsWith(input)
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["serialNo"]?.ToString()).Distinct().ToArray();
+            }
+            else
+            {
+                return (from s in GlobalData.AllSupplies
+                        where s["serialNo"] != null
+                        && s["serialNo"].ToString().StartsWith(input)
+                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["serialNo"]?.ToString()).Distinct().ToArray();
+            }
         }
 
         public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
