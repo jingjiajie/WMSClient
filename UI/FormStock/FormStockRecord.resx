@@ -132,7 +132,7 @@
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false},
         {name:"storageLocationId",displayName:"库位ID",type:"int",visible:false},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false},
-        {name:"supplySerialNo",displayName:"供货序号",type:"string"},
+        {name:"supplySerialNo",displayName:"供货序号",type:"string",editable:false},
         {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded",editable:false},
         {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded",editable:false},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false},
@@ -148,8 +148,8 @@
         {name:"storageLocationName",displayName:"库位名称",type:"string",association:"#storageLocationNameAssociation",editEnded:"#storageLocationNameEditEnded",editable:false},
         {name:"batchNo",displayName:"批次号",type:"string",placeHolder:"留空自动生成",editable:false},       
         {name:"relatedOrderNo",displayName:"相关单号",type:"string",editable:false},
-        {name:"inventoryDate",displayName:"存货日期",type:"datetime",editable:false},
-        {name:"manufactureDate",displayName:"生产日期",type:"datetime",editable:false},
+        {name:"inventoryDate",displayName:"生产日期",type:"datetime",editable:false},
+        {name:"manufactureDate",displayName:"存货日期",type:"datetime",editable:false},
         {name:"expiryDate",displayName:"失效日期",type:"datetime",editable:false,visible:false},
         {name:"time",displayName:"记录时间",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation",editable:false},
         {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
@@ -180,9 +180,9 @@ httpAPIs:[
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
+        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
+        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
