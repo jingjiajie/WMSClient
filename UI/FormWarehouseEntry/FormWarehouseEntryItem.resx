@@ -215,9 +215,9 @@
         {name:"refuseUnitAmount",displayName:"拒收单位数量",type:"double",defaultValue:1},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
         {name:"manufactureNo",displayName:"厂商批号",placeHolder:"点击填写厂商批号"},
-        {name:"inventoryDate",displayName:"存货日期",type:"datetime",defaultValue:"#now",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
-        {name:"manufactureDate",displayName:"生产日期",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
-        {name:"expiryDate",displayName:"失效日期",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
+        {name:"inventoryDate",displayName:"生产日期",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
+        {name:"manufactureDate",displayName:"存货日期",type:"datetime",defaultValue:"#now",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation"},
+        {name:"expiryDate",displayName:"失效日期",type:"datetime",placeHolder:"#datetimePlaceHolder",association:"#datetimeAssociation",visible:false},
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称",association:"#personAssociation",editEnded:"#personEditEnded"}
     ],

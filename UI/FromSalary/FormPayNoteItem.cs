@@ -139,9 +139,9 @@ namespace WMS.UI.FromSalary
             {
                 if (this.payNoteState == FormPayNote.CONFIRM_PAY)
                 {
-                    this.basicView1.Mode = "pay";
-                    this.reoGridView1.Mode = "pay";
-                    this.model1.Mode = "pay";
+                    this.basicView1.Mode = "pre-pay";
+                    this.reoGridView1.Mode = "pre-pay";
+                    this.model1.Mode = "pre-pay";
                     this.buttonCalculateAllTax.Enabled = false;
                     this.buttonCclcultateItemsTax.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
@@ -150,9 +150,9 @@ namespace WMS.UI.FromSalary
                     this.buttonRealPayItems.Enabled = true;
                 }
                 else if (this.payNoteState == FormPayNote.WAITING_FOR_CONFIRM) {
-                    this.model1.Mode = "default";
-                    this.basicView1.Mode = "default";
-                    this.reoGridView1.Mode = "default";
+                    this.model1.Mode = "calculate";
+                    this.basicView1.Mode = "calculate";
+                    this.reoGridView1.Mode = "calculate";
                     this.buttonCclcultateItemsTax.Enabled = true;
                     this.buttonRealPayItems.Enabled = true;
                     this.ButtonAllPerson.Enabled = true;

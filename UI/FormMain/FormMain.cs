@@ -12,6 +12,7 @@ using WMS.UI.FormStockTaking;
 using WMS.UI.FormStock;
 using WMS.UI.FromDeliverOrder;
 using WMS;
+using WMS.UI.FormAcccount;
 
 namespace WMS.UI
 {
@@ -474,6 +475,10 @@ class SingletonManager<T> where T:class
         if (name.Equals("FormSafetyStock1"))
         {
             FormSafetyStock.stockType = 1;
+        }
+        if (name.Equals("FormAccountRecord")&&FormAccountRecord.formAccountRecord!=null)
+        {
+            FormAccountRecord.formAccountRecord.InitTree();
         }
         if (info.Obj != null)
         {

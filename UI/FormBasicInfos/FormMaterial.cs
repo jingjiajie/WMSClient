@@ -69,6 +69,8 @@ namespace WMS.UI.FormBasicInfos
                 Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                 GlobalData.AllMaterials = RestClient.Get<List<IDictionary<string, object>>>(
                    $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/material/{condWarehouse.ToString()}");
+                GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
             }
         }
 

@@ -24,11 +24,16 @@ namespace WMS.UI.FromDeliverOrder
             InitializeComponent();
             this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
             int OrderState=(int)this.deliveryOrder["state"];
+            int OrderType = (int)this.deliveryOrder["type"];
             if (OrderState == 3 || OrderState == 4) {
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonAlter.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
                 this.toolStripButtonDeliveyPakage.Enabled = false;
+            }
+            if (OrderType == 1 )
+            {
+                this.toolStripButtonDeliveyPakage.Visible=false;
             }
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
@@ -299,7 +304,7 @@ namespace WMS.UI.FromDeliverOrder
                 return (from s in GlobalData.AllSupplies
                         where s["serialNo"] != null
                         && s["serialNo"].ToString().StartsWith(input)
-                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
                         && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                         select s["serialNo"]?.ToString()).Distinct().ToArray();
             }

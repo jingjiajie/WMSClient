@@ -137,17 +137,19 @@
         {name:"scheduledAmount",displayName:"计划上架数量",type:"double",defaultValue:0,forwardMapper:"#scheduledAmountForwardMapper",backwardMapper:"#scheduledAmountBackwardMapper"},
         {name:"realAmount",displayName:"实际上架数量",type:"double",defaultValue:0,forwardMapper:"#realAmountForwardMapper",backwardMapper:"#realAmountBackwardMapper"},
                 {name:"sourceStorageLocationId",displayName:"源库位ID",type:"int",visible:false},
-        {name:"sourceStorageLocationNo",displayName:"源库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
+       {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false},
+        {name:"targetStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded"},
+        {name:"targetStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#targetStorageLocationNameEditEnded"},
+{name:"unit",displayName:"单位"},
+        {name:"unitAmount",displayName:"单位数量",type:"double",editEnded:"#unitAmountEditEnded"},
+
+ {name:"sourceStorageLocationNo",displayName:"源库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded"},
         {name:"sourceStorageLocationName",displayName:"源库位名称",association:"#storageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded"},       
         {name:"sourceUnit",displayName:"源单位",type:"string",placeHolder:"必填信息"},
         {name:"sourceUnitAmount",displayName:"源单位数量",type:"double",placeHolder:"必填信息"},  
 
 
-        {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false},
-        {name:"targetStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded"},
-        {name:"targetStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#targetStorageLocationNameEditEnded"},
-{name:"unit",displayName:"单位"},
-        {name:"unitAmount",displayName:"单位数量",type:"double",editEnded:"#unitAmountEditEnded"},
+       
         {name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#stateForwardMapper"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},     
  {name:"personId",displayName:"作业人ID",type:"int",visible:false},
