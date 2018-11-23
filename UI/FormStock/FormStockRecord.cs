@@ -50,9 +50,21 @@ namespace WMS.UI.FormStock
             }
         }
 
+        public int[] getSelectRowIds()
+        {
+            List<int> selectIds = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                selectIds.Add(this.model1.SelectionRange.Row + i);
+            }
+            return selectIds.ToArray();
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            FormAddStockRecord form = new FormAddStockRecord();
+            //var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            var rowData = this.model1.GetRows(this.getSelectRowIds());
+            FormAddStockRecord form = new FormAddStockRecord(rowData);
             form.SetAddFinishedCallback(() =>
             {
                 this.searchView1.Search();
