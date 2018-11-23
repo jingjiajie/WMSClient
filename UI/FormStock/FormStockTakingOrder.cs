@@ -157,14 +157,14 @@ namespace WMS.UI.FormStockTaking
             try
             {
                 string body = "";
-                if (MessageBox.Show("是否以当前时间进行盘点？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                {
-                    body = "{\"stockTakingOrderId\":\"" + 0 + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"checkTime\":\"" + DateTime.Now + "\"}";                         
-                }
-                else
-                {
-                    string s = Interaction.InputBox("请输入盘点时间", "提示", "1", -1, -1);  //-1表示在屏幕的中间
-                }
+                //if (MessageBox.Show("是否以当前时间进行盘点？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                //{
+                //    body = "{\"stockTakingOrderId\":\"" + 0 + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"checkTime\":\"" + DateTime.Now + "\"}";                         
+                //}
+                //else
+                //{
+                //    string s = Interaction.InputBox("请输入盘点时间", "提示", "1", -1, -1);  //-1表示在屏幕的中间
+                //}
                 body = "{\"stockTakingOrderId\":\"" + 0 + "\",\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"checkTime\":\"" + DateTime.Now + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/stocktaking_order_item/add_all";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
