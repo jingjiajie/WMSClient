@@ -53,6 +53,7 @@ namespace WMS.UI.FormStock
         public int[] getSelectRowIds()
         {
             List<int> selectIds = new List<int>();
+            if (this.model1.SelectionRange == null) { return new int[] { }; }
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
                 selectIds.Add(this.model1.SelectionRange.Row + i);
