@@ -153,7 +153,7 @@ namespace WMS.UI
             try
             {
                 string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 0 + "\"}";
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/put_away_auto";
                 var remindData = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 if (remindData.Count == 0)
                 {

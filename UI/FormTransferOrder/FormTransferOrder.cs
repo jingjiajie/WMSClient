@@ -197,7 +197,7 @@ namespace WMS.UI.FormTransferOrder
             try
             {
                 string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 1 + "\"}";
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto_new";
                 var remindData=RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 if (remindData.Count==0)
                 {
@@ -230,7 +230,7 @@ namespace WMS.UI.FormTransferOrder
                                     .Append("”，系列：“").Append(transferOrderItem["materialProductLine"])
                                      .Append("”（单位：“").Append(transferOrderItem["unit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
                                     .Append("”检测状态：“合格”），在目标库位：“").Append(transferOrderItem["targetStorageLocationName"])
-                                    .Append("”上库存充足！无需备货操作！\r\n\r\n");
+                                    .Append("”上库存或预库存充足！无需继续备货操作！\r\n\r\n");
                         }
                         if ((int)transferOrderItem["state"] == 2)
                         {
@@ -241,7 +241,7 @@ namespace WMS.UI.FormTransferOrder
                                     .Append("”，系列：“").Append(transferOrderItem["materialProductLine"])
                                     .Append("”（单位：“").Append(transferOrderItem["sourceUnit"]).Append("”，单位数量：“").Append(transferOrderItem["unitAmount"])
                                     .Append("”检测状态：“合格”），在源库位：“").Append(transferOrderItem["sourceStorageLocationName"])
-                                    .Append("”上库存可用数量不足！需要库存数量：“").Append(transferOrderItem["scheduledAmount"]).Append("”，现有库存：“")
+                                    .Append("”上库存可用数量不足！需要库存数量：“").Append(transferOrderItem["scheduledAmount"]).Append("”，现有库存可用数量：“")
                                     .Append(transferOrderItem["realAmount"]).Append("”\r\n\r\n");
                         }
                     }

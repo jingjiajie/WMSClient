@@ -247,7 +247,7 @@ namespace WMS.UI.FormBasicInfos
                 this.FindStorageLocation(model, row, "sourceStorageLocation", FindStorageLocationBy.NO, sourceStorageLocationNo, false);
             }
 
-            model[row, "amount"] = supply["defaultDeliveryAmount"];
+            model[row, "amountMin"] = supply["defaultDeliveryAmount"];
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
             model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
