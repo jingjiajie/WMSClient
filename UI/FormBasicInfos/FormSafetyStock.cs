@@ -21,9 +21,14 @@ namespace WMS.UI.FormBasicInfos
             FormSafetyStock.stockType = stockType;
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            if (FormSafetyStock.stockType == 0)
+            {
+                this.basicView1.Mode = "putaway";
+                this.reoGridView2.Mode = "putaway";
+            }
 
         }
-        private string AmountForwardMapper(double amount, int row)
+        private string AmountMinForwardMapper(double amount, int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -36,7 +41,42 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private double AmountBackwardMapper([Data]string strAmount, [Row] int row)
+        private double AmountMinBackwardMapper([Data]string strAmount, [Row] int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            if (row == -1)
+            {
+                return amount;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private string AmountMaxForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountMaxBackwardMapper([Data]string strAmount, [Row] int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
@@ -63,8 +103,17 @@ namespace WMS.UI.FormBasicInfos
             this.model1.RefreshView(row);
         }
 
+        private void AmountMinEditEnded([Row]int row)
+        {
+            if (FormSafetyStock.stockType == 1)
+            {
+                this.model1[row, "amountMax"] = this.model1[row, "amountMin"];
+            }
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+
             this.basicView1.Enabled = true;
             this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
@@ -198,7 +247,7 @@ namespace WMS.UI.FormBasicInfos
                 this.FindStorageLocation(model, row, "sourceStorageLocation", FindStorageLocationBy.NO, sourceStorageLocationNo, false);
             }
 
-            model[row, "amount"] = supply["defaultDeliveryAmount"];
+            model[row, "amountMin"] = supply["defaultDeliveryAmount"];
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
             model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
