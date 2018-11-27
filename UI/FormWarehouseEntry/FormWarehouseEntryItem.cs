@@ -104,6 +104,11 @@ namespace WMS.UI
             this.model.RefreshView(row);
         }
 
+        private void ExpectedAmountEditEnded(int row)
+        {
+            this.model[row, "realAmount"] = this.model[row, "expectedAmount"];
+        }
+
         private void PersonEditEnded(int row, string personName)
         {
             this.model[row, "personId"] = 0;//先清除ID
