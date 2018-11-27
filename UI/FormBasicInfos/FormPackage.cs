@@ -72,19 +72,28 @@ namespace WMS.UI.FormBasicInfos
             if (this.synchronizer.Save())
             {
                 this.searchView1.Search();
+
+                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                GlobalData.AllPackage = RestClient.Get<List<IDictionary<string, object>>>(
+                  $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/package/{condWarehouse.ToString()}");
             }
         }
 
         private void buttonItems_Click(object sender, EventArgs e)
         {
             try { 
-            if (this.model1.SelectionRange.Rows != 1)
-            {
-                MessageBox.Show("请选择一项发货套餐单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
-            new FormPackageItem(rowData).Show();
+                if (this.model1.SelectionRange == null || this.model1.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项发货套餐单查看物料条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+                if (rowData["id"] == null)
+                {
+                    MessageBox.Show("请先保存单据再查看条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                new FormPackageItem(rowData).Show();
             }
             catch
             {
