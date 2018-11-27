@@ -416,6 +416,8 @@ namespace WMS.UI.FormStock
             {
                 this.model1[row, "storageLocationNo"] = (string)foundSupplies[0]["defaultUnqualifiedStorageLocationNo"];
             }
+
+            this.FindStorageLocation(this.model1, row, "storageLocation", FindStorageLocationBy.NO, (string)this.model1[row, "storageLocationNo"]);
         }
 
         private void FillDefaultValue(int row, string fieldName, object value)
