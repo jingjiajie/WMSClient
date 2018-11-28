@@ -945,6 +945,15 @@ Public Class ReoGridView
     Public Sub UpdateRows(rows() As Integer, dataOfEachRow() As IDictionary(Of String, Object), suspendUIUpdates As Boolean)
         'If suspendUIUpdates Then Call Me.Panel.SuspendUIUpdates()
         Dim cellInfos As New List(Of ViewCellInfo)
+        '处理data为Nothing的输入
+        If dataOfEachRow Is Nothing Then
+            ReDim dataOfEachRow(rows.Length - 1)
+        End If
+        For i = 0 To dataOfEachRow.Length - 1
+            If dataOfEachRow(i) Is Nothing Then
+                dataOfEachRow(i) = New Dictionary(Of String, Object)
+            End If
+        Next
         '清空ReoGrid相应行
         Me.ClearRows(rows)
         '遍历传入数据
