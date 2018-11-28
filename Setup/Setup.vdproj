@@ -40,13 +40,13 @@
         "Entry"
         {
         "MsmKey" = "8:_3AF7D432FE595C2DD34855D80AE29CE0"
-        "OwnerKey" = "8:_AFC063A4C04D4B41931CD929A01B9246"
+        "OwnerKey" = "8:_C023A1242DA91AE7C6607142C37B739F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_3AF7D432FE595C2DD34855D80AE29CE0"
-        "OwnerKey" = "8:_C023A1242DA91AE7C6607142C37B739F"
+        "OwnerKey" = "8:_AFC063A4C04D4B41931CD929A01B9246"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -166,13 +166,13 @@
         "Entry"
         {
         "MsmKey" = "8:_D1F85A371F87D508F24440A9ABBADDE1"
-        "OwnerKey" = "8:_C023A1242DA91AE7C6607142C37B739F"
+        "OwnerKey" = "8:_AFC063A4C04D4B41931CD929A01B9246"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_D1F85A371F87D508F24440A9ABBADDE1"
-        "OwnerKey" = "8:_AFC063A4C04D4B41931CD929A01B9246"
+        "OwnerKey" = "8:_C023A1242DA91AE7C6607142C37B739F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -208,49 +208,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_90DECA1EF97D2453B4D0DCD8E6C60AD2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BFCD6B2A55E9C228A076E38F28092B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2CA6E1F7BEC1E54DB871DF6867C3CBC9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C023A1242DA91AE7C6607142C37B739F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E27EF64C21B3DC2C51430A011C8EC27D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_673F41CD8EDB7532888F81D4EAD80158"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_63AE644E7F2D161D93921ACA2AEB5986"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3AF7D432FE595C2DD34855D80AE29CE0"
+        "OwnerKey" = "8:_5913A8A7A0BA11C24AEBEB3B3E254468"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -262,7 +220,49 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5913A8A7A0BA11C24AEBEB3B3E254468"
+        "OwnerKey" = "8:_3AF7D432FE595C2DD34855D80AE29CE0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_63AE644E7F2D161D93921ACA2AEB5986"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_673F41CD8EDB7532888F81D4EAD80158"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E27EF64C21B3DC2C51430A011C8EC27D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C023A1242DA91AE7C6607142C37B739F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2CA6E1F7BEC1E54DB871DF6867C3CBC9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BFCD6B2A55E9C228A076E38F28092B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_90DECA1EF97D2453B4D0DCD8E6C60AD2"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -407,11 +407,6 @@
             "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2CA6E1F7BEC1E54DB871DF6867C3CBC9"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
@@ -438,11 +433,6 @@
             "AssemblyAsmDisplayName" = "8:unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3AF7D432FE595C2DD34855D80AE29CE0"
-                    {
-                    "Name" = "8:unvell.ReoGrid.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:unvell.ReoGrid.dll"
             "TargetName" = "8:"
@@ -509,11 +499,6 @@
             "AssemblyAsmDisplayName" = "8:Antlr4.Runtime.Standard, Version=4.7.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_5913A8A7A0BA11C24AEBEB3B3E254468"
-                    {
-                    "Name" = "8:Antlr4.Runtime.Standard.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Antlr4.Runtime.Standard.dll"
             "TargetName" = "8:"
@@ -540,11 +525,6 @@
             "AssemblyAsmDisplayName" = "8:EMacro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_63AE644E7F2D161D93921ACA2AEB5986"
-                    {
-                    "Name" = "8:EMacro.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:EMacro.dll"
             "TargetName" = "8:"
@@ -571,11 +551,6 @@
             "AssemblyAsmDisplayName" = "8:ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_673F41CD8EDB7532888F81D4EAD80158"
-                    {
-                    "Name" = "8:ScintillaNET.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ScintillaNET.dll"
             "TargetName" = "8:"
@@ -682,11 +657,6 @@
             "AssemblyAsmDisplayName" = "8:zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_90DECA1EF97D2453B4D0DCD8E6C60AD2"
-                    {
-                    "Name" = "8:zxing.presentation.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:zxing.presentation.dll"
             "TargetName" = "8:"
@@ -753,11 +723,6 @@
             "AssemblyAsmDisplayName" = "8:zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_BFCD6B2A55E9C228A076E38F28092B79"
-                    {
-                    "Name" = "8:zxing.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:zxing.dll"
             "TargetName" = "8:"
@@ -784,11 +749,6 @@
             "AssemblyAsmDisplayName" = "8:FrontWork, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C023A1242DA91AE7C6607142C37B739F"
-                    {
-                    "Name" = "8:FrontWork.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:FrontWork.dll"
             "TargetName" = "8:"
@@ -815,11 +775,6 @@
             "AssemblyAsmDisplayName" = "8:Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_D1F85A371F87D508F24440A9ABBADDE1"
-                    {
-                    "Name" = "8:Jint.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Jint.dll"
             "TargetName" = "8:"
@@ -846,11 +801,6 @@
             "AssemblyAsmDisplayName" = "8:ConfigurationEditor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E27EF64C21B3DC2C51430A011C8EC27D"
-                    {
-                    "Name" = "8:ConfigurationEditor.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ConfigurationEditor.exe"
             "TargetName" = "8:"
@@ -977,15 +927,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WMS仓库管理系统"
-        "ProductCode" = "8:{31E5E454-FB0B-4D81-9E46-F5D4140C997D}"
-        "PackageCode" = "8:{027EE923-5F3D-4E00-99D1-F09F41CEA1FC}"
+        "ProductCode" = "8:{83C7F43C-E56C-4A35-94D4-BA1FA5A35D5D}"
+        "PackageCode" = "8:{44FC3019-26FA-4D01-98F5-610D8D1979CF}"
         "UpgradeCode" = "8:{A9AE385E-C8FC-4629-8461-1096D01CCA2F}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.1.0"
+        "ProductVersion" = "8:2.1.2"
         "Manufacturer" = "8:WMS2"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1100,8 +1050,8 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4C13699099554A1AA9E33D06CE3720BB"
             {
-            "Name" = "8:安途丰达WMS系统2.1.0"
-            "Arguments" = "8:/x {31E5E454-FB0B-4D81-9E46-F5D4140C997D}"
+            "Name" = "8:安途丰达WMS系统2.1.2"
+            "Arguments" = "8:/x {83C7F43C-E56C-4A35-94D4-BA1FA5A35D5D}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1114,8 +1064,8 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_55E7EFED42274FA1BA308A5A5E9B1E99"
             {
-            "Name" = "8:安途丰达WMS系统2.1.0"
-            "Arguments" = "8:/x {31E5E454-FB0B-4D81-9E46-F5D4140C997D}"
+            "Name" = "8:安途丰达WMS系统2.1.2"
+            "Arguments" = "8:/x {83C7F43C-E56C-4A35-94D4-BA1FA5A35D5D}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1129,7 +1079,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_72009F6D62624D8BAF9CF99D41954719"
             {
             "Name" = "8:Uninstall.exe"
-            "Arguments" = "8:/x {31E5E454-FB0B-4D81-9E46-F5D4140C997D}"
+            "Arguments" = "8:/x {83C7F43C-E56C-4A35-94D4-BA1FA5A35D5D}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1143,7 +1093,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F58E66E1A82F4827B41133478B74A9F8"
             {
             "Name" = "8:卸载安途丰达WMS系统"
-            "Arguments" = "8:/x {31E5E454-FB0B-4D81-9E46-F5D4140C997D}"
+            "Arguments" = "8:/x {83C7F43C-E56C-4A35-94D4-BA1FA5A35D5D}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
