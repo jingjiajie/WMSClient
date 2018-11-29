@@ -163,6 +163,18 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+
+            switch (state)
+            {
+                case "待备货": return 0;
+                case "部分备货": return 1;
+                case "备货完成": return 2;
+                default: return -1;
+            }
+        }
+
         private void TransferDone()
         {
             //获取选中行ID，过滤掉新建的行（ID为0的）
