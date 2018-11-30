@@ -18,6 +18,31 @@ namespace WMS.UI.FormSettlement
             InitializeComponent();
         }
 
+        private void RefreshMode()
+        {
+            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 1|| (int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 2)
+            {
+                this.model1.Mode = "default1";
+                this.basicView1.Mode = "default1";
+                this.reoGridView1.Mode = "default1";
+            }
+            else
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+        }
+
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
         private void FormInvoice_Load(object sender, EventArgs e)
         {
             //设置两个请求参数
