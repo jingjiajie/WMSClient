@@ -239,6 +239,17 @@ namespace WMS.UI
             }
         }
 
+        private int StateForwardMapper(string state)
+        {
+            switch (state)
+            {
+                case "待上架": return 0;
+                case "部分上架": return 1;
+                case "全部上架": return 2;
+                default: return -1;
+            }
+        }
+
         public void SetAddFinishedCallback(Action callback)
         {
             this.addFinishedCallback = callback;
