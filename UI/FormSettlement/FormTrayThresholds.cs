@@ -78,6 +78,30 @@ namespace WMS.UI.FormSettlement
 
             commonDataWidth.key = this.widthKey;
             commonDataWidth.value = this.textBoxWidth.Text;
+
+            ValidateTray validateTray = new ValidateTray();
+            int num;
+            int.TryParse(textBoxLength.Text.Trim(), out num);
+            validateTray.length = num;
+            int.TryParse(textBoxWidth.Text.Trim(), out num);
+            validateTray.width = num;
+            validateTray.warehouseId = (int)GlobalData.Warehouse["id"];
+            string bodyValidtae = serializer.Serialize(validateTray);
+            try
+            {
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/validate_tray";
+                RestClient.RequestPost<int[]>(url, bodyValidtae, "POST");
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("验证托位大失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             string body = serializer.Serialize(new CommonData[] { commonDataLength, commonDataWidth });
             try
             {
