@@ -17,12 +17,43 @@ namespace WMS.UI.FormSettlement
     {
         private IDictionary<string, object> settlementNote = null;
         private Action addFinishedCallback = null;
+        int noteState = -1;
         public FormSettlementNoteItem(IDictionary<string, object> settlementNote)
         {
             this.settlementNote = settlementNote;
          
             MethodListenerContainer.Register(this);
             InitializeComponent();
+        }
+
+        private void RefreshMode()
+        {
+            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 1
+                ||this.noteState==1)
+            {
+                this.basicView1.Mode = "default1";
+                this.reoGridView1.Mode = "default1";
+            }
+            else if(this.noteState == 2)
+            {
+                this.basicView1.Mode = "default1";
+                this.reoGridView1.Mode = "default1";
+            }
+            else
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+        }
+
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.RefreshMode();
         }
 
         private void FormSettlementNoteItem_Load(object sender, EventArgs e)
@@ -35,21 +66,21 @@ namespace WMS.UI.FormSettlement
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
 
-            int noteState = (int)this.settlementNote["state"];
-            if (noteState == 1)
-            {
-                this.model1.Mode = "default1";
-                this.basicView1.Mode = "default1";
-                this.reoGridView1.Mode = "default1";
-            }
-            if (noteState == 2)
-            {
-                this.model1.Mode = "default2";
-                this.basicView1.Mode = "default2";
-                this.reoGridView1.Mode = "default2";
-            }
+            //this.noteState = (int)this.settlementNote["state"];
+            //if (noteState == 1)
+            //{
+            //    this.model1.Mode = "default1";
+            //    this.basicView1.Mode = "default1";
+            //    this.reoGridView1.Mode = "default1";
+            //}
+            //if (noteState == 2)
+            //{
+            //    this.model1.Mode = "default2";
+            //    this.basicView1.Mode = "default2";
+            //    this.reoGridView1.Mode = "default2";
+            //}
 
-            
+            this.RefreshMode();
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
@@ -58,6 +89,54 @@ namespace WMS.UI.FormSettlement
             {
                 this.searchView1.Search();
             }
+        }
+
+        private void StorageChargeEditEnded([Row]int row, [Data] string storageCharge)
+        {
+            double? logisticFee = (double?)this.model1[row, "logisticFee"];
+            if (logisticFee.HasValue == false)
+            {
+                this.model1[row, "logisticFee"] = 0;
+                this.model1[row, "planPayment"] = storageCharge;
+
+            }
+            else
+            {
+                try
+                {
+                    this.model1[row, "planPayment"] = logisticFee.Value + Double.Parse(storageCharge);
+                }
+                catch {
+                }
+            }
+        }
+
+        private void logisticFeeEditEnded([Row]int row, [Data] string logisticFee)
+        {
+            double? storageCharge = (double?)this.model1[row, "storageCharge"];
+            if (storageCharge.HasValue == false)
+            {
+                this.model1[row, "storageCharge"] = 0;
+                this.model1[row, "planPayment"] = logisticFee;
+
+            }
+            else {
+                try
+                {
+                    this.model1[row, "planPayment"] = storageCharge.Value + Double.Parse(logisticFee);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        private string PlanPaymentForwardMapper([Data]double amount, [Row] int row)
+        {
+            double? storageCharge = (double?)this.model1[row, "storageCharge"];
+            double? logisticFee = (double?)this.model1[row, "logisticFee"];
+            return Utilities.DoubleToString(storageCharge.Value + logisticFee.Value);
+            
         }
 
         //供应商名称编辑完成，根据名称自动搜索ID和No
