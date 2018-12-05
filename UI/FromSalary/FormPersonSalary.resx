@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>127, 98</value>
-  </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>[
     {mode:"default",
@@ -127,7 +124,7 @@
         {name:"id",displayName:"ID",type:"int",visible:false},
         {name:"salaryItemId",displayName:"salaryItemID",type:"int",visible:false}, 
         {name:"salaryPeriodId",displayName:"salaryPeriodID",type:"int",visible:false},                    
-        {name:"personId",displayName:"人员id",type:"string",visible:false},    
+        {name:"personId",displayName:"人员id",type:"string",visible:true},    
         {name:"personName",displayName:"人员名称",type:"string",association:"#personAssociation",editEnded:"#personNameEditEnded"},                       
         {name:"salaryItemName",displayName:"项目名称",type:"string",association:"#salaryItemNameAssociation",editEnded:"#salaryItemNameEditEnded"}, 
         {name:"salaryPeriodName",displayName:"期间名称",type:"string",association:"#salaryPeriodNameAssociation",editEnded:"#salaryPeriodNameEditEnded",visible:false}, 
@@ -160,6 +157,9 @@
     }
 ]</value>
   </data>
+  <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>127, 98</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

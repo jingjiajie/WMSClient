@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPersonSalary));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
@@ -121,14 +121,14 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(31, 60);
+            this.configuration1.Location = new System.Drawing.Point(54, 137);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPersonSalary",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -167,7 +167,7 @@
             this.model2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model2.Configuration = this.configuration2;
             this.model2.Font = new System.Drawing.Font("宋体", 10F);
-            this.model2.Location = new System.Drawing.Point(598, 34);
+            this.model2.Location = new System.Drawing.Point(609, 96);
             this.model2.Margin = new System.Windows.Forms.Padding(2);
             this.model2.Mode = "default";
             this.model2.Name = "model2";
@@ -177,15 +177,15 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(474, 34);
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(502, 112);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -210,7 +210,7 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(224, 55);
+            this.synchronizer.Location = new System.Drawing.Point(305, 69);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -224,7 +224,7 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(149, 98);
+            this.model1.Location = new System.Drawing.Point(241, 137);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -463,7 +463,8 @@
             this.pivotTableAdapter1.ColumnNamesAsColumn = new string[] {
         "salaryItemName"};
             this.pivotTableAdapter1.ColumnNamesAsRow = new string[] {
-        "personName"};
+        "personName",
+        "personId"};
             this.pivotTableAdapter1.ColumnNamesAsValue = new string[] {
         "amount"};
             this.pivotTableAdapter1.SourceMode = "default";

@@ -119,7 +119,7 @@ namespace WMS.UI
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(508, 30);
             this.label1.TabIndex = 0;
-            this.label1.Text = "安途丰达WMS仓库管理系统 V2.1.3 - Build1130";
+            this.label1.Text = "安途丰达WMS仓库管理系统 V2.1.4 - Build1205";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // panel1

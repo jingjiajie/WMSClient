@@ -10,6 +10,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using System.Web.Script.Serialization;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI
 {
@@ -46,7 +47,20 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
+            {
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
@@ -56,6 +70,7 @@ namespace WMS.UI
                 { "supplierNo",this.putAwayNote["supplierNo"]},
                 { "supplierName",this.putAwayNote["supplierName"]}
             });
+            }
         }
 
 
@@ -239,16 +254,16 @@ namespace WMS.UI
             }
         }
 
-        private int StateForwardMapper(string state)
-        {
-            switch (state)
-            {
-                case "待上架": return 0;
-                case "部分上架": return 1;
-                case "全部上架": return 2;
-                default: return -1;
-            }
-        }
+        //private int StateForwardMapper(string state)
+        //{
+        //    switch (state)
+        //    {
+        //        case "待上架": return 0;
+        //        case "部分上架": return 1;
+        //        case "全部上架": return 2;
+        //        default: return -1;
+        //    }
+        //}
 
         public void SetAddFinishedCallback(Action callback)
         {
