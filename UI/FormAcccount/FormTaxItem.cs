@@ -21,12 +21,38 @@ namespace WMS.UI.FormAcccount
             this.searchView1.AddStaticCondition("taxId", this.tax["id"]);
         }
 
+        private void RefreshMode()
+        {
+            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["type"] == 1)
+            {
+                this.basicView1.Mode = "default";
+                this.reoGridView1.Mode = "default";
+            }
+            else
+            {
+                this.basicView1.Mode = "type_quota";
+                this.reoGridView1.Mode = "type_quota";
+            }
+            
+        }
+
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
+        {
+            this.RefreshMode();
+        }
+
         private void FormTaxItem_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
             this.searchView1.Search();
+            this.RefreshMode();
         }
 
         private string TypeForwardMapper([Data]int type)
@@ -55,6 +81,7 @@ namespace WMS.UI.FormAcccount
             {
                 { "taxId",this.tax["id"]}
             });
+            this.RefreshMode();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
