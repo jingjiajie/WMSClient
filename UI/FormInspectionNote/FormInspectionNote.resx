@@ -131,7 +131,7 @@
         {name:"supplierNo",displayName:"供应商代号",editable:false},
         {name:"supplierName",displayName:"供货商名称",editable:false},
         {name:"warehouseEntryNo",displayName:"源入库单号",editable:false},
-        {name:"InboundDeliveryOrderNo",displayName:"内向交货单号",editable:false},
+        {name:"inboundDeliveryOrderNo",displayName:"内向交货单号",editable:false},
         {name:"createPersonId",displayName:"创建人员ID",type:"int",visible:false},
         {name:"createPersonName",displayName:"创建人员",editable:false,defaultValue:"#createPersonDefaultValue"},
         {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},
@@ -170,7 +170,7 @@
   <data name="buttonSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
         CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
         NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
         ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
@@ -196,7 +196,7 @@
   <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG/SURBVDhPndI/SAJxFAfw29raanCsPShobYi2hraopKCI
+        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAG/SURBVDhPndI/SAJxFAfw29raanCsPShobYi2hraopKCI
         QrLDmiKTpCiiWmoJl6CSkzsU5ZLQkBosIQm8ED1CIZJCSigFE0ny27vzjCiy7MGH+/feu98/5nPw8Tj+
         Qkv/HsrHapTLZZTe3lAovSJbLCLz8oJ0PgebJP3eIPn0BF8yiaNEAl5yeH0NkZzd3mLr8rJ2A+XPcibz
         pViGR5ZxenOD9XC4doNCqQQpnYab7l3EGYtBIHw0iuNkAkuhUO0Gz4UCLlIpOK4kcDRfuxSBPRLBAfHS
