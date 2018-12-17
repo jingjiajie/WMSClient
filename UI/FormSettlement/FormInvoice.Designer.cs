@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInvoice));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -52,10 +53,10 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.basicView1 = new FrontWork.BasicView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripButtonSend = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonReceive = new System.Windows.Forms.ToolStripButton();
+            this.basicView1 = new FrontWork.BasicView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -68,7 +69,7 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(687, 466);
+            this.toolStrip1.Location = new System.Drawing.Point(687, 465);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 22;
@@ -93,7 +94,7 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Padding = new System.Windows.Forms.Padding(3);
+            this.searchView1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.searchView1.Size = new System.Drawing.Size(777, 25);
             this.searchView1.TabIndex = 0;
             // 
@@ -102,15 +103,20 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(63, 65);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormInvoice",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormInvoice",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair2.Mode = "default1";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair1,
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(135, 144);
             this.configuration1.TabIndex = 1;
             // 
             // toolStripSeparator3
@@ -154,7 +160,7 @@
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(645, 75);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
@@ -184,7 +190,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(180, 180);
+            this.synchronizer.Size = new System.Drawing.Size(135, 144);
             this.synchronizer.TabIndex = 3;
             // 
             // model1
@@ -194,12 +200,14 @@
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(270, 75);
-            this.model1.Margin = new System.Windows.Forms.Padding(2);
+            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
             this.model1.Size = new System.Drawing.Size(141, 138);
             this.model1.TabIndex = 2;
+            this.model1.Refreshed += new System.EventHandler<FrontWork.ModelRefreshedEventArgs>(this.model1_Refreshed);
+            this.model1.SelectionRangeChanged += new System.EventHandler<FrontWork.ModelSelectionRangeChangedEventArgs>(this.model1_SelectionRangeChanged);
             // 
             // reoGridView1
             // 
@@ -208,7 +216,7 @@
             this.reoGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView1.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView1.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
@@ -286,6 +294,24 @@
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // toolStripButtonSend
+            // 
+            this.toolStripButtonSend.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSend.Image")));
+            this.toolStripButtonSend.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSend.Name = "toolStripButtonSend";
+            this.toolStripButtonSend.Size = new System.Drawing.Size(80, 21);
+            this.toolStripButtonSend.Text = "寄出确认";
+            this.toolStripButtonSend.Click += new System.EventHandler(this.toolStripButtonSend_Click);
+            // 
+            // toolStripButtonReceive
+            // 
+            this.toolStripButtonReceive.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReceive.Image")));
+            this.toolStripButtonReceive.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonReceive.Name = "toolStripButtonReceive";
+            this.toolStripButtonReceive.Size = new System.Drawing.Size(80, 21);
+            this.toolStripButtonReceive.Text = "收到确认";
+            this.toolStripButtonReceive.Click += new System.EventHandler(this.toolStripButtonReceive_Click);
+            // 
             // basicView1
             // 
             this.basicView1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -298,7 +324,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Padding = new System.Windows.Forms.Padding(3);
+            this.basicView1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.basicView1.Size = new System.Drawing.Size(777, 75);
             this.basicView1.TabIndex = 13;
             // 
@@ -324,24 +350,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(777, 396);
             this.tableLayoutPanel1.TabIndex = 23;
-            // 
-            // toolStripButtonSend
-            // 
-            this.toolStripButtonSend.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSend.Image")));
-            this.toolStripButtonSend.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSend.Name = "toolStripButtonSend";
-            this.toolStripButtonSend.Size = new System.Drawing.Size(80, 21);
-            this.toolStripButtonSend.Text = "寄出确认";
-            this.toolStripButtonSend.Click += new System.EventHandler(this.toolStripButtonSend_Click);
-            // 
-            // toolStripButtonReceive
-            // 
-            this.toolStripButtonReceive.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReceive.Image")));
-            this.toolStripButtonReceive.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonReceive.Name = "toolStripButtonReceive";
-            this.toolStripButtonReceive.Size = new System.Drawing.Size(80, 21);
-            this.toolStripButtonReceive.Text = "收到确认";
-            this.toolStripButtonReceive.Click += new System.EventHandler(this.toolStripButtonReceive_Click);
             // 
             // FormInvoice
             // 

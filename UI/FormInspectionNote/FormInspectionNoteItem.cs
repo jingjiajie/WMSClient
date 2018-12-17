@@ -59,6 +59,10 @@ namespace WMS.UI
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -89,6 +93,10 @@ namespace WMS.UI
             {
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
+            }
+            if (row == -1)
+            {
+                return amount;
             }
             double? returnUnitAmount = (double?)this.model[row, "returnUnitAmount"];
             if (returnUnitAmount.HasValue == false || returnUnitAmount == 0)

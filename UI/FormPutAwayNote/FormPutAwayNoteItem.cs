@@ -10,6 +10,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using System.Web.Script.Serialization;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI
 {
@@ -46,7 +47,20 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
+            {
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
@@ -56,7 +70,9 @@ namespace WMS.UI
                 { "supplierNo",this.putAwayNote["supplierNo"]},
                 { "supplierName",this.putAwayNote["supplierName"]}
             });
+            }
         }
+
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
@@ -131,6 +147,10 @@ namespace WMS.UI
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -162,6 +182,10 @@ namespace WMS.UI
             {
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
+            }
+            if (row == -1)
+            {
+                return amount;
             }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -230,6 +254,17 @@ namespace WMS.UI
             }
         }
 
+        //private int StateForwardMapper(string state)
+        //{
+        //    switch (state)
+        //    {
+        //        case "待上架": return 0;
+        //        case "部分上架": return 1;
+        //        case "全部上架": return 2;
+        //        default: return -1;
+        //    }
+        //}
+
         public void SetAddFinishedCallback(Action callback)
         {
             this.addFinishedCallback = callback;
@@ -246,29 +281,76 @@ namespace WMS.UI
     [MethodListener]
     public class FormPutAwayNoteItemMethodListener
     {
+        private void PersonEditEnded([Model] IModel model, [Row] int row, [Data] string personName)
+        {
+            model[row, "personId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(personName)) return;
+            var foundPersons = (from s in GlobalData.AllPersons
+                                where s["name"]?.ToString() == personName
+                                select s).ToArray();
+            if (foundPersons.Length != 1) goto FAILED;
+            model[row, "personId"] = (int)foundPersons[0]["id"];
+            model[row, "personName"] = foundPersons[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
-            return (from s in GlobalData.AllSupplies
-                    where s["serialNo"] != null
-                    && s["serialNo"].ToString().StartsWith(input)
-                    && (int)s["supplierId"] == (int)model[row, "supplierId"]
-                    && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
-                    select s["serialNo"]?.ToString()).Distinct().ToArray();
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
+            if (supplierId==0)
+            {
+                return (from s in GlobalData.AllSupplies
+                        where s["serialNo"] != null
+                        && s["serialNo"].ToString().StartsWith(input)
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["serialNo"]?.ToString()).Distinct().ToArray();
+            }
+            else
+            {
+                return (from s in GlobalData.AllSupplies
+                        where s["serialNo"] != null
+                        && s["serialNo"].ToString().StartsWith(input)
+                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["serialNo"]?.ToString()).Distinct().ToArray();
+            }
         }
 
         public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)
         {
             string supplySerialNo = model[row, "supplySerialNo"]?.ToString() ?? "";
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
             if (string.IsNullOrWhiteSpace(supplySerialNo)) return;
-            var foundSupplies = (from m in GlobalData.AllSupplies
-                                 where supplySerialNo == (string)m["serialNo"]
-                                 select m).ToArray();
-            if (foundSupplies.Length != 1)
+            if (supplierId == 0)
             {
-                model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
-                return;
+                var foundSupplies = (from m in GlobalData.AllSupplies
+                                     where supplySerialNo == (string)m["serialNo"]
+                                     select m).ToArray();
+                if (foundSupplies.Length != 1)
+                {
+                    model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                    return;
+                }
+                this.FillSupplyFields(model, row, foundSupplies[0]);
             }
-            this.FillSupplyFields(model, row, foundSupplies[0]);
+            else
+            {
+                var foundSupplies = (from m in GlobalData.AllSupplies
+                                     where supplySerialNo == (string)m["serialNo"]
+                                     && supplierId==(int)m["supplierId"]
+                                     select m).ToArray();
+                if (foundSupplies.Length != 1)
+                {
+                    model.UpdateCellState(row, "supplySerialNo", new ModelCellState(new ValidationState(ValidationStateType.ERROR, "供货不存在！")));
+                    return;
+                }
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+            }
         }
 
         private void FillSupplyFields(IModel model, int row, IDictionary<string, object> supply)
@@ -285,6 +367,8 @@ namespace WMS.UI
 
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
+            model[row, "sourceUnit"] = supply["defaultEntryUnit"];
+            model[row, "sourceUnitAmount"] = supply["defaultEntryUnitAmount"];
 
             string targetStorageLocationNo = supply["defaultDeliveryStorageLocationNo"] as string;
             string sourceStorageLocationNo = supply["defaultQualifiedStorageLocationNo"] as string;
@@ -473,12 +557,32 @@ namespace WMS.UI
             this.FindSupplyByMaterialAndSupplier(model, row);
         }
 
+        private void TryFindSupplyByMaterialOnly(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int materialId = (int?)model[row, "materialId"] ?? 0;
+            if (materialId == 0) return;
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (int)s["materialId"] == materialId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
+            }
+        }
+
         private void MaterialNoEditEnded([Model] IModel model, [Row] int row)
         {
             if (string.IsNullOrWhiteSpace(model[row, "materialNo"]?.ToString())) return;
             //this.model[row, "materialName"] = "";
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void MaterialNameEditEnded([Model] IModel model, [Row] int row)
@@ -487,12 +591,20 @@ namespace WMS.UI
             // this.model[row, "materialNo"] = "";
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void MaterialProductLineEditEnded([Model] IModel model, [Row] int row)
         {
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void FindMaterialID(IModel model, int row)

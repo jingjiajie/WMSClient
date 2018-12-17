@@ -12,6 +12,7 @@ using WMS.UI.FormStockTaking;
 using WMS.UI.FormStock;
 using WMS.UI.FromDeliverOrder;
 using WMS;
+using WMS.UI.FormAcccount;
 
 namespace WMS.UI
 {
@@ -60,19 +61,19 @@ namespace WMS.UI
                     MakeTreeNode("库存批次", "FormStockRecord"),
                     MakeTreeNode("库存盘点","FormStockTakingOrder"),
                     MakeTreeNode("移位记录", "FormTransferRecord")
+                    }),
+                 MakeTreeNode("薪金管理",null ,new TreeNode[]{
+                    MakeTreeNode("薪金类别","FormSalaryType"),
+                    MakeTreeNode("薪金期间", "FormSalaryPeriod"),
+                    MakeTreeNode("人员薪金", "FormPersonSalary"),
+                    MakeTreeNode("薪资发放单", "FormPayNote")
+                    }),
+                 MakeTreeNode("总账管理", null, new TreeNode[]{
+                    MakeTreeNode("科目管理","FormAccountTitle"),
+                    MakeTreeNode("税务管理","FormTax"),
+                    MakeTreeNode("账目记录", "FormAccountRecord"),
+                    MakeTreeNode("会计期间", "FormAccountPeriod")
                     })
-                 //MakeTreeNode("薪金管理",null ,new TreeNode[]{
-                 //   MakeTreeNode("薪金类别","FormSalaryType"),
-                 //   MakeTreeNode("薪金期间", "FormSalaryPeriod"),
-                 //   MakeTreeNode("人员薪金", "FormPersonSalary"),
-                 //   MakeTreeNode("薪资发放单", "FormPayNote")
-                 //   }),
-                 //MakeTreeNode("总账管理", null, new TreeNode[]{
-                 //   MakeTreeNode("科目管理","FormAccountTitle"),
-                 //   MakeTreeNode("税务管理","FormTax"),
-                 //   MakeTreeNode("账目记录", "FormAccountRecord"),
-                 //   MakeTreeNode("会计期间", "FormAccountPeriod")
-                 //   }),
                  //MakeTreeNode("结算管理",null, new TreeNode[]{
                  //  MakeTreeNode("汇总单管理","FormSummaryNote"),
                  //  MakeTreeNode("结算单管理","FormSettlementNote"),
@@ -235,6 +236,10 @@ namespace WMS.UI
             
             GlobalData.AllDate = RestClient.Get<IDictionary<string, object[]>>(
            Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/refreshGlobalDate" + "/" + GlobalData.Warehouse["id"]);
+            if (GlobalData.AllDate == null) {
+                MessageBox.Show("请检查网络连接！","提示",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             foreach (KeyValuePair<string, Object[]> allData in GlobalData.AllDate)
             {
                 string key = allData.Key;
@@ -463,6 +468,18 @@ class SingletonManager<T> where T:class
             return default(T);
         }
         ObjectInfo info = this.objs[name];
+
+        if (name.Equals("FormSafetyStock0")) {
+            FormSafetyStock.stockType = 0;
+        }
+        if (name.Equals("FormSafetyStock1"))
+        {
+            FormSafetyStock.stockType = 1;
+        }
+        if (name.Equals("FormAccountRecord")&&FormAccountRecord.formAccountRecord!=null)
+        {
+            FormAccountRecord.formAccountRecord.InitTree();
+        }
         if (info.Obj != null)
         {
             return info.Obj;

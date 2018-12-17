@@ -99,6 +99,18 @@ namespace WMS.UI
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            //0待上架 1部分上架完成 2.全部上架完成
+            switch (state)
+            {
+                case "待上架": return 0;
+                case "部分上架完成": return 1;
+                case "全部上架完成": return 2;
+                default: return -1;
+            }
+        }
+
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             if (this.model1.SelectionRange == null)
@@ -141,7 +153,7 @@ namespace WMS.UI
             try
             {
                 string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"personId\":\"" + GlobalData.Person["id"] + "\",\"transferType\":\"" + 0 + "\"}";
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/transfer_auto";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/delivery_order/put_away_auto";
                 var remindData = RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 if (remindData.Count == 0)
                 {

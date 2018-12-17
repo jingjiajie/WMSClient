@@ -658,6 +658,7 @@ Partial Public Class BasicView
 
     Private Function RawDataToCellInfos(data As IDictionary(Of String, Object)) As Dictionary(Of String, CellInfo)
         Dim newData As New Dictionary(Of String, CellInfo)
+        If data Is Nothing Then Return newData
         For Each viewColumn In Me.ViewColumns
             Dim cellInfo As CellInfo
             If data.ContainsKey(viewColumn.Name) Then

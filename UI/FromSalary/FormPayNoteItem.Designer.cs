@@ -36,6 +36,8 @@
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair4 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair5 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair6 = new FrontWork.ModeMethodListenerNamesPair();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -103,6 +105,7 @@
             // panelSearchWidget
             // 
             this.panelSearchWidget.Controls.Add(this.pagerSearchJsonRESTAdapter1);
+            this.panelSearchWidget.Controls.Add(this.configuration1);
             this.panelSearchWidget.Controls.Add(this.searchView1);
             this.panelSearchWidget.Controls.Add(this.model1);
             this.panelSearchWidget.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -122,12 +125,12 @@
             orderParamNamesType1.Order = "order";
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(692, 0);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(735, -13);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(39, 23);
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(39, 38);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
@@ -159,7 +162,7 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(2, 321);
+            this.configuration1.Location = new System.Drawing.Point(644, -28);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPayNoteItem",
@@ -177,13 +180,23 @@
         "FormPayNoteItem",
         "AssociationMethodListener"};
             modeMethodListenerNamesPair4.Mode = "add";
+            modeMethodListenerNamesPair5.MethodListenerNames = new string[] {
+        "FormPayNoteItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair5.Mode = "calculate";
+            modeMethodListenerNamesPair6.MethodListenerNames = new string[] {
+        "FormPayNoteItem",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair6.Mode = "pre-pay";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2,
         modeMethodListenerNamesPair3,
-        modeMethodListenerNamesPair4};
+        modeMethodListenerNamesPair4,
+        modeMethodListenerNamesPair5,
+        modeMethodListenerNamesPair6};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(65, 102);
             this.configuration1.TabIndex = 1;
             // 
             // synchronizer
@@ -217,7 +230,7 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(750, 503);
+            this.toolStrip1.Location = new System.Drawing.Point(712, 621);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 24;
@@ -227,7 +240,6 @@
             // 
             this.panelPager.BackColor = System.Drawing.SystemColors.Control;
             this.panelPager.Controls.Add(this.tableLayoutPanel3);
-            this.panelPager.Controls.Add(this.configuration1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPager.Location = new System.Drawing.Point(0, 173);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);

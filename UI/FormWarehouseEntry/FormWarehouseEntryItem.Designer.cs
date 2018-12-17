@@ -224,14 +224,14 @@ namespace WMS.UI
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(49, 66);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormWarehouseEntryItemMethodListener",
         "FormWarehouseEntryItem",
-        "AssociationMethodListener",
-        "FormWarehouseEntryItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormWarehouseEntryItemMethodListener",
         "FormWarehouseEntryItem",
-        "AssociationMethodListener",
-        "FormWarehouseEntryItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair2.Mode = "put_in";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,

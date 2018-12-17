@@ -157,6 +157,12 @@ httpAPIs:[
             url:"{$url}/warehouse/{$accountBook}/invoice/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
+    },
+{mode:"default1",
+     ref:"default",
+     fields:[
+    {name:"supplierName",displayName:"供应商名称",type:"string",editable:false,association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+    {name:"supplierNo",displayName:"供应商代码",type:"string",editable:false,association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},   ]
     }
 ]</value>
   </data>

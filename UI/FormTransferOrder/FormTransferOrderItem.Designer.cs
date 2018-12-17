@@ -232,14 +232,14 @@
             this.configuration1.Location = new System.Drawing.Point(160, 37);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormTransferOrderItemMethodListener",
         "FormTransferOrderItem",
-        "AssociationMethodListener",
-        "FormTransferOrderItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair1.Mode = "default";
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormTransferOrderItemMethodListener",
         "FormTransferOrderItem",
-        "AssociationMethodListener",
-        "FormTransferOrderItemMethodListener"};
+        "AssociationMethodListener"};
             modeMethodListenerNamesPair2.Mode = "no_supplier";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1,

@@ -84,6 +84,10 @@ namespace WMS.UI
 
         private double AmountBackwardMapper([Data]double amount, [Row]int row)
         {
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -98,6 +102,11 @@ namespace WMS.UI
         private void UnitAmountEditEnded(int row)
         {
             this.model.RefreshView(row);
+        }
+
+        private void ExpectedAmountEditEnded(int row)
+        {
+            this.model[row, "realAmount"] = this.model[row, "expectedAmount"];
         }
 
         private void PersonEditEnded(int row, string personName)
@@ -225,7 +234,8 @@ namespace WMS.UI
             model[row, "supplierId"] = supply["supplierId"];
             model[row, "supplierNo"] = supply["supplierNo"];
             model[row, "supplierName"] = supply["supplierName"];
-            model[row, "expectedAmount"] = supply["defaultEntryAmount"];
+            model[row, "expectedAmount"] = supply["defaultEntryAmount"] ?? 0;
+            model[row, "realAmount"] = supply["defaultEntryAmount"] ?? 0;
             model[row, "unit"] = supply["defaultEntryUnit"];
             model[row, "unitAmount"] = supply["defaultEntryUnitAmount"];
             string defaultEntryStorageLocationNo = supply["defaultEntryStorageLocationNo"] as string;

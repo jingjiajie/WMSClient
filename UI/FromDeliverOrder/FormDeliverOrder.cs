@@ -22,43 +22,37 @@ namespace WMS.UI.FromDeliverOrder
             MethodListenerContainer.Register(this);
             InitializeComponent();
             this.model1.CellUpdated += this.model_CellUpdated;
-            this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
-        private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
+        private void RefreshMode()
         {
-            if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
+            int?[] selectedIDs = this.model1.GetSelectedRows<int?>("id");
+            if (selectedIDs.Length == 0 || selectedIDs[0].HasValue == false)
+            {
+                this.basicView1.Mode = "type-can-editable";
+                this.reoGridView2.Mode = "type-can-editable";
+            }
+            else if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["state"] == 3)
             {
                 this.model1.Mode = "default1";
                 this.basicView1.Mode = "default1";
                 this.reoGridView2.Mode = "default1";
             }
-            else {
-                this.model1.Mode = "default";
+            else
+            {
                 this.basicView1.Mode = "default";
                 this.reoGridView2.Mode = "default";
             }
         }
 
-        private void updateBasicAndReoGridView()
+        private void model1_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
-
-            if (this.model1.RowCount == 0)
-            {
-                this.basicView1.Enabled = false;
-                this.reoGridView2.Enabled = false;
-            }
-            else
-            {
-                this.basicView1.Enabled = true;
-                this.reoGridView2.Enabled = true;
-            }
-
+            this.RefreshMode();
         }
 
-        private void model_RowRemoved(object sender, ModelRowRemovedEventArgs e)
+        private void model1_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
-            this.updateBasicAndReoGridView();
+            this.RefreshMode();
         }
 
         //查看条目
@@ -125,6 +119,26 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
+        private string TypeForwardMapper([Data]int type)
+        {
+            switch (type)
+            {
+                case 0: return "合格品出库";
+                case 1: return "不良品出库";
+                default: return "未知状态";
+            }
+        }
+
+        private int TypeBackwardMapper([Data]string type)
+        {
+            switch (type)
+            {
+                case "合格品出库": return 0;
+                case "不良品出库": return 1;
+                default: return -1;
+            }
+        }
+
         private int warehouseIdDefaultValue()
         {
             return (int)GlobalData.Warehouse["id"];
@@ -159,11 +173,7 @@ namespace WMS.UI.FromDeliverOrder
                 this.model1[cell.Row, "lastUpdateTime"] = DateTime.Now;
             }
         }
-        //进入备货
-        private void buttonTransferOrder_Click(object sender, EventArgs e)
-        {
-            new FormDeliveryOrderReady().Show();
-        }
+
 
         //完成发货
         private void buttonDeliver_Click(object sender, EventArgs e)
@@ -183,17 +193,11 @@ namespace WMS.UI.FromDeliverOrder
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
             {
-                //if (rowData[i]["driverName"] == null)
-                //{
-                //    MessageBox.Show("请输入相应司机名称以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //    return;
-                //}
-                
-                //if (rowData[i]["liscensePlateNumber"] == null)
-                //{
-                //    MessageBox.Show("请输入相应车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //    return;
-                //}
+                if (string.IsNullOrWhiteSpace((string)rowData[i]["driverName"])|| string.IsNullOrWhiteSpace((string)rowData[i]["liscensePlateNumber"]))
+                {
+                    MessageBox.Show("请输入相应司机/车牌号以继续发运操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if ((int)rowData[i]["state"] == DeliveryOrderState.DELIVERY_STATE_DELIVER_FINNISH)
                 {
                     MessageBox.Show("选中出库单已经核减无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -264,11 +268,6 @@ namespace WMS.UI.FromDeliverOrder
             this.model1.InsertRow(0, new Dictionary<string, object>()
             {
             });
-        }
-
-        private void model1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void toolStripAutoTransfer_Click(object sender, EventArgs e)
@@ -388,5 +387,6 @@ namespace WMS.UI.FromDeliverOrder
         {
             this.model1[row, "returnNoteTime"] = DateTime.Now;
         }
+
     }
 }

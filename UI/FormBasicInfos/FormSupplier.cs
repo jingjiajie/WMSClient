@@ -104,9 +104,10 @@ namespace WMS.UI.FormBasicInfos
             }
             for (int i = 0; i < row; i++)
             {
-                this.model1.InsertRow(0, new Dictionary<string, object>()
-                {
-                });
+                //this.model1.InsertRow(0, new Dictionary<string, object>()
+                //{
+                //});
+                this.model1.InsertRow(0, null);
             }
         }
 
@@ -156,7 +157,10 @@ namespace WMS.UI.FormBasicInfos
                     Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
                     GlobalData.AllSuppliers = RestClient.Get<List<IDictionary<string, object>>>(
                        $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supplier/{condWarehouse.ToString()}/new");
-                }
+                GlobalData.AllSupplies = RestClient.Get<List<IDictionary<string, object>>>(
+              $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/supply/{condWarehouse.ToString()}");
+
+            }
                 // }
                 /* else
                  //{

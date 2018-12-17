@@ -244,6 +244,10 @@ namespace WMS.UI.FormBasicInfos
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "defaultEntryUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -280,6 +284,10 @@ namespace WMS.UI.FormBasicInfos
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "defaultInspectionUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -315,6 +323,10 @@ namespace WMS.UI.FormBasicInfos
             {
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
+            }
+            if (row == -1)
+            {
+                return amount;
             }
             double? unitAmount = (double?)this.model1[row, "defaultDeliveryUnitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)

@@ -24,11 +24,16 @@ namespace WMS.UI.FromDeliverOrder
             InitializeComponent();
             this.searchView1.AddStaticCondition("deliveryOrderId", this.deliveryOrder["id"]);
             int OrderState=(int)this.deliveryOrder["state"];
+            int OrderType = (int)this.deliveryOrder["type"];
             if (OrderState == 3 || OrderState == 4) {
-                this.toolStripButtonAdd.Visible = false;
-                this.toolStripButtonAlter.Visible = false;
-                this.toolStripButtonDelete.Visible = false;
-                this.toolStripButtonDeliveyPakage.Visible = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonAlter.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+                this.toolStripButtonDeliveyPakage.Enabled = false;
+            }
+            if (OrderType == 1 )
+            {
+                this.toolStripButtonDeliveyPakage.Visible=false;
             }
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
@@ -63,6 +68,11 @@ namespace WMS.UI.FromDeliverOrder
         private int deliveryOrderIdDefaultValue()
         {
             return (int)this.deliveryOrder["id"];
+        }
+        
+        private int deliveryOrderTypeDefaultValue()
+        {
+            return (int)this.deliveryOrder["type"];
         }
 
         private string deliveryOrderNoDefaultValue()
@@ -125,6 +135,10 @@ namespace WMS.UI.FromDeliverOrder
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
             }
+            if (row == -1)
+            {
+                return amount;
+            }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
             {
@@ -139,6 +153,26 @@ namespace WMS.UI.FromDeliverOrder
         private void UnitAmountEditEnded([Row]int row)
         {
             this.model1.RefreshView(row);
+        }
+
+        private string TypeForwardMapper([Data]int type)
+        {
+            switch (type)
+            {
+                case 0: return "合格品出库";
+                case 1: return "不良品出库";
+                default: return "未知状态";
+            }
+        }
+
+        private int TypeBackwardMapper([Data]string type)
+        {
+            switch (type)
+            {
+                case "合格品出库": return 0;
+                case "不良品出库": return 1;
+                default: return -1;
+            }
         }
 
         private void FormDeliverOrderItem_Load(object sender, EventArgs e)
@@ -188,6 +222,18 @@ namespace WMS.UI.FromDeliverOrder
                 case 1: return "装车中";
                 case 2: return "装车完成";
                 default: return "未知状态";
+            }
+        }
+
+        private int StateBackwardMapper([Data]string state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case "待装车": return 0;
+                case "装车中": return 1;
+                case "装车完成": return 2;
+                default: return -1;
             }
         }
 
@@ -248,12 +294,29 @@ namespace WMS.UI.FromDeliverOrder
         [MethodListener]
         public class FormDeliverOrderItemMethodListener
         {
+            private void PersonEditEnded([Model] IModel model, [Row] int row, [Data] string personName)
+            {
+                model[row, "personId"] = 0;//先清除ID
+                if (string.IsNullOrWhiteSpace(personName)) return;
+                var foundPersons = (from s in GlobalData.AllPersons
+                                    where s["name"]?.ToString() == personName
+                                    select s).ToArray();
+                if (foundPersons.Length != 1) goto FAILED;
+                model[row, "personId"] = (int)foundPersons[0]["id"];
+                model[row, "personName"] = foundPersons[0]["name"];
+                return;
+
+                FAILED:
+                MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
             {
                 return (from s in GlobalData.AllSupplies
                         where s["serialNo"] != null
                         && s["serialNo"].ToString().StartsWith(input)
-                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
                         && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                         select s["serialNo"]?.ToString()).Distinct().ToArray();
             }
@@ -459,12 +522,32 @@ namespace WMS.UI.FromDeliverOrder
                 this.FindSupplyByMaterialAndSupplier(model, row);
             }
 
+            private void TryFindSupplyByMaterialOnly(IModel model, int row)
+            {
+                model[row, "supplyId"] = 0; //先清除供货ID
+                int materialId = (int?)model[row, "materialId"] ?? 0;
+                if (materialId == 0) return;
+                var foundSupplies = (from s in GlobalData.AllSupplies
+                                     where (int)s["materialId"] == materialId
+                                     select s).ToArray();
+                //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+                if (foundSupplies.Length == 1)
+                {
+                    this.FillSupplyFields(model, row, foundSupplies[0]);
+                    model.RefreshView(row);
+                }
+            }
+
             private void MaterialNoEditEnded([Model] IModel model, [Row] int row)
             {
                 if (string.IsNullOrWhiteSpace(model[row, "materialNo"]?.ToString())) return;
                 //this.model[row, "materialName"] = "";
                 this.FindMaterialID(model, row);
                 this.FindSupplyByMaterialAndSupplier(model, row);
+                if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+                {
+                    this.TryFindSupplyByMaterialOnly(model, row);
+                }
             }
 
             private void MaterialNameEditEnded([Model] IModel model, [Row] int row)
@@ -473,12 +556,20 @@ namespace WMS.UI.FromDeliverOrder
                 // this.model[row, "materialNo"] = "";
                 this.FindMaterialID(model, row);
                 this.FindSupplyByMaterialAndSupplier(model, row);
+                if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+                {
+                    this.TryFindSupplyByMaterialOnly(model, row);
+                }
             }
 
             private void MaterialProductLineEditEnded([Model] IModel model, [Row] int row)
             {
                 this.FindMaterialID(model, row);
                 this.FindSupplyByMaterialAndSupplier(model, row);
+                if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+                {
+                    this.TryFindSupplyByMaterialOnly(model, row);
+                }
             }
 
             private void FindMaterialID(IModel model, int row)

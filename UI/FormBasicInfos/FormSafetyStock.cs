@@ -21,9 +21,14 @@ namespace WMS.UI.FormBasicInfos
             FormSafetyStock.stockType = stockType;
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            if (FormSafetyStock.stockType == 0)
+            {
+                this.basicView1.Mode = "putaway";
+                this.reoGridView2.Mode = "putaway";
+            }
 
         }
-        private string AmountForwardMapper(double amount, int row)
+        private string AmountMinForwardMapper(double amount, int row)
         {
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -36,12 +41,51 @@ namespace WMS.UI.FormBasicInfos
             }
         }
 
-        private double AmountBackwardMapper([Data]string strAmount, [Row] int row)
+        private double AmountMinBackwardMapper([Data]string strAmount, [Row] int row)
         {
             if (!Double.TryParse(strAmount, out double amount))
             {
                 MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return 0;
+            }
+            if (row == -1)
+            {
+                return amount;
+            }
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount;
+            }
+            else
+            {
+                return amount * unitAmount.Value;
+            }
+        }
+
+        private string AmountMaxForwardMapper(double amount, int row)
+        {
+            double? unitAmount = (double?)this.model1[row, "unitAmount"];
+            if (unitAmount.HasValue == false || unitAmount == 0)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                return Utilities.DoubleToString(amount / unitAmount.Value);
+            }
+        }
+
+        private double AmountMaxBackwardMapper([Data]string strAmount, [Row] int row)
+        {
+            if (!Double.TryParse(strAmount, out double amount))
+            {
+                MessageBox.Show($"\"{strAmount}\"不是合法的数字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return 0;
+            }
+            if (row == -1)
+            {
+                return amount;
             }
             double? unitAmount = (double?)this.model1[row, "unitAmount"];
             if (unitAmount.HasValue == false || unitAmount == 0)
@@ -59,8 +103,17 @@ namespace WMS.UI.FormBasicInfos
             this.model1.RefreshView(row);
         }
 
+        private void AmountMinEditEnded([Row]int row)
+        {
+            if (FormSafetyStock.stockType == 1)
+            {
+                this.model1[row, "amountMax"] = this.model1[row, "amountMin"];
+            }
+        }
+
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
+
             this.basicView1.Enabled = true;
             this.reoGridView2.Enabled = true;
             this.model1.InsertRow(0, new Dictionary<string, object>()
@@ -130,10 +183,10 @@ namespace WMS.UI.FormBasicInfos
     {
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
-            return (from s in GlobalData.AllSupplies
+          return (from s in GlobalData.AllSupplies
                     where s["serialNo"] != null
                     && s["serialNo"].ToString().StartsWith(input)
-                    && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                    //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["serialNo"]?.ToString()).Distinct().ToArray();
         }
@@ -194,10 +247,11 @@ namespace WMS.UI.FormBasicInfos
                 this.FindStorageLocation(model, row, "sourceStorageLocation", FindStorageLocationBy.NO, sourceStorageLocationNo, false);
             }
 
-            model[row, "amount"] = supply["defaultDeliveryAmount"];
+            model[row, "amountMin"] = supply["defaultDeliveryAmount"];
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
-
+            model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
+            model[row, "sourceUnitAmount"] = supply["defaultDeliveryUnitAmount"];
 
 
 
@@ -377,12 +431,32 @@ namespace WMS.UI.FormBasicInfos
             this.FindSupplyByMaterialAndSupplier(model, row);
         }
 
+        private void TryFindSupplyByMaterialOnly(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int materialId = (int?)model[row, "materialId"] ?? 0;
+            if (materialId == 0) return;
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (int)s["materialId"] == materialId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
+            }
+        }
+
         private void MaterialNoEditEnded([Model] IModel model, [Row] int row)
         {
             if (string.IsNullOrWhiteSpace(model[row, "materialNo"]?.ToString())) return;
             //this.model[row, "materialName"] = "";
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void MaterialNameEditEnded([Model] IModel model, [Row] int row)
@@ -391,12 +465,20 @@ namespace WMS.UI.FormBasicInfos
             // this.model[row, "materialNo"] = "";
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void MaterialProductLineEditEnded([Model] IModel model, [Row] int row)
         {
             this.FindMaterialID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
         }
 
         private void FindMaterialID(IModel model, int row)

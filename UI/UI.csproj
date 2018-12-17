@@ -211,6 +211,7 @@
     </Compile>
     <Compile Include="FormSettlement\AddAllItem.cs" />
     <Compile Include="FormSettlement\CommonData.cs" />
+    <Compile Include="FormSettlement\SettlementNoteState.cs" />
     <Compile Include="FormSettlement\FormInvoice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -308,6 +309,7 @@
     <Compile Include="FormStock\FormTransferRecord.Designer.cs">
       <DependentUpon>FormTransferRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStock\StockTakingOrderAdd.cs" />
     <Compile Include="FormTransferOrder\FormTransferOrder.cs">
       <SubType>Form</SubType>
     </Compile>
