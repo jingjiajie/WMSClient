@@ -306,6 +306,7 @@
             this.toolStripButtonAllItem.Size = new System.Drawing.Size(104, 21);
             this.toolStripButtonAllItem.Text = "查看所有条目";
             this.toolStripButtonAllItem.ToolTipText = "查看零件条目";
+            this.toolStripButtonAllItem.Visible = false;
             this.toolStripButtonAllItem.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
             // buttonNotZero

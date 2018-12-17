@@ -22,8 +22,15 @@ namespace WMS.UI.FormStock
         private void FormStockRecord_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-            this.synchronizer.FindAPI.SetRequestParameter("$AllOrPlus","plus");
-            this.synchronizer.GetCountAPI.SetRequestParameter("$AllOrPlus", "plus");
+            //this.synchronizer.FindAPI.SetRequestParameter("$AllOrPlus","plus");
+            //this.synchronizer.GetCountAPI.SetRequestParameter("$AllOrPlus", "plus");
+  //          { type: "get-count",
+  //          url: "{$url}/warehouse/{$accountBook}/stock_record/count/{{conditions:$conditions,orders:$orders}}/{$AllOrPlus}",
+  //          method: "GET",
+  //          responseBody: "$count"},
+		//{ type: "find",
+  //          url: "{$url}/warehouse/{$accountBook}/stock_record/find_newest/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}/{$AllOrPlus}",
+  //          method: "GET",
             this.searchView1.AddStaticCondition("warehouseId", GlobalData.Warehouse["id"]);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
