@@ -152,6 +152,7 @@
         {name:"warehouseEntryId",type:"int",displayName:"入库单ID",visible:false},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
         {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
+        {name:"inboundDeliveryOrderNo",displayName:"内向交货单号"},
         {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
         {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
         {name:"createPersonId",type:"int",displayName:"创建用户ID",visible:false,defaultValue:"#createPersonIDDefaultValue"},

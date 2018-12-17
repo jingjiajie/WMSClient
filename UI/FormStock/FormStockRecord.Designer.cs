@@ -51,6 +51,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAllItem = new System.Windows.Forms.ToolStripButton();
+            this.buttonNotZero = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -277,7 +279,9 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonReturnSupply,
-            this.toolStripButtonAdd});
+            this.toolStripButtonAdd,
+            this.toolStripButtonAllItem,
+            this.buttonNotZero});
             this.toolStripTop.Location = new System.Drawing.Point(0, 27);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(866, 24);
@@ -293,6 +297,27 @@
             this.buttonReturnSupply.Text = "批量退件";
             this.buttonReturnSupply.ToolTipText = "批量退件";
             this.buttonReturnSupply.Click += new System.EventHandler(this.buttonReturnSupply_Click);
+            // 
+            // toolStripButtonAllItem
+            // 
+            this.toolStripButtonAllItem.Image = global::WMS.UI.Properties.Resources.find;
+            this.toolStripButtonAllItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAllItem.Name = "toolStripButtonAllItem";
+            this.toolStripButtonAllItem.Size = new System.Drawing.Size(104, 21);
+            this.toolStripButtonAllItem.Text = "查看所有条目";
+            this.toolStripButtonAllItem.ToolTipText = "查看零件条目";
+            this.toolStripButtonAllItem.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            // 
+            // buttonNotZero
+            // 
+            this.buttonNotZero.Image = global::WMS.UI.Properties.Resources.find;
+            this.buttonNotZero.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonNotZero.Name = "buttonNotZero";
+            this.buttonNotZero.Size = new System.Drawing.Size(111, 21);
+            this.buttonNotZero.Text = "查看不为0条目";
+            this.buttonNotZero.ToolTipText = "查看零件条目";
+            this.buttonNotZero.Visible = false;
+            this.buttonNotZero.Click += new System.EventHandler(this.buttonItems_Click);
             // 
             // FormStockRecord
             // 
@@ -338,5 +363,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripButton buttonReturnSupply;
+        private System.Windows.Forms.ToolStripButton buttonNotZero;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAllItem;
     }
 }

@@ -238,6 +238,21 @@ namespace WMS.UI.FormSettlement
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                if ((int)rowData[i]["state"] == SettlementNoteState.Receivables)
+                {
+                    MessageBox.Show("选中结算单已经同步到应收款，无法重复操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else if ((int)rowData[i]["state"] == SettlementNoteState.Receipts)
+                {
+                    MessageBox.Show("选中结算单已经同步到实收款,无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(selectedIDs);
             LedgerSynchronous ledgerSynchronous = new LedgerSynchronous();
@@ -274,6 +289,21 @@ namespace WMS.UI.FormSettlement
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                if ((int)rowData[i]["state"] == SettlementNoteState.Receipts)
+                {
+                    MessageBox.Show("选中结算单已经同步到实收款,无法进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if ((int)rowData[i]["state"] != SettlementNoteState.Receivables)
+                {
+                    MessageBox.Show("选中结算单未同步到应收款，无法进行同步到实收款操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }             
+            }
+
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string strIDs = serializer.Serialize(selectedIDs);
             LedgerSynchronous ledgerSynchronous = new LedgerSynchronous();

@@ -36,8 +36,8 @@ namespace WMS.UI.FormSettlement
             }
             else if(this.noteState == 2)
             {
-                this.basicView1.Mode = "default1";
-                this.reoGridView1.Mode = "default1";
+                this.basicView1.Mode = "default2";
+                this.reoGridView1.Mode = "default2";
             }
             else
             {
