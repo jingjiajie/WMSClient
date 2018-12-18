@@ -10,6 +10,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using System.Web.Script.Serialization;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FormTransferOrder
 {
@@ -50,7 +51,20 @@ namespace WMS.UI.FormTransferOrder
         {
             //this.basicView1.Enabled = true;
             //this.reoGridView1.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
+            {
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
@@ -60,6 +74,7 @@ namespace WMS.UI.FormTransferOrder
                 { "supplierNo",this.transferOrder["supplierNo"]},
                 { "supplierName",this.transferOrder["supplierName"]}
             });
+            }
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -163,6 +178,18 @@ namespace WMS.UI.FormTransferOrder
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+
+            switch (state)
+            {
+                case "待备货": return 0;
+                case "部分备货": return 1;
+                case "备货完成": return 2;
+                default: return -1;
+            }
+        }
+
         private void TransferDone()
         {
             //获取选中行ID，过滤掉新建的行（ID为0的）
@@ -258,12 +285,25 @@ namespace WMS.UI.FormTransferOrder
 
         public string[] SupplySerialNoAssociation([Model] IModel model, [Row] int row, [Data] string input)
         {
-            return (from s in GlobalData.AllSupplies
-                    where s["serialNo"] != null
-                    && s["serialNo"].ToString().StartsWith(input)
-                    && (int)s["supplierId"] == (int)model[row, "supplierId"]
-                    && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
-                    select s["serialNo"]?.ToString()).Distinct().ToArray();
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
+            if (supplierId == 0)
+            {
+                return (from s in GlobalData.AllSupplies
+                        where s["serialNo"] != null
+                        && s["serialNo"].ToString().StartsWith(input)
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["serialNo"]?.ToString()).Distinct().ToArray();
+            }
+            else
+            {
+                return (from s in GlobalData.AllSupplies
+                        where s["serialNo"] != null
+                        && s["serialNo"].ToString().StartsWith(input)
+                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                        select s["serialNo"]?.ToString()).Distinct().ToArray();
+            }
         }
 
         public void SupplySerialNoEditEnded([Model] IModel model, [Row] int row)

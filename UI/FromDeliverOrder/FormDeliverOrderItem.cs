@@ -225,6 +225,18 @@ namespace WMS.UI.FromDeliverOrder
             }
         }
 
+        private int StateBackwardMapper([Data]string state)
+        {
+            //0待入库 1送检中 2.全部入库 3.部分入库
+            switch (state)
+            {
+                case "待装车": return 0;
+                case "装车中": return 1;
+                case "装车完成": return 2;
+                default: return -1;
+            }
+        }
+
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认保存当前修改并完成选中条目装车吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -304,7 +316,7 @@ namespace WMS.UI.FromDeliverOrder
                 return (from s in GlobalData.AllSupplies
                         where s["serialNo"] != null
                         && s["serialNo"].ToString().StartsWith(input)
-                        && (int)s["supplierId"] == (int)model[row, "supplierId"]
+                        //&& (int)s["supplierId"] == (int)model[row, "supplierId"]
                         && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                         select s["serialNo"]?.ToString()).Distinct().ToArray();
             }

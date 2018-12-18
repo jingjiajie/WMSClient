@@ -137,11 +137,11 @@
         {name:"sourceStorageLocationId",displayName:"出货库位ID",type:"int",visible:false},
         {name:"sourceStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded",placeHolder:"不能为空"},
         {name:"sourceStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded",placeHolder:"不能为空"},
-        {name:"scheduledAmount",displayName:"计划装车数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
-        {name:"realAmount",displayName:"实际装车数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"scheduledAmount",displayName:"计划装车数量",type:"double",defaultValue:0},
+        {name:"realAmount",displayName:"实际装车数量",type:"double",defaultValue:0},
         {name:"unit",displayName:"单位",placeHolder:"必填信息"},
-        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息",editEnded:"#unitAmountEditEnded"},
-        {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper"},
+        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息"},
+        {name:"state",displayName:"状态",type:"int",editable:false,backwardMapper:"#stateBackwardMapper",forwardMapper:"#stateForwardMapper"},
         {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"}, 
         {name:"deliveryOrderType",displayName:"出库单类型",type:"int",editable:false,defaultValue:"#deliveryOrderTypeDefaultValue",forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},
@@ -184,7 +184,7 @@
   <data name="toolStripButtonDeliveyPakage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
         ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
         NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>

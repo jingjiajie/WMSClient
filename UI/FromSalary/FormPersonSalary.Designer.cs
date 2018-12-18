@@ -52,7 +52,9 @@
             this.comboBoxSalaryType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -121,7 +123,7 @@
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(31, 60);
+            this.configuration1.Location = new System.Drawing.Point(54, 137);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormPersonSalary",
@@ -167,7 +169,7 @@
             this.model2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model2.Configuration = this.configuration2;
             this.model2.Font = new System.Drawing.Font("宋体", 10F);
-            this.model2.Location = new System.Drawing.Point(598, 34);
+            this.model2.Location = new System.Drawing.Point(609, 96);
             this.model2.Margin = new System.Windows.Forms.Padding(2);
             this.model2.Mode = "default";
             this.model2.Name = "model2";
@@ -185,7 +187,7 @@
             orderParamNamesType2.Order = "order";
             apiParamNamesType2.OrderParamNames = orderParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(474, 34);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(502, 112);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
@@ -210,7 +212,7 @@
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(224, 55);
+            this.synchronizer.Location = new System.Drawing.Point(305, 69);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
@@ -224,7 +226,7 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(149, 98);
+            this.model1.Location = new System.Drawing.Point(241, 137);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -335,7 +337,9 @@
             this.toolStripTop.GripMargin = new System.Windows.Forms.Padding(0);
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton3,
             this.toolStripButtonAdd,
+            this.toolStripButton2,
             this.toolStripButton1,
             this.toolStripButtonAlter});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
@@ -344,6 +348,15 @@
             this.toolStripTop.Size = new System.Drawing.Size(408, 27);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = global::WMS.UI.Properties.Resources.check;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(116, 24);
+            this.toolStripButton3.Text = "按上一期间生成";
+            this.toolStripButton3.ToolTipText = "查看零件条目";
             // 
             // toolStripButtonAdd
             // 
@@ -355,13 +368,22 @@
             this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::WMS.UI.Properties.Resources.check;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(104, 24);
+            this.toolStripButton2.Text = "刷新人员薪资";
+            this.toolStripButton2.ToolTipText = "查看零件条目";
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.check;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(104, 24);
-            this.toolStripButton1.Text = "刷新人员薪资";
+            this.toolStripButton1.Size = new System.Drawing.Size(140, 24);
+            this.toolStripButton1.Text = "刷新公式、计件薪资";
             this.toolStripButton1.ToolTipText = "查看零件条目";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -531,5 +553,7 @@
         private System.Windows.Forms.ComboBox comboBoxSalaryPeriod;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }

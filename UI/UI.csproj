@@ -211,6 +211,7 @@
     </Compile>
     <Compile Include="FormSettlement\AddAllItem.cs" />
     <Compile Include="FormSettlement\CommonData.cs" />
+    <Compile Include="FormSettlement\SettlementNoteState.cs" />
     <Compile Include="FormSettlement\FormInvoice.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -15,10 +15,12 @@ namespace WMS.UI.FormStock
     {
         private Action addFinishedCallback = null;
         private int rowCur = 0;
-        public FormAddStockRecord()
+        private IDictionary<string, object>[] data;
+        public FormAddStockRecord(IDictionary<string,object>[] data)
         {
             MethodListenerContainer.Register(this);
             InitializeComponent();
+            this.data = data;
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -52,6 +54,11 @@ namespace WMS.UI.FormStock
             this.CenterToScreen();
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
             this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+
+            for (int i = data.Length-1; i >=0; i--)
+            {
+                this.model1.InsertRow(0, data[i]);
+            }
         }
 
 
@@ -248,12 +255,32 @@ namespace WMS.UI.FormStock
             this.TryGetSupplyID(row);
         }
 
-        private void MaterialNoEditEnded([Row]int row)
+        private void MaterialNoEditEnded([Model] IModel model, [Row] int row)
         {
             if (string.IsNullOrWhiteSpace(this.model1[row, "materialNo"]?.ToString())) return;
             //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
+            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialOnly(model, row);
+            }
+        }
+
+        private void TryFindSupplyByMaterialOnly(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int materialId = (int?)model[row, "materialId"] ?? 0;
+            if (materialId == 0) return;
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (int)s["materialId"] == materialId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
+            }
         }
 
         private void MaterialNameEditEnded([Row]int row)

@@ -144,7 +144,7 @@ namespace WMS.UI
             return (from s in GlobalData.AllSalaryPeriod
                     where s["name"] != null
                        && s["name"].ToString().StartsWith(str)
-                       && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
+                       //&& s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["name"]).Distinct().ToArray();
         }
 

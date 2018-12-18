@@ -136,10 +136,12 @@
         {name:"supplierId",displayName:"供货商ID",type:"int",visible:false,defaultValue:0},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,editable:false},
         {name:"targetStorageLocationId",displayName:"目标库位ID",type:"int",visible:false,editable:false},
-        {name:"amount",displayName:"安全库存数",type:"double",forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper",placeHolder:"必填信息"},
+        {name:"amountMin",displayName:"安全库存数",type:"double",editEnded:"#amountMinEditEnded",placeHolder:"必填信息"},
+        {name:"amountMax",displayName:"上架峰值",type:"double",visible:false,placeHolder:"必填信息"},
+
         {name:"sourceStorageLocationId",displayName:"移出库位ID",type:"int",visible:false,editable:false},
 {name:"unit",displayName:"单位",type:"string",placeHolder:"必填信息"},
-        {name:"unitAmount",displayName:"单位数量",type:"double",editEnded:"#unitAmountEditEnded",placeHolder:"必填信息"},
+        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息"},
 
  {name:"targetStorageLocationNo",displayName:"目标库位编码",type:"string",association:"#storageLocationNoAssociation",editEnded:"#targetStorageLocationNoEditEnded",placeHolder:"必填信息"},
         {name:"targetStorageLocationName",displayName:"目标库位名称",type:"string",association:"#storageLocationNameAssociation",editEnded:"#targetStorageLocationNameEditEnded",placeHolder:"必填信息"},
@@ -177,6 +179,12 @@
             url:"{$url}/warehouse/{$accountBook}/safety_stock/{mapProperty($data,'id')}",
             method:"DELETE"}
 	]
+    },
+{mode:"putaway",
+     ref:"default",
+     fields:[
+        {name:"amountMax",displayName:"上架峰值",type:"double",visible:true,forwardMapper:"#amountMaxForwardMapper",backwardMapper:"#amountMaxBackwardMapper",placeHolder:"必填信息"},
+   ]
     }
 ]</value>
   </data>

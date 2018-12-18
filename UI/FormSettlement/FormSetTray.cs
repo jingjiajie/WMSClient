@@ -41,7 +41,7 @@ namespace WMS.UI.FormSettlement
         private void buttonADD_Click(object sender, EventArgs e)
         {
             if (!this.validateTextBox(textBoxLength.Text))
-            { MessageBox.Show("请输入正确的托位长度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);return; }
+            { MessageBox.Show("请输入正确的托位长度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!this.validateTextBox(textBoxWidth.Text))
             { MessageBox.Show("请输入正确的托位宽度！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!this.validateDate(textBoxLength.Text))
@@ -51,10 +51,33 @@ namespace WMS.UI.FormSettlement
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             commonDataLength.key = this.lengthKey;
             commonDataLength.value = this.textBoxLength.Text;
-          
+
             commonDataWidth.key = this.widthKey;
             commonDataWidth.value = this.textBoxWidth.Text;
-            string body = serializer.Serialize(new CommonData[] {commonDataLength,commonDataWidth});
+            ValidateTray validateTray = new ValidateTray();
+            int num;
+            int.TryParse(textBoxLength.Text.Trim(), out num);
+            validateTray.length = num;
+            int.TryParse(textBoxWidth.Text.Trim(), out num);
+            validateTray.width = num;
+            validateTray.warehouseId =(int) GlobalData.Warehouse["id"];
+            string bodyValidtae = serializer.Serialize(new ValidateTray[] { validateTray });
+            try
+            {
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/validate_tray";
+                RestClient.RequestPost<int[]>(url, bodyValidtae, "POST");        
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("验证托位大失败") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            string body = serializer.Serialize(new CommonData[] { commonDataLength, commonDataWidth });
             try
             {
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/tray/";
@@ -65,7 +88,7 @@ namespace WMS.UI.FormSettlement
                 }
                 else if (this.mode == FormMode.ADD)
                 {
-                    
+
                     RestClient.RequestPost<string>(url, body, "POST");
                     MessageBox.Show("设置托位大小成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -84,12 +107,12 @@ namespace WMS.UI.FormSettlement
         private void Search()
         {
             Condition condition = new Condition();
-            condition.AddCondition("key", new object[] { this.lengthKey, this.widthKey }, ConditionItemRelation.IN);    
+            condition.AddCondition("key", new object[] { this.lengthKey, this.widthKey }, ConditionItemRelation.IN);
             string cond = condition.ToString();
             try
             {
                 string url = $"{Defines.ServerURL}/warehouse/{GlobalData.AccountBook}/tray/{condition.ToString()}";
-                CommonData[] trayDates= RestClient.RequestPost<CommonData[]>(url,null, "GET");
+                CommonData[] trayDates = RestClient.RequestPost<CommonData[]>(url, null, "GET");
                 if (trayDates.Length == 2)
                 {
                     if (trayDates[0].key == this.lengthKey && trayDates[1].key == this.widthKey)
@@ -137,7 +160,7 @@ namespace WMS.UI.FormSettlement
         {
             int num;
             if (!int.TryParse(text.Trim(), out num))
-            {              
+            {
                 return false;
             }
             else
@@ -163,5 +186,11 @@ namespace WMS.UI.FormSettlement
         {
             ADD, ALTER
         }
+
+    }
+    public class ValidateTray{
+       public double length;
+       public double width;
+       public int warehouseId;
     }
 }

@@ -104,6 +104,11 @@ namespace WMS.UI
             this.model.RefreshView(row);
         }
 
+        private void ExpectedAmountEditEnded(int row)
+        {
+            this.model[row, "realAmount"] = this.model[row, "expectedAmount"];
+        }
+
         private void PersonEditEnded(int row, string personName)
         {
             this.model[row, "personId"] = 0;//先清除ID
@@ -229,7 +234,8 @@ namespace WMS.UI
             model[row, "supplierId"] = supply["supplierId"];
             model[row, "supplierNo"] = supply["supplierNo"];
             model[row, "supplierName"] = supply["supplierName"];
-            model[row, "expectedAmount"] = supply["defaultEntryAmount"];
+            model[row, "expectedAmount"] = supply["defaultEntryAmount"] ?? 0;
+            model[row, "realAmount"] = supply["defaultEntryAmount"] ?? 0;
             model[row, "unit"] = supply["defaultEntryUnit"];
             model[row, "unitAmount"] = supply["defaultEntryUnitAmount"];
             string defaultEntryStorageLocationNo = supply["defaultEntryStorageLocationNo"] as string;

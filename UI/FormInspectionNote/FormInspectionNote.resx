@@ -131,6 +131,7 @@
         {name:"supplierNo",displayName:"供应商代号",editable:false},
         {name:"supplierName",displayName:"供货商名称",editable:false},
         {name:"warehouseEntryNo",displayName:"源入库单号",editable:false},
+        {name:"inboundDeliveryOrderNo",displayName:"内向交货单号",editable:false},
         {name:"createPersonId",displayName:"创建人员ID",type:"int",visible:false},
         {name:"createPersonName",displayName:"创建人员",editable:false,defaultValue:"#createPersonDefaultValue"},
         {name:"createTime",displayName:"创建时间",type:"datetime",editable:false,defaultValue:"#now"},

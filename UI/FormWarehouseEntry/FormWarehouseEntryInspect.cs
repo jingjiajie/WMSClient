@@ -126,11 +126,14 @@ namespace WMS.UI
             foreach (Model model in this.modelBoxInspectionNoteItems.Models)
             {
                 string warehouseEntryNo = model.Name;
-                int warehouseEntryID = (int)(this.warehouseEntries.Where((item) => ((string)item["no"]) == warehouseEntryNo).First()["id"]);
+                var warehouseEntry = this.warehouseEntries.Where((item) => ((string)item["no"]) == warehouseEntryNo).First();
+                int warehouseEntryID = (int)warehouseEntry["id"];
+                string inboundDeliveryOrderNo = (string)warehouseEntry["inboundDeliveryOrderNo"];
                 this.modelInspectionNotes.AddRow(new Dictionary<string, object>()
                 {
                     { "warehouseEntryNo",warehouseEntryNo },
-                    { "warehouseEntryId",warehouseEntryID }
+                    { "warehouseEntryId",warehouseEntryID },
+                    { "inboundDeliveryOrderNo",inboundDeliveryOrderNo}
                 });
             }
             this.ModelInspectionNoteSelect(this.modelBoxInspectionNoteItems.CurrentModelName);

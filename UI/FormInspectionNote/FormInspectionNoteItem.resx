@@ -129,13 +129,13 @@
         {name:"materialProductLine",displayName:"系列",editable:false},
         {name:"supplierNo",displayName:"供应商代号",editable:false},
         {name:"supplierName",displayName:"供货商名称",editable:false},
-        {name:"amount",displayName:"送检数量",type:"double",editable:false,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"amount",displayName:"送检数量",type:"double",editable:false},
         {name:"unit",displayName:"送检单位",editable:false},
-        {name:"unitAmount",displayName:"送检单位数量",type:"double",editable:false,editEnded:"#unitAmountEditEnded"},
+        {name:"unitAmount",displayName:"送检单位数量",type:"double",editable:false},
         {name:"state",displayName:"状态",type:"int",editable:false,forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper"},
-        {name:"returnAmount",displayName:"返回数量",type:"double",forwardMapper:"#returnAmountForwardMapper",backwardMapper:"#returnAmountBackwardMapper"},
+        {name:"returnAmount",displayName:"返回数量",type:"double"},
         {name:"returnUnit",displayName:"返回单位"},
-        {name:"returnUnitAmount",displayName:"返回单位数量",type:"double",editEnded:"#returnUnitAmountEditEnded"},
+        {name:"returnUnitAmount",displayName:"返回单位数量",type:"double"},
         {name:"comment",displayName:"备注"},
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称",association:"#personAssociation",editEnded:"#personEditEnded"}
@@ -983,7 +983,7 @@
   <data name="buttonSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
         CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
         NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
         ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
