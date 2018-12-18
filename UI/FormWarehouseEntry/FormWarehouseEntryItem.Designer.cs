@@ -63,13 +63,13 @@ namespace WMS.UI
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(114, 25);
+            this.lableStatus.Size = new System.Drawing.Size(92, 25);
             this.lableStatus.Text = "入库单物料列表";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 25);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // statusStrip1
@@ -134,7 +134,7 @@ namespace WMS.UI
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(63, 27);
+            this.buttonAdd.Size = new System.Drawing.Size(56, 27);
             this.buttonAdd.Text = "添加";
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -143,7 +143,7 @@ namespace WMS.UI
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(63, 27);
+            this.buttonDelete.Size = new System.Drawing.Size(56, 27);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -152,7 +152,7 @@ namespace WMS.UI
             this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
             this.buttonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(93, 27);
+            this.buttonSave.Size = new System.Drawing.Size(80, 27);
             this.buttonSave.Text = "保存修改";
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -297,7 +297,7 @@ namespace WMS.UI
             // 
             // FormWarehouseEntryItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);
