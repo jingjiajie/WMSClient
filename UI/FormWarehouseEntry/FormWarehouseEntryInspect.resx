@@ -129,9 +129,9 @@
         {name:"supplierName",displayName:"供货商名称",editable:false},
         {name:"receivedAmount",displayName:"实收数量",type:"int",editable:false},
         {name:"inspectionAmount",displayName:"已分配送检数量",type:"double",visible:false},
-        {name:"amount",displayName:"送检数量",type:"double",placeHolder:"必填项",forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"amount",displayName:"送检数量",type:"double",placeHolder:"必填项"},
         {name:"unit",displayName:"送检单位",placeHolder:"必填项"},
-        {name:"unitAmount",displayName:"送检单位数量",type:"double",placeHolder:"必填项",editEnded:"#unitAmountEditEnded"},
+        {name:"unitAmount",displayName:"送检单位数量",type:"double",placeHolder:"必填项"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"}
      ],
     httpAPIs:[
@@ -152,6 +152,7 @@
         {name:"warehouseEntryId",type:"int",displayName:"入库单ID",visible:false},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},
         {name:"no",displayName:"送检单号",placeHolder:"留空自动生成"},
+        {name:"inboundDeliveryOrderNo",displayName:"内向交货单号"},
         {name:"description",displayName:"描述",placeHolder:"点击填写描述"},
         {name:"inspectionTime",type:"datetime",displayName:"送检时间",defaultValue:"#inspectionTimeDefaultValue"},
         {name:"createPersonId",type:"int",displayName:"创建用户ID",visible:false,defaultValue:"#createPersonIDDefaultValue"},

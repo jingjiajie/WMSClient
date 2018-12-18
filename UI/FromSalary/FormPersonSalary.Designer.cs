@@ -52,7 +52,9 @@
             this.comboBoxSalaryType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -335,7 +337,9 @@
             this.toolStripTop.GripMargin = new System.Windows.Forms.Padding(0);
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton3,
             this.toolStripButtonAdd,
+            this.toolStripButton2,
             this.toolStripButton1,
             this.toolStripButtonAlter});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
@@ -344,6 +348,15 @@
             this.toolStripTop.Size = new System.Drawing.Size(408, 27);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = global::WMS.UI.Properties.Resources.check;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(116, 24);
+            this.toolStripButton3.Text = "按上一期间生成";
+            this.toolStripButton3.ToolTipText = "查看零件条目";
             // 
             // toolStripButtonAdd
             // 
@@ -355,13 +368,22 @@
             this.toolStripButtonAdd.Visible = false;
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::WMS.UI.Properties.Resources.check;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(104, 24);
+            this.toolStripButton2.Text = "刷新人员薪资";
+            this.toolStripButton2.ToolTipText = "查看零件条目";
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.check;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(104, 24);
-            this.toolStripButton1.Text = "刷新人员薪资";
+            this.toolStripButton1.Size = new System.Drawing.Size(140, 24);
+            this.toolStripButton1.Text = "刷新公式、计件薪资";
             this.toolStripButton1.ToolTipText = "查看零件条目";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -531,5 +553,7 @@
         private System.Windows.Forms.ComboBox comboBoxSalaryPeriod;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
