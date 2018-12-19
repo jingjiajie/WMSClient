@@ -256,6 +256,7 @@ namespace WMS.UI
         public DateTime inspectionTime;
         public int createPersonId;
         public DateTime createTime;
+        public int version;
     }
 
     public class InspectionNoteItem
@@ -271,5 +272,6 @@ namespace WMS.UI
         public int? returnStorageLocationId;
         public string comment;
         public int? personId;
+        public int version;
     }
 }

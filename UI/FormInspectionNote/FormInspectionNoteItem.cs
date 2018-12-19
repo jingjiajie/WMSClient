@@ -298,6 +298,7 @@ namespace WMS.UI
             inspectFinishItem.returnAmount = (double?)this.model[selectedRow, "returnAmount"];
             inspectFinishItem.returnUnit = (string)this.model[selectedRow, "returnUnit"];
             inspectFinishItem.returnUnitAmount = (double?)this.model[selectedRow, "returnUnitAmount"];
+            inspectFinishItem.version= (int)this.model[selectedRow, "version"];
             JsonSerializer serializer = new JsonSerializer();
             try
             {
@@ -377,4 +378,5 @@ public class InspectFinishItem
     public String returnUnit;
     public double? returnUnitAmount;
     public int? personId = -1;
+    public int version = -1;
 }

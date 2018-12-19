@@ -227,7 +227,7 @@ namespace WMS.UI
         {
             //获取选中行ID，过滤掉新建的行（ID为0的）
             int[] selectedIDs = this.model1.GetSelectedRows<int>("id").Except(new int[] { 0 }).ToArray();
-            if (selectedIDs.Length == 0)
+            if (selectedIDs.Length != 1)
             {
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
