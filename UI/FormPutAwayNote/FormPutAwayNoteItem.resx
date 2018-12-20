@@ -157,6 +157,7 @@
         {name:"operateTime",displayName:"作业时间",type:"datetime",editable:true},
         {name:"supplyId",displayName:"供货ID",type:"int",visible:false,defaultValue:0},
         {name:"materialId",displayName:"物料ID",type:"int",visible:false,defaultValue:0},
+{name:"version",displayName:"版本号",type:"int",visible:false,defaultValue:1},
        
  ],
     httpAPIs:[
