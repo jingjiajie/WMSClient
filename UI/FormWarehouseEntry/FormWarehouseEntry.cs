@@ -133,7 +133,12 @@ namespace WMS.UI
                 MessageBox.Show("请选择要生成送检单的入库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            foreach(var row in this.model1.GetSelectedRows())
+            if (this.model1.SelectionRange?.Rows != 1)
+            {
+                MessageBox.Show("请选择一项入库单送检！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            foreach (var row in this.model1.GetSelectedRows())
             {
                 if(((int?)row["state"] ?? 0) != STATE_WAIT_FOR_PUT_IN)
                 {
