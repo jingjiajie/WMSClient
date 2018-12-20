@@ -252,6 +252,7 @@ namespace WMS.UI
             inspectFinishArgs.inspectionNoteId = (int)this.inspectionNote["id"];
             inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
             inspectFinishArgs.personId = (int)GlobalData.Person["id"];
+            inspectFinishArgs.version= (int)this.inspectionNote["version"];
             JsonSerializer serializer = new JsonSerializer();
             try
             {
@@ -286,6 +287,7 @@ namespace WMS.UI
             inspectFinishArgs.warehouseEntryId = (int)this.inspectionNote["warehouseEntryId"];
             InspectFinishItem inspectFinishItem = new InspectFinishItem();
             inspectFinishArgs.inspectFinishItems = new InspectFinishItem[] { inspectFinishItem };
+            inspectFinishArgs.version= (int)this.inspectionNote["version"];
             if (this.model.SelectionRange == null)
             {
                 MessageBox.Show("请选择一项进行操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -357,6 +359,11 @@ namespace WMS.UI
                 this.reoGridView1.Mode = "default";
             }
         }
+
+        private void basicView1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
@@ -367,6 +374,7 @@ public class InspectFinishArgs
     public int warehouseEntryId = -1;
     public bool qualified = true;
     public int personId = -1;
+    public int version = -1;
     public InspectFinishItem[] inspectFinishItems = new InspectFinishItem[] { };
 }
 
