@@ -139,7 +139,7 @@
         {name:"comment",displayName:"备注"},
         {name:"personId",displayName:"作业人ID",type:"int",visible:false},
         {name:"personName",displayName:"作业人名称",association:"#personAssociation",editEnded:"#personEditEnded"},
-        {name:"version",displayName:"版本",type:"int"}
+        {name:"version",displayName:"版本",type:"int",defaultValue:0}
     ],
     httpAPIs:[
         {type:"get-count",
