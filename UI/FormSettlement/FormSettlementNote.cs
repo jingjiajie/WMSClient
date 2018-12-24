@@ -57,7 +57,7 @@ namespace WMS.UI.FormSettlement
 
         private void buttonItems_Click(object sender, EventArgs e)
         {
-            if (this.model1.SelectionRange == null) { return; }
+            if (this.model1.SelectionRange == null) { MessageBox.Show("请选择一项结算单查看结算单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (this.model1.SelectionRange.Rows != 1)
             {
                 MessageBox.Show("请选择一项汇总单查看结算单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
