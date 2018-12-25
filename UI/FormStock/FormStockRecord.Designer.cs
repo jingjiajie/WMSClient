@@ -53,6 +53,7 @@
             this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAllItem = new System.Windows.Forms.ToolStripButton();
             this.buttonNotZero = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -281,7 +282,8 @@
             this.buttonReturnSupply,
             this.toolStripButtonAdd,
             this.toolStripButtonAllItem,
-            this.buttonNotZero});
+            this.buttonNotZero,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 27);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(866, 24);
@@ -319,6 +321,15 @@
             this.buttonNotZero.ToolTipText = "查看零件条目";
             this.buttonNotZero.Visible = false;
             this.buttonNotZero.Click += new System.EventHandler(this.buttonItems_Click);
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(85, 21);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click_1);
             // 
             // FormStockRecord
             // 
@@ -364,7 +375,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripButton buttonReturnSupply;
-        private System.Windows.Forms.ToolStripButton buttonNotZero;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripButton toolStripButtonAllItem;
+        private System.Windows.Forms.ToolStripButton buttonNotZero;
     }
 }
