@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace WMS.UI
 {
@@ -34,6 +36,7 @@ namespace WMS.UI
         public static T Request<T>(string url, string method = "GET", string bodyStr = null, string failHint = "加载失败")
         {
             string responseStr = null;
+            ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
             try
             {
@@ -71,6 +74,7 @@ namespace WMS.UI
         public static T RequestPost<T>(string url,string bodyStr = null,string method = "POST")
         {
             string responseStr = null;
+            ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
                 request.Method = method;
                 if (!string.IsNullOrWhiteSpace(bodyStr))
@@ -87,6 +91,12 @@ namespace WMS.UI
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             T result = serializer.Deserialize<T>(responseStr);
             return result;
+        }
+
+        private static bool RemoteCertificateValidate(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors error)
+        {
+            //为了通过证书验证，总是返回true
+            return true;
         }
     }
 }
