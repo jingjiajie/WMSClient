@@ -62,10 +62,11 @@ namespace WMS.UI.FromSalary
             this.comboBoxSalaryType.Items.Clear();
             this.comboBoxSalaryType.Items.AddRange((from item in GlobalData.AllSalaryType
                                                     select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
+            this.comboBoxSalaryType.Items.Add("全部类型");
             if (GlobalData.AllSalaryType.Count != 0)
             {
                 GlobalData.SalaryType = GlobalData.AllSalaryType[0];
-                for (int i = 0; i < this.comboBoxSalaryType.Items.Count; i++)
+                for (int i = 0; i < this.comboBoxSalaryType.Items.Count-1; i++)
                 {
                     if (GlobalData.AllSalaryType[i] == GlobalData.SalaryType)
                     {
@@ -192,10 +193,21 @@ namespace WMS.UI.FromSalary
 
         private void comboBoxSalaryType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GlobalData.SalaryType = ((ComboBoxItem)this.comboBoxSalaryType.SelectedItem).Value as IDictionary<string, object>;
-            this.searchView1.ClearStaticCondition("salaryTypeId");
-           // this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
-            this.searchView1.Search();
+            string str="";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch {  }
+            if (str == "全部类型")
+            {
+                this.searchView1.ClearStaticCondition("salaryTypeId");
+                this.searchView1.Search();
+            }
+            else
+            {
+                GlobalData.SalaryType = ((ComboBoxItem)this.comboBoxSalaryType.SelectedItem).Value as IDictionary<string, object>;
+                this.searchView1.ClearStaticCondition("salaryTypeId");
+                this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
+                this.searchView1.Search();
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
