@@ -133,7 +133,8 @@ namespace WMS.UI
                 {
                     { "warehouseEntryNo",warehouseEntryNo },
                     { "warehouseEntryId",warehouseEntryID },
-                    { "inboundDeliveryOrderNo",inboundDeliveryOrderNo}
+                    { "inboundDeliveryOrderNo",inboundDeliveryOrderNo},
+                    { "version",warehouseEntry["version"]}
                 });
             }
             this.ModelInspectionNoteSelect(this.modelBoxInspectionNoteItems.CurrentModelName);
