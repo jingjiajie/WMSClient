@@ -237,7 +237,53 @@ namespace WMS.UI.FromSalary
             try
             {
                 string body = json;
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula_and_valuation";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新公式、计件条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            List<int> ids = new List<int>();
+            IDictionary<string, object> rowData;
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                rowData = this.model1.GetRows(new int[] { i })[0];
+                ids.Add((int)rowData["id"]);
+            }
+            AddPersonSalary addPersonSalary = new AddPersonSalary();
+            addPersonSalary.personSalaryIds = ids;
+            if (GlobalData.SalaryPeriod == null)
+            {
+                MessageBox.Show($"无薪资期间无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (GlobalData.SalaryType == null)
+            {
+                MessageBox.Show($"无薪资类型无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
+            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
+            addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+            string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+            try
+            {
+                string body = json;
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_person_salary";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
@@ -255,9 +301,49 @@ namespace WMS.UI.FromSalary
 
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void toolStripButton3_Click(object sender, EventArgs e)
         {
-
+            List<int> ids = new List<int>();
+            IDictionary<string, object> rowData;
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                rowData = this.model1.GetRows(new int[] { i })[0];
+                ids.Add((int)rowData["id"]);
+            }
+            AddPersonSalary addPersonSalary = new AddPersonSalary();
+            addPersonSalary.personSalaryIds = ids;
+            if (GlobalData.SalaryPeriod == null)
+            {
+                MessageBox.Show($"无薪资期间无法进行添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (GlobalData.SalaryType == null)
+            {
+                MessageBox.Show($"无薪资类型无法进行添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
+            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
+            addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+            string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+            try
+            {
+                string body = json;
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/add_last_period";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.searchView1.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("添加") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
     }
 }
