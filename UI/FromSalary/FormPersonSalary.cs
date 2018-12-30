@@ -62,9 +62,9 @@ namespace WMS.UI.FromSalary
             this.comboBoxSalaryType.Items.Clear();
             this.comboBoxSalaryType.Items.AddRange((from item in GlobalData.AllSalaryType
                                                     select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
-            this.comboBoxSalaryType.Items.Add("全部类型");
             if (GlobalData.AllSalaryType.Count != 0)
             {
+                this.comboBoxSalaryType.Items.Add("全部类型");
                 GlobalData.SalaryType = GlobalData.AllSalaryType[0];
                 for (int i = 0; i < this.comboBoxSalaryType.Items.Count-1; i++)
                 {
