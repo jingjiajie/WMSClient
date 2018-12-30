@@ -213,6 +213,7 @@ namespace WMS.UI.FromSalary
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             List<int> ids = new List<int>();
+            List<int> typeIds = new List<int>();
             IDictionary<string, object> rowData;
             for (int i = 0; i < this.model1.RowCount; i++)
             {
@@ -230,8 +231,22 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show($"无薪资类型无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            string str = "";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch { }
+            if (str == "全部类型")
+            {
+                foreach (IDictionary<string, object> salaryType in GlobalData.AllSalaryType)
+                {
+                    typeIds.Add((int)salaryType["id"]);
+                }
+            }
+            else
+            {
+                typeIds.Add((int)GlobalData.SalaryType["id"]);
+            }
             addPersonSalary.salaryPeriodId =(int) GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
+            addPersonSalary.salaryTypeId = typeIds;
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try
@@ -258,6 +273,7 @@ namespace WMS.UI.FromSalary
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             List<int> ids = new List<int>();
+            List<int> typeIds = new List<int>();
             IDictionary<string, object> rowData;
             for (int i = 0; i < this.model1.RowCount; i++)
             {
@@ -276,8 +292,22 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show($"无薪资类型无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            string str = "";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch { }
+            if (str == "全部类型")
+            {
+              foreach(IDictionary<string,object> salaryType in GlobalData.AllSalaryType)
+                {
+                    typeIds.Add((int)salaryType["id"]);
+                }
+            }
+            else
+            {
+                typeIds.Add((int)GlobalData.SalaryType["id"]);
+            }
             addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
+            addPersonSalary.salaryTypeId = typeIds;
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try
