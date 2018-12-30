@@ -125,6 +125,7 @@
         {name:"salaryItemId",displayName:"salaryItemID",type:"int",visible:false}, 
         {name:"salaryPeriodId",displayName:"salaryPeriodID",type:"int",visible:false},                    
         {name:"personId",displayName:"人员id",type:"string",visible:true},    
+        {name:"post",displayName:"岗位",type:"string",visible:true}, 
         {name:"personName",displayName:"人员名称",type:"string",association:"#personAssociation",editEnded:"#personNameEditEnded"}, 
         {name:"post",displayName:"岗位",type:"string"},                       
         {name:"salaryItemName",displayName:"项目名称",type:"string",association:"#salaryItemNameAssociation",editEnded:"#salaryItemNameEditEnded"}, 
@@ -132,7 +133,7 @@
         {name:"amount",displayName:"",type:"double"},  
         {name:"warehouseId",displayName:"仓库id",defaultValue:"#warehouseIdDefaultValue",type:"int",visible:false},
         {name:"warehouseName",displayName:"仓库名称",type:"string",visible:false},
-        {name:"edited",displayName:"是否编辑",type:"double",visible:true},
+        {name:"edited",displayName:"是否编辑",type:"double",visible:true}
      ],
     httpAPIs:[
         {type:"get-count",

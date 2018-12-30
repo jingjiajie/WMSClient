@@ -475,7 +475,8 @@
             this.pivotTableAdapter1.ColumnNamesAsColumn = new string[] {
         "salaryItemName"};
             this.pivotTableAdapter1.ColumnNamesAsRow = new string[] {
-        "personName"};
+        "personName",
+        "post"};
             this.pivotTableAdapter1.ColumnNamesAsValue = new string[] {
         "amount"};
             this.pivotTableAdapter1.SourceMode = "default";
