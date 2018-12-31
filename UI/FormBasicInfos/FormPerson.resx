@@ -186,7 +186,7 @@
 		{name:"role",type:"string",displayName:"角色",visible:false,editable:true,defaultValue:"管理员"},
 		{name:"password",type:"string",displayName:"密码",visible:true,editable:true},
 		{name:"authorityString",type:"string",displayName:"权限字符串",visible:false,editable:false,defaultValue:"ALL"},
-        {name:"psot",type:"string",displayName:"岗位"},
+        {name:"post",type:"string",displayName:"岗位"}
 	]
 	,"httpAPIs":[
         {type:"get-count",
