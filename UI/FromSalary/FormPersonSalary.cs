@@ -246,7 +246,7 @@ namespace WMS.UI.FromSalary
                 typeIds.Add((int)GlobalData.SalaryType["id"]);
             }
             addPersonSalary.salaryPeriodId =(int) GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = typeIds;
+            addPersonSalary.salaryTypeIds = typeIds;
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try
@@ -307,7 +307,7 @@ namespace WMS.UI.FromSalary
                 typeIds.Add((int)GlobalData.SalaryType["id"]);
             }
             addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = typeIds;
+            addPersonSalary.salaryTypeIds = typeIds;
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try

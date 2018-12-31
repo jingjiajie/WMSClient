@@ -10,7 +10,7 @@ namespace WMS.UI.FromSalary
 
         public int salaryPeriodId;
 
-        public List<int> salaryTypeId;
+        public List<int> salaryTypeIds;
         
         public int warehouseId;
 
