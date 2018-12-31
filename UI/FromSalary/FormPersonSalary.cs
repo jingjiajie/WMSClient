@@ -353,7 +353,6 @@ namespace WMS.UI.FromSalary
                 return;
             }
             addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try
