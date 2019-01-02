@@ -28,7 +28,7 @@ namespace WMS.UI.FormAcccount
         }
 
 
-        private void AccountTitleNameEditEnded(int row, string accountTitleName)
+        private void OwnAccountTitleNameEditEnded(int row, string accountTitleName)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -42,13 +42,34 @@ namespace WMS.UI.FormAcccount
             }
             else
             {
-                this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
-                this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
+                this.model1[row, "ownAccountTitleId"] = foundAccountTitle["id"];
+                //this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
             }
 
         }
-            private void AccountTitleNoEditEnded(int row, string accountTitleNo)
+
+        private void OtherAccountTitleNameEditEnded(int row, string accountTitleName)
+        {
+            IDictionary<string, object> foundAccountTitle =
+                GlobalData.AllAccountTitle.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == accountTitleName;
+                });
+            if (foundAccountTitle == null)
             {
+                MessageBox.Show($"科目\"{accountTitleName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "otherAccountTitleId"] = foundAccountTitle["id"];
+                //this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
+            }
+
+        }
+
+        private void AccountTitleNoEditEnded(int row, string accountTitleNo)
+        {
                 IDictionary<string, object> foundAccountTitle =
                     GlobalData.AllAccountTitle.Find((s) =>
                     {
@@ -64,7 +85,7 @@ namespace WMS.UI.FormAcccount
                     this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
                 this.model1[row, "accountTitleName"] = foundAccountTitle["name"];
             }
-            }
+        }
 
         private void FormAccountRecord_Load(object sender, EventArgs e)
         {
@@ -136,9 +157,9 @@ namespace WMS.UI.FormAcccount
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "accountPeriodName",GlobalData.AccountPeriod["name"]},
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
-                { "accountTitleName",GlobalData.AccountTitle["name"]},
-                { "accountTitleNo",GlobalData.AccountTitle["no"]},
-                { "accountTitleId",GlobalData.AccountTitle["id"]},
+                { "ownAccountTitleName",GlobalData.AccountTitle["name"]},
+                { "ownAccountTitleId",GlobalData.AccountTitle["id"]},
+                { "serviceTime",DateTime.Now},
             });
             }
             else
@@ -150,6 +171,7 @@ namespace WMS.UI.FormAcccount
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "accountPeriodName",GlobalData.AccountPeriod["name"]},
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
+                { "serviceTime",DateTime.Now},
             });
             }
         }
