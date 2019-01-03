@@ -17,6 +17,7 @@ namespace WMS.UI.FormAcccount
     {
         private Boolean DoneDeficitCheck = false;
         public static FormAccountRecord formAccountRecord = null;
+        private static int checkMode = 1;
         System.Timers.Timer timer = new System.Timers.Timer();
         Timer T = new Timer();
         public FormAccountRecord()
@@ -150,7 +151,9 @@ namespace WMS.UI.FormAcccount
         {
             if (GlobalData.AccountTitle != null)
             {
-                this.model1.InsertRow(0, new Dictionary<string, object>()
+                if (checkMode == TreeViewSelect.OWN_ACCOUNTTITLE_MODE)
+                {
+                    this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
@@ -161,6 +164,22 @@ namespace WMS.UI.FormAcccount
                 { "ownAccountTitleId",GlobalData.AccountTitle["id"]},
                 { "serviceTime",DateTime.Now},
             });
+                }
+                else
+                {
+                    this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "personId",GlobalData.Person["id"]},
+                { "personName",GlobalData.Person["name"]},
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "accountPeriodName",GlobalData.AccountPeriod["name"]},
+                { "accountPeriodId",GlobalData.AccountPeriod["id"]},
+                { "otherAccountTitleName",GlobalData.AccountTitle["name"]},
+                { "otherAccountTitleId",GlobalData.AccountTitle["id"]},
+                { "serviceTime",DateTime.Now},
+            });
+                }
+
             }
             else
             {
@@ -448,10 +467,41 @@ namespace WMS.UI.FormAcccount
                                           where item["name"].ToString() == accountTitleName
                                            select item).ToList().First();
 
-                this.searchView1.AddStaticCondition("accountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                if (checkMode == TreeViewSelect.OWN_ACCOUNTTITLE_MODE) {
+                    this.searchView1.AddStaticCondition("ownAccountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                }
+                else {
+                    this.searchView1.AddStaticCondition("otherAccountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                }                
                 this.searchView1.Search();
 
                 this.showBalance();
+            }
+        }
+
+        private void OtherTitleCheckChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxOtherTitle.Checked == false)
+            {
+                this.checkBoxOwnTitle.Checked = true;
+                checkMode = TreeViewSelect.OWN_ACCOUNTTITLE_MODE;
+            }
+            else {
+                this.checkBoxOwnTitle.Checked = false;
+                checkMode = TreeViewSelect.OTHER_ACCOUNTTITLE_MODE;
+            }
+        }
+
+        private void OwnTitleCheckChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxOwnTitle.Checked == false)
+            {
+                this.checkBoxOtherTitle.Checked = true;
+                checkMode = TreeViewSelect.OTHER_ACCOUNTTITLE_MODE;
+            }
+            else {
+                this.checkBoxOtherTitle.Checked = false;
+                checkMode = TreeViewSelect.OWN_ACCOUNTTITLE_MODE;
             }
         }
     }

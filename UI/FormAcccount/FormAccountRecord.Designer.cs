@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair4 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -72,10 +72,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxBalance = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.treeViewAccountTitle = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.tableLayoutPanelTreeView = new System.Windows.Forms.TableLayoutPanel();
+            this.panelTreeCheck = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.treeViewAccountTitle = new System.Windows.Forms.TreeView();
+            this.checkBoxOwnTitle = new System.Windows.Forms.CheckBox();
+            this.checkBoxOtherTitle = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -89,6 +94,9 @@
             this.panel1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
+            this.tableLayoutPanelTreeView.SuspendLayout();
+            this.panelTreeCheck.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -190,12 +198,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair4.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1};
+        modeMethodListenerNamesPair4};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -362,7 +370,7 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.treeViewAccountTitle, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanelTreeView, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 50);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
@@ -430,14 +438,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType1.Key = "key";
-            conditionFieldNamesType1.Relation = "relation";
-            conditionFieldNamesType1.Values = "values";
-            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
-            orderParamNamesType1.Key = "key";
-            orderParamNamesType1.Order = "order";
-            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
+            conditionFieldNamesType2.Key = "key";
+            conditionFieldNamesType2.Relation = "relation";
+            conditionFieldNamesType2.Values = "values";
+            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
+            orderParamNamesType2.Key = "key";
+            orderParamNamesType2.Order = "order";
+            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(555, 55);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -589,16 +597,6 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "借方发生额";
             // 
-            // treeViewAccountTitle
-            // 
-            this.treeViewAccountTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewAccountTitle.Location = new System.Drawing.Point(838, 0);
-            this.treeViewAccountTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.treeViewAccountTitle.Name = "treeViewAccountTitle";
-            this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 389);
-            this.treeViewAccountTitle.TabIndex = 1;
-            this.treeViewAccountTitle.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAccountTitle_AfterSelect);
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
@@ -626,6 +624,77 @@
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(509, 25);
             this.miniToolStrip.TabIndex = 3;
+            // 
+            // tableLayoutPanelTreeView
+            // 
+            this.tableLayoutPanelTreeView.ColumnCount = 1;
+            this.tableLayoutPanelTreeView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTreeView.Controls.Add(this.panelTreeCheck, 0, 0);
+            this.tableLayoutPanelTreeView.Controls.Add(this.panel4, 0, 1);
+            this.tableLayoutPanelTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTreeView.Location = new System.Drawing.Point(838, 0);
+            this.tableLayoutPanelTreeView.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelTreeView.Name = "tableLayoutPanelTreeView";
+            this.tableLayoutPanelTreeView.RowCount = 2;
+            this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTreeView.Size = new System.Drawing.Size(180, 389);
+            this.tableLayoutPanelTreeView.TabIndex = 1;
+            // 
+            // panelTreeCheck
+            // 
+            this.panelTreeCheck.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.panelTreeCheck.Controls.Add(this.checkBoxOtherTitle);
+            this.panelTreeCheck.Controls.Add(this.checkBoxOwnTitle);
+            this.panelTreeCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTreeCheck.Location = new System.Drawing.Point(0, 0);
+            this.panelTreeCheck.Margin = new System.Windows.Forms.Padding(0);
+            this.panelTreeCheck.Name = "panelTreeCheck";
+            this.panelTreeCheck.Size = new System.Drawing.Size(180, 50);
+            this.panelTreeCheck.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.treeViewAccountTitle);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 50);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(180, 339);
+            this.panel4.TabIndex = 1;
+            // 
+            // treeViewAccountTitle
+            // 
+            this.treeViewAccountTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewAccountTitle.Location = new System.Drawing.Point(0, 0);
+            this.treeViewAccountTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.treeViewAccountTitle.Name = "treeViewAccountTitle";
+            this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 339);
+            this.treeViewAccountTitle.TabIndex = 2;
+            // 
+            // checkBoxOwnTitle
+            // 
+            this.checkBoxOwnTitle.AutoSize = true;
+            this.checkBoxOwnTitle.Checked = true;
+            this.checkBoxOwnTitle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOwnTitle.Location = new System.Drawing.Point(7, 17);
+            this.checkBoxOwnTitle.Name = "checkBoxOwnTitle";
+            this.checkBoxOwnTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOwnTitle.TabIndex = 0;
+            this.checkBoxOwnTitle.Text = "己方科目";
+            this.checkBoxOwnTitle.UseVisualStyleBackColor = true;
+            this.checkBoxOwnTitle.CheckedChanged += new System.EventHandler(this.OwnTitleCheckChanged);
+            // 
+            // checkBoxOtherTitle
+            // 
+            this.checkBoxOtherTitle.AutoSize = true;
+            this.checkBoxOtherTitle.Location = new System.Drawing.Point(88, 17);
+            this.checkBoxOtherTitle.Name = "checkBoxOtherTitle";
+            this.checkBoxOtherTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOtherTitle.TabIndex = 1;
+            this.checkBoxOtherTitle.Text = "对方科目";
+            this.checkBoxOtherTitle.UseVisualStyleBackColor = true;
+            this.checkBoxOtherTitle.CheckedChanged += new System.EventHandler(this.OtherTitleCheckChanged);
             // 
             // FormAccountRecord
             // 
@@ -656,6 +725,10 @@
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
+            this.tableLayoutPanelTreeView.ResumeLayout(false);
+            this.panelTreeCheck.ResumeLayout(false);
+            this.panelTreeCheck.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -690,7 +763,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxBalance;
-        private System.Windows.Forms.TreeView treeViewAccountTitle;
         private System.Windows.Forms.ToolStrip miniToolStrip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -705,5 +777,11 @@
         private System.Windows.Forms.ToolStripButton ButtonWriteOff;
         private System.Windows.Forms.ToolStripButton toolStripButtonDeficit;
         private System.Windows.Forms.ToolStripButton ButtonAccrualCheck;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTreeView;
+        private System.Windows.Forms.Panel panelTreeCheck;
+        private System.Windows.Forms.CheckBox checkBoxOtherTitle;
+        private System.Windows.Forms.CheckBox checkBoxOwnTitle;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TreeView treeViewAccountTitle;
     }
 }
