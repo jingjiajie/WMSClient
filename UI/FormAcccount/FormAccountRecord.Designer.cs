@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAccountRecord));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair4 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
             FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
             FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
@@ -72,15 +72,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxBalance = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tableLayoutPanelTreeView = new System.Windows.Forms.TableLayoutPanel();
+            this.panelTreeCheck = new System.Windows.Forms.Panel();
+            this.checkBoxOtherTitle = new System.Windows.Forms.CheckBox();
+            this.checkBoxOwnTitle = new System.Windows.Forms.CheckBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.treeViewAccountTitle = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.tableLayoutPanelTreeView = new System.Windows.Forms.TableLayoutPanel();
-            this.panelTreeCheck = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.treeViewAccountTitle = new System.Windows.Forms.TreeView();
-            this.checkBoxOwnTitle = new System.Windows.Forms.CheckBox();
-            this.checkBoxOtherTitle = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -198,12 +198,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(28, 65);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair4.Mode = "default";
+            modeMethodListenerNamesPair2.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair4};
+        modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 6;
@@ -597,34 +597,6 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "借方发生额";
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
-            this.tableLayoutPanel1.TabIndex = 11;
-            // 
-            // miniToolStrip
-            // 
-            this.miniToolStrip.AutoSize = false;
-            this.miniToolStrip.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.miniToolStrip.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
-            this.miniToolStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.miniToolStrip.CanOverflow = false;
-            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.miniToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.miniToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.miniToolStrip.Name = "miniToolStrip";
-            this.miniToolStrip.Size = new System.Drawing.Size(509, 25);
-            this.miniToolStrip.TabIndex = 3;
-            // 
             // tableLayoutPanelTreeView
             // 
             this.tableLayoutPanelTreeView.ColumnCount = 1;
@@ -653,6 +625,30 @@
             this.panelTreeCheck.Size = new System.Drawing.Size(180, 50);
             this.panelTreeCheck.TabIndex = 0;
             // 
+            // checkBoxOtherTitle
+            // 
+            this.checkBoxOtherTitle.AutoSize = true;
+            this.checkBoxOtherTitle.Location = new System.Drawing.Point(88, 17);
+            this.checkBoxOtherTitle.Name = "checkBoxOtherTitle";
+            this.checkBoxOtherTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOtherTitle.TabIndex = 1;
+            this.checkBoxOtherTitle.Text = "对方科目";
+            this.checkBoxOtherTitle.UseVisualStyleBackColor = true;
+            this.checkBoxOtherTitle.CheckedChanged += new System.EventHandler(this.OtherTitleCheckChanged);
+            // 
+            // checkBoxOwnTitle
+            // 
+            this.checkBoxOwnTitle.AutoSize = true;
+            this.checkBoxOwnTitle.Checked = true;
+            this.checkBoxOwnTitle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOwnTitle.Location = new System.Drawing.Point(7, 17);
+            this.checkBoxOwnTitle.Name = "checkBoxOwnTitle";
+            this.checkBoxOwnTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOwnTitle.TabIndex = 0;
+            this.checkBoxOwnTitle.Text = "己方科目";
+            this.checkBoxOwnTitle.UseVisualStyleBackColor = true;
+            this.checkBoxOwnTitle.CheckedChanged += new System.EventHandler(this.OwnTitleCheckChanged);
+            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.treeViewAccountTitle);
@@ -671,30 +667,35 @@
             this.treeViewAccountTitle.Name = "treeViewAccountTitle";
             this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 339);
             this.treeViewAccountTitle.TabIndex = 2;
+            this.treeViewAccountTitle.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAccountTitle_AfterSelect);
             // 
-            // checkBoxOwnTitle
+            // tableLayoutPanel1
             // 
-            this.checkBoxOwnTitle.AutoSize = true;
-            this.checkBoxOwnTitle.Checked = true;
-            this.checkBoxOwnTitle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOwnTitle.Location = new System.Drawing.Point(7, 17);
-            this.checkBoxOwnTitle.Name = "checkBoxOwnTitle";
-            this.checkBoxOwnTitle.Size = new System.Drawing.Size(72, 16);
-            this.checkBoxOwnTitle.TabIndex = 0;
-            this.checkBoxOwnTitle.Text = "己方科目";
-            this.checkBoxOwnTitle.UseVisualStyleBackColor = true;
-            this.checkBoxOwnTitle.CheckedChanged += new System.EventHandler(this.OwnTitleCheckChanged);
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
+            this.tableLayoutPanel1.TabIndex = 11;
             // 
-            // checkBoxOtherTitle
+            // miniToolStrip
             // 
-            this.checkBoxOtherTitle.AutoSize = true;
-            this.checkBoxOtherTitle.Location = new System.Drawing.Point(88, 17);
-            this.checkBoxOtherTitle.Name = "checkBoxOtherTitle";
-            this.checkBoxOtherTitle.Size = new System.Drawing.Size(72, 16);
-            this.checkBoxOtherTitle.TabIndex = 1;
-            this.checkBoxOtherTitle.Text = "对方科目";
-            this.checkBoxOtherTitle.UseVisualStyleBackColor = true;
-            this.checkBoxOtherTitle.CheckedChanged += new System.EventHandler(this.OtherTitleCheckChanged);
+            this.miniToolStrip.AutoSize = false;
+            this.miniToolStrip.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.miniToolStrip.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.miniToolStrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.miniToolStrip.CanOverflow = false;
+            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.miniToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.miniToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.miniToolStrip.Name = "miniToolStrip";
+            this.miniToolStrip.Size = new System.Drawing.Size(509, 25);
+            this.miniToolStrip.TabIndex = 3;
             // 
             // FormAccountRecord
             // 

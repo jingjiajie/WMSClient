@@ -341,12 +341,12 @@ namespace WMS.UI.FormAcccount
                 else
                 {
                     StringBuilder remindBody = new StringBuilder();
-                    foreach (IDictionary<string, object> AccountRecordView in returnDeficitCheck)
+                    foreach (IDictionary<string, object> DeficitCheck in returnDeficitCheck)
                     {
 
                         remindBody = remindBody
-                                .Append("科目名称：“").Append(AccountRecordView["accountTitleName"])
-                                .Append("”，余额：“").Append(AccountRecordView["balance"])
+                                .Append("科目名称：“").Append(DeficitCheck["curAccountTitleName"])
+                                .Append("”，余额：“").Append(DeficitCheck["balance"])
                                 .Append("”存在赤字！请核准账目记录！\r\n");
 
                     }
@@ -455,7 +455,8 @@ namespace WMS.UI.FormAcccount
             string accountTitleNo = treeViewAccountTitle.SelectedNode.Name;
             string accountTitleName = treeViewAccountTitle.SelectedNode.Text;
 
-            this.searchView1.ClearStaticCondition("accountTitleNo");
+            this.searchView1.ClearStaticCondition("ownAccountTitleNo");
+            this.searchView1.ClearStaticCondition("otherAccountTitleNo");
             if (accountTitleNo == "全部科目")
             {
                 GlobalData.AccountTitle = null;
