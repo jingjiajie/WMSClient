@@ -44,6 +44,7 @@ namespace WMS.UI.FormAcccount
             else
             {
                 this.model1[row, "ownAccountTitleId"] = foundAccountTitle["id"];
+                this.model1[row, "ownAccountTitleDependence"] = foundAccountTitle["accountTitleDdpendent"];
                 //this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
             }
 
@@ -65,6 +66,7 @@ namespace WMS.UI.FormAcccount
             {
                 this.model1[row, "otherAccountTitleId"] = foundAccountTitle["id"];
                 //this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
+                this.model1[row, "otherAccountTitleDependence"] = foundAccountTitle["accountTitleDdpendent"];
             }
 
         }
@@ -84,7 +86,6 @@ namespace WMS.UI.FormAcccount
                 else
                 {
                     this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
-                this.model1[row, "accountTitleName"] = foundAccountTitle["name"];
             }
         }
 
@@ -162,6 +163,7 @@ namespace WMS.UI.FormAcccount
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
                 { "ownAccountTitleName",GlobalData.AccountTitle["name"]},
                 { "ownAccountTitleId",GlobalData.AccountTitle["id"]},
+                { "ownAccountTitleDependence",GlobalData.AccountTitle["accountTitleDdpendent"]},
                 { "serviceTime",DateTime.Now},
             });
                 }
@@ -176,6 +178,7 @@ namespace WMS.UI.FormAcccount
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
                 { "otherAccountTitleName",GlobalData.AccountTitle["name"]},
                 { "otherAccountTitleId",GlobalData.AccountTitle["id"]},
+                { "otherAccountTitleDependence",GlobalData.AccountTitle["accountTitleDdpendent"]},
                 { "serviceTime",DateTime.Now},
             });
                 }
