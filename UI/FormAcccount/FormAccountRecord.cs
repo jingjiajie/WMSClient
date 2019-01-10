@@ -508,5 +508,10 @@ namespace WMS.UI.FormAcccount
                 checkMode = TreeViewSelect.OWN_ACCOUNTTITLE_MODE;
             }
         }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -83,6 +83,12 @@
     <Compile Include="FormAcccount\FormAccountTitle.Designer.cs">
       <DependentUpon>FormAccountTitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAcccount\FormSelectSummaryTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAcccount\FormSelectSummaryTime.Designer.cs">
+      <DependentUpon>FormSelectSummaryTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAcccount\FormTax.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -476,6 +482,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAcccount\FormAccountTitle.resx">
       <DependentUpon>FormAccountTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAcccount\FormSelectSummaryTime.resx">
+      <DependentUpon>FormSelectSummaryTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAcccount\FormTax.resx">
       <DependentUpon>FormTax.cs</DependentUpon>
