@@ -117,6 +117,7 @@
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(1028, 19);
             this.searchView1.TabIndex = 0;
+            this.searchView1.Load += new System.EventHandler(this.searchView1_Load);
             // 
             // configuration1
             // 
