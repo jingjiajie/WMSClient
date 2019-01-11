@@ -198,6 +198,7 @@ namespace WMS.UI.FromSalary
             catch {  }
             if (str == "全部类型")
             {
+                this.judegeSalaryType();
                 this.searchView1.ClearStaticCondition("salaryTypeId");
                 this.searchView1.Search();
             }
@@ -371,6 +372,34 @@ namespace WMS.UI.FromSalary
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
                 MessageBox.Show(("添加") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+        }
+
+        private void judegeSalaryType()
+        {
+            try
+            {
+                AddPersonSalary addPersonSalary = new AddPersonSalary();
+                addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+                string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/judge_salary_type_person";
+                IDictionary<string, object> salaryTypePerson = RestClient.RequestPost<IDictionary<string, object>>(url,json);
+
+                   if ((int)salaryTypePerson["personId"] != -1)
+                    {
+                        MessageBox.Show($"人员{salaryTypePerson["personName"]}在多个类型中重复，如果其对应薪资项目名称完全相同，则显示所有类型工资时金额将会出错！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
         }
