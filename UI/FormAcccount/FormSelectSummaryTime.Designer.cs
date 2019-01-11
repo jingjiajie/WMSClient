@@ -73,7 +73,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(62, 61);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 17;
             // 
             // basicView1
@@ -186,6 +186,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSelectSummaryTime";
             this.Text = "FormSelectSummaryTime";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSelectSummaryTime_Closed);
             this.Load += new System.EventHandler(this.FormSelectSummaryTime_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

@@ -511,7 +511,12 @@ namespace WMS.UI.FormAcccount
 
         private void buttonPreview_Click(object sender, EventArgs e)
         {
-
+            var a1 = new FormSelectSummaryTime();
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
     }
 }
