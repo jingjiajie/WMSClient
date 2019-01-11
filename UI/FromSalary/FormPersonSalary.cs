@@ -25,7 +25,14 @@ namespace WMS.UI.FromSalary
         }
 
         public void Search()
-        {        
+        {
+            string str = "";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch { }
+            if (str == "全部类型")
+            {
+                this.judegeSalaryType();
+            }
             this.searchView1.Search();
         }
 
@@ -114,6 +121,11 @@ namespace WMS.UI.FromSalary
            
         }
 
+        private void SearchAndJudge() {
+            this.judegeSalaryType();           
+            this.searchView1.Search();
+        }
+
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -124,7 +136,7 @@ namespace WMS.UI.FromSalary
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();              
+                this.Search();             
             }
         }
 
@@ -198,6 +210,7 @@ namespace WMS.UI.FromSalary
             catch {  }
             if (str == "全部类型")
             {
+                this.judegeSalaryType();
                 this.searchView1.ClearStaticCondition("salaryTypeId");
                 this.searchView1.Search();
             }
@@ -255,7 +268,7 @@ namespace WMS.UI.FromSalary
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula_and_valuation";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
+                this.Search();
             }
             catch (WebException ex)
             {
@@ -316,7 +329,7 @@ namespace WMS.UI.FromSalary
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_person_salary";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
+                this.Search();
             }
             catch (WebException ex)
             {
@@ -361,7 +374,7 @@ namespace WMS.UI.FromSalary
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/add_last_period";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
+                this.Search();
             }
             catch (WebException ex)
             {
@@ -373,6 +386,39 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show(("添加") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+        }
+
+        private void judegeSalaryType()
+        {
+            try
+            {
+                AddPersonSalary addPersonSalary = new AddPersonSalary();
+                addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+                string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/judge_salary_type_person";
+                IDictionary<string, object> salaryTypePerson = RestClient.RequestPost<IDictionary<string, object>>(url,json);
+
+                   if ((int)salaryTypePerson["personId"] != -1)
+                    {
+                        MessageBox.Show($"人员\"{salaryTypePerson["personName"]}\"在多个类型中重复，如果其对应薪资项目名称完全相同，则显示“所有类型”工资时金额可能不准确！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+        }
+
+        private void searchView1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
