@@ -109,6 +109,7 @@ namespace WMS.UI.FromSalary
 
         private void UpdateItemState()
         {
+            if (this.model1.SelectionRange == null) { return; }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             if (rowData == null) { return; }
             if (rowData[0]["id"] == null) {
