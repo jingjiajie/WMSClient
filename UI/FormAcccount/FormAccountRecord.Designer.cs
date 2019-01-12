@@ -55,6 +55,7 @@
             this.ButtonWriteOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDeficit = new System.Windows.Forms.ToolStripButton();
             this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -286,7 +287,8 @@
             this.ButtonTransfer,
             this.ButtonWriteOff,
             this.toolStripButtonDeficit,
-            this.ButtonAccrualCheck});
+            this.ButtonAccrualCheck,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(763, 25);
@@ -363,6 +365,15 @@
             this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 22);
             this.ButtonAccrualCheck.Text = "自动对账";
             this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(121, 22);
+            this.buttonPreview.Text = "导出/打印汇总单";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // tableLayoutPanel8
             // 
@@ -784,5 +795,6 @@
         private System.Windows.Forms.CheckBox checkBoxOwnTitle;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TreeView treeViewAccountTitle;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }

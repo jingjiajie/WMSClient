@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using System.Web.Script.Serialization;
+using System.Net;
+using System.IO;
 
 namespace WMS.UI.FromSalary
 {
@@ -39,7 +42,36 @@ namespace WMS.UI.FromSalary
         {
             if (this.synchronizer.Save())
             {
+                this.judegeSalaryType();
                 this.searchView1.Search();            
+            }
+        }
+
+        private void judegeSalaryType()
+        {
+            try
+            {
+                AddPersonSalary addPersonSalary = new AddPersonSalary();
+                addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+                string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/judge_salary_type_person";
+                IDictionary<string, object> salaryTypePerson = RestClient.RequestPost<IDictionary<string, object>>(url, json);
+
+                if ((int)salaryTypePerson["personId"] != -1)
+                {
+                    MessageBox.Show($"人员\"{salaryTypePerson["personName"]}\"在多个类型中重复，如果其对应薪资项目名称完全相同，则人员薪资窗口显示“所有类型”工资时金额可能不准确！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 
