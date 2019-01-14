@@ -56,15 +56,12 @@ namespace WMS.UI.FormAcccount
                 var returnSummaryList=RestClient.RequestPost<List<object>>(url, body);
                 var returnSummarys= returnSummaryList.ToArray();
                 StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("移库单预览");
-                
-                
-                   
-                    
-                    string no = "汇总";
-                    if (!formPreviewExcel.AddPatternTable("Excel/AccountRecord.xlsx", no)) return;
-                    formPreviewExcel.AddData("returnSummarys", returnSummarys, no);
 
-                
+                string no = "汇总";
+                if (!formPreviewExcel.AddPatternTable("Excel/AccountRecord.xlsx", no)) return;
+                formPreviewExcel.AddData("returnSummarys", returnSummarys, no);
+                formPreviewExcel.Show();
+
 
                 //string localFilePath = ShowSaveFileDialog();
 
@@ -117,7 +114,7 @@ namespace WMS.UI.FormAcccount
                 //    }
                 //}
 
-              
+
                 ////设置新建文件路径及名称
                 //string savePath = localFilePath + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".xls";
 
@@ -136,7 +133,7 @@ namespace WMS.UI.FormAcccount
                 //file.Write(bytes, 0, bytes.Length);
                 //file.Flush();
 
-           
+
 
                 ////释放资源
                 //bytes = null;

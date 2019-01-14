@@ -160,7 +160,7 @@
             this.buttonADD.Name = "buttonADD";
             this.buttonADD.Size = new System.Drawing.Size(150, 40);
             this.buttonADD.TabIndex = 11;
-            this.buttonADD.Text = "确定结转";
+            this.buttonADD.Text = "显示汇总";
             this.buttonADD.UseVisualStyleBackColor = true;
             this.buttonADD.Click += new System.EventHandler(this.buttonADD_Click);
             // 
@@ -185,7 +185,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSelectSummaryTime";
-            this.Text = "FormSelectSummaryTime";
+            this.Text = "填写汇总区间";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormSelectSummaryTime_Closed);
             this.Load += new System.EventHandler(this.FormSelectSummaryTime_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
