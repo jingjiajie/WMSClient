@@ -225,6 +225,7 @@ namespace WMS.UI.FromSalary
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("将会刷新公式、计价相关条目，手动修改过的条目，将不会清空，并用于公式计算，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             List<int> ids = new List<int>();
             List<int> typeIds = new List<int>();
             IDictionary<string, object> rowData;
@@ -285,6 +286,7 @@ namespace WMS.UI.FromSalary
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("将会清空当前显示的所有条目，重新按默认值生成，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             List<int> ids = new List<int>();
             List<int> typeIds = new List<int>();
             IDictionary<string, object> rowData;
@@ -346,6 +348,7 @@ namespace WMS.UI.FromSalary
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("将会清空当前期间的所有条目，按上一期间生成，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             List<int> ids = new List<int>();
             IDictionary<string, object> rowData;
             for (int i = 0; i < this.model1.RowCount; i++)
