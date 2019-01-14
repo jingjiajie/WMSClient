@@ -49,6 +49,7 @@ namespace WMS.UI.FromSalary
         private void model_Refreshed(object sender, ModelRefreshedEventArgs e)
         {
             this.UpdateBasicAndReoGridView();
+            this.RefreshState();
         }
 
         private void UpdateBasicAndReoGridView()
