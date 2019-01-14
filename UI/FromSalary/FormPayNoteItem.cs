@@ -37,6 +37,7 @@ namespace WMS.UI.FromSalary
             this.periodId = periodId;
             this.taxId = taxId;
             this.payNoteState = payNoteState;
+            this.payNoteNo = payNoteNo;
             this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
