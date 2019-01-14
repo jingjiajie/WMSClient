@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrontWork;
+using System.Web.Script.Serialization;
 
 namespace WMS.UI.FormStock
 {
@@ -347,6 +348,33 @@ namespace WMS.UI.FormStock
             this.searchView1.Search();
             this.toolStripButtonAllItem.Visible = false;
             this.buttonNotZero.Visible = true;
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void buttonPreview_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                Condition condWarehouse = new Condition().AddCondition("warehouseId", GlobalData.Warehouse["id"]);
+                var previewData = RestClient.Get<object[]>(Defines.ServerURL + "/warehouse/WMS_Template/stock_record/find_newest/"+condWarehouse.ToString());
+                if (previewData == null) return;
+                StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("盘点单预览");
+                   string no = "库存";
+                   if (!formPreviewExcel.AddPatternTable("Excel/StockRecord.xlsx", no)) return;
+                    //formPreviewExcel.AddData("StockInfoCheckTicket", null, no);
+                    formPreviewExcel.AddData("StockRecord", previewData, no);
+                    formPreviewExcel.Show();
+            }
+            catch
+            {
+                MessageBox.Show("无任何数据！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
         }
     }
 }

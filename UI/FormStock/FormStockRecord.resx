@@ -140,8 +140,8 @@
         {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded",editable:false},
         {name:"materialProductLine",displayName:"物料系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded",editable:false},
         {name:"supplierId",displayName:"供应商Id",type:"int",visible:false},
-        {name:"amount",displayName:"数量",type:"double",forwardMapper:"#AmountForwardMapper",editable:false},
-        {name:"availableAmount",displayName:"可用数量",type:"double",forwardMapper:"#AvailableAmountForwardMapper",editable:false},
+        {name:"amount",displayName:"数量",type:"double",editable:false},
+        {name:"availableAmount",displayName:"可用数量",type:"double",editable:false},
         {name:"unit",displayName:"单位",type:"string",editable:false},
         {name:"unitAmount",displayName:"单位数量",type:"double",editable:false},
         {name:"storageLocationNo",displayName:"库位编码",type:"string",association:"#storageLocationNoAssociation",editEnded:"#storageLocationNoEditEnded",editable:false},
@@ -180,12 +180,26 @@ httpAPIs:[
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
-        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
-        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1071, 59</value>
   </metadata>
+  <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG/SURBVDhPndI/SAJxFAfw29raanCsPShobYi2hraopKCI
+        QrLDmiKTpCiiWmoJl6CSkzsU5ZLQkBosIQm8ED1CIZJCSigFE0ny27vzjCiy7MGH+/feu98/5nPw8Tj+
+        Qkv/HsrHapTLZZTe3lAovSJbLCLz8oJ0PgebJP3eIPn0BF8yiaNEAl5yeH0NkZzd3mLr8rJ2A+XPcibz
+        pViGR5ZxenOD9XC4doNCqQQpnYab7l3EGYtBIHw0iuNkAkuhUO0Gz4UCLlIpOK4kcDRfuxSBPRLBAfHS
+        KOaDwe8Nmq0raFnbRD/vhMnnx7hHhF5wQk/PQ7yAQYeAAQePYXrXvbsPJV8rrcRq8Exd5cd8Hg+fpHM5
+        1T25U2SzSBHlaj45rTRpWlwGF40hQvOuh626Gw3sLLZDFxBo/vVYro6A0Y/A4j/G+vl5XUyiqDXo7QPr
+        9mA+EMCwy42e3b2aprxeNXeUFlWt1xmMGLNz2KYD0rt/gBxt409ccRkT4iE26Cx0rW2g07wAZobj0Mqa
+        VI0TBgTouP5EmWrzpAEt06zKRLXMFg2nqm3OjI7FJY21wmJFu0ZnZDG0Y/vIVzBHtKL/F8c7y1WZOtry
+        EfkAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

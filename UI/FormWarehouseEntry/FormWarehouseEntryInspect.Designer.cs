@@ -272,13 +272,13 @@
             this.basicView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView1.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView1.ItemsPerRow = 3;
-            this.basicView1.Location = new System.Drawing.Point(0, 23);
+            this.basicView1.Location = new System.Drawing.Point(0, 19);
             this.basicView1.Margin = new System.Windows.Forms.Padding(0);
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.modelInspectionNotes;
             this.basicView1.Name = "basicView1";
             this.basicView1.Padding = new System.Windows.Forms.Padding(6);
-            this.basicView1.Size = new System.Drawing.Size(874, 77);
+            this.basicView1.Size = new System.Drawing.Size(874, 81);
             this.basicView1.TabIndex = 0;
             // 
             // groupBox2
@@ -302,17 +302,17 @@
             this.basicView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.basicView2.Font = new System.Drawing.Font("黑体", 10F);
             this.basicView2.ItemsPerRow = 4;
-            this.basicView2.Location = new System.Drawing.Point(3, 23);
+            this.basicView2.Location = new System.Drawing.Point(3, 19);
             this.basicView2.Margin = new System.Windows.Forms.Padding(0);
             this.basicView2.Mode = "default";
             this.basicView2.Model = this.modelBoxInspectionNoteItems;
             this.basicView2.Name = "basicView2";
-            this.basicView2.Size = new System.Drawing.Size(868, 111);
+            this.basicView2.Size = new System.Drawing.Size(868, 115);
             this.basicView2.TabIndex = 4;
             // 
             // FormWarehouseEntryInspect
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 529);
             this.Controls.Add(this.tableLayoutPanel1);

@@ -194,7 +194,7 @@ namespace WMS.UI.FromSalary
         {
             GlobalData.SalaryType = ((ComboBoxItem)this.comboBoxSalaryType.SelectedItem).Value as IDictionary<string, object>;
             this.searchView1.ClearStaticCondition("salaryTypeId");
-            this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
+           // this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
             this.searchView1.Search();
         }
 
@@ -240,6 +240,11 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show(("刷新") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
 
         }
     }

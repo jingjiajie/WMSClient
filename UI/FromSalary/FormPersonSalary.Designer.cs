@@ -53,7 +53,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
@@ -226,7 +225,7 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(241, 137);
+            this.model1.Location = new System.Drawing.Point(238, 149);
             this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
@@ -268,8 +267,8 @@
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.68872F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.57199F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.55253F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.70817F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.64202F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.toolStripTop, 0, 0);
@@ -300,7 +299,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(316, 26);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(234, 26);
             this.tableLayoutPanel4.TabIndex = 10;
             // 
             // comboBoxSalaryType
@@ -309,7 +308,7 @@
             this.comboBoxSalaryType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSalaryType.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxSalaryType.FormattingEnabled = true;
-            this.comboBoxSalaryType.Location = new System.Drawing.Point(148, 2);
+            this.comboBoxSalaryType.Location = new System.Drawing.Point(107, 2);
             this.comboBoxSalaryType.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxSalaryType.Name = "comboBoxSalaryType";
             this.comboBoxSalaryType.Size = new System.Drawing.Size(100, 27);
@@ -321,7 +320,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(68, 0);
+            this.label1.Location = new System.Drawing.Point(27, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 19);
@@ -338,14 +337,13 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton3,
-            this.toolStripButtonAdd,
             this.toolStripButton2,
             this.toolStripButton1,
             this.toolStripButtonAlter});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStripTop.Size = new System.Drawing.Size(408, 27);
+            this.toolStripTop.Size = new System.Drawing.Size(458, 27);
             this.toolStripTop.TabIndex = 9;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -358,16 +356,6 @@
             this.toolStripButton3.Text = "按上一期间生成";
             this.toolStripButton3.ToolTipText = "查看零件条目";
             // 
-            // toolStripButtonAdd
-            // 
-            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 24);
-            this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Visible = false;
-            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
-            // 
             // toolStripButton2
             // 
             this.toolStripButton2.Image = global::WMS.UI.Properties.Resources.check;
@@ -376,6 +364,7 @@
             this.toolStripButton2.Size = new System.Drawing.Size(104, 24);
             this.toolStripButton2.Text = "刷新人员薪资";
             this.toolStripButton2.ToolTipText = "查看零件条目";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolStripButton1
             // 
@@ -408,12 +397,12 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.comboBoxSalaryPeriod, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(408, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(458, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 27);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(254, 27);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // comboBoxSalaryPeriod
@@ -423,7 +412,7 @@
             this.comboBoxSalaryPeriod.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxSalaryPeriod.FormattingEnabled = true;
             this.comboBoxSalaryPeriod.IntegralHeight = false;
-            this.comboBoxSalaryPeriod.Location = new System.Drawing.Point(146, 2);
+            this.comboBoxSalaryPeriod.Location = new System.Drawing.Point(121, 2);
             this.comboBoxSalaryPeriod.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxSalaryPeriod.MaxDropDownItems = 15;
             this.comboBoxSalaryPeriod.Name = "comboBoxSalaryPeriod";
@@ -437,7 +426,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(62, 0);
+            this.label2.Location = new System.Drawing.Point(37, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 19);
@@ -525,7 +514,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelSearchWidget;
@@ -549,11 +537,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.ComboBox comboBoxSalaryType;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.ComboBox comboBoxSalaryPeriod;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ComboBox comboBoxSalaryPeriod;
+        private System.Windows.Forms.Label label2;
     }
 }

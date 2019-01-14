@@ -137,10 +137,10 @@
         {name:"sourceStorageLocationId",displayName:"出货库位ID",type:"int",visible:false},
         {name:"sourceStorageLocationNo",displayName:"目标库位编码",association:"#storageLocationNoAssociation",editEnded:"#sourceStorageLocationNoEditEnded",placeHolder:"不能为空"},
         {name:"sourceStorageLocationName",displayName:"目标库位名称",association:"#storageLocationNameAssociation",editEnded:"#sourceStorageLocationNameEditEnded",placeHolder:"不能为空"},
-        {name:"scheduledAmount",displayName:"计划装车数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
-        {name:"realAmount",displayName:"实际装车数量",type:"double",defaultValue:0,forwardMapper:"#amountForwardMapper",backwardMapper:"#amountBackwardMapper"},
+        {name:"scheduledAmount",displayName:"计划装车数量",type:"double",defaultValue:0},
+        {name:"realAmount",displayName:"实际装车数量",type:"double",defaultValue:0},
         {name:"unit",displayName:"单位",placeHolder:"必填信息"},
-        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息",editEnded:"#unitAmountEditEnded"},
+        {name:"unitAmount",displayName:"单位数量",type:"double",placeHolder:"必填信息"},
         {name:"state",displayName:"状态",type:"int",editable:false,backwardMapper:"#stateBackwardMapper",forwardMapper:"#stateForwardMapper"},
         {name:"loadingTime",displayName:"装车时间",type:"datetime",defaultValue:"#now"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"}, 
@@ -184,9 +184,9 @@
   <data name="toolStripButtonDeliveyPakage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
-        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
-        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
+        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
+        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
