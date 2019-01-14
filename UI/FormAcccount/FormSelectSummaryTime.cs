@@ -47,17 +47,26 @@ namespace WMS.UI.FormAcccount
         private void buttonADD_Click(object sender, EventArgs e)
         {
             this.buttonADD.Focus();
+            int summaryMode = -1;            
             var startTime = this.model1[this.model1.SelectionRange.Row, "startTime"];
             var endTime = this.model1[this.model1.SelectionRange.Row, "endTime"];
             try
             {
-                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"endTime\":\"" + endTime + "\",\"startTime\":\"" + startTime + "\"}";
+                string no = "";
+                if (this.checkBoxChangeSummary.Checked == false){
+                    summaryMode = 1;
+                    no = "记录时间汇总";
+                }
+                else{
+                    no = "业务时间汇总";
+                }
+                string body = "{\"warehouseId\":\"" + GlobalData.Warehouse["id"] + "\",\"checkMode\":\"" + summaryMode + "\",\"endTime\":\"" + endTime + "\",\"startTime\":\"" + startTime + "\"}";
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/summary_all_title";
                 var returnSummaryList=RestClient.RequestPost<List<object>>(url, body);
                 var returnSummarys= returnSummaryList.ToArray();
                 StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("移库单预览");
 
-                string no = "汇总";
+                
                 if (!formPreviewExcel.AddPatternTable("Excel/AccountRecord.xlsx", no)) return;
                 formPreviewExcel.AddData("returnSummarys", returnSummarys, no);
                 formPreviewExcel.Show();
@@ -186,6 +195,11 @@ namespace WMS.UI.FormAcccount
             {
                 this.addFinishedCallback();
             }
+        }
+
+        private void CheckChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
