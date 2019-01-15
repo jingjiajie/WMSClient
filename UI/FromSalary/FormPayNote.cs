@@ -40,7 +40,6 @@ namespace WMS.UI.FromSalary
             this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
             this.model1.RowRemoved += this.model_RowRemoved;
             this.model1.Refreshed += this.model_Refreshed;
-            Utilities.BindBlueButton(this.buttonAccountPay);
             Utilities.BindBlueButton(this.buttonAccountRealPay);
             this.UpdateBasicAndReoGridView();
             this.RefreshState();
@@ -57,14 +56,12 @@ namespace WMS.UI.FromSalary
 
             if (this.model1.RowCount == 0)
             {
-                this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled= false;
                 //Utilities.ButtonEffectsCancel(this.buttonAccountPay);
                 //Utilities.ButtonEffectsCancel(this.buttonAccountRealPay);
             }
             else
             {
-                this.buttonAccountPay.Enabled = true;
                 this.buttonAccountRealPay.Enabled = true;
             }
         }
@@ -75,7 +72,6 @@ namespace WMS.UI.FromSalary
             if (rowData == null) { return; }
             if (rowData["id"] == null)
             {
-                this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
                 this.toolStripButtonDelete.Enabled = true;
                 this.ChangeConfigMode("creat");
@@ -83,21 +79,18 @@ namespace WMS.UI.FromSalary
             }
             if ((int)rowData["state"] == 0)
             {          
-                this.buttonAccountPay.Enabled = true;
                 this.buttonAccountRealPay.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
                 this.ChangeConfigMode("default");
             }
             else if ((int)rowData["state"] == 1)
-            {
-                this.buttonAccountPay.Enabled = false;           
+            {      
                 this.buttonAccountRealPay.Enabled = true;
                 this.toolStripButtonDelete.Enabled = false;
                 this.ChangeConfigMode("payed");
             }
             else
             {
-                this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
                 this.ChangeConfigMode("payed");
@@ -114,7 +107,6 @@ namespace WMS.UI.FromSalary
             if (this.model1.RowCount == 0) { return; }
             if (this.model1.SelectionRange.Rows != 1)
             {
-                this.buttonAccountPay.Enabled = false;
                 this.buttonAccountRealPay.Enabled = false;
                 return;
             }

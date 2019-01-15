@@ -97,8 +97,6 @@ namespace WMS.UI.FromSalary
             this.CenterToScreen();
             Utilities.BindBlueButton(this.buttonCalculateAllTax);
             Utilities.BindBlueButton(this.buttonCclcultateItemsTax);
-            Utilities.BindBlueButton(this.buttonRealPayAll);
-            Utilities.BindBlueButton(this.buttonRealPayItems);
             this.searchView1.AddStaticCondition("payNoteId", payNoteId);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -119,8 +117,6 @@ namespace WMS.UI.FromSalary
                 this.reoGridView1.Mode = "add";
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.buttonCalculateAllTax.Enabled = false;
-                this.buttonRealPayAll.Enabled = false;
-                this.buttonRealPayItems.Enabled = false;
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
@@ -132,7 +128,6 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";           
                 this.buttonCclcultateItemsTax.Enabled = true;
-                this.buttonRealPayItems.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
@@ -149,14 +144,12 @@ namespace WMS.UI.FromSalary
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
-                    this.buttonRealPayItems.Enabled = true;
                 }
                 else if (this.payNoteState == FormPayNote.WAITING_FOR_CONFIRM) {
                     this.model1.Mode = "calculate";
                     this.basicView1.Mode = "calculate";
                     this.reoGridView1.Mode = "calculate";
                     this.buttonCclcultateItemsTax.Enabled = true;
-                    this.buttonRealPayItems.Enabled = true;
                     this.ButtonAllPerson.Enabled = true;
                     this.toolStripButtonAdd.Enabled = true;
                     this.toolStripButtonDelete.Enabled = true;
@@ -173,7 +166,6 @@ namespace WMS.UI.FromSalary
                     this.buttonCclcultateItemsTax.Enabled = false;
                     //this.buttonCalculateAllTax.Enabled = false;
                     //this.buttonRealPayAll.Enabled = false;
-                    this.buttonRealPayItems.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
@@ -189,7 +181,6 @@ namespace WMS.UI.FromSalary
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
                     //this.buttonRealPayAll.Enabled = true;
-                    this.buttonRealPayItems.Enabled = true;
                 }
             }
 
@@ -214,8 +205,6 @@ namespace WMS.UI.FromSalary
                 this.model1.Mode = "payed";               
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.buttonCalculateAllTax.Enabled = false;
-                this.buttonRealPayAll.Enabled = false;
-                this.buttonRealPayItems.Enabled = false;
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
@@ -227,8 +216,6 @@ namespace WMS.UI.FromSalary
                 this.model1.Mode = "default";
                 this.buttonCclcultateItemsTax.Enabled = true;
                 this.buttonCalculateAllTax.Enabled = true;
-                this.buttonRealPayAll.Enabled = true;
-                this.buttonRealPayItems.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;              
