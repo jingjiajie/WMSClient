@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPersonSalary));
-            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType2 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
+            FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
@@ -117,6 +117,7 @@
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(1028, 19);
             this.searchView1.TabIndex = 0;
+            this.searchView1.Load += new System.EventHandler(this.searchView1_Load);
             // 
             // configuration1
             // 
@@ -124,12 +125,12 @@
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(54, 137);
             this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormPersonSalary",
         "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default";
+            modeMethodListenerNamesPair1.Mode = "default";
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair2};
+        modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
             this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
@@ -178,14 +179,14 @@
             // 
             // pagerSearchJsonRESTAdapter1
             // 
-            conditionFieldNamesType2.Key = "key";
-            conditionFieldNamesType2.Relation = "relation";
-            conditionFieldNamesType2.Values = "values";
-            apiParamNamesType2.ConditionParamNames = conditionFieldNamesType2;
-            orderParamNamesType2.Key = "key";
-            orderParamNamesType2.Order = "order";
-            apiParamNamesType2.OrderParamNames = orderParamNamesType2;
-            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType2;
+            conditionFieldNamesType1.Key = "key";
+            conditionFieldNamesType1.Relation = "relation";
+            conditionFieldNamesType1.Values = "values";
+            apiParamNamesType1.ConditionParamNames = conditionFieldNamesType1;
+            orderParamNamesType1.Key = "key";
+            orderParamNamesType1.Order = "order";
+            apiParamNamesType1.OrderParamNames = orderParamNamesType1;
+            this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(502, 112);
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
@@ -313,6 +314,7 @@
             this.comboBoxSalaryType.Name = "comboBoxSalaryType";
             this.comboBoxSalaryType.Size = new System.Drawing.Size(100, 27);
             this.comboBoxSalaryType.TabIndex = 0;
+            this.comboBoxSalaryType.SelectedIndexChanged += new System.EventHandler(this.comboBoxSalaryType_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -355,6 +357,7 @@
             this.toolStripButton3.Size = new System.Drawing.Size(116, 24);
             this.toolStripButton3.Text = "按上一期间生成";
             this.toolStripButton3.ToolTipText = "查看零件条目";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripButton2
             // 
@@ -474,7 +477,8 @@
             this.pivotTableAdapter1.ColumnNamesAsColumn = new string[] {
         "salaryItemName"};
             this.pivotTableAdapter1.ColumnNamesAsRow = new string[] {
-        "personName"};
+        "personName",
+        "post"};
             this.pivotTableAdapter1.ColumnNamesAsValue = new string[] {
         "amount"};
             this.pivotTableAdapter1.SourceMode = "default";

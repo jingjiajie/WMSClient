@@ -23,6 +23,7 @@ namespace WMS.UI.FormAcccount
 
         private void RefreshMode()
         {
+            if (this.model1.SelectionRange==null) { return; }
             if ((int)this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0]["type"] == 1)
             {
                 this.basicView1.Mode = "default";

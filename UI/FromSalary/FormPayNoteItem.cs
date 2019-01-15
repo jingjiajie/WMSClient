@@ -37,6 +37,7 @@ namespace WMS.UI.FromSalary
             this.periodId = periodId;
             this.taxId = taxId;
             this.payNoteState = payNoteState;
+            this.payNoteNo = payNoteNo;
             this.model1.SelectionRangeChanged += this.model_SelectionRangeChanged;
         }
 
@@ -109,6 +110,7 @@ namespace WMS.UI.FromSalary
 
         private void UpdateItemState()
         {
+            if (this.model1.SelectionRange == null) { return; }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
             if (rowData == null) { return; }
             if (rowData[0]["id"] == null) {

@@ -55,6 +55,7 @@
             this.ButtonWriteOff = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDeficit = new System.Windows.Forms.ToolStripButton();
             this.ButtonAccrualCheck = new System.Windows.Forms.ToolStripButton();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -72,6 +73,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxBalance = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tableLayoutPanelTreeView = new System.Windows.Forms.TableLayoutPanel();
+            this.panelTreeCheck = new System.Windows.Forms.Panel();
+            this.checkBoxOtherTitle = new System.Windows.Forms.CheckBox();
+            this.checkBoxOwnTitle = new System.Windows.Forms.CheckBox();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.treeViewAccountTitle = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
@@ -89,6 +95,9 @@
             this.panel1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
+            this.tableLayoutPanelTreeView.SuspendLayout();
+            this.panelTreeCheck.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -278,7 +287,8 @@
             this.ButtonTransfer,
             this.ButtonWriteOff,
             this.toolStripButtonDeficit,
-            this.ButtonAccrualCheck});
+            this.ButtonAccrualCheck,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(763, 25);
@@ -326,6 +336,7 @@
             this.ButtonTransfer.Name = "ButtonTransfer";
             this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
             this.ButtonTransfer.Text = "转账";
+            this.ButtonTransfer.Visible = false;
             this.ButtonTransfer.Click += new System.EventHandler(this.ButtonTransfer_Click);
             // 
             // ButtonWriteOff
@@ -355,13 +366,22 @@
             this.ButtonAccrualCheck.Text = "自动对账";
             this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
             // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(92, 22);
+            this.buttonPreview.Text = "查看汇总单";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            // 
             // tableLayoutPanel8
             // 
             this.tableLayoutPanel8.ColumnCount = 2;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.treeViewAccountTitle, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanelTreeView, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 50);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
@@ -588,14 +608,76 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "借方发生额";
             // 
+            // tableLayoutPanelTreeView
+            // 
+            this.tableLayoutPanelTreeView.ColumnCount = 1;
+            this.tableLayoutPanelTreeView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTreeView.Controls.Add(this.panelTreeCheck, 0, 0);
+            this.tableLayoutPanelTreeView.Controls.Add(this.panel4, 0, 1);
+            this.tableLayoutPanelTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelTreeView.Location = new System.Drawing.Point(838, 0);
+            this.tableLayoutPanelTreeView.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanelTreeView.Name = "tableLayoutPanelTreeView";
+            this.tableLayoutPanelTreeView.RowCount = 2;
+            this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelTreeView.Size = new System.Drawing.Size(180, 389);
+            this.tableLayoutPanelTreeView.TabIndex = 1;
+            // 
+            // panelTreeCheck
+            // 
+            this.panelTreeCheck.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.panelTreeCheck.Controls.Add(this.checkBoxOtherTitle);
+            this.panelTreeCheck.Controls.Add(this.checkBoxOwnTitle);
+            this.panelTreeCheck.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTreeCheck.Location = new System.Drawing.Point(0, 0);
+            this.panelTreeCheck.Margin = new System.Windows.Forms.Padding(0);
+            this.panelTreeCheck.Name = "panelTreeCheck";
+            this.panelTreeCheck.Size = new System.Drawing.Size(180, 50);
+            this.panelTreeCheck.TabIndex = 0;
+            // 
+            // checkBoxOtherTitle
+            // 
+            this.checkBoxOtherTitle.AutoSize = true;
+            this.checkBoxOtherTitle.Location = new System.Drawing.Point(88, 17);
+            this.checkBoxOtherTitle.Name = "checkBoxOtherTitle";
+            this.checkBoxOtherTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOtherTitle.TabIndex = 1;
+            this.checkBoxOtherTitle.Text = "对方科目";
+            this.checkBoxOtherTitle.UseVisualStyleBackColor = true;
+            this.checkBoxOtherTitle.CheckedChanged += new System.EventHandler(this.OtherTitleCheckChanged);
+            // 
+            // checkBoxOwnTitle
+            // 
+            this.checkBoxOwnTitle.AutoSize = true;
+            this.checkBoxOwnTitle.Checked = true;
+            this.checkBoxOwnTitle.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOwnTitle.Location = new System.Drawing.Point(7, 17);
+            this.checkBoxOwnTitle.Name = "checkBoxOwnTitle";
+            this.checkBoxOwnTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOwnTitle.TabIndex = 0;
+            this.checkBoxOwnTitle.Text = "己方科目";
+            this.checkBoxOwnTitle.UseVisualStyleBackColor = true;
+            this.checkBoxOwnTitle.CheckedChanged += new System.EventHandler(this.OwnTitleCheckChanged);
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.treeViewAccountTitle);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 50);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(180, 339);
+            this.panel4.TabIndex = 1;
+            // 
             // treeViewAccountTitle
             // 
             this.treeViewAccountTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewAccountTitle.Location = new System.Drawing.Point(838, 0);
+            this.treeViewAccountTitle.Location = new System.Drawing.Point(0, 0);
             this.treeViewAccountTitle.Margin = new System.Windows.Forms.Padding(0);
             this.treeViewAccountTitle.Name = "treeViewAccountTitle";
-            this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 389);
-            this.treeViewAccountTitle.TabIndex = 1;
+            this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 339);
+            this.treeViewAccountTitle.TabIndex = 2;
             this.treeViewAccountTitle.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAccountTitle_AfterSelect);
             // 
             // tableLayoutPanel1
@@ -655,6 +737,10 @@
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
+            this.tableLayoutPanelTreeView.ResumeLayout(false);
+            this.panelTreeCheck.ResumeLayout(false);
+            this.panelTreeCheck.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -689,7 +775,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxBalance;
-        private System.Windows.Forms.TreeView treeViewAccountTitle;
         private System.Windows.Forms.ToolStrip miniToolStrip;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -704,5 +789,12 @@
         private System.Windows.Forms.ToolStripButton ButtonWriteOff;
         private System.Windows.Forms.ToolStripButton toolStripButtonDeficit;
         private System.Windows.Forms.ToolStripButton ButtonAccrualCheck;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTreeView;
+        private System.Windows.Forms.Panel panelTreeCheck;
+        private System.Windows.Forms.CheckBox checkBoxOtherTitle;
+        private System.Windows.Forms.CheckBox checkBoxOwnTitle;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TreeView treeViewAccountTitle;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }

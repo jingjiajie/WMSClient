@@ -17,6 +17,7 @@ namespace WMS.UI.FormAcccount
     {
         private Boolean DoneDeficitCheck = false;
         public static FormAccountRecord formAccountRecord = null;
+        private static int checkMode = 1;
         System.Timers.Timer timer = new System.Timers.Timer();
         Timer T = new Timer();
         public FormAccountRecord()
@@ -28,7 +29,7 @@ namespace WMS.UI.FormAcccount
         }
 
 
-        private void AccountTitleNameEditEnded(int row, string accountTitleName)
+        private void OwnAccountTitleNameEditEnded(int row, string accountTitleName)
         {
             IDictionary<string, object> foundAccountTitle =
                 GlobalData.AllAccountTitle.Find((s) =>
@@ -42,13 +43,36 @@ namespace WMS.UI.FormAcccount
             }
             else
             {
-                this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
-                this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
+                this.model1[row, "ownAccountTitleId"] = foundAccountTitle["id"];
+                this.model1[row, "ownAccountTitleDependence"] = foundAccountTitle["accountTitleDdpendent"];
+                //this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
             }
 
         }
-            private void AccountTitleNoEditEnded(int row, string accountTitleNo)
+
+        private void OtherAccountTitleNameEditEnded(int row, string accountTitleName)
+        {
+            IDictionary<string, object> foundAccountTitle =
+                GlobalData.AllAccountTitle.Find((s) =>
+                {
+                    if (s["name"] == null) return false;
+                    return s["name"].ToString() == accountTitleName;
+                });
+            if (foundAccountTitle == null)
             {
+                MessageBox.Show($"科目\"{accountTitleName}\"不存在，请重新填写", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                this.model1[row, "otherAccountTitleId"] = foundAccountTitle["id"];
+                //this.model1[row, "accountTitleNo"] = foundAccountTitle["no"];
+                this.model1[row, "otherAccountTitleDependence"] = foundAccountTitle["accountTitleDdpendent"];
+            }
+
+        }
+
+        private void AccountTitleNoEditEnded(int row, string accountTitleNo)
+        {
                 IDictionary<string, object> foundAccountTitle =
                     GlobalData.AllAccountTitle.Find((s) =>
                     {
@@ -62,9 +86,8 @@ namespace WMS.UI.FormAcccount
                 else
                 {
                     this.model1[row, "accountTitleId"] = foundAccountTitle["id"];
-                this.model1[row, "accountTitleName"] = foundAccountTitle["name"];
             }
-            }
+        }
 
         private void FormAccountRecord_Load(object sender, EventArgs e)
         {
@@ -129,17 +152,37 @@ namespace WMS.UI.FormAcccount
         {
             if (GlobalData.AccountTitle != null)
             {
-                this.model1.InsertRow(0, new Dictionary<string, object>()
+                if (checkMode == TreeViewSelect.OWN_ACCOUNTTITLE_MODE)
+                {
+                    this.model1.InsertRow(0, new Dictionary<string, object>()
             {
                 { "personId",GlobalData.Person["id"]},
                 { "personName",GlobalData.Person["name"]},
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "accountPeriodName",GlobalData.AccountPeriod["name"]},
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
-                { "accountTitleName",GlobalData.AccountTitle["name"]},
-                { "accountTitleNo",GlobalData.AccountTitle["no"]},
-                { "accountTitleId",GlobalData.AccountTitle["id"]},
+                { "ownAccountTitleName",GlobalData.AccountTitle["name"]},
+                { "ownAccountTitleId",GlobalData.AccountTitle["id"]},
+                { "ownAccountTitleDependence",GlobalData.AccountTitle["accountTitleDdpendent"]},
+                { "serviceTime",DateTime.Now},
             });
+                }
+                else
+                {
+                    this.model1.InsertRow(0, new Dictionary<string, object>()
+            {
+                { "personId",GlobalData.Person["id"]},
+                { "personName",GlobalData.Person["name"]},
+                { "warehouseId",GlobalData.Warehouse["id"]},
+                { "accountPeriodName",GlobalData.AccountPeriod["name"]},
+                { "accountPeriodId",GlobalData.AccountPeriod["id"]},
+                { "otherAccountTitleName",GlobalData.AccountTitle["name"]},
+                { "otherAccountTitleId",GlobalData.AccountTitle["id"]},
+                { "otherAccountTitleDependence",GlobalData.AccountTitle["accountTitleDdpendent"]},
+                { "serviceTime",DateTime.Now},
+            });
+                }
+
             }
             else
             {
@@ -150,6 +193,7 @@ namespace WMS.UI.FormAcccount
                 { "warehouseId",GlobalData.Warehouse["id"]},
                 { "accountPeriodName",GlobalData.AccountPeriod["name"]},
                 { "accountPeriodId",GlobalData.AccountPeriod["id"]},
+                { "serviceTime",DateTime.Now},
             });
             }
         }
@@ -300,12 +344,12 @@ namespace WMS.UI.FormAcccount
                 else
                 {
                     StringBuilder remindBody = new StringBuilder();
-                    foreach (IDictionary<string, object> AccountRecordView in returnDeficitCheck)
+                    foreach (IDictionary<string, object> DeficitCheck in returnDeficitCheck)
                     {
 
                         remindBody = remindBody
-                                .Append("科目名称：“").Append(AccountRecordView["accountTitleName"])
-                                .Append("”，余额：“").Append(AccountRecordView["balance"])
+                                .Append("科目名称：“").Append(DeficitCheck["curAccountTitleName"])
+                                .Append("”，余额：“").Append(DeficitCheck["balance"])
                                 .Append("”存在赤字！请核准账目记录！\r\n");
 
                     }
@@ -414,7 +458,8 @@ namespace WMS.UI.FormAcccount
             string accountTitleNo = treeViewAccountTitle.SelectedNode.Name;
             string accountTitleName = treeViewAccountTitle.SelectedNode.Text;
 
-            this.searchView1.ClearStaticCondition("accountTitleNo");
+            this.searchView1.ClearStaticCondition("ownAccountTitleNo");
+            this.searchView1.ClearStaticCondition("otherAccountTitleNo");
             if (accountTitleNo == "全部科目")
             {
                 GlobalData.AccountTitle = null;
@@ -426,11 +471,52 @@ namespace WMS.UI.FormAcccount
                                           where item["name"].ToString() == accountTitleName
                                            select item).ToList().First();
 
-                this.searchView1.AddStaticCondition("accountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                if (checkMode == TreeViewSelect.OWN_ACCOUNTTITLE_MODE) {
+                    this.searchView1.AddStaticCondition("ownAccountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                }
+                else {
+                    this.searchView1.AddStaticCondition("otherAccountTitleNo", accountTitleNo, Relation.STARTS_WITH);
+                }                
                 this.searchView1.Search();
 
                 this.showBalance();
             }
+        }
+
+        private void OtherTitleCheckChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxOtherTitle.Checked == false)
+            {
+                this.checkBoxOwnTitle.Checked = true;
+                checkMode = TreeViewSelect.OWN_ACCOUNTTITLE_MODE;
+            }
+            else {
+                this.checkBoxOwnTitle.Checked = false;
+                checkMode = TreeViewSelect.OTHER_ACCOUNTTITLE_MODE;
+            }
+        }
+
+        private void OwnTitleCheckChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxOwnTitle.Checked == false)
+            {
+                this.checkBoxOtherTitle.Checked = true;
+                checkMode = TreeViewSelect.OTHER_ACCOUNTTITLE_MODE;
+            }
+            else {
+                this.checkBoxOtherTitle.Checked = false;
+                checkMode = TreeViewSelect.OWN_ACCOUNTTITLE_MODE;
+            }
+        }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormSelectSummaryTime();
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
+            a1.Show();
         }
     }
 }

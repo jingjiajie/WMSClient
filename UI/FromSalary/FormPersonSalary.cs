@@ -25,7 +25,14 @@ namespace WMS.UI.FromSalary
         }
 
         public void Search()
-        {        
+        {
+            string str = "";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch { }
+            if (str == "全部类型")
+            {
+                this.judegeSalaryType();
+            }
             this.searchView1.Search();
         }
 
@@ -64,8 +71,9 @@ namespace WMS.UI.FromSalary
                                                     select new ComboBoxItem(item["name"]?.ToString(), item)).ToArray());
             if (GlobalData.AllSalaryType.Count != 0)
             {
+                this.comboBoxSalaryType.Items.Add("全部类型");
                 GlobalData.SalaryType = GlobalData.AllSalaryType[0];
-                for (int i = 0; i < this.comboBoxSalaryType.Items.Count; i++)
+                for (int i = 0; i < this.comboBoxSalaryType.Items.Count-1; i++)
                 {
                     if (GlobalData.AllSalaryType[i] == GlobalData.SalaryType)
                     {
@@ -113,6 +121,11 @@ namespace WMS.UI.FromSalary
            
         }
 
+        private void SearchAndJudge() {
+            this.judegeSalaryType();           
+            this.searchView1.Search();
+        }
+
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("确认删除吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -123,7 +136,7 @@ namespace WMS.UI.FromSalary
         {
             if (this.synchronizer.Save())
             {
-                this.searchView1.Search();              
+                this.Search();             
             }
         }
 
@@ -192,15 +205,29 @@ namespace WMS.UI.FromSalary
 
         private void comboBoxSalaryType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GlobalData.SalaryType = ((ComboBoxItem)this.comboBoxSalaryType.SelectedItem).Value as IDictionary<string, object>;
-            this.searchView1.ClearStaticCondition("salaryTypeId");
-           // this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
-            this.searchView1.Search();
+            string str="";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch {  }
+            if (str == "全部类型")
+            {
+                this.judegeSalaryType();
+                this.searchView1.ClearStaticCondition("salaryTypeId");
+                this.searchView1.Search();
+            }
+            else
+            {
+                GlobalData.SalaryType = ((ComboBoxItem)this.comboBoxSalaryType.SelectedItem).Value as IDictionary<string, object>;
+                this.searchView1.ClearStaticCondition("salaryTypeId");
+                this.searchView1.AddStaticCondition("salaryTypeId", GlobalData.SalaryType["id"]);
+                this.searchView1.Search();
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("将会刷新公式、计价相关条目，手动修改过的条目，将不会清空，并用于公式计算，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             List<int> ids = new List<int>();
+            List<int> typeIds = new List<int>();
             IDictionary<string, object> rowData;
             for (int i = 0; i < this.model1.RowCount; i++)
             {
@@ -218,17 +245,93 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show($"无薪资类型无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            string str = "";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch { }
+            if (str == "全部类型")
+            {
+                foreach (IDictionary<string, object> salaryType in GlobalData.AllSalaryType)
+                {
+                    typeIds.Add((int)salaryType["id"]);
+                }
+            }
+            else
+            {
+                typeIds.Add((int)GlobalData.SalaryType["id"]);
+            }
             addPersonSalary.salaryPeriodId =(int) GlobalData.SalaryPeriod["id"];
-            addPersonSalary.salaryTypeId = (int)GlobalData.SalaryType["id"];
+            addPersonSalary.salaryTypeIds = typeIds;
             addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
             string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
             try
             {
                 string body = json;
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula";
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_formula_and_valuation";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
                 MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
+                this.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新公式、计件条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("将会清空当前显示的所有条目，重新按默认值生成，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            List<int> ids = new List<int>();
+            List<int> typeIds = new List<int>();
+            IDictionary<string, object> rowData;
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                rowData = this.model1.GetRows(new int[] { i })[0];
+                ids.Add((int)rowData["id"]);
+            }
+            AddPersonSalary addPersonSalary = new AddPersonSalary();
+            addPersonSalary.personSalaryIds = ids;
+            if (GlobalData.SalaryPeriod == null)
+            {
+                MessageBox.Show($"无薪资期间无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (GlobalData.SalaryType == null)
+            {
+                MessageBox.Show($"无薪资类型无法进行刷新！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string str = "";
+            try { str = (string)this.comboBoxSalaryType.SelectedItem; }
+            catch { }
+            if (str == "全部类型")
+            {
+              foreach(IDictionary<string,object> salaryType in GlobalData.AllSalaryType)
+                {
+                    typeIds.Add((int)salaryType["id"]);
+                }
+            }
+            else
+            {
+                typeIds.Add((int)GlobalData.SalaryType["id"]);
+            }
+            addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
+            addPersonSalary.salaryTypeIds = typeIds;
+            addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+            string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+            try
+            {
+                string body = json;
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/refresh_person_salary";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("刷新成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Search();
             }
             catch (WebException ex)
             {
@@ -243,7 +346,80 @@ namespace WMS.UI.FromSalary
 
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("将会清空当前期间的所有条目，按上一期间生成，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            List<int> ids = new List<int>();
+            IDictionary<string, object> rowData;
+            for (int i = 0; i < this.model1.RowCount; i++)
+            {
+                rowData = this.model1.GetRows(new int[] { i })[0];
+                ids.Add((int)rowData["id"]);
+            }
+            AddPersonSalary addPersonSalary = new AddPersonSalary();
+            addPersonSalary.personSalaryIds = ids;
+            if (GlobalData.SalaryPeriod == null)
+            {
+                MessageBox.Show($"无薪资期间无法进行添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (GlobalData.SalaryType == null)
+            {
+                MessageBox.Show($"无薪资类型无法进行添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            addPersonSalary.salaryPeriodId = (int)GlobalData.SalaryPeriod["id"];
+            addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+            string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+            try
+            {
+                string body = json;
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/add_last_period";
+                RestClient.RequestPost<List<IDictionary<string, object>>>(url, body);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Search();
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("添加") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+        }
+
+        private void judegeSalaryType()
+        {
+            try
+            {
+                AddPersonSalary addPersonSalary = new AddPersonSalary();
+                addPersonSalary.warehouseId = (int)GlobalData.Warehouse["id"];
+                string json = (new JavaScriptSerializer()).Serialize(addPersonSalary);
+                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/person_salary/judge_salary_type_person";
+                IDictionary<string, object> salaryTypePerson = RestClient.RequestPost<IDictionary<string, object>>(url,json);
+
+                   if ((int)salaryTypePerson["personId"] != -1)
+                    {
+                        MessageBox.Show($"人员\"{salaryTypePerson["personName"]}\"在多个类型中重复，如果其对应薪资项目名称完全相同，则显示“所有类型”工资时金额可能不准确！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+            }
+            catch (WebException ex)
+            {
+                string message = ex.Message;
+                if (ex.Response != null)
+                {
+                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+                }
+                MessageBox.Show(("刷新") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+        }
+
+        private void searchView1_Load(object sender, EventArgs e)
         {
 
         }
