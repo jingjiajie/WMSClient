@@ -388,5 +388,21 @@ namespace WMS.UI.FromDeliverOrder
             this.model1[row, "returnNoteTime"] = DateTime.Now;
         }
 
+        private void destinationNameEditEnded([Model] IModel model, [Row] int row, [Data] string destinationName)
+        {
+            model[row, "destinationId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(destinationName)) return;
+            var foundDestinations = (from s in GlobalData.AllDestinations
+                                where s["name"]?.ToString() == destinationName
+                                select s).ToArray();
+            if (foundDestinations.Length != 1) goto FAILED;
+            model[row, "destinationId"] = (int)foundDestinations[0]["id"];
+            model[row, "destinationName"] = foundDestinations[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"目的地\"{destinationName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
     }
 }
