@@ -130,6 +130,7 @@
         {name:"serialNo",displayName:"序号",type:"string",editable:false},      
         {name:"no",displayName:"供应商代号",type:"string",editable:false},
         {name:"name",displayName:"供应商名",type:"string",editable:false},
+        {name:"supplierPassward",displayName:"供应商密码",type:"string",placeHolder:"12345678"},
         {name:"fullName",displayName:"供应商全名",type:"string",editable:false},        
         {name:"contractNo",displayName:"合同编码",type:"string",editable:false},
         {name:"enterpriseCode",displayName:"企业编码",type:"string",editable:false},
