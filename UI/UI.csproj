@@ -129,6 +129,12 @@
       <DependentUpon>FormTransferAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAcccount\TreeViewSelect.cs" />
+    <Compile Include="FormBasicInfos\FormDestination.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormDestination.Designer.cs">
+      <DependentUpon>FormDestination.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRemind.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -512,6 +518,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAcccount\FormTransferAccount.resx">
       <DependentUpon>FormTransferAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormDestination.resx">
+      <DependentUpon>FormDestination.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRemind.resx">
       <DependentUpon>FormRemind.cs</DependentUpon>

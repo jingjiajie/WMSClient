@@ -194,5 +194,14 @@ namespace WMS.UI
                        && s["no"].ToString().StartsWith(str)
                     select s["no"]).Distinct().ToArray();
         }
+
+        //目的地名称输入联想
+        private object[] DestinationNameAssociation([Data]string str)
+        {
+            return (from s in GlobalData.AllDestinations
+                    where s["name"] != null
+                       && s["name"].ToString().StartsWith(str)
+                    select s["name"]).Distinct().ToArray();
+        }
     }
 }
