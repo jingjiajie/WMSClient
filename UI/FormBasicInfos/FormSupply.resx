@@ -123,7 +123,7 @@
     {mode:"default",
         fields:[
 		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
-{name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
+        {name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},   
 		{name:"supplierId",type:"int",displayName:"供货商ID",visible:false},
 		{name:"supplierName",type:"string",displayName:"供货商名称",placeHolder:"必填信息",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
@@ -133,7 +133,8 @@
         {name:"materialProductLine",displayName:"物料系列",placeHolder:"必填信息",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
         {name:"barCodeNo",type:"string",displayName:"条码号",placeHolder:"必填信息",visible:true},
         {name:"trayCapacity",type:"double",displayName:"单托含量",defaultValue:0,visible:true},
-        {name:"SingleCarUsageAmount",type:"double",displayName:"单台用量",visible:true},
+        {name:"singleCarUsageAmount",type:"double",displayName:"单台用量",visible:true},
+        {name:"supplySaftyStock",type:"double",displayName:"供货安全库存",visible:true},
         {name:"defaultEntryAmount",type:"double",displayName:"默认入库数量（个）",visible:true,editable:true,forwardMapper:"#entryAmountForwardMapper",backwardMapper:"#entryAmountBackwardMapper"},
 		{name:"defaultEntryUnit",type:"string",displayName:"默认入库单位",visible:true,editable:true},
 		{name:"defaultEntryUnitAmount",type:"double",displayName:"默认入库单位数量",visible:true,editEnded:"#entryunitAmountEditEnded"},
