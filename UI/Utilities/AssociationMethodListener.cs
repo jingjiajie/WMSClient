@@ -24,7 +24,7 @@ namespace WMS.UI
         {
             return (from s in GlobalData.AllMaterials
                     where s["no"] != null
-                    && s["no"].ToString().StartsWith(str)
+                    && s["no"].ToString().Contains(str)
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["no"]).Distinct().ToArray();
         }
@@ -54,7 +54,7 @@ namespace WMS.UI
         {
             return (from s in GlobalData.AllSuppliers
                     where s["no"] != null 
-                    && s["no"].ToString().StartsWith(str)
+                    && s["no"].ToString().Contains(str)
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["no"]).Distinct().ToArray();
         }
