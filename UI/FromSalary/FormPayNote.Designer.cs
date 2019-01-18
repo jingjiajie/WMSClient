@@ -325,7 +325,7 @@
             this.buttonAccountRealPay.Name = "buttonAccountRealPay";
             this.buttonAccountRealPay.Size = new System.Drawing.Size(144, 61);
             this.buttonAccountRealPay.TabIndex = 2;
-            this.buttonAccountRealPay.Text = "实付同步总账";
+            this.buttonAccountRealPay.Text = "同步到总账";
             this.buttonAccountRealPay.UseVisualStyleBackColor = false;
             this.buttonAccountRealPay.Click += new System.EventHandler(this.buttonAccountRealPay_Click);
             // 

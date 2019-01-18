@@ -93,15 +93,27 @@ namespace WMS.UI.FromSalary
             }
             else if ((int)rowData[0]["state"] == 2)
             {
-                   //条目已确认实付
+                if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY)
+                {
+                    //条目已确认实付
                     this.basicView1.Mode = "payed";
                     this.reoGridView1.Mode = "payed";
                     this.model1.Mode = "payed";
                     this.buttonCclcultateItemsTax.Enabled = false;
-                    //this.buttonCalculateAllTax.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
+                }
+                else if (this.payNoteState == FormPayNote.WAITING_FOR_CONFIRM)
+                {
+                    //条目已确认实付
+                    this.basicView1.Mode = "pre-pay";
+                    this.reoGridView1.Mode = "pre-pay";
+                    this.model1.Mode = "pre-pay";
+                    this.buttonCclcultateItemsTax.Enabled = true;
+                    this.toolStripButtonAdd.Enabled = false;
+                    this.toolStripButtonDelete.Enabled = false;
+                }
             }
 
         }
@@ -182,6 +194,34 @@ namespace WMS.UI.FromSalary
                 this.model1[row, "personId"] = foundPerson["id"];
             }
         }
+
+        private void PreTaxAmountEditEnded([Row]int row, [Data] double preTaxAmount)
+        {
+            double? taxAmount = (double?)this.model1[row, "taxAmount"];
+            if (taxAmount.HasValue == false)
+            {
+              return;
+            }
+            else
+            {
+              this.model1[row, "afterTaxAmount"] = preTaxAmount-taxAmount;
+            }
+        }
+
+        private void TaxAmountEditEnded([Row]int row, [Data] double taxAmount)
+        {
+            double? preTaxAmount = (double?)this.model1[row, "preTaxAmount"];
+            if (preTaxAmount.HasValue == false || preTaxAmount == 0)
+            {
+                return;
+            }
+            else
+            {
+                this.model1[row, "afterTaxAmount"] = preTaxAmount - taxAmount;
+            }
+        }
+
+
 
         private string StateForwardMapper([Data]int state)
         {
@@ -278,12 +318,12 @@ namespace WMS.UI.FromSalary
                 return;
             }
             if (this.judgeAllFinish(payNoteId, PAYED)) {
-                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
                 AccountSynchronize accountSynchronize = new AccountSynchronize();
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
-                accountSynchronize.comment = "应付自动同步到总账";
+                accountSynchronize.comment = "薪金自动同步到总账";
                 accountSynchronize.voucherInfo = this.payNoteNo;
                 if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
@@ -291,7 +331,7 @@ namespace WMS.UI.FromSalary
                 try
                 {
 
-                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     addFinishedCallback?.Invoke();
@@ -306,7 +346,7 @@ namespace WMS.UI.FromSalary
                     {
                         message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                     }
-                    MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(("薪金同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -334,12 +374,12 @@ namespace WMS.UI.FromSalary
             }
             if (this.judgeAllFinish(payNoteId, PAYED))
             {
-                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
                 AccountSynchronize accountSynchronize = new AccountSynchronize();
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
-                accountSynchronize.comment = "应付自动同步到总账";
+                accountSynchronize.comment = "薪金自动同步到总账";
                 accountSynchronize.voucherInfo = this.payNoteNo;
                 if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
@@ -347,9 +387,9 @@ namespace WMS.UI.FromSalary
                 try
                 {
 
-                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
-                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("薪金同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     addFinishedCallback?.Invoke();
                     this.searchView1.Search();
                     this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
@@ -362,7 +402,7 @@ namespace WMS.UI.FromSalary
                     {
                         message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                     }
-                    MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(("薪金同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
