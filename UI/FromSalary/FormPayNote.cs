@@ -25,7 +25,7 @@ namespace WMS.UI.FromSalary
         private FormPayNoteItem form ;
 
         public const  int WAITING_FOR_CONFIRM = 0;
-        public const  int CONFIRM_PAY = 1;
+        //public const  int CONFIRM_PAY = 1;
         public const  int CONFIRM_REAL_PAY = 2;
 
     
@@ -111,26 +111,6 @@ namespace WMS.UI.FromSalary
                 return;
             }
             this.RefreshState();
-            //var rowData = this.model1.GetSelectedRow();
-
-            //    if ((int)rowData["state"] == 0)
-            //    {
-            //        this.buttonAccountPay.Enabled = true;
-            //        this.buttonAccountRealPay.Enabled = true;
-            //    this.ChangeConfigMode("default");
-            //    }
-            //    else if ((int)rowData["state"] == 1)
-            //    {
-            //        this.buttonAccountPay.Enabled = false;
-            //        this.buttonAccountRealPay.Enabled = true;
-            //    this.ChangeConfigMode("payed");
-            //    }
-            //    else
-            //    {
-            //        this.buttonAccountPay.Enabled = false;
-            //        this.buttonAccountRealPay.Enabled = false;
-            //    this.ChangeConfigMode("payed");
-            //    }
         }
 
         private void ChangeConfigMode(string mode)
@@ -339,7 +319,7 @@ namespace WMS.UI.FromSalary
             {
                 case 0: return "待确认";
                 case 1: return "已确认应付";
-                case 2: return "已确认实付";
+                case 2: return "已实付";
                 default: return "未知状态";
             }
         }
@@ -350,7 +330,7 @@ namespace WMS.UI.FromSalary
             {
                 case "待确认": return 0;
                 case "已确认应付": return 1;
-                case "已确认实付": return 2;
+                case "已实付": return 2;
                 default: return -1;
             }
         }
@@ -424,56 +404,7 @@ namespace WMS.UI.FromSalary
             return selectIds.ToArray();
         }
 
-        private void buttonAccountPay_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (this.model1.SelectionRange.Rows != 1)
-                {
-                    MessageBox.Show("请选择薪金单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-            catch { return; }
-            var rowData = this.model1.GetRows(getSelectRowIds());        
-            AccountSynchronize accountSynchronize=new AccountSynchronize();
-            if (rowData[0]["id"] == null || rowData[0]["no"] == null) { return; }
-            accountSynchronize.payNoteId=((int)rowData[0]["id"]);
-            accountSynchronize.personId=((int)GlobalData.Person["id"]);
-            accountSynchronize.warehouseId=((int)GlobalData.Warehouse["id"]);
-            accountSynchronize.voucherInfo= (string)rowData[0]["no"];
-            accountSynchronize.comment = "应付自动同步到总账";
-            if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);return; }
-            accountSynchronize.accountPeriodId =(int) GlobalData.AccountPeriod["id"];
-            string jsonstr = JsonConvert.SerializeObject(accountSynchronize);       
-            string json = (new JavaScriptSerializer()).Serialize(accountSynchronize);      
-            try
-            {
-
-                string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";                
-                RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
-                MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.searchView1.Search();
-                this.RefreshState();
-                if (form != null)
-                {
-                    this.form.payNoteState = FormPayNote.CONFIRM_PAY;
-                    this.form.UpdateState();
-                }
-            }
-            catch (WebException ex)
-            {
-                string message = ex.Message;
-                if (ex.Response != null)
-                {
-                    message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
-                }
-                MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
-
-
+       
         private void buttonAccountRealPay_Click(object sender, EventArgs e)
         {
             try
@@ -492,7 +423,7 @@ namespace WMS.UI.FromSalary
             accountSynchronize.personId = ((int)GlobalData.Person["id"]);
             accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
             accountSynchronize.voucherInfo = (string)rowData[0]["no"];
-            accountSynchronize.comment = "实付自动同步到总账";
+            accountSynchronize.comment = "薪金自动同步到总账";
             if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
             string jsonstr = JsonConvert.SerializeObject(accountSynchronize);
@@ -502,7 +433,7 @@ namespace WMS.UI.FromSalary
 
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                 RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
-                MessageBox.Show("实付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("薪金同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.searchView1.Search();
                 this.RefreshState();
                 if (form != null)
@@ -518,7 +449,7 @@ namespace WMS.UI.FromSalary
                 {
                     message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                 }
-                MessageBox.Show(("实付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(("薪金同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }

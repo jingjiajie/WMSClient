@@ -129,11 +129,10 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded",editable:false},
-{name:"preTaxAmount",displayName:"税前应付",type:"double"},
+{name:"preTaxAmount",displayName:"税前金额",type:"double"},
 {name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
-{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后金额",type:"double",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
-{name:"paidAmount",displayName:"实付金额",type:"double",editable:false},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"comment",displayName:"备注",type:"string"}
      ],
@@ -165,11 +164,10 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded",editable:false},
-{name:"preTaxAmount",displayName:"税前应付",type:"double"},
+{name:"preTaxAmount",displayName:"税前金额",type:"double"},
 {name:"taxAmount",displayName:"扣除税费",type:"double"},
-{name:"afterTaxAmount",displayName:"税后应付",type:"double"},
+{name:"afterTaxAmount",displayName:"税后金额",type:"double"},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
-{name:"paidAmount",displayName:"实付金额",type:"double"},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"comment",displayName:"备注",type:"string"}
      ],
@@ -201,11 +199,10 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded",editable:false},
-{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
+{name:"preTaxAmount",displayName:"税前金额",type:"double",editable:false},
 {name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
-{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后金额",type:"double",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
-{name:"paidAmount",displayName:"实付金额",type:"double"},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"comment",displayName:"备注",type:"string"}
      ],
@@ -237,11 +234,10 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded",editable:false},
-{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
+{name:"preTaxAmount",displayName:"税前金额",type:"double",editable:false},
 {name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
-{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后金额",type:"double",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
-{name:"paidAmount",displayName:"实付金额",type:"double"},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"comment",displayName:"备注",type:"string"}
      ],
@@ -273,11 +269,10 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded",editable:false},
-{name:"preTaxAmount",displayName:"税前应付",type:"double",editable:false},
+{name:"preTaxAmount",displayName:"税前金额",type:"double",editable:false},
 {name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
-{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后金额",type:"double",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
-{name:"paidAmount",displayName:"实付金额",type:"double",editable:false},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"comment",displayName:"备注",type:"string"}
      ],
@@ -309,11 +304,10 @@
 {name:"payNoteId",displayName:"薪资发放单ID",type:"int",visible:false},
 {name:"personId",displayName:"人员ID",type:"int",visible:false},
 {name:"personName",displayName:"人员名称",type:"string",association:"#PersonAssociation",editEnded:"#PersonNameEditEnded"},
-{name:"preTaxAmount",displayName:"税前应付",type:"double"},
+{name:"preTaxAmount",displayName:"税前金额",type:"double"},
 {name:"taxAmount",displayName:"扣除税费",type:"double",editable:false},
-{name:"afterTaxAmount",displayName:"税后应付",type:"double",editable:false},
+{name:"afterTaxAmount",displayName:"税后金额",type:"double",editable:false},
 {name:"state",displayName:"状态",type:"int",forwardMapper:"#stateForwardMapper",backwardMapper:"#stateBackwardMapper",editable:false},
-{name:"paidAmount",displayName:"实付金额",type:"double",editable:false},
 {name:"vocherNo",displayName:"凭证号",type:"string"},
 {name:"comment",displayName:"备注",type:"string"}
      ],
@@ -351,65 +345,65 @@
   <data name="ButtonAllPerson.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
+        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
+        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB7SURBVDhPY2AY1OA/EiDZoWC9DQ0IDOSSZAjZBiA7G90F
+        MDmcLsGwFdkLIHZIyP//HBxgZVgNQTGgtvb//8DA//9VVP7/l5L6/5+HB6QLggkaUFr6/7+EBEIDTCMh
+        A0DOQgkDZI2kRinUnYSdjStEKTYA3TskJaKhpRgALVXwKVEPKQUAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStripButtonDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOeSURBVFhH7VZJaBRBFB1NNG6IEtyNiGLEg4kQEFxQcxJP
-        4iki4l3cSELEPTEacxAR9KDo1bsXJSc3EL2ZKKggiQsenOl09/RMT3XPpJfn++UEXBJ1kmHw4IOiqJnu
-        /179/+pXJ/6j0nBPnYI6ehTFZWWRI3nu/HmoM2fgnzhRWRGa/MIFqJ4eKM7elSvI9/WVJsI/fBheW1vJ
-        ylV7O3IXL0IVR+7cOSgKCD9+LD0LXkcH1NmzUK2tf/Wyx3pL2kcFyCwCvKtXEZvmxMrgsYaqsxMeAxV/
-        GhPeoUO63jrtowK6u5Hju4WbNwHfn5gAgSd1vHQJ6uTJMYNo8tOnvxFTgM6AkIsBb99G9OYNkM1OXIDA
-        k6AigrP3nav9Y8e00dTly3rkenu/CejqQp7k4evXiEdGELx4MTkBAo+7UmIqZkIdOQJFo+aOH9c7dekV
-        l7M2HQXlr19HODgIxDHC/v7Jk48ivX49jCVLYNbWwlqwANaiRTAXL8bwwoUY5uxs3AiPoiK6PgYQDAyU
-        j1zgzJ6N1LRpSE6ZglQigWEOk8OaOhXO5s3wr11D+OoVUCiUn1yQnjEDJkUYM2ciNX06DA6zqgpOfT0K
-        THusFKLJOH48pEk0THIhtUhoylpE1NQgybXd1IT8jRsIX74sP7ktOxVykkn6Je32vHmwpfZz5yJJIcnq
-        athr1sDds6e8AkwhZfAvJJWaZ7Ztg8/mEj5+jMKdO3C4TlGc/C8ireXLkdm+vTwiDAbVgbnD9Natui0H
-        9+4BhgGEIUYePIC7dy+s1au1CG1MPmutWIHMrl0TF2ExkCGplmPW0AB3/34E9+8Dros4lUL0+fMPwTM7
-        dsBctkyLEI/IbHGd3b27dBHaWGI0plIdOICQxNHQEGLHQfju3bgBncZGmOwP4hHtFx7L9Nq1ulkVH/k9
-        LKZazrPNxpJtadH1jdhGow8fED59+ldBJPXiEy1AjMvj6mzaBJ+3avGRsWHzJYc7dvftQ/7WLQSPHiHk
-        BRJ9+lRSCh3uWDqiPi3F42nMn49sc/P4cTIkzu7cCZ+3WPDkCaJksiTSn2GvW4eUdEsxpYjg5qy6OhTu
-        3v01rrthg/7qKTx8iOD9+0kRfw+TWUjOmoWkGFIE0JDB8+dli/9HOCtXIjVnji6BNC2HWQnLcR2XAnPp
-        UhjskvaqVfAOHkRsWZUVIFlwtmyBxy/k4Nkz3stBZQUIFMlHeKIids7w7dvKC/iPfwyJxFcYDOb7zu/p
-        WAAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOySURBVFhH7ZZJaBRBFIYnLjFREUWicUWUKB7UgCAYxeUk
+        niQnRcS7uKGiuCcmLgcJQnJQ9Jp7LoonN5B4cwMVRBPFgzOd7p6e6anumfTy+79KAtEYnUmGOWWgKIrp
+        fv/3Xv31qhOJqV+FK+BevAh14gQqLDskl6N47to1qMuX4Z8/X1kILd7eDnXjBhRnr6MD+cePS4Pwjx2D
+        d/p0aS8xc3XmDHLXr0MNj9zVq1AECL99KzlWwjt7FurKFahTp4p62eN+S9lHAGQWAO/OHcSmWVSMMX7x
+        uIeqpQUeA/3LTN7Ro3q/ddlHsm9rQ47vFu7dA3x/YgAi6sk+3rwJdeHCX4No8UuXhoQJoCsg4mLABw8Q
+        ffwIZLMTB9AQElQgOHujXO2fPKmNpm7f1iN369YQQGsr8hQPP3xAPDiI4PXryQFoCGalxFSshDp+HIpG
+        zZ07pzN16RWXszYdgfJdXQi/fAHiGOGbN5MXH9n/9IYNMJYsgblwIay6OliLF8Osr8fAokUY4Oxs2QKP
+        UBFdHwMI3r4tn7hAOHPmIDVzJpJVVUglEhjgMDmsadPgNDXB7+xE+P49UCiUX1wA0jU1MAlh1NYiVV0N
+        g8OcPh3O2rUosOyxUogm4/jxjlqaQgMUF1GLgqasBWLWLCS5tjdvRv7uXYTv3pW35AJkS6YiTjEpv5Td
+        nj8ftuz9vHlIEiQ5Ywbshga4zc3lBTBFlMF/UlT2PLNjB3w2l/D5cxS6u+FwnSKc/C+Q1vLlyOzcWR4I
+        g0F1YGaY3r5dt+Xg4UPAMIAwxOCTJ3APHIC1Zo2G0Mbks9bKlcjs3TtxCIuBDCm1HLONG+EeOoTg0SPA
+        dRGnUoh+/PgteGbXLpjLlmkI8YjMFtfZfftKh9DGEqOxlOrwYYQUjr5+Rew4CD9/Hjegs2kTTPYH8Yj2
+        C49let063ayK+iCxhs+zzcaS3b9f72/ENhr19yN8+bKoIFJ68YkGEOPyuDpbt8LnrfpPCJsvOczYPXgQ
+        +fv3ETx7hpAXSPT9e1HCI8EdZiwdUZ+W4eNpLFiA7O7d48fJUDi7Zw983mLBixeIksmSRP/MzF6/Hinp
+        lmJKgZAuuWIFCj09Y+O6jY36q6fw9CmCvr5JCY8GMVmF5OzZSIohBYCGDF69Klv8/3rKWbUKqblzdYeU
+        puWwKmE5ruP/Ko96wFy6FAa7pL16NbwjRxBbVuUqoG9NVsHZtg0ev5CD3l7ey0FlAQRCUXyQJypi5ww/
+        fao8QClbNvVsRSrwCxgM5vv90QpNAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="toolStripButtonAlter.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASrSURBVFhH7VVbTJtlGObKA95xq1dGvdsFMZjA1dQgcIEk
-        CFgWZBmZRHRm6LxgG3FuQkSCZnCxMNwmYGDhUFpO7UpL6Xqw/ddD2kJrD7aMllMB5zZIRuDi8XtfitM4
-        NCDBC3mTL2n/fP//HN7n/b6Uw/rfVlpaGo4cOYLk34OtjIwMpKenIzc39+AJFBcVo6CgADk5/wF4ZmYm
-        ZDIZKy8sLNxfAu3t7TCbJuD1uhEI+J748fLycmRnZyM/P3/34G63G3a7HWazGYbbRmg0GgwPD6OnpwcE
-        bjSOw+fzwmjQwWo18167w4EpnxstLc0oKysTtr8lHCjdHbjf7xeqvHA6nbDZbALICJ1Ox+ByeT/aO37A
-        xIQO0WgAwaAPkmSGfEDOxGw2C+rr6hg0Ly+PF5EJBYOIxaf/mUgoGBKqfNhWb7FYoNfrWf2gchCdnR2C
-        jBaJRJyVjmnVUCgUYvWLdxxobPoGlZWV3G9Sf/78WRhNBlhtJnjc9r8nEAptgZN6t9vF6s0mE3SCwOjo
-        KLq6uxl8MTGHcCQAtXoESqUcY2MaJqQQ7lDPKXQ5OTk49fEpfp9cikZDGBkZ3JlAOBwWG4Pw+/xwuVy/
-        957Uq1Uq9Pb2QavVYnkpjpnpIAMTgUDQy+DXrrWhtFTGfafEE7h+XCO+Y4XDIYmQetDX3/9XAqFIBBGx
-        SD313uPx/Kn3BKoU1qsECQJ68GCJbb91SyX2SZiacgkiQ6iq+hAnKio47Scq3heEbgi3xkQLTfwOhZgc
-        aCx8/jGJcFiAC+Xb6rd6T+qlpPU67js5sLIyj/X1hxgfV8Fg0GJ+bpoXpf/MmU9xvPw49/1Y2Ul8VX+J
-        95F6aldsJgy10QXT9YrH4POJe6A1m/gFM/MriMTm8dPPdzEViMDpnoLN7obeJEFnMGBpOYbNzVVWQ7ZO
-        Tro4VDSGFDKyvaioBCWlFfjskw/gvPoyYsosLLibsPpog0dTstvQUv3SFgGLWo6tpYBV0w+TqhcTQzd5
-        qXq+x0BnK6/utmb8aNTi0fqacCDOYZqdjXL6TSY9WluvcOhovSt7D1UfnYay7kV4m5+G/etULNhrMbe0
-        CqsnCt9o7c4B3Kmqj76AG0210JttsEsWkZUgh47mX69Xc+ho5GjmyXpSONmcCufl59gFahm5GoyICTj3
-        6u4JUHVcaWACNOt02FAeyE5KfUmJjMFJfXNDNdtOBCxfPsXqyX7//Coi6pq9gVOZ5E38EcqF9Y5DjKaF
-        x4lOPbKebjqynlp1PzGJtYXbuO9vw+bGQ8wt3MPi4t29q6eiNnSefo0THPZboZ+wQKUe4zGrqTmHLy5e
-        wsjQCCSHSLlFEJS8HGAa78TqJgex/s1n9k7gj0Ufopbc7Olj4MbGRh7JmFDqDcywS5R4qyQOH5dXuLAG
-        R+vb+wO+XXQR0Xn/+YULuHwyA/7v8nBHcx1zUQnxeJjJhGZ+xfTyBrfj6jv7pJ5KoRgQUxBkB5KPuL59
-        IwVdx1IhtbzOgVsJDXIeiFxyy78vOu3ojjCIgyn56InVcDQF7bJnYb34yv6pz8rK4jue7gU6fJKPD66K
-        iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
+        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
 </value>
   </data>
 </root>
