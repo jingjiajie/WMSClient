@@ -62,8 +62,8 @@
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonCclcultateItemsTax = new System.Windows.Forms.Button();
             this.buttonCalculateAllTax = new System.Windows.Forms.Button();
+            this.buttonCclcultateItemsTax = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
@@ -422,23 +422,6 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(187, 120);
             this.tableLayoutPanel4.TabIndex = 14;
             // 
-            // buttonCclcultateItemsTax
-            // 
-            this.buttonCclcultateItemsTax.BackColor = System.Drawing.Color.White;
-            this.buttonCclcultateItemsTax.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonCclcultateItemsTax.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonCclcultateItemsTax.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCclcultateItemsTax.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonCclcultateItemsTax.FlatAppearance.BorderSize = 0;
-            this.buttonCclcultateItemsTax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCclcultateItemsTax.Location = new System.Drawing.Point(21, 9);
-            this.buttonCclcultateItemsTax.Name = "buttonCclcultateItemsTax";
-            this.buttonCclcultateItemsTax.Size = new System.Drawing.Size(144, 48);
-            this.buttonCclcultateItemsTax.TabIndex = 3;
-            this.buttonCclcultateItemsTax.Text = "计算选中条目税费";
-            this.buttonCclcultateItemsTax.UseVisualStyleBackColor = false;
-            this.buttonCclcultateItemsTax.Click += new System.EventHandler(this.ButtonCalculateItemsTax_Click);
-            // 
             // buttonCalculateAllTax
             // 
             this.buttonCalculateAllTax.BackColor = System.Drawing.Color.White;
@@ -455,6 +438,23 @@
             this.buttonCalculateAllTax.Text = "计算整单税费";
             this.buttonCalculateAllTax.UseVisualStyleBackColor = false;
             this.buttonCalculateAllTax.Click += new System.EventHandler(this.buttonCalculateAllTax_Click);
+            // 
+            // buttonCclcultateItemsTax
+            // 
+            this.buttonCclcultateItemsTax.BackColor = System.Drawing.Color.White;
+            this.buttonCclcultateItemsTax.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonCclcultateItemsTax.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonCclcultateItemsTax.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonCclcultateItemsTax.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonCclcultateItemsTax.FlatAppearance.BorderSize = 0;
+            this.buttonCclcultateItemsTax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCclcultateItemsTax.Location = new System.Drawing.Point(21, 9);
+            this.buttonCclcultateItemsTax.Name = "buttonCclcultateItemsTax";
+            this.buttonCclcultateItemsTax.Size = new System.Drawing.Size(144, 48);
+            this.buttonCclcultateItemsTax.TabIndex = 3;
+            this.buttonCclcultateItemsTax.Text = "计算选中条目税费";
+            this.buttonCclcultateItemsTax.UseVisualStyleBackColor = false;
+            this.buttonCclcultateItemsTax.Click += new System.EventHandler(this.ButtonCalculateItemsTax_Click);
             // 
             // FormPayNoteItem
             // 
