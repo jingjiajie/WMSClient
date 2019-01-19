@@ -317,9 +317,9 @@ namespace WMS.UI.FromSalary
         {
             switch (state)
             {
-                case 0: return "待确认";
+                case 0: return "未同步";
                 case 1: return "已确认应付";
-                case 2: return "已实付";
+                case 2: return "已同步";
                 default: return "未知状态";
             }
         }
@@ -328,9 +328,9 @@ namespace WMS.UI.FromSalary
         {
             switch (enable)
             {
-                case "待确认": return 0;
+                case "未同步": return 0;
                 case "已确认应付": return 1;
-                case "已实付": return 2;
+                case "已同步": return 2;
                 default: return -1;
             }
         }
