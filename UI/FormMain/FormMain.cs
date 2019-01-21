@@ -73,13 +73,13 @@ namespace WMS.UI
                     MakeTreeNode("税务管理","FormTax"),
                     MakeTreeNode("账目记录", "FormAccountRecord"),
                     MakeTreeNode("会计期间", "FormAccountPeriod")
+                    }),
+                 MakeTreeNode("结算管理",null, new TreeNode[]{
+                   MakeTreeNode("汇总单管理","FormSummaryNote"),
+                   MakeTreeNode("结算单管理","FormSettlementNote"),
+                   MakeTreeNode("发票管理", "FormInvoice"),
+                   MakeTreeNode("价格管理", "FormPrice")
                     })
-                 //MakeTreeNode("结算管理",null, new TreeNode[]{
-                 //  MakeTreeNode("汇总单管理","FormSummaryNote"),
-                 //  MakeTreeNode("结算单管理","FormSettlementNote"),
-                 //  MakeTreeNode("发票管理", "FormInvoice"),
-                 //  MakeTreeNode("价格管理", "FormPrice")
-                 //   })
             };
 
             this.treeViewLeft.Nodes.Clear();

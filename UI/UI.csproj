@@ -231,62 +231,62 @@
     <Compile Include="FormPutAwayNote\FormPutAwayNoteItem.Designer.cs">
       <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\AddAllItem.cs" />
-    <Compile Include="FormPutAwayNote\FormSettlement\CommonData.cs" />
-    <Compile Include="FormPutAwayNote\FormSettlement\SettlementNoteState.cs" />
-    <Compile Include="FormPutAwayNote\FormSettlement\FormInvoice.cs">
+    <Compile Include="FormSettlement\AddAllItem.cs" />
+    <Compile Include="FormSettlement\CommonData.cs" />
+    <Compile Include="FormSettlement\SettlementNoteState.cs" />
+    <Compile Include="FormSettlement\FormInvoice.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormInvoice.Designer.cs">
+    <Compile Include="FormSettlement\FormInvoice.Designer.cs">
       <DependentUpon>FormInvoice.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormPrice.cs">
+    <Compile Include="FormSettlement\FormPrice.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormPrice.Designer.cs">
+    <Compile Include="FormSettlement\FormPrice.Designer.cs">
       <DependentUpon>FormPrice.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSettlementNote.cs">
+    <Compile Include="FormSettlement\FormSettlementNote.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSettlementNote.Designer.cs">
+    <Compile Include="FormSettlement\FormSettlementNote.Designer.cs">
       <DependentUpon>FormSettlementNote.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSettlementNoteItem.cs">
+    <Compile Include="FormSettlement\FormSettlementNoteItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSettlementNoteItem.Designer.cs">
+    <Compile Include="FormSettlement\FormSettlementNoteItem.Designer.cs">
       <DependentUpon>FormSettlementNoteItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSetTray.cs">
+    <Compile Include="FormSettlement\FormSetTray.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSetTray.Designer.cs">
+    <Compile Include="FormSettlement\FormSetTray.Designer.cs">
       <DependentUpon>FormSetTray.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSummaryNote.cs">
+    <Compile Include="FormSettlement\FormSummaryNote.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSummaryNote.Designer.cs">
+    <Compile Include="FormSettlement\FormSummaryNote.Designer.cs">
       <DependentUpon>FormSummaryNote.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSummaryNoteItem.cs">
+    <Compile Include="FormSettlement\FormSummaryNoteItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSummaryNoteItem.Designer.cs">
+    <Compile Include="FormSettlement\FormSummaryNoteItem.Designer.cs">
       <DependentUpon>FormSummaryNoteItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormTrayThresholds.cs">
+    <Compile Include="FormSettlement\FormTrayThresholds.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormTrayThresholds.Designer.cs">
+    <Compile Include="FormSettlement\FormTrayThresholds.Designer.cs">
       <DependentUpon>FormTrayThresholds.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\LedgerSynchronous.cs" />
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSummaryDetails.cs">
+    <Compile Include="FormSettlement\LedgerSynchronous.cs" />
+    <Compile Include="FormSettlement\FormSummaryDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPutAwayNote\FormSettlement\FormSummaryDetails.Designer.cs">
+    <Compile Include="FormSettlement\FormSummaryDetails.Designer.cs">
       <DependentUpon>FormSummaryDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStock\FormAddStockRecord.cs">
@@ -565,31 +565,31 @@
     <EmbeddedResource Include="FormPutAwayNote\FormPutAwayNoteItem.resx">
       <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormInvoice.resx">
+    <EmbeddedResource Include="FormSettlement\FormInvoice.resx">
       <DependentUpon>FormInvoice.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormPrice.resx">
+    <EmbeddedResource Include="FormSettlement\FormPrice.resx">
       <DependentUpon>FormPrice.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormSettlementNote.resx">
+    <EmbeddedResource Include="FormSettlement\FormSettlementNote.resx">
       <DependentUpon>FormSettlementNote.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormSettlementNoteItem.resx">
+    <EmbeddedResource Include="FormSettlement\FormSettlementNoteItem.resx">
       <DependentUpon>FormSettlementNoteItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormSetTray.resx">
+    <EmbeddedResource Include="FormSettlement\FormSetTray.resx">
       <DependentUpon>FormSetTray.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormSummaryNote.resx">
+    <EmbeddedResource Include="FormSettlement\FormSummaryNote.resx">
       <DependentUpon>FormSummaryNote.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormSummaryNoteItem.resx">
+    <EmbeddedResource Include="FormSettlement\FormSummaryNoteItem.resx">
       <DependentUpon>FormSummaryNoteItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormSummaryDetails.resx">
+    <EmbeddedResource Include="FormSettlement\FormSummaryDetails.resx">
       <DependentUpon>FormSummaryDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPutAwayNote\FormSettlement\FormTrayThresholds.resx">
+    <EmbeddedResource Include="FormSettlement\FormTrayThresholds.resx">
       <DependentUpon>FormTrayThresholds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormAddStockRecord.resx">
