@@ -322,7 +322,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormSummaryDetails";
-            this.Text = "面积详情";
+            this.Text = "汇总详情";
             this.Load += new System.EventHandler(this.SummaryDetails_Load);
             this.panelSearchWidget.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
