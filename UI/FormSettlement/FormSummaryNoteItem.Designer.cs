@@ -55,6 +55,7 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.basicView1 = new FrontWork.BasicView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.ButtonDeliveryDetails = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelSearchWidget.SuspendLayout();
@@ -247,6 +248,7 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonItems,
+            this.ButtonDeliveryDetails,
             this.toolStripButtonAdd,
             this.toolStripButtonDelete,
             this.toolStripButtonAlter,
@@ -337,6 +339,16 @@
             this.toolStrip1.TabIndex = 21;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // ButtonDeliveryDetails
+            // 
+            this.ButtonDeliveryDetails.Image = global::WMS.UI.Properties.Resources.find;
+            this.ButtonDeliveryDetails.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonDeliveryDetails.Name = "ButtonDeliveryDetails";
+            this.ButtonDeliveryDetails.Size = new System.Drawing.Size(104, 21);
+            this.ButtonDeliveryDetails.Text = "查看物流详情";
+            this.ButtonDeliveryDetails.ToolTipText = "查看零件条目";
+            this.ButtonDeliveryDetails.Click += new System.EventHandler(this.ButtonDeliveryDetails_Click);
+            // 
             // FormSummaryNoteItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -383,5 +395,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton buttonItems;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton ButtonDeliveryDetails;
     }
 }

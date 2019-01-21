@@ -150,6 +150,19 @@ namespace WMS.UI.FormSettlement
                 MessageBox.Show(("添加所有条目") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void ButtonDeliveryDetails_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null) { return; }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项汇总单条目查看详情！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
+            var a1 = new FormDeliveryDetails(rowData);
+            a1.Show();
+        }
     }
 
     public class summaryNoteItemState
