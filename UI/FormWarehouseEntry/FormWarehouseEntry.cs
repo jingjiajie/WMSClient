@@ -216,8 +216,8 @@ namespace WMS.UI
                 formPreviewExcel.AddData("warehouseEntryItems", warehouseEntryItems,no);
             }
             formPreviewExcel.Show();
-            ushort height = 50;
-            formPreviewExcel.SetAllCowsHeigth(5,5,height);
+            //ushort height = 50;
+            //formPreviewExcel.SetAllCowsHeigth(5,5,height);
         }
 
         private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
