@@ -281,6 +281,9 @@ namespace WMS.UI
                     case "AllPersons":
                         GlobalData.AllPersons = list;
                         break;
+                    case "AllDestinations":
+                        GlobalData.AllDestinations = list;
+                        break;
                     case "AllPackage":
                         GlobalData.AllPackage = list;
                         break;

@@ -176,6 +176,7 @@
         {name:"serialNo",displayName:"序号",type:"string",placeHolder:"必填项"},    
         {name:"no",displayName:"供应商代号",type:"string",placeHolder:"必填项"},
         {name:"name",displayName:"供应商名",type:"string",placeHolder:"必填项"},
+        {name:"supplierPassward",displayName:"供应商密码",type:"string",placeHolder:"12345678"},
         {name:"fullName",displayName:"供应商全名",type:"string"},        
         {name:"contractNo",displayName:"合同编码",type:"string"},
         {name:"enterpriseCode",displayName:"企业编码",type:"string"},

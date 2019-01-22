@@ -54,7 +54,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAccountRealPay = new System.Windows.Forms.Button();
-            this.buttonAccountPay = new System.Windows.Forms.Button();
             this.basicView1 = new FrontWork.BasicView();
             this.pagerSearchJsonRESTAdapter1 = new FrontWork.PagerSearchJsonRESTAdapter();
             this.synchronizer = new FrontWork.JsonRESTSynchronizer();
@@ -300,18 +299,16 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.buttonAccountRealPay, 1, 2);
-            this.tableLayoutPanel4.Controls.Add(this.buttonAccountPay, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.buttonAccountRealPay, 1, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(613, 0);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 4;
+            this.tableLayoutPanel4.RowCount = 3;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 67F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(203, 133);
             this.tableLayoutPanel4.TabIndex = 14;
             // 
@@ -324,30 +321,13 @@
             this.buttonAccountRealPay.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonAccountRealPay.FlatAppearance.BorderSize = 0;
             this.buttonAccountRealPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAccountRealPay.Location = new System.Drawing.Point(29, 69);
+            this.buttonAccountRealPay.Location = new System.Drawing.Point(29, 34);
             this.buttonAccountRealPay.Name = "buttonAccountRealPay";
-            this.buttonAccountRealPay.Size = new System.Drawing.Size(144, 48);
+            this.buttonAccountRealPay.Size = new System.Drawing.Size(144, 61);
             this.buttonAccountRealPay.TabIndex = 2;
-            this.buttonAccountRealPay.Text = "实付同步总账";
+            this.buttonAccountRealPay.Text = "同步到总账";
             this.buttonAccountRealPay.UseVisualStyleBackColor = false;
             this.buttonAccountRealPay.Click += new System.EventHandler(this.buttonAccountRealPay_Click);
-            // 
-            // buttonAccountPay
-            // 
-            this.buttonAccountPay.BackColor = System.Drawing.Color.White;
-            this.buttonAccountPay.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonAccountPay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAccountPay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAccountPay.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonAccountPay.FlatAppearance.BorderSize = 0;
-            this.buttonAccountPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAccountPay.Location = new System.Drawing.Point(29, 15);
-            this.buttonAccountPay.Name = "buttonAccountPay";
-            this.buttonAccountPay.Size = new System.Drawing.Size(144, 48);
-            this.buttonAccountPay.TabIndex = 3;
-            this.buttonAccountPay.Text = "应付同步总账";
-            this.buttonAccountPay.UseVisualStyleBackColor = false;
-            this.buttonAccountPay.Click += new System.EventHandler(this.buttonAccountPay_Click);
             // 
             // basicView1
             // 
@@ -491,6 +471,5 @@
         private FrontWork.BasicView basicView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button buttonAccountRealPay;
-        private System.Windows.Forms.Button buttonAccountPay;
     }
 }

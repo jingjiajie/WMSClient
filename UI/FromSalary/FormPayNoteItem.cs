@@ -49,47 +49,6 @@ namespace WMS.UI.FromSalary
         private void model_SelectionRangeChanged(object sender, ModelSelectionRangeChangedEventArgs e)
         {
             this.UpdateItemState();
-            /*var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row });
-            if (rowData == null) { return; }
-            if ((int)rowData[0]["state"] == 0)
-            {
-                this.model1.Mode = "default";
-                this.basicView1.Mode = "default";
-                this.reoGridView1.Mode = "default";
-                //this.synchronizer.Mode = "default";
-                this.buttonCclcultateItemsTax.Enabled =true;
-                this.buttonCalculateAllTax.Enabled = true;
-                this.buttonRealPayAll.Enabled = true;
-                this.buttonRealPayItems.Enabled =true;
-                this.ButtonAllPerson.Enabled = true;
-                this.toolStripButtonAdd.Enabled =true;
-                this.toolStripButtonDelete.Enabled = true;
-            }
-            else if ((int)rowData[0]["state"] == 1)
-            {
-                this.basicView1.Mode = "pay";
-                this.reoGridView1.Mode = "pay";
-                this.model1.Mode = "pay";
-                //this.synchronizer.Mode = "pay";
-                this.buttonCalculateAllTax.Enabled = false;
-                this.buttonCclcultateItemsTax.Enabled = false;
-                this.ButtonAllPerson.Enabled = false;
-                this.toolStripButtonAdd.Enabled = false;
-                this.toolStripButtonDelete.Enabled = false;
-            }
-            else {
-                this.basicView1.Mode = "payed";
-                this.reoGridView1.Mode = "payed";
-                this.model1.Mode = "payed";
-                //this.synchronizer.Mode = "payed";
-                this.buttonCclcultateItemsTax.Enabled = false;
-                this.buttonCalculateAllTax.Enabled = false;
-                this.buttonRealPayAll.Enabled = false;
-                this.buttonRealPayItems.Enabled = false;
-                this.ButtonAllPerson.Enabled = false;
-                this.toolStripButtonAdd.Enabled = false;
-                this.toolStripButtonDelete.Enabled = false;
-            }*/
         }
 
         private void FormPayNoteItem_Load(object sender, EventArgs e)
@@ -97,8 +56,6 @@ namespace WMS.UI.FromSalary
             this.CenterToScreen();
             Utilities.BindBlueButton(this.buttonCalculateAllTax);
             Utilities.BindBlueButton(this.buttonCclcultateItemsTax);
-            Utilities.BindBlueButton(this.buttonRealPayAll);
-            Utilities.BindBlueButton(this.buttonRealPayItems);
             this.searchView1.AddStaticCondition("payNoteId", payNoteId);
             //设置两个请求参数
             this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
@@ -119,8 +76,6 @@ namespace WMS.UI.FromSalary
                 this.reoGridView1.Mode = "add";
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.buttonCalculateAllTax.Enabled = false;
-                this.buttonRealPayAll.Enabled = false;
-                this.buttonRealPayItems.Enabled = false;
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
@@ -132,64 +87,32 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";           
                 this.buttonCclcultateItemsTax.Enabled = true;
-                this.buttonRealPayItems.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
             }
-            else if ((int)rowData[0]["state"] == 1)
-            {
-                if (this.payNoteState == FormPayNote.CONFIRM_PAY)
-                {
-                    this.basicView1.Mode = "pre-pay";
-                    this.reoGridView1.Mode = "pre-pay";
-                    this.model1.Mode = "pre-pay";
-                    this.buttonCalculateAllTax.Enabled = false;
-                    this.buttonCclcultateItemsTax.Enabled = false;
-                    this.ButtonAllPerson.Enabled = false;
-                    this.toolStripButtonAdd.Enabled = false;
-                    this.toolStripButtonDelete.Enabled = false;
-                    this.buttonRealPayItems.Enabled = true;
-                }
-                else if (this.payNoteState == FormPayNote.WAITING_FOR_CONFIRM) {
-                    this.model1.Mode = "calculate";
-                    this.basicView1.Mode = "calculate";
-                    this.reoGridView1.Mode = "calculate";
-                    this.buttonCclcultateItemsTax.Enabled = true;
-                    this.buttonRealPayItems.Enabled = true;
-                    this.ButtonAllPerson.Enabled = true;
-                    this.toolStripButtonAdd.Enabled = true;
-                    this.toolStripButtonDelete.Enabled = true;
-                }
-            }
             else if ((int)rowData[0]["state"] == 2)
             {
-                //条目已确认实付后根据整单状态分为两种情况
                 if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY)
                 {
+                    //条目已确认实付
                     this.basicView1.Mode = "payed";
                     this.reoGridView1.Mode = "payed";
                     this.model1.Mode = "payed";
                     this.buttonCclcultateItemsTax.Enabled = false;
-                    //this.buttonCalculateAllTax.Enabled = false;
-                    //this.buttonRealPayAll.Enabled = false;
-                    this.buttonRealPayItems.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
                 }
-                else if (this.payNoteState == FormPayNote.CONFIRM_PAY)
+                else if (this.payNoteState == FormPayNote.WAITING_FOR_CONFIRM)
                 {
-                    this.basicView1.Mode = "pay";
-                    this.reoGridView1.Mode = "pay";
-                    this.model1.Mode = "pay";
-                    this.buttonCalculateAllTax.Enabled = false;
-                    //this.buttonCclcultateItemsTax.Enabled = false;
-                    this.ButtonAllPerson.Enabled = false;
+                    //条目已确认实付
+                    this.basicView1.Mode = "pre-pay";
+                    this.reoGridView1.Mode = "pre-pay";
+                    this.model1.Mode = "pre-pay";
+                    this.buttonCclcultateItemsTax.Enabled = true;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
-                    //this.buttonRealPayAll.Enabled = true;
-                    this.buttonRealPayItems.Enabled = true;
                 }
             }
 
@@ -197,25 +120,12 @@ namespace WMS.UI.FromSalary
 
 
         public void UpdateState() {
-            if (this.payNoteState == FormPayNote.CONFIRM_PAY)
-            {
-                this.basicView1.Mode = "pay";
-                this.reoGridView1.Mode = "pay";
-                this.model1.Mode = "pay";
-                this.buttonCalculateAllTax.Enabled = false;
-                this.buttonCclcultateItemsTax.Enabled = false;
-                this.ButtonAllPerson.Enabled = false;
-                this.toolStripButtonAdd.Enabled = false;
-                this.toolStripButtonDelete.Enabled = false;
-            }
-            else if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY) {
+            if (this.payNoteState == FormPayNote.CONFIRM_REAL_PAY) {
                 this.basicView1.Mode = "payed";
                 this.reoGridView1.Mode = "payed";
                 this.model1.Mode = "payed";               
                 this.buttonCclcultateItemsTax.Enabled = false;
                 this.buttonCalculateAllTax.Enabled = false;
-                this.buttonRealPayAll.Enabled = false;
-                this.buttonRealPayItems.Enabled = false;
                 this.ButtonAllPerson.Enabled = false;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
@@ -225,10 +135,8 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";
                 this.model1.Mode = "default";
-                this.buttonCclcultateItemsTax.Enabled = true;
+                //this.buttonCclcultateItemsTax.Enabled = true;
                 this.buttonCalculateAllTax.Enabled = true;
-                this.buttonRealPayAll.Enabled = true;
-                this.buttonRealPayItems.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;              
@@ -286,6 +194,34 @@ namespace WMS.UI.FromSalary
                 this.model1[row, "personId"] = foundPerson["id"];
             }
         }
+
+        private void PreTaxAmountEditEnded([Row]int row, [Data] double preTaxAmount)
+        {
+            double? taxAmount = (double?)this.model1[row, "taxAmount"];
+            if (taxAmount.HasValue == false)
+            {
+              return;
+            }
+            else
+            {
+              this.model1[row, "afterTaxAmount"] = preTaxAmount-taxAmount;
+            }
+        }
+
+        private void TaxAmountEditEnded([Row]int row, [Data] double taxAmount)
+        {
+            double? preTaxAmount = (double?)this.model1[row, "preTaxAmount"];
+            if (preTaxAmount.HasValue == false || preTaxAmount == 0)
+            {
+                return;
+            }
+            else
+            {
+                this.model1[row, "afterTaxAmount"] = preTaxAmount - taxAmount;
+            }
+        }
+
+
 
         private string StateForwardMapper([Data]int state)
         {
@@ -381,13 +317,13 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show(("计算") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (this.judgeAllFinish(payNoteId, CALCULATED_PAY)) {
-                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (this.judgeAllFinish(payNoteId, PAYED)) {
+                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
                 AccountSynchronize accountSynchronize = new AccountSynchronize();
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
-                accountSynchronize.comment = "应付自动同步到总账";
+                accountSynchronize.comment = "薪金自动同步到总账";
                 accountSynchronize.voucherInfo = this.payNoteNo;
                 if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
@@ -395,11 +331,11 @@ namespace WMS.UI.FromSalary
                 try
                 {
 
-                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
                     MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     addFinishedCallback?.Invoke();
-                    this.payNoteState = FormPayNote.CONFIRM_PAY;
+                    this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
                     this.UpdateState();
                     this.searchView1.Search();
                 }
@@ -410,7 +346,7 @@ namespace WMS.UI.FromSalary
                     {
                         message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                     }
-                    MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(("薪金同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -436,14 +372,14 @@ namespace WMS.UI.FromSalary
                 MessageBox.Show(("计算") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (this.judgeAllFinish(payNoteId, CALCULATED_PAY))
+            if (this.judgeAllFinish(payNoteId, PAYED))
             {
-                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到应付总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+                if (MessageBox.Show("本单全部条目已经计算税费，是否直接同步到总账？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
                 AccountSynchronize accountSynchronize = new AccountSynchronize();
                 accountSynchronize.payNoteId = payNoteId;
                 accountSynchronize.personId = ((int)GlobalData.Person["id"]);
                 accountSynchronize.warehouseId = ((int)GlobalData.Warehouse["id"]);
-                accountSynchronize.comment = "应付自动同步到总账";
+                accountSynchronize.comment = "薪金自动同步到总账";
                 accountSynchronize.voucherInfo = this.payNoteNo;
                 if (GlobalData.AccountPeriod == null) { MessageBox.Show("当前会计期间为空，请先检查会计期间！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                 accountSynchronize.accountPeriodId = (int)GlobalData.AccountPeriod["id"];
@@ -451,12 +387,12 @@ namespace WMS.UI.FromSalary
                 try
                 {
 
-                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/confirm_to_account_title";
+                    string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/pay_note/real_pay_to_account_title";
                     RestClient.RequestPost<List<IDictionary<string, object>>>(url,json);
-                    MessageBox.Show("应付同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("薪金同步到总账成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     addFinishedCallback?.Invoke();
                     this.searchView1.Search();
-                    this.payNoteState = FormPayNote.CONFIRM_PAY;
+                    this.payNoteState = FormPayNote.CONFIRM_REAL_PAY;
                     this.UpdateState();
                 }
                 catch (WebException ex)
@@ -466,7 +402,7 @@ namespace WMS.UI.FromSalary
                     {
                         message = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
                     }
-                    MessageBox.Show(("应付同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(("薪金同步到总账") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }

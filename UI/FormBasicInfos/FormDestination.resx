@@ -117,11 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 98</value>
-  </metadata>
+  <data name="configuration1.ConfigurationString" xml:space="preserve">
+    <value>[
+{mode:"default",
+	fields:[
+		{name:"id",type:"int",displayName:"id",visible:false,editable:false},
+       	{name:"name",type:"string",displayName:"名称",visible:true,editable:true}
+	]
+	,"httpAPIs":[
+        {type:"get-count",
+            url:"{$url}/ledger/WMS_Template/destination/count/{{conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$count"},
+		{type:"find",
+            url:"{$url}/ledger/WMS_Template/destination/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
+            method:"GET",
+            responseBody:"$data"},
+		{type:"update",
+            url:"{$url}/ledger/WMS_Template/destination/",
+            method:"PUT",
+            requestBody:"$data"},
+		{type:"add",
+            url:"{$url}/ledger/WMS_Template/destination/",
+            method:"POST",
+            requestBody:"$data"},
+		{type:"remove",
+            url:"{$url}/ledger/WMS_Template/destination/{mapProperty($data,'id')}",
+            method:"DELETE"}
+	]
+}
+]
+
+</value>
+  </data>
   <metadata name="toolStripTop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>138, 98</value>
+    <value>17, 55</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAdd.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -180,55 +210,7 @@
         iovR3dV98MBUdMslfx7WYe1TpaT8Bo0fbiC3qz7PAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="toolStripButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACASURBVDhP3YwxCoAwFEM7dvAAxdkLCb1KR8GbxzbmU1tB
-        ipP4IMtP3nffBhd0GofWvtdkVI1B480DLo3ugaHpHbZXqU+MgPecSWlhY+NtA9YVWBZgnoFpKtaZjJQW
-        NkVOCQihCn0yUu6wNTrJ0PQZLZsHqsaQ8f5BgZbQ6X84dwAtVfApDXgEOwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="configuration1.ConfigurationString" xml:space="preserve">
-    <value>
-[
-{mode:"default",
-     fields:[
-    {name:"id",displayName:"ID",type:"int",visible:false},
-    {name:"supplierNo",displayName:"供应商代码",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
-    {name:"supplierName",displayName:"供应商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
-    {name:"summaryNoteId",displayName:"汇总单ID",type:"int",visible:false},
-    {name:"supplierId",displayName:"供应商ID",type:"int",visible:false},
-    {name:"totalArea",displayName:"单天最大使用面积",type:"double"},
-    {name:"days",displayName:"放置天数",type:"double"},
-    {name:"totalDeliveryAmount",displayName:"出货总次数",type:"double"}
-  
-    //{name:"state",displayName:"状态",type:"int",editable:false,defaultValue:0,forwardMapper:"#StateForwardMapper",backwardMapper:"#StateBackwardMapper"}
-    ],
-httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/count/{{conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$count"},
-		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
-            method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/summary_note_item/{mapProperty($data,'id')}",
-            method:"DELETE"}
-	]
-}
-]</value>
-  </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>264, 98</value>
+    <value>143, 55</value>
   </metadata>
 </root>

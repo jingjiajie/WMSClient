@@ -129,6 +129,9 @@
         {name:"deliverTime",displayName:"发运时间",type:"datetime"},
         {name:"liscensePlateNumber",displayName:"车牌号",type:"string",placeHolder:"必填信息"},
         {name:"driverName",displayName:"司机",type:"string",placeHolder:"必填信息"},
+        {name:"destinationId",displayName:"目的地ID",type:"int",visible:false},
+        {name:"destinationName",displayName:"目的地",type:"string",editEnded:"#destinationNameEditEnded",association:"#destinationNameAssociation"},
+
         {name:"returnNoteNo",displayName:"回单号",type:"string",editEnded:"#returnNoteNoEditEnded",editable:false},
         {name:"returnNoteTime",displayName:"回单时间",type:"datetime",editable:false},
 {name:"type",displayName:"类型",type:"int",values:["合格品出库","不良品出库"],defaultValue:0,editable:false,forwardMapper:"#typeForwardMapper",backwardMapper:"#typeBackwardMapper"},

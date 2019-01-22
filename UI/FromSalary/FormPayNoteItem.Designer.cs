@@ -52,8 +52,6 @@
             this.panelPager = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonRealPayAll = new System.Windows.Forms.Button();
-            this.buttonRealPayItems = new System.Windows.Forms.Button();
             this.reoGridView1 = new FrontWork.ReoGridView();
             this.basicView1 = new FrontWork.BasicView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -70,7 +68,6 @@
             this.panelSearchWidget.SuspendLayout();
             this.panelPager.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -196,7 +193,7 @@
         modeMethodListenerNamesPair5,
         modeMethodListenerNamesPair6};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(65, 102);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // synchronizer
@@ -269,8 +266,6 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.buttonRealPayAll, 1, 1);
-            this.tableLayoutPanel5.Controls.Add(this.buttonRealPayItems, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(765, 0);
@@ -282,40 +277,6 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(191, 200);
             this.tableLayoutPanel5.TabIndex = 5;
-            // 
-            // buttonRealPayAll
-            // 
-            this.buttonRealPayAll.BackColor = System.Drawing.Color.White;
-            this.buttonRealPayAll.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonRealPayAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRealPayAll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonRealPayAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonRealPayAll.FlatAppearance.BorderSize = 0;
-            this.buttonRealPayAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRealPayAll.Location = new System.Drawing.Point(23, 56);
-            this.buttonRealPayAll.Name = "buttonRealPayAll";
-            this.buttonRealPayAll.Size = new System.Drawing.Size(144, 47);
-            this.buttonRealPayAll.TabIndex = 2;
-            this.buttonRealPayAll.Text = "确认整单实付";
-            this.buttonRealPayAll.UseVisualStyleBackColor = false;
-            this.buttonRealPayAll.Click += new System.EventHandler(this.buttonRealPayAll_Click);
-            // 
-            // buttonRealPayItems
-            // 
-            this.buttonRealPayItems.BackColor = System.Drawing.Color.White;
-            this.buttonRealPayItems.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonRealPayItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonRealPayItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonRealPayItems.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonRealPayItems.FlatAppearance.BorderSize = 0;
-            this.buttonRealPayItems.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonRealPayItems.Location = new System.Drawing.Point(23, 3);
-            this.buttonRealPayItems.Name = "buttonRealPayItems";
-            this.buttonRealPayItems.Size = new System.Drawing.Size(144, 47);
-            this.buttonRealPayItems.TabIndex = 3;
-            this.buttonRealPayItems.Text = "确认选中实付";
-            this.buttonRealPayItems.UseVisualStyleBackColor = false;
-            this.buttonRealPayItems.Click += new System.EventHandler(this.buttonRealPayItems_Click);
             // 
             // reoGridView1
             // 
@@ -512,7 +473,6 @@
             this.panelSearchWidget.ResumeLayout(false);
             this.panelPager.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.toolStripTop.ResumeLayout(false);
@@ -549,10 +509,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Button buttonRealPayAll;
-        private System.Windows.Forms.Button buttonRealPayItems;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Button buttonCalculateAllTax;
         private System.Windows.Forms.Button buttonCclcultateItemsTax;
+        private System.Windows.Forms.Button buttonCalculateAllTax;
     }
 }

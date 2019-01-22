@@ -22,6 +22,7 @@ namespace WMS.UI
         public static List<IDictionary<string, object>> AllStorageLocations;
         public static List<IDictionary<string, object>> AllStorageAreas;
         public static List<IDictionary<string, object>> AllPersons;
+        public static List<IDictionary<string, object>> AllDestinations;
         public static List<IDictionary<string, object>> AllPackage;
         public static List<IDictionary<string, object>> AllSalaryType;
         public static List<IDictionary<string, object>> AllSalaryPeriod;

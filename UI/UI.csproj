@@ -129,6 +129,12 @@
       <DependentUpon>FormTransferAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAcccount\TreeViewSelect.cs" />
+    <Compile Include="FormBasicInfos\FormDestination.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasicInfos\FormDestination.Designer.cs">
+      <DependentUpon>FormDestination.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRemind.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +239,12 @@
     </Compile>
     <Compile Include="FormSettlement\AddAllItem.cs" />
     <Compile Include="FormSettlement\CommonData.cs" />
+    <Compile Include="FormSettlement\FormDeliveryDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettlement\FormDeliveryDetails.Designer.cs">
+      <DependentUpon>FormDeliveryDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSettlement\SettlementNoteState.cs" />
     <Compile Include="FormSettlement\FormInvoice.cs">
       <SubType>Form</SubType>
@@ -513,6 +525,9 @@
     <EmbeddedResource Include="FormAcccount\FormTransferAccount.resx">
       <DependentUpon>FormTransferAccount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBasicInfos\FormDestination.resx">
+      <DependentUpon>FormDestination.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormRemind.resx">
       <DependentUpon>FormRemind.cs</DependentUpon>
     </EmbeddedResource>
@@ -564,6 +579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPutAwayNote\FormPutAwayNoteItem.resx">
       <DependentUpon>FormPutAwayNoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettlement\FormDeliveryDetails.resx">
+      <DependentUpon>FormDeliveryDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettlement\FormInvoice.resx">
       <DependentUpon>FormInvoice.cs</DependentUpon>

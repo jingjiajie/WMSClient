@@ -24,7 +24,7 @@ namespace WMS.UI
         {
             return (from s in GlobalData.AllMaterials
                     where s["no"] != null
-                    && s["no"].ToString().StartsWith(str)
+                    && s["no"].ToString().Contains(str)
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["no"]).Distinct().ToArray();
         }
@@ -54,7 +54,7 @@ namespace WMS.UI
         {
             return (from s in GlobalData.AllSuppliers
                     where s["no"] != null 
-                    && s["no"].ToString().StartsWith(str)
+                    && s["no"].ToString().Contains(str)
                     && s["warehouseId"].Equals(GlobalData.Warehouse["id"])
                     select s["no"]).Distinct().ToArray();
         }
@@ -193,6 +193,15 @@ namespace WMS.UI
                     where s["no"] != null
                        && s["no"].ToString().StartsWith(str)
                     select s["no"]).Distinct().ToArray();
+        }
+
+        //目的地名称输入联想
+        private object[] DestinationNameAssociation([Data]string str)
+        {
+            return (from s in GlobalData.AllDestinations
+                    where s["name"] != null
+                       && s["name"].ToString().StartsWith(str)
+                    select s["name"]).Distinct().ToArray();
         }
     }
 }

@@ -37,6 +37,7 @@ namespace WMS.UI
             {
                 MakeTreeNode("基本信息",null,new TreeNode[]{
                     MakeTreeNode("用户管理", "FormPerson"),
+                    MakeTreeNode("目的地管理", "FormDestination"),
                     MakeTreeNode("供应商管理", "FormSupplier"),
                     MakeTreeNode("物料管理", "FormMaterial"),
                     MakeTreeNode("仓库管理", "FormWarehouse"),
@@ -91,6 +92,7 @@ namespace WMS.UI
         {
             formManager.ClearInstances();
             formManager.Set("FormPerson", () => new FormPerson());
+            formManager.Set("FormDestination", () => new FormDestination());
             formManager.Set("FormSupplier", () => new FormSupplier());
             formManager.Set("FormMaterial", () => new FormMaterial());
             formManager.Set("FormWarehouse", () => new FormWarehouse(this.comboBoxWarehouse, this.panelRight, this.treeViewLeft));
@@ -264,6 +266,9 @@ namespace WMS.UI
                         break;
                     case "AllPersons":
                         GlobalData.AllPersons = list;
+                        break;
+                    case "AllDestinations":
+                        GlobalData.AllDestinations = list;
                         break;
                     case "AllPackage":
                         GlobalData.AllPackage = list;
