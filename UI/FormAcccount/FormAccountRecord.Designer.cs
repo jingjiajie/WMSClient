@@ -114,13 +114,13 @@
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 5;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1018, 494);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1357, 618);
             this.tableLayoutPanel2.TabIndex = 12;
             // 
             // toolStrip1
@@ -131,32 +131,32 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 469);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 587);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1018, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1357, 31);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 28);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 22);
+            this.labelStatus.Size = new System.Drawing.Size(69, 28);
             this.labelStatus.Text = "账目记录";
             // 
             // panelPager
             // 
             this.panelPager.Controls.Add(this.pagerView1);
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 439);
+            this.panelPager.Location = new System.Drawing.Point(0, 549);
             this.panelPager.Margin = new System.Windows.Forms.Padding(0);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1018, 30);
+            this.panelPager.Size = new System.Drawing.Size(1357, 38);
             this.panelPager.TabIndex = 5;
             // 
             // pagerView1
@@ -168,7 +168,7 @@
             this.pagerView1.Mode = "default";
             this.pagerView1.Name = "pagerView1";
             this.pagerView1.PageSize = 50;
-            this.pagerView1.Size = new System.Drawing.Size(1018, 30);
+            this.pagerView1.Size = new System.Drawing.Size(1357, 38);
             this.pagerView1.TabIndex = 16;
             // 
             // panelSearchWidget
@@ -178,7 +178,7 @@
             this.panelSearchWidget.Location = new System.Drawing.Point(0, 0);
             this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
             this.panelSearchWidget.Name = "panelSearchWidget";
-            this.panelSearchWidget.Size = new System.Drawing.Size(1018, 25);
+            this.panelSearchWidget.Size = new System.Drawing.Size(1357, 31);
             this.panelSearchWidget.TabIndex = 6;
             // 
             // searchView1
@@ -190,15 +190,15 @@
             this.searchView1.Margin = new System.Windows.Forms.Padding(0);
             this.searchView1.Mode = "default";
             this.searchView1.Name = "searchView1";
-            this.searchView1.Size = new System.Drawing.Size(1018, 25);
+            this.searchView1.Size = new System.Drawing.Size(1357, 31);
             this.searchView1.TabIndex = 2;
             // 
             // configuration1
             // 
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(28, 65);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            this.configuration1.Location = new System.Drawing.Point(37, 81);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormAccountRecord",
         "AssociationMethodListener"};
@@ -206,23 +206,23 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.Size = new System.Drawing.Size(240, 225);
             this.configuration1.TabIndex = 6;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 255F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 340F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.toolStripTop, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 25);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 31);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1018, 25);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1357, 31);
             this.tableLayoutPanel3.TabIndex = 9;
             // 
             // tableLayoutPanel5
@@ -232,18 +232,18 @@
             this.tableLayoutPanel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tableLayoutPanel5.ColumnCount = 4;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Controls.Add(this.comboBoxAccountPeriod, 2, 0);
             this.tableLayoutPanel5.Controls.Add(this.label1, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(763, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(1017, 0);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(255, 25);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(340, 31);
             this.tableLayoutPanel5.TabIndex = 5;
             // 
             // comboBoxAccountPeriod
@@ -252,10 +252,10 @@
             this.comboBoxAccountPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAccountPeriod.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxAccountPeriod.FormattingEnabled = true;
-            this.comboBoxAccountPeriod.Location = new System.Drawing.Point(109, 2);
-            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxAccountPeriod.Location = new System.Drawing.Point(146, 2);
+            this.comboBoxAccountPeriod.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxAccountPeriod.Name = "comboBoxAccountPeriod";
-            this.comboBoxAccountPeriod.Size = new System.Drawing.Size(108, 27);
+            this.comboBoxAccountPeriod.Size = new System.Drawing.Size(143, 31);
             this.comboBoxAccountPeriod.TabIndex = 0;
             this.comboBoxAccountPeriod.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountPeriod_SelectedIndexChanged);
             // 
@@ -265,10 +265,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(37, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(50, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 25);
+            this.label1.Size = new System.Drawing.Size(88, 26);
             this.label1.TabIndex = 2;
             this.label1.Text = "会计期间";
             // 
@@ -291,7 +290,7 @@
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(763, 25);
+            this.toolStripTop.Size = new System.Drawing.Size(1017, 31);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -300,7 +299,7 @@
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 28);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -309,7 +308,7 @@
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 22);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 28);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Visible = false;
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
@@ -319,7 +318,7 @@
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(93, 28);
             this.toolStripButtonAlter.Text = "保存修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -334,7 +333,7 @@
             this.ButtonTransfer.Image = global::WMS.UI.Properties.Resources.cancle;
             this.ButtonTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonTransfer.Name = "ButtonTransfer";
-            this.ButtonTransfer.Size = new System.Drawing.Size(56, 22);
+            this.ButtonTransfer.Size = new System.Drawing.Size(63, 28);
             this.ButtonTransfer.Text = "转账";
             this.ButtonTransfer.Visible = false;
             this.ButtonTransfer.Click += new System.EventHandler(this.ButtonTransfer_Click);
@@ -344,7 +343,7 @@
             this.ButtonWriteOff.Image = global::WMS.UI.Properties.Resources.cancle;
             this.ButtonWriteOff.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonWriteOff.Name = "ButtonWriteOff";
-            this.ButtonWriteOff.Size = new System.Drawing.Size(104, 22);
+            this.ButtonWriteOff.Size = new System.Drawing.Size(123, 28);
             this.ButtonWriteOff.Text = "冲销当前条目";
             this.ButtonWriteOff.Click += new System.EventHandler(this.ButtonWriteOff_Click);
             // 
@@ -353,7 +352,7 @@
             this.toolStripButtonDeficit.Image = global::WMS.UI.Properties.Resources.check;
             this.toolStripButtonDeficit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDeficit.Name = "toolStripButtonDeficit";
-            this.toolStripButtonDeficit.Size = new System.Drawing.Size(80, 22);
+            this.toolStripButtonDeficit.Size = new System.Drawing.Size(93, 28);
             this.toolStripButtonDeficit.Text = "赤字提醒";
             this.toolStripButtonDeficit.Click += new System.EventHandler(this.toolStripButtonDeficit_Click);
             // 
@@ -362,7 +361,7 @@
             this.ButtonAccrualCheck.Image = global::WMS.UI.Properties.Resources.check;
             this.ButtonAccrualCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonAccrualCheck.Name = "ButtonAccrualCheck";
-            this.ButtonAccrualCheck.Size = new System.Drawing.Size(80, 22);
+            this.ButtonAccrualCheck.Size = new System.Drawing.Size(93, 28);
             this.ButtonAccrualCheck.Text = "自动对账";
             this.ButtonAccrualCheck.Click += new System.EventHandler(this.ButtonAccrualCheck_Click);
             // 
@@ -371,7 +370,7 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(92, 22);
+            this.buttonPreview.Size = new System.Drawing.Size(108, 28);
             this.buttonPreview.Text = "查看汇总单";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
@@ -379,16 +378,16 @@
             // 
             this.tableLayoutPanel8.ColumnCount = 2;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 240F));
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanelTreeView, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 50);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 62);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1018, 389);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1357, 487);
             this.tableLayoutPanel8.TabIndex = 11;
             // 
             // tableLayoutPanel9
@@ -402,9 +401,9 @@
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 2;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(838, 389);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(1117, 487);
             this.tableLayoutPanel9.TabIndex = 0;
             // 
             // panel2
@@ -415,22 +414,22 @@
             this.panel2.Controls.Add(this.configuration1);
             this.panel2.Controls.Add(this.reoGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 118);
+            this.panel2.Location = new System.Drawing.Point(0, 148);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(838, 271);
+            this.panel2.Size = new System.Drawing.Size(1117, 339);
             this.panel2.TabIndex = 9;
             // 
             // synchronizer
             // 
             this.synchronizer.Configuration = this.configuration1;
             this.synchronizer.FieldMapping = new FrontWork.JsonRESTSynchronizer.FieldMappingItem[0];
-            this.synchronizer.Location = new System.Drawing.Point(343, 46);
+            this.synchronizer.Location = new System.Drawing.Point(457, 58);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(180, 180);
+            this.synchronizer.Size = new System.Drawing.Size(240, 225);
             this.synchronizer.TabIndex = 10;
             // 
             // model1
@@ -439,12 +438,12 @@
             this.model1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
-            this.model1.Location = new System.Drawing.Point(200, 37);
-            this.model1.Margin = new System.Windows.Forms.Padding(2);
+            this.model1.Location = new System.Drawing.Point(267, 46);
+            this.model1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
-            this.model1.Size = new System.Drawing.Size(109, 116);
+            this.model1.Size = new System.Drawing.Size(145, 145);
             this.model1.TabIndex = 7;
             // 
             // pagerSearchJsonRESTAdapter1
@@ -457,12 +456,12 @@
             orderParamNamesType1.Order = "order";
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
-            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(555, 55);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
+            this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(740, 69);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
-            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(105, 98);
+            this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(140, 122);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 9;
             this.pagerSearchJsonRESTAdapter1.Visible = false;
@@ -477,7 +476,7 @@
             this.reoGridView1.Mode = "default";
             this.reoGridView1.Model = this.model1;
             this.reoGridView1.Name = "reoGridView1";
-            this.reoGridView1.Size = new System.Drawing.Size(838, 271);
+            this.reoGridView1.Size = new System.Drawing.Size(1117, 339);
             this.reoGridView1.TabIndex = 2;
             // 
             // panel1
@@ -487,7 +486,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(838, 118);
+            this.panel1.Size = new System.Drawing.Size(1117, 148);
             this.panel1.TabIndex = 10;
             // 
             // tableLayoutPanel6
@@ -503,7 +502,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(838, 118);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1117, 148);
             this.tableLayoutPanel6.TabIndex = 11;
             // 
             // basicView1
@@ -518,7 +517,7 @@
             this.basicView1.Mode = "default";
             this.basicView1.Model = this.model1;
             this.basicView1.Name = "basicView1";
-            this.basicView1.Size = new System.Drawing.Size(631, 118);
+            this.basicView1.Size = new System.Drawing.Size(841, 148);
             this.basicView1.TabIndex = 18;
             // 
             // tableLayoutPanel7
@@ -526,8 +525,8 @@
             this.tableLayoutPanel7.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel7.ColumnCount = 4;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.Controls.Add(this.textBoxDebitAmount, 2, 2);
             this.tableLayoutPanel7.Controls.Add(this.textBoxCreditAmount, 2, 3);
@@ -536,46 +535,46 @@
             this.tableLayoutPanel7.Controls.Add(this.textBoxBalance, 2, 1);
             this.tableLayoutPanel7.Controls.Add(this.label3, 1, 2);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(631, 0);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(841, 0);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 5;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(207, 118);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(276, 148);
             this.tableLayoutPanel7.TabIndex = 19;
             // 
             // textBoxDebitAmount
             // 
             this.textBoxDebitAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDebitAmount.Enabled = false;
-            this.textBoxDebitAmount.Location = new System.Drawing.Point(87, 46);
-            this.textBoxDebitAmount.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxDebitAmount.Location = new System.Drawing.Point(116, 57);
+            this.textBoxDebitAmount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxDebitAmount.Name = "textBoxDebitAmount";
-            this.textBoxDebitAmount.Size = new System.Drawing.Size(108, 21);
+            this.textBoxDebitAmount.Size = new System.Drawing.Size(143, 25);
             this.textBoxDebitAmount.TabIndex = 0;
             // 
             // textBoxCreditAmount
             // 
             this.textBoxCreditAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxCreditAmount.Enabled = false;
-            this.textBoxCreditAmount.Location = new System.Drawing.Point(87, 76);
-            this.textBoxCreditAmount.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxCreditAmount.Location = new System.Drawing.Point(116, 95);
+            this.textBoxCreditAmount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxCreditAmount.Name = "textBoxCreditAmount";
-            this.textBoxCreditAmount.Size = new System.Drawing.Size(108, 21);
+            this.textBoxCreditAmount.Size = new System.Drawing.Size(143, 25);
             this.textBoxCreditAmount.TabIndex = 1;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(10, 74);
+            this.label4.Location = new System.Drawing.Point(13, 93);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(75, 30);
+            this.label4.Size = new System.Drawing.Size(100, 38);
             this.label4.TabIndex = 3;
             this.label4.Text = "贷方发生额";
             // 
@@ -583,28 +582,30 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(13, 14);
+            this.label5.Location = new System.Drawing.Point(17, 17);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 30);
+            this.label5.Size = new System.Drawing.Size(92, 38);
             this.label5.TabIndex = 4;
             this.label5.Text = "科目总余额";
             // 
             // textBoxBalance
             // 
             this.textBoxBalance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBalance.Location = new System.Drawing.Point(88, 17);
+            this.textBoxBalance.Location = new System.Drawing.Point(117, 21);
+            this.textBoxBalance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxBalance.Name = "textBoxBalance";
-            this.textBoxBalance.Size = new System.Drawing.Size(106, 21);
+            this.textBoxBalance.Size = new System.Drawing.Size(141, 25);
             this.textBoxBalance.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(10, 44);
+            this.label3.Location = new System.Drawing.Point(13, 55);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 30);
+            this.label3.Size = new System.Drawing.Size(100, 38);
             this.label3.TabIndex = 2;
             this.label3.Text = "借方发生额";
             // 
@@ -615,13 +616,13 @@
             this.tableLayoutPanelTreeView.Controls.Add(this.panelTreeCheck, 0, 0);
             this.tableLayoutPanelTreeView.Controls.Add(this.panel4, 0, 1);
             this.tableLayoutPanelTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelTreeView.Location = new System.Drawing.Point(838, 0);
+            this.tableLayoutPanelTreeView.Location = new System.Drawing.Point(1117, 0);
             this.tableLayoutPanelTreeView.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelTreeView.Name = "tableLayoutPanelTreeView";
             this.tableLayoutPanelTreeView.RowCount = 2;
-            this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanelTreeView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelTreeView.Size = new System.Drawing.Size(180, 389);
+            this.tableLayoutPanelTreeView.Size = new System.Drawing.Size(240, 487);
             this.tableLayoutPanelTreeView.TabIndex = 1;
             // 
             // panelTreeCheck
@@ -633,15 +634,16 @@
             this.panelTreeCheck.Location = new System.Drawing.Point(0, 0);
             this.panelTreeCheck.Margin = new System.Windows.Forms.Padding(0);
             this.panelTreeCheck.Name = "panelTreeCheck";
-            this.panelTreeCheck.Size = new System.Drawing.Size(180, 50);
+            this.panelTreeCheck.Size = new System.Drawing.Size(240, 62);
             this.panelTreeCheck.TabIndex = 0;
             // 
             // checkBoxOtherTitle
             // 
             this.checkBoxOtherTitle.AutoSize = true;
-            this.checkBoxOtherTitle.Location = new System.Drawing.Point(88, 17);
+            this.checkBoxOtherTitle.Location = new System.Drawing.Point(117, 21);
+            this.checkBoxOtherTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxOtherTitle.Name = "checkBoxOtherTitle";
-            this.checkBoxOtherTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOtherTitle.Size = new System.Drawing.Size(89, 19);
             this.checkBoxOtherTitle.TabIndex = 1;
             this.checkBoxOtherTitle.Text = "对方科目";
             this.checkBoxOtherTitle.UseVisualStyleBackColor = true;
@@ -652,9 +654,10 @@
             this.checkBoxOwnTitle.AutoSize = true;
             this.checkBoxOwnTitle.Checked = true;
             this.checkBoxOwnTitle.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOwnTitle.Location = new System.Drawing.Point(7, 17);
+            this.checkBoxOwnTitle.Location = new System.Drawing.Point(9, 21);
+            this.checkBoxOwnTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxOwnTitle.Name = "checkBoxOwnTitle";
-            this.checkBoxOwnTitle.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxOwnTitle.Size = new System.Drawing.Size(89, 19);
             this.checkBoxOwnTitle.TabIndex = 0;
             this.checkBoxOwnTitle.Text = "己方科目";
             this.checkBoxOwnTitle.UseVisualStyleBackColor = true;
@@ -664,10 +667,10 @@
             // 
             this.panel4.Controls.Add(this.treeViewAccountTitle);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(0, 50);
+            this.panel4.Location = new System.Drawing.Point(0, 62);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(180, 339);
+            this.panel4.Size = new System.Drawing.Size(240, 425);
             this.panel4.TabIndex = 1;
             // 
             // treeViewAccountTitle
@@ -676,7 +679,7 @@
             this.treeViewAccountTitle.Location = new System.Drawing.Point(0, 0);
             this.treeViewAccountTitle.Margin = new System.Windows.Forms.Padding(0);
             this.treeViewAccountTitle.Name = "treeViewAccountTitle";
-            this.treeViewAccountTitle.Size = new System.Drawing.Size(180, 339);
+            this.treeViewAccountTitle.Size = new System.Drawing.Size(240, 425);
             this.treeViewAccountTitle.TabIndex = 2;
             this.treeViewAccountTitle.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAccountTitle_AfterSelect);
             // 
@@ -686,11 +689,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 494);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1357, 618);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
             // miniToolStrip
@@ -710,11 +714,12 @@
             // 
             // FormAccountRecord
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1018, 494);
+            this.ClientSize = new System.Drawing.Size(1357, 618);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormAccountRecord";
             this.Text = "FormAccountRecord";
             this.Load += new System.EventHandler(this.FormAccountRecord_Load);
