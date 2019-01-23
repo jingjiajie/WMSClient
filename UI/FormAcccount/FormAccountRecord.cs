@@ -89,6 +89,23 @@ namespace WMS.UI.FormAcccount
             }
         }
 
+        private void PersonEditEnded(int row, string personName)
+        {
+            this.model1[row, "personId"] = 0;//先清除ID
+            if (string.IsNullOrWhiteSpace(personName)) return;
+            var foundPersons = (from s in GlobalData.AllPersons
+                                where s["name"]?.ToString() == personName
+                                select s).ToArray();
+            if (foundPersons.Length != 1) goto FAILED;
+            this.model1[row, "personId"] = (int)foundPersons[0]["id"];
+            this.model1[row, "personName"] = foundPersons[0]["name"];
+            return;
+
+            FAILED:
+            MessageBox.Show($"人员\"{personName}\"不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
         private void FormAccountRecord_Load(object sender, EventArgs e)
         {
             GlobalData.AccountTitle = null;
@@ -139,14 +156,6 @@ namespace WMS.UI.FormAcccount
             }
             T.Stop();
         }
-
-        //private void Timerup(object sender, System.Timers.ElapsedEventArgs e)
-        //{
-        //    if (GlobalData.REMAINDENABLE)
-        //    {
-        //        this.DeficitCheck();
-        //    }
-        //}
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
