@@ -383,5 +383,12 @@ namespace WMS.UI
                 this.SetPaperSizeAll(this.textBoxPaperSize.Text);
             }
         }
+
+        public void SetAllCowsHeigth(int row,int rowCounts,ushort height) {
+            foreach (Worksheet worksheet in this.reoGridControlMain.Worksheets) { 
+                worksheet.SetRowsHeight(row, rowCounts, height);
+            }
+
+        }
     }
 }
