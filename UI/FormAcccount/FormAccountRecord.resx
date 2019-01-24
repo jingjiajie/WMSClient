@@ -152,7 +152,7 @@
 {name:"personName",displayName:"经手人",type:"string",association:"#personNameAssociation"},
 {name:"accountPeriodName",displayName:"期间名称",type:"string"},
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-
+{name:"personName",displayName:"经手人",type:"string",association:"#personAssociation",editEnded:"#personEditEnded"},
 
     ],
 httpAPIs:[
