@@ -163,6 +163,38 @@ namespace WMS.UI.FormSettlement
             var a1 = new FormDeliveryDetails(rowData);
             a1.Show();
         }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的备货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<int> ids = new List<int>();
+            for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            {
+                int curRow = this.model1.SelectionRange.Row + i;
+                if (this.model1[curRow, "id"] == null) continue;
+                ids.Add((int)this.model1[curRow, "id"]);
+            }
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string strIDs = serializer.Serialize(ids);
+
+            var previewData = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/WMS_Template/summary_note_item/preview/" + strIDs);
+            if (previewData == null) return;
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("查看物流详情");
+            foreach (IDictionary<string, object> entryAndItem in previewData)
+            {
+                IDictionary<string, object> summaryNoteItem = (IDictionary<string, object>)entryAndItem["summaryNoteItem"];
+                object[] deliveryAmountDetails = (object[])entryAndItem["deliveryAmountDetails"];
+                string no = (string)summaryNoteItem["no"];
+                if (!formPreviewExcel.AddPatternTable("Excel/TransferOrderNote.xlsx", no)) return;
+                formPreviewExcel.AddData("summaryNoteItem", summaryNoteItem, no);
+                formPreviewExcel.AddData("deliveryAmountDetails", deliveryAmountDetails, no);
+            }
+            formPreviewExcel.Show();
+        }
     }
 
     public class summaryNoteItemState
