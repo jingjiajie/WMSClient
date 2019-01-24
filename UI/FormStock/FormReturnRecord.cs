@@ -15,5 +15,13 @@ namespace WMS.UI.FormStock
         {
             InitializeComponent();
         }
+
+        private void FormReturnRecord_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+            this.synchronizer.SetRequestParameter("$url", Defines.ServerURL);
+            this.synchronizer.SetRequestParameter("$accountBook", GlobalData.AccountBook);
+            this.searchView1.Search();
+        }
     }
 }
