@@ -313,6 +313,12 @@
     <Compile Include="FormStock\FormAddStockTakingOrderItemsBySupply.Designer.cs">
       <DependentUpon>FormAddStockTakingOrderItemsBySupply.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStock\FormReturnRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStock\FormReturnRecord.Designer.cs">
+      <DependentUpon>FormReturnRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStock\FormReturnSupply.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -615,6 +621,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormAddStockTakingOrderItemsBySupply.resx">
       <DependentUpon>FormAddStockTakingOrderItemsBySupply.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStock\FormReturnRecord.resx">
+      <DependentUpon>FormReturnRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStock\FormReturnSupply.resx">
       <DependentUpon>FormReturnSupply.cs</DependentUpon>
