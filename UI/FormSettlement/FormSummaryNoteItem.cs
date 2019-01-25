@@ -161,6 +161,10 @@ namespace WMS.UI.FormSettlement
             }
             var rowData = this.model1.GetRows(new int[] { this.model1.SelectionRange.Row })[0];
             var a1 = new FormDeliveryDetails(rowData);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.searchView1.Search();
+            });
             a1.Show();
         }
 

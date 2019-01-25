@@ -143,8 +143,6 @@ namespace WMS.UI.FormAcccount
             T.Interval=100;
             T.Tick += new EventHandler(t_tick);
             T.Start();
-            //timer.Elapsed += new System.Timers.ElapsedEventHandler(Timerup);
-            //timer.Start();
 
         }
 

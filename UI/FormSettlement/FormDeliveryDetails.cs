@@ -13,6 +13,7 @@ namespace WMS.UI.FormSettlement
     public partial class FormDeliveryDetails : Form
     {
         private IDictionary<string, object> summaryNoteItem = null;
+        private Action addFinishedCallback = null;
         public FormDeliveryDetails(IDictionary<string, object> summaryNoteItem)
         {
             MethodListenerContainer.Register(this);
@@ -52,6 +53,18 @@ namespace WMS.UI.FormSettlement
             this.model1.RemoveSelectedRows();
         }
 
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
+
+        private void FormDeliveryDetailsClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
+        }
         //===========为了实现一个看起来天经地义的交互逻辑=========
 
         private void SupplierNoEditEnded([Row]int row)

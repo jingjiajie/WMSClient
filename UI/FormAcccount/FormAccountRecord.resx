@@ -149,10 +149,9 @@
 
 {name:"comment",displayName:"备注",type:"string"},
 {name:"personId",displayName:"经手人ID",type:"int",visible:false},
-{name:"personName",displayName:"经手人",type:"string",association:"#personNameAssociation"},
+{name:"personName",displayName:"经手人",type:"string",association:"#personAssociation",editEnded:"#personEditEnded"},
 {name:"accountPeriodName",displayName:"期间名称",type:"string"},
 {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-{name:"personName",displayName:"经手人",type:"string",association:"#personAssociation",editEnded:"#personEditEnded"},
 
     ],
 httpAPIs:[
