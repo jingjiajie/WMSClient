@@ -82,7 +82,7 @@
             this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
         modeMethodListenerNamesPair1};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(165, 125);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 1;
             // 
             // model1
@@ -150,7 +150,7 @@
             this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
-            this.pagerSearchJsonRESTAdapter1.SearchView = null;
+            this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
             this.pagerSearchJsonRESTAdapter1.Size = new System.Drawing.Size(175, 144);
             this.pagerSearchJsonRESTAdapter1.Synchronizer = this.synchronizer;
             this.pagerSearchJsonRESTAdapter1.TabIndex = 4;
@@ -165,7 +165,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(147, 112);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 3;
             // 
             // reoGridView1
@@ -252,6 +252,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormReturnRecord";
             this.Text = "退货记录";
+            this.Load += new System.EventHandler(this.FormReturnRecord_Load);
             this.panelPager.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
