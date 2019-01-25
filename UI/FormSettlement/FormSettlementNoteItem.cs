@@ -242,5 +242,46 @@ namespace WMS.UI.FormSettlement
                 MessageBox.Show(("选中条目确认") + "失败：" + message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            if (this.model1.SelectionRange == null)
+            {
+                MessageBox.Show("请选择要预览的结算条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项结算条目查看详情页！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            //List<int> ids = new List<int>();
+            //for (int i = 0; i < this.model1.SelectionRange.Rows; i++)
+            //{
+            //    int curRow = this.model1.SelectionRange.Row + i;
+            //    if (this.model1[curRow, "id"] == null) continue;
+            //    ids.Add((int)this.model1[curRow, "id"]);
+            //}
+            int id = (int)this.model1[this.model1.SelectionRange.Row, "id"];
+            var storageCharge= this.model1[this.model1.SelectionRange.Row, "storageCharge"];
+            var logisticFee = this.model1[this.model1.SelectionRange.Row, "logisticFee"];
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //string strIDs = serializer.Serialize(ids);
+
+            var previewData = RestClient.Get<List<object>>(Defines.ServerURL + "/warehouse/WMS_Template/summary_note/find/" + id);
+            if (previewData == null) return;
+            var priceDetails = previewData.ToArray();
+            StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("查看物流详情");
+
+
+            string no ="查看结算详情";
+                if (!formPreviewExcel.AddPatternTable("Excel/SettlementDetails.xlsx", no)) return;
+                formPreviewExcel.AddData("priceDetails", priceDetails, no);
+            formPreviewExcel.AddData("storageCharge", storageCharge, no);
+            formPreviewExcel.AddData("logisticFee", logisticFee, no);
+
+
+            formPreviewExcel.Show();
+        }
     }
 }
