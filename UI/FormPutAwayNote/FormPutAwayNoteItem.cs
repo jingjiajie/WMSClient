@@ -51,6 +51,7 @@ namespace WMS.UI
             int row = 1;
             try
             {
+                if (string.IsNullOrEmpty(s)) { return; }
                 row = Convert.ToInt32(s);
             }
             catch
