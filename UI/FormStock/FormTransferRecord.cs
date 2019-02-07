@@ -113,21 +113,37 @@ namespace WMS.UI.FormStock
                 }
                 sb.Append("[" + "个" + "(" + "1" + ")]");
                 return sb.ToString();
-            }   
+            }
+            //else
+            //{
+            //    sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
+            //    if (this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length > 0)
+            //    {
+            //        sb.Append(this.addString( this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length));
+            //    }
+            //    sb.Append("-->");              
+            //    sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmount.Value/ unitAmount.Value));
+            //    if (this.sourceLength2 - Utilities.DoubleToString(sourceStorageLocationNewAmount.Value / unitAmount.Value).Length > 0)
+            //    {
+            //        sb.Append(this.addString( this.sourceLength2 - Utilities.DoubleToString(sourceStorageLocationNewAmount.Value / unitAmount.Value).Length));
+            //    }
+            //    sb.Append("[" +sourceStorageLocationUnit+ "(" + unitAmount + ")]");
+            //    return sb.ToString();
+            //}
             else
             {
-                sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
-                if (this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length > 0)
+                sb.Append(Utilities.DoubleToString(amount));
+                if (this.sourceLength1 - Utilities.DoubleToString(amount).Length > 0)
                 {
-                    sb.Append(this.addString( this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length));
+                    sb.Append(this.addString(this.sourceLength1 - Utilities.DoubleToString(amount).Length));
                 }
-                sb.Append("-->");              
-                sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmount.Value/ unitAmount.Value));
-                if (this.sourceLength2 - Utilities.DoubleToString(sourceStorageLocationNewAmount.Value / unitAmount.Value).Length > 0)
+                sb.Append("-->");
+                sb.Append(Utilities.DoubleToString(sourceStorageLocationNewAmount.Value));
+                if (this.sourceLength2 - Utilities.DoubleToString(sourceStorageLocationNewAmount.Value).Length > 0)
                 {
-                    sb.Append(this.addString( this.sourceLength2 - Utilities.DoubleToString(sourceStorageLocationNewAmount.Value / unitAmount.Value).Length));
+                    sb.Append(this.addString(this.sourceLength2 - Utilities.DoubleToString(sourceStorageLocationNewAmount.Value).Length));
                 }
-                sb.Append("[" +sourceStorageLocationUnit+ "(" + unitAmount + ")]");
+                sb.Append("[" + sourceStorageLocationUnit + "(" + unitAmount + ")]");
                 return sb.ToString();
             }
         }
@@ -157,23 +173,39 @@ namespace WMS.UI.FormStock
                 sb.Append("[" + "个" + "(" + "1" + ")]");
                 return sb.ToString();
             }
+            //else
+            //{
+            //    sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
+            //    if (this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length > 0)
+            //    {
+            //        sb.Append(this.addString(this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length));
+            //    }
+            //    sb.Append("-->");
+            //    sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
+            //    if (this.sourceLength2 - Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value).Length > 0)
+            //    {
+            //        sb.Append(this.addString( this.sourceLength2 - Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value).Length));
+            //    }
+            //    sb.Append("[" + targetStorageLocationUnit + "(" + unitAmount + ")]");
+            //    return sb.ToString();
+            //}
             else
             {
-                sb.Append(Utilities.DoubleToString(amount / unitAmount.Value));
-                if (this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length > 0)
+                sb.Append(Utilities.DoubleToString(amount));
+                if (this.sourceLength1 - Utilities.DoubleToString(amount).Length > 0)
                 {
-                    sb.Append(this.addString(this.sourceLength1 - Utilities.DoubleToString(amount / unitAmount.Value).Length));
+                    sb.Append(this.addString(this.sourceLength1 - Utilities.DoubleToString(amount).Length));
                 }
                 sb.Append("-->");
-                sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value));
-                if (this.sourceLength2 - Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value).Length > 0)
+                sb.Append(Utilities.DoubleToString(targetStorageLocationNewAmount.Value));
+                if (this.sourceLength2 - Utilities.DoubleToString(targetStorageLocationNewAmount.Value).Length > 0)
                 {
-                    sb.Append(this.addString( this.sourceLength2 - Utilities.DoubleToString(targetStorageLocationNewAmount.Value / unitAmount.Value).Length));
+                    sb.Append(this.addString(this.sourceLength2 - Utilities.DoubleToString(targetStorageLocationNewAmount.Value).Length));
                 }
                 sb.Append("[" + targetStorageLocationUnit + "(" + unitAmount + ")]");
                 return sb.ToString();
             }
-         
+
         }
 
         private string OriginalAmountForwardMapper([Data]double amount, [Row]int row)
@@ -198,7 +230,7 @@ namespace WMS.UI.FormStock
             }
             else
             {
-                return Utilities.DoubleToString(amount / unitAmount.Value);
+                return Utilities.DoubleToString(amount);
             }
         }
 
