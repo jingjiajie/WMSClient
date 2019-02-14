@@ -214,6 +214,7 @@ namespace WMS.UI
             if (string.IsNullOrWhiteSpace(supplySerialNo)) return;
             var foundSupplies = (from m in GlobalData.AllSupplies
                                  where supplySerialNo == (string)m["serialNo"]
+                                 && (int)m["supplierId"] == (int)model[row, "supplierId"]
                                  select m).ToArray();
             if (foundSupplies.Length != 1)
             {

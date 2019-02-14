@@ -87,6 +87,7 @@ namespace WMS.UI.FromSalary
                 this.basicView1.Mode = "default";
                 this.reoGridView1.Mode = "default";           
                 this.buttonCclcultateItemsTax.Enabled = true;
+                this.buttonCalculateAllTax.Enabled = true;
                 this.ButtonAllPerson.Enabled = true;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonDelete.Enabled = true;
@@ -100,6 +101,7 @@ namespace WMS.UI.FromSalary
                     this.reoGridView1.Mode = "payed";
                     this.model1.Mode = "payed";
                     this.buttonCclcultateItemsTax.Enabled = false;
+                    this.buttonCalculateAllTax.Enabled = false;
                     this.ButtonAllPerson.Enabled = false;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
@@ -111,6 +113,7 @@ namespace WMS.UI.FromSalary
                     this.reoGridView1.Mode = "pre-pay";
                     this.model1.Mode = "pre-pay";
                     this.buttonCclcultateItemsTax.Enabled = true;
+                    this.buttonCalculateAllTax.Enabled = true;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
                 }
@@ -229,7 +232,7 @@ namespace WMS.UI.FromSalary
             {
                 case 0: return "待计算应付";
                 case 1: return "已计算应付";
-                case 2: return "已付款";
+                case 2: return "已计算";
                 default: return "未知状态";
             }
         }
@@ -240,7 +243,7 @@ namespace WMS.UI.FromSalary
             {
                 case "待计算应付": return 0;
                 case "已计算应付": return 1;
-                case "已付款": return 2;
+                case "已计算": return 2;
                 default: return -1;
             }
         }

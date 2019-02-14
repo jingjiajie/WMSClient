@@ -172,7 +172,12 @@ namespace WMS.UI.FormSettlement
         {
             if (this.model1.SelectionRange == null)
             {
-                MessageBox.Show("请选择要预览的备货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择要预览的汇总单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (this.model1.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项汇总单条目查看物流详情！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             List<int> ids = new List<int>();
@@ -192,8 +197,8 @@ namespace WMS.UI.FormSettlement
             {
                 IDictionary<string, object> summaryNoteItem = (IDictionary<string, object>)entryAndItem["summaryNoteItem"];
                 object[] deliveryAmountDetails = (object[])entryAndItem["deliveryAmountDetails"];
-                string no = (string)summaryNoteItem["no"];
-                if (!formPreviewExcel.AddPatternTable("Excel/TransferOrderNote.xlsx", no)) return;
+                string no = (string)summaryNoteItem["supplierName"];
+                if (!formPreviewExcel.AddPatternTable("Excel/DeliveryDetails.xlsx", no)) return;
                 formPreviewExcel.AddData("summaryNoteItem", summaryNoteItem, no);
                 formPreviewExcel.AddData("deliveryAmountDetails", deliveryAmountDetails, no);
             }
