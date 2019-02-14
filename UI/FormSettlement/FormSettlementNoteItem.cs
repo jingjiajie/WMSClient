@@ -265,6 +265,7 @@ namespace WMS.UI.FormSettlement
             int id = (int)this.model1[this.model1.SelectionRange.Row, "id"];
             var storageCharge= this.model1[this.model1.SelectionRange.Row, "storageCharge"];
             var logisticFee = this.model1[this.model1.SelectionRange.Row, "logisticFee"];
+            var wholeFee = (double)storageCharge + (double)logisticFee;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             //string strIDs = serializer.Serialize(ids);
 
@@ -279,6 +280,7 @@ namespace WMS.UI.FormSettlement
                 formPreviewExcel.AddData("priceDetails", priceDetails, no);
             formPreviewExcel.AddData("storageCharge", storageCharge, no);
             formPreviewExcel.AddData("logisticFee", logisticFee, no);
+            formPreviewExcel.AddData("wholeFee", wholeFee, no);
 
 
             formPreviewExcel.Show();
