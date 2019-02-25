@@ -117,75 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
-  </metadata>
   <data name="configuration1.ConfigurationString" xml:space="preserve">
     <value>
 [
     {mode:"default",
      fields:[
-        {name:"id",displayName:"ID",type:"int",visible:false},       
-        {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false}, 
-        {name:"serialNo",displayName:"序号",type:"string",editable:false},      
-        {name:"no",displayName:"供应商代号",type:"string",editable:false},
-        {name:"name",displayName:"供应商名",type:"string",editable:false},
-        {name:"supplierPassward",displayName:"供应商密码",type:"string",placeHolder:"12345678"},
-        {name:"fullName",displayName:"供应商全名",type:"string",editable:false},        
-        {name:"contractNo",displayName:"合同编码",type:"string",editable:false},
-        {name:"enterpriseCode",displayName:"企业编码",type:"string",editable:false},
-        {name:"contractStartTime",displayName:"合同生效时间",type:"DateTime",editable:false},
-        {name:"contractEndTime",displayName:"合同截止时间",type:"DateTime",editable:false},
-        {name:"invoiceDelayMonth",displayName:"开票延迟月",type:"double",editable:false},
-        {name:"balanceDelayMonth",displayName:"结算延迟月",type:"double",editable:false},
-        {name:"basicArea",displayName:"基础面积",type:"double"},
-        {name:"fixedStorageSingleCost",displayName:"仓储单价费用",type:"double"},
-        {name:"realArea",displayName:"实际面积",type:"string"},
-        {name:"taxpayerNumber",displayName:"纳税人识别号",type:"string",editable:false},
-        {name:"address",displayName:"地址",type:"string",editable:false},
-        {name:"tel",displayName:"电话",type:"string",editable:false},
-        {name:"bankName",displayName:"开户行",type:"string",editable:false},
-        {name:"bankAccount",displayName:"账号",type:"string"},
-        {name:"zipCode",displayName:"邮编",type:"string",editable:false},
-        {name:"recipientName",displayName:"收件人",type:"string",editable:false},
-        {name:"contractState",displayName:"合同状态",values:["已签合同","未签合同"],editable:false},
-        {name:"isHistory",displayName:"是否历史信息",type:"int",visible:false},
-        {name:"warehouseName",displayName:"仓库名",type:"string",visible:false},
-        {name:"Enabled",displayName:"是否启用",type:"int",visible:false},
-        {name:"newestSupplierID",displayName:"最新供应商信息ID",type:"int",visible:false},
-        {name:"createPersonId",displayName:"创建人ID",type:"int",visible:false},
-        {name:"createPersonName",displayName:"创建人名称",type:"string",editable:false,placeHolder:"留空自动生成"},
-        {name:"createTime",displayName:"创建时间",type:"datetime",editable:false},
-        {name:"lastUpdatePersonId",displayName:"最后修改用户ID",type:"int",visible:false},
-        {name:"enabled",displayName:"是否启用",type:"int",values:["启用","禁用"],defaultValue:1,forwardMapper:"#EnableForwardMapper",backwardMapper:"#EnableBackwardMapper"},
-        {name:"lastUpdatePersonName",displayName:"最后修改用户名称",type:"string",editable:false,placeHolder:"修改时自动生成"},     
-        {name:"lastUpdateTime",displayName:"最后修改时间",type:"datetime",editable:false,placeHolder:"修改时自动生成"}
+        {name:"id",displayName:"ID",type:"int",visible:false},              
+        {name:"warehouseId",displayName:"仓库ID",type:"int",defaultValue:"#warehouseIdDefaultValue",visible:false},
+        {name:"supplierNo",displayName:"供应商代号",type:"string",association:"#supplierNoAssociation",editEnded:"#supplierNoEditEnded"},
+        {name:"supplierName",displayName:"供货商名称",type:"string",association:"#supplierNameAssociation",editEnded:"#supplierNameEditEnded"},
+        {name:"supplyId",displayName:"供货ID",type:"int",visible:false,defaultValue:0},
+        {name:"materialNo",displayName:"物料代号",type:"string",association:"#materialNoAssociation",editEnded:"#materialNoEditEnded"},
+        {name:"materialName",displayName:"物料名称",type:"string",association:"#materialNameAssociation",editEnded:"#materialNameEditEnded"},
+        {name:"materialProductLine",displayName:"物料系列",type:"string",association:"#materialProductLineAssociation",editEnded:"#materialProductLineEditEnded"},
+        {name:"amount",displayName:"数量",type:"double",placeHolder:"必填项",defaultValue:0},
+        {name:"time",displayName:"退货时间",type:"datetime"},
+        {name:"comment",displayName:"备注",type:"string"}
+       
     ],
-    httpAPIs:[
-        {type:"get-count",
-            url:"{$url}/warehouse/{$accountBook}/supplier/count/{{conditions:$conditions,orders:$orders}}/{$history}",
+httpAPIs:[
+		{type:"get-count",
+            url:"{$url}/warehouse/{$accountBook}/return_record/count/{{conditions:$conditions,orders:$orders}}",
             method:"GET",
             responseBody:"$count"},
 		{type:"find",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}/{$history}",
+            url:"{$url}/warehouse/{$accountBook}/return_record/{{page:$page,pageSize:$pageSize,conditions:$conditions,orders:$orders}}",
             method:"GET",
-            responseBody:"$data"},
-		{type:"update",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{$save}",
-            method:"PUT",
-            requestBody:"$data"},
-		{type:"add",
-            url:"{$url}/warehouse/{$accountBook}/supplier/",
-            method:"POST",
-            requestBody:"$data"},
-		{type:"remove",
-            url:"{$url}/warehouse/{$accountBook}/supplier/{mapProperty($data,'id')}",
-            method:"DELETE"}
+            responseBody:"$data"}
 	]
     }
 ]</value>
   </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>253, 56</value>
+    <value>656, 101</value>
   </metadata>
 </root>

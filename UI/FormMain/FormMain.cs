@@ -60,6 +60,7 @@ namespace WMS.UI
                     }),
                 MakeTreeNode("库存管理", null, new TreeNode[]{
                     MakeTreeNode("库存批次", "FormStockRecord"),
+                    MakeTreeNode("退货记录", "FormReturnRecord"),
                     MakeTreeNode("库存盘点","FormStockTakingOrder"),
                     MakeTreeNode("移位记录", "FormTransferRecord")
                     }),
@@ -122,6 +123,7 @@ namespace WMS.UI
             formManager.Set("FormSettlementNote", () => new FormSettlement.FormSettlementNote());
             formManager.Set("FormInvoice", () => new FormSettlement.FormInvoice());
             formManager.Set("FormPrice", () => new FormSettlement.FormPrice());
+            formManager.Set("FormReturnRecord", () => new FormReturnRecord());
         }
 
         private static TreeNode MakeTreeNode(string text, string formName, TreeNode[] subNodes = null)

@@ -64,7 +64,7 @@ namespace WMS.UI.FormAcccount
                 string url = Defines.ServerURL + "/warehouse/" + GlobalData.AccountBook + "/account_record/summary_all_title";
                 var returnSummaryList=RestClient.RequestPost<List<object>>(url, body);
                 var returnSummarys= returnSummaryList.ToArray();
-                StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("移库单预览");
+                StandardFormPreviewExcel formPreviewExcel = new StandardFormPreviewExcel("账目汇总");
 
                 
                 if (!formPreviewExcel.AddPatternTable("Excel/AccountRecord.xlsx", no)) return;
