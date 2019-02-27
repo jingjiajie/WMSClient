@@ -125,7 +125,7 @@
             this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
             this.configuration1.Location = new System.Drawing.Point(137, 51);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
             modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
         "FormTransferOrder",
         "AssociationMethodListener"};
@@ -138,7 +138,7 @@
         modeMethodListenerNamesPair1,
         modeMethodListenerNamesPair2};
             this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(135, 144);
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
             this.configuration1.TabIndex = 11;
             // 
             // panelPagerWidget
@@ -146,7 +146,7 @@
             this.panelPagerWidget.Controls.Add(this.pagerView1);
             this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPagerWidget.Location = new System.Drawing.Point(2, 394);
-            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2);
             this.panelPagerWidget.Name = "panelPagerWidget";
             this.panelPagerWidget.Size = new System.Drawing.Size(848, 26);
             this.panelPagerWidget.TabIndex = 7;
@@ -220,7 +220,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -259,7 +259,6 @@
             // 
             // toolStripAutoTransfer
             // 
-            this.toolStripAutoTransfer.Enabled = false;
             this.toolStripAutoTransfer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoTransfer.Image")));
             this.toolStripAutoTransfer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripAutoTransfer.Name = "toolStripAutoTransfer";
@@ -343,7 +342,7 @@
             this.model1.Configuration = this.configuration1;
             this.model1.Font = new System.Drawing.Font("宋体", 10F);
             this.model1.Location = new System.Drawing.Point(321, 45);
-            this.model1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.model1.Margin = new System.Windows.Forms.Padding(2);
             this.model1.Mode = "default";
             this.model1.Name = "model1";
             this.model1.SelectionRange = null;
@@ -378,7 +377,7 @@
             apiParamNamesType1.OrderParamNames = orderParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.APIFieldNames = apiParamNamesType1;
             this.pagerSearchJsonRESTAdapter1.Location = new System.Drawing.Point(638, 71);
-            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pagerSearchJsonRESTAdapter1.Margin = new System.Windows.Forms.Padding(2);
             this.pagerSearchJsonRESTAdapter1.Name = "pagerSearchJsonRESTAdapter1";
             this.pagerSearchJsonRESTAdapter1.PagerView = this.pagerView1;
             this.pagerSearchJsonRESTAdapter1.SearchView = this.searchView1;
@@ -396,7 +395,7 @@
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.model1;
             this.synchronizer.Name = "synchronizer";
-            this.synchronizer.Size = new System.Drawing.Size(135, 144);
+            this.synchronizer.Size = new System.Drawing.Size(180, 180);
             this.synchronizer.TabIndex = 13;
             // 
             // reoGridView1
@@ -419,7 +418,7 @@
             this.reoGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridView2.Font = new System.Drawing.Font("黑体", 11F);
             this.reoGridView2.Location = new System.Drawing.Point(0, 0);
-            this.reoGridView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridView2.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridView2.Mode = "default";
             this.reoGridView2.Model = null;
             this.reoGridView2.Name = "reoGridView2";
