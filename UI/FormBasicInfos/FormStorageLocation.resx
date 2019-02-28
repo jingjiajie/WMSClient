@@ -131,7 +131,7 @@
         {name:"lengthPadding",displayName:"长度内边距",type:"double"},
         {name:"widthPadding",displayName:"宽度内边距",type:"double"},
         {name:"reservedArea",displayName:"余留面积",type:"double"},
-        {name:"piles",displayName:"最高码放层数",type:"double"},
+        {name:"piles",displayName:"最高码放层数",type:"double",visible:false},
         {name:"storageAreaNo",displayName:"库区编码",type:"string",association:"#storageAreaNoAssociation",editEnded:"#storageAreaNoEditEnded"}, 
         {name:"storageAreaName",displayName:"库区名称",type:"string",association:"#storageAreaNameAssociation",editEnded:"#storageAreaNameEditEnded"},                
         {name:"warehouseId",displayName:"仓库ID",type:"int",visible:false,defaultValue:"#warehouseIdDefaultValue"},   
