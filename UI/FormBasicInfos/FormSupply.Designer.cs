@@ -28,17 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
+            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSupply));
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair1 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair2 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair3 = new FrontWork.ModeMethodListenerNamesPair();
             FrontWork.ModeMethodListenerNamesPair modeMethodListenerNamesPair4 = new FrontWork.ModeMethodListenerNamesPair();
-            FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType apiParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.APIParamNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType conditionFieldNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.ConditionFieldNamesType();
-            FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType orderParamNamesType1 = new FrontWork.SearchViewJsonRESTAdapter.OrderParamNamesType();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.searchView1 = new FrontWork.SearchView();
-            this.configuration1 = new FrontWork.Configuration();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSupplyShipmentInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSupplyOuterPackingSize = new System.Windows.Forms.ToolStripButton();
@@ -66,6 +65,7 @@
             this.basicView1 = new FrontWork.BasicView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.configuration1 = new FrontWork.Configuration();
             this.panelSearchWidget.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -96,41 +96,6 @@
             this.searchView1.Name = "searchView1";
             this.searchView1.Size = new System.Drawing.Size(977, 25);
             this.searchView1.TabIndex = 2;
-            // 
-            // configuration1
-            // 
-            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
-            this.configuration1.Location = new System.Drawing.Point(125, -4);
-            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
-            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
-        "FormSupply",
-        "FormSupplyMethodListener",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair1.Mode = "default";
-            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
-        "FormSupply",
-        "FormSupplyMethodListener",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair2.Mode = "default1";
-            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
-        "FormSupply",
-        "FormSupplyMethodListener",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair3.Mode = "default2";
-            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
-        "FormSupply",
-        "FormSupplyMethodListener",
-        "AssociationMethodListener"};
-            modeMethodListenerNamesPair4.Mode = "default3";
-            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
-        modeMethodListenerNamesPair1,
-        modeMethodListenerNamesPair2,
-        modeMethodListenerNamesPair3,
-        modeMethodListenerNamesPair4};
-            this.configuration1.Name = "configuration1";
-            this.configuration1.Size = new System.Drawing.Size(180, 180);
-            this.configuration1.TabIndex = 3;
             // 
             // toolStripSeparator1
             // 
@@ -430,6 +395,41 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(977, 478);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
+            // configuration1
+            // 
+            this.configuration1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.configuration1.ConfigurationString = resources.GetString("configuration1.ConfigurationString");
+            this.configuration1.Location = new System.Drawing.Point(125, -4);
+            this.configuration1.Margin = new System.Windows.Forms.Padding(2);
+            modeMethodListenerNamesPair1.MethodListenerNames = new string[] {
+        "FormSupply",
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair1.Mode = "default";
+            modeMethodListenerNamesPair2.MethodListenerNames = new string[] {
+        "FormSupply",
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair2.Mode = "default1";
+            modeMethodListenerNamesPair3.MethodListenerNames = new string[] {
+        "FormSupply",
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair3.Mode = "default2";
+            modeMethodListenerNamesPair4.MethodListenerNames = new string[] {
+        "FormSupply",
+        "FormSupplyMethodListener",
+        "AssociationMethodListener"};
+            modeMethodListenerNamesPair4.Mode = "default3";
+            this.configuration1.MethodListeners = new FrontWork.ModeMethodListenerNamesPair[] {
+        modeMethodListenerNamesPair1,
+        modeMethodListenerNamesPair2,
+        modeMethodListenerNamesPair3,
+        modeMethodListenerNamesPair4};
+            this.configuration1.Name = "configuration1";
+            this.configuration1.Size = new System.Drawing.Size(180, 180);
+            this.configuration1.TabIndex = 3;
+            // 
             // FormSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -481,11 +481,11 @@
         private System.Windows.Forms.Panel panel2;
         private FrontWork.BasicView basicView1;
         private FrontWork.PagerView pagerView1;
-        private FrontWork.Configuration configuration1;
         private FrontWork.Model model1;
         private FrontWork.JsonRESTSynchronizer synchronizer;
         private FrontWork.PagerSearchJsonRESTAdapter pagerSearchJsonRESTAdapter1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButtonSaveFileDialog;
+        private FrontWork.Configuration configuration1;
     }
 }
