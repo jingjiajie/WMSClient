@@ -310,7 +310,6 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 28);
             this.toolStripButtonDelete.Text = "删除";
-            this.toolStripButtonDelete.Visible = false;
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // toolStripButtonAlter
