@@ -67,6 +67,7 @@ namespace WMS.UI
             }
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = Int32.MaxValue;
             T result = serializer.Deserialize<T>(responseStr);
             return result;
         }
@@ -89,6 +90,7 @@ namespace WMS.UI
                     responseStr = reader.ReadToEnd();
                 }
             JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = Int32.MaxValue;
             T result = serializer.Deserialize<T>(responseStr);
             return result;
         }
