@@ -261,9 +261,26 @@ namespace WMS.UI.FormStock
             //this.model1[row, "materialName"] = "";
             this.FindMaterialID(row);
             this.TryGetSupplyID(row);
-            if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
+            if (((int?)this.model1[row, "supplyId"] ?? 0) == 0 && ((int?)this.model1[row, "supplierId"] ?? 0) != 0)
             {
-                this.TryFindSupplyByMaterialOnly(model, row);
+                this.TryFindSupplyByMaterialWithSupplierID(this.model1, row);
+            }
+        }
+
+        private void TryFindSupplyByMaterialWithSupplierID(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
+            string materialNo = (string)model[row, "materialNo"];
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (string)s["materialNo"] == materialNo
+                                 && (int)s["supplierId"] == supplierId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
             }
         }
 
