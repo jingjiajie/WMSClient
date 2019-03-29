@@ -27,6 +27,12 @@ namespace WMS.UI
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
             }
+            //旧入库单不能加新条目
+            if ((int)warehouseEntry["version"] ==0)
+            {
+                this.buttonAdd.Enabled = false;
+            }
+
         }
 
         //添加按钮点击事件

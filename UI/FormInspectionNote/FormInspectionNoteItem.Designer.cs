@@ -309,6 +309,7 @@
             this.basicView1.Padding = new System.Windows.Forms.Padding(7, 7, 7, 0);
             this.basicView1.Size = new System.Drawing.Size(899, 150);
             this.basicView1.TabIndex = 14;
+            this.basicView1.Load += new System.EventHandler(this.basicView1_Load);
             // 
             // toolStripTop
             // 

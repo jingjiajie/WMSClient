@@ -133,7 +133,8 @@ namespace WMS.UI
                 {
                     { "warehouseEntryNo",warehouseEntryNo },
                     { "warehouseEntryId",warehouseEntryID },
-                    { "inboundDeliveryOrderNo",inboundDeliveryOrderNo}
+                    { "inboundDeliveryOrderNo",inboundDeliveryOrderNo},
+                    { "version",warehouseEntry["version"]}
                 });
             }
             this.ModelInspectionNoteSelect(this.modelBoxInspectionNoteItems.CurrentModelName);
@@ -256,6 +257,7 @@ namespace WMS.UI
         public DateTime inspectionTime;
         public int createPersonId;
         public DateTime createTime;
+        public int version;
     }
 
     public class InspectionNoteItem
@@ -271,5 +273,6 @@ namespace WMS.UI
         public int? returnStorageLocationId;
         public string comment;
         public int? personId;
+        public int version;
     }
 }
