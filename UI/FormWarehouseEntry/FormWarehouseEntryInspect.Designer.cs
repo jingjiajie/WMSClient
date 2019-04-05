@@ -187,7 +187,7 @@
         fieldMappingItem3,
         fieldMappingItem4,
         fieldMappingItem5};
-            this.synchronizer.Location = new System.Drawing.Point(362, 41);
+            this.synchronizer.Location = new System.Drawing.Point(339, 41);
             this.synchronizer.Margin = new System.Windows.Forms.Padding(0);
             this.synchronizer.Mode = "default";
             this.synchronizer.Model = this.modelBoxInspectionNoteItems;
