@@ -133,7 +133,7 @@
         {name:"unit",displayName:"送检单位",placeHolder:"必填项"},
         {name:"unitAmount",displayName:"送检单位数量",type:"double",placeHolder:"必填项"},
         {name:"comment",displayName:"备注",placeHolder:"点击填写备注"},
-        {name:"version",type:"int",displayName:"版本",visible:true}
+        {name:"version",type:"int",displayName:"版本",visible:false}
       
 
      ],
