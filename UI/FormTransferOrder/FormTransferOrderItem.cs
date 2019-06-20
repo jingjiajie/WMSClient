@@ -363,7 +363,7 @@ namespace WMS.UI.FormTransferOrder
             if (supply["defaultDeliveryAmount"] != null)
             {
                 model[row, "scheduledAmount"] = supply["defaultDeliveryAmount"];
-            }        
+            }
             model[row, "unit"] = supply["defaultDeliveryUnit"];
             model[row, "unitAmount"] = supply["defaultDeliveryUnitAmount"];
             model[row, "sourceUnit"] = supply["defaultDeliveryUnit"];
@@ -546,6 +546,7 @@ namespace WMS.UI.FormTransferOrder
             model[row, "supplierName"] = "";
             this.FindSupplierID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            this.TryFindSupplyByMaterialNoAndSupplier(model, row);
         }
 
         private void SupplierNameEditEnded([Model] IModel model, [Row] int row)
@@ -554,6 +555,7 @@ namespace WMS.UI.FormTransferOrder
             model[row, "supplierNo"] = "";
             this.FindSupplierID(model, row);
             this.FindSupplyByMaterialAndSupplier(model, row);
+            this.TryFindSupplyByMaterialNoAndSupplier(model, row);
         }
 
         private void TryFindSupplyByMaterialOnly(IModel model, int row)
@@ -581,6 +583,10 @@ namespace WMS.UI.FormTransferOrder
             if (((int?)model[row, "supplyId"] ?? 0) == 0 && ((int?)model[row, "supplierId"] ?? 0) == 0)
             {
                 this.TryFindSupplyByMaterialOnly(model, row);
+            }
+            if (((int?)model[row, "supplyId"] ?? 0) == 0)
+            {
+                this.TryFindSupplyByMaterialNoAndSupplier(model, row);
             }
         }
 
@@ -656,5 +662,26 @@ namespace WMS.UI.FormTransferOrder
             MessageBox.Show("供应商不存在，请重新填写！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
+        private void TryFindSupplyByMaterialNoAndSupplier(IModel model, int row)
+        {
+            model[row, "supplyId"] = 0; //先清除供货ID
+            int supplierId = (int?)model[row, "supplierId"] ?? 0;
+            string materialNo = (string)model[row, "materialNo"];
+            if (((int?)model[row, "supplierId"] ?? 0) == 0)
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(model[row, "materialNo"]?.ToString())) return;
+            var foundSupplies = (from s in GlobalData.AllSupplies
+                                 where (string)s["materialNo"] == materialNo
+                                  && (int)s["supplierId"] == supplierId
+                                 select s).ToArray();
+            //如果找到供货信息，则把供货设置的默认入库信息拷贝到相应字段上
+            if (foundSupplies.Length == 1)
+            {
+                this.FillSupplyFields(model, row, foundSupplies[0]);
+                model.RefreshView(row);
+            }
+        }
     }
-}
+    }
