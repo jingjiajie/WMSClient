@@ -305,8 +305,8 @@ Public Class JsonRESTAPIInfo
         Dim requestBody = Me.GetRequestBody
         Logger.Debug(Me.HTTPMethod.ToString & " " & strUrl & vbCrLf & requestBody)
         Dim httpWebRequest = CType(WebRequest.Create(uri), HttpWebRequest)
-        httpWebRequest.Timeout = 40000
-        httpWebRequest.ReadWriteTimeout = 40000
+        httpWebRequest.Timeout = 600000
+        httpWebRequest.ReadWriteTimeout = 600000
         ServicePointManager.DefaultConnectionLimit = 500
 
         httpWebRequest.Method = Me.HTTPMethod.ToString

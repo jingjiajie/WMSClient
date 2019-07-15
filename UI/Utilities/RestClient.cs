@@ -38,6 +38,8 @@ namespace WMS.UI
             string responseStr = null;
             ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Timeout = 600000;
+            request.ReadWriteTimeout = 600000;
             try
             {
                 request.Method = method;
@@ -77,6 +79,8 @@ namespace WMS.UI
             string responseStr = null;
             ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Timeout = 600000;
+            request.ReadWriteTimeout = 600000;
                 request.Method = method;
                 if (!string.IsNullOrWhiteSpace(bodyStr))
                 {
