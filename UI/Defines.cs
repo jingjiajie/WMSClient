@@ -10,6 +10,7 @@ namespace WMS.UI
        //有问题把http改为https试试
 
         //public static string ServerURL = "http://localhost.fiddler:9000";
+
         //public static string ServerURL = "http://localhost:9000";
 
         //public const string ServerURL = "http://linuxserver.jingjiajie.com:9000";
