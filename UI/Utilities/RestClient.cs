@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 
 namespace WMS.UI
 {
@@ -38,8 +36,8 @@ namespace WMS.UI
             string responseStr = null;
             ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            request.Timeout = 600000;
-            request.ReadWriteTimeout = 600000;
+            request.Timeout = 6000000;
+            //request.ReadWriteTimeout = 6000;
             try
             {
                 request.Method = method;
@@ -79,8 +77,8 @@ namespace WMS.UI
             string responseStr = null;
             ServicePointManager.ServerCertificateValidationCallback += RemoteCertificateValidate;
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            request.Timeout = 600000;
-            request.ReadWriteTimeout = 600000;
+            request.Timeout = 6000000;
+            //request.ReadWriteTimeout = 6000;
                 request.Method = method;
                 if (!string.IsNullOrWhiteSpace(bodyStr))
                 {
