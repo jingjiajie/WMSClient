@@ -28,8 +28,24 @@ namespace WMS.UI
             };
 
             InitializeComponent();
-            this.comboBoxAccountBook.Items.Add("默认账套");
-            this.comboBoxAccountBook.SelectedIndex = 0;
+            //this.comboBoxAccountBook.Items.Add("默认账套");
+            //this.comboBoxAccountBook.SelectedIndex = 0;
+            string accountBook = "WMS_Template";
+            var warehouseList = RestClient.Get<List<IDictionary<string, object>>>(Defines.ServerURL + "/warehouse/" + accountBook + "/warehouse/" +
+                new Condition().AddOrder("name", OrderItemOrder.DESC));
+            if (warehouseList == null)
+            {
+                this.Close();
+                Environment.Exit(0);
+                return;
+            }
+            GlobalData.AllWarehouses = warehouseList;
+            this.comboBoxWarehouse.Items.Clear();
+            foreach (var warehouse in warehouseList)
+            {
+                this.comboBoxWarehouse.Items.Add(warehouse["name"].ToString());
+            }
+            this.comboBoxWarehouse.SelectedIndex = 0;
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
@@ -243,6 +259,8 @@ namespace WMS.UI
             }
             this.comboBoxWarehouse.SelectedIndex = 0;
         }
+
+
 
 
 
