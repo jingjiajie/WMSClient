@@ -461,7 +461,7 @@ namespace WMS.UI.FromDeliverOrder
                 {
                     var a = (from s in GlobalData.AllSupplies
                              where s["materialNo"] != null &&
-                             s["materialNo"].ToString().StartsWith(str)
+                             s["materialNo"].ToString().Contains(str)
                              && s["warehouseId"] != GlobalData.Warehouse["id"]
                              && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)
                              select s["materialNo"]).ToArray();
@@ -471,7 +471,7 @@ namespace WMS.UI.FromDeliverOrder
                 {
                     var a = (from s in GlobalData.AllSupplies
                              where s["materialNo"] != null &&
-                             s["materialNo"].ToString().StartsWith(str) &&
+                             s["materialNo"].ToString().Contains(str) &&
                              (int)s["supplierId"] == selectedIDs[0]
                              && s["warehouseId"] != GlobalData.Warehouse["id"]
                              && (string.IsNullOrWhiteSpace(materialName) ? true : (s["materialName"]?.ToString() ?? "") == materialName)

@@ -466,7 +466,7 @@ namespace WMS.UI.FormTransferOrder
             {
                 var a = (from s in GlobalData.AllSupplies
                          where s["materialName"] != null &&
-                         s["materialName"].ToString().StartsWith(str)
+                         s["materialName"].ToString().Contains(str)
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
                          && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
                          select s["materialName"]).ToArray();
@@ -476,7 +476,7 @@ namespace WMS.UI.FormTransferOrder
             {
                 var a = (from s in GlobalData.AllSupplies
                          where s["materialName"] != null &&
-                         s["materialName"].ToString().StartsWith(str) &&
+                         s["materialName"].ToString().Contains(str) &&
                          (int)s["supplierId"] == selectedIDs[0]
                          && s["warehouseId"] != GlobalData.Warehouse["id"]
                          && (string.IsNullOrWhiteSpace(materialNo) ? true : (s["materialNo"]?.ToString() ?? "") == materialNo)
