@@ -41,8 +41,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxWarehouse = new System.Windows.Forms.ComboBox();
-            this.comboBoxAccountBook = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -59,10 +57,10 @@
             this.labelPsaaword.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelPsaaword.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPsaaword.ForeColor = System.Drawing.Color.White;
-            this.labelPsaaword.Location = new System.Drawing.Point(0, 35);
+            this.labelPsaaword.Location = new System.Drawing.Point(0, 48);
             this.labelPsaaword.Margin = new System.Windows.Forms.Padding(0);
             this.labelPsaaword.Name = "labelPsaaword";
-            this.labelPsaaword.Size = new System.Drawing.Size(85, 35);
+            this.labelPsaaword.Size = new System.Drawing.Size(85, 21);
             this.labelPsaaword.TabIndex = 7;
             this.labelPsaaword.Text = "密   码：";
             this.labelPsaaword.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -79,7 +77,7 @@
             this.labelusername.Location = new System.Drawing.Point(0, 0);
             this.labelusername.Margin = new System.Windows.Forms.Padding(0);
             this.labelusername.Name = "labelusername";
-            this.labelusername.Size = new System.Drawing.Size(85, 35);
+            this.labelusername.Size = new System.Drawing.Size(85, 48);
             this.labelusername.TabIndex = 6;
             this.labelusername.Text = "用户名：";
             this.labelusername.Click += new System.EventHandler(this.labelusername_Click);
@@ -91,7 +89,7 @@
             // 
             this.textBoxPassword.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxPassword.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxPassword.Location = new System.Drawing.Point(88, 39);
+            this.textBoxPassword.Location = new System.Drawing.Point(88, 52);
             this.textBoxPassword.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
@@ -225,20 +223,18 @@
             this.tableLayoutPanel2.Controls.Add(this.labelusername, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.labelPsaaword, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.comboBoxAccountBook, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.textBoxUsername, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxPassword, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(46, 54);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(46, 57);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(265, 140);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(265, 137);
             this.tableLayoutPanel2.TabIndex = 16;
             // 
             // comboBoxWarehouse
@@ -247,38 +243,11 @@
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxWarehouse.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(89, 111);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(89, 99);
             this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
             this.comboBoxWarehouse.Size = new System.Drawing.Size(172, 27);
             this.comboBoxWarehouse.TabIndex = 3;
-            // 
-            // comboBoxAccountBook
-            // 
-            this.comboBoxAccountBook.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBoxAccountBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAccountBook.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.comboBoxAccountBook.FormattingEnabled = true;
-            this.comboBoxAccountBook.Location = new System.Drawing.Point(89, 76);
-            this.comboBoxAccountBook.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.comboBoxAccountBook.Name = "comboBoxAccountBook";
-            this.comboBoxAccountBook.Size = new System.Drawing.Size(172, 27);
-            this.comboBoxAccountBook.TabIndex = 2;
-            this.comboBoxAccountBook.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccountBook_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(0, 70);
-            this.label2.Margin = new System.Windows.Forms.Padding(0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 35);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "账   套：";
             // 
             // label3
             // 
@@ -287,10 +256,10 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(0, 105);
+            this.label3.Location = new System.Drawing.Point(0, 93);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 35);
+            this.label3.Size = new System.Drawing.Size(85, 47);
             this.label3.TabIndex = 13;
             this.label3.Text = "仓   库：";
             // 
@@ -394,9 +363,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ComboBox comboBoxAccountBook;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxWarehouse;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
