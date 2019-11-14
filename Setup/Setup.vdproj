@@ -1344,15 +1344,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WMS仓库管理系统"
-        "ProductCode" = "8:{2E7A2165-8F10-4FDB-9CA4-DB58584DE509}"
-        "PackageCode" = "8:{7B3819A9-293F-4380-BCA1-E9667FF6FE9A}"
+        "ProductCode" = "8:{0E90F3EA-A9AB-4C44-B61D-534A2C48D1B4}"
+        "PackageCode" = "8:{B2B9B38D-0C45-419F-A6A6-AE5CAEDF578F}"
         "UpgradeCode" = "8:{A9AE385E-C8FC-4629-8461-1096D01CCA2F}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.2.11"
+        "ProductVersion" = "8:2.2.12"
         "Manufacturer" = "8:WMS2"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1467,8 +1467,8 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4C13699099554A1AA9E33D06CE3720BB"
             {
-            "Name" = "8:安途丰达WMS系统2.2.11"
-            "Arguments" = "8:/ {2E7A2165-8F10-4FDB-9CA4-DB58584DE509}"
+            "Name" = "8:安途丰达WMS系统2.2.12"
+            "Arguments" = "8:/ {0E90F3EA-A9AB-4C44-B61D-534A2C48D1B4}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1481,8 +1481,8 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_55E7EFED42274FA1BA308A5A5E9B1E99"
             {
-            "Name" = "8:安途丰达WMS系统2.2.11"
-            "Arguments" = "8:/x {2E7A2165-8F10-4FDB-9CA4-DB58584DE509}"
+            "Name" = "8:安途丰达WMS系统2.2.12"
+            "Arguments" = "8:/x {0E90F3EA-A9AB-4C44-B61D-534A2C48D1B4}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1496,7 +1496,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_72009F6D62624D8BAF9CF99D41954719"
             {
             "Name" = "8:Uninstall.exe"
-            "Arguments" = "8:/x {2E7A2165-8F10-4FDB-9CA4-DB58584DE509}"
+            "Arguments" = "8:/x {0E90F3EA-A9AB-4C44-B61D-534A2C48D1B4}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1510,7 +1510,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F58E66E1A82F4827B41133478B74A9F8"
             {
             "Name" = "8:卸载安途丰达WMS系统"
-            "Arguments" = "8:/x {2E7A2165-8F10-4FDB-9CA4-DB58584DE509}"
+            "Arguments" = "8:/x {0E90F3EA-A9AB-4C44-B61D-534A2C48D1B4}"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
