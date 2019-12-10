@@ -10,6 +10,7 @@ using System.IO;
 using System.Net;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace WMS.UI.FromDeliverOrder
 {
@@ -94,10 +95,25 @@ namespace WMS.UI.FromDeliverOrder
         {
             this.basicView1.Enabled = true;
             this.reoGridView2.Enabled = true;
-            this.model1.InsertRow(0, new Dictionary<string, object>()
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
             {
+                if (string.IsNullOrEmpty(s)) { return; }
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            for (int i = 0; i < row; i++)
+            {
+                this.model1.InsertRow(0, new Dictionary<string, object>()
+                {
 
-            });
+                });
+            }
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using FrontWork;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +39,23 @@ namespace WMS.UI
         //添加按钮点击事件
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            this.model.InsertRow(0, null);
+            string s = Interaction.InputBox("请输入需要添加的行数", "提示", "1", -1, -1);  //-1表示在屏幕的中间         
+            int row = 1;
+            try
+            {
+                if (string.IsNullOrEmpty(s)) { return; }
+                row = Convert.ToInt32(s);
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确的数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            for (int i = 0; i < row; i++)
+            {
+                this.model.InsertRow(0, null);
+            }
         }
 
         //删除按钮点击事件
